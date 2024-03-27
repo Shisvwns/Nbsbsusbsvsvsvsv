@@ -4348,14 +4348,14 @@ Tabs.Farm:AddButton({
     Title = "Refresh Boss",
     Description = "",
     Callback = function()
-        table.clear(Boss)
+        table.clear(bossCheck)
 	    for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
-    		if string.find(v.Name,"Boss") then
+    		if string.find(v.Name, "Boss") then
 	    		table.insert(bossCheck,v.Name)
     		end
     	end
     	for i,v in pairs(game.ReplicatedStorage:GetChildren()) do
-	    	if string.find(v.Name,"Boss") then
+	    	if string.find(v.Name, "Boss") then
 	    		table.insert(bossCheck,v.Name)
     		end
     	end
@@ -4482,7 +4482,7 @@ end
 local MobName = Tabs.Farm:AddDropdown("SelectMob", {
 	Title = "Select Monster",
 	Values = tableMon,
-	Multi = true,
+	Multi = false,
 	Default = "",
 })
 MobName:OnChanged(function(Value)
