@@ -5486,6 +5486,18 @@ spawn(function()
     end
 end)
 
+spawn(function()
+	pcall(function()
+		while wait() do
+			if _G.SailBoat then
+				if game:GetService("Workspace").Enemies:FindFirstChild("Shark") or game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") or game:GetService("Workspace").Enemies:FindFirstChild("Piranha") or game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") then
+				    game.Players.LocalPlayer.Character.Humanoid.Sit = false
+				end
+			end
+		end
+	end)
+end)
+
 function TweenShip(CFgo)
     local tween_s = game:service"TweenService"
     local info = TweenInfo.new((game:GetService("Workspace").Boats.MarineBrigade.VehicleSeat.CFrame.Position - CFgo.Position).Magnitude/300, Enum.EasingStyle.Linear)
