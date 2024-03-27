@@ -5421,12 +5421,12 @@ local Section = Tabs.Sea:AddSection("Sea Event")
 
 AllBoat = {
 	"Dinghy",
-	"Pirate Sloop",
-	"Pirate Brigade",
-	"Pirate Grand Brigade",
-	"Marine Sloop",
-	"Marine Brigade",
-	"Marine Grand Brigade"
+	"PirateSloop",
+	"PirateBrigade",
+	"PirateGrandBrigade",
+	"MarineSloop",
+	"MarineBrigade",
+	"MarineGrandBrigade"
 }
 
 local Boat = Tabs.Sea:AddDropdown("Boat", {
@@ -5461,9 +5461,9 @@ spawn(function()
                             }
                             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
                         end
-                    elseif game:GetService("Workspace").Boats:FindFirstChild("PirateGrandBrigade") then
+                    elseif game:GetService("Workspace").Boats:FindFirstChild(SelectBoat) then
                         if game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Sit == false then
-                            TweenBoat(game:GetService("Workspace").Boats.PirateGrandBrigade.VehicleSeat.CFrame * CFrame.new(0,1,0))
+                            TweenBoat(game:GetService("Workspace").Boats.SelectBoat.VehicleSeat.CFrame * CFrame.new(0,1,0))
                         else
                             for i,v in pairs(game:GetService("Workspace").Boats:GetChildren()) do
                                 if v.Name == SelectBoat then
