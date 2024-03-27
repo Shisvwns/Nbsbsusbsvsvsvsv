@@ -4309,21 +4309,34 @@ end)
 
 local Section = Tabs.Farm:AddSection("Boss")
 
-Boss = {}
-for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
-	if string.find(v.Name,"Boss") then
-		table.insert(Boss,v.Name)
-	end
+local Boss = {}
+for i, v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
+    if string.find(v.Name, "Boss") then
+        if v.Name == "Ice Admiral" then
+            else
+            table.insert(Boss, v.Name)
+        end
+    end
 end
-for i,v in pairs(game.ReplicatedStorage:GetChildren()) do
-	if string.find(v.Name,"Boss") then
-		table.insert(Boss,v.Name)
-	end
+
+local bossCheck = {}
+local bossNames = { "The Gorilla King", "Bobby", "The Saw", "Yeti", "Mob Leader", "Vice Admiral", "Warden", "Chief Warden", "Swan", "Saber Expert", "Magma Admiral", "Fishman Lord", "Wysper", "Thunder God", "Cyborg", "Greybeard", "Diamond", "Jeremy", "Fajita", "Don Swan", "Smoke Admiral", "Awakened Ice Admiral", "Tide Keeper", "Order", "Darkbeard", "Cursed Captain", "Stone", "Island Empress", "Kilo Admiral", "Captain Elephant", "Beautiful Pirate", "Longma", "Cake Queen", "Soul Reaper", "Rip_Indra", "Cake Prince", "Dough King" }
+
+if World1 or World2 or World3 then
+    for _, bossName in pairs(bossNames) do
+        if game:GetService("ReplicatedStorage"):FindFirstChild(bossName) then
+            table.insert(bossCheck, bossName)
+        end
+    end
+end
+
+for _, name in pairs(Boss) do
+    table.insert(bossCheck, name)
 end
 
 local BossName = Tabs.Farm:AddDropdown("SelectBoss", {
 	Title = "Select Boss",
-	Values = Boss,
+	Values = bossCheck,
 	Multi = false,
 	Default = "",
 })
@@ -4338,12 +4351,12 @@ Tabs.Farm:AddButton({
         table.clear(Boss)
 	    for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
     		if string.find(v.Name,"Boss") then
-	    		table.insert(Boss,v.Name)
+	    		table.insert(bossCheck,v.Name)
     		end
     	end
     	for i,v in pairs(game.ReplicatedStorage:GetChildren()) do
 	    	if string.find(v.Name,"Boss") then
-	    		table.insert(Boss,v.Name)
+	    		table.insert(bossCheck,v.Name)
     		end
     	end
     end
