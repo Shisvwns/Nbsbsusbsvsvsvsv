@@ -4350,12 +4350,12 @@ Tabs.Farm:AddButton({
     Title = "Refresh Boss",
     Description = "",
     Callback = function()
-        table.clear(bossCheck)
+        table.clear(Boss)
         for i, v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
             if string.find(v.Name, "Boss") then
                 if v.Name == "Ice Admiral" then
                     else
-                    table.insert(bossCheck,v.Name)
+                    table.insert(Boss,v.Name)
                 end
             end
         end
