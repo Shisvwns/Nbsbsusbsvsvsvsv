@@ -1,9 +1,3 @@
-lback = function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/HuyLocDz/ShowItem/main/ShowItem.lua"))()
-    end
-})
-
-end
 ----------------------------------------------------------------------------------------------------------------------------------------------
 -- [ Ui Fluent ]
 
