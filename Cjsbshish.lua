@@ -4335,7 +4335,7 @@ Tabs.Farm:AddButton({
     Title = "Refresh Boss",
     Description = "",
     Callback = function()
-        table.clear()
+        table.clear(Boss)
 	    for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
     		if string.find(v.Name,"Boss") then
 	    		table.insert(Boss,v.Name)
