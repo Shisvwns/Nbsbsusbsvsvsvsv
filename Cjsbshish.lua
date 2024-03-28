@@ -5068,7 +5068,7 @@ spawn(function()
         if _G.AutoOderSword then
             pcall(function()
                 for i,v in pairs(game.ReplicatedStorage:GetChildren()) do
-                    if v.Name == "Order" then
+                    if (v.Name == "Order") then
                         if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 17000 then
                             repeat task.wait()
                                 AutoHaki()
