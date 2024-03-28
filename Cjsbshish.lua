@@ -3206,7 +3206,7 @@ FastAttackFarm:OnChanged(function(Value)
 end)
 
 spawn(function()
-    while wait(.1) do
+    while wait(0) do
         if _G.FastAttackDelay then
             pcall(function()
                 if _G.FastAttackDelay == "0" then
@@ -3281,7 +3281,7 @@ function AttackHit()
     end
 end
 spawn(function()
-    while wait(.1) do
+    while wait(0) do
         if _G.FastAttack then
             pcall(function()
                 repeat task.wait(_G.FastAttackDelay)
