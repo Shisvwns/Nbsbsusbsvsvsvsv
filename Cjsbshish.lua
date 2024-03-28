@@ -3230,7 +3230,7 @@ spawn(function()
                 elseif _G.FastAttackDelay == "0.185" then
                     _G.FastAttackDelay = 0.185
                 elseif _G.FastAttackDelay == "Super Fast Attack [ Super Op ]" then
-                    _G.FastAttackDelay = _G.AttackNoCd
+                    _G.AttackNoCd
                 end
             end)
         end
