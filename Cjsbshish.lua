@@ -4359,7 +4359,7 @@ Tabs.Farm:AddButton({
     end
 })
 
-local KillBoss = Tabs.Farm:AddToggle("KillBos", {Title = "Auto Kill Boss", Default = false })
+local KillBoss = Tabs.Farm:AddToggle("KillBos", {Title = "Auto Farm Boss", Default = false })
 Options.KillBos:SetValue(false)
 KillBoss:OnChanged(function(Value)
     _G.AutoFarmBoss = Value
@@ -4414,7 +4414,7 @@ spawn(function()
                                     v.HumanoidRootPart.CanCollide = false
                                     v.Humanoid.WalkSpeed = 0
                                     v.HumanoidRootPart.Size = Vector3.new(80,80,80)                             
-                                    topos(v.HumanoidRootPart.CFrame * (Farm_pos))
+                                    topos(v.HumanoidRootPart.CFrame*Pos)
                                     game:GetService("VirtualUser"):CaptureController()
                                     game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
                                     sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
@@ -4432,7 +4432,7 @@ spawn(function()
     end
 end)
 
-local KillAllBoss = Tabs.Farm:AddToggle("KillAllBos", {Title = "Auto Kill All Boss", Default = false })
+local KillAllBoss = Tabs.Farm:AddToggle("KillAllBos", {Title = "Auto Farm All Boss", Default = false })
 Options.KillAllBos:SetValue(false)
 KillAllBoss:OnChanged(function(Value)
     _G.AutoAllBoss = Value
@@ -4470,7 +4470,7 @@ spawn(function()
     end
 end)
 
-local KillAllBos = Tabs.Farm:AddToggle("KillAllBo", {Title = "Auto Kill All Boss [ Hop ]", Default = false })
+local KillAllBos = Tabs.Farm:AddToggle("KillAllBo", {Title = "Auto Farm All Boss [ Hop ]", Default = false })
 Options.KillAllBo:SetValue(false)
 KillAllBos:OnChanged(function(Value)
     _G.AutoAllBossHop = Value
