@@ -2873,6 +2873,103 @@ if getgenv().NoDieEffect then
     end
 end
 
+----------------------------------------------------------------------------------------------------------------------------------------------
+-- [ Tab Farm ]
+
+local Section = Tabs.Farm:AddSection("Setting Farm")
+
+local SelectWeaponFarm = Tabs.Farm:AddDropdown("SelectWeaponFarm", {
+	Title = "Select Weapon",
+	Values = {"Melee","Sword","Devil Fruit","Gun"},
+	Multi = false,
+	Default = 1,
+})
+SelectWeaponFarm:OnChanged(function(Value)
+    _G.SelectWeapon = Value
+end)
+
+task.spawn(function()
+	while wait() do
+		pcall(function()
+			if _G.SelectWeapon == "Melee" then
+				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+					if v.ToolTip == "Melee" then
+						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+							_G.SelectWeapon = v.Name
+						end
+					end
+				end
+			elseif _G.SelectWeapon == "Sword" then
+				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+					if v.ToolTip == "Sword" then
+						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+							_G.SelectWeapon = v.Name
+						end
+					end
+				end
+			elseif _G.SelectWeapon == "Gun" then
+				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+					if v.ToolTip == "Gun" then
+						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+							_G.SelectWeapon = v.Name
+						end
+					end
+				end
+			elseif _G.SelectWeapon == "Devil Fruit" then
+				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+					if v.ToolTip == "Blox Fruit" then
+						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+							_G.SelectWeapon = v.Name
+						end
+					end
+				end
+			end
+		end)
+	end
+end)
+
+local FastAttackFarm = Tabs.Farm:AddDropdown("FastAttackFarm", {
+	Title = "Select Fast Attack",
+	Values = {"0","0.1","0.15","0.155","0.16","0.165","0.17","0.175","0.18","0.185","10"},
+	Multi = false,
+	Default = 8,
+})
+FastAttackFarm:OnChanged(function(Value)
+    _G.FastAttackDelay = Value
+end)
+
+spawn(function()
+    while wait(.1) do
+        if _G.FastAttackDelay then
+            pcall(function()
+                if _G.FastAttackDelay == "0" then
+                    _G.FastAttackDelay = 0
+                elseif _G.FastAttackDelay == "0.1" then
+                    _G.FastAttackDelay = 0.1
+                elseif _G.FastAttackDelay == "0.15" then
+                    _G.FastAttackDelay = 0.15
+                elseif _G.FastAttackDelay == "0.155" then
+                    _G.FastAttackDelay = 0.155
+                elseif _G.FastAttackDelay == "0.16" then
+                    _G.FastAttackDelay = 0.16
+                elseif _G.FastAttackDelay == "0.165" then
+                    _G.FastAttackDelay = 0.165
+                elseif _G.FastAttackDelay == "0.17" then
+                    _G.FastAttackDelay = 0.17
+                elseif _G.FastAttackDelay == "0.175" then
+                    _G.FastAttackDelay = 0.175
+                elseif _G.FastAttackDelay == "0.18" then
+                    _G.FastAttackDelay = 0.18
+                elseif _G.FastAttackDelay == "0.185" then
+                    _G.FastAttackDelay = 0.185
+                elseif _G.FastAttackDelay == "10" then
+                    _G.FastAttackDelay = 10
+                end
+            end)
+        end
+    end
+end)
+
 repeat
     task.wait()
 until game:IsLoaded()
@@ -3096,29 +3193,17 @@ spawn(function()
         pcall(function()
             if true or false then
                 if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") then
-                    AttackNoCD(0)
+                    AttackNoCD(_G.FastAttackDelay)
                 end
             end
         end)
     end
 end)
 
-b2 = tick()
-spawn(function()
-    while wait(0.1) do
-        if b2 - tick() > 1.5 then
-            wait(0.01)
-            b2 = tick()
-        end
-        pcall(function()
-            if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") then
-                if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
-                end
-                AttackNoCD(1)
-            end
-        end)
-    end
+local FastAttackFarm = Tabs.Farm:AddToggle("FastAttackFar", {Title = "Fast Attack", Default = true })
+Options.FastAttackFar:SetValue(true)
+FastAttackFarm:OnChanged(function(Value)
+    _G.FastAttack = Value
 end)
 
 local Module = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
@@ -3126,7 +3211,7 @@ local CombatFramework = debug.getupvalues(Module)[2]
 local CameraShakerR = require(game.ReplicatedStorage.Util.CameraShaker)
 task.spawn(function()
     while task.wait() do
-        if _G.AttackNoCd then
+        if _G.FastAttack then
                 CameraShakerR:Stop()
                 CombatFramework.activeController.attacking = false
                 CombatFramework.activeController.timeToNextAttack = 0
@@ -3137,225 +3222,6 @@ task.spawn(function()
                 CombatFramework.activeController.focusStart = 0
                 CombatFramework.activeController.humanoid.AutoRotate = true
         end
-    end
-end)
-
-----------------------------------------------------------------------------------------------------------------------------------------------
--- [ Tab Farm ]
-
-local Section = Tabs.Farm:AddSection("Setting Farm")
-
-local SelectWeaponFarm = Tabs.Farm:AddDropdown("SelectWeaponFarm", {
-	Title = "Select Weapon",
-	Values = {"Melee","Sword","Devil Fruit","Gun"},
-	Multi = false,
-	Default = 1,
-})
-SelectWeaponFarm:OnChanged(function(Value)
-    _G.SelectWeapon = Value
-end)
-
-task.spawn(function()
-	while wait() do
-		pcall(function()
-			if _G.SelectWeapon == "Melee" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Melee" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.SelectWeapon = v.Name
-						end
-					end
-				end
-			elseif _G.SelectWeapon == "Sword" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Sword" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.SelectWeapon = v.Name
-						end
-					end
-				end
-			elseif _G.SelectWeapon == "Gun" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Gun" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.SelectWeapon = v.Name
-						end
-					end
-				end
-			elseif _G.SelectWeapon == "Devil Fruit" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Blox Fruit" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.SelectWeapon = v.Name
-						end
-					end
-				end
-			end
-		end)
-	end
-end)
-
-local FastAttackFarm = Tabs.Farm:AddDropdown("FastAttackFarm", {
-	Title = "Select Fast Attack",
-	Values = {"0","0.1","0.15","0.155","0.16","0.165","0.17","0.175","0.18","0.185","Super Fast Attack [ Super Op ]"},
-	Multi = false,
-	Default = 8,
-})
-FastAttackFarm:OnChanged(function(Value)
-    _G.FastAttackDelay = Value
-end)
-
-spawn(function()
-    while wait(0) do
-        if _G.FastAttackDelay then
-            pcall(function()
-                if _G.FastAttackDelay == "0" then
-                    _G.FastAttackDelay = 0
-                elseif _G.FastAttackDelay == "0.1" then
-                    _G.FastAttackDelay = 0.1
-                elseif _G.FastAttackDelay == "0.15" then
-                    _G.FastAttackDelay = 0.15
-                elseif _G.FastAttackDelay == "0.155" then
-                    _G.FastAttackDelay = 0.155
-                elseif _G.FastAttackDelay == "0.16" then
-                    _G.FastAttackDelay = 0.16
-                elseif _G.FastAttackDelay == "0.165" then
-                    _G.FastAttackDelay = 0.165
-                elseif _G.FastAttackDelay == "0.17" then
-                    _G.FastAttackDelay = 0.17
-                elseif _G.FastAttackDelay == "0.175" then
-                    _G.FastAttackDelay = 0.175
-                elseif _G.FastAttackDelay == "0.18" then
-                    _G.FastAttackDelay = 0.18
-                elseif _G.FastAttackDelay == "0.185" then
-                    _G.FastAttackDelay = 0.185
-                elseif _G.FastAttackDelay == "Super Fast Attack [ Super Op ]" then
-                    _G.AttackNoCd
-                end
-            end)
-        end
-    end
-end)
-
-function GetBladeHit()
-    local CombatFrameworkLib = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework))
-    local CmrFwLib = CombatFrameworkLib[2]
-    local p13 = CmrFwLib.activeController
-    local weapon = p13.blades[1]
-    if not weapon then 
-        return weapon
-    end
-    while weapon.Parent ~= game.Players.LocalPlayer.Character do
-        weapon = weapon.Parent 
-    end
-    return weapon
-end
-function AttackHit()
-    local CombatFrameworkLib = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework))
-    local CmrFwLib = CombatFrameworkLib[2]
-    local plr = game.Players.LocalPlayer
-    for i = 1, 1 do
-        local bladehit = require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(plr.Character,{plr.Character.HumanoidRootPart},60)
-        local cac = {}
-        local hash = {}
-        for k, v in pairs(bladehit) do
-            if v.Parent:FindFirstChild("HumanoidRootPart") and not hash[v.Parent] then
-                table.insert(cac, v.Parent.HumanoidRootPart)
-                hash[v.Parent] = true
-            end
-        end
-        bladehit = cac
-        if #bladehit > 0 then
-            pcall(function()
-                CmrFwLib.activeController.timeToNextAttack = 1
-                CmrFwLib.activeController.attacking = false
-                CmrFwLib.activeController.blocking = false
-                CmrFwLib.activeController.timeToNextBlock = 0
-                CmrFwLib.activeController.increment = 3
-                CmrFwLib.activeController.hitboxMagnitude = 60
-                CmrFwLib.activeController.focusStart = 0
-                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange",tostring(GetBladeHit()))
-                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, i, "")
-            end)
-        end
-    end
-end
-spawn(function()
-    while wait(0) do
-        if _G.FastAttack then
-            pcall(function()
-                repeat task.wait(_G.FastAttackDelay)
-                    AttackHit()
-                until not _G.FastAttack
-            end)
-        end
-    end
-end)
-
-local FastAttackFarm = Tabs.Farm:AddToggle("FastAttackFar", {Title = "Fast Attack", Default = true })
-Options.FastAttackFar:SetValue(true)
-FastAttackFarm:OnChanged(function(Value)
-    _G.FastAttack = Value
-end)
-
-local CameraShaker = require(game.ReplicatedStorage.Util.CameraShaker)
-CombatFrameworkR = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
-y = debug.getupvalues(CombatFrameworkR)[2]
-spawn(function()
-    game:GetService("RunService").RenderStepped:Connect(function()
-        if _G.FastAttack then
-            if typeof(y) == "table" then
-                pcall(function()
-                    CameraShaker:Stop()
-                    y.activeController.timeToNextAttack = (math.huge^math.huge^math.huge)
-                    y.activeController.timeToNextAttack = 0
-                    y.activeController.hitboxMagnitude = 60
-                    y.activeController.active = false
-                    y.activeController.timeToNextBlock = 0
-                    y.activeController.focusStart = 1655503339.0980349
-                    y.activeController.increment = 1
-                    y.activeController.blocking = false
-                    y.activeController.attacking = false
-                    y.activeController.humanoid.AutoRotate = true
-                end)
-            end
-        end
-    end)
-end)
-spawn(function()
-    game:GetService("RunService").RenderStepped:Connect(function()
-        if _G.FastAttack or _G.FastAttackCambodiakak == true then
-            game.Players.LocalPlayer.Character.Stun.Value = 0
-            game.Players.LocalPlayer.Character.Busy.Value = false        
-        end
-    end)
-end)
-local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
-CamShake:Stop()
-local Client = game.Players.LocalPlayer
-local STOP = require(Client.PlayerScripts.CombatFramework.Particle)
-local STOPRL = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib)
-spawn(function()
-    while task.wait() do
-        pcall(function()
-            if not shared.orl then shared.orl = STOPRL.wrapAttackAnimationAsync end
-            if not shared.cpc then shared.cpc = STOP.play end
-                STOPRL.wrapAttackAnimationAsync = function(a,b,c,d,func)
-                local Hits = STOPRL.getBladeHits(b,c,d)
-                if Hits then
-                    if _G.FastAttack then
-                        STOP.play = function() end
-                        a:Play(0.01,0.01,0.01)
-                        func(Hits)
-                        STOP.play = shared.cpc
-                        wait(a.length * 0.5)
-                        a:Stop()
-                    else
-                        a:Play()
-                    end
-                end
-            end
-        end)
     end
 end)
 
@@ -3984,7 +3850,7 @@ spawn(function()
                             if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                                 if v.Name == Mon then
                                     if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
-                                        repeat wait(_G.FastAttackDelay)
+                                        repeat task.wait()
                                             EquipWeapon(_G.SelectWeapon)
                                             AutoHaki()                                            
                                             PosMon = v.HumanoidRootPart.CFrame
@@ -4047,7 +3913,7 @@ spawn(function()
                             if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                                 if v.Name == Mon then
                                     if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
-                                        repeat wait(_G.FastAttackDelay)
+                                        repeat task.wait()
                                             EquipWeapon(_G.SelectWeapon)
                                             AutoHaki()                                            
                                             PosMon = v.HumanoidRootPart.CFrame
@@ -4096,7 +3962,7 @@ spawn(function()
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == _G.SelectMob then
                             if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                repeat wait(_G.FastAttackDelay)
+                                repeat task.wait()
                                     AutoHaki()
                                     EquipWeapon(_G.SelectWeapon)
                                     v.HumanoidRootPart.CanCollide = false
@@ -4185,7 +4051,7 @@ spawn(function()
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == "Cake Prince" then
                             if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                repeat wait(_G.FastAttackDelay)
+                                repeat task.wait()
                                     AutoHaki()
                                     EquipWeapon(_G.SelectWeapon)
                                     v.HumanoidRootPart.CanCollide = false
@@ -4210,7 +4076,7 @@ spawn(function()
                                 for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                                     if v.Name == "Cookie Crafter" or v.Name == "Cake Guard" or v.Name == "Baking Staff" or v.Name == "Head Baker" then
                                         if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                            repeat wait(_G.FastAttackDelay)
+                                            repeat task.wait()
                                                 AutoHaki()
                                                 EquipWeapon(_G.SelectWeapon)
                                                 v.HumanoidRootPart.CanCollide = false
@@ -4280,7 +4146,7 @@ spawn(function()
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == "Cake Prince" or v.Name == "Dough King" then
                             if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                repeat wait(_G.FastAttackDelay)
+                                repeat task.wait()
                                     AutoHaki()
                                     EquipWeapon(_G.SelectWeapon)
                                     v.HumanoidRootPart.CanCollide = false
@@ -4333,7 +4199,7 @@ spawn(function()
                             if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                                 if v.Name == "Cookie Crafter" or v.Name == "Cake Guard" or v.Name == "Baking Staff" or v.Name == "Head Baker" then
                                     if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, "Cookie Crafter") then
-                                        repeat wait(_G.FastAttackDelay)
+                                        repeat task.wait()
                                             EquipWeapon(_G.SelectWeapon)
                                             AutoHaki()                                            
                                             PosMonCake = v.HumanoidRootPart.CFrame
@@ -4387,7 +4253,7 @@ spawn(function()
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                             if v.Name == "Dough King" then
                                 if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                    repeat wait(_G.FastAttackDelay)
+                                    repeat task.wait()
                                         AutoHaki()
                                         EquipWeapon(_G.SelectWeapon)
                                         v.HumanoidRootPart.CanCollide = false
@@ -4454,7 +4320,7 @@ local BonePos = CFrame.new(-9506.234375, 172.130615234375, 6117.0771484375)
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                             if v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy" then
                                if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                   repeat wait(_G.FastAttackDelay)
+                                   repeat task.wait()
                                         AutoHaki()
                                         EquipWeapon(_G.SelectWeapon)
                                         v.HumanoidRootPart.CanCollide = false
@@ -4530,7 +4396,7 @@ local BonePos = CFrame.new(-9506.234375, 172.130615234375, 6117.0771484375)
                                 if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                                     if v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy" then
                                         if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, "Demonic Soul") then
-                                            repeat wait(_G.FastAttackDelay)
+                                            repeat task.wait()
                                                 EquipWeapon(_G.SelectWeapon)
                                                 AutoHaki()                                            
                                                 PosMonBone = v.HumanoidRootPart.CFrame
@@ -4643,7 +4509,7 @@ spawn(function()
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == _G.SelectBoss then
                             if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                repeat wait(_G.FastAttackDelay)
+                                repeat task.wait()
                                     AutoHaki()
                                     EquipWeapon(_G.SelectWeapon)
                                     v.HumanoidRootPart.CanCollide = false
@@ -4677,7 +4543,7 @@ spawn(function()
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == _G.SelectBoss then
                             if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                repeat wait(_G.FastAttackDelay)
+                                repeat task.wait()
                                     AutoHaki()
                                     EquipWeapon(_G.SelectWeapon)
                                     v.HumanoidRootPart.CanCollide = false
@@ -4715,7 +4581,7 @@ spawn(function()
                 for i,v in pairs(game.ReplicatedStorage:GetChildren()) do
                     if (v.Name == "rip_indra" or v.Name == "Ice Admiral") or (v.Name == "Saber Expert" or v.Name == "The Saw" or v.Name == "Greybeard" or v.Name == "Mob Leader" or v.Name == "The Gorilla King" or v.Name == "Bobby" or v.Name == "Yeti" or v.Name == "Vice Admiral" or v.Name == "Warden" or v.Name == "Chief Warden" or v.Name == "Swan" or v.Name == "Magma Admiral" or v.Name == "Fishman Lord" or v.Name == "Wysper" or v.Name == "Thunder God" or v.Name == "Cyborg") or (v.Name == "Don Swan" or v.Name == "Diamond" or v.Name == "Jeremy" or v.Name == "Fajita" or v.Name == "Smoke Admiral" or v.Name == "Awakened Ice Admiral" or v.Name == "Tide Keeper" or v.Name == "Order" or v.Name == "Darkbeard") or (v.Name == "Stone" or v.Name == "Island Empress" or v.Name == "Kilo Admiral" or v.Name == "Captain Elephant" or v.Name == "Beautiful Pirate" or v.Name == "Cake Queen" or v.Name == "rip_indra True Form" or v.Name == "Longma" or v.Name == "Soul Reaper" or v.Name == "Cake Prince" or v.Name == "Dough King") then
                         if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 17000 then
-                            repeat wait(_G.FastAttackDelay)
+                            repeat task.wait()
                                 AutoHaki()
                                 EquipWeapon(_G.SelectWeapon)
                                 v.Humanoid.WalkSpeed = 0
@@ -4780,7 +4646,7 @@ spawn(function()
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == _G.SelectMob then
                             if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                repeat wait(_G.FastAttackDelay)
+                                repeat task.wait()
                                     AutoHaki()
                                     EquipWeapon(_G.SelectWeapon)
                                     v.HumanoidRootPart.CanCollide = false
@@ -5225,7 +5091,7 @@ spawn(function()
             pcall(function()
                 for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
                     if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                        repeat wait(_G.FastAttackDelay)
+                        repeat task.wait()
                             sethiddenproperty(game:GetService('Players').LocalPlayer,"SimulationRadius",math.huge)
                             v.Humanoid.Health = 0
                             v.HumanoidRootPart.CanCollide = false
@@ -5340,7 +5206,7 @@ spawn(function()
                     if game:GetService("Workspace").Enemies:FindFirstChild("Order") then
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                             if v.Name == "Order" then
-                                repeat wait(_G.FastAttackDelay)
+                                repeat task.wait()
                                     AutoHaki()
                                     EquipWeapon(_G.SelectWeapon)
                                     topos(v.HumanoidRootPart.CFrame*Pos)
@@ -5381,7 +5247,7 @@ spawn(function()
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if _G.RaidPirate and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                             if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 2000 then
-                                repeat wait(_G.FastAttackDelay)
+                                repeat task.wait()
                                     AutoHaki()
                                     EquipWeapon(_G.SelectWeapon)
                                     v.HumanoidRootPart.CanCollide = false
@@ -5421,7 +5287,7 @@ spawn(function()
                 if game:GetService("Workspace").Enemies:FindFirstChild("Core") then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == "Core" and v.Humanoid.Health > 0 then
-                            repeat wait(_G.FastAttackDelay)
+                            repeat task.wait()
                                 AutoHaki()         
                                 EquipWeapon(_G.SelectWeapon)           
                                 topos(CFrame.new(448.46756, 199.356781, -441.389252))                                  
@@ -5556,7 +5422,7 @@ spawn(function()
                             for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                                 if v.Name == "Diablo" or v.Name == "Deandre" or v.Name == "Urban" then
                                     if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                        repeat wait(_G.FastAttackDelay)
+                                        repeat task.wait()
                                             AutoHaki()
                                             EquipWeapon(_G.SelectWeapon)
                                             v.HumanoidRootPart.CanCollide = false
