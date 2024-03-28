@@ -225,6 +225,236 @@ end
 ----------------------------------------------------------------------------------------------------------------------------------------------
 -- [ Quest Check ]
 
+repeat
+    task.wait()
+until game:IsLoaded()
+repeat
+    task.wait()
+until game.Players
+repeat
+    task.wait()
+until game.Players.LocalPlayer
+if game.Players.LocalPlayer.Team==nil then repeat pcall(function()task.wait()if game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Main"):FindFirstChild("ChooseTeam")then if string.find(tostring(getgenv().Team),"Pirate")then for a,a in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.TextButton.Activated))do a.Function()end elseif string.find(tostring(getgenv().Team),"Marine")then for a,a in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Marines.Frame.TextButton.Activated))do a.Function()end else for a,a in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.TextButton.Activated))do a.Function()end end end end)until game.Players.LocalPlayer.Team~=nil end
+local plr = game.Players.LocalPlayer
+local CbFw = debug.getupvalues(require(game.Players.LocalPlayer.PlayerScripts.CombatFramework))
+local CbFw2 = CbFw[2]
+
+require(game.ReplicatedStorage.Util.CameraShaker):Stop()
+
+function GetBlade() 
+    local p13 = CbFw2.activeController
+    local ret = p13.blades[1]
+    if not ret then 
+        return 
+    end
+    while ret.Parent ~= game.Players.LocalPlayer.Character do 
+        ret = ret.Parent 
+    end
+    return ret
+end
+DeoCanOxy = 0
+function CheckOxy()
+  if type(DeoCanOxy) ~= "number" or not DeoCanOxy then
+    DeoCanOxy = 0
+  end
+  DeoCanOxy = DeoCanOxy + 1
+  if DeoCanOxy < 200 then
+    return "VanOK"
+  else
+    return "Cuuchiemoi"
+  end
+end
+function Hitoxy()
+if not OxyChuanBiNap then
+  OxyChuanBiNap = true
+  wait(5)
+  DeoCanOxy = 0
+  OxyChuanBiNap = false
+else
+  return 'Dangnapoxy'
+end
+end
+function AttackNoCD(Num)
+    if Num == 1 then
+        if CheckOxy() == "Cuuchiemoi" then
+           Hitoxy()
+           return "tutubinhtinh"
+        end
+        local AC = CbFw2.activeController
+        for i = 1,1 do 
+            local bladehit = require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(
+                plr.Character,
+                {plr.Character.HumanoidRootPart},
+                55
+            )
+            local cac = {}
+            local hash = {}
+            for k, v in pairs(bladehit) do
+                if v.Parent:FindFirstChild("HumanoidRootPart") and not hash[v.Parent] then
+                    table.insert(cac, v.Parent.HumanoidRootPart)
+                    hash[v.Parent] = true
+                end
+            end
+            bladehit = cac
+            if #bladehit > 0 then
+                local u8 = debug.getupvalue(AC.attack, 5)
+                local u9 = debug.getupvalue(AC.attack, 6)
+                local u7 = debug.getupvalue(AC.attack, 4)
+                local u10 = debug.getupvalue(AC.attack, 7)
+                local u12 = (u8 * 798405 + u7 * 727595) % u9
+                local u13 = u7 * 798405
+                (function()
+                    u12 = (u12 * u9 + u13) % 1099511627776
+                    u8 = math.floor(u12 / u9)
+                    u7 = u12 - u8 * u9
+                end)()
+                u10 = u10 + 1
+                debug.setupvalue(AC.attack, 5, u8)
+                debug.setupvalue(AC.attack, 6, u9)
+                debug.setupvalue(AC.attack, 4, u7)
+                debug.setupvalue(AC.attack, 7, u10)
+                pcall(function()
+                    if plr.Character:FindFirstChildOfClass("Tool") and AC.blades and AC.blades[1] then
+                        AC.animator.anims.basic[1]:Play(0.001,0.001,0.001)
+                        game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange",tostring(GetBlade()))
+                        game.ReplicatedStorage.Remotes.Validator:FireServer(math.floor(u12 / 1099511627776 * 16777215), u10)
+                        game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, 2, "")
+                    end
+                end)
+            end
+        end
+    elseif Num == 0 then
+        local AC = CbFw2.activeController
+        for i = 1,1 do 
+            local bladehit = require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(
+                plr.Character,
+                {plr.Character.HumanoidRootPart},
+                55
+            )
+            local cac = {}
+            local hash = {}
+            for k, v in pairs(bladehit) do
+                if v.Parent:FindFirstChild("HumanoidRootPart") and not hash[v.Parent] then
+                    table.insert(cac, v.Parent.HumanoidRootPart)
+                    hash[v.Parent] = true
+                end
+            end
+            bladehit = cac
+            if #bladehit > 0 then
+                pcall(function()
+                    if plr.Character:FindFirstChildOfClass("Tool") and AC.blades and AC.blades[1] then
+                        for i,CombatFrameworkR in pairs(CbFw) do
+                            pcall(function()
+                                if i == 2 then
+                                    CombatFrameworkR.activeController.increment = 4
+                                    CombatFrameworkR.activeController.hitboxMagnitude = 55
+                                    CombatFrameworkR.activeController.timeToNextAttack = tick()
+                                    game:GetService("VirtualUser"):CaptureController()
+                                    game:GetService("VirtualUser"):ClickButton1(Vector2.new(1300,760))
+                                end
+                            end)
+                        end
+                    end
+                end)
+            end
+        end
+    end
+end
+
+local STOP = require(game.Players.LocalPlayer.PlayerScripts.CombatFramework.Particle)
+local STOPRL = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib)
+
+if not shared.orl then
+    shared.orl = STOPRL.wrapAttackAnimationAsync
+end
+
+if not shared.cpc then
+    shared.cpc = STOP.play 
+end
+
+spawn(function()
+    while task.wait() do
+        STOPRL.wrapAttackAnimationAsync = function(a,b,c,d,func)
+            local Hits = STOPRL.getBladeHits(b,c,d)
+            if Hits then
+                STOP.play = function() end
+                a:Play(15.25,15.25,15.25)
+                func(Hits)                
+                STOP.play = shared.cpc
+                wait(0.5)
+                a:Stop()
+            end         
+            if Hits then
+                STOP.play = function() end
+                a:Play(15.25,15.25,15.25)
+                func(Hits)
+                STOP.play = shared.cpc
+                wait(0.5)
+                a:Stop()
+            end      
+        end
+        STOPRL.wrapAttackAnimationAsync = function(a,b,c,d,func)
+            local Hits = STOPRL.getBladeHits(b,c,d)
+            if Hits then
+                STOP.play = function() end
+                a:Play(15.25,15.25,15.25)
+                func(Hits)                
+                STOP.play = shared.cpc
+                wait(0.5)
+                a:Stop()
+            end         
+            if Hits then
+                STOP.play = function() end
+                a:Play(15.25,15.25,15.25)
+                func(Hits)
+                STOP.play = shared.cpc
+                wait(0.5)
+                a:Stop()
+            end      
+        end
+    end
+end)
+
+spawn(function()
+    while task.wait() do
+        STOPRL.wrapAttackAnimationAsync = function(a,b,c,d,func)
+            local Hits = STOPRL.getBladeHits(b,c,d)
+            if Hits then
+                STOP.play = function() end
+                a:Play(0.01,0.01,0.01)
+                func(Hits)                
+                STOP.play = shared.cpc
+                wait(0.5)
+                a:Stop()
+            end             
+        end
+    end
+end)
+
+spawn(function()
+    while task.wait() do
+        STOPRL.wrapAttackAnimationAsync = function(a,b,c,d,func)
+            local Hits = STOPRL.getBladeHits(b,c,d)
+            if Hits then
+                STOP.play = shared.cpc
+                func(Hits)   
+            end             
+        end
+    end
+end)
+
+spawn(function()
+    while task.wait() do 
+        pcall(function()
+            if true or false then
+                if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") then
+                    AttackNoCD(0)
+                end
+            end
+        end)
+    end
+end)
+
 function CheckQuest()
     MyLevel = game:GetService("Players").LocalPlayer.Data.Level.Value
     if World1 then
@@ -2970,236 +3200,6 @@ spawn(function()
     end
 end)
 
-repeat
-    task.wait()
-until game:IsLoaded()
-repeat
-    task.wait()
-until game.Players
-repeat
-    task.wait()
-until game.Players.LocalPlayer
-if game.Players.LocalPlayer.Team==nil then repeat pcall(function()task.wait()if game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Main"):FindFirstChild("ChooseTeam")then if string.find(tostring(getgenv().Team),"Pirate")then for a,a in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.TextButton.Activated))do a.Function()end elseif string.find(tostring(getgenv().Team),"Marine")then for a,a in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Marines.Frame.TextButton.Activated))do a.Function()end else for a,a in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.TextButton.Activated))do a.Function()end end end end)until game.Players.LocalPlayer.Team~=nil end
-local plr = game.Players.LocalPlayer
-local CbFw = debug.getupvalues(require(game.Players.LocalPlayer.PlayerScripts.CombatFramework))
-local CbFw2 = CbFw[2]
-
-require(game.ReplicatedStorage.Util.CameraShaker):Stop()
-
-function GetBlade() 
-    local p13 = CbFw2.activeController
-    local ret = p13.blades[1]
-    if not ret then 
-        return 
-    end
-    while ret.Parent ~= game.Players.LocalPlayer.Character do 
-        ret = ret.Parent 
-    end
-    return ret
-end
-DeoCanOxy = 0
-function CheckOxy()
-  if type(DeoCanOxy) ~= "number" or not DeoCanOxy then
-    DeoCanOxy = 0
-  end
-  DeoCanOxy = DeoCanOxy + 1
-  if DeoCanOxy < 200 then
-    return "VanOK"
-  else
-    return "Cuuchiemoi"
-  end
-end
-function Hitoxy()
-if not OxyChuanBiNap then
-  OxyChuanBiNap = true
-  wait(5)
-  DeoCanOxy = 0
-  OxyChuanBiNap = false
-else
-  return 'Dangnapoxy'
-end
-end
-function AttackNoCD(Num)
-    if Num == 1 then
-        if CheckOxy() == "Cuuchiemoi" then
-           Hitoxy()
-           return "tutubinhtinh"
-        end
-        local AC = CbFw2.activeController
-        for i = 1,1 do 
-            local bladehit = require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(
-                plr.Character,
-                {plr.Character.HumanoidRootPart},
-                55
-            )
-            local cac = {}
-            local hash = {}
-            for k, v in pairs(bladehit) do
-                if v.Parent:FindFirstChild("HumanoidRootPart") and not hash[v.Parent] then
-                    table.insert(cac, v.Parent.HumanoidRootPart)
-                    hash[v.Parent] = true
-                end
-            end
-            bladehit = cac
-            if #bladehit > 0 then
-                local u8 = debug.getupvalue(AC.attack, 5)
-                local u9 = debug.getupvalue(AC.attack, 6)
-                local u7 = debug.getupvalue(AC.attack, 4)
-                local u10 = debug.getupvalue(AC.attack, 7)
-                local u12 = (u8 * 798405 + u7 * 727595) % u9
-                local u13 = u7 * 798405
-                (function()
-                    u12 = (u12 * u9 + u13) % 1099511627776
-                    u8 = math.floor(u12 / u9)
-                    u7 = u12 - u8 * u9
-                end)()
-                u10 = u10 + 1
-                debug.setupvalue(AC.attack, 5, u8)
-                debug.setupvalue(AC.attack, 6, u9)
-                debug.setupvalue(AC.attack, 4, u7)
-                debug.setupvalue(AC.attack, 7, u10)
-                pcall(function()
-                    if plr.Character:FindFirstChildOfClass("Tool") and AC.blades and AC.blades[1] then
-                        AC.animator.anims.basic[1]:Play(0.001,0.001,0.001)
-                        game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange",tostring(GetBlade()))
-                        game.ReplicatedStorage.Remotes.Validator:FireServer(math.floor(u12 / 1099511627776 * 16777215), u10)
-                        game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, 2, "")
-                    end
-                end)
-            end
-        end
-    elseif Num == 0 then
-        local AC = CbFw2.activeController
-        for i = 1,1 do 
-            local bladehit = require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(
-                plr.Character,
-                {plr.Character.HumanoidRootPart},
-                55
-            )
-            local cac = {}
-            local hash = {}
-            for k, v in pairs(bladehit) do
-                if v.Parent:FindFirstChild("HumanoidRootPart") and not hash[v.Parent] then
-                    table.insert(cac, v.Parent.HumanoidRootPart)
-                    hash[v.Parent] = true
-                end
-            end
-            bladehit = cac
-            if #bladehit > 0 then
-                pcall(function()
-                    if plr.Character:FindFirstChildOfClass("Tool") and AC.blades and AC.blades[1] then
-                        for i,CombatFrameworkR in pairs(CbFw) do
-                            pcall(function()
-                                if i == 2 then
-                                    CombatFrameworkR.activeController.increment = 4
-                                    CombatFrameworkR.activeController.hitboxMagnitude = 55
-                                    CombatFrameworkR.activeController.timeToNextAttack = tick()
-                                    game:GetService("VirtualUser"):CaptureController()
-                                    game:GetService("VirtualUser"):ClickButton1(Vector2.new(1300,760))
-                                end
-                            end)
-                        end
-                    end
-                end)
-            end
-        end
-    end
-end
-
-local STOP = require(game.Players.LocalPlayer.PlayerScripts.CombatFramework.Particle)
-local STOPRL = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib)
-
-if not shared.orl then
-    shared.orl = STOPRL.wrapAttackAnimationAsync
-end
-
-if not shared.cpc then
-    shared.cpc = STOP.play 
-end
-
-spawn(function()
-    while task.wait() do
-        STOPRL.wrapAttackAnimationAsync = function(a,b,c,d,func)
-            local Hits = STOPRL.getBladeHits(b,c,d)
-            if Hits then
-                STOP.play = function() end
-                a:Play(15.25,15.25,15.25)
-                func(Hits)                
-                STOP.play = shared.cpc
-                wait(0.5)
-                a:Stop()
-            end         
-            if Hits then
-                STOP.play = function() end
-                a:Play(15.25,15.25,15.25)
-                func(Hits)
-                STOP.play = shared.cpc
-                wait(0.5)
-                a:Stop()
-            end      
-        end
-        STOPRL.wrapAttackAnimationAsync = function(a,b,c,d,func)
-            local Hits = STOPRL.getBladeHits(b,c,d)
-            if Hits then
-                STOP.play = function() end
-                a:Play(15.25,15.25,15.25)
-                func(Hits)                
-                STOP.play = shared.cpc
-                wait(0.5)
-                a:Stop()
-            end         
-            if Hits then
-                STOP.play = function() end
-                a:Play(15.25,15.25,15.25)
-                func(Hits)
-                STOP.play = shared.cpc
-                wait(0.5)
-                a:Stop()
-            end      
-        end
-    end
-end)
-
-spawn(function()
-    while task.wait() do
-        STOPRL.wrapAttackAnimationAsync = function(a,b,c,d,func)
-            local Hits = STOPRL.getBladeHits(b,c,d)
-            if Hits then
-                STOP.play = function() end
-                a:Play(0.01,0.01,0.01)
-                func(Hits)                
-                STOP.play = shared.cpc
-                wait(0.5)
-                a:Stop()
-            end             
-        end
-    end
-end)
-
-spawn(function()
-    while task.wait() do
-        STOPRL.wrapAttackAnimationAsync = function(a,b,c,d,func)
-            local Hits = STOPRL.getBladeHits(b,c,d)
-            if Hits then
-                STOP.play = shared.cpc
-                func(Hits)   
-            end             
-        end
-    end
-end)
-
-spawn(function()
-    while task.wait() do 
-        pcall(function()
-            if true or false then
-                if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") then
-                    AttackNoCD(_G.FastAttackDelay)
-                end
-            end
-        end)
-    end
-end)
-
 local FastAttackFarm = Tabs.Farm:AddToggle("FastAttackFar", {Title = "Fast Attack", Default = true })
 Options.FastAttackFar:SetValue(true)
 FastAttackFarm:OnChanged(function(Value)
@@ -4367,7 +4367,7 @@ local BonePos = CFrame.new(-9506.234375, 172.130615234375, 6117.0771484375)
     
     local BoneQuestPos = CFrame.new(-9516.99316, 172.017181, 6078.46533, 0, 0, -1, 0, 1, 0, 1, 0, 0)
 
-    task.spawn(function()
+    spawn(function()
         while wait() do
             if  BoneFMode == "Get Quest" and _G.Auto_Bone and World3 then
                 pcall(function()
