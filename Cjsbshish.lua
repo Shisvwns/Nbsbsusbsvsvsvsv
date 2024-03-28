@@ -5064,30 +5064,31 @@ KillLaw:OnChanged(function(Value)
 end)
 
 spawn(function()
-    while wait() do
-        if _G.AutoOderSword then
-            pcall(function()
-                for i,v in pairs(game.ReplicatedStorage:GetChildren()) do
-                    if (v.Name == "Order") then
-                        if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 17000 then
-                            repeat task.wait()
-                                AutoHaki()
-                                EquipWeapon(_G.SelectWeapon)
-                                v.Humanoid.WalkSpeed = 0
-                                v.HumanoidRootPart.CanCollide = false
-                                v.Head.CanCollide = false
-                                v.HumanoidRootPart.Size = Vector3.new(80,80,80)
-                                topos(v.HumanoidRootPart.CFrame*Pos)
-                                game:GetService'VirtualUser':CaptureController()
-                                game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
-                                sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",math.huge)
-                            until v.Humanoid.Health <= 0 or _G.AutoOderSword == false or not v.Parent
+    pcall(function()
+        while wait(0.4) do
+            if _G.AutoOderSword then
+                if game:GetService("ReplicatedStorage"):FindFirstChild("Order") or game:GetService("Workspace").Enemies:FindFirstChild("Order") then
+                    if game:GetService("Workspace").Enemies:FindFirstChild("Order") then
+                        for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                            if v.Name == "Order" then
+                                repeat task.wait()
+                                    AutoHaki()
+                                    EquipWeapon(_G.SelectWeapon)
+                                    topos(v.HumanoidRootPart.CFrame*Pos)
+                                    v.HumanoidRootPart.CanCollide = false
+                                    v.HumanoidRootPart.Size = Vector3.new(120, 120, 120)
+                                    game:GetService("VirtualUser"):CaptureController()
+                                    game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
+                                until not v.Parent or v.Humanoid.Health <= 0 or _G.AutoOderSword == false
+                            end
                         end
+                    elseif game:GetService("ReplicatedStorage"):FindFirstChild("Order") then
+                        topos(CFrame.new(-6217.2021484375, 28.047645568848, -5053.1357421875))
                     end
                 end
-            end)
+            end
         end
-    end
+    end)
 end)
 
 ----------------------------------------------------------------------------------------------------------------------------------------------
@@ -5111,7 +5112,7 @@ spawn(function()
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if _G.RaidPirate and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                             if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 2000 then
-                                repeat wait()
+                                repeat task.wait()
                                     AutoHaki()
                                     EquipWeapon(_G.SelectWeapon)
                                     v.HumanoidRootPart.CanCollide = false
