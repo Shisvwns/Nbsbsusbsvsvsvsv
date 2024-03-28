@@ -2930,7 +2930,7 @@ end)
 
 local FastAttackFarm = Tabs.Farm:AddDropdown("FastAttackFarm", {
 	Title = "Select Fast Attack",
-	Values = {"0","0.1","0.15","0.155","0.16","0.165","0.17","0.175","0.18","0.185","10"},
+	Values = {"0","0.0137","0.1","0.15","0.155","0.16","0.165","0.17","0.175","0.18","0.185"},
 	Multi = false,
 	Default = 8,
 })
@@ -2964,8 +2964,6 @@ spawn(function()
                     _G.FastAttackDelay = 0.18
                 elseif _G.FastAttackDelay == "0.185" then
                     _G.FastAttackDelay = 0.185
-                elseif _G.FastAttackDelay == "10" then
-                    _G.FastAttackDelay = 10
                 end
             end)
         end
