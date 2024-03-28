@@ -5058,35 +5058,27 @@ KillLaw:OnChanged(function(Value)
 end)
 
 spawn(function()
-    while wait() do
-        if _G.AutoOderSword then
-            pcall(function()
-                if game:GetService("Workspace").Enemies:FindFirstChild("Order [Lv. 1250] [Raid Boss]") then
-                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                        if v.Name == "Order [Lv. 1250] [Raid Boss]" then
-                            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                repeat task.wait()
-                                    AutoHaki()
-                                    EquipWeapon(_G.SelectWeapon)
-                                    v.HumanoidRootPart.CanCollide = false
-                                    v.Humanoid.WalkSpeed = 0
-                                    v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                    topos(v.HumanoidRootPart.CFrame * Pos)
-                                    game:GetService("VirtualUser"):CaptureController()
-                                    game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
-                                    sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",math.huge)
-                                until not _G.AutoOderSword or not v.Parent or v.Humanoid.Health <= 0
-                            end
-                        end
-                    end
-                else
-                    if game:GetService("ReplicatedStorage"):FindFirstChild("Order [Lv. 1250] [Raid Boss]") then
-                        topos(game:GetService("ReplicatedStorage"):FindFirstChild("Order [Lv. 1250] [Raid Boss]").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
-                    end
-                end
-            end)
-        end
-    end
+	while wait() do
+		if _G.AutoOderSword then
+			pcall(function()
+				if game:GetService("ReplicatedStorage"):FindFirstChild("Order") or game:GetService("Workspace").Enemies:FindFirstChild("Order") then
+					for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
+						if _G.AutoOderSword and v.Name == "Order" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+							repeat task.wait()
+								AutoHaki()
+								EquipWeapon(_G.Select_Weapon)
+								v.HumanoidRootPart.CanCollide = false
+								v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+								topos(v.HumanoidRootPart.CFrame * Pos)
+								game:GetService'VirtualUser':CaptureController()
+								game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
+							until not _G.AutoOderSword or v.Humanoid.Health <= 0 or not v.Parent
+						end
+					end
+				end 
+			end)
+		end
+	end
 end)
 
 ----------------------------------------------------------------------------------------------------------------------------------------------
