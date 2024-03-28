@@ -4350,16 +4350,12 @@ Tabs.Farm:AddButton({
     Title = "Refresh Boss",
     Description = "",
     Callback = function()
-        BossName:Clear()
-        wait(0.1)
-        for i, v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
-            if (v.Name == "rip_indra" or v.Name == "Ice Admiral")
-                                or (v.Name == "Saber Expert" or v.Name == "The Saw" or v.Name == "Greybeard" or v.Name == "Mob Leader" or v.Name == "The Gorilla King" or v.Name == "Bobby" or v.Name == "Yeti" or v.Name == "Vice Admiral" or v.Name == "Warden" or v.Name == "Chief Warden" or v.Name == "Swan" or v.Name == "Magma Admiral" or v.Name == "Fishman Lord" or v.Name == "Wysper" or v.Name == "Thunder God" or v.Name == "Cyborg")
-                                or (v.Name == "Don Swan" or v.Name == "Diamond" or v.Name == "Jeremy" or v.Name == "Fajita" or v.Name == "Smoke Admiral" or v.Name == "Awakened Ice Admiral" or v.Name == "Tide Keeper" or v.Name == "Order" or v.Name == "Darkbeard")
-                                or (v.Name == "Stone" or v.Name == "Island Empress" or v.Name == "Kilo Admiral" or v.Name == "Captain Elephant" or v.Name == "Beautiful Pirate" or v.Name == "Cake Queen" or v.Name == "rip_indra True Form" or v.Name == "Longma" or v.Name == "Soul Reaper" or v.Name == "Cake Prince" or v.Name == "Dough King") then
-                BossName:Add(v.Name)
-            end
-        end
+       Fluent:Notify({
+            Title = "Tinh Linh Hub",
+            Content = "Wait Fix",
+            SubContent = "",
+            Duration = 5
+        })
     end
 })
 
@@ -4372,24 +4368,31 @@ end)
 
 spawn(function()
     while wait() do
-        if _G.AutoFarmBoss then
+        if _G.AutoFarmBoss and BypassTP then
             pcall(function()
-                for i,v in pairs(game.ReplicatedStorage:GetChildren()) do
-                    if v.Name == _G.SelectBoss then
-                        if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 17000 then
-                            repeat task.wait()
-                                AutoHaki()
-                                EquipWeapon(_G.SelectWeapon)
-                                v.Humanoid.WalkSpeed = 0
-                                v.HumanoidRootPart.CanCollide = false
-                                v.Head.CanCollide = false
-                                v.HumanoidRootPart.Size = Vector3.new(80,80,80)
-                                topos(v.HumanoidRootPart.CFrame*Pos)
-                                game:GetService'VirtualUser':CaptureController()
-                                game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
-                                sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",math.huge)
-                            until v.Humanoid.Health <= 0 or _G.AutoAllBoss == false or not v.Parent
+                if game:GetService("Workspace").Enemies:FindFirstChild(_G.SelectBoss) then
+                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        if v.Name == _G.SelectBoss then
+                            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                                repeat task.wait()
+                                    AutoHaki()
+                                    EquipWeapon(_G.SelectWeapon)
+                                    v.HumanoidRootPart.CanCollide = false
+                                    v.Humanoid.WalkSpeed = 0
+                                    v.HumanoidRootPart.Size = Vector3.new(80,80,80)                             
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
+                                    game:GetService("VirtualUser"):CaptureController()
+                                    game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
+                                    sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
+                                until not _G.AutoFarmBoss or not v.Parent or v.Humanoid.Health <= 0
+                            end
                         end
+                    end
+                elseif game.ReplicatedStorage:FindFirstChild(_G.SelectBoss) then
+                    if ((game.ReplicatedStorage:FindFirstChild(_G.SelectBoss).HumanoidRootPart.CFrame).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 1500 then
+                        topos(game.ReplicatedStorage:FindFirstChild(_G.SelectBoss).HumanoidRootPart.CFrame)
+                    else
+                        BTP(game.ReplicatedStorage:FindFirstChild(_G.SelectBoss).HumanoidRootPart.CFrame)
                     end
                 end
             end)
@@ -4455,6 +4458,10 @@ spawn(function()
                                 game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
                                 sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",math.huge)
                             until v.Humanoid.Health <= 0 or _G.AutoAllBoss == false or not v.Parent
+                        end
+                    else
+                        if _G.AutoAllBossHop then
+                            Hop()
                         end
                     end
                 end
