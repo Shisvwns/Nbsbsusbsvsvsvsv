@@ -2939,7 +2939,7 @@ FastAttackFarm:OnChanged(function(Value)
 end)
 
 spawn(function()
-    while wait(.1) do
+    while task.wait() do
         if _G.FastAttackDelay then
             pcall(function()
                 if _G.FastAttackDelay == "0" then
