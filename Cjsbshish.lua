@@ -17,35 +17,31 @@ local Window = Fluent:CreateWindow({
 
 -- [ Button ]
 
-if game.CoreGui:FindFirstChild("TinhLinhHubOpenClose") then
-    game.CoreGui:FindFirstChild("TinhLinhHubOpenClose"):Destroy()
-end
-local UIStroke = Instance.new("UIStroke")
+local ScreenGui1 = Instance.new("ScreenGui")
+local ImageButton1 = Instance.new("ImageButton")
 local UICorner = Instance.new("UICorner")
-local ScreenGui = Instance.new("ScreenGui")
-local ImageButton = Instance.new("ImageButton")
-local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "TinhLinhHubOpenClose"
-ScreenGui.Parent = game.CoreGui
-ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-ImageButton.Parent = ScreenGui
-ImageButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-ImageButton.BorderColor3 = Color3.fromRGB(255, 255, 255)
-ImageButton.Draggable = false
-ImageButton.Position = UDim2.new(0.08, 0, 0.06, 0)
-ImageButton.Size = UDim2.new(0, 50, 0, 50)
-ImageButton.Image = "rbxassetid://16730867128"
-UICorner.Name = "MainCorner"
-UICorner.CornerRadius = UDim.new(0, 9)
-UICorner.Parent = ImageButton
-ImageButton.MouseButton1Down:connect(function()
-game:GetService("VirtualInputManager"):SendKeyEvent(true,127,false,game)
-game:GetService("VirtualInputManager"):SendKeyEvent(false,127,false,game)
+local UIGradient = Instance.new("UIGradient")
+local UIStroke = Instance.new("UIStroke")
+ScreenGui1.Name = "ImageButton"
+ScreenGui1.Parent = game.CoreGui
+ScreenGui1.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+ImageButton1.Parent = ScreenGui1
+ImageButton1.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+ImageButton1.BorderSizePixel = 0
+ImageButton1.Position = UDim2.new(0.120833337, 0, 0.0952890813, 0)
+ImageButton1.Size = UDim2.new(0, 50, 0, 50)
+ImageButton1.Draggable = true
+ImageButton1.Image = "rbxassetid://16730867128" -- ảnh button ở ngoài --
+ImageButton1.MouseButton1Down:connect(function()
+game:GetService("VirtualInputManager"):SendKeyEvent(true,305,false,game)
+game:GetService("VirtualInputManager"):SendKeyEvent(false,305,false,game)
 end)
 UICorner.Parent = ImageButton1
 UIStroke.Color = Color3.fromRGB(255, 255, 255)
 UIStroke.Thickness = 1.5
 UIStroke.Parent = ImageButton1
+UIGradient.Parent = UIStroke
 
 -- [ Create Tab ]
 
@@ -5605,10 +5601,10 @@ Tabs.Race:AddButton({
     end
 })
 
-local Section = Tabs.Race:AddSection("Mirage Isalnd")
+local Section = Tabs.Race:AddSection("Mirage Island")
 
 local StatusMirage = Tabs.Race:AddParagraph({
-    Title = "Mirage Isand Status",
+    Title = "Mirage Island Status",
     Content = "Mirage Island: 🔴"
 })
 
@@ -6200,7 +6196,7 @@ spawn(function()
 end)
 
 local Mirage = Tabs.StatusServer:AddParagraph({
-    Title = "Mirage Isand Status",
+    Title = "Mirage Island Status",
     Content = "Mirage Island: 🔴"
 })
 
@@ -6215,7 +6211,7 @@ spawn(function()
 end)
 
 local Kitsune = Tabs.StatusServer:AddParagraph({
-    Title = "Kitsune Isand Status",
+    Title = "Kitsune Island Status",
     Content = "Kitsune Island: 🔴"
 })
 
