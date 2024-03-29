@@ -17,8 +17,8 @@ local Window = Fluent:CreateWindow({
 
 -- [ Button ]
 
-if game.CoreGui:FindFirstChild("TinhLinhHubOpenClose") then
-    game.CoreGui:FindFirstChild("TinhLinhHubOpenClose"):Destroy()
+if game.CoreGui:FindFirstChild("OpenClose") then
+    game.CoreGui:FindFirstChild("OpenClose"):Destroy()
 end
 local ScreenGui1 = Instance.new("ScreenGui")
 local ImageButton1 = Instance.new("ImageButton")
@@ -33,7 +33,7 @@ ImageButton1.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 ImageButton1.BorderSizePixel = 0
 ImageButton1.Position = UDim2.new(0.08, 0, 0.06, 0)
 ImageButton1.Size = UDim2.new(0, 50, 0, 50)
-ImageButton1.Draggable = true
+ImageButton1.Draggable = false
 ImageButton1.Image = "rbxassetid://16730867128"
 ImageButton1.MouseButton1Down:connect(function()
 game:GetService("VirtualInputManager"):SendKeyEvent(true,127,false,game)
@@ -2997,7 +2997,7 @@ function AttackHit()
     end
 end
 spawn(function()
-    while wait(.1) do
+    while wait(0) do
         if _G.FastAttack then
             pcall(function()
                 repeat task.wait(_G.FastAttackDelay)
@@ -4409,6 +4409,7 @@ spawn(function()
                         end
                     end
                 else
+                    SelectMag = false
                     if game:GetService("ReplicatedStorage"):FindFirstChild(_G.SelectMob) then
                         topos(game:GetService("ReplicatedStorage"):FindFirstChild(_G.SelectMob).HumanoidRootPart.CFrame * CFrame.new(5,10,2))
                     end
