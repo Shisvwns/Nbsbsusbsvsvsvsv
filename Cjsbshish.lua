@@ -2928,7 +2928,7 @@ FastAttackFarm:OnChanged(function(Value)
 end)
 
 spawn(function()
-    while wait(.1) do
+    while task.wait() do
         if _G.FastAttackDelay then
             pcall(function()
                 if _G.FastAttackDelay == "0" then
@@ -2994,7 +2994,7 @@ function AttackHit()
                 CmrFwLib.activeController.blocking = false
                 CmrFwLib.activeController.timeToNextBlock = 0
                 CmrFwLib.activeController.increment = 3
-                CmrFwLib.activeController.hitboxMagnitude = 60
+                CmrFwLib.activeController.hitboxMagnitude = 70
                 CmrFwLib.activeController.focusStart = 0
                 game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange",tostring(GetBladeHit()))
                 game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, i, "")
