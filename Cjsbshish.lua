@@ -42,6 +42,10 @@ ImageButton.MouseButton1Down:connect(function()
 game:GetService("VirtualInputManager"):SendKeyEvent(true,127,false,game)
 game:GetService("VirtualInputManager"):SendKeyEvent(false,127,false,game)
 end)
+UICorner.Parent = ImageButton1
+UIStroke.Color = Color3.fromRGB(255, 255, 255)
+UIStroke.Thickness = 1.5
+UIStroke.Parent = ImageButton1
 
 -- [ Create Tab ]
 
