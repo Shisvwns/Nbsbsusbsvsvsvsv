@@ -2911,7 +2911,7 @@ end)
 
 local FastAttackFarm = Tabs.Farm:AddDropdown("FastAttackFarm", {
 	Title = "Select Fast Attack",
-	Values = {"Super Fast Attack","0","0.1","0.15","0.155","0.16","0.165","0.17","0.175","0.18","0.185","10"},
+	Values = {"0","0.1","0.15","0.155","0.16","0.165","0.17","0.175","0.18","0.185","10"},
 	Multi = false,
 	Default = 8,
 })
@@ -3531,110 +3531,6 @@ task.spawn(function()
 	end
 end)
 
-local Section = Tabs.Farm:AddSection("Code")
-
-x2Code = {
-    "KITTGAMING",
-    "ENYU_IS_PRO",
-    "FUDD10",
-    "BIGNEWS",
-    "THEGREATACE",
-    "SUB2GAMERROBOT_EXP1",
-    "STRAWHATMAIME",
-    "SUB2OFFICIALNOOBIE",
-    "SUB2NOOBMASTER123",
-    "SUB2DAIGROCK",
-    "AXIORE",
-    "TANTAIGAMIMG",
-    "STRAWHATMAINE",
-    "JCWK",
-    "FUDD10_V2",
-    "SUB2FER999",
-    "MAGICBIS",
-    "TY_FOR_WATCHING",
-    "STARCODEHEO"
-}
-
-local CodeX2 = Tabs.Farm:AddDropdown("Codec2", {
-	Title = "Select Code x2 Exp",
-	Values = x2Code,
-	Multi = false,
-	Default = 1,
-})
-CodeX2:OnChanged(function(Value)
-    _G.Codex2 = Value
-end)
-
-Tabs.Farm:AddButton({
-    Title = "Redeem Code x2 Exp",
-    Description = "",
-    Callback = function()
-        game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer(_G.Codex2)
-    end
-})
-
-StatsCode = {
-    "KITT_RESET",
-    "SUB2GAMERROBOT_RESET1",
-    "Sub2UncleKizaru"
-}
-
-local CodeStats = Tabs.Farm:AddDropdown("Hoho", {
-	Title = "Select Code Stats Refund",
-	Values = StatsCode,
-	Multi = false,
-	Default = 1,
-})
-CodeStats:OnChanged(function(Value)
-    _G.CodeStatss = Value
-end)
-
-Tabs.Farm:AddButton({
-    Title = "Redeem Code Stats Refund",
-    Description = "",
-    Callback = function()
-        game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer(_G.CodeStatss)
-    end
-})
-
-Tabs.Farm:AddButton({
-    Title = "Redeem All Code",
-    Description = "",
-    Callback = function()
-        function RedeemCode(value)
-            game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer(value)
-        end
-        for i,v in pairs(x2Code) do
-            RedeemCode(v)
-        end
-    end
-})
-
-local X2Code = {
-    "KITTGAMING",
-    "ENYU_IS_PRO",
-    "FUDD10",
-    "BIGNEWS",
-    "THEGREATACE",
-    "SUB2GAMERROBOT_EXP1",
-    "STRAWHATMAIME",
-    "SUB2OFFICIALNOOBIE",
-    "SUB2NOOBMASTER123",
-    "SUB2DAIGROCK",
-    "AXIORE",
-    "TANTAIGAMIMG",
-    "STRAWHATMAINE",
-    "JCWK",
-    "FUDD10_V2",
-    "SUB2FER999",
-    "KITT_RESET",
-    "SUB2GAMERROBOT_RESET1",
-    "Sub2UncleKizaru",
-    "MAGICBIS",
-    "TY_FOR_WATCHING",
-    "STARCODEHEO"
-}
-
 local Section = Tabs.Farm:AddSection("Farm Level")
 
 local YourLevel = Tabs.Farm:AddParagraph({
@@ -4217,68 +4113,7 @@ local BonePos = CFrame.new(-9506.234375, 172.130615234375, 6117.0771484375)
 
     spawn(function()
         while wait() do
-            if BoneFMode == "Get Quest" and _G.Auto_Bone and World3 then
-                pcall(function()
-                    local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
-                    if not string.find(QuestTitle, "Demonic Soul") then
-                        StartMagnetBoneMon = false
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
-                    end
-                    if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
-                        StartMagnetBoneMon = false
-                        if BypassTP then
-                        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - BoneQuestPos.Position).Magnitude > 1500 then
-						BTP(BoneQuestPos)
-						elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - BoneQuestPos.Position).Magnitude < 1500 then
-						topos(BoneQuestPos)
-						end
-					else
-						topos(BoneQuestPos)
-					end
-                    if (BoneQuestPos.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3 then    
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest","HauntedQuest2",1)
-                        end
-                    elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
-                        if game:GetService("Workspace").Enemies:FindFirstChild("Reborn Skeleton") or game:GetService("Workspace").Enemies:FindFirstChild("Living Zombie") or game:GetService("Workspace").Enemies:FindFirstChild("Demonic Soul") or game:GetService("Workspace").Enemies:FindFirstChild("Posessed Mummy") then
-                            for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                                if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
-                                    if v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy" then
-                                        if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, "Demonic Soul") then
-                                            repeat wait(_G.FastAttackDelay)
-                                                EquipWeapon(_G.SelectWeapon)
-                                                AutoHaki()                                            
-                                                PosMonBone = v.HumanoidRootPart.CFrame
-                                                topos(v.HumanoidRootPart.CFrame * Pos)
-                                                v.HumanoidRootPart.CanCollide = false
-                                                v.Humanoid.WalkSpeed = 0
-                                                v.Head.CanCollide = false
-                                                v.HumanoidRootPart.Size = Vector3.new(70,70,70)
-                                                StartMagnetBoneMon = true
-                                                game:GetService'VirtualUser':CaptureController()
-                                                game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
-                                            until not _G.Auto_Bone or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
-                                        else
-                                            StartMagnetBoneMon = false
-                                            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
-                                        end
-                                    end
-                                end
-                            end
-                        else
-                            StartMagnetBoneMon = false
-                            if game:GetService("ReplicatedStorage"):FindFirstChild("Demonic Soul [Lv. 2025]") then
-                             topos(game:GetService("ReplicatedStorage"):FindFirstChild("Demonic Soul [Lv. 2025]").HumanoidRootPart.CFrame * CFrame.new(15,10,2))
-                            end
-                        end
-                    end
-                end)
-            end
-        end
-    end)
-    
-    spawn(function()
-        while wait() do
-            if _G.FastAttackDelay == "Super Fast Attack" and BoneFMode == "Get Quest" and _G.Auto_Bone and World3 then
+            if  BoneFMode == "Get Quest" and _G.Auto_Bone and World3 then
                 pcall(function()
                     local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
                     if not string.find(QuestTitle, "Demonic Soul") then
@@ -6470,6 +6305,290 @@ Tabs.StatusServer:AddButton({
     Description = "",
     Callback = function()
         Hop()
+    end
+})
+
+-- [ Tab Shop ]
+
+local Section = Tabs.Shop:AddSection("Code")
+
+x2Code = {
+    "KITTGAMING",
+    "ENYU_IS_PRO",
+    "FUDD10",
+    "BIGNEWS",
+    "THEGREATACE",
+    "SUB2GAMERROBOT_EXP1",
+    "STRAWHATMAIME",
+    "SUB2OFFICIALNOOBIE",
+    "SUB2NOOBMASTER123",
+    "SUB2DAIGROCK",
+    "AXIORE",
+    "TANTAIGAMIMG",
+    "STRAWHATMAINE",
+    "JCWK",
+    "FUDD10_V2",
+    "SUB2FER999",
+    "MAGICBIS",
+    "TY_FOR_WATCHING",
+    "STARCODEHEO"
+}
+
+local CodeX2 = Tabs.Shop:AddDropdown("Codec2", {
+	Title = "Select Code x2 Exp",
+	Values = x2Code,
+	Multi = false,
+	Default = 1,
+})
+CodeX2:OnChanged(function(Value)
+    _G.Codex2 = Value
+end)
+
+Tabs.Shop:AddButton({
+    Title = "Redeem Code x2 Exp",
+    Description = "",
+    Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer(_G.Codex2)
+    end
+})
+
+StatsCode = {
+    "KITT_RESET",
+    "SUB2GAMERROBOT_RESET1",
+    "Sub2UncleKizaru"
+}
+
+local CodeStats = Tabs.Shop:AddDropdown("Hoho", {
+	Title = "Select Code Stats Refund",
+	Values = StatsCode,
+	Multi = false,
+	Default = 1,
+})
+CodeStats:OnChanged(function(Value)
+    _G.CodeStatss = Value
+end)
+
+Tabs.Shop:AddButton({
+    Title = "Redeem Code Stats Refund",
+    Description = "",
+    Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer(_G.CodeStatss)
+    end
+})
+
+Tabs.Shop:AddButton({
+    Title = "Redeem All Code",
+    Description = "",
+    Callback = function()
+        function RedeemCode(value)
+            game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer(value)
+        end
+        for i,v in pairs(x2Code) do
+            RedeemCode(v)
+        end
+    end
+})
+
+local X2Code = {
+    "KITTGAMING",
+    "ENYU_IS_PRO",
+    "FUDD10",
+    "BIGNEWS",
+    "THEGREATACE",
+    "SUB2GAMERROBOT_EXP1",
+    "STRAWHATMAIME",
+    "SUB2OFFICIALNOOBIE",
+    "SUB2NOOBMASTER123",
+    "SUB2DAIGROCK",
+    "AXIORE",
+    "TANTAIGAMIMG",
+    "STRAWHATMAINE",
+    "JCWK",
+    "FUDD10_V2",
+    "SUB2FER999",
+    "KITT_RESET",
+    "SUB2GAMERROBOT_RESET1",
+    "Sub2UncleKizaru",
+    "MAGICBIS",
+    "TY_FOR_WATCHING",
+    "STARCODEHEO"
+}
+
+local Section = Tabs.Shop:AddSection("Fighting Style")
+
+Tabs.Shop:AddButton({
+    Title = "Buy Black Leg",
+    Description = "",
+    Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyBlackLeg")
+    end
+})
+
+Tabs.Shop:AddButton({
+    Title = "Buy Electro",
+    Description = "",
+    Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyElectro")
+    end
+})
+
+Tabs.Shop:AddButton({
+    Title = "Buy Fishman Karate",
+    Description = "",
+    Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyFishmanKarate")
+    end
+})
+
+Tabs.Shop:AddButton({
+    Title = "Buy Dragon Claw",
+    Description = "",
+    Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","DragonClaw","1")
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","DragonClaw","2")
+    end
+})
+
+Tabs.Shop:AddButton({
+    Title = "Buy SuperHuman",
+    Description = "",
+    Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySuperhuman")
+    end
+})
+
+Tabs.Shop:AddButton({
+    Title = "Buy Death Step",
+    Description = "",
+    Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyDeathStep")
+    end
+})
+
+Tabs.Shop:AddButton({
+    Title = "Buy Sharkman Karate",
+    Description = "",
+    Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySharkmanKarate",true)
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySharkmanKarate")
+    end
+})
+
+Tabs.Shop:AddButton({
+    Title = "Buy Electric Claw",
+    Description = "",
+    Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyElectricClaw")
+    end
+})
+
+Tabs.Shop:AddButton({
+    Title = "Buy Dragon Talon",
+    Description = "",
+    Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyDragonTalon")
+    end
+})
+
+Tabs.Shop:AddButton({
+    Title = "Buy God Human",
+    Description = "",
+    Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyGodhuman")
+    end
+})
+
+Tabs.Shop:AddButton({
+    Title = "Buy Sanguine Art",
+    Description = "",
+    Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySanguineArt", true)
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySanguineArt")
+    end
+})
+
+local Section = Tabs.Shop:AddSection("Abilities")
+
+Tabs.Shop:AddButton({
+    Title = "Buy Sky Jump [ $10,000 Beli ]",
+    Description = "",
+    Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyHaki","Geppo")
+    end
+})
+
+Tabs.Shop:AddButton({
+    Title = "Buy Buso Haki [ $25,000 Beli ]",
+    Description = "",
+    Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyHaki","Buso")
+    end
+})
+
+Tabs.Shop:AddButton({
+    Title = "Buy Soru [ $100,000 Beli ]",
+    Description = "",
+    Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyHaki","Soru")
+    end
+})
+
+Tabs.Shop:AddButton({
+    Title = "Buy Observation Haki [ $750,000 Beli ]",
+    Description = "",
+    Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("KenTalk","Buy")
+    end
+})
+
+local Section = Tabs.Shop:AddSection("Other")
+
+Tabs.Shop:AddButton({
+    Title = "Buy Reroll Race [ $3,000 Fragments ]",
+    Description = "",
+    Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Reroll","1")
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Reroll","2")
+    end
+})
+
+Tabs.Shop:AddButton({
+    Title = "Buy Reset Stats [ $2,500 Fragments ]",
+    Description = "",
+    Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Refund","1")
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Refund","2")
+    end
+})
+
+Tabs.Shop:AddButton({
+    Title = "Buy Cyborg Race [ $2,500 Fragments ]",
+    Description = "",
+    Callback = function()
+        local a = {
+            [1] = "CyborgTrainer",
+            [2] = "Buy"
+        }
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(a))
+    end
+})
+
+Tabs.Shop:AddButton({
+    Title = "Buy Ghoul Race [ $2,500 Fragments ]",
+    Description = "",
+    Callback = function()
+        local a = {
+            [1] = "Ectoplasm",
+            [2] = "BuyCheck",
+            [3] = 4
+        }
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(a))
+        local a = {
+            [1] = "Ectoplasm",
+            [2] = "Change",
+            [3] = 4
+        }
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(a))
     end
 })
 
