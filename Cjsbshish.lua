@@ -2844,6 +2844,14 @@ if game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit') then
     game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit'):Destroy()
 end
 
+if game:GetService("ReplicatedStorage").Assets:FindFirstChild('Sounds') then
+    game:GetService("ReplicatedStorage").Assets:FindFirstChild('Sounds'):Destroy()
+end
+
+if game:GetService("ReplicatedStorage").Assets:FindFirstChild('CurvedRing') then
+    game:GetService("ReplicatedStorage").Assets:FindFirstChild('CurvedRing'):Destroy()
+end
+
 getgenv().NoDieEffect = true
 if getgenv().NoDieEffect then
     local effectContainer = game:GetService("ReplicatedStorage").Effect.Container
