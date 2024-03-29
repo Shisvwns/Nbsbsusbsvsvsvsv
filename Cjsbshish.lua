@@ -41,7 +41,7 @@ game:GetService("VirtualInputManager"):SendKeyEvent(false,127,false,game)
 end)
 UICorner.Parent = ImageButton1
 UIStroke.Color = Color3.fromRGB(255, 255, 255)
-UIStroke.Thickness = 0.5
+UIStroke.Thickness = 1
 UIStroke.Parent = ImageButton1
 UIGradient.Parent = UIStroke
 
