@@ -1,11 +1,9 @@
-----------------------------------------------------------------------------------------------------------------------------------------------
 -- [ Ui Fluent ]
 
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
-----------------------------------------------------------------------------------------------------------------------------------------------
 -- [ Name Hub ]
 local Window = Fluent:CreateWindow({
     Title = "Tinh Linh Hub",
@@ -17,7 +15,6 @@ local Window = Fluent:CreateWindow({
     MinimizeKey = Enum.KeyCode.Delete
 })
 
-----------------------------------------------------------------------------------------------------------------------------------------------
 -- [ Button ]
 
 if game.CoreGui:FindFirstChild("TinhLinhHubOpenClose") then
@@ -33,7 +30,7 @@ ScreenGui.Parent = game.CoreGui
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 ImageButton.Parent = ScreenGui
 ImageButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-ImageButton.BorderColor3 = Color3.fromRGB(255, 0, 0)
+ImageButton.BorderColor3 = Color3.fromRGB(255, 255, 255)
 ImageButton.Draggable = false
 ImageButton.Position = UDim2.new(0.08, 0, 0.06, 0)
 ImageButton.Size = UDim2.new(0, 50, 0, 50)
@@ -46,7 +43,6 @@ game:GetService("VirtualInputManager"):SendKeyEvent(true,127,false,game)
 game:GetService("VirtualInputManager"):SendKeyEvent(false,127,false,game)
 end)
 
-----------------------------------------------------------------------------------------------------------------------------------------------
 -- [ Create Tab ]
 
 local Tabs = {
@@ -59,13 +55,13 @@ local Tabs = {
     StatsEsp = Window:AddTab({ Title = "Tab Stats & Esp", Icon = "" }),wait(0.1),
     Teleport = Window:AddTab({ Title = "Tab Teleport", Icon = "" }),wait(0.1),
     StatusServer = Window:AddTab({ Title = "Tab Status & Server", Icon = "" }),wait(0.1),
+    Shop = Window:AddTab({ Title = "Tab Shop", Icon = "" }),wait(0.1),
     Setting = Window:AddTab({ Title = "Tab Setting", Icon = "" }),wait(0.1),
 }
 
 local Options = Fluent.Options
 do
 
-----------------------------------------------------------------------------------------------------------------------------------------------
 -- [ Anti Ban & Anti Afk ]
 
 _G.SafeFarm = true
@@ -134,7 +130,7 @@ spawn(function()
         end
     end
 end)
-function intiAppleHub() 
+function intiTinhLinhHub() 
 _G.antiscan = true
 getgenv().A = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib).wrapAttackAnimationAsync
 getgenv().B = require(game.Players.LocalPlayer.PlayerScripts.CombatFramework.Particle).play
@@ -211,7 +207,6 @@ if game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseT
 		until game.Players.LocalPlayer.Team ~= nil and game:IsLoaded()
 	end
 
-----------------------------------------------------------------------------------------------------------------------------------------------
 -- [ World Check ]
 
 if game.PlaceId == 2753915549 then
@@ -222,7 +217,6 @@ if game.PlaceId == 2753915549 then
         World3 = true
 end
 
-----------------------------------------------------------------------------------------------------------------------------------------------
 -- [ Quest Check ]
 
 function CheckQuest()
@@ -1628,7 +1622,6 @@ function CheckQuest()
     end
 end
 
-----------------------------------------------------------------------------------------------------------------------------------------------
 -- [ Misc ]
 
 function Hop()
@@ -2862,7 +2855,6 @@ if getgenv().NoDieEffect then
     end
 end
 
-----------------------------------------------------------------------------------------------------------------------------------------------
 -- [ Tab Farm ]
 
 local Section = Tabs.Farm:AddSection("Setting Farm")
@@ -4292,7 +4284,7 @@ end)
 
 spawn(function()
     pcall(function()
-        while wait(0) do
+        while task.wait() do
             if _G.Auto_Random_Bone then    
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Bones","Buy",1,1)
             end
@@ -4528,7 +4520,6 @@ spawn(function()
     end
 end)
 
-----------------------------------------------------------------------------------------------------------------------------------------------
 -- [ Tab Fruit & Raid ]
 
 local Section = Tabs.FruitRaid:AddSection("Devil Fruit")
@@ -5082,7 +5073,6 @@ spawn(function()
     end)
 end)
 
-----------------------------------------------------------------------------------------------------------------------------------------------
 -- [ Tab Misc ]
 
 local Section = Tabs.Misc:AddSection("Game Event")
@@ -5311,7 +5301,6 @@ spawn(function()
     end
 end)
 
-----------------------------------------------------------------------------------------------------------------------------------------------
 -- [ Tab Sea Event ]
 
 local Section = Tabs.Sea:AddSection("Sea Event")
@@ -5549,7 +5538,6 @@ game:GetService("RunService").RenderStepped:Connect(function()
     end
 end)
 
-----------------------------------------------------------------------------------------------------------------------------------------------
 -- [ Tab Item & Quest ]
 
 local Section = Tabs.Item:AddSection("Legendary Sword")
@@ -5642,7 +5630,6 @@ spawn(function()
 	end
 end)
 
-----------------------------------------------------------------------------------------------------------------------------------------------
 -- [ Tab Race ]
 
 local Section = Tabs.Race:AddSection("Templete Of Time")
@@ -5838,7 +5825,6 @@ spawn(function()
     end)
 end)
 
-----------------------------------------------------------------------------------------------------------------------------------------------
 -- [ Tab Stats & Esp ]
 
 local Section = Tabs.StatsEsp:AddSection("Stats")
@@ -5988,7 +5974,6 @@ spawn(function()
 	end
 end)
 
-----------------------------------------------------------------------------------------------------------------------------------------------
 -- [ Tab Teleport ]
 
 local Section = Tabs.Teleport:AddSection("Teleport Sea")
@@ -6224,7 +6209,6 @@ TeleportIsland:OnChanged(function(Value)
     StopTween(_G.TeleportIsland)
 end)
 
-----------------------------------------------------------------------------------------------------------------------------------------------
 -- [ Tab Status & Server ]
 
 local Section = Tabs.StatusServer:AddSection("Status Server")
@@ -6428,7 +6412,6 @@ Tabs.StatusServer:AddButton({
     end
 })
 
-----------------------------------------------------------------------------------------------------------------------------------------------
 -- [ Tab Setting ]
 
 local Section = Tabs.Setting:AddSection("Reduce Lag")
