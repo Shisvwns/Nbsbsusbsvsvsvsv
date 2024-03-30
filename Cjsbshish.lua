@@ -2860,14 +2860,7 @@ end
 -- [ Tab Farm ]
 
 local Section = Tabs.Farm:AddSection("Setting Farm")
-_G.SelectWeapon = "Melee"
-for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-    if v.ToolTip == "Melee" then
-        if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-            _G.SelectWeapon = v.Name
-        end
-    end
-end
+
 local SelectWeaponFarm = Tabs.Farm:AddDropdown("SelectWeaponFarm", {
 	Title = "Select Weapon",
 	Values = {"Melee","Sword","Gun","Blox Fruit"},
@@ -2875,17 +2868,51 @@ local SelectWeaponFarm = Tabs.Farm:AddDropdown("SelectWeaponFarm", {
 	Default = 1,
 })
 SelectWeaponFarm:OnChanged(function(Value)
-    checkrr = nil
-    for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-        if v.ToolTip == Value then
-            if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-                checkrr = v.Name
-            end
-        end
-    end
-    if checkrr ~= nil then
-        _G.SelectWeapon = checkrr
-    end
+
+task.spawn(function()
+	while wait() do
+		pcall(function()
+			if _G.SelectWeapon == "Melee" then
+				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+					if v.ToolTip == "Melee" then
+						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+							_G.SelectWeapon = v.Name
+						end
+					end
+				end
+			elseif _G.SelectWeapon == "Sword" then
+				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+					if v.ToolTip == "Sword" then
+						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+							_G.SelectWeapon = v.Name
+						end
+					end
+				end
+			elseif _G.SelectWeapon == "Gun" then
+				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+					if v.ToolTip == "Gun" then
+						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+							_G.SelectWeapon = v.Name
+						end
+					end
+				end
+			elseif _G.SelectWeapon == "Devil Fruit" then
+				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+					if v.ToolTip == "Blox Fruit" then
+						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+							_G.SelectWeapon = v.Name
+						end
+					end
+				end
+			else
+				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+					if v.ToolTip == _G.SelectWeapon then
+						_G.SelectWeapon = v.Name
+					end
+				end
+			end
+		end)
+	end
 end)
 
 local FastAttackFarm = Tabs.Farm:AddDropdown("FastAttackFarm", {
