@@ -2863,11 +2863,13 @@ local Section = Tabs.Farm:AddSection("Setting Farm")
 
 local SelectWeaponFarm = Tabs.Farm:AddDropdown("SelectWeaponFarm", {
 	Title = "Select Weapon",
-	Values = {"Melee","Sword","Gun","Blox Fruit"},
+	Values = {"Melee","Sword","Gun","Devil Fruit"},
 	Multi = false,
 	Default = 1,
 })
 SelectWeaponFarm:OnChanged(function(Value)
+    _G.SelectWeapon = Value
+end)
 
 spawn(function()
 	while task.wait() do
