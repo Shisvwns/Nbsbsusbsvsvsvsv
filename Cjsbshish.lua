@@ -2884,7 +2884,7 @@ SelectWeaponFarm:OnChanged(function(Value)
         end
     end
     if checkrr ~= nil then
-        _G.SelectWeapon = Value
+        _G.SelectWeapon = checkrr
     end
 end)
 
