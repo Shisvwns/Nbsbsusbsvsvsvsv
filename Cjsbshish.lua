@@ -4409,7 +4409,6 @@ spawn(function()
                         end
                     end
                 else
-                    SelectMag = false
                     if game:GetService("ReplicatedStorage"):FindFirstChild(_G.SelectMob) then
                         topos(game:GetService("ReplicatedStorage"):FindFirstChild(_G.SelectMob).HumanoidRootPart.CFrame * CFrame.new(5,10,2))
                     end
@@ -6419,179 +6418,147 @@ local X2Code = {
 
 local Section = Tabs.Shop:AddSection("Fighting Style")
 
-Tabs.Shop:AddButton({
-    Title = "Buy Black Leg",
-    Description = "",
-    Callback = function()
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyBlackLeg")
-    end
+SelectMelee = {
+	"Black Leg",
+	"Electro",
+	"Fishman Karate",
+	"Dragon Claw",
+	"SuperHuman",
+	"Death Step",
+	"Sharkman Karate",
+	"Electric Claw",
+	"Dragon Talon",
+	"GodHuman",
+	"Sanguine Art"
+}
+
+local BuyMelee = Tabs.Shop:AddDropdown("BuyMele", {
+	Title = "Select Fighting Style",
+	Values = SelectMelee,
+	Multi = false,
+	Default = 1,
 })
+BuyMelee:OnChanged(function(Value)
+    _G.SelectMelee = Value
+end)
 
 Tabs.Shop:AddButton({
-    Title = "Buy Electro",
+    Title = "Buy Fighting Style",
     Description = "",
     Callback = function()
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyElectro")
-    end
-})
-
-Tabs.Shop:AddButton({
-    Title = "Buy Fishman Karate",
-    Description = "",
-    Callback = function()
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyFishmanKarate")
-    end
-})
-
-Tabs.Shop:AddButton({
-    Title = "Buy Dragon Claw",
-    Description = "",
-    Callback = function()
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","DragonClaw","1")
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","DragonClaw","2")
-    end
-})
-
-Tabs.Shop:AddButton({
-    Title = "Buy SuperHuman",
-    Description = "",
-    Callback = function()
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySuperhuman")
-    end
-})
-
-Tabs.Shop:AddButton({
-    Title = "Buy Death Step",
-    Description = "",
-    Callback = function()
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyDeathStep")
-    end
-})
-
-Tabs.Shop:AddButton({
-    Title = "Buy Sharkman Karate",
-    Description = "",
-    Callback = function()
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySharkmanKarate",true)
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySharkmanKarate")
-    end
-})
-
-Tabs.Shop:AddButton({
-    Title = "Buy Electric Claw",
-    Description = "",
-    Callback = function()
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyElectricClaw")
-    end
-})
-
-Tabs.Shop:AddButton({
-    Title = "Buy Dragon Talon",
-    Description = "",
-    Callback = function()
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyDragonTalon")
-    end
-})
-
-Tabs.Shop:AddButton({
-    Title = "Buy God Human",
-    Description = "",
-    Callback = function()
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyGodhuman")
-    end
-})
-
-Tabs.Shop:AddButton({
-    Title = "Buy Sanguine Art",
-    Description = "",
-    Callback = function()
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySanguineArt", true)
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySanguineArt")
+        if _G.SelectMelee == "Black Leg" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyBlackLeg")
+        elseif _G.SelectMelee == "Electro" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyElectro")
+        elseif _G.SelectMelee == "Fishman Karate" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyFishmanKarate")
+        elseif _G.SelectMelee == "Dragon Claw" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","DragonClaw","1")
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","DragonClaw","2")
+        elseif _G.SelectMelee == "SuperHuman" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySuperhuman")
+        elseif _G.SelectMelee == "Death Step" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyDeathStep")
+        elseif _G.SelectMelee == "Sharkman Karate" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySharkmanKarate",true)
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySharkmanKarate")
+        elseif _G.SelectMelee == "Electric Claw" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyElectricClaw")
+        elseif _G.SelectMelee == "Dragon Talon" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyDragonTalon")
+        elseif _G.SelectMelee == "GodHuman" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyGodhuman")
+        elseif _G.SelectMelee == "Sanguine Art" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySanguineArt", true)
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySanguineArt")
+        end
     end
 })
 
 local Section = Tabs.Shop:AddSection("Abilities")
 
-Tabs.Shop:AddButton({
-    Title = "Buy Sky Jump [ $10,000 Beli ]",
-    Description = "",
-    Callback = function()
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyHaki","Geppo")
-    end
+SelectAbilities = {
+	"Sky Jump",
+	"Buso Haki",
+	"Soru",
+	"Observation Haki"
+}
+
+local BuyAbiliti = Tabs.Shop:AddDropdown("BuyAbili", {
+	Title = "Select Abilities",
+	Values = SelectAbilities,
+	Multi = false,
+	Default = 1,
 })
+BuyAbiliti:OnChanged(function(Value)
+    _G.SelectAbilities = Value
+end)
 
 Tabs.Shop:AddButton({
-    Title = "Buy Buso Haki [ $25,000 Beli ]",
+    Title = "Buy Abilities",
     Description = "",
     Callback = function()
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyHaki","Buso")
-    end
-})
-
-Tabs.Shop:AddButton({
-    Title = "Buy Soru [ $100,000 Beli ]",
-    Description = "",
-    Callback = function()
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyHaki","Soru")
-    end
-})
-
-Tabs.Shop:AddButton({
-    Title = "Buy Observation Haki [ $750,000 Beli ]",
-    Description = "",
-    Callback = function()
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("KenTalk","Buy")
+        if _G.SelectAbilities == "Sky Jump" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyHaki","Geppo")
+        elseif _G.SelectAbilities == "Buso Haki" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyHaki","Buso")
+        elseif _G.SelectAbilities == "Soru" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyHaki","Soru")
+        elseif _G.SelectAbilities == "Observation Haki" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("KenTalk","Buy")
+        end
     end
 })
 
 local Section = Tabs.Shop:AddSection("Other")
 
-Tabs.Shop:AddButton({
-    Title = "Buy Reroll Race [ $3,000 Fragments ]",
-    Description = "",
-    Callback = function()
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Reroll","1")
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Reroll","2")
-    end
+SelectOther = {
+	"Reroll Race",
+	"Reset Stats",
+	"Cyborg Race",
+	"Ghoul Race"
+}
+
+local BuyOther = Tabs.Shop:AddDropdown("BuyOth", {
+	Title = "Select Other Things",
+	Values = SelectOther,
+	Multi = false,
+	Default = 1,
 })
+BuyOther:OnChanged(function(Value)
+    _G.SelectOther = Value
+end)
 
 Tabs.Shop:AddButton({
-    Title = "Buy Reset Stats [ $2,500 Fragments ]",
+    Title = "Buy Other Things Selected",
     Description = "",
     Callback = function()
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Refund","1")
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Refund","2")
-    end
-})
-
-Tabs.Shop:AddButton({
-    Title = "Buy Cyborg Race [ $2,500 Fragments ]",
-    Description = "",
-    Callback = function()
-        local a = {
-            [1] = "CyborgTrainer",
-            [2] = "Buy"
-        }
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(a))
-    end
-})
-
-Tabs.Shop:AddButton({
-    Title = "Buy Ghoul Race [ $2,500 Fragments ]",
-    Description = "",
-    Callback = function()
-        local a = {
-            [1] = "Ectoplasm",
-            [2] = "BuyCheck",
-            [3] = 4
-        }
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(a))
-        local a = {
-            [1] = "Ectoplasm",
-            [2] = "Change",
-            [3] = 4
-        }
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(a))
+        if _G.SelectOther == "Reroll Race" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Reroll","1")
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Reroll","2")
+        elseif _G.SelectOther == "Reset Stats" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Refund","1")
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Refund","2")
+        elseif _G.SelectOther == "Cyborg Race" then
+            local a = {
+                [1] = "CyborgTrainer",
+                [2] = "Buy"
+            }
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(a))
+        elseif _G.SelectOther == "Ghoul Race" then
+            local a = {
+                [1] = "Ectoplasm",
+                [2] = "BuyCheck",
+                [3] = 4
+            }
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(a))
+            local a = {
+                [1] = "Ectoplasm",
+                [2] = "Change",
+                [3] = 4
+            }
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(a))
+        end
     end
 })
 
