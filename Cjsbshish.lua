@@ -18,7 +18,7 @@ local Window = Fluent:CreateWindow({
 -- [ Button ]
 
 if game.CoreGui:FindFirstChild("OpenClose") then
-    game.CoreGui:FindFirstChild("OpenClose"):Destroy()
+   game.CoreGui:FindFirstChild("OpenClose"):Destroy()
 end
 local ScreenGui1 = Instance.new("ScreenGui")
 local ImageButton1 = Instance.new("ImageButton")
@@ -2997,7 +2997,7 @@ function AttackHit()
     end
 end
 spawn(function()
-    while wait(0) do
+    while task.wait() do
         if _G.FastAttack then
             pcall(function()
                 repeat task.wait(_G.FastAttackDelay)
