@@ -1,3 +1,8 @@
+
+    end
+})
+
+end
 -- [ Ui Fluent ]
 
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
@@ -2909,9 +2914,7 @@ spawn(function()
 			else
 				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
 					if v.ToolTip == _G.SelectWeapon then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.SelectWeapon = v.Name
-						end
+						_G.SelectWeapon = v.Name
 					end
 				end
 			end
@@ -4239,7 +4242,7 @@ Tabs.Farm:AddButton({
     Title = "Refresh Boss",
     Description = "",
     Callback = function()
-       table.clear(bossCheck)
+       table.clear(Boss)
     end
 })
 
