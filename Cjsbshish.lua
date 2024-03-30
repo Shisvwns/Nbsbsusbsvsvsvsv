@@ -18,7 +18,7 @@ local Window = Fluent:CreateWindow({
 -- [ Button ]
 
 if game.CoreGui:FindFirstChild("OpenClose") then
-   game.CoreGui:FindFirstChild("OpenClose"):Destroy()
+    game.CoreGui:FindFirstChild("OpenClose"):Destroy()
 end
 local ScreenGui1 = Instance.new("ScreenGui")
 local ImageButton1 = Instance.new("ImageButton")
@@ -2906,6 +2906,14 @@ task.spawn(function()
 						end
 					end
 				end
+			else
+				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+					if v.ToolTip == _G.SelectWeapon then
+						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+							_G.SelectWeapon = v.Name
+						end
+					end
+				end
 			end
 		end)
 	end
@@ -2997,7 +3005,7 @@ function AttackHit()
     end
 end
 spawn(function()
-    while task.wait() do
+    while wait(0) do
         if _G.FastAttack then
             pcall(function()
                 repeat task.wait(_G.FastAttackDelay)
@@ -5558,15 +5566,6 @@ spawn(function()
     end)
 end)
 
-local EspMira = Tabs.Race:AddToggle("EspMira1", {Title = "Esp Mirage Island", Default = false })
-Options.EspMira1:SetValue(false)
-EspMira:OnChanged(function(Value)
-    MirageIslandESP = Value
-    while MirageIslandESP do wait()
-    	UpdateIslandMirageESP()
-	end
-end)
-
 local TweenGear = Tabs.Race:AddToggle("TweenGear1", {Title = "Tween Gear", Default = false })
 Options.TweenGear1:SetValue(false)
 TweenGear:OnChanged(function(Value)
@@ -5590,15 +5589,6 @@ spawn(function()
 			end
         end
     end)
-end)
-
-local EspGear = Tabs.Race:AddToggle("EspGear1", {Title = "Esp Gear", Default = false })
-Options.EspGear1:SetValue(false)
-EspGear:OnChanged(function(Value)
-    GearESP = Value
-    while GearESP do wait()
-    	UpdateGeaESP()
-	end
 end)
 
 local LockMoon = Tabs.Race:AddToggle("LockMoon1", {Title = "Lock Moon", Default = false })
@@ -5638,6 +5628,24 @@ spawn(function()
             end
         end
     end)
+end)
+
+local EspMira = Tabs.Race:AddToggle("EspMira1", {Title = "Esp Mirage Island", Default = false })
+Options.EspMira1:SetValue(false)
+EspMira:OnChanged(function(Value)
+    MirageIslandESP = Value
+    while MirageIslandESP do wait()
+    	UpdateIslandMirageESP()
+	end
+end)
+
+local EspGear = Tabs.Race:AddToggle("EspGear1", {Title = "Esp Gear", Default = false })
+Options.EspGear1:SetValue(false)
+EspGear:OnChanged(function(Value)
+    GearESP = Value
+    while GearESP do wait()
+    	UpdateGeaESP()
+	end
 end)
 
 -- [ Tab Stats & Esp ]
@@ -6257,7 +6265,7 @@ local CodeX2 = Tabs.Shop:AddDropdown("Codec2", {
 	Title = "Select Code x2 Exp",
 	Values = x2Code,
 	Multi = false,
-	Default = 1,
+	Default = "",
 })
 CodeX2:OnChanged(function(Value)
     _G.Codex2 = Value
@@ -6281,7 +6289,7 @@ local CodeStats = Tabs.Shop:AddDropdown("Hoho", {
 	Title = "Select Code Stats Refund",
 	Values = StatsCode,
 	Multi = false,
-	Default = 1,
+	Default = "",
 })
 CodeStats:OnChanged(function(Value)
     _G.CodeStatss = Value
@@ -6353,7 +6361,7 @@ local BuyMelee = Tabs.Shop:AddDropdown("BuyMele", {
 	Title = "Select Fighting Style",
 	Values = SelectMelee,
 	Multi = false,
-	Default = 0,
+	Default = "",
 })
 BuyMelee:OnChanged(function(Value)
     _G.SelectMelee = Value
@@ -6405,7 +6413,7 @@ local BuyAbiliti = Tabs.Shop:AddDropdown("BuyAbili", {
 	Title = "Select Abilities",
 	Values = SelectAbilities,
 	Multi = false,
-	Default = 1,
+	Default = "",
 })
 BuyAbiliti:OnChanged(function(Value)
     _G.SelectAbilities = Value
@@ -6440,7 +6448,7 @@ local BuyOther = Tabs.Shop:AddDropdown("BuyOth", {
 	Title = "Select Other Things",
 	Values = SelectOther,
 	Multi = false,
-	Default = 1,
+	Default = "",
 })
 BuyOther:OnChanged(function(Value)
     _G.SelectOther = Value
