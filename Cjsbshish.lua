@@ -2869,8 +2869,8 @@ local SelectWeaponFarm = Tabs.Farm:AddDropdown("SelectWeaponFarm", {
 })
 SelectWeaponFarm:OnChanged(function(Value)
 
-task.spawn(function()
-	while wait() do
+spawn(function()
+	while task.wait() do
 		pcall(function()
 			if _G.SelectWeapon == "Melee" then
 				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
@@ -2907,7 +2907,9 @@ task.spawn(function()
 			else
 				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
 					if v.ToolTip == _G.SelectWeapon then
-						_G.SelectWeapon = v.Name
+						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+							_G.SelectWeapon = v.Name
+						end
 					end
 				end
 			end
@@ -4235,12 +4237,7 @@ Tabs.Farm:AddButton({
     Title = "Refresh Boss",
     Description = "",
     Callback = function()
-       Fluent:Notify({
-            Title = "Tinh Linh Hub",
-            Content = "Wait Fix",
-            SubContent = "",
-            Duration = 5
-        })
+       table.clear(bossCheck)
     end
 })
 
