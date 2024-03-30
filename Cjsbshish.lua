@@ -5048,89 +5048,6 @@ spawn(function()
     end
 end)
 
-local Section = Tabs.Misc:AddSection("Chest")
-
-local ChonTem = Tabs.Misc:AddDropdown("ChonTem", {
-	Title = "Select Team",
-	Values = {"Pirates","Marines"},
-	Multi = false,
-	Default = "Pirates",
-})
-ChonTem:OnChanged(function(Value)
-    _G.SelectTem = Value
-end)
-
-local AutoChest = Tabs.Misc:AddToggle("AutoChest1", {Title = "Auto Farm Chest [ Tween ]", Default = false })
-Options.AutoChest1:SetValue(false)
-AutoChest:OnChanged(function(Value)
-    AutoFarmChest = Value
-    StopTween(AutoFarmChest)
-end)
-
-_G.MagnitudeAdd = 0
-spawn(function()
-	while wait() do 
-		if AutoFarmChest then
-			for i,v in pairs(game:GetService("Workspace"):GetChildren()) do 
-				if v.Name:find("Chest") then
-					if game:GetService("Workspace"):FindFirstChild(v.Name) then
-						if (v.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5000+_G.MagnitudeAdd then
-							repeat wait()
-								if game:GetService("Workspace"):FindFirstChild(v.Name) then
-									topos(v.CFrame)
-								end
-							until AutoFarmChest == false or not v.Parent
-							topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
-							_G.MagnitudeAdd = _G.MagnitudeAdd+1500
-							break
-						end
-					end
-				end
-			end
-		end
-	end
-end)
-
-local AutoChestB = Tabs.Misc:AddToggle("AutoChestB1", {Title = "Auto Farm Chest [ Bypass Tp ]", Default = false })
-Options.AutoChestB1:SetValue(false)
-AutoChestB:OnChanged(function(Value)
-    _G.ChestBypass = Value
-end)
-
-_G.MagnitudeAdd = 0
-spawn(function()
-	while wait() do 
-		if _G.ChestBypass then
-			for i,v in pairs(game:GetService("Workspace"):GetChildren()) do 
-				if v.Name:find("Chest") then
-					if game:GetService("Workspace"):FindFirstChild(v.Name) then
-						if (v.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5000+_G.MagnitudeAdd then
-							repeat wait()
-								if game:GetService("Workspace"):FindFirstChild(v.Name) then
-									TP3(v.CFrame)
-								end
-							until AutoFarmChest == false or not v.Parent
-							topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
-							_G.MagnitudeAdd = _G.MagnitudeAdd+1500
-							break
-						end
-					end
-				end
-			end
-		end
-	end
-end)
-
-spawn(function()
-    while task.wait() do
-        if _G.ChestBypass then
-            local ohString1 = "SetTeam"
-            local ohString2 = _G.SelectTem
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(ohString1, ohString2)
-        end
-    end
-end)
-
 local Section = Tabs.Misc:AddSection("Elite Hunter")
 
 local EliteStatus = Tabs.Misc:AddParagraph({
@@ -6436,7 +6353,7 @@ local BuyMelee = Tabs.Shop:AddDropdown("BuyMele", {
 	Title = "Select Fighting Style",
 	Values = SelectMelee,
 	Multi = false,
-	Default = 1,
+	Default = 0,
 })
 BuyMelee:OnChanged(function(Value)
     _G.SelectMelee = Value
