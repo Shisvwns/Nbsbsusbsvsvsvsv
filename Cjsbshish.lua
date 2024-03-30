@@ -2870,7 +2870,7 @@ for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
 end
 local SelectWeaponFarm = Tabs.Farm:AddDropdown("SelectWeaponFarm", {
 	Title = "Select Weapon",
-	Values = {"Melee","Sword","Blox Fruit","Gun"},
+	Values = {"Melee","Sword","Gun","Blox Fruit"},
 	Multi = false,
 	Default = 1,
 })
@@ -2884,7 +2884,7 @@ SelectWeaponFarm:OnChanged(function(Value)
         end
     end
     if checkrr ~= nil then
-        _G.SelectWeapon = checkrr
+        _G.SelectWeapon = Value
     end
 end)
 
@@ -6234,7 +6234,7 @@ local CodeX2 = Tabs.Shop:AddDropdown("Codec2", {
 	Title = "Select Code x2 Exp",
 	Values = x2Code,
 	Multi = false,
-	Default = 1,
+	Default = "",
 })
 CodeX2:OnChanged(function(Value)
     _G.Codex2 = Value
@@ -6258,7 +6258,7 @@ local CodeStats = Tabs.Shop:AddDropdown("Hoho", {
 	Title = "Select Code Stats Refund",
 	Values = StatsCode,
 	Multi = false,
-	Default = 1,
+	Default = "",
 })
 CodeStats:OnChanged(function(Value)
     _G.CodeStatss = Value
@@ -6330,7 +6330,7 @@ local BuyMelee = Tabs.Shop:AddDropdown("BuyMele", {
 	Title = "Select Fighting Style",
 	Values = SelectMelee,
 	Multi = false,
-	Default = 0,
+	Default = "",
 })
 BuyMelee:OnChanged(function(Value)
     _G.SelectMelee = Value
@@ -6382,7 +6382,7 @@ local BuyAbiliti = Tabs.Shop:AddDropdown("BuyAbili", {
 	Title = "Select Abilities",
 	Values = SelectAbilities,
 	Multi = false,
-	Default = 1,
+	Default = "",
 })
 BuyAbiliti:OnChanged(function(Value)
     _G.SelectAbilities = Value
@@ -6417,7 +6417,7 @@ local BuyOther = Tabs.Shop:AddDropdown("BuyOth", {
 	Title = "Select Other Things",
 	Values = SelectOther,
 	Multi = false,
-	Default = 1,
+	Default = "",
 })
 BuyOther:OnChanged(function(Value)
     _G.SelectOther = Value
