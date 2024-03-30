@@ -18,7 +18,7 @@ local Window = Fluent:CreateWindow({
 -- [ Button ]
 
 if game.CoreGui:FindFirstChild("OpenClose") then
-    game.CoreGui:FindFirstChild("OpenClose"):Destroy()
+   game.CoreGui:FindFirstChild("OpenClose"):Destroy()
 end
 local ScreenGui1 = Instance.new("ScreenGui")
 local ImageButton1 = Instance.new("ImageButton")
@@ -2860,63 +2860,32 @@ end
 -- [ Tab Farm ]
 
 local Section = Tabs.Farm:AddSection("Setting Farm")
-
+_G.SelectWeapon = "Melee"
+for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+    if v.ToolTip == "Melee" then
+        if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+            _G.SelectWeapon = v.Name
+        end
+    end
+end
 local SelectWeaponFarm = Tabs.Farm:AddDropdown("SelectWeaponFarm", {
 	Title = "Select Weapon",
-	Values = {"Melee","Sword","Devil Fruit","Gun"},
+	Values = {"Melee","Sword","Blox Fruit","Gun"},
 	Multi = false,
 	Default = 1,
 })
 SelectWeaponFarm:OnChanged(function(Value)
-    _G.SelectWeapon = Value
-end)
-
-task.spawn(function()
-	while wait() do
-		pcall(function()
-			if _G.SelectWeapon == "Melee" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Melee" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.SelectWeapon = v.Name
-						end
-					end
-				end
-			elseif _G.SelectWeapon == "Sword" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Sword" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.SelectWeapon = v.Name
-						end
-					end
-				end
-			elseif _G.SelectWeapon == "Gun" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Gun" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.SelectWeapon = v.Name
-						end
-					end
-				end
-			elseif _G.SelectWeapon == "Devil Fruit" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Blox Fruit" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.SelectWeapon = v.Name
-						end
-					end
-				end
-			else
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == _G.SelectWeapon then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.SelectWeapon = v.Name
-						end
-					end
-				end
-			end
-		end)
-	end
+    checkrr = nil
+    for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+        if v.ToolTip == Value then
+            if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+                checkrr = v.Name
+            end
+        end
+    end
+    if checkrr ~= nil then
+        _G.SelectWeapon = checkrr
+    end
 end)
 
 local FastAttackFarm = Tabs.Farm:AddDropdown("FastAttackFarm", {
@@ -3005,7 +2974,7 @@ function AttackHit()
     end
 end
 spawn(function()
-    while wait(0) do
+    while task.wait() do
         if _G.FastAttack then
             pcall(function()
                 repeat task.wait(_G.FastAttackDelay)
@@ -5566,6 +5535,15 @@ spawn(function()
     end)
 end)
 
+local EspMira = Tabs.Race:AddToggle("EspMira1", {Title = "Esp Mirage Island", Default = false })
+Options.EspMira1:SetValue(false)
+EspMira:OnChanged(function(Value)
+    MirageIslandESP = Value
+    while MirageIslandESP do wait()
+    	UpdateIslandMirageESP()
+	end
+end)
+
 local TweenGear = Tabs.Race:AddToggle("TweenGear1", {Title = "Tween Gear", Default = false })
 Options.TweenGear1:SetValue(false)
 TweenGear:OnChanged(function(Value)
@@ -5589,6 +5567,15 @@ spawn(function()
 			end
         end
     end)
+end)
+
+local EspGear = Tabs.Race:AddToggle("EspGear1", {Title = "Esp Gear", Default = false })
+Options.EspGear1:SetValue(false)
+EspGear:OnChanged(function(Value)
+    GearESP = Value
+    while GearESP do wait()
+    	UpdateGeaESP()
+	end
 end)
 
 local LockMoon = Tabs.Race:AddToggle("LockMoon1", {Title = "Lock Moon", Default = false })
@@ -5628,24 +5615,6 @@ spawn(function()
             end
         end
     end)
-end)
-
-local EspMira = Tabs.Race:AddToggle("EspMira1", {Title = "Esp Mirage Island", Default = false })
-Options.EspMira1:SetValue(false)
-EspMira:OnChanged(function(Value)
-    MirageIslandESP = Value
-    while MirageIslandESP do wait()
-    	UpdateIslandMirageESP()
-	end
-end)
-
-local EspGear = Tabs.Race:AddToggle("EspGear1", {Title = "Esp Gear", Default = false })
-Options.EspGear1:SetValue(false)
-EspGear:OnChanged(function(Value)
-    GearESP = Value
-    while GearESP do wait()
-    	UpdateGeaESP()
-	end
 end)
 
 -- [ Tab Stats & Esp ]
@@ -6265,7 +6234,7 @@ local CodeX2 = Tabs.Shop:AddDropdown("Codec2", {
 	Title = "Select Code x2 Exp",
 	Values = x2Code,
 	Multi = false,
-	Default = "",
+	Default = 1,
 })
 CodeX2:OnChanged(function(Value)
     _G.Codex2 = Value
@@ -6289,7 +6258,7 @@ local CodeStats = Tabs.Shop:AddDropdown("Hoho", {
 	Title = "Select Code Stats Refund",
 	Values = StatsCode,
 	Multi = false,
-	Default = "",
+	Default = 1,
 })
 CodeStats:OnChanged(function(Value)
     _G.CodeStatss = Value
@@ -6361,7 +6330,7 @@ local BuyMelee = Tabs.Shop:AddDropdown("BuyMele", {
 	Title = "Select Fighting Style",
 	Values = SelectMelee,
 	Multi = false,
-	Default = "",
+	Default = 0,
 })
 BuyMelee:OnChanged(function(Value)
     _G.SelectMelee = Value
@@ -6413,7 +6382,7 @@ local BuyAbiliti = Tabs.Shop:AddDropdown("BuyAbili", {
 	Title = "Select Abilities",
 	Values = SelectAbilities,
 	Multi = false,
-	Default = "",
+	Default = 1,
 })
 BuyAbiliti:OnChanged(function(Value)
     _G.SelectAbilities = Value
@@ -6448,7 +6417,7 @@ local BuyOther = Tabs.Shop:AddDropdown("BuyOth", {
 	Title = "Select Other Things",
 	Values = SelectOther,
 	Multi = false,
-	Default = "",
+	Default = 1,
 })
 BuyOther:OnChanged(function(Value)
     _G.SelectOther = Value
