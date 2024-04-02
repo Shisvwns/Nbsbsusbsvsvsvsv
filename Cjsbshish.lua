@@ -2911,20 +2911,6 @@ spawn(function()
 	end
 end)
 
-spawn(function()
-    pcall(function()
-        while wait() do
-            for i, v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
-                if v:IsA("Tool") then
-                    if v:FindFirstChild("RemoteFunctionShoot") then
-                        _G.SelectWeapon = v.Name
-                    end
-                end
-            end
-        end
-    end)
-end)
-
 local FastAttackFarm = Tabs.Farm:AddDropdown("FastAttackFarm", {
 	Title = "Select Fast Attack",
 	Values = {"0","0.1","0.15","0.155","0.16","0.165","0.17","0.175","0.18","0.185","10"},
