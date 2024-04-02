@@ -6576,11 +6576,11 @@ local Moon = Tabs.StatusServer:AddParagraph({
 
 function MoonTextureId()
     if World1 then
-        return game:GetService("Lighting").FantasySky.MoonTextureId
+        Moon:SetDesc(game:GetService("Lighting").FantasySky.MoonTextureId)
     elseif World2 then
-        return game:GetService("Lighting").FantasySky.MoonTextureId
+        Moon:SetDesc(game:GetService("Lighting").FantasySky.MoonTextureId)
     elseif World3 then
-        return game:GetService("Lighting").Sky.MoonTextureId
+        Moon:SetDesc(game:GetService("Lighting").Sky.MoonTextureId)
     end
 end
 
@@ -6602,7 +6602,7 @@ function CheckMoon()
             cofullmoonkothangbeo = "Next Night"
         end
     end
-    return cofullmoonkothangbeo
+    Moon:SetDesc(cofullmoonkothangbeo)
 end
 
 function function7()
@@ -6614,11 +6614,11 @@ function function7()
     else
         GameTime = "Day"
     end
-    return GameTime
+    Moon:SetDesc(GameTime)
 end
 
 function function6()
-    return math.floor(game.Lighting.ClockTime)
+    Moon:SetDesc(math.floor(game.Lighting.ClockTime))
 end
 
 function getServerTime()
@@ -6626,7 +6626,7 @@ function getServerTime()
     RealTime = tostring(game.Lighting.ClockTime)
     RealTimeTable = RealTime:split(".")
     Minute, Second = RealTimeTable[1], tonumber(0 + tonumber(RealTimeTable[2] / 100)) * 60
-    return Minute, Second
+    Moon:SetDesc(Minute, Second)
 end
 
 function function8()
@@ -6650,7 +6650,7 @@ function function8()
 end
 
 function FullMoobCheck()
- return function8()
+Moon:SetDesc(function8())
 end
 
 local KillCake = Tabs.StatusServer:AddParagraph({
