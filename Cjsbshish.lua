@@ -1,3 +1,8 @@
+
+    end
+})
+
+end
 -- [ Ui Fluent ]
 
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
@@ -2863,7 +2868,7 @@ local Section = Tabs.Farm:AddSection("Setting Farm")
 
 local SelectWeaponFarm = Tabs.Farm:AddDropdown("SelectWeaponFarm", {
 	Title = "Select Weapon",
-	Values = {"Melee","Sword","Gun","Devil Fruit"},
+	Values = {"Melee","Sword","Gun","Blox Fruit"},
 	Multi = false,
 	Default = 1,
 })
@@ -2898,7 +2903,7 @@ spawn(function()
 						end
 					end
 				end
-			elseif _G.SelectWeapon == "Devil Fruit" then
+			elseif _G.SelectWeapon == "Blox Fruit" then
 				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
 					if v.ToolTip == "Blox Fruit" then
 						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
@@ -2909,6 +2914,20 @@ spawn(function()
 			end
 		end)
 	end
+end)
+
+spawn(function()
+    pcall(function()
+        while wait() do
+            for i, v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
+                if v:IsA("Tool") then
+                    if v:FindFirstChild("RemoteFunctionShoot") then
+                        _G.SelectWeapon = v.Name
+                    end
+                end
+            end
+        end
+    end)
 end)
 
 local FastAttackFarm = Tabs.Farm:AddDropdown("FastAttackFarm", {
@@ -5228,7 +5247,7 @@ spawn(function()
     end)
 end)
 
-local Observationv2 = Tabs.Misc:AddToggle("Observationv21", {Title = "Auto Upgrade Observation V2", Default = false })
+local Observationv2 = Tabs.Misc:AddToggle("Observationv21", {Title = "Auto Upgrade Observation Haki V2", Default = false })
 Options.Observationv21:SetValue(false)
 Observationv2:OnChanged(function(Value)
     _G.AutoObservationv2 = Value
@@ -5546,7 +5565,7 @@ BuyKiem:OnChanged(function(Value)
 end)
 
 spawn(function()
-    while wait(0) do
+    while task.wait() do
         if _G.AutoBuyLegendarySword then
             pcall(function()
                 local args = {
@@ -5595,7 +5614,7 @@ BuyHaki:OnChanged(function(Value)
 end)
 
 spawn(function()
-	while wait(0) do
+	while task.wait() do
 		if _G.Auto_Buy_Enchancement then
 			local args = {
 				[1] = "ColorsDealer",
@@ -6943,6 +6962,59 @@ Tabs.Shop:AddButton({
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyHaki","Soru")
         elseif _G.SelectAbilities == "Observation Haki" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("KenTalk","Buy")
+        end
+    end
+})
+
+local Section = Tabs.Shop:AddSection("Sword")
+
+SelectSword = {
+	"Cutlass",
+    "Katana",
+    "Iron Mace",
+    "Dual Katana",
+    "Triple Katana",
+    "Pipe",
+    "Dual-Headed Blade",
+    "Bisento",
+    "Soul Cane",
+    "Pole V2"
+}
+
+local BuySword = Tabs.Shop:AddDropdown("BuySwor", {
+	Title = "Select Sword",
+	Values = SelectSword,
+	Multi = false,
+	Default = "",
+})
+BuySword:OnChanged(function(Value)
+    _G.SelectSword = Value
+end)
+
+Tabs.Shop:AddButton({
+    Title = "Buy Sword",
+    Description = "",
+    Callback = function()
+        if _G.SelectSword == "Cutlass" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Cutlass")
+        elseif _G.SelectSword == "Katana" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Katana")
+        elseif _G.SelectSword == "Iron Mace" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Iron Mace")
+        elseif _G.SelectSword == "Dual Katana" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Duel Katana")
+        elseif _G.SelectSword == "Triple Katana" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Triple Katana")
+        elseif _G.SelectSword == "Pipe" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Pipe")
+        elseif _G.SelectSword == "Dual-Headed Blade" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Dual-Headed Blade")
+        elseif _G.SelectSword == "Bisento" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Bisento")
+        elseif _G.SelectSword == "Soul Cane" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Soul Cane")
+        elseif _G.SelectSword == "Pole V2" then
+            game.ReplicatedStorage.Remotes.CommF_:InvokeServer("ThunderGodTalk")
         end
     end
 })
