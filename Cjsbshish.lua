@@ -6594,15 +6594,15 @@ function CheckMoon()
     moon2 = "http://www.roblox.com/asset/?id=9709139597"
     moon1 = "http://www.roblox.com/asset/?id=9709135895"
     moonreal = MoonTextureId()
-    cofullmoonk = "Bad Moon"
+    cofullmoonkothangbeo = "Bad Moon"
     if moonreal == moon5 or moonreal == moon4 then
         if moonreal == moon5 then
-            cofullmoonk = "Full Moon"
+            cofullmoonkothangbeo = "Full Moon"
         elseif moonreal == moon4 then
-            cofullmoonk = "Next Night"
+            cofullmoonkothangbeo = "Next Night"
         end
     end
-    return cofullmoonk
+    return cofullmoonkothangbeo
 end
 
 function function7()
@@ -6616,6 +6616,7 @@ function function7()
     end
     return GameTime
 end
+
 function function6()
     return math.floor(game.Lighting.ClockTime)
 end
@@ -6632,20 +6633,20 @@ function function8()
     local c = game.Lighting
     local ao = c.ClockTime
     if CheckMoon() == "Full Moon" and ao <= 5 then
-        return tostring(function6()) .. " ( Will End Moon In " .. math.floor(5 - ao) .. " Minutes )"
+        Moon:SetDesc(tostring(function6()) .. " ( Will End Moon In " .. math.floor(5 - ao) .. " Minutes )")
     elseif CheckMoon() == "Full Moon" and (ao > 5 and ao < 12) then
-        Moon:SetDesc(function6()) .. " ( Fake Moon )"
+        Moon:SetDesc(tostring(function6()) .. " ( Fake Moon )"
     elseif CheckMoon() == "Full Moon" and (ao > 12 and ao < 18) then
-        Moon:SetDesc(function6()) .. " ( Will Full Moon In " .. math.floor(18 - ao) .. " Minutes )"
+        Moon:SetDesc(tostring(function6()) .. " ( Will Full Moon In " .. math.floor(18 - ao) .. " Minutes )")
     elseif CheckMoon() == "Full Moon" and (ao > 18 and ao <= 24) then
-        Moon:SetDesc(function6()) .. " ( Will End Moon In " .. math.floor(24 + 6 - ao) .. " Minutes )"
+        Moon:SetDesc(tostring(function6()) .. " ( Will End Moon In " .. math.floor(24 + 6 - ao) .. " Minutes )")
     end
     if CheckMoon() == "Next Night" and ao < 12 then
-        Moon:SetDesc(function6()) .. " ( Will Full Moon In " .. math.floor(18 - ao) .. " Minutes )"
+        return tostring(function6()) .. " ( Will Full Moon In " .. math.floor(18 - ao) .. " Minutes )")
     elseif CheckMoon() == "Next Night" and ao > 12 then
-        Moon:SetDesc(function6()) .. " ( Will Full Moon In " .. math.floor(18 + 12 - ao) .. " Minutes )"
+        Moon:SetDesc(tostring(function6()) .. " ( Will Full Moon In " .. math.floor(18 + 12 - ao) .. " Minutes )")
     end
-    Moon:SetDesc(function6())
+    Moon:SetDesc(tostring(function6()))
 end
 
 function FullMoobCheck()
