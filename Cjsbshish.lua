@@ -5880,6 +5880,82 @@ SoulH:OnChanged(function(Value)
     _G.soulGuitarhop = Value
 end)
 
+local Section = Tabs.Item:AddSection("Cursed Dual Katana")
+
+local Yama = Tabs.Item:AddToggle("Yama1", {Title = "Auto Get Yama", Default = false })
+Options.Yama1:SetValue(false)
+Yama:OnChanged(function(Value)
+    _G.AutoYama = Value
+    StopTween(_G.AutoYama)
+end)
+
+spawn(function()
+    while wait() do
+        if _G.AutoYama then
+            if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter","Progress") >= 30 then
+                repeat wait(.1)
+                    fireclickdetector(game:GetService("Workspace").Map.Waterfall.SealedKatana.Handle.ClickDetector)
+                until game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Yama") or not _G.AutoYama
+            end
+        end
+    end
+end)
+
+local Tushita = Tabs.Item:AddToggle("Tushita1", {Title = "Auto Get Tushita", Default = false })
+Options.Tushita1:SetValue(false)
+Tushita:OnChanged(function(Value)
+    _G.Autotushita = Value
+    StopTween(_G.Autotushita)
+end)
+
+local TushitaPos = CFrame.new(-10238.875976563, 389.7912902832, -9549.7939453125)
+spawn(function()
+    while wait() do
+        if  _G.Autotushita and World3 then
+            pcall(function()
+                if game:GetService("Workspace").Enemies:FindFirstChild("Longma") then
+                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        if v.Name == "Longma" then
+                            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                                repeat task.wait()
+                                    AutoHaki()
+                                    EquipWeapon(_G.SelectWeapon)
+                                    v.HumanoidRootPart.CanCollide = false
+                                    v.Humanoid.WalkSpeed = 0
+                                    v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
+                                    game:GetService("VirtualUser"):CaptureController()
+                                    game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
+                                    sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",math.huge)
+                                until not  _G.Autotushita or not v.Parent or v.Humanoid.Health <= 0
+                            end
+                        end
+                    end
+                else
+                if BypassTP then
+                if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - TushitaPos.Position).Magnitude > 1500 then
+                BTP(TushitaPos)
+                elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - TushitaPos.Position).Magnitude < 1500 then
+                topos(TushitaPos)
+                end
+            else
+                topos(TushitaPos)
+            end
+                UnEquipWeapon(_G.SelectWeapon)
+                topos(CFrame.new(-10238.875976563, 389.7912902832, -9549.7939453125))
+                    if game:GetService("ReplicatedStorage"):FindFirstChild("Longma") then
+                        topos(game:GetService("ReplicatedStorage"):FindFirstChild("Longma").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                    else
+                        if  _G.Autotushitahop then
+                            Hop()
+                        end
+                    end
+                end
+            end)
+        end
+    end
+end)
+
 local Section = Tabs.Item:AddSection("Other")
 
 local Mu = Tabs.Item:AddToggle("Mu1", {Title = "Auto Take Musketeer Hat", Default = false })
@@ -6570,88 +6646,33 @@ spawn(function()
 end)
 
 local Moon = Tabs.StatusServer:AddParagraph({
-    Title = "Full Moon Status",
+    Title = "Moon Status",
     Content = "..."
 })
 
-function MoonTextureId()
-    if World1 then
-        Moon:SetDesc(game:GetService("Lighting").FantasySky.MoonTextureId)
-    elseif World2 then
-        Moon:SetDesc(game:GetService("Lighting").FantasySky.MoonTextureId)
-    elseif World3 then
-        Moon:SetDesc(game:GetService("Lighting").Sky.MoonTextureId)
-    end
-end
-
-function CheckMoon()
-    moon8 = "http://www.roblox.com/asset/?id=9709150401"
-    moon7 = "http://www.roblox.com/asset/?id=9709150086"
-    moon6 = "http://www.roblox.com/asset/?id=9709149680"
-    moon5 = "http://www.roblox.com/asset/?id=9709149431"
-    moon4 = "http://www.roblox.com/asset/?id=9709149052"
-    moon3 = "http://www.roblox.com/asset/?id=9709143733"
-    moon2 = "http://www.roblox.com/asset/?id=9709139597"
-    moon1 = "http://www.roblox.com/asset/?id=9709135895"
-    moonreal = MoonTextureId()
-    cofullmoonkothangbeo = "Bad Moon"
-    if moonreal == moon5 or moonreal == moon4 then
-        if moonreal == moon5 then
-            cofullmoonkothangbeo = "Full Moon"
-        elseif moonreal == moon4 then
-            cofullmoonkothangbeo = "Next Night"
+spawn(function()
+    while wait() do
+        if game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709150401" then
+            Moon:SetDesc("Moon: 🌒 25% | Bad Moon")
+        elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709150086" then
+            Moon:SetDesc("Moon: 🌓 50% | Bad Moon")
+        elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709149680" then
+            Moon:SetDesc("Moon: 🌔 75% | Bad Moon")
+        elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709149431" then
+            Moon:SetDesc("Moon: 🌕 100% | Full Moon")
+        elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709149052" then
+            Moon:SetDesc("Moon: 🌖 75% | Next Night Will Be Full Moon")
+        elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709143733" then
+            Moon:SetDesc("Moon: 🌗 50% | 1 More Nights Will Be Full Moon")
+        elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709139597" then
+            Moon:SetDesc("Moon: 🌘 25% | 2 More Nights Will Be Full Moon")
+        elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709135895" then
+            Moon:SetDesc("Moon: 🌑 0% | 3 More Nights Will Be Full Moon")
+        else
+            Moon:SetDesc("Moon: 🌑 0% | Please Come To Third Sea")
         end
     end
-    Moon:SetDesc(cofullmoonkothangbeo)
-end
-
-function function7()
-    GameTime = "Error"
-    local c = game.Lighting
-    local ao = c.ClockTime
-    if ao >= 18 or ao < 5 then
-        GameTime = "Night"
-    else
-        GameTime = "Day"
-    end
-    Moon:SetDesc(GameTime)
-end
-
-function function6()
-    Moon:SetDesc(math.floor(game.Lighting.ClockTime))
-end
-
-function getServerTime()
-    RealTime = tostring(math.floor(game.Lighting.ClockTime * 100) / 100)
-    RealTime = tostring(game.Lighting.ClockTime)
-    RealTimeTable = RealTime:split(".")
-    Minute, Second = RealTimeTable[1], tonumber(0 + tonumber(RealTimeTable[2] / 100)) * 60
-    Moon:SetDesc(Minute, Second)
-end
-
-function function8()
-    local c = game.Lighting
-    local ao = c.ClockTime
-    if CheckMoon() == "Full Moon" and ao <= 5 then
-        Moon:SetDesc(tostring(function6()) .. " ( Will End Moon In " .. math.floor(5 - ao) .. " Minutes )")
-    elseif CheckMoon() == "Full Moon" and (ao > 5 and ao < 12) then
-        Moon:SetDesc(tostring(function6()) .. " ( Fake Moon )"
-    elseif CheckMoon() == "Full Moon" and (ao > 12 and ao < 18) then
-        Moon:SetDesc(tostring(function6()) .. " ( Will Full Moon In " .. math.floor(18 - ao) .. " Minutes )")
-    elseif CheckMoon() == "Full Moon" and (ao > 18 and ao <= 24) then
-        Moon:SetDesc(tostring(function6()) .. " ( Will End Moon In " .. math.floor(24 + 6 - ao) .. " Minutes )")
-    end
-    if CheckMoon() == "Next Night" and ao < 12 then
-        return tostring(function6()) .. " ( Will Full Moon In " .. math.floor(18 - ao) .. " Minutes )")
-    elseif CheckMoon() == "Next Night" and ao > 12 then
-        Moon:SetDesc(tostring(function6()) .. " ( Will Full Moon In " .. math.floor(18 + 12 - ao) .. " Minutes )")
-    end
-    Moon:SetDesc(tostring(function6()))
-end
-
-function FullMoobCheck()
-Moon:SetDesc(function8())
-end
+end)
 
 local KillCake = Tabs.StatusServer:AddParagraph({
     Title = "Cake Prince Status",
@@ -7201,13 +7222,33 @@ Tabs.Setting:AddButton({
     end
 })
 
-local Section = Tabs.Setting:AddSection("Misc")
+local Section = Tabs.Setting:AddSection("Other")
+
+local RejoinSv = Tabs.Setting:AddToggle("RejoinS", {Title = "Auto Rejoin When Disconnect", Default = false })
+Options.RejoinS:SetValue(false)
+RejoinSv:OnChanged(function(Value)
+    _G.AutoRejoin = Value
+end)
+
+spawn(function()
+	while wait() do
+		if _G.AutoRejoin then
+			getgenv().rejoin = game:GetService("CoreGui").RobloxPromptGui.promptOverlay.ChildAdded:Connect(function(child)
+				if child.Name == 'ErrorPrompt' and child:FindFirstChild('MessageArea') and child.MessageArea:FindFirstChild("ErrorFrame") then
+					game:GetService("TeleportService"):Teleport(game.PlaceId)
+				end
+			 end)
+		end
+	end
+end)
 
 local BypassTele = Tabs.Setting:AddToggle("BypassTel", {Title = "Bypass Tp", Default = false })
 Options.BypassTel:SetValue(false)
 BypassTele:OnChanged(function(Value)
     BypassTP = Value
 end)
+
+local Section = Tabs.Setting:AddSection("Misc")
 
 Tabs.Setting:AddButton({
     Title = "Show Item",
