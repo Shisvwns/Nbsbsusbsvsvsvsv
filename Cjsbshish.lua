@@ -195,14 +195,8 @@ for _, player in ipairs(Players:GetPlayers()) do
     end
 end
 
-if _G.TeamSe == "Pirates" then
-    game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.TextButton.Activated
-elseif _G.TeamSe == "Marines" then
-    game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.TextButton.Activated
-end
-
 repeat wait() until game:IsLoaded()
-if game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseTeam")  then
+if game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseTeam") then
 	repeat wait()
 		if game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Main").ChooseTeam.Visible == true then
 			if _G.Team == "Pirates" then
@@ -213,13 +207,8 @@ if game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseT
 				for i, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Marines.Frame.TextButton.Activated)) do                                                                                                
 					v.Function()
 				end
-			else
-				for i, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.TextButton.Activated)) do                                                                                                
-					v.Function()
-				end
 			end
 		end
-	until game.Players.LocalPlayer.Team ~= nil and game:IsLoaded()
 end
 
 -- [ World Check ]
