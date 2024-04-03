@@ -195,6 +195,12 @@ for _, player in ipairs(Players:GetPlayers()) do
     end
 end
 
+if _G.TeamSe == "Pirates" then
+    game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.TextButton.Activated
+elseif _G.TeamSe == "Marines" then
+    game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.TextButton.Activated
+end
+
 repeat wait() until game:IsLoaded()
 if game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseTeam")  then
 	repeat wait()
@@ -7672,7 +7678,7 @@ local Tem = Tabs.Setting:AddDropdown("Temm", {
 	Default = "Pirates",
 })
 Tem:OnChanged(function(Value)
-    _G.Team = Value
+    _G.TeamSe = Value
 end)
 
 local RejoinSv = Tabs.Setting:AddToggle("RejoinS", {Title = "Auto Rejoin When Disconnect", Default = true })
