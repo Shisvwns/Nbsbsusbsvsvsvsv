@@ -209,6 +209,7 @@ if game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseT
 				end
 			end
 		end
+	until game.Players.LocalPlayer.Team ~= nil and game:IsLoaded()
 end
 
 -- [ World Check ]
@@ -7667,7 +7668,7 @@ local Tem = Tabs.Setting:AddDropdown("Temm", {
 	Default = "Pirates",
 })
 Tem:OnChanged(function(Value)
-    _G.TeamSe = Value
+    _G.Team = Value
 end)
 
 local RejoinSv = Tabs.Setting:AddToggle("RejoinS", {Title = "Auto Rejoin When Disconnect", Default = true })
