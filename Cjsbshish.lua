@@ -66,6 +66,13 @@ do
 
 -- [ Anti Ban & Anti Afk ]
 
+Fluent:Notify({
+    Title = "Tinh Linh Hub",
+    Content = "Loading Script...",
+    SubContent = "",
+    Duration = 5
+})
+
 _G.SafeFarm = true
 assert(getrawmetatable)
     grm = getrawmetatable(game)
@@ -190,24 +197,24 @@ end
 
 repeat wait() until game:IsLoaded()
 if game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseTeam")  then
-		repeat wait()
-			if game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Main").ChooseTeam.Visible == true then
-				if _G.Team == "Pirate" then
-					for i, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.TextButton.Activated)) do                                                                                                
-						v.Function()
-					end
-				elseif _G.Team == "Marine" then
-					for i, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Marines.Frame.TextButton.Activated)) do                                                                                                
-						v.Function()
-					end
-				else
-					for i, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.TextButton.Activated)) do                                                                                                
-						v.Function()
-					end
+	repeat wait()
+		if game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Main").ChooseTeam.Visible == true then
+			if _G.Team == "Pirates" then
+				for i, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.TextButton.Activated)) do                                                                                                
+					v.Function()
+				end
+			elseif _G.Team == "Marines" then
+				for i, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Marines.Frame.TextButton.Activated)) do                                                                                                
+					v.Function()
+				end
+			else
+				for i, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.TextButton.Activated)) do                                                                                                
+					v.Function()
 				end
 			end
-		until game.Players.LocalPlayer.Team ~= nil and game:IsLoaded()
-	end
+		end
+	until game.Players.LocalPlayer.Team ~= nil and game:IsLoaded()
+end
 
 -- [ World Check ]
 
@@ -7658,6 +7665,16 @@ Tabs.Setting:AddButton({
 
 local Section = Tabs.Setting:AddSection("Other")
 
+local Tem = Tabs.Setting:AddDropdown("Temm", {
+	Title = "Select Team",
+	Values = {"Pirates","Marines"},
+	Multi = false,
+	Default = "Pirates",
+})
+Tem:OnChanged(function(Value)
+    _G.Team = Value
+end)
+
 local RejoinSv = Tabs.Setting:AddToggle("RejoinS", {Title = "Auto Rejoin When Disconnect", Default = true })
 Options.RejoinS:SetValue(false)
 RejoinSv:OnChanged(function(Value)
@@ -7690,6 +7707,13 @@ Tabs.Setting:AddButton({
     Callback = function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/HuyLocDz/ShowItem/main/ShowItem.lua"))()
     end
+})
+
+Fluent:Notify({
+    Title = "Tinh Linh Hub",
+    Content = "Script Loaded Successfully !",
+    SubContent = "",
+    Duration = 5
 })
 
 end
