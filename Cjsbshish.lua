@@ -4510,6 +4510,8 @@ spawn(function()
     end
 end)
 
+local Section = Tabs.Farm:AddSection("Material")
+
 if World1 then
     MaterialList = {"Scrap Metal","Leather","Angel Wings","Magma Ore","Fish Tail"}
 elseif World2 then
@@ -4549,7 +4551,7 @@ spawn(function()
                                     AutoHaki()
                                     StartMagnet = true
                                     EquipWeapon(_G.SelectWeapon)
-                                    Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
                                     v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
                                     v.HumanoidRootPart.Transparency = 1
                                     v.Humanoid.JumpPower = 0
