@@ -1627,6 +1627,102 @@ function CheckQuest()
     end
 end
 
+-- [ Material ]
+
+function MaterialMon()
+    if SelectMaterial == "Radioactive Material" then
+        MMon = "Factory Staff"
+        MPos = CFrame.new(295,73,-56)
+        SP = "Default"
+    elseif SelectMaterial == "Mystic Droplet" then
+        MMon = "Water Fighter"
+        MPos = CFrame.new(-3385,239,-10542)
+        SP = "Default"
+    elseif SelectMaterial == "Magma Ore" then
+    if World1 then
+        MMon = "Military Spy"
+        MPos = CFrame.new(-5815,84,8820)
+        SP = "Default"
+    elseif World2 then
+        MMon = "Magma Ninja"
+        MPos = CFrame.new(-5428,78,-5959)
+        SP = "Default"
+    end
+    elseif SelectMaterial == "Angel Wings" then
+        MMon = "God's Guard"
+        MPos = CFrame.new(-4698,845,-1912)
+        SP = "Default"
+    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(-7859.09814, 5544.19043, -381.476196)).Magnitude >= 5000 then
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-7859.09814, 5544.19043, -381.476196))
+    end
+    elseif SelectMaterial == "Leather" then
+    if World1 then
+        MMon = "Brute"
+        MPos = CFrame.new(-1145,15,4350)
+        SP = "Default"
+    elseif World2 then
+        MMon = "Marine Captain"
+        MPos = CFrame.new(-2010.5059814453125, 73.00115966796875, -3326.620849609375)
+        SP = "Default"
+    elseif World3 then
+        MMon = "Jungle Pirate"
+        MPos = CFrame.new(-11975.78515625, 331.7734069824219, -10620.0302734375)
+        SP = "Default"
+    end
+    elseif SelectMaterial == "Scrap Metal" then
+    if World1 then
+        MMon = "Brute"
+        MPos = CFrame.new(-1145,15,4350)
+        SP = "Default"
+    elseif World1 then
+        MMon = "Swan Pirate"
+        MPos = CFrame.new(878,122,1235)
+        SP = "Default"
+    elseif World3 then
+        MMon = "Jungle Pirate"
+        MPos = CFrame.new(-12107,332,-10549)
+        SP = "Default"
+    end
+    elseif SelectMaterial == "Fish Tail" then
+    if World3 then
+        MMon = "Fishman Raider"
+        MPos = CFrame.new(-10993,332,-8940)
+        SP = "Default"
+    elseif World1 then
+        MMon = "Fishman Warrior"
+        MPos = CFrame.new(61123,19,1569)
+        SP = "Default"
+    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(61163.8515625, 5.342342376708984, 1819.7841796875)).Magnitude >= 17000 then
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(61163.8515625, 5.342342376708984, 1819.7841796875))
+    end
+    end
+    elseif SelectMaterial == "Demonic Wisp" then
+        MMon = "Demonic Soul"
+        MPos = CFrame.new(-9507,172,6158)
+        SP = "Default"
+    elseif SelectMaterial == "Vampire Fang" then
+        MMon = "Vampire"
+        MPos = CFrame.new(-6033,7,-1317)
+        SP = "Default"
+    elseif SelectMaterial == "Conjured Cocoa" then
+        MMon = "Chocolate Bar Battler"
+        MPos = CFrame.new(620.6344604492188,78.93644714355469, -12581.369140625)
+        SP = "Default"
+    elseif SelectMaterial == "Dragon Scale" then
+        MMon = "Dragon Crew Archer"
+        MPos = CFrame.new(6594,383,139)
+        SP = "Default"
+    elseif SelectMaterial == "Gunpowder" then
+        MMon = "Pistol Billionaire"
+        MPos = CFrame.new(-469,74,5904)
+        SP = "Default"
+    elseif SelectMaterial == "Mini Tusk" then
+        MMon = "Mythological Pirate"
+        MPos = CFrame.new(-13545,470,-6917)
+        SP = "Default"
+    end
+end
+
 -- [ Misc ]
 
 function Hop()
@@ -4407,6 +4503,73 @@ spawn(function()
                 else
                     if game:GetService("ReplicatedStorage"):FindFirstChild(_G.SelectMob) then
                         topos(game:GetService("ReplicatedStorage"):FindFirstChild(_G.SelectMob).HumanoidRootPart.CFrame * CFrame.new(5,10,2))
+                    end
+                end
+            end)
+        end
+    end
+end)
+
+if World1 then
+    MaterialList = {"Scrap Metal","Leather","Angel Wings","Magma Ore","Fish Tail"}
+elseif World2 then
+    MaterialList = {"Scrap Metal","Leather","Radioactive Material","Mystic Droplet","Magma Ore","Vampire Fang"}
+elseif World3 then
+    MaterialList = {"Scrap Metal","Leather","Demonic Wisp","Conjured Cocoa","Dragon Scale","Gunpowder","Fish Tail","Mini Tusk"}
+end
+
+local Mater = Tabs.Farm:AddDropdown("Material", {
+	Title = "Select Material",
+	Values = MaterialList,
+	Multi = false,
+	Default = "",
+})
+Mater:OnChanged(function(Value)
+    SelectMaterial = Value
+end)
+
+local Material = Tabs.Farm:AddToggle("Material1", {Title = "Auto Farm Material", Default = false })
+Options.Material1:SetValue(false)
+Material:OnChanged(function(Value)
+    _G.AutoMaterial = Value
+    StopTween(_G.AutoMaterial)
+end)
+
+spawn(function()
+    while wait() do
+        if _G.AutoMaterial then
+            pcall(function()
+                MaterialMon(SelectMaterial)
+                topos(MPos)
+                if game:GetService("Workspace").Enemies:FindFirstChild(MMon) then
+                    for i,v in pairs (game.Workspace.Enemies:GetChildren()) do
+                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                            if v.Name == MMon then
+                                repeat task.wait()
+                                    AutoHaki()
+                                    StartMagnet = true
+                                    EquipWeapon(_G.SelectWeapon)
+                                    Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
+                                    v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                                    v.HumanoidRootPart.Transparency = 1
+                                    v.Humanoid.JumpPower = 0
+                                    v.Humanoid.WalkSpeed = 0
+                                    v.HumanoidRootPart.CanCollide = false
+                                    FarmPos = v.HumanoidRootPart.CFrame
+                                    MonFarm = v.Name
+                                    Click()
+                                until not _G.AutoMaterial or not v.Parent or v.Humanoid.Health <= 0
+                                StartMagnet = false
+                            end
+                        end
+                    end
+                else
+                    for i,v in pairs(game:GetService("Workspace")["_WorldOrigin"].EnemySpawns:GetChildren()) do
+                        if string.find(v.Name, Mon) then
+                            if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).Magnitude >= 10 then
+                                topos(v.HumanoidRootPart.CFrame * Pos)
+                            end
+                        end
                     end
                 end
             end)
