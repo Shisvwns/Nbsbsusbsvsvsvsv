@@ -8186,15 +8186,6 @@ Tabs.Setting:AddButton({
 })
 
 Tabs.Setting:AddButton({
-    Title = "Always Day",
-    Description = "",
-    Callback = function()
-        game:GetService("RunService").Heartbeat:wait() do
-        game:GetService("Lighting").ClockTime = 12
-    end
-})
-
-Tabs.Setting:AddButton({
     Title = "Fps Booster",
     Description = "",
     Callback = function()
@@ -8243,15 +8234,6 @@ function FPSBooster()
         end
     end
 end
-
-
-Tabs.Setting:AddButton({
-    Title = "Unlock Fps",
-    Description = "",
-    Callback = function()
-        setfpscap(9999999)
-    end
-})
 
 local Section = Tabs.Setting:AddSection("Team")
 
