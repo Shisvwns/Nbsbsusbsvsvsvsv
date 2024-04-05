@@ -4098,38 +4098,38 @@ KillDough:OnChanged(function(Value)
 end)
 
 spawn(function()
-        while wait() do
-            if  _G.Autodoughking and World3 then
-                pcall(function()
-                    if game:GetService("Workspace").Enemies:FindFirstChild("Dough King") then
-                        for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                            if v.Name == "Dough King" then
-                                if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                    repeat task.wait()
-                                        AutoHaki()
-                                        EquipWeapon(_G.SelectWeapon)
-                                        v.HumanoidRootPart.CanCollide = false
-                                        v.Humanoid.WalkSpeed = 0
-                                        v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                        topos(v.HumanoidRootPart.CFrame * Pos)
-                                        game:GetService("VirtualUser"):CaptureController()
-                                        game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
-                                        sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",math.huge)
-                                    until not  _G.Autodoughking or not v.Parent or v.Humanoid.Health <= 0
-                                end
+    while wait() do
+        if  _G.Autodoughking and World3 then
+            pcall(function()
+                if game:GetService("Workspace").Enemies:FindFirstChild("Dough King") then
+                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        if v.Name == "Dough King" then
+                            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                                repeat task.wait()
+                                    AutoHaki()
+                                    EquipWeapon(_G.SelectWeapon)
+                                    v.HumanoidRootPart.CanCollide = false
+                                    v.Humanoid.WalkSpeed = 0
+                                    v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
+                                    game:GetService("VirtualUser"):CaptureController()
+                                    game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
+                                    sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",math.huge)
+                                until not  _G.Autodoughking or not v.Parent or v.Humanoid.Health <= 0
                             end
                         end
-                    else
-                    UnEquipWeapon(_G.SelectWeapon)
-                    topos(CFrame.new(-2662.818603515625, 1062.3480224609375, -11853.6953125))
-                        if game:GetService("ReplicatedStorage"):FindFirstChild("Dough King") then
-                            topos(game:GetService("ReplicatedStorage"):FindFirstChild("Dough King").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
-                        end
                     end
-                end)
-            end
+                else
+                UnEquipWeapon(_G.SelectWeapon)
+                topos(CFrame.new(-2662.818603515625, 1062.3480224609375, -11853.6953125))
+                    if game:GetService("ReplicatedStorage"):FindFirstChild("Dough King") then
+                        topos(game:GetService("ReplicatedStorage"):FindFirstChild("Dough King").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                    end
+                end
+            end)
         end
-    end)
+    end
+end)
 
 local Section = Tabs.Farm:AddSection("Bone")
 
@@ -6711,59 +6711,114 @@ end)
 
 -- [ Tab Player ]
 
-local Section = Tabs.Player:AddSection("Abilities")
+local Section = Tabs.Player:AddSection("Haki State")
 
-function NoCooldown()
-	for i,v in next, getgc() do
-		if typeof(v) == "function" then
-			if getfenv(v).script == game.Players.LocalPlayer.Character:WaitForChild("Dodge") and _G.DashNoCd then
-				for i2,v2 in next, getupvalues(v) do
-					if tostring(v2) == "0.4" then
-						repeat wait(.1)
-							setupvalue(v,i2,0)
-						until not _G.DashNoCd
-					end
-				end
-			end
-			if getfenv(v).script == game.Players.LocalPlayer.Character:WaitForChild("Geppo") and _G.GeppoNoCd then
-				for i2,v2 in next, getupvalues(v) do
-					if tostring(v2) == "0" then
-						repeat wait(.1)
-							setupvalue(v,i2,0)
-						until not _G.GeppoNoCd
-					end
-				end
-			end
-			if getfenv(v).script == game.Players.LocalPlayer.Character:WaitForChild("Soru") and _G.SoruNoCd then
-				for i2,v2 in pairs(debug.getupvalues(v)) do
-					if type(v2) == 'table' then
-						if v2.LastUse then
-							repeat wait(_G.Fast_Delay)
-								setupvalue(v, i2, {LastAfter = 0,LastUse = 0})
-							until not _G.SoruNoCd
-						end
-					end
-				end
-			end
-		end
-	end
-end
+local Sate = Tabs.Player:AddDropdown("Sate", {
+	Title = "Select Haki State",
+	Values = {"State 0","State 1","State 2","State 3","State 4","State 5"},
+	Multi = false,
+	Default = "",
+})
+Sate:OnChanged(function(Value)
+    _G.SelectStateHaki = Value
+end)
+
+Tabs.Player:AddButton({
+    Title = "Set State Haki",
+    Description = "",
+    Callback = function()
+        if _G.SelectStateHaki == "State 0" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ChangeBusoStage",0)
+        elseif _G.SelectStateHaki == "State 1" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ChangeBusoStage",1)
+        elseif _G.SelectStateHaki == "State 2" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ChangeBusoStage",2)
+        elseif _G.SelectStateHaki == "State 3" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ChangeBusoStage",3)
+        elseif _G.SelectStateHaki == "State 4 " then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ChangeBusoStage",4)
+        elseif _G.SelectStateHaki == "State 5" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ChangeBusoStage",5)
+        end
+    end
+})
+
+local Section = Tabs.Player:AddSection("Abilities")
 
 local Jump = Tabs.Player:AddToggle("Jump1", {Title = "Infinite Sky Jump [ Geppo ]", Default = false })
 Options.Jump1:SetValue(false)
 Jump:OnChanged(function(Value)
-    _G.GeppoNoCd = Value
-    NoCooldown()
+    getgenv().InfGeppo = Value
 end)
 
-local Soru = Tabs.Player:AddToggle("Soru1", {Title = "Infinite Soru", Default = false })
+spawn(function()
+    while wait() do
+        pcall(function()
+            if getgenv().InfGeppo then
+                for i,v in next, getgc() do
+                    if game:GetService("Players").LocalPlayer.Character.Geppo then
+                        if typeof(v) == "function" and getfenv(v).script == game:GetService("Players").LocalPlayer.Character.Geppo then
+                            for i2,v2 in next, getupvalues(v) do
+                                if tostring(i2) == "0" then
+                                    repeat wait(0.1)
+                                        setupvalue(v,i2,0)
+                                    until not getgenv().InfGeppo or game:GetService("Players").LocalPlayer.Character.Humanoid.Health <= 0 
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end)
+    end
+end)
+
+local ChayNhanh = Tabs.Player:AddToggle("ChayNhanh1", {Title = "Infinite Ability", Default = false })
+Options.ChayNhanh1:SetValue(false)
+ChayNhanh:OnChanged(function(Value)
+    InfAbility = Value
+    if value == false then
+        game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("Agility"):Destroy()
+    end
+end)
+
+spawn(function()
+    while wait() do
+        if InfAbility then
+            InfAb()
+        end
+    end
+end)
+
+local Soru = Tabs.Player:AddToggle("Soru1", {Title = "Soru Cooldown", Default = false })
 Options.Soru1:SetValue(false)
 Soru:OnChanged(function(Value)
-    _G.SoruNoCd = Value
-    NoCooldown()
+    getgenv().InfSoru = Value
 end)
 
-local Water = Tabs.Player:AddToggle("Water1", {Title = "Walk on Water", Default = false })
+spawn(function()
+    while wait() do
+        pcall(function()
+            if getgenv().InfSoru and game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart") ~= nil  then
+                for i,v in next, getgc() do
+                    if game:GetService("Players").LocalPlayer.Character.Soru then
+                        if typeof(v) == "function" and getfenv(v).script == game:GetService("Players").LocalPlayer.Character.Soru then
+                            for i2,v2 in next, getupvalues(v) do
+                                if typeof(v2) == "table" then
+                                    repeat wait(0.1)
+                                        v2.LastUse = 0
+                                    until not getgenv().InfSoru or game:GetService("Players").LocalPlayer.Character.Humanoid.Health <= 0
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end)
+    end
+end)
+
+local Water = Tabs.Player:AddToggle("Water1", {Title = "Walk On Water", Default = false })
 Options.Water1:SetValue(false)
 Water:OnChanged(function(Value)
     _G.WalkWater = Value
@@ -6840,14 +6895,27 @@ Tabs.Race:AddButton({
     Title = "Teleport To Pull Lever",
     Description = "",
     Callback = function()
-        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - PosTemplete.Position).Magnitude > 1000 then
-            Templeteleport()
-        elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - PosTemplete.Position).Magnitude < 1000 then
-            wait(0.2)
-            topos(CFrame.new(28575.181640625, 14936.6279296875, 72.31636810302734))
-        end
+        PullLever()
     end
 })
+
+function PullLever()
+    local bn = CFrame.new(28576.4688,14939.2832,76.5164413,-1,0,0,0,0.707134247,-0.707079291,-0,-0.707079291,-0.707134247)
+    local bo = CFrame.new(28576.4688,14935.9512,75.469101,-1,-4.22219593e-08,1.13133396e-08,0,-0.258819044,-0.965925813,4.37113883e-08,-0.965925813,0.258819044)
+    local bp = 0.2
+    if
+        game:GetService("Workspace").Map["Temple of Time"].Lever.Lever.CFrame.Z > bo.Z + bp or
+            game:GetService("Workspace").Map["Temple of Time"].Lever.Lever.CFrame.Z < bo.Z - bp
+     then
+        CheckAndTweenTemple()
+        TP(game:GetService("Workspace").Map["Temple of Time"].Lever.Part.CFrame)
+        for r, v in pairs(game:GetService("Workspace").Map["Temple of Time"].Lever:GetDescendants()) do
+            if v.Name == "ProximityPrompt" then
+                fireproximityprompt(v)
+            end
+        end
+    end
+end
 
 Tabs.Race:AddButton({
     Title = "Teleport To Clock",
@@ -8097,7 +8165,7 @@ Tabs.Shop:AddButton({
 
 -- [ Tab Setting ]
 
-local Section = Tabs.Setting:AddSection("Reduce Lag")
+local Section = Tabs.Setting:AddSection("Graphic & Reduce Lag")
 
 local WhiteScreen = Tabs.Setting:AddToggle("WhiteScreen", {Title = "White Screen", Default = false })
 WhiteScreen:OnChanged(function(Value)
@@ -8120,6 +8188,24 @@ spawn(function()
         end
     end
 end)
+
+Tabs.Setting:AddButton({
+    Title = "Remove Fog",
+    Description = "",
+    Callback = function()
+        game:GetService("Lighting").LightingLayers:Destroy()
+    	game:GetService("Lighting").Sky:Destroy()
+    end
+})
+
+Tabs.Setting:AddButton({
+    Title = "Always Day",
+    Description = "",
+    Callback = function()
+        game:GetService("RunService").Heartbeat:wait() do
+        game:GetService("Lighting").ClockTime = 12
+    end
+})
 
 Tabs.Setting:AddButton({
     Title = "Fps Booster",
@@ -8170,6 +8256,15 @@ function FPSBooster()
         end
     end
 end
+
+
+Tabs.Setting:AddButton({
+    Title = "Unlock Fps",
+    Description = "",
+    Callback = function()
+        setfpscap(9999999)
+    end
+})
 
 local Section = Tabs.Setting:AddSection("Team")
 
