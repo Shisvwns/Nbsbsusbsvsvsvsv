@@ -2948,6 +2948,18 @@ spawn(function()
         end
     end)
 end)
+
+spawn(function()
+    while wait() do
+        if sethiddenproperty then
+            sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",100)
+        end
+        if setscriptable then
+           setscriptable(game.Players.LocalPlayer, "SimulationRadius", true)
+           game.Players.LocalPlayer.SimulationRadius = math.huge * math.huge, math.huge * math.huge * 0 / 0 * 0 / 0 * 0 / 0 * 0 / 0 * 0 / 0
+        end
+    end
+end)
     
 game:GetService("Players").LocalPlayer.Idled:connect(function()
     game:GetService("VirtualUser"):Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
@@ -5294,7 +5306,7 @@ end)
 local Section = Tabs.Misc:AddSection("Observation Haki")
 
 local ObservationStatus = Tabs.Misc:AddParagraph({
-    Title = "Observation Status",
+    Title = "Observation Range",
     Content = "..."
 })
 
@@ -6714,6 +6726,159 @@ spawn(function()
     end)
 end)
 
+-- [ Tab Player ]
+
+local Section = Tabs.Player:AddSection("Abilities")
+
+local Dodge = Tabs.Player:AddToggle("Dodge1", {Title = "Dodge No Cooldown", Default = false })
+Options.Dodge1:SetValue(false)
+Dodge:OnChanged(function(Value)
+    nododgecool = Value
+    NoDodgeCool()
+end)
+
+local Energy = Tabs.Player:AddToggle("Energy1", {Title = "Infinite Energy", Default = false })
+Options.Energy1:SetValue(false)
+Energy:OnChanged(function(Value)
+    InfiniteEnergy = Value
+    originalstam = LocalPlayer.Character.Energy.Value
+end)
+
+local Ability2 = Tabs.Player:AddToggle("Ability3", {Title = "Infinite Ability", Default = false })
+Options.Ability3:SetValue(false)
+Ability2:OnChanged(function(Value)
+    InfAbility = Value
+    if Value == false then
+        game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("Agility"):Destroy()
+    end
+end)
+
+spawn(function()
+    while wait() do
+        if InfAbility then
+            InfAb()
+        end
+    end
+end
+
+local Range = Tabs.Player:AddToggle("Range3", {Title = "Infinite Obversation Range", Default = false })
+Options.Range3:SetValue(false)
+Range:OnChanged(function(Value)
+    getgenv().InfiniteObRange = Value
+    local VS = game:GetService("Players").LocalPlayer.VisionRadius.Value
+    while getgenv().InfiniteObRange do
+        wait()
+        local player = game:GetService("Players").LocalPlayer
+        local char = player.Character
+        local VisionRadius = player.VisionRadius
+        if player then
+            if char.Humanoid.Health <= 0 then 
+                wait(5) 
+            end
+            VisionRadius.Value = math.huge
+        elseif getgenv().InfiniteObRange == false and player then
+            VisionRadius.Value = VS
+        end
+    end
+end)
+
+local Jump = Tabs.Player:AddToggle("Jump1", {Title = "Infinite Sky Jump [ Geppo ]", Default = false })
+Options.Jump1:SetValue(false)
+Jump:OnChanged(function(Value)
+    getgenv().InfGeppo = Value
+end)
+
+spawn(function()
+    while wait() do
+        pcall(function()
+            if getgenv().InfGeppo then
+                for i,v in next, getgc() do
+                    if game:GetService("Players").LocalPlayer.Character.Geppo then
+                        if typeof(v) == "function" and getfenv(v).script == game:GetService("Players").LocalPlayer.Character.Geppo then
+                            for i2,v2 in next, getupvalues(v) do
+                                if tostring(i2) == "9" then
+                                    repeat wait(.1)
+                                        setupvalue(v,i2,0)
+                                    until not getgenv().InfGeppo or game:GetService("Players").LocalPlayer.Character.Humanoid.Health <= 0 
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end)
+    end
+end)
+
+local Soru = Tabs.Player:AddToggle("Soru1", {Title = "Infinite Soru", Default = false })
+Options.Soru1:SetValue(false)
+Soru:OnChanged(function(Value)
+    getgenv().InfSoru = Value
+end)
+
+spawn(function()
+    while wait() do
+        pcall(function()
+            if getgenv().InfSoru and game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart") ~= nil  then
+                for i,v in next, getgc() do
+                    if game:GetService("Players").LocalPlayer.Character.Soru then
+                        if typeof(v) == "function" and getfenv(v).script == game:GetService("Players").LocalPlayer.Character.Soru then
+                            for i2,v2 in next, getupvalues(v) do
+                                if typeof(v2) == "table" then
+                                    repeat wait(0.1)
+                                        v2.LastUse = 0
+                                    until not getgenv().InfSoru or game:GetService("Players").LocalPlayer.Character.Humanoid.Health <= 0
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end)
+    end
+end)
+
+local Water = Tabs.Player:AddToggle("Water1", {Title = "Walk on Water", Default = false })
+Options.Water1:SetValue(false)
+Water:OnChanged(function(Value)
+    _G.WalkWater = Value
+end)
+
+spawn(function()
+	while task.wait() do
+		pcall(function()
+			if _G.WalkWater then
+				game:GetService("Workspace").Map["WaterBase-Plane"].Size = Vector3.new(1000,112,1000)
+			else
+				game:GetService("Workspace").Map["WaterBase-Plane"].Size = Vector3.new(1000,80,1000)
+			end
+		end)
+	end
+end)
+
+local Noclip = Tabs.Player:AddToggle("Noclip1", {Title = "No Clip", Default = false })
+Options.Noclip1:SetValue(false)
+Noclip:OnChanged(function(Value)
+    _G.NOCLIP = Value
+end)
+
+Tabs.Player:AddButton({
+    Title = "Remove Lava",
+    Description = "",
+    Callback = function()
+        for i,v in pairs(game.Workspace:GetDescendants()) do
+			if v.Name == "Lava" then   
+				v:Destroy()
+			end
+		end
+		for i,v in pairs(game.ReplicatedStorage:GetDescendants()) do
+			if v.Name == "Lava" then   
+				v:Destroy()
+			end
+		end
+    end
+})
+
 -- [ Tab Race ]
 
 local Section = Tabs.Race:AddSection("Templete Of Time")
@@ -7854,7 +8019,7 @@ Tabs.Shop:AddButton({
 local Section = Tabs.Shop:AddSection("Abilities")
 
 SelectAbilities = {
-	"Sky Jump",
+	"Sky Jump [ Geppo ]",
 	"Buso Haki",
 	"Soru",
 	"Observation Haki"
@@ -7874,7 +8039,7 @@ Tabs.Shop:AddButton({
     Title = "Buy Abilities",
     Description = "",
     Callback = function()
-        if _G.SelectAbilities == "Sky Jump" then
+        if _G.SelectAbilities == "Sky Jump [ Geppo ]" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyHaki","Geppo")
         elseif _G.SelectAbilities == "Buso Haki" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyHaki","Buso")
