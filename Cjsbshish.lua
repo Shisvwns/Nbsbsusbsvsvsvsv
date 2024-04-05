@@ -6713,86 +6713,55 @@ end)
 
 local Section = Tabs.Player:AddSection("Abilities")
 
+function NoCooldown()
+	for i,v in next, getgc() do
+		if typeof(v) == "function" then
+			if getfenv(v).script == game.Players.LocalPlayer.Character:WaitForChild("Dodge") and _G.DashNoCd then
+				for i2,v2 in next, getupvalues(v) do
+					if tostring(v2) == "0.4" then
+						repeat wait(.1)
+							setupvalue(v,i2,0)
+						until not _G.DashNoCd
+					end
+				end
+			end
+			if getfenv(v).script == game.Players.LocalPlayer.Character:WaitForChild("Geppo") and _G.GeppoNoCd then
+				for i2,v2 in next, getupvalues(v) do
+					if tostring(v2) == "0" then
+						repeat wait(.1)
+							setupvalue(v,i2,0)
+						until not _G.GeppoNoCd
+					end
+				end
+			end
+			if getfenv(v).script == game.Players.LocalPlayer.Character:WaitForChild("Soru") and _G.SoruNoCd then
+				for i2,v2 in pairs(debug.getupvalues(v)) do
+					if type(v2) == 'table' then
+						if v2.LastUse then
+							repeat wait(_G.Fast_Delay)
+								setupvalue(v, i2, {LastAfter = 0,LastUse = 0})
+							until not _G.SoruNoCd
+						end
+					end
+				end
+			end
+		end
+	end
+end
+
 local Jump = Tabs.Player:AddToggle("Jump1", {Title = "Infinite Sky Jump [ Geppo ]", Default = false })
 Options.Jump1:SetValue(false)
 Jump:OnChanged(function(Value)
-    getgenv().InfGeppo = Value
-end)
-
-spawn(function()
-    while wait() do
-        pcall(function()
-            if getgenv().InfGeppo then
-                for i,v in next, getgc() do
-                    if game:GetService("Players").LocalPlayer.Character.Geppo then
-                        if typeof(v) == "function" and getfenv(v).script == game:GetService("Players").LocalPlayer.Character.Geppo then
-                            for i2,v2 in next, getupvalues(v) do
-                                if tostring(i2) == "0" then
-                                    repeat wait(.1)
-                                        setupvalue(v,i2,0)
-                                    until not getgenv().InfGeppo or game:GetService("Players").LocalPlayer.Character.Humanoid.Health <= 0 
-                                end
-                            end
-                        end
-                    end
-                end
-            end
-        end)
-    end
+    _G.GeppoNoCd = Value
+    NoCooldown()
 end)
 
 local Soru = Tabs.Player:AddToggle("Soru1", {Title = "Infinite Soru", Default = false })
 Options.Soru1:SetValue(false)
 Soru:OnChanged(function(Value)
-    getgenv().InfSoru = Value
+    _G.SoruNoCd = Value
+    NoCooldown()
 end)
-
-spawn(function()
-    while wait() do
-        pcall(function()
-            if getgenv().InfSoru and game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart") ~= nil  then
-                for i,v in next, getgc() do
-                    if game:GetService("Players").LocalPlayer.Character.Soru then
-                        if typeof(v) == "function" and getfenv(v).script == game:GetService("Players").LocalPlayer.Character.Soru then
-                            for i2,v2 in next, getupvalues(v) do
-                                if typeof(v2) == "table" then
-                                    repeat wait(0.1)
-                                        v2.LastUse = 0
-                                    until not getgenv().InfSoru or game:GetService("Players").LocalPlayer.Character.Humanoid.Health <= 0
-                                end
-                            end
-                        end
-                    end
-                end
-            end
-        end)
-    end
-end)
-
-local Dodge = Tabs.Player:AddToggle("Dodge1", {Title = "Dodge No Cooldown", Default = false })
-Options.Dodge1:SetValue(false)
-Dodge:OnChanged(function(Value)
-    nododgecool = Value
-    NoDodgeCool()
-end)
-
-function NoDodgeCool()
-    if nododgecool then
-        for i,v in next, getgc() do
-            if game:GetService("Players").LocalPlayer.Character.Dodge then
-                if typeof(v) == "function" and getfenv(v).script == game:GetService("Players").LocalPlayer.Character.Dodge then
-                    for i2,v2 in next, getupvalues(v) do
-                        if tostring(v2) == "0.1" then
-                        repeat wait(.1)
-                            setupvalue(v,i2,0)
-                        until not nododgecool
-                        end
-                    end
-                end
-            end
-        end
-    end
-end
 
 local Water = Tabs.Player:AddToggle("Water1", {Title = "Walk on Water", Default = false })
 Options.Water1:SetValue(false)
