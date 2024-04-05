@@ -2506,24 +2506,7 @@ spawn(function()
         end
     end)
 end)
-    
-function NoDodgeCool()
-    if nododgecool then
-        for i,v in next, getgc() do
-            if game:GetService("Players").LocalPlayer.Character.Dodge then
-                if typeof(v) == "function" and getfenv(v).script == game:GetService("Players").LocalPlayer.Character.Dodge then
-                    for i2,v2 in next, getupvalues(v) do
-                        if tostring(v2) == "0.1" then
-                        repeat wait(.1)
-                            setupvalue(v,i2,0)
-                        until not nododgecool
-                        end
-                    end
-                end
-            end
-        end
-    end
-end
+   
 
 function fly()
     local mouse=game:GetService("Players").LocalPlayer:GetMouse''
@@ -6730,13 +6713,6 @@ end)
 
 local Section = Tabs.Player:AddSection("Abilities")
 
-local Energy = Tabs.Player:AddToggle("Energy1", {Title = "Infinite Energy", Default = false })
-Options.Energy1:SetValue(false)
-Energy:OnChanged(function(Value)
-    InfiniteEnergy = Value
-    originalstam = LocalPlayer.Character.Energy.Value
-end)
-
 local Jump = Tabs.Player:AddToggle("Jump1", {Title = "Infinite Sky Jump [ Geppo ]", Default = false })
 Options.Jump1:SetValue(false)
 Jump:OnChanged(function(Value)
@@ -6751,7 +6727,7 @@ spawn(function()
                     if game:GetService("Players").LocalPlayer.Character.Geppo then
                         if typeof(v) == "function" and getfenv(v).script == game:GetService("Players").LocalPlayer.Character.Geppo then
                             for i2,v2 in next, getupvalues(v) do
-                                if tostring(i2) == "9" then
+                                if tostring(i2) == "0" then
                                     repeat wait(.1)
                                         setupvalue(v,i2,0)
                                     until not getgenv().InfGeppo or game:GetService("Players").LocalPlayer.Character.Humanoid.Health <= 0 
@@ -6793,6 +6769,31 @@ spawn(function()
     end
 end)
 
+local Dodge = Tabs.Player:AddToggle("Dodge1", {Title = "Dodge No Cooldown", Default = false })
+Options.Dodge1:SetValue(false)
+Dodge:OnChanged(function(Value)
+    nododgecool = Value
+    NoDodgeCool()
+end)
+
+function NoDodgeCool()
+    if nododgecool then
+        for i,v in next, getgc() do
+            if game:GetService("Players").LocalPlayer.Character.Dodge then
+                if typeof(v) == "function" and getfenv(v).script == game:GetService("Players").LocalPlayer.Character.Dodge then
+                    for i2,v2 in next, getupvalues(v) do
+                        if tostring(v2) == "0.1" then
+                        repeat wait(.1)
+                            setupvalue(v,i2,0)
+                        until not nododgecool
+                        end
+                    end
+                end
+            end
+        end
+    end
+end
+
 local Water = Tabs.Player:AddToggle("Water1", {Title = "Walk on Water", Default = false })
 Options.Water1:SetValue(false)
 Water:OnChanged(function(Value)
@@ -6814,7 +6815,21 @@ end)
 local Noclip = Tabs.Player:AddToggle("Noclip1", {Title = "No Clip", Default = false })
 Options.Noclip1:SetValue(false)
 Noclip:OnChanged(function(Value)
-    _G.NOCLIP = Value
+    _G.LOf = Value
+end)
+
+spawn(function()
+    pcall(function()
+        game:GetService("RunService").Stepped:Connect(function()
+            if _G.LOf then
+                for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                    if v:IsA("BasePart") then
+                        v.CanCollide = false    
+                    end
+                end
+            end
+        end)
+    end)
 end)
 
 Tabs.Player:AddButton({
