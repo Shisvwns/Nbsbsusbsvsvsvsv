@@ -6730,56 +6730,11 @@ end)
 
 local Section = Tabs.Player:AddSection("Abilities")
 
-local Dodge = Tabs.Player:AddToggle("Dodge1", {Title = "Dodge No Cooldown", Default = false })
-Options.Dodge1:SetValue(false)
-Dodge:OnChanged(function(Value)
-    nododgecool = Value
-    NoDodgeCool()
-end)
-
 local Energy = Tabs.Player:AddToggle("Energy1", {Title = "Infinite Energy", Default = false })
 Options.Energy1:SetValue(false)
 Energy:OnChanged(function(Value)
     InfiniteEnergy = Value
     originalstam = LocalPlayer.Character.Energy.Value
-end)
-
-local Ability2 = Tabs.Player:AddToggle("Ability3", {Title = "Infinite Ability", Default = false })
-Options.Ability3:SetValue(false)
-Ability2:OnChanged(function(Value)
-    InfAbility = Value
-    if Value == false then
-        game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("Agility"):Destroy()
-    end
-end)
-
-spawn(function()
-    while wait() do
-        if InfAbility then
-            InfAb()
-        end
-    end
-end)
-
-local Range = Tabs.Player:AddToggle("Range3", {Title = "Infinite Obversation Range", Default = false })
-Options.Range3:SetValue(false)
-Range:OnChanged(function(Value)
-    getgenv().InfiniteObRange = Value
-    local VS = game:GetService("Players").LocalPlayer.VisionRadius.Value
-    while getgenv().InfiniteObRange do
-        wait()
-        local player = game:GetService("Players").LocalPlayer
-        local char = player.Character
-        local VisionRadius = player.VisionRadius
-        if player then
-            if char.Humanoid.Health <= 0 then 
-                wait(5) 
-            end
-            VisionRadius.Value = math.huge
-        elseif getgenv().InfiniteObRange == false and player then
-            VisionRadius.Value = VS
-        end
-    end
 end)
 
 local Jump = Tabs.Player:AddToggle("Jump1", {Title = "Infinite Sky Jump [ Geppo ]", Default = false })
