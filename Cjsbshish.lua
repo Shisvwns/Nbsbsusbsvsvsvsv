@@ -6759,7 +6759,7 @@ spawn(function()
             InfAb()
         end
     end
-end
+end)
 
 local Range = Tabs.Player:AddToggle("Range3", {Title = "Infinite Obversation Range", Default = false })
 Options.Range3:SetValue(false)
