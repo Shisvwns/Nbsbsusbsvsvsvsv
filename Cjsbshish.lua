@@ -2810,6 +2810,14 @@ game:GetService("RunService").RenderStepped:Connect(function()
 end)
 end)
 
+function TweenObject(TweenCFrame,obj,ts)
+    if not ts then ts = 350 end
+    local tween_s = game:GetService("TweenService")
+    local info = TweenInfo.new((TweenCFrame.Position -obj.Position).Magnitude /ts,Enum.EasingStyle.Linear)
+    tween = tween_s:Create(obj,info,{CFrame = TweenCFrame})
+    tween:Play() 
+end
+
 function StopTween(target)
     if not target then
         _G.StopTween = true
@@ -5360,127 +5368,38 @@ spawn(function()
 
 local Section = Tabs.Sea:AddSection("Boat")
 
-AllBoat = {
-	"Dinghy",
-	"PirateSloop",
-	"PirateBrigade",
-	"PirateGrandBrigade",
-	"MarineSloop",
-	"MarineBrigade",
-	"MarineGrandBrigade"
-}
-
 local Boat = Tabs.Sea:AddDropdown("Boat", {
 	Title = "Select Boat",
-	Values = AllBoat,
+	Values = {"PirateBrigade", "PirateGrandBrigade","PirateSloop","MarineBrigade","MarineGrandBrigade"},
 	Multi = false,
 	Default = "",
 })
 Boat:OnChanged(function(Value)
-    SelectBoat = Value
+    _G.Boat = Value
 end)
 
-local BuyBoat = Tabs.Sea:AddToggle("BuyBoat1", {Title = "Auto Sail Boat ", Default = false })
-Options.BuyBoat1:SetValue(false)
-BuyBoat:OnChanged(function(Value)
-    _G.SailBoat = Value
-    StopTween(_G.SailBoat)
-end)
-
-spawn(function()
-    while wait() do
-        pcall(function()
-            if _G.SailBoat then
-                if not game:GetService("Workspace").Enemies:FindFirstChild("Shark") or not game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") or not game:GetService("Workspace").Enemies:FindFirstChild("Piranha") or not game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") then
-                    if not game:GetService("Workspace").Boats:FindFirstChild("PirateGrandBrigade") then
-                        buyb = TweenBoat(CFrame.new(-16927.451171875, 9.0863618850708, 433.8642883300781))
-                        if (CFrame.new(-16927.451171875, 9.0863618850708, 433.8642883300781).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 10 then
-                            if buyb then buyb:Stop() end
-                            local args = {
-                                [1] = "BuyBoat",
-                                [2] = "PirateGrandBrigade"
-                            }
-                            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
-                        end
-                    elseif game:GetService("Workspace").Boats:FindFirstChild("PirateGrandBrigade") then
-                        if game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Sit == false then
-                            TweenBoat(game:GetService("Workspace").Boats.PirateGrandBrigade.VehicleSeat.CFrame * CFrame.new(0,1,0))
-                        else
-                            for i,v in pairs(game:GetService("Workspace").Boats:GetChildren()) do
-                                if v.Name == "PirateGrandBrigade" then
-                                    repeat task.wait()
-                                        if (CFrame.new(-17013.80078125, 10.962434768676758, 438.0169982910156).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 10 then
-                                            TweenShip(CFrame.new(-33163.1875, 10.964323997497559, -324.4842224121094))
-                                        elseif (CFrame.new(-33163.1875, 10.964323997497559, -324.4842224121094).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 10 then
-                                            TweenShip(CFrame.new(-37952.49609375, 10.96342945098877, -1324.12109375))
-                                        elseif (CFrame.new(-37952.49609375, 10.96342945098877, -1324.12109375).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 10 then
-                                            TweenShip(CFrame.new(-33163.1875, 10.964323997497559, -324.4842224121094))
-                                        end 
-                                    until game:GetService("Workspace").Enemies:FindFirstChild("Shark") or game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") or game:GetService("Workspace").Enemies:FindFirstChild("Piranha") or game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") or _G.SailBoat == false
-                                end
-                            end
-                        end
-                    end
-                end
-            end
-        end)
-    end
-end)
-
-spawn(function()
-	pcall(function()
-		while wait() do
-			if _G.SailBoat then
-				if game:GetService("Workspace").Enemies:FindFirstChild("Shark") or game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") or game:GetService("Workspace").Enemies:FindFirstChild("Piranha") or game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") then
-				    game.Players.LocalPlayer.Character.Humanoid.Sit = false
-				end
-			end
-		end
-	end)
-end)
-
-function TweenShip(CFgo)
-    local tween_s = game:service"TweenService"
-    local info = TweenInfo.new((game:GetService("Workspace").Boats.MarineBrigade.VehicleSeat.CFrame.Position - CFgo.Position).Magnitude/300, Enum.EasingStyle.Linear)
-    tween = tween_s:Create(game:GetService("Workspace").Boats.MarineBrigade.VehicleSeat, info, {CFrame = CFgo})
-        tween:Play()
-    local tweenfunc = {}
-    function tweenfunc:Stop()
-        tween:Cancel()
-    end
-    return tweenfunc
-end
-    
-function TweenBoat(CFgo)
-    if game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Health <= 0 or not game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid") then tween:Cancel() repeat wait(_G.Fast_Delay) until game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid") and game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health > 0 wait(7) return end
-    local tween_s = game:service"TweenService"
-    local info = TweenInfo.new((game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart.Position - CFgo.Position).Magnitude/325, Enum.EasingStyle.Linear)
-    tween = tween_s:Create(game.Players.LocalPlayer.Character["HumanoidRootPart"], info, {CFrame = CFgo})
-    tween:Play()
-    local tweenfunc = {}
-    function tweenfunc:Stop()
-        tween:Cancel()
-    end
-    return tweenfunc
-end
-
-SelectZone = {
-	"Zone 1 [ Low ]",
-	"Zone 2 [ Medium ]",
-	"Zone 3 [ High ]",
-	"Zone 4 [ Extreme ]",
-	"Zone 5 [ Crazy ]",
-	"Zone 6 [ ??? ]"
-}
 
 local Zone = Tabs.Sea:AddDropdown("Zone", {
 	Title = "Select Zone",
-	Values = SelectZone,
+	Values = {"Zone 1 [ Low ]","Zone 2 [ Medium ]","Zone 3 [ High ]","Zone 4 [ Extreme ]","Zone 5 [ Crazy ]","Zone 6 [ ??? ]"},
 	Multi = false,
 	Default = "",
 })
 Zone:OnChanged(function(Value)
-    _G.SelectLocalTeleportSea = Value
+    _G.Zone = Value
+    if _G.Zone == "Zone 1 [ Low ]" then
+        ZoneCFrame = CFrame.new(-21313.607421875, 12.560698509216309, 1330.6165771484375)
+    elseif _G.Zone == "Zone 2 [ Medium ]" then
+        ZoneCFrame = CFrame.new(-24815.267578125, 12.560657501220703, 5262.62060546875)
+    elseif _G.Zone == "Zone 3 [ High ]" then
+        ZoneCFrame = CFrame.new(-28464.876953125, 12.553319931030273, 6896.8076171875)
+    elseif _G.Zone == "Zone 4 [ Extreme ]" then
+        ZoneCFrame = CFrame.new(-30294.8515625, 12.554117202758789, 10409.8564453125)
+    elseif _G.Zone == "Zone 5 [ Crazy ]" then
+        ZoneCFrame = CFrame.new(-37704.828125, 12.561018943786621, 6750.69873046875)
+    elseif _G.Zone == "Zone 6 [ ??? ]" then
+        ZoneCFrame = CFrame.new(-32704.103515625, 12.557344436645508, 24089.923828125)
+    end
 end)
 
 local TeleZone = Tabs.Sea:AddToggle("TeleZone1", {Title = "Teleport To Zone", Default = false })
@@ -7158,6 +7077,50 @@ spawn(function()
                     end
                 end
             end
+        end)
+    end
+end)
+
+local Section = Tabs.Race:AddSection("Train")
+
+function CheckAncientOneStatus()
+    if not game.Players.LocalPlayer.Character:FindFirstChild("RaceTransformed") then
+        return "You have yet to achieve greatness"
+    end
+    local v227 = nil
+    local v228 = nil
+    local v229 = nil
+    v229, v228, v227 = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("UpgradeRace", "Check")
+    if v229 == 1 then
+        return "Required Train More"
+    elseif v229 == 2 or v229 == 4 or v229 == 7 then
+        return "Can Buy Gear With " .. v227 .. " Fragments"
+    elseif v229 == 3 then
+        return "Required Train More"
+    elseif v229 == 5 then
+        return "You Are Done Your Race."
+    elseif v229 == 6 then
+        return "Upgrades completed: " .. v228 - 2 .. "/3, Need Trains More"
+    end
+    if v229 ~= 8 then
+        if v229 == 0 then
+            return "Ready For Trial"
+        else
+            return "You have yet to achieve greatness"
+        end
+    end
+    return "Remaining " .. 10 - v228 .. " training sessions."
+end
+
+local Moon1 = Tabs.Race:AddParagraph({
+    Title = "Ancient One Status",
+    Content = CheckAncientOneStatus()
+})
+
+spawn(function()
+    while wait() do
+        pcall(function()
+            CheckAncientOneStatus()
         end)
     end
 end)
