@@ -2605,41 +2605,19 @@ function TP(Pos)
     _G.Clip = false
 end
 
-  function GetTPPos(position)
-    local NearPos = math.huge
-    local TpPos = Vector3.new()
-    
-    table.foreach(PortalPos, function(___, pos)
-      if (pos - position).Magnitude <= NearPos then
-        NearPos = (pos - position).Magnitude
-        TpPos = pos
-      end
-    end)
-    return TpPos
-  end
-end)
-
-local TeleportPos
-local function topos(Tween_Pos)
-  TeleportPos = Tween_Pos.p
-  local plrPP = Player.Character and Player.Character.PrimaryPart
-  if not plrPP then return end
-  local Distance = (plrPP.Position - Tween_Pos.p).Magnitude
-  local PortalPos = GetTPPos(Tween_Pos.p)
-  if (plrPP.Position - Tween_Pos.p).Magnitude > (Tween_Pos.p - PortalPos).Magnitude + 250 then
-    plrPP.CFrame = CFrame.new(PortalPos)
-    block.CFrame = CFrame.new(PortalPos)
-  elseif block then
-    if Distance <= 450 then
-      local tween = game:GetService("TweenService"):Create(block,
-      TweenInfo.new(Distance / tonumber(getgenv().TweenSpeed * 1.8), Enum.EasingStyle.Linear),
-      {CFrame = Tween_Pos}):Play()
-    else
-      local tween = game:GetService("TweenService"):Create(block,
-      TweenInfo.new(Distance / getgenv().TweenSpeed, Enum.EasingStyle.Linear),
-      {CFrame = Tween_Pos}):Play()
+function topos(Pos)
+    Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    if game.Players.LocalPlayer.Character.Humanoid.Sit == true then game.Players.LocalPlayer.Character.Humanoid.Sit = false end
+    pcall(function() tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/210, Enum.EasingStyle.Linear),{CFrame = Pos}) end)
+    tween:Play()
+    if Distance <= 250 then
+        tween:Cancel()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
     end
-  end
+    if _G.StopTween == true then
+        tween:Cancel()
+        _G.Clip = false
+    end
 end
 
 -- [ Tween Boat ]
