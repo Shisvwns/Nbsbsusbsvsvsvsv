@@ -5369,7 +5369,7 @@ local Section = Tabs.Sea:AddSection("Boats Settings")
 
 local Boat = Tabs.Sea:AddDropdown("Boat", {
 	Title = "Select Boats",
-	Values = {"PirateBrigade", "PirateGrandBrigade","PirateSloop","MarineBrigade","MarineGrandBrigade"},
+	Values = {"GrandBrigade", "Brigade","Seleigh","Guardian","Lantern","BeastHunter"},
 	Multi = false,
 	Default = 1,
 })
@@ -7998,6 +7998,7 @@ SelectGun = {
 	"Cannon",
 	"Refined Flintlock",
 	"Refined Slingshot",
+	"Bizarre Rifle",
 	"Kabucha"
 }
 
@@ -8029,6 +8030,17 @@ Tabs.Shop:AddButton({
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Refined Slingshot")
         elseif _G.SelectGun == "Kabucha" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Kabucha")
+        elseif _G.SelectGun == "Bizarre Rifle" then
+            local A_1 = "Ectoplasm"
+            local A_2 = "Buy"
+            local A_3 = 1
+            local Event = game:GetService("ReplicatedStorage").Remotes["CommF_"]
+            Event:InvokeServer(A_1, A_2, A_3) 
+            local A_1 = "Ectoplasm"
+            local A_2 = "Buy"
+            local A_3 = 1
+            local Event = game:GetService("ReplicatedStorage").Remotes["CommF_"]
+            Event:InvokeServer(A_1, A_2, A_3)
         end
     end
 })
