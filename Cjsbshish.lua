@@ -59,11 +59,10 @@ local Tabs = {
     Teleport = Window:AddTab({ Title = "Tab Teleport", Icon = "" }),wait(0.1),
     StatusServer = Window:AddTab({ Title = "Tab Status & Server", Icon = "" }),wait(0.1),
     Shop = Window:AddTab({ Title = "Tab Shop", Icon = "" }),wait(0.1),
-    Setting = Window:AddTab({ Title = "Tab Setting", Icon = "" }),wait(0.1),
+    Setting = Window:AddTab({ Title = "Tab Settings", Icon = "" }),wait(0.1),
 }
 
 local Options = Fluent.Options
-do
 
 -- [ Anti Ban & Anti Afk ]
 
@@ -5366,13 +5365,13 @@ spawn(function()
 
 -- [ Tab Sea Event ]
 
-local Section = Tabs.Sea:AddSection("Boats")
+local Section = Tabs.Sea:AddSection("Boats Settings")
 
 local Boat = Tabs.Sea:AddDropdown("Boat", {
 	Title = "Select Boats",
 	Values = {"PirateBrigade", "PirateGrandBrigade","PirateSloop","MarineBrigade","MarineGrandBrigade"},
 	Multi = false,
-	Default = "",
+	Default = 1,
 })
 Boat:OnChanged(function(Value)
     _G.Boat = Value
@@ -5381,13 +5380,15 @@ end)
 
 local Zone = Tabs.Sea:AddDropdown("Zone", {
 	Title = "Select Zone",
-	Values = {"Zone 1 [ Low ]","Zone 2 [ Medium ]","Zone 3 [ High ]","Zone 4 [ Extreme ]","Zone 5 [ Crazy ]","Zone 6 [ ??? ]"},
+	Values = {"Zone 0 [ None ]", "Zone 1 [ Low ]","Zone 2 [ Medium ]","Zone 3 [ High ]","Zone 4 [ Extreme ]","Zone 5 [ Crazy ]","Zone 6 [ ??? ]"},
 	Multi = false,
-	Default = "",
+	Default = 6,
 })
 Zone:OnChanged(function(Value)
     _G.Zone = Value
-    if _G.Zone == "Zone 1 [ Low ]" then
+    if _G.Zone == "Zone 0 [ None ]" then
+        ZoneCFrame = CFrame.new(-19118.041015625, 24.44040298461914, 858.4185791015625)
+    elseif _G.Zone == "Zone 1 [ Low ]" then
         ZoneCFrame = CFrame.new(-21313.607421875, 12.560698509216309, 1330.6165771484375)
     elseif _G.Zone == "Zone 2 [ Medium ]" then
         ZoneCFrame = CFrame.new(-24815.267578125, 12.560657501220703, 5262.62060546875)
@@ -5504,7 +5505,7 @@ spawn(function()
 	end
 end)
 
-local Res = Tabs.Sea:AddToggle("Res1", {Title = "Auto Reset Character Go Tiki If Boats Health = 0", Default = false })
+local Res = Tabs.Sea:AddToggle("Res1", {Title = "Auto Reset Character Go Tiki If Boats Destroy", Default = false })
 Options.Res1:SetValue(false)
 Res:OnChanged(function(Value)
     _G.ResetChar = Value
@@ -8185,5 +8186,3 @@ Fluent:Notify({
     SubContent = "",
     Duration = 5
 })
-
-end
