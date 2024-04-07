@@ -6960,8 +6960,8 @@ spawn(function()
             if _G.TweenMGear then
 				if game:GetService("Workspace").Map:FindFirstChild("MysticIsland") then
 					for i,v in pairs(game:GetService("Workspace").Map.MysticIsland:GetChildren()) do 
-						if v:IsA("MeshPart")then 
-                            if v.Material ==  Enum.Material.Neon then  
+						if v:IsA("MeshPart") then 
+                            if v.Material == Enum.Material.Neon then  
                                 topos(v.CFrame)
                             end
                         end
@@ -7248,6 +7248,7 @@ end)
 local BuyG = Tabs.Race:AddToggle("BuyG1", {Title = "Auto Buy Gear", Default = false })
 BuyG:OnChanged(function(Value)
     _G.BuyGear = Value
+    StopTween(_G.BuyGear)
 end)
 
 spawn(function()
