@@ -4209,48 +4209,42 @@ end)
 
 local Section = Tabs.Farm:AddSection("Boss")
 
-local Boss = {}
-for i, v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
-    if string.find(v.Name, "Boss") then
-        if v.Name == "Ice Admiral" then
-            else
-            table.insert(Boss, v.Name)
-        end
-    end
+if World1 then
+	bossList = {"The Gorilla King","Bobby","Yeti","Mob Leader","Vice Admiral","Warden","Chief Warden","Swan","Magma Admiral","Fishman Lord","Wysper","Thunder God","Cyborg","Saber Expert"}
+elseif World2 then
+	bossList = {"Diamond","Jeremy","Fajita","Don Swan","Smoke Admiral","Cursed Captain","Darkbeard","Order","Awakened Ice Admiral","Tide Keeper"}
+elseif World3 then
+	bossList = {"Stone","Island Empress","Kilo Admiral","Captain Elephant","Beautiful Pirate","rip_indra True Form","Longma","Soul Reaper","Cake Queen"}
 end
 
-local bossCheck = {}
-local bossNames = { "The Gorilla King", "Bobby", "The Saw", "Yeti", "Mob Leader", "Vice Admiral", "Warden", "Chief Warden", "Swan", "Saber Expert", "Magma Admiral", "Fishman Lord", "Wysper", "Thunder God", "Cyborg", "Greybeard", "Diamond", "Jeremy", "Fajita", "Don Swan", "Smoke Admiral", "Awakened Ice Admiral", "Tide Keeper", "Order", "Darkbeard", "Cursed Captain", "Stone", "Island Empress", "Kilo Admiral", "Captain Elephant", "Beautiful Pirate", "Longma", "Cake Queen", "Soul Reaper", "Rip_Indra", "Cake Prince", "Dough King" }
+local bossStatus = {}
 
-if World1 or World2 or World3 then
-    for _, bossName in pairs(bossNames) do
-        if game:GetService("ReplicatedStorage"):FindFirstChild(bossName) then
-            table.insert(bossCheck, bossName)
+for i, bossName in ipairs(bossList) do
+    bossStatus[i] = Tabs.Farm:AddParagraph("Status")
+
+    spawn(function()
+        while wait() do
+            pcall(function()
+                local boss = game:GetService("ReplicatedStorage"):FindFirstChild(bossName)
+                if boss then
+                    bossStatus[i]:SetDesc("Spawn: " .. bossName .. " ✅ ")
+                else
+                    bossStatus[i]:SetDesc("Spawn: " .. bossName .. " ☹ ")
+                end
+            end)
         end
-    end
-end
-
-for _, name in pairs(Boss) do
-    table.insert(bossCheck, name)
+    end)
 end
 
 local BossName = Tabs.Farm:AddDropdown("SelectBoss", {
 	Title = "Select Boss",
-	Values = bossCheck,
+	Values = bossList,
 	Multi = false,
-	Default = "No Boss",
+	Default = "",
 })
 BossName:OnChanged(function(Value)
     _G.SelectBoss = Value
 end)
-
-Tabs.Farm:AddButton({
-    Title = "Refresh Boss",
-    Description = "",
-    Callback = function()
-       table.clear(Boss)
-    end
-})
 
 local KillBoss = Tabs.Farm:AddToggle("KillBos", {Title = "Auto Farm Boss", Default = false })
 Options.KillBos:SetValue(false)
@@ -5369,7 +5363,7 @@ local Section = Tabs.Sea:AddSection("Boats Settings")
 
 local Boat = Tabs.Sea:AddDropdown("Boat", {
 	Title = "Select Boats",
-	Values = {"GrandBrigade", "Brigade","Seleigh","Guardian","Lantern","BeastHunter"},
+	Values = {"PirateBrigade", "PirateGrandBrigade","PirateSloop","MarineBrigade","MarineGrandBrigade"},
 	Multi = false,
 	Default = 1,
 })
