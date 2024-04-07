@@ -7256,9 +7256,6 @@ spawn(function()
         while wait(0.1) do
             if _G.BuyGear then
                 local args = {
-                [1] = true
-                }
-                local args = {
                     [1] = "UpgradeRace",
                     [2] = "Buy"
                 }
