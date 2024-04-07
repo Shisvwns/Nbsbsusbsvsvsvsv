@@ -6676,27 +6676,6 @@ end)
 
 local Section = Tabs.Player:AddSection("Player")
 
-local StatusPl = Tabs.Player:AddParagraph({
-    Title = "Player In Server",
-    Content = "..."
-})
-
-spawn(function()
-    while wait() do
-        pcall(function()
-            for i,v in pairs(game:GetService("Players"):GetPlayers()) do
-                if i == 12 then
-                    StatusPl:SetDesc("Player: "..i.."/".."12".." [ Max ]")
-                elseif i == 1 then
-                    StatusPl:SetDesc("Player: "..i.."/".."12")
-                else
-                    StatusPl:SetDesc("Player: "..i.."/".."12")
-                end
-            end
-        end)
-    end
-end)
-
 local Section = Tabs.Player:AddSection("Haki State")
 
 local Sate = Tabs.Player:AddDropdown("Sate", {
