@@ -7245,26 +7245,6 @@ spawn(function()
     end
 end)
 
-local BuyG = Tabs.Race:AddToggle("BuyG1", {Title = "Auto Buy Gear", Default = false })
-BuyG:OnChanged(function(Value)
-    _G.BuyGear = Value
-    StopTween(_G.BuyGear)
-end)
-
-spawn(function()
-    pcall(function()
-        while wait(0.1) do
-            if _G.BuyGear then
-                local args = {
-                    [1] = "UpgradeRace",
-                    [2] = "Buy"
-                }
-                game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(unpack(args))
-            end
-        end 
-    end)  
-end)
-
 -- [ Tab Stats & Esp ]
 
 local Section = Tabs.StatsEsp:AddSection("Stats")
