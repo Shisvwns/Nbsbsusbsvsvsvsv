@@ -7265,13 +7265,6 @@ spawn(function()
     end)  
 end)
 
-local TrainT = Tabs.Race:AddToggle("TrainT1", {Title = "Auto Ancient One Quest", Default = false })
-TrainT:OnChanged(function(Value)
-    _G.AutoRace = Value
-    StardFarm = Value
-    StopTween(_G.AutoRace)
-end)
-
 -- [ Tab Stats & Esp ]
 
 local Section = Tabs.StatsEsp:AddSection("Stats")
