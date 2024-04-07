@@ -6676,33 +6676,12 @@ end)
 
 local Section = Tabs.Player:AddSection("Player")
 
-local StatusPl = Tabs.Player:AddParagraph({
-    Title = "Player In Server",
-    Content = "..."
-})
-
-spawn(function()
-    while wait() do
-        pcall(function()
-            for i,v in pairs(game:GetService("Players"):GetPlayers()) do
-                if i == 12 then
-                    StatusPl:SetDesc("Player: "..i.."/".."12".." [ Max ]")
-                elseif i == 1 then
-                    StatusPl:SetDesc("Player: "..i.."/".."12")
-                else
-                    StatusPl:SetDesc("Player: "..i.."/".."12")
-                end
-            end
-        end)
-    end
-end)
-
 local Playerslist = {}
 for i,v in pairs(game:GetService("Players"):GetChildren()) do
     table.insert(Playerslist,v.Name)
 end
 
-local SelectedPly = Tabs.Player:AddDropdown("Sele", {
+local SelectedPly = Tabs.Player:AddDropdown("SelectedPly", {
     Title = "Select Player",
     Description = "",
     Values = Playerslist,
@@ -6713,17 +6692,30 @@ SelectedPly:OnChanged(function(Value)
     _G.SelectPly = Value
 end)
 
+local TheoDoi = Tabs.Player:AddToggle("TD", {Title = "Spectate Selected Player", Description = "Bay Đến Người Chơi",Default = false })
+TheoDoi:OnChanged(function(Value)
+    SpectatePlys = Value
+    local plr1 = game:GetService("Players").LocalPlayer.Character.Humanoid
+    local plr2 = game:GetService("Players"):FindFirstChild(_G.SelectPly)
+    repeat wait(.1)
+        game:GetService("Workspace").Camera.CameraSubject = game:GetService("Players"):FindFirstChild(_G.SelectPly).Character.Humanoid
+    until SpectatePlys == false 
+    game:GetService("Workspace").Camera.CameraSubject = game:GetService("Players").LocalPlayer.Character.Humanoid
+end)
 
-Tabs.Player:AddButton({
-    Title = "Refresh Player List",
-    Description = "",
-    Callback = function()
-        table.clear(Playerslist)
-        for i,v in pairs(game:GetService("Players"):GetChildren()) do
-            table.insert(Playerslist,v.Name)
-        end
+local ToggleTeleport = Tabs.Player:AddToggle("TeleportP", {Title = "Teleport To Player", Description = "Bay Đến Người Chơi",Default = false })
+ToggleTeleport:OnChanged(function(Value)
+    _G.TeleportPly = Value
+    if _G.TeleportPly == false then
+        game.Players:FindFirstChild(_G.SelectPly).Character.HumanoidRootPart.Size = Vector3.new(2, 2, 1)
     end
-})
+    while _G.Teleport do task.wait()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players:FindFirstChild(_G.SelectPly).Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 0)
+        game.Players:FindFirstChild(_G.SelectPly).Character.HumanoidRootPart.Size = Vector3.new(60,60,60)
+        game:GetService'VirtualUser':CaptureController()
+        game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
+    end
+end)
 
 local Section = Tabs.Player:AddSection("Haki State")
 
