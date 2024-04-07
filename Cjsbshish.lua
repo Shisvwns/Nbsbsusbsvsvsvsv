@@ -3503,7 +3503,7 @@ end)
 task.spawn(function()
 	while task.wait() do
 		pcall(function()
-			if NguyenMinhTien and _G.BringMonster then
+			if SEvent and _G.BringMonster then
 				for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
 					if not string.find(v.Name,"Boss") and (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= _G.BringMode then
 						if InMyNetWork(v.HumanoidRootPart) then
@@ -5500,6 +5500,160 @@ local TShark = Tabs.Sea:AddToggle("TShark1", {Title = "Auto Kill Terrorshark", D
 TShark:OnChanged(function(Value)
     _G.AutoTerrorshark = Value
     StopTween(_G.AutoTerrorshark)
+end)
+
+spawn(function()
+    while wait() do
+        if  _G.AutoTerrorshark and World3 then
+            pcall(function()
+                if game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") then
+                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        if v.Name == "Terrorshark" then
+                            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                                repeat task.wait()
+                                    AutoHaki()
+                                    EquipWeapon(_G.SelectWeapon)
+                                    v.HumanoidRootPart.CanCollide = false
+                                    v.Humanoid.WalkSpeed = 0
+                                    PosNarathiwat = v.HumanoidRootPart.CFrame
+                                    v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
+                                    SEvent = true
+                                    game:GetService("VirtualUser"):CaptureController()
+                                    game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
+                                until not  _G.AutoTerrorshark or not v.Parent or v.Humanoid.Health <= 0
+                                SEvent = false
+                            end
+                        end
+                    end
+                else
+                    if game:GetService("ReplicatedStorage"):FindFirstChild("Terrorshark") then
+                        topos(game:GetService("ReplicatedStorage"):FindFirstChild("Terrorshark").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                    end
+                end
+            end)
+        end
+    end
+end)
+
+local KShark = Tabs.Sea:AddToggle("KShark1", {Title = "Auto Kill Shark", Default = false })
+KShark:OnChanged(function(Value)
+    FarmShark = Value
+    StopTween(FarmShark)
+end)
+
+spawn(function()
+    while wait() do
+        if  FarmShark and World3 then
+            pcall(function()
+                if game:GetService("Workspace").Enemies:FindFirstChild("Shark") then
+                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        if v.Name == "Shark" then
+                            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                                repeat task.wait()
+                                    AutoHaki()
+                                    EquipWeapon(_G.SelectWeapon)
+                                    v.HumanoidRootPart.CanCollide = false
+                                    v.Humanoid.WalkSpeed = 0
+                                    v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                                    PosNarathiwat = v.HumanoidRootPart.CFrame
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
+                                    SEvent = true
+                                    game:GetService("VirtualUser"):CaptureController()
+                                    game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
+                                until not  FarmShark or not v.Parent or v.Humanoid.Health <= 0
+                                SEvent = false
+                            end
+                        end
+                    end
+                else
+                    if game:GetService("ReplicatedStorage"):FindFirstChild("Terrorshark") then
+                        topos(game:GetService("ReplicatedStorage"):FindFirstChild("Terrorshark").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                    end
+                end
+            end)
+        end
+    end
+end)
+
+local Piranha = Tabs.Sea:AddToggle("Piranha1", {Title = "Auto Kill Piranha", Default = false })
+Piranha:OnChanged(function(Value)
+    _G.farmpiranya = Value
+    StopTween(_G.farmpiranya)
+end)
+
+spawn(function()
+    while wait() do
+        if  _G.farmpiranya and World3 then
+            pcall(function()
+                if game:GetService("Workspace").Enemies:FindFirstChild("Piranha") then
+                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        if v.Name == "Piranha" then
+                            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                                repeat task.wait()
+                                    AutoHaki()
+                                    EquipWeapon(_G.SelectWeapon)
+                                    v.HumanoidRootPart.CanCollide = false
+                                    v.Humanoid.WalkSpeed = 0
+                                    PosNarathiwat = v.HumanoidRootPart.CFrame
+                                    v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
+                                    SEvent = true
+                                    game:GetService("VirtualUser"):CaptureController()
+                                    game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
+                                until not  _G.farmpiranya or not v.Parent or v.Humanoid.Health <= 0
+                                SEvent = false
+                            end
+                        end
+                    end
+                else
+                    if game:GetService("ReplicatedStorage"):FindFirstChild("Piranha") then
+                        topos(game:GetService("ReplicatedStorage"):FindFirstChild("Piranha").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                    end
+                end
+            end)
+        end
+    end
+end)
+
+local Fish_Crew = Tabs.Sea:AddToggle("Fish_1", {Title = "Auto Kill Fish Crew Member", Default = false })
+Fish_Crew:OnChanged(function(Value)
+    _G.Fish_Crew_Member = Value
+    StopTween(_G.Fish_Crew_Member)
+end)
+
+spawn(function()
+    while wait() do
+        if  _G.Fish_Crew_Member and World3 then
+            pcall(function()
+                if game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") then
+                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        if v.Name == "Fish Crew Member" then
+                            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                                repeat task.wait()
+                                    AutoHaki()
+                                    EquipWeapon(_G.SelectWeapon)
+                                    v.HumanoidRootPart.CanCollide = false
+                                    v.Humanoid.WalkSpeed = 0
+                                    PosNarathiwat = v.HumanoidRootPart.CFrame
+                                    v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                                    SEvent = true
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
+                                    game:GetService("VirtualUser"):CaptureController()
+                                    game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
+                                until not  _G.Fish_Crew_Member or not v.Parent or v.Humanoid.Health <= 0
+                                SEvent = false
+                            end
+                        end
+                    end
+                else
+                    if game:GetService("ReplicatedStorage"):FindFirstChild("Fish Crew Member") then
+                        topos(game:GetService("ReplicatedStorage"):FindFirstChild("Fish Crew Member").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                    end
+                end
+            end)
+        end
+    end
 end)
 
 -- [ Tab Item & Quest ]
