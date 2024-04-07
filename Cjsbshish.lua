@@ -4220,7 +4220,7 @@ end
 local bossStatus = {}
 
 for i, bossName in ipairs(bossList) do
-    bossStatus[i] = Tabs.Farm:AddParagraph("Status")
+    local bossStatus[i] = Tabs.Farm:AddParagraph("Status")
 
     spawn(function()
         while wait() do
