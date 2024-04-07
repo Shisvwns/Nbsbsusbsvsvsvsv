@@ -6702,7 +6702,7 @@ for i,v in pairs(game:GetService("Players"):GetChildren()) do
     table.insert(Playerslist,v.Name)
 end
 
-local SelectedPly = Tabs.Player:AddDropdown("SelectedPly", {
+local SelectedPly = Tabs.Player:AddDropdown("Sele", {
     Title = "Select Player",
     Description = "",
     Values = Playerslist,
@@ -6742,7 +6742,7 @@ ToggleTeleport:OnChanged(function(Value)
     if _G.TeleportPly == false then
         game.Players:FindFirstChild(_G.SelectPly).Character.HumanoidRootPart.Size = Vector3.new(2, 2, 1)
     end
-    while _G.Teleport do task.wait()
+    while _G.TeleporPly do task.wait()
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players:FindFirstChild(_G.SelectPly).Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 0)
         game.Players:FindFirstChild(_G.SelectPly).Character.HumanoidRootPart.Size = Vector3.new(60,60,60)
         game:GetService'VirtualUser':CaptureController()
