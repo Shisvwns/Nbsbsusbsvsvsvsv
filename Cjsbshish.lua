@@ -4217,7 +4217,7 @@ BossName:OnChanged(function(Value)
     _G.SelectBoss = Value
 end)
 
-local KillBoss = Tabs.Farm:AddToggle("KillBos", {Title = "Auto Farm Boss", Default = false })
+local KillBoss = Tabs.Farm:AddToggle("KillBos", {Title = "Auto Farm Selected Boss", Default = false })
 KillBoss:OnChanged(function(Value)
     _G.AutoFarmBoss = Value
     StopTween(_G.AutoFarmBoss)
@@ -6019,7 +6019,7 @@ end)
 
 local Section = Tabs.Item:AddSection("Cursed Dual Katana")
 
-local Yama = Tabs.Item:AddToggle("Yama1", {Title = "Auto Get Yama", Default = false })
+local Yama = Tabs.Item:AddToggle("Yama1", {Title = "Auto Get Yama [ Only Elite Process 30 ]", Default = false })
 Yama:OnChanged(function(Value)
     _G.AutoYama = Value
     StopTween(_G.AutoYama)
@@ -6673,6 +6673,82 @@ spawn(function()
 end)
 
 -- [ Tab Player ]
+
+local Section = Tabs.Player:AddSection("Player")
+
+local StatusPl = Tabs.Race:AddParagraph({
+    Title = "Player In Server",
+    Content = "..."
+})
+
+spawn(function()
+    while wait() do
+        pcall(function()
+            for i,v in pairs(game:GetService("Players"):GetPlayers()) do
+                if i == 12 then
+                    StatusPl:SetDesc("Player: "..i.."/".."12".." [ Max ]")
+                elseif i == 1 then
+                    StatusPl:SetDesc("Player: "..i.."/".."12")
+                else
+                    StatusPl:SetDesc("Player: "..i.."/".."12")
+                end
+            end
+        end)
+    end
+end)
+
+local Playerslist = {}
+for i,v in pairs(game:GetService("Players"):GetChildren()) do
+    table.insert(Playerslist,v.Name)
+end
+
+local SelectedPly = Tabs.Player:AddDropdown("SelectedPly", {
+    Title = "Select Player",
+    Description = "",
+    Values = Playerslist,
+    Multi = false,
+    Default = "",
+})
+SelectedPly:OnChanged(function(Value)
+    _G.SelectPly = Value
+end)
+
+
+Tabs.Player:AddButton({
+    Title = "Refresh Player List",
+    Description = "",
+    Callback = function()
+        table.clear(Playerslist)
+        for i,v in pairs(game:GetService("Players"):GetChildren()) do
+            table.insert(Playerslist,v.Name)
+        end
+    end
+})
+
+local TheoDoi = Tabs.Player:AddToggle("TD", {Title = "Spectate Selected Player", Description = "Bay Đến Người Chơi",Default = false })
+TheoDoi:OnChanged(function(Value)
+    SpectatePlys = Value
+    local plr1 = game:GetService("Players").LocalPlayer.Character.Humanoid
+    local plr2 = game:GetService("Players"):FindFirstChild(_G.SelectPly)
+    repeat wait(.1)
+        game:GetService("Workspace").Camera.CameraSubject = game:GetService("Players"):FindFirstChild(_G.SelectPly).Character.Humanoid
+    until SpectatePlys == false 
+    game:GetService("Workspace").Camera.CameraSubject = game:GetService("Players").LocalPlayer.Character.Humanoid
+end)
+
+local ToggleTeleport = Tabs.Player:AddToggle("TeleportP", {Title = "Teleport To Player", Description = "Bay Đến Người Chơi",Default = false })
+ToggleTeleport:OnChanged(function(Value)
+    _G.TeleportPly = Value
+    if _G.TeleportPly == false then
+        game.Players:FindFirstChild(_G.SelectPly).Character.HumanoidRootPart.Size = Vector3.new(2, 2, 1)
+    end
+    while _G.Teleport do task.wait()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players:FindFirstChild(_G.SelectPly).Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 0)
+        game.Players:FindFirstChild(_G.SelectPly).Character.HumanoidRootPart.Size = Vector3.new(60,60,60)
+        game:GetService'VirtualUser':CaptureController()
+        game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
+    end
+end)
 
 local Section = Tabs.Player:AddSection("Haki State")
 
@@ -7408,7 +7484,7 @@ TlSea:OnChanged(function(Value)
 end)
 
 Tabs.Teleport:AddButton({
-    Title = "Teleport To Sea",
+    Title = "Teleport To Selected Sea",
     Description = "",
     Callback = function()
         if _G.SelectSea == "First Sea" then
@@ -7506,7 +7582,7 @@ Teleport:OnChanged(function(Value)
 end)
 end
 
-local TeleportIsland = Tabs.Teleport:AddToggle("TeleportIslan", {Title = "Teleport To Island", Default = false })
+local TeleportIsland = Tabs.Teleport:AddToggle("TeleportIslan", {Title = "Teleport To Selected Island", Default = false })
 TeleportIsland:OnChanged(function(Value)
     _G.TeleportIsland = Value
     if _G.TeleportIsland == true then
