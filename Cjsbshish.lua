@@ -6674,8 +6674,6 @@ end)
 
 -- [ Tab Player ]
 
-local Section = Tabs.Player:AddSection("Player")
-
 local Section = Tabs.Player:AddSection("Haki State")
 
 local Sate = Tabs.Player:AddDropdown("Sate", {
