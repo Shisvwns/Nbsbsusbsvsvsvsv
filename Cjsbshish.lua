@@ -2656,7 +2656,7 @@ getgenv().ToTargets = function(p)
         pcall(function()
             if game:GetService("Players").LocalPlayer:DistanceFromCharacter(p.Position) <= 250 then 
                 game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = p
-            elseif not game.Players.LocalPlayer.Character:FindFirstChild("Root")then 
+            elseif not game.Players.LocalPlayer.Character:FindFirstChild("Root") then 
                 local K = Instance.new("Part",game.Players.LocalPlayer.Character)
                 K.Size = Vector3.new(1,0.5,1)
                 K.Name = "Root"
@@ -2697,7 +2697,7 @@ getgenv().ToTargets = function(p)
             end
 	    end)
     end)
-    end
+end
     
 Type = 1
 spawn(function()
@@ -6023,6 +6023,14 @@ local Yama = Tabs.Item:AddToggle("Yama1", {Title = "Auto Get Yama", Default = fa
 Yama:OnChanged(function(Value)
     _G.AutoYama = Value
     StopTween(_G.AutoYama)
+end)
+
+spawn(function()
+    while wait() do
+        pcall(function()
+            Yama:SetDesc("Elite Killed: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter","Progress"))
+        end)
+    end
 end)
 
 spawn(function()
