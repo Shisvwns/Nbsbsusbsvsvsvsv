@@ -3033,7 +3033,6 @@ spawn(function()
 end)
 
 local FastAttackFarm = Tabs.Farm:AddToggle("FastAttackFar", {Title = "Fast Attack", Default = true })
-Options.FastAttackFar:SetValue(true)
 FastAttackFarm:OnChanged(function(Value)
     _G.FastAttack = Value
 end)
@@ -3100,7 +3099,6 @@ task.spawn(function()
 end)
 
 local AutoClick = Tabs.Farm:AddToggle("AutoClic", {Title = "Auto Click", Default = false })
-Options.AutoClic:SetValue(false)
 AutoClick:OnChanged(function(Value)
     _G.AutoClick = Value
 end)
@@ -3132,7 +3130,6 @@ spawn(function()
 end)
 
 local BringMon = Tabs.Farm:AddToggle("BringMo", {Title = "Bring Monster", Default = true })
-Options.BringMo:SetValue(true)
 BringMon:OnChanged(function(Value)
     _G.BringMonster = Value
 end)
@@ -3583,7 +3580,6 @@ ModeFarmLevel:OnChanged(function(Value)
 end)
 
 local FarmLevel = Tabs.Farm:AddToggle("FarmLeve", {Title = "Auto Farm Level", Default = false })
-Options.FarmLeve:SetValue(false)
 FarmLevel:OnChanged(function(Value)
     _G.AutoFarm = Value
     StopTween(_G.AutoFarm)
@@ -3718,7 +3714,6 @@ spawn(function()
 end)
 
 local FarmNear = Tabs.Farm:AddToggle("FarmNea", {Title = "Auto Farm Nearest", Default = false })
-Options.FarmNea:SetValue(false)
 FarmNear:OnChanged(function(Value)
     _G.AutoFarmNearest = Value
     StopTween(_G.AutoFarmNearest)
@@ -3785,7 +3780,6 @@ ModeFarmKata:OnChanged(function(Value)
 end)
 
 local FarmKata = Tabs.Farm:AddToggle("FarmKat", {Title = "Auto Farm Cake Prince", Default = false })
-Options.FarmKat:SetValue(false)
 FarmKata:OnChanged(function(Value)
     _G.AutoDoughtBoss = Value
     StopTween(_G.AutoDoughtBoss)
@@ -3996,13 +3990,11 @@ spawn(function()
 end)
 
 local SpawnKata = Tabs.Farm:AddToggle("SpawnKat", {Title = "Auto Spawn Cake Prince", Default = true })
-Options.SpawnKat:SetValue(true)
 SpawnKata:OnChanged(function(Value)
     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner",Value)
 end)
 
 local KillDough = Tabs.Farm:AddToggle("KillDoug", {Title = "Auto Kill Dough King", Default = false })
-Options.KillDoug:SetValue(false)
 KillDough:OnChanged(function(Value)
     _G.Autodoughking = Value
     StopTween(_G.Autodoughking)
@@ -4068,7 +4060,6 @@ ModeFarmBone:OnChanged(function(Value)
 end)
 
 local FarmBones = Tabs.Farm:AddToggle("FarmBone", {Title = "Auto Farm Bone", Default = false })
-Options.FarmBone:SetValue(false)
 FarmBones:OnChanged(function(Value)
     _G.Auto_Bone = Value
     StopTween(_G.Auto_Bone)
@@ -4192,7 +4183,6 @@ local BonePos = CFrame.new(-9506.234375, 172.130615234375, 6117.0771484375)
     end)
 
 local RandomBone = Tabs.Farm:AddToggle("RandomBon", {Title = "Auto Random Bone", Default = false })
-Options.RandomBon:SetValue(false)
 RandomBone:OnChanged(function(Value)
     _G.Auto_Random_Bone = Value
 end)
@@ -4228,7 +4218,6 @@ BossName:OnChanged(function(Value)
 end)
 
 local KillBoss = Tabs.Farm:AddToggle("KillBos", {Title = "Auto Farm Boss", Default = false })
-Options.KillBos:SetValue(false)
 KillBoss:OnChanged(function(Value)
     _G.AutoFarmBoss = Value
     StopTween(_G.AutoFarmBoss)
@@ -4301,7 +4290,6 @@ spawn(function()
 end)
 
 local KillAllBoss = Tabs.Farm:AddToggle("KillAllBos", {Title = "Auto Farm All Boss", Default = false })
-Options.KillAllBos:SetValue(false)
 KillAllBoss:OnChanged(function(Value)
     _G.AutoAllBoss = Value
     StopTween(_G.AutoAllBoss)
@@ -4339,7 +4327,6 @@ spawn(function()
 end)
 
 local KillAllBos = Tabs.Farm:AddToggle("KillAllBo", {Title = "Auto Farm All Boss [ Hop ]", Default = false })
-Options.KillAllBo:SetValue(false)
 KillAllBos:OnChanged(function(Value)
     _G.AutoAllBossHop = Value
 end)
@@ -4365,7 +4352,6 @@ MobName:OnChanged(function(Value)
 end)
 
 local KillMon = Tabs.Farm:AddToggle("KillMon1", {Title = "Auto Farm Monster", Default = false })
-Options.KillMon1:SetValue(false)
 KillMon:OnChanged(function(Value)
     _G.AutoFarmMob = Value
     StopTween(_G.AutoFarmMob)
@@ -4426,7 +4412,6 @@ Mater:OnChanged(function(Value)
 end)
 
 local Material = Tabs.Farm:AddToggle("Material1", {Title = "Auto Farm Material", Default = false })
-Options.Material1:SetValue(false)
 Material:OnChanged(function(Value)
     _G.AutoMaterial = Value
     StopTween(_G.AutoMaterial)
@@ -4551,7 +4536,6 @@ FruitSnipe:OnChanged(function(Value)
 end)
 
 local BuyFruitSniper = Tabs.FruitRaid:AddToggle("BuyFruitSnipe", {Title = "Auto Buy Fruit Sniper", Default = false })
-Options.BuyFruitSnipe:SetValue(false)
 BuyFruitSniper:OnChanged(function(Value)
     _G.AutoBuyFruitSniper = Value
 end)
@@ -4576,7 +4560,6 @@ Tabs.FruitRaid:AddButton({
 })
 
 local RandomFruit = Tabs.FruitRaid:AddToggle("RandomFrui", {Title = "Auto Random Fruit", Default = false })
-Options.RandomFrui:SetValue(false)
 RandomFruit:OnChanged(function(Value)
     _G.Random_Auto = Value
 end)
@@ -4592,7 +4575,6 @@ spawn(function()
 end)
 
 local StoreFruit = Tabs.FruitRaid:AddToggle("StoreFrui", {Title = "Auto Store Fruit", Default = false })
-Options.StoreFrui:SetValue(false)
 StoreFruit:OnChanged(function(Value)
     _G.AutoStoreFruit = Value
 end)
@@ -4757,7 +4739,6 @@ spawn(function()
 end)
 
 local TeleFruit = Tabs.FruitRaid:AddToggle("TeleFrui", {Title = "Teleport To Fruit", Default = false })
-Options.TeleFrui:SetValue(false)
 TeleFruit:OnChanged(function(Value)
     _G.Tweenfruit = Value
     StopTween(_G.Tweenfruit)
@@ -4776,7 +4757,6 @@ spawn(function()
 end)
 
 local TeleFruit1 = Tabs.FruitRaid:AddToggle("TeleFrui1", {Title = "Bring To Fruit", Default = false })
-Options.TeleFrui1:SetValue(false)
 TeleFruit1:OnChanged(function(Value)
     _G.Grabfruit = Value
 end)
@@ -4794,7 +4774,6 @@ spawn(function()
 end)
 
 local TeleFruit2 = Tabs.FruitRaid:AddToggle("TeleFrui2", {Title = "Bring All Fruit [ 75% Kick System ]", Default = false })
-Options.TeleFrui2:SetValue(false)
 TeleFruit2:OnChanged(function(Value)
     _G.BringFruitBF = Value
 end)
@@ -4836,7 +4815,6 @@ ChonChips:OnChanged(function(Value)
 end)
 
 local BuyChips = Tabs.FruitRaid:AddToggle("BuyChip", {Title = "Auto Buy Chip", Default = false })
-Options.BuyChip:SetValue(false)
 BuyChips:OnChanged(function(Value)
     _G.AutoBuyChip = Value
 end)
@@ -4857,7 +4835,6 @@ spawn(function()
 end)
 
 local BatDauRaid = Tabs.FruitRaid:AddToggle("BatDauRai", {Title = "Auto Start Raid", Default = false })
-Options.BatDauRai:SetValue(false)
 BatDauRaid:OnChanged(function(Value)
     _G.Auto_StartRaid = Value
 end)
@@ -4881,7 +4858,6 @@ spawn(function()
 end)
 
 local KillAura = Tabs.FruitRaid:AddToggle("KillAur", {Title = "Kill Aura", Default = false })
-Options.KillAur:SetValue(false)
 KillAura:OnChanged(function(Value)
     _G.Kill_Aura = Value
 end)
@@ -4905,7 +4881,6 @@ spawn(function()
 end)
 
 local NextIsland = Tabs.FruitRaid:AddToggle("NextIslan", {Title = "Auto Next Island", Default = false })
-Options.NextIslan:SetValue(false)
 NextIsland:OnChanged(function(Value)
     _G.NextIsland = Value
     StopTween(_G.NextIsland)
@@ -4943,7 +4918,6 @@ spawn(function()
 end)
 
 local Awakener = Tabs.FruitRaid:AddToggle("Awakene", {Title = "Auto Awakener", Default = false })
-Options.Awakene:SetValue(false)
 Awakener:OnChanged(function(Value)
     _G.Auto_Awakener = Value
 end)
@@ -4975,7 +4949,6 @@ Tabs.FruitRaid:AddButton({
 })
 
 local BatDauRaid1 = Tabs.FruitRaid:AddToggle("BatDauRai1", {Title = "Auto Start Raid Law", Default = false })
-Options.BatDauRai1:SetValue(false)
 BatDauRaid1:OnChanged(function(Value)
     _G.StartRaidLaw = Value
 end)
@@ -4993,7 +4966,6 @@ spawn(function()
 end)
 
 local KillLaw = Tabs.FruitRaid:AddToggle("KillLaw1", {Title = "Auto Kill Law", Default = false })
-Options.KillLaw1:SetValue(false)
 KillLaw:OnChanged(function(Value)
     _G.AutoOderSword = Value
     StopTween(_G.AutoOderSword)
@@ -5032,7 +5004,6 @@ end)
 local Section = Tabs.Misc:AddSection("Game Event")
 
 local Pirate = Tabs.Misc:AddToggle("Pirate1", {Title = "Auto Pirate Raid", Default = false })
-Options.Pirate1:SetValue(false)
 Pirate:OnChanged(function(Value)
     _G.RaidPirate = Value
     StopTween(_G.RaidPirate)
@@ -5074,7 +5045,6 @@ spawn(function()
 end)
 
 local Factory = Tabs.Misc:AddToggle("Factory1", {Title = "Auto Factory", Default = false })
-Options.Factory1:SetValue(false)
 Factory:OnChanged(function(Value)
     _G.AutoFactory = Value
     StopTween(_G.AutoFactory)
@@ -5122,7 +5092,6 @@ spawn(function()
 end)
 
 local KillElite = Tabs.Misc:AddToggle("KillElite1", {Title = "Auto Kill Elite", Default = false })
-Options.KillElite1:SetValue(false)
 KillElite:OnChanged(function(Value)
     _G.AutoElitehunter = Value
     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
@@ -5188,7 +5157,6 @@ spawn(function()
 end)
 
 local ObservationF = Tabs.Misc:AddToggle("ObservationF1", {Title = "Auto Farm Observation", Default = false })
-Options.ObservationF1:SetValue(false)
 ObservationF:OnChanged(function(Value)
     _G.AutoObservation = Value
     StopTween(_G.AutoObservation)
@@ -5212,7 +5180,6 @@ spawn(function()
 end)
 
 local ObservationFH = Tabs.Misc:AddToggle("ObservationFH1", {Title = "Auto Farm Observation [ Hop ]", Default = false })
-Options.ObservationFH1:SetValue(false)
 ObservationFH:OnChanged(function(Value)
     _G.AutoObservation_Hop = Value
 end)
@@ -5292,7 +5259,6 @@ spawn(function()
 end)
 
 local Observationv2 = Tabs.Misc:AddToggle("Observationv21", {Title = "Auto Upgrade Observation Haki V2", Default = false })
-Options.Observationv21:SetValue(false)
 Observationv2:OnChanged(function(Value)
     _G.AutoObservationv2 = Value
     StopTween(_G.AutoObservationv2)
@@ -5379,7 +5345,6 @@ Zone:OnChanged(function(Value)
 end)
 
 local Sail = Tabs.Sea:AddToggle("Sail1", {Title = "Auto Sail Boats", Default = false })
-Options.Sail1:SetValue(false)
 Sail:OnChanged(function(Value)
     _G.SailBoat = Value
     StopTween(_G.SailBoat)
@@ -5445,7 +5410,6 @@ spawn(function()
 end)
 
 local NoClipR = Tabs.Sea:AddToggle("NoClipR1", {Title = "No Clip Rock", Default = false })
-Options.NoClipR1:SetValue(false)
 NoClipR:OnChanged(function(Value)
     _G.Nocliprock = Value
 end)
@@ -5481,7 +5445,6 @@ spawn(function()
 end)
 
 local Res = Tabs.Sea:AddToggle("Res1", {Title = "Auto Reset Character Go Tiki If Boats Destroy", Default = false })
-Options.Res1:SetValue(false)
 Res:OnChanged(function(Value)
     _G.ResetChar = Value
 end)
@@ -5518,7 +5481,6 @@ SelectSpeed:OnChanged(function(Value)
 end)
 
 local BoatFast = Tabs.Sea:AddToggle("BoatFast1", {Title = "Change To Mode Speed ​​Boats", Default = false })
-Options.BoatFast1:SetValue(false)
 BoatFast:OnChanged(function(Value)
     _G.increaseboatspeed = Value
     game:GetService("RunService").RenderStepped:Connect(function()
@@ -5533,6 +5495,12 @@ BoatFast:OnChanged(function(Value)
 end)
 
 local Section = Tabs.Sea:AddSection("Sea Event")
+
+local TShark = Tabs.Sea:AddToggle("TShark1", {Title = "Auto Kill Terrorshark", Default = false })
+TShark:OnChanged(function(Value)
+    _G.AutoTerrorshark = Value
+    StopTween(_G.AutoTerrorshark)
+end)
 
 -- [ Tab Item & Quest ]
 
@@ -5560,7 +5528,6 @@ spawn(function()
 end)
 
 local BuyKiem = Tabs.Item:AddToggle("BuyKiem1", {Title = "Auto Buy Legendary Sword", Default = false })
-Options.BuyKiem1:SetValue(false)
 BuyKiem:OnChanged(function(Value)
     _G.AutoBuyLegendarySword = Value
 end)
@@ -5609,7 +5576,6 @@ spawn(function()
 end)
 
 local BuyHaki = Tabs.Item:AddToggle("BuyHaki1", {Title = "Auto Buy Haki Colors", Default = false })
-Options.BuyHaki1:SetValue(false)
 BuyHaki:OnChanged(function(Value)
     _G.Auto_Buy_Enchancement = Value
 end)
@@ -5627,7 +5593,6 @@ spawn(function()
 end)
 
 local BuyHakih = Tabs.Item:AddToggle("BuyHakih1", {Title = "Auto Get Rainbow Haki", Default = false })
-Options.BuyHakih1:SetValue(false)
 BuyHakih:OnChanged(function(Value)
     _G.Auto_Rainbow_Haki = Value
     StopTween(_G.Auto_Rainbow_Haki)
@@ -5758,7 +5723,6 @@ spawn(function()
 local Section = Tabs.Item:AddSection("Soul Guitar")
 
 local Soul = Tabs.Item:AddToggle("Soul1", {Title = "Auto Get Soul Guitar", Default = false })
-Options.Soul1:SetValue(false)
 Soul:OnChanged(function(Value)
     _G.AutoNevaSoulGuitar = Value
     StopTween(_G.AutoNevaSoulGuitar)
@@ -5895,7 +5859,6 @@ end
 end)
 
 local SoulH = Tabs.Item:AddToggle("SoulH1", {Title = "Auto Get Soul Guitar [ Hop ]", Default = false })
-Options.SoulH1:SetValue(false)
 SoulH:OnChanged(function(Value)
     _G.soulGuitarhop = Value
 end)
@@ -5903,7 +5866,6 @@ end)
 local Section = Tabs.Item:AddSection("Cursed Dual Katana")
 
 local Yama = Tabs.Item:AddToggle("Yama1", {Title = "Auto Get Yama", Default = false })
-Options.Yama1:SetValue(false)
 Yama:OnChanged(function(Value)
     _G.AutoYama = Value
     StopTween(_G.AutoYama)
@@ -5922,7 +5884,6 @@ spawn(function()
 end)
 
 local Tushita = Tabs.Item:AddToggle("Tushita1", {Title = "Auto Get Tushita", Default = false })
-Options.Tushita1:SetValue(false)
 Tushita:OnChanged(function(Value)
     _G.Autotushita = Value
     StopTween(_G.Autotushita)
@@ -5977,7 +5938,6 @@ spawn(function()
 end)
 
 local KiemHt = Tabs.Item:AddToggle("KiemHt1", {Title = "Auto Get Cursed Dual Katana", Default = false })
-Options.KiemHt1:SetValue(false)
 KiemHt:OnChanged(function(Value)
     Auto_Cursed_Dual_Katana = Value
     StopTween(Auto_Cursed_Dual_Katana)
@@ -6413,7 +6373,6 @@ end)
 local Section = Tabs.Item:AddSection("Other")
 
 local Racev2 = Tabs.Item:AddToggle("Racev21", {Title = "Auto Evo Race V2", Default = false })
-Options.Racev21:SetValue(false)
 Racev2:OnChanged(function(Value)
     _G.Auto_EvoRace = Value
     StopTween(_G.Auto_EvoRace)
@@ -6470,7 +6429,6 @@ spawn(function()
 end)
 
 local Mu = Tabs.Item:AddToggle("Mu1", {Title = "Auto Take Musketeer Hat", Default = false })
-Options.Mu1:SetValue(false)
 Mu:OnChanged(function(Value)
     _G.AutoMusketeerHat = Value
     StopTween(_G.AutoMusketeerHat)
@@ -6589,7 +6547,6 @@ Tabs.Player:AddButton({
 local Section = Tabs.Player:AddSection("Abilities")
 
 local Jump = Tabs.Player:AddToggle("Jump1", {Title = "Infinite Sky Jump [ Geppo ]", Default = false })
-Options.Jump1:SetValue(false)
 Jump:OnChanged(function(Value)
     getgenv().InfGeppo = Value
 end)
@@ -6617,7 +6574,6 @@ spawn(function()
 end)
 
 local ChayNhanh = Tabs.Player:AddToggle("ChayNhanh1", {Title = "Infinite Ability", Default = false })
-Options.ChayNhanh1:SetValue(false)
 ChayNhanh:OnChanged(function(Value)
     InfAbility = Value
     if value == false then
@@ -6634,7 +6590,6 @@ spawn(function()
 end)
 
 local Soru = Tabs.Player:AddToggle("Soru1", {Title = "Soru Cooldown", Default = false })
-Options.Soru1:SetValue(false)
 Soru:OnChanged(function(Value)
     getgenv().InfSoru = Value
 end)
@@ -6662,7 +6617,6 @@ spawn(function()
 end)
 
 local Water = Tabs.Player:AddToggle("Water1", {Title = "Walk On Water", Default = false })
-Options.Water1:SetValue(false)
 Water:OnChanged(function(Value)
     _G.WalkWater = Value
 end)
@@ -6680,7 +6634,6 @@ spawn(function()
 end)
 
 local Noclip = Tabs.Player:AddToggle("Noclip1", {Title = "No Clip", Default = false })
-Options.Noclip1:SetValue(false)
 Noclip:OnChanged(function(Value)
     _G.LOf = Value
 end)
@@ -6777,28 +6730,29 @@ Tabs.Race:AddButton({
     Title = "Teleport To Doors Trial",
     Description = "",
     Callback = function()
-        local player = game.Players.LocalPlayer
-        local humanoidRootPart = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
-        local raceValue = player.Data.Race.Value
-        if humanoidRootPart and raceValue then
-            for i = 1, 4 do
-                humanoidRootPart.CFrame = CFrame.new(28286.35546875, 14895.3017578125, 102.62469482421875)
-                wait(0.1)
-            end
-            wait(1)
-            if raceValue == "Fishman" then
+        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - PosTemplete.Position).Magnitude > 1000 then
+            Templeteleport()
+        elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - PosTemplete.Position).Magnitude < 1000 then
+            wait(0.3)
+            if game:GetService("Players").LocalPlayer.Data.Race.Value == "Fishman" then
+                wait(0.01)
                 topos(CFrame.new(28224.056640625, 14889.4267578125, -210.5872039794922))
-            elseif raceValue == "Human" then
+            elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Human" then
+                wait(0.01)
                 topos(CFrame.new(29237.294921875, 14889.4267578125, -206.94955444335938))
-            elseif raceValue == "Cyborg" then
+            elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Cyborg" then
+                wait(0.01)
                 topos(CFrame.new(28492.4140625, 14894.4267578125, -422.1100158691406))
-            elseif raceValue == "Skypiea" then
+            elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Skypiea" then
+                wait(0.01)
                 topos(CFrame.new(28967.408203125, 14918.0751953125, 234.31198120117188))
-            elseif raceValue == "Ghoul" then
+            elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Ghoul" then
+                wait(0.01)
                 topos(CFrame.new(28672.720703125, 14889.1279296875, 454.5961608886719))
-            elseif raceValue == "Mink" then
+            elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Mink" then
+                wait(0.01)
                 topos(CFrame.new(29020.66015625, 14889.4267578125, -379.2682800292969))
-            end
+            end     
         end
     end
 })
@@ -6821,7 +6775,6 @@ spawn(function()
 end)
 
 local TeleMirage = Tabs.Race:AddToggle("TeleMirage1", {Title = "Teleport To Mirage Island", Default = false })
-Options.TeleMirage1:SetValue(false)
 TeleMirage:OnChanged(function(Value)
     _G.AutoMysticIsland = Value
     StopTween(_G.AutoMysticIsland)
@@ -6842,7 +6795,6 @@ spawn(function()
 end)
 
 local TweenGear = Tabs.Race:AddToggle("TweenGear1", {Title = "Tween Gear", Default = false })
-Options.TweenGear1:SetValue(false)
 TweenGear:OnChanged(function(Value)
     _G.TweenMGear = Value
     StopTween(_G.TweenMGear)
@@ -6867,7 +6819,6 @@ spawn(function()
 end)
 
 local LockMoon = Tabs.Race:AddToggle("LockMoon1", {Title = "Lock Moon", Default = false })
-Options.LockMoon1:SetValue(false)
 LockMoon:OnChanged(function(Value)
     _G.LockCamToMoon = Value
 end)
@@ -6887,7 +6838,6 @@ spawn(function()
 end)
 
 local TeleO = Tabs.Race:AddToggle("TeleO1", {Title = "Teleport To Advanced Fruit Dealer", Default = false })
-Options.TeleO1:SetValue(false)
 TeleO:OnChanged(function(Value)
     _G.Miragenpc = Value
     StopTween(_G.Miragenpc)
@@ -6906,7 +6856,6 @@ spawn(function()
 end)
 
 local EspMira = Tabs.Race:AddToggle("EspMira1", {Title = "Esp Mirage Island", Default = false })
-Options.EspMira1:SetValue(false)
 EspMira:OnChanged(function(Value)
     MirageIslandESP = Value
     while MirageIslandESP do wait()
@@ -6946,7 +6895,6 @@ spawn(function()
 end)
 
 local Trial = Tabs.Race:AddToggle("Trial1", {Title = "Auto Trials Race", Default = false })
-Options.Trial1:SetValue(false)
 Trial:OnChanged(function(Value)
     _G.AutoQuestRace = Value
     StopTween(_G.AutoQuestRace)
@@ -7069,7 +7017,6 @@ spawn(function()
 end)
 
 local KillPl = Tabs.Race:AddToggle("KillPl1", {Title = "Auto Kill Player After Trials", Default = false })
-Options.KillPl1:SetValue(false)
 KillPl:OnChanged(function(Value)
     _G.KillAfterTrials = Value
     StopTween(_G.KillAfterTrials)
@@ -7149,31 +7096,26 @@ end)
 local Section = Tabs.StatsEsp:AddSection("Stats")
 
 local StatsMelee = Tabs.StatsEsp:AddToggle("StatsMele", {Title = "Auto Melee", Default = false })
-Options.StatsMele:SetValue(false)
 StatsMelee:OnChanged(function(Value)
     Melee = Value
 end)
 
 local StatsDefense = Tabs.StatsEsp:AddToggle("StatsDefens", {Title = "Auto Defense", Default = false })
-Options.StatsDefens:SetValue(false)
 StatsDefense:OnChanged(function(Value)
     Defense = Value
 end)
 
 local StatsSword = Tabs.StatsEsp:AddToggle("StatsSwor", {Title = "Auto Sword", Default = false })
-Options.StatsSwor:SetValue(false)
 StatsSword:OnChanged(function(Value)
     Sword = Value
 end)
 
 local StatsGun = Tabs.StatsEsp:AddToggle("StatsGu", {Title = "Auto Gun", Default = false })
-Options.StatsGu:SetValue(false)
 StatsGun:OnChanged(function(Value)
     Gun = Value
 end)
 
 local StatsDemonFruit = Tabs.StatsEsp:AddToggle("StatsDemonFrui", {Title = "Auto Devil Fruit", Default = false })
-Options.StatsDemonFrui:SetValue(false)
 StatsDemonFruit:OnChanged(function(Value)
     DemonFruit = Value
 end)
@@ -7240,14 +7182,13 @@ local PointStats = Tabs.StatsEsp:AddSlider("PointStats", {
 local Section = Tabs.StatsEsp:AddSection("Esp")
 
 local EspPlayer = Tabs.StatsEsp:AddToggle("EspPlaye", {Title = "Esp Player", Default = false })
-Options.EspPlaye:SetValue(false)
 EspPlayer:OnChanged(function(Value)
     ESPPlayer = Value
 	UpdatePlayerChams()
 end)
 
 local EspIsland = Tabs.StatsEsp:AddToggle("EspIslan", {Title = "Esp Island", Default = false })
-Options.EspIslan:SetValue(false)
+
 EspIsland:OnChanged(function(Value)
     IslandESP = Value
     while IslandESP do wait()
@@ -7256,21 +7197,18 @@ EspIsland:OnChanged(function(Value)
 end)
 
 local EspFruit = Tabs.StatsEsp:AddToggle("EspFrui", {Title = "Esp Devil Fruit", Default = false })
-Options.EspFrui:SetValue(false)
 EspFruit:OnChanged(function(Value)
     DevilFruitESP = Value
 	UpdateDevilChams()
 end)
 
 local EspHoa = Tabs.StatsEsp:AddToggle("EspHo", {Title = "Esp Flower", Default = false })
-Options.EspHo:SetValue(false)
 EspHoa:OnChanged(function(Value)
     FlowerESP = Value
 	UpdateFlowerChams()
 end)
 
 local EspChest = Tabs.StatsEsp:AddToggle("EspRuong", {Title = "Esp Chest", Default = false })
-Options.EspRuong:SetValue(false)
 EspChest:OnChanged(function(Value)
     ChestESP = Value
 	UpdateChestChams()
@@ -7407,7 +7345,6 @@ end)
 end
 
 local TeleportIsland = Tabs.Teleport:AddToggle("TeleportIslan", {Title = "Teleport To Island", Default = false })
-Options.TeleportIslan:SetValue(false)
 TeleportIsland:OnChanged(function(Value)
     _G.TeleportIsland = Value
     if _G.TeleportIsland == true then
@@ -7718,7 +7655,6 @@ Input:OnChanged(function(Value)
 end)
 
 local SpamJoin = Tabs.StatusServer:AddToggle("SpamJoin1", {Title = "Spam Join Job Id", Default = false })
-Options.SpamJoin1:SetValue(false)
 SpamJoin:OnChanged(function(Value)
     _G.Join = Value
 end)
@@ -8215,7 +8151,6 @@ Tabs.Setting:AddButton({
 local Section = Tabs.Setting:AddSection("Other")
 
 local RejoinSv = Tabs.Setting:AddToggle("RejoinS", {Title = "Auto Rejoin When Disconnect", Default = true })
-Options.RejoinS:SetValue(true)
 RejoinSv:OnChanged(function(Value)
     _G.AutoRejoin = Value
 end)
@@ -8233,7 +8168,6 @@ spawn(function()
 end)
 
 local BypassTele = Tabs.Setting:AddToggle("BypassTel", {Title = "Bypass Tp", Default = false })
-Options.BypassTel:SetValue(false)
 BypassTele:OnChanged(function(Value)
     BypassTP = Value
 end)
