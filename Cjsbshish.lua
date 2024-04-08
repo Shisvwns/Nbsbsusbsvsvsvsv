@@ -2611,7 +2611,7 @@ end
 
 local lp = game.Players.LocalPlayer
 
-function TweenPos(Pos)
+function topos(Pos)
     if not Pos then return end 
     lp.Character:WaitForChild("HumanoidRootPart", 9)
     lp.Character:WaitForChild("Head", 9)
