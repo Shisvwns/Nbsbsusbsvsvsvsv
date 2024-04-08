@@ -2604,38 +2604,19 @@ function TP(Pos)
     _G.Clip = false
 end
 
-function WaitHRP(q0) 
-    if not q0 then return end
-    return q0.Character:WaitForChild("HumanoidRootPart", 9) 
-end
-
-local lp = game.Players.LocalPlayer
-
 function topos(Pos)
-    if not Pos then
-    lp.Character:WaitForChild("HumanoidRootPart", 9)
-    lp.Character:WaitForChild("Head", 9)
-    if not lp.Character.HumanoidRootPart:FindFirstChild("Hold") then
-        local Hold = Instance.new("BodyVelocity", lp.Character.HumanoidRootPart)
-        Hold.Name = "Hold"
-        Hold.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
-        Hold.Velocity = Vector3.new(0, 0, 0)
+    Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    if game.Players.LocalPlayer.Character.Humanoid.Sit == true then game.Players.LocalPlayer.Character.Humanoid.Sit = false end
+    pcall(function() tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/210, Enum.EasingStyle.Linear),{CFrame = Pos}) end)
+    tween:Play()
+    if Distance <= 250 then
+        tween:Cancel()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
     end
-    if not lp.Character:FindFirstChild("PartTele") then
-        local PartTele = Instance.new("Part", lp.Character) -- Create part
-        PartTele.Size = Vector3.new(10,1,10)
-        PartTele.Name = "PartTele"
-        PartTele.Anchored = true
-        PartTele.Transparency = 1
-        PartTele.CanCollide = false
-        PartTele.CFrame = WaitHRP(lp).CFrame 
-        PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
-            task.wait(0.01)
-            WaitHRP(lp).CFrame = PartTele.CFrame
-        end)
+    if _G.StopTween == true then
+        tween:Cancel()
+        _G.Clip = false
     end
-Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear),{CFrame = Pos})
-Tween:Play() 
 end
 
 -- [ Tween Boat ]
@@ -3747,7 +3728,7 @@ spawn(function()
 			            repeat task.wait()
 			                EquipWeapon(_G.SelectWeapon)
 			                AutoHaki()
-			                topos(CFrame.new())
+			                topos(v.HumanoidRootPart.CFrame * Pos)
 			                v.HumanoidRootPart.CanCollide = false
 			                Fastattack = true
 			                v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
@@ -3833,7 +3814,7 @@ spawn(function()
                                     v.HumanoidRootPart.CanCollide = false
                                     v.Humanoid.WalkSpeed = 0
                                     v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                    topos(CFrame.new())
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
                                     game:GetService("VirtualUser"):CaptureController()
                                     game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
                                     sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",math.huge)
@@ -3861,7 +3842,7 @@ spawn(function()
                                                 v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                                                 MagnetDought = true
                                                 PosMonDoughtOpenDoor = v.HumanoidRootPart.CFrame
-                                                topos(CFrame.new())
+                                                topos(v.HumanoidRootPart.CFrame * Pos)
                                                 game:GetService("VirtualUser"):CaptureController()
                                                 game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
                                             until not _G.AutoDoughtBoss or not v.Parent or v.Humanoid.Health <= 0 or game:GetService("Workspace").Map.CakeLoaf.BigMirror.Other.Transparency == 0 or game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince [Lv. 2300] [Raid Boss]") or game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince [Lv. 2300] [Raid Boss]") or KillMob == 0
@@ -3928,7 +3909,7 @@ spawn(function()
                                     v.HumanoidRootPart.CanCollide = false
                                     v.Humanoid.WalkSpeed = 0
                                     v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                    topos(CFrame.new())
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
                                     game:GetService("VirtualUser"):CaptureController()
                                     game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
                                     sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",math.huge)
@@ -3979,7 +3960,7 @@ spawn(function()
                                             EquipWeapon(_G.SelectWeapon)
                                             AutoHaki()                                            
                                             PosMonCake = v.HumanoidRootPart.CFrame
-                                            topos(CFrame.new())
+                                            topos(v.HumanoidRootPart.CFrame * Pos)
                                             v.HumanoidRootPart.CanCollide = false
                                             v.Humanoid.WalkSpeed = 0
                                             v.Head.CanCollide = false
@@ -4033,7 +4014,7 @@ spawn(function()
                                     v.HumanoidRootPart.CanCollide = false
                                     v.Humanoid.WalkSpeed = 0
                                     v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                    topos(CFrame.new())
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
                                     game:GetService("VirtualUser"):CaptureController()
                                     game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
                                     sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",math.huge)
@@ -4101,7 +4082,7 @@ local BonePos = CFrame.new(-9506.234375, 172.130615234375, 6117.0771484375)
                                         v.Head.CanCollide = false 
                                         StartMagnetBoneMon = true
                                         PosMonBone = v.HumanoidRootPart.CFrame
-                                        topos(CFrame.new())
+                                        topos(v.HumanoidRootPart.CFrame * Pos)
                                         game:GetService("VirtualUser"):CaptureController()
                                         game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
                                     until not _G.Auto_Bone or not v.Parent or v.Humanoid.Health <= 0
@@ -4173,7 +4154,7 @@ local BonePos = CFrame.new(-9506.234375, 172.130615234375, 6117.0771484375)
                                                 EquipWeapon(_G.SelectWeapon)
                                                 AutoHaki()                                            
                                                 PosMonBone = v.HumanoidRootPart.CFrame
-                                                topos(CFrame.new())
+                                                topos(v.HumanoidRootPart.CFrame * Pos)
                                                 v.HumanoidRootPart.CanCollide = false
                                                 v.Humanoid.WalkSpeed = 0
                                                 v.Head.CanCollide = false
@@ -4256,7 +4237,7 @@ spawn(function()
                                     v.HumanoidRootPart.CanCollide = false
                                     v.Humanoid.WalkSpeed = 0
                                     v.HumanoidRootPart.Size = Vector3.new(80,80,80)                             
-                                    topos(CFrame.new())
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
                                     game:GetService("VirtualUser"):CaptureController()
                                     game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
                                     sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
@@ -4392,7 +4373,7 @@ spawn(function()
                                     SelectMag = true
                                     PosMon = v.HumanoidRootPart.CFrame
                                     v.HumanoidRootPart.Size = Vector3.new(80,80,80)                             
-                                    topos(CFrame.new())
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
                                     game:GetService("VirtualUser"):CaptureController()
                                     game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
                                 until not _G.AutoFarmMob or not v.Parent or v.Humanoid.Health <= 0
@@ -4450,7 +4431,7 @@ spawn(function()
                                     AutoHaki()
                                     MakoriGayMag = true
                                     EquipWeapon(_G.SelectWeapon)
-                                    topos(CFrame.new())
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
                                     v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
                                     v.HumanoidRootPart.Transparency = 1
                                     v.Humanoid.JumpPower = 0
@@ -4468,7 +4449,7 @@ spawn(function()
                     for i,v in pairs(game:GetService("Workspace")["_WorldOrigin"].EnemySpawns:GetChildren()) do
                         if string.find(v.Name, Mon) then
                             if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).Magnitude >= 10 then
-                                topos(CFrame.new())
+                                topos(v.HumanoidRootPart.CFrame * Pos)
                             end
                         end
                     end
@@ -5042,7 +5023,7 @@ spawn(function()
                                     EquipWeapon(_G.SelectWeapon)
                                     v.HumanoidRootPart.CanCollide = false
                                     v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-                                    topos(CFrame.new())
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
                                     Click()
                                 until v.Humanoid.Health <= 0 or not v.Parent or not _G.RaidPirate
                             end
@@ -5133,7 +5114,7 @@ spawn(function()
                                             v.HumanoidRootPart.CanCollide = false
                                             v.Humanoid.WalkSpeed = 0
                                             v.Head.CanCollide = false
-                                            topos(CFrame.new())
+                                            topos(v.HumanoidRootPart.CFrame * Pos)
                                             game:GetService("VirtualUser"):CaptureController()
                                             game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
                                             v.HumanoidRootPart.Size = Vector3.new(50,50,50)
@@ -5536,7 +5517,7 @@ spawn(function()
                                     v.Humanoid.WalkSpeed = 0
                                     PosNarathiwat = v.HumanoidRootPart.CFrame
                                     v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                    topos(CFrame.new())
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
                                     SEvent = true
                                     game:GetService("VirtualUser"):CaptureController()
                                     game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
@@ -5576,7 +5557,7 @@ spawn(function()
                                     v.Humanoid.WalkSpeed = 0
                                     v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                                     PosNarathiwat = v.HumanoidRootPart.CFrame
-                                    topos(CFrame.new())
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
                                     SEvent = true
                                     game:GetService("VirtualUser"):CaptureController()
                                     game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
@@ -5616,7 +5597,7 @@ spawn(function()
                                     v.Humanoid.WalkSpeed = 0
                                     PosNarathiwat = v.HumanoidRootPart.CFrame
                                     v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                    topos(CFrame.new())
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
                                     SEvent = true
                                     game:GetService("VirtualUser"):CaptureController()
                                     game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
@@ -5657,7 +5638,7 @@ spawn(function()
                                     PosNarathiwat = v.HumanoidRootPart.CFrame
                                     v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                                     SEvent = true
-                                    topos(CFrame.new())
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
                                     game:GetService("VirtualUser"):CaptureController()
                                     game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
                                 until not  _G.Fish_Crew_Member or not v.Parent or v.Humanoid.Health <= 0
@@ -5788,7 +5769,7 @@ spawn(function()
                                     OldCFrameRainbow = v.HumanoidRootPart.CFrame
                                     repeat task.wait()
                                         EquipWeapon(_G.SelectWeapon)
-                                        topos(CFrame.new())
+                                        topos(v.HumanoidRootPart.CFrame * Pos)
                                         v.HumanoidRootPart.CanCollide = false
                                         v.HumanoidRootPart.CFrame = OldCFrameRainbow
                                         v.HumanoidRootPart.Size = Vector3.new(50,50,50)
@@ -5808,7 +5789,7 @@ spawn(function()
                                     OldCFrameRainbow = v.HumanoidRootPart.CFrame
                                     repeat task.wait()
                                         EquipWeapon(_G.SelectWeapon)
-                                        topos(CFrame.new())
+                                        topos(v.HumanoidRootPart.CFrame * Pos)
                                         v.HumanoidRootPart.CanCollide = false
                                         v.HumanoidRootPart.CFrame = OldCFrameRainbow
                                         v.HumanoidRootPart.Size = Vector3.new(50,50,50)
@@ -5828,7 +5809,7 @@ spawn(function()
                                     OldCFrameRainbow = v.HumanoidRootPart.CFrame
                                     repeat task.wait()
                                         EquipWeapon(_G.SelectWeapon)
-                                        topos(CFrame.new())
+                                        topos(v.HumanoidRootPart.CFrame * Pos)
                                         v.HumanoidRootPart.CanCollide = false
                                         v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                                         v.HumanoidRootPart.CFrame = OldCFrameRainbow
@@ -5848,7 +5829,7 @@ spawn(function()
                                     OldCFrameRainbow = v.HumanoidRootPart.CFrame
                                     repeat task.wait()
                                         EquipWeapon(_G.SelectWeapon)
-                                        topos(CFrame.new())
+                                        topos(v.HumanoidRootPart.CFrame * Pos)
                                         v.HumanoidRootPart.CanCollide = false
                                         v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                                         v.HumanoidRootPart.CFrame = OldCFrameRainbow
@@ -5868,7 +5849,7 @@ spawn(function()
                                     OldCFrameRainbow = v.HumanoidRootPart.CFrame
                                     repeat task.wait()
                                         EquipWeapon(_G.SelectWeapon)
-                                        topos(CFrame.new())
+                                        topos(v.HumanoidRootPart.CFrame * Pos)
                                         v.HumanoidRootPart.CanCollide = false
                                         v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                                         v.HumanoidRootPart.CFrame = OldCFrameRainbow
@@ -6085,7 +6066,7 @@ spawn(function()
                                     v.HumanoidRootPart.CanCollide = false
                                     v.Humanoid.WalkSpeed = 0
                                     v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                    topos(CFrame.new())
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
                                     game:GetService("VirtualUser"):CaptureController()
                                     game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
                                     sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",math.huge)
@@ -6317,10 +6298,10 @@ spawn(function()
                     if v:FindFirstChild("HazeESP") then
                         repeat wait()
                             if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 2000 then
-                                topos(CFrame.new())
+                                topos(v.HumanoidRootPart.CFrame * Pos)
                             else
                                 EquipWeapon(Sword)
-                                topos(CFrame.new())
+                                topos(v.HumanoidRootPart.CFrame * Pos)
                                 v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
                                 v.HumanoidRootPart.Transparency = 1
                                 v.Humanoid.JumpPower = 0
@@ -6366,7 +6347,7 @@ spawn(function()
                                     if v.Humanoid.Health > 0 then
                                         repeat wait()
                                             EquipWeapon(Sword)
-                                            topos(CFrame.new())
+                                            topos(v.HumanoidRootPart.CFrame * Pos)
                                             v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
                                             v.HumanoidRootPart.Transparency = 1
                                             v.Humanoid.JumpPower = 0
@@ -6445,7 +6426,7 @@ spawn(function()
                             if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 2000 then
                                 repeat wait()
                                     EquipWeapon(Sword)
-                                    topos(CFrame.new())
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
                                     v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
                                     v.HumanoidRootPart.Transparency = 1
                                     v.Humanoid.JumpPower = 0
@@ -6481,7 +6462,7 @@ spawn(function()
                                 if v.Humanoid.Health > 0 then
                                     repeat wait()
                                         EquipWeapon(Sword)
-                                        topos(CFrame.new())
+                                        topos(v.HumanoidRootPart.CFrame * Pos)
                                         v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
                                         v.HumanoidRootPart.Transparency = 1
                                         v.Humanoid.JumpPower = 0
@@ -6510,7 +6491,7 @@ spawn(function()
                                     if v.Humanoid.Health > 0 then
                                         repeat wait()
                                             EquipWeapon(Sword)
-                                            topos(CFrame.new())
+                                            topos(v.HumanoidRootPart.CFrame * Pos)
                                             v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
                                             v.HumanoidRootPart.Transparency = 1
                                             v.Humanoid.JumpPower = 0
@@ -6583,7 +6564,7 @@ spawn(function()
                                             repeat task.wait()
                                                 AutoHaki()
                                                 EquipWeapon(_G.SelectWeapon)
-                                                topos(CFrame.new())
+                                                topos(v.HumanoidRootPart.CFrame * Pos)
                                                 v.HumanoidRootPart.CanCollide = false
                                                 v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                                                 game:GetService("VirtualUser"):CaptureController()
@@ -6629,7 +6610,7 @@ spawn(function()
                                             EquipWeapon(_G.SelectWeapon)
                                             AutoHaki()
                                             v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                            topos(CFrame.new())
+                                            topos(v.HumanoidRootPart.CFrame * Pos)
                                             v.HumanoidRootPart.CanCollide = false
                                             game:GetService'VirtualUser':CaptureController()
                                             game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
@@ -6663,7 +6644,7 @@ spawn(function()
                                             AutoHaki()
                                             v.HumanoidRootPart.CanCollide = false
                                             v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                            topos(CFrame.new())
+                                            topos(v.HumanoidRootPart.CFrame * Pos)
                                             v.HumanoidRootPart.CanCollide = false
                                             v.HumanoidRootPart.CFrame = OldCFrameElephant
                                             game:GetService("VirtualUser"):CaptureController()
