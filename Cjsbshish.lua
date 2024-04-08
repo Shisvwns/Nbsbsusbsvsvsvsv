@@ -2612,7 +2612,7 @@ end
 local lp = game.Players.LocalPlayer
 
 function topos(Pos)
-    if not Pos then return end 
+    if not Pos then
     lp.Character:WaitForChild("HumanoidRootPart", 9)
     lp.Character:WaitForChild("Head", 9)
     if not lp.Character.HumanoidRootPart:FindFirstChild("Hold") then
