@@ -2604,36 +2604,39 @@ function TP(Pos)
     _G.Clip = false
 end
 
-function WaitHRP(q0) 
-    if not q0 then return end
-    return q0.Character:WaitForChild("HumanoidRootPart", 9) 
-end
-
 function topos(Pos)
     if not Pos then return end 
-    lp.Character:WaitForChild("HumanoidRootPart", 9)
+    local lp = game.Players.LocalPlayer
+    local hrp = WaitHRP(lp)
+    if not hrp then return end
+    
     lp.Character:WaitForChild("Head", 9)
+    
     if not lp.Character.HumanoidRootPart:FindFirstChild("Hold") then
         local Hold = Instance.new("BodyVelocity", lp.Character.HumanoidRootPart)
         Hold.Name = "Hold"
         Hold.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
         Hold.Velocity = Vector3.new(0, 0, 0)
     end
+    
     if not lp.Character:FindFirstChild("PartTele") then
-        local PartTele = Instance.new("Part", lp.Character) -- Create part
-        PartTele.Size = Vector3.new(10,1,10)
+        local PartTele = Instance.new("Part", lp.Character)
+        PartTele.Size = Vector3.new(10, 1, 10)
         PartTele.Name = "PartTele"
         PartTele.Anchored = true
         PartTele.Transparency = 1
         PartTele.CanCollide = false
-        PartTele.CFrame = WaitHRP(lp).CFrame 
+        PartTele.CFrame = hrp.CFrame 
+        
         PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
             task.wait(0.01)
-            WaitHRP(lp).CFrame = PartTele.CFrame
+            hrp.CFrame = PartTele.CFrame
         end)
     end
-Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear),{CFrame = Pos})
-Tween:Play() 
+    
+    local Distance = (Pos.Position - hrp.Position).magnitude
+    local Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear), {CFrame = Pos})
+    Tween:Play() 
 end
 
 -- [ Tween Boat ]
