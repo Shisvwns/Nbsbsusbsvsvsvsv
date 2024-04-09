@@ -2556,22 +2556,6 @@ end
 function TelePPlayer(P)
 	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = P
 end
-    
-
-function TP1(Pos)
-    Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-    if game.Players.LocalPlayer.Character.Humanoid.Sit == true then game.Players.LocalPlayer.Character.Humanoid.Sit = false end
-    pcall(function() tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/210, Enum.EasingStyle.Linear),{CFrame = Pos}) end)
-    tween:Play()
-    if Distance <= 250 then
-        tween:Cancel()
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
-    end
-    if _G.StopTween == true then
-        tween:Cancel()
-        _G.Clip = false
-    end
-end
 
 function TP(Pos)
     Distance = (Pos.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
@@ -2620,7 +2604,7 @@ function topos(Pos)
             WaitHRP(game.Players.LocalPlayer).CFrame = PartTele.CFrame
         end)
     end
-pcall(function() Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear),{CFrame = Pos}) end)
+pcall(function() Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.PartTele, TweenInfo.new(Distance / _G.Speed, Enum.EasingStyle.Linear),{CFrame = Pos}) end)
 Tween:Play()
 if Distance <= 250 then
     Tween:Cancel()
@@ -3620,10 +3604,10 @@ spawn(function()
                     if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQuest.Position).Magnitude > 1500 then
 					BTP(CFrameQuest)
 					elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQuest.Position).Magnitude < 1500 then
-					TP1(CFrameQuest)
+					topos(CFrameQuest)
 					end
 				else
-					TP1(CFrameQuest)
+					topos(CFrameQuest)
 				end
 				if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQuest.Position).Magnitude <= 5 then
 					game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest",NameQuest,LevelQuest)
@@ -3639,7 +3623,7 @@ spawn(function()
                                             EquipWeapon(_G.SelectWeapon)
                                             AutoHaki()                                            
                                             PosMon = v.HumanoidRootPart.CFrame
-                                            TP1(v.HumanoidRootPart.CFrame * Pos)
+                                            topos(v.HumanoidRootPart.CFrame * Pos)
                                             v.HumanoidRootPart.CanCollide = false
                                             v.Humanoid.WalkSpeed = 0
                                             v.Head.CanCollide = false
@@ -3656,11 +3640,11 @@ spawn(function()
                             end
                         end
                     else
-                        TP1(CFrameMon)
+                        topos(CFrameMon)
                         UnEquipWeapon(_G.SelectWeapon)
                         StartMagnet = false
                         if game:GetService("ReplicatedStorage"):FindFirstChild(Mon) then
-                         TP1(game:GetService("ReplicatedStorage"):FindFirstChild(Mon).HumanoidRootPart.CFrame * CFrame.new(15,10,2))
+                         topos(game:GetService("ReplicatedStorage"):FindFirstChild(Mon).HumanoidRootPart.CFrame * CFrame.new(15,10,2))
                         end
                     end
                 end
@@ -3686,10 +3670,10 @@ spawn(function()
                     if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameMon.Position).Magnitude > 1500 then
 					BTP(CFrameMon)
 					elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameMon.Position).Magnitude < 1500 then
-					TP1(CFrameMon)
+					topos(CFrameMon)
 					end
 				else
-					TP1(CFrameMon)
+					topos(CFrameMon)
 				end
                 elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
                     CheckQuest()
@@ -3702,7 +3686,7 @@ spawn(function()
                                             EquipWeapon(_G.SelectWeapon)
                                             AutoHaki()                                            
                                             PosMon = v.HumanoidRootPart.CFrame
-                                            TP1(v.HumanoidRootPart.CFrame * Pos)
+                                            topos(v.HumanoidRootPart.CFrame * Pos)
                                             v.HumanoidRootPart.CanCollide = false
                                             v.Humanoid.WalkSpeed = 0
                                             v.Head.CanCollide = false
@@ -3719,11 +3703,11 @@ spawn(function()
                             end
                         end
                     else
-                        TP1(CFrameMon)
+                        topos(CFrameMon)
                         UnEquipWeapon(_G.SelectWeapon)
                         StartMagnet = false
                         if game:GetService("ReplicatedStorage"):FindFirstChild(Mon) then
-                        TP1(game:GetService("ReplicatedStorage"):FindFirstChild(Mon).HumanoidRootPart.CFrame * CFrame.new(15,10,2))
+                        topos(game:GetService("ReplicatedStorage"):FindFirstChild(Mon).HumanoidRootPart.CFrame * CFrame.new(15,10,2))
                         end
                     end
                 end
@@ -7217,7 +7201,7 @@ spawn(function()
                                 AutoHaki()
                                 EquipWeapon(_G.SelectWeapon)
                                 NameTarget = v.Name
-                                TP1(v.HumanoidRootPart.CFrame * CFrame.new(0,0,5))
+                                topos(v.HumanoidRootPart.CFrame * CFrame.new(0,0,5))
                                 v.HumanoidRootPart.CanCollide = false
                                 v.Head.CanCollide = false
                                 v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
@@ -8372,6 +8356,20 @@ function FPSBooster()
         end
     end
 end
+
+local Section = Tabs.Setting:AddSection("Teleport Speed")
+
+local TeleportSpeed = Tabs.Setting:AddSlider("Tepeed", {
+    Title = "Teleport Speed",
+    Description = "",
+    Default = 350,
+    Min = 0,
+    Max = 400,
+    Rounding = 0,
+    Callback = function(Value)
+        _G.Speed = Value
+     end
+})
 
 local Section = Tabs.Setting:AddSection("Team")
 
