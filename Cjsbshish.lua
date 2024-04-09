@@ -2604,7 +2604,7 @@ function topos(Pos)
             WaitHRP(game.Players.LocalPlayer).CFrame = PartTele.CFrame
         end)
     end
-pcall(function() Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.PartTele, TweenInfo.new(Distance / SpeedTL, Enum.EasingStyle.Linear),{CFrame = Pos}) end)
+pcall(function() Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.PartTele, TweenInfo.new(Distance / 375, Enum.EasingStyle.Linear),{CFrame = Pos}) end)
 Tween:Play()
 if Distance <= 250 then
     Tween:Cancel()
@@ -8356,23 +8356,6 @@ function FPSBooster()
         end
     end
 end
-
-local Section = Tabs.Setting:AddSection("Teleport Speed")
-
-local TeleportSpeed = Tabs.Setting:AddSlider("Tepeed", {
-    Title = "Teleport Speed",
-    Description = "",
-    Default = 350,
-    Min = 0,
-    Max = 400,
-    Rounding = 0,
-    Callback = function(Value)
-        SpeedTL = Value
-     end
-})
-TeleportSpeed:OnChanged(function(Value)
-    SpeedTL = Value
-end)
 
 local Section = Tabs.Setting:AddSection("Team")
 
