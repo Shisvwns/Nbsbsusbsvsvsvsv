@@ -7056,25 +7056,6 @@ spawn(function()
     end
 end)
 
-function CheckRace()
-local a = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Wenlocktoad","1")
-local b = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Alchemist","1")
-
-if game.Players.LocalPlayer.Character:FindFirstChild("RaceTransformed") then
-return game:GetService("Players").LocalPlayer.Data.Race.Value.." V4"
-end
-
-if a == -2 then
-return game:GetService("Players").LocalPlayer.Data.Race.Value.." V3"
-end
-
-if b == -2 then
-return game:GetService("Players").LocalPlayer.Data.Race.Value.." V2"
-end
-
-return game:GetService("Players").LocalPlayer.Data.Race.Value.." V1"
-end
-
 local RaceCheck = Tabs.Race:AddParagraph({
     Title = "Check Race",
     Content = "..."
@@ -7083,7 +7064,7 @@ local RaceCheck = Tabs.Race:AddParagraph({
 spawn(function()
     while wait() do
         pcall(function()
-            RaceCheck:SetDesc("Race: "..CheckRace())
+            RaceCheck:SetDesc("Race: "..game:GetService("Players").LocalPlayer.Data.Race.Value)
         end)
     end
 end)
