@@ -3559,11 +3559,6 @@ local YourLevel = Tabs.Farm:AddParagraph({
     Content = "..."
 })
 
-local YourLevel1 = Tabs.Farm:AddParagraph({
-    Title = "Your Level",
-    Content = "..."
-})
-
 spawn(function()
     while wait() do
         pcall(function()
@@ -7059,6 +7054,38 @@ spawn(function()
     end
 end)
 
+function CheckRace()
+local a = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Wenlocktoad","1")
+local b = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Alchemist","1")
+
+if game.Players.LocalPlayer.Character:FindFirstChild("RaceTransformed") then
+return game:GetService("Players").LocalPlayer.Data.Race.Value.." V4"
+end
+
+if a == -2 then
+return game:GetService("Players").LocalPlayer.Data.Race.Value.." V3"
+end
+
+if b == -2 then
+return game:GetService("Players").LocalPlayer.Data.Race.Value.." V2"
+end
+
+return game:GetService("Players").LocalPlayer.Data.Race.Value.." V1"
+end
+
+local CRace = Tabs.Race:AddParagraph({
+    Title = "Check Race",
+    Content = CheckRace()
+})
+
+spawn(function()
+    while wait() do
+        pcall(function()
+            CheckRace()
+        end)
+    end
+end)
+
 local Trial = Tabs.Race:AddToggle("Trial1", {Title = "Auto Trials Race", Default = false })
 Trial:OnChanged(function(Value)
     _G.AutoQuestRace = Value
@@ -7243,7 +7270,7 @@ function CheckAncientOneStatus()
     return "Remaining " .. 10 - v228 .. " training sessions."
 end
 
-local Moon1 = Tabs.Race:AddParagraph({
+local AnOn = Tabs.Race:AddParagraph({
     Title = "Ancient One Status",
     Content = CheckAncientOneStatus()
 })
