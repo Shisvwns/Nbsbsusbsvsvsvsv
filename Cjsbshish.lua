@@ -7025,35 +7025,6 @@ end)
 
 local Section = Tabs.Race:AddSection("Trials")
 
-local Moon1 = Tabs.Race:AddParagraph({
-    Title = "Moon Status",
-    Content = "..."
-})
-
-spawn(function()
-    while wait() do
-        if game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709150401" then
-            Moon1:SetDesc("Moon: 🌒 25% | Bad Moon")
-        elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709150086" then
-            Moon1:SetDesc("Moon: 🌓 50% | Bad Moon")
-        elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709149680" then
-            Moon1:SetDesc("Moon: 🌔 75% | Bad Moon")
-        elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709149431" then
-            Moon1:SetDesc("Moon: 🌕 100% | Full Moon")
-        elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709149052" then
-            Moon1:SetDesc("Moon: 🌖 75% | Next Night Will Be Full Moon")
-        elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709143733" then
-            Moon1:SetDesc("Moon: 🌗 50% | 1 More Nights Will Be Full Moon")
-        elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709139597" then
-            Moon1:SetDesc("Moon: 🌘 25% | 2 More Nights Will Be Full Moon")
-        elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709135895" then
-            Moon1:SetDesc("Moon: 🌑 0% | 3 More Nights Will Be Full Moon")
-        else
-            Moon1:SetDesc("Moon: 🌑 0% | Please Come To Third Sea")
-        end
-    end
-end)
-
 function CheckRace()
 local a = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Wenlocktoad","1")
 local b = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Alchemist","1")
@@ -7074,14 +7045,14 @@ return game:GetService("Players").LocalPlayer.Data.Race.Value.." V1"
 end
 
 local CRace = Tabs.Race:AddParagraph({
-    Title = "Check Race",
-    Content = CheckRace()
+    Title = "Your Race",
+    Content = "..."
 })
 
 spawn(function()
     while wait() do
         pcall(function()
-            CheckRace()
+            CRace:SetDesc("Race: "..CheckRace())
         end)
     end
 end)
@@ -7264,21 +7235,21 @@ function CheckAncientOneStatus()
         if v229 == 0 then
             return "Ready For Trial"
         else
-            return "You have yet to achieve greatness"
+            return "You Have Yet To Achieve Greatness"
         end
     end
-    return "Remaining " .. 10 - v228 .. " training sessions."
+    return "Remaining " .. 10 - v228 .. " Training Sessions"
 end
 
 local AnOn = Tabs.Race:AddParagraph({
     Title = "Ancient One Status",
-    Content = CheckAncientOneStatus()
+    Content = "..."
 })
 
 spawn(function()
     while wait() do
         pcall(function()
-            CheckAncientOneStatus()
+            AnOn:SetDesc("Ancient One"..CheckAncientOneStatus())
         end)
     end
 end)
@@ -7682,34 +7653,93 @@ spawn(function()
     end
 end)
 
+function MoonTextureId()
+    if World1 then
+        return game:GetService("Lighting").FantasySky.MoonTextureId
+    elseif World2 then
+        return game:GetService("Lighting").FantasySky.MoonTextureId
+    elseif World3 then
+        return game:GetService("Lighting").Sky.MoonTextureId
+    end
+end
+function CheckMoon()
+    moon8 = "http://www.roblox.com/asset/?id=9709150401"
+    moon7 = "http://www.roblox.com/asset/?id=9709150086"
+    moon6 = "http://www.roblox.com/asset/?id=9709149680"
+    moon5 = "http://www.roblox.com/asset/?id=9709149431"
+    moon4 = "http://www.roblox.com/asset/?id=9709149052"
+    moon3 = "http://www.roblox.com/asset/?id=9709143733"
+    moon2 = "http://www.roblox.com/asset/?id=9709139597"
+    moon1 = "http://www.roblox.com/asset/?id=9709135895"
+    moonreal = MoonTextureId()
+    cofullmoonkothangbeo = "Bad Moon"
+    if moonreal == moon5 or moonreal == moon4 then
+        if moonreal == moon5 then
+            cofullmoonkothangbeo = "Full Moon"
+        elseif moonreal == moon4 then
+            cofullmoonkothangbeo = "Next Night"
+        end
+    end
+    return cofullmoonkothangbeo
+end
+function function7()
+    GameTime = "Error"
+    local c = game.Lighting
+    local ao = c.ClockTime
+    if ao >= 18 or ao < 5 then
+        GameTime = "Night"
+    else
+        GameTime = "Day"
+    end
+    return GameTime
+end
+function function6()
+    return math.floor(game.Lighting.ClockTime)
+end
+function getServerTime()
+    RealTime = tostring(math.floor(game.Lighting.ClockTime * 100) / 100)
+    RealTime = tostring(game.Lighting.ClockTime)
+    RealTimeTable = RealTime:split(".")
+    Minute, Second = RealTimeTable[1], tonumber(0 + tonumber(RealTimeTable[2] / 100)) * 60
+    return Minute, Second
+end
+function function8()
+    local c = game.Lighting
+    local ao = c.ClockTime
+    if CheckMoon() == "Full Moon" and ao <= 5 then
+        return tostring(function6()) .. " ( Will End Moon In " .. math.floor(5 - ao) .. " Minutes )"
+    elseif CheckMoon() == "Full Moon" and (ao > 5 and ao < 12) then
+        return tostring(function6()) .. " ( Fake Moon )"
+    elseif CheckMoon() == "Full Moon" and (ao > 12 and ao < 18) then
+        return tostring(function6()) .. " ( Will Full Moon In " .. math.floor(18 - ao) .. " Minutes )"
+    elseif CheckMoon() == "Full Moon" and (ao > 18 and ao <= 24) then
+        return tostring(function6()) .. " ( Will End Moon In " .. math.floor(24 + 6 - ao) .. " Minutes )"
+    end
+    if CheckMoon() == "Next Night" and ao < 12 then
+        return tostring(function6()) .. " ( Will Full Moon In " .. math.floor(18 - ao) .. " Minutes )"
+    elseif CheckMoon() == "Next Night" and ao > 12 then
+        return tostring(function6()) .. " ( Will Full Moon In " .. math.floor(18 + 12 - ao) .. " Minutes )"
+    end
+    return tostring(function6())
+end
+function FullMoobCheck()
+ return function8()
+end
+
 local Moon = Tabs.StatusServer:AddParagraph({
     Title = "Moon Status",
     Content = "..."
 })
 
 spawn(function()
-    while wait() do
-        if game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709150401" then
-            Moon:SetDesc("Moon: 🌒 25% | Bad Moon")
-        elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709150086" then
-            Moon:SetDesc("Moon: 🌓 50% | Bad Moon")
-        elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709149680" then
-            Moon:SetDesc("Moon: 🌔 75% | Bad Moon")
-        elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709149431" then
-            Moon:SetDesc("Moon: 🌕 100% | Full Moon")
-        elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709149052" then
-            Moon:SetDesc("Moon: 🌖 75% | Next Night Will Be Full Moon")
-        elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709143733" then
-            Moon:SetDesc("Moon: 🌗 50% | 1 More Nights Will Be Full Moon")
-        elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709139597" then
-            Moon:SetDesc("Moon: 🌘 25% | 2 More Nights Will Be Full Moon")
-        elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709135895" then
-            Moon:SetDesc("Moon: 🌑 0% | 3 More Nights Will Be Full Moon")
-        else
-            Moon:SetDesc("Moon: 🌑 0% | Please Come To Third Sea")
-        end
+    while task.wait() do
+        pcall(function()
+            Moon:SetDesc(CheckMoon())
+        end)
     end
 end)
+
+
 
 local KillCake = Tabs.StatusServer:AddParagraph({
     Title = "Cake Prince Status",
