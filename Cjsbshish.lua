@@ -7056,11 +7056,6 @@ spawn(function()
     end
 end)
 
-local CRace = Tabs.Race:AddParagraph({
-    Title = "Race Check",
-    Content = "..."
-})
-
 local Trial = Tabs.Race:AddToggle("Trial1", {Title = "Auto Trials Race", Default = false })
 Trial:OnChanged(function(Value)
     _G.AutoQuestRace = Value
