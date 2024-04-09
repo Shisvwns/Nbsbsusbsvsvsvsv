@@ -1,6 +1,6 @@
 -- [ Ui Fluent ]
 
-local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/vinhuchi/rblx/main/FixedFluent.lua"))()
+local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/HuyLocDz/Ui/main/FluentFixed.lua"))()
 
 -- [ Name Hub ]
 local Window = Fluent:CreateWindow({
@@ -3555,6 +3555,11 @@ end)
 local Section = Tabs.Farm:AddSection("Farm Level")
 
 local YourLevel = Tabs.Farm:AddParagraph({
+    Title = "Your Level",
+    Content = "..."
+})
+
+local YourLevel1 = Tabs.Farm:AddParagraph({
     Title = "Your Level",
     Content = "..."
 })
