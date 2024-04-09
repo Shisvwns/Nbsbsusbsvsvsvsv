@@ -2603,21 +2603,39 @@ function TP(Pos)
 end
 
 function topos(Pos)
-    Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-    if game.Players.LocalPlayer.Character.Humanoid.Sit == true then game.Players.LocalPlayer.Character.Humanoid.Sit = false end
-    pcall(function() tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/210, Enum.EasingStyle.Linear),{CFrame = Pos}) end)
-    tween:Play()
-    if Distance <= 250 then
-        tween:Cancel()
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
+    if not Pos then return end 
+    game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart", 9)
+    game.Players.LocalPlayer.Character:WaitForChild("Head", 9)
+    if not game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("Hold") then
+        local Hold = Instance.new("BodyVelocity", game.Players.LocalPlayer.Character.HumanoidRootPart)
+        Hold.Name = "Hold"
+        Hold.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+        Hold.Velocity = Vector3.new(0, 0, 0)
     end
-    if _G.StopTween == true then
-        tween:Cancel()
-        _G.Clip = false
+    if not game.Players.LocalPlayer.Character:FindFirstChild("PartTele") then
+        local PartTele = Instance.new("Part", game.Players.LocalPlayer.Character) -- Create part
+        PartTele.Size = Vector3.new(10,1,10)
+        PartTele.Name = "PartTele"
+        PartTele.Anchored = true
+        PartTele.Transparency = 1
+        PartTele.CanCollide = false
+        PartTele.CFrame = WaitHRP(game.Players.LocalPlayer).CFrame 
+        PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
+            task.wait(0.01)
+            WaitHRP(game.Players.LocalPlayer).CFrame = PartTele.CFrame
+        end)
     end
+Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear),{CFrame = Pos})
+Tween:Play() 
+end
+
+function WaitHRP(q0) 
+    if not q0 then return end
+    return q0.Character:WaitForChild("HumanoidRootPart", 9) 
 end
 
 -- [ Tween Boat ]
+
 function TPB(CFgo)
 	local tween_s = game:service"TweenService"
 	local info = TweenInfo.new((game:GetService("Workspace").Boats.PirateBrigade.VehicleSeat.CFrame.Position - CFgo.Position).Magnitude/300, Enum.EasingStyle.Linear)
@@ -7727,7 +7745,7 @@ function FullMoobCheck()
 end
 
 local Moon = Tabs.StatusServer:AddParagraph({
-    Title = "Moon Status",
+    Title = "Full Moon Status",
     Content = "..."
 })
 
