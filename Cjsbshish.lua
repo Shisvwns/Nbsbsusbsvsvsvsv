@@ -7056,18 +7056,10 @@ spawn(function()
     end
 end)
 
-local RaceCheck = Tabs.Race:AddParagraph({
-    Title = "Check Race",
+local CRace = Tabs.Race:AddParagraph({
+    Title = "Race Check",
     Content = "..."
 })
-
-spawn(function()
-    while wait() do
-        pcall(function()
-            RaceCheck:SetDesc("Race: "..game:GetService("Players").LocalPlayer.Data.Race.Value)
-        end)
-    end
-end)
 
 local Trial = Tabs.Race:AddToggle("Trial1", {Title = "Auto Trials Race", Default = false })
 Trial:OnChanged(function(Value)
