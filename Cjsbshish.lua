@@ -2605,38 +2605,18 @@ function TP(Pos)
 end
 
 function topos(Pos)
-    if not Pos then return end 
-    local lp = game.Players.LocalPlayer
-    local hrp = WaitHRP(lp)
-    if not hrp then return end
-    
-    lp.Character:WaitForChild("Head", 9)
-    
-    if not lp.Character.HumanoidRootPart:FindFirstChild("Hold") then
-        local Hold = Instance.new("BodyVelocity", lp.Character.HumanoidRootPart)
-        Hold.Name = "Hold"
-        Hold.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
-        Hold.Velocity = Vector3.new(0, 0, 0)
+    Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    if game.Players.LocalPlayer.Character.Humanoid.Sit == true then game.Players.LocalPlayer.Character.Humanoid.Sit = false end
+    pcall(function() tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/210, Enum.EasingStyle.Linear),{CFrame = Pos}) end)
+    tween:Play()
+    if Distance <= 250 then
+        tween:Cancel()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
     end
-    
-    if not lp.Character:FindFirstChild("PartTele") then
-        local PartTele = Instance.new("Part", lp.Character)
-        PartTele.Size = Vector3.new(10, 1, 10)
-        PartTele.Name = "PartTele"
-        PartTele.Anchored = true
-        PartTele.Transparency = 1
-        PartTele.CanCollide = false
-        PartTele.CFrame = hrp.CFrame 
-        
-        PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
-            task.wait(0.01)
-            hrp.CFrame = PartTele.CFrame
-        end)
+    if _G.StopTween == true then
+        tween:Cancel()
+        _G.Clip = false
     end
-    
-    local Distance = (Pos.Position - hrp.Position).magnitude
-    local Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear), {CFrame = Pos})
-    Tween:Play() 
 end
 
 -- [ Tween Boat ]
@@ -7073,6 +7053,38 @@ spawn(function()
         else
             Moon1:SetDesc("Moon: 🌑 0% | Please Come To Third Sea")
         end
+    end
+end)
+
+function CheckRace()
+local a = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Wenlocktoad","1")
+local b = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Alchemist","1")
+
+if game.Players.LocalPlayer.Character:FindFirstChild("RaceTransformed") then
+return game:GetService("Players").LocalPlayer.Data.Race.Value.." V4"
+end
+
+if a == -2 then
+return game:GetService("Players").LocalPlayer.Data.Race.Value.." V3"
+end
+
+if b == -2 then
+return game:GetService("Players").LocalPlayer.Data.Race.Value.." V2"
+end
+
+return game:GetService("Players").LocalPlayer.Data.Race.Value.." V1"
+end
+
+local RaceCheck = Tabs.Race:AddParagraph({
+    Title = "Check Race",
+    Content = "..."
+})
+
+spawn(function()
+    while wait() do
+        pcall(function()
+            RaceCheck:SetDesc("Race: "..CheckRace())
+        end)
     end
 end)
 
