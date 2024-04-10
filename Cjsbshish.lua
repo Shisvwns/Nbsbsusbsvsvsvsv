@@ -2589,8 +2589,6 @@ end
 function topos(Pos)
     Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
     if not Pos then return end 
-    game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart", 9)
-    game.Players.LocalPlayer.Character:WaitForChild("Head", 9)
     if not game.Players.LocalPlayer.Character:FindFirstChild("PartTele") then
         local PartTele = Instance.new("Part", game.Players.LocalPlayer.Character)
         PartTele.Size = Vector3.new(10,1,10)
@@ -2851,6 +2849,18 @@ spawn(function()
     end)
 end)
 
+spawn(function()
+    while wait() do
+        if sethiddenproperty then
+            sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",100)
+        end
+        if setscriptable then
+           setscriptable(game.Players.LocalPlayer, "SimulationRadius", true)
+           game.Players.LocalPlayer.SimulationRadius = math.huge * math.huge, math.huge * math.huge * 0 / 0 * 0 / 0 * 0 / 0 * 0 / 0 * 0 / 0
+        end
+    end
+end)
+
 function MoonTextureId()
     if World1 then
         return game:GetService("Lighting").FantasySky.MoonTextureId
@@ -2923,18 +2933,6 @@ end
 function FullMoobCheck()
  return function8()
 end
-
-spawn(function()
-    while wait() do
-        if sethiddenproperty then
-            sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",100)
-        end
-        if setscriptable then
-           setscriptable(game.Players.LocalPlayer, "SimulationRadius", true)
-           game.Players.LocalPlayer.SimulationRadius = math.huge * math.huge, math.huge * math.huge * 0 / 0 * 0 / 0 * 0 / 0 * 0 / 0 * 0 / 0
-        end
-    end
-end)
     
 game:GetService("Players").LocalPlayer.Idled:connect(function()
     game:GetService("VirtualUser"):Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
@@ -6914,15 +6912,19 @@ local Section = Tabs.Race:AddSection("Templete Of Time")
 function CheckRace()
 local a = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Wenlocktoad","1")
 local b = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Alchemist","1")
+
 if game.Players.LocalPlayer.Character:FindFirstChild("RaceTransformed") then
 return game:GetService("Players").LocalPlayer.Data.Race.Value.." V4"
 end
+
 if a == -2 then
 return game:GetService("Players").LocalPlayer.Data.Race.Value.." V3"
 end
+
 if b == -2 then
 return game:GetService("Players").LocalPlayer.Data.Race.Value.." V2"
 end
+
 return game:GetService("Players").LocalPlayer.Data.Race.Value.." V1"
 end
 
@@ -6974,7 +6976,7 @@ Tabs.Race:AddButton({
             Templeteleport()
         elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - PosTemplete.Position).Magnitude < 1000 then
             wait(0.5)
-      	    topos(CFrame.new(29551.9941, 15069.002, -85.5179291))
+      	  topos(CFrame.new(29551.9941, 15069.002, -85.5179291))
         end
     end
 })
@@ -6999,7 +7001,7 @@ Tabs.Race:AddButton({
         if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - PosTemplete.Position).Magnitude > 1000 then
             Templeteleport()
         elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - PosTemplete.Position).Magnitude < 1000 then
-            wait(0.3)
+            wait(0.1)
             if game:GetService("Players").LocalPlayer.Data.Race.Value == "Fishman" then
                 wait(0.01)
                 topos(CFrame.new(28224.056640625, 14889.4267578125, -210.5872039794922))
@@ -7266,20 +7268,35 @@ spawn(function()
     end)
 end)
 
-local KillPlTSk = Tabs.Player:AddDropdown("KiP", {
-	Title = "Select Kill Player Trials Mode",
-	Values = {"Spam Click","Spam Skill"},
-	Multi = false,
-	Default = 1,
-})
-KillPlTSk:OnChanged(function(Value)
-    SelectSpamKillPl = Value
-end)
-
 local KillPl = Tabs.Race:AddToggle("KillPl1", {Title = "Auto Kill Player After Trials", Default = false })
 KillPl:OnChanged(function(Value)
     _G.KillAfterTrials = Value
     StopTween(_G.KillAfterTrials)
+end)
+
+spawn(function()
+    while wait() do 
+        pcall(function()
+            if _G.KillAfterTrials then
+                for i,v in pairs(game:GetService("Workspace").Characters:GetChildren()) do
+                    if v.Name ~= game.Players.LocalPlayer.Name and (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
+                        if v.Humanoid.Health > 0 then
+                            repeat task.wait()
+                                AutoHaki()
+                                EquipWeapon(_G.SelectWeapon)
+                                NameTarget = v.Name
+                                topos(v.HumanoidRootPart.CFrame * CFrame.new(0,0,5))
+                                v.HumanoidRootPart.CanCollide = false
+                                v.Head.CanCollide = false
+                                v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                                Click()
+                            until not _G.KillAfterTrials or not v.Parent or v.Humanoid.Health <= 0 
+                        end
+                    end
+                end
+            end
+        end)
+    end
 end)
 
 local Section = Tabs.Race:AddSection("Train")
@@ -7321,7 +7338,7 @@ local AnOn = Tabs.Race:AddParagraph({
 spawn(function()
     while wait() do
         pcall(function()
-            AnOn:SetDesc("Ancient One"..CheckAncientOneStatus())
+            AnOn:SetDesc("Ancient One: "..CheckAncientOneStatus())
         end)
     end
 end)
@@ -7583,7 +7600,7 @@ local TeleportIsland = Tabs.Teleport:AddToggle("TeleportIslan", {Title = "Telepo
 TeleportIsland:OnChanged(function(Value)
     _G.TeleportIsland = Value
     if _G.TeleportIsland == true then
-        repeat task.wait()
+        repeat wait()
             if _G.SelectIsland == "WindMill" then
                 topos(CFrame.new(979.79895019531, 16.516613006592, 1429.0466308594))
             elseif _G.SelectIsland == "Marine" then
