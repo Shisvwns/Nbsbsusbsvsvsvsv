@@ -2851,6 +2851,79 @@ spawn(function()
     end)
 end)
 
+function MoonTextureId()
+    if World1 then
+        return game:GetService("Lighting").FantasySky.MoonTextureId
+    elseif World2 then
+        return game:GetService("Lighting").FantasySky.MoonTextureId
+    elseif World3 then
+        return game:GetService("Lighting").Sky.MoonTextureId
+    end
+end
+function CheckMoon()
+    moon8 = "http://www.roblox.com/asset/?id=9709150401"
+    moon7 = "http://www.roblox.com/asset/?id=9709150086"
+    moon6 = "http://www.roblox.com/asset/?id=9709149680"
+    moon5 = "http://www.roblox.com/asset/?id=9709149431"
+    moon4 = "http://www.roblox.com/asset/?id=9709149052"
+    moon3 = "http://www.roblox.com/asset/?id=9709143733"
+    moon2 = "http://www.roblox.com/asset/?id=9709139597"
+    moon1 = "http://www.roblox.com/asset/?id=9709135895"
+    moonreal = MoonTextureId()
+    cofullmoonkothangbeo = "Bad Moon"
+    if moonreal == moon5 or moonreal == moon4 then
+        if moonreal == moon5 then
+            cofullmoonkothangbeo = "Full Moon"
+        elseif moonreal == moon4 then
+            cofullmoonkothangbeo = "Next Night"
+        end
+    end
+    return cofullmoonkothangbeo
+end
+function function7()
+    GameTime = "Error"
+    local c = game.Lighting
+    local ao = c.ClockTime
+    if ao >= 18 or ao < 5 then
+        GameTime = "Night"
+    else
+        GameTime = "Day"
+    end
+    return GameTime
+end
+function function6()
+    return math.floor(game.Lighting.ClockTime)
+end
+function getServerTime()
+    RealTime = tostring(math.floor(game.Lighting.ClockTime * 100) / 100)
+    RealTime = tostring(game.Lighting.ClockTime)
+    RealTimeTable = RealTime:split(".")
+    Minute, Second = RealTimeTable[1], tonumber(0 + tonumber(RealTimeTable[2] / 100)) * 60
+    return Minute, Second
+end
+function function8()
+    local c = game.Lighting
+    local ao = c.ClockTime
+    if CheckMoon() == "Full Moon" and ao <= 5 then
+        return tostring(function6()) .. " ( Will End Moon In " .. math.floor(5 - ao) .. " Minutes )"
+    elseif CheckMoon() == "Full Moon" and (ao > 5 and ao < 12) then
+        return tostring(function6()) .. " ( Fake Moon )"
+    elseif CheckMoon() == "Full Moon" and (ao > 12 and ao < 18) then
+        return tostring(function6()) .. " ( Will Full Moon In " .. math.floor(18 - ao) .. " Minutes )"
+    elseif CheckMoon() == "Full Moon" and (ao > 18 and ao <= 24) then
+        return tostring(function6()) .. " ( Will End Moon In " .. math.floor(24 + 6 - ao) .. " Minutes )"
+    end
+    if CheckMoon() == "Next Night" and ao < 12 then
+        return tostring(function6()) .. " ( Will Full Moon In " .. math.floor(18 - ao) .. " Minutes )"
+    elseif CheckMoon() == "Next Night" and ao > 12 then
+        return tostring(function6()) .. " ( Will Full Moon In " .. math.floor(18 + 12 - ao) .. " Minutes )"
+    end
+    return tostring(function6())
+end
+function FullMoobCheck()
+ return function8()
+end
+
 spawn(function()
     while wait() do
         if sethiddenproperty then
@@ -2890,7 +2963,7 @@ local Section = Tabs.Farm:AddSection("Setting Farm")
 
 local SelectWeaponFarm = Tabs.Farm:AddDropdown("SelectWeaponFarm", {
 	Title = "Select Weapon",
-	Values = {"Melee","Sword","Gun","Blox Fruit"},
+	Values = {"Melee","Sword","Gun","Devil Fruit"},
 	Multi = false,
 	Default = 1,
 })
@@ -2925,7 +2998,7 @@ spawn(function()
 						end
 					end
 				end
-			elseif _G.SelectWeapon == "Blox Fruit" then
+			elseif _G.SelectWeapon == "Devil Fruit" then
 				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
 					if v.ToolTip == "Blox Fruit" then
 						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
@@ -6838,6 +6911,34 @@ Tabs.Player:AddButton({
 
 local Section = Tabs.Race:AddSection("Templete Of Time")
 
+function CheckRace()
+local a = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Wenlocktoad","1")
+local b = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Alchemist","1")
+if game.Players.LocalPlayer.Character:FindFirstChild("RaceTransformed") then
+return game:GetService("Players").LocalPlayer.Data.Race.Value.." V4"
+end
+if a == -2 then
+return game:GetService("Players").LocalPlayer.Data.Race.Value.." V3"
+end
+if b == -2 then
+return game:GetService("Players").LocalPlayer.Data.Race.Value.." V2"
+end
+return game:GetService("Players").LocalPlayer.Data.Race.Value.." V1"
+end
+
+local CRace = Tabs.Race:AddParagraph({
+    Title = "Your Race",
+    Content = "..."
+})
+
+spawn(function()
+    while wait() do
+        pcall(function()
+            CRace:SetDesc("Race: "..CheckRace())
+        end)
+    end
+end)
+
 Tabs.Race:AddButton({
     Title = "Teleport To Temple Of Time",
     Description = "",
@@ -7030,34 +7131,15 @@ end)
 
 local Section = Tabs.Race:AddSection("Trials")
 
-function CheckRace()
-local a = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Wenlocktoad","1")
-local b = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Alchemist","1")
-
-if game.Players.LocalPlayer.Character:FindFirstChild("RaceTransformed") then
-return game:GetService("Players").LocalPlayer.Data.Race.Value.." V4"
-end
-
-if a == -2 then
-return game:GetService("Players").LocalPlayer.Data.Race.Value.." V3"
-end
-
-if b == -2 then
-return game:GetService("Players").LocalPlayer.Data.Race.Value.." V2"
-end
-
-return game:GetService("Players").LocalPlayer.Data.Race.Value.." V1"
-end
-
-local CRace = Tabs.Race:AddParagraph({
-    Title = "Your Race",
+local Moon1 = Tabs.Race:AddParagraph({
+    Title = "Full Moon Status",
     Content = "..."
 })
 
 spawn(function()
-    while wait() do
+    while task.wait() do
         pcall(function()
-            CRace:SetDesc("Race: "..CheckRace())
+            Moon1:SetDesc("Moon: "..CheckMoon())
         end)
     end
 end)
@@ -7191,49 +7273,7 @@ local KillPlTSk = Tabs.Player:AddDropdown("KiP", {
 	Default = 1,
 })
 KillPlTSk:OnChanged(function(Value)
-    _G.SelectSpamKillPl = Value
-end)
-
-local KillPlT = Tabs.Player:AddDropdown("KillP", {
-	Title = "Select Weapon Kill Player Trials",
-	Values = {"Melee","Sword","Devil Fruit"},
-	Multi = false,
-	Default = 1,
-})
-KillPlT:OnChanged(function(Value)
-    _G.SelectSpamSkillPl = Value
-end)
-
-spawn(function()
-	while task.wait() do
-		pcall(function()
-			if _G.SelectSpamSkillPl == "Melee" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Melee" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.SelectSpamSkillPl = v.Name
-						end
-					end
-				end
-			elseif _G.SelectSpamSkillPl == "Sword" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Sword" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.SelectSpamSkillPl = v.Name
-						end
-					end
-				end
-			elseif _G.SelectSpamSkillPl == "Devil Fruit" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Blox Fruit" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.SelectSpamSkillPl = v.Name
-						end
-					end
-				end
-			end
-		end)
-	end
+    SelectSpamKillPl = Value
 end)
 
 local KillPl = Tabs.Race:AddToggle("KillPl1", {Title = "Auto Kill Player After Trials", Default = false })
@@ -7242,56 +7282,14 @@ KillPl:OnChanged(function(Value)
     StopTween(_G.KillAfterTrials)
 end)
 
-spawn(function()
-    while wait() do 
-        pcall(function()
-            if _G.SelectSpamKillPl == "Spam Click" and _G.KillAfterTrials then
-                for i,v in pairs(game:GetService("Workspace").Characters:GetChildren()) do
-                    if v.Name ~= game.Players.LocalPlayer.Name and (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
-                        if v.Humanoid.Health > 0 then
-                            repeat task.wait()
-                                AutoHaki()
-                                EquipWeapon(_G.SelectSpamSkillPl)
-                                NameTarget = v.Name
-                                topos(v.HumanoidRootPart.CFrame * CFrame.new(0,0,5))
-                                v.HumanoidRootPart.CanCollide = false
-                                v.Head.CanCollide = false
-                                v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-                                Click()
-                            until not _G.KillAfterTrials or not v.Parent or v.Humanoid.Health <= 0 
-                        end
-                    end
-                end
-            end
-        end)
-    end
-end)
-
-spawn(function()
-    while wait() do 
-        pcall(function()
-            if _G.SelectSpamKillPl == "Spam Skill" and _G.KillAfterTrials then
-                for i,v in pairs(game:GetService("Workspace").Characters:GetChildren()) do
-                    if v.Name ~= game.Players.LocalPlayer.Name and (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
-                        if v.Humanoid.Health > 0 then
-                            repeat task.wait()
-                                AutoHaki()
-                                EquipWeapon(_G.SelectSpamSkillPl)
-                                NameTarget = v.Name
-                                topos(v.HumanoidRootPart.CFrame * CFrame.new(0,0,5))
-                                v.HumanoidRootPart.CanCollide = false
-                                v.Head.CanCollide = false
-                                v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-                                useskilltrial = true
-                                Click()
-                            until not _G.KillAfterTrials or not v.Parent or v.Humanoid.Health <= 0
-                            useskilltrial = false
-                        end
-                    end
-                end
-            end
-        end)
-    end
+local KillPlT = Tabs.Player:AddDropdown("KillP", {
+	Title = "Select Weapon Kill Player Trials",
+	Values = {"Melee","Sword","Gun","Devil Fruit"},
+	Multi = false,
+	Default = 1,
+})
+KillPlT:OnChanged(function(Value)
+    _G.SelectSpamSkillPl = Value
 end)
 
 local KillPlZ = Tabs.Race:AddToggle("KillPl4", {Title = "Skill Z", Default = false })
@@ -7312,35 +7310,6 @@ end)
 local KillPlV = Tabs.Race:AddToggle("KillPl9", {Title = "Skill V", Default = false })
 KillPlV:OnChanged(function(Value)
     _G.V = Value
-end)
-
-spawn(function()
-    while wait() do
-        if useskilltrial then
-            pcall(function()
-                if _G.Z then
-                    game:GetService("VirtualInputManager"):SendKeyEvent(true, "Z", false, game)
-                    wait(0)
-                    game:GetService("VirtualInputManager"):SendKeyEvent(false, "Z", false, game)
-                    if _G.X then
-                        game:GetService("VirtualInputManager"):SendKeyEvent(true, "X", false, game)
-                        wait(0)
-                        game:GetService("VirtualInputManager"):SendKeyEvent(false, "X", false, game)
-                        if _G.C then
-                            game:GetService("VirtualInputManager"):SendKeyEvent(true, "C", false, game)
-                            wait(0)
-                            game:GetService("VirtualInputManager"):SendKeyEvent(false, "C", false, game)
-                            if _G.V then
-                                game:GetService("VirtualInputManager"):SendKeyEvent(true, "V", false, game)
-                                wait(0)
-                                game:GetService("VirtualInputManager"):SendKeyEvent(false, "V", false, game)
-                            end
-                        end
-                    end
-                end
-            end)
-        end
-    end
 end)
 
 local Section = Tabs.Race:AddSection("Train")
@@ -7644,7 +7613,7 @@ local TeleportIsland = Tabs.Teleport:AddToggle("TeleportIslan", {Title = "Telepo
 TeleportIsland:OnChanged(function(Value)
     _G.TeleportIsland = Value
     if _G.TeleportIsland == true then
-        repeat wait()
+        repeat task.wait()
             if _G.SelectIsland == "WindMill" then
                 topos(CFrame.new(979.79895019531, 16.516613006592, 1429.0466308594))
             elseif _G.SelectIsland == "Marine" then
@@ -7786,79 +7755,6 @@ spawn(function()
     end
 end)
 
-function MoonTextureId()
-    if World1 then
-        return game:GetService("Lighting").FantasySky.MoonTextureId
-    elseif World2 then
-        return game:GetService("Lighting").FantasySky.MoonTextureId
-    elseif World3 then
-        return game:GetService("Lighting").Sky.MoonTextureId
-    end
-end
-function CheckMoon()
-    moon8 = "http://www.roblox.com/asset/?id=9709150401"
-    moon7 = "http://www.roblox.com/asset/?id=9709150086"
-    moon6 = "http://www.roblox.com/asset/?id=9709149680"
-    moon5 = "http://www.roblox.com/asset/?id=9709149431"
-    moon4 = "http://www.roblox.com/asset/?id=9709149052"
-    moon3 = "http://www.roblox.com/asset/?id=9709143733"
-    moon2 = "http://www.roblox.com/asset/?id=9709139597"
-    moon1 = "http://www.roblox.com/asset/?id=9709135895"
-    moonreal = MoonTextureId()
-    cofullmoonkothangbeo = "Bad Moon"
-    if moonreal == moon5 or moonreal == moon4 then
-        if moonreal == moon5 then
-            cofullmoonkothangbeo = "Full Moon"
-        elseif moonreal == moon4 then
-            cofullmoonkothangbeo = "Next Night"
-        end
-    end
-    return cofullmoonkothangbeo
-end
-function function7()
-    GameTime = "Error"
-    local c = game.Lighting
-    local ao = c.ClockTime
-    if ao >= 18 or ao < 5 then
-        GameTime = "Night"
-    else
-        GameTime = "Day"
-    end
-    return GameTime
-end
-function function6()
-    return math.floor(game.Lighting.ClockTime)
-end
-function getServerTime()
-    RealTime = tostring(math.floor(game.Lighting.ClockTime * 100) / 100)
-    RealTime = tostring(game.Lighting.ClockTime)
-    RealTimeTable = RealTime:split(".")
-    Minute, Second = RealTimeTable[1], tonumber(0 + tonumber(RealTimeTable[2] / 100)) * 60
-    return Minute, Second
-end
-function function8()
-    local c = game.Lighting
-    local ao = c.ClockTime
-    if CheckMoon() == "Full Moon" and ao <= 5 then
-        return tostring(function6()) .. " ( Will End Moon In " .. math.floor(5 - ao) .. " Minutes )"
-    elseif CheckMoon() == "Full Moon" and (ao > 5 and ao < 12) then
-        return tostring(function6()) .. " ( Fake Moon )"
-    elseif CheckMoon() == "Full Moon" and (ao > 12 and ao < 18) then
-        return tostring(function6()) .. " ( Will Full Moon In " .. math.floor(18 - ao) .. " Minutes )"
-    elseif CheckMoon() == "Full Moon" and (ao > 18 and ao <= 24) then
-        return tostring(function6()) .. " ( Will End Moon In " .. math.floor(24 + 6 - ao) .. " Minutes )"
-    end
-    if CheckMoon() == "Next Night" and ao < 12 then
-        return tostring(function6()) .. " ( Will Full Moon In " .. math.floor(18 - ao) .. " Minutes )"
-    elseif CheckMoon() == "Next Night" and ao > 12 then
-        return tostring(function6()) .. " ( Will Full Moon In " .. math.floor(18 + 12 - ao) .. " Minutes )"
-    end
-    return tostring(function6())
-end
-function FullMoobCheck()
- return function8()
-end
-
 local Moon = Tabs.StatusServer:AddParagraph({
     Title = "Full Moon Status",
     Content = "..."
@@ -7867,7 +7763,7 @@ local Moon = Tabs.StatusServer:AddParagraph({
 spawn(function()
     while task.wait() do
         pcall(function()
-            Moon:SetDesc(CheckMoon())
+            Moon:SetDesc("Moon: "..CheckMoon())
         end)
     end
 end)
