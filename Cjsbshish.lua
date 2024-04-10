@@ -7270,16 +7270,6 @@ spawn(function()
     end)
 end)
 
-local HillPl = Tabs.Race:AddDropdown("J", {
-	Title = "Select Weapon Skill Player Trials",
-	Values = {"Melee","Sword","Gun","Devil Fruit"},
-	Multi = false,
-	Default = 1,
-})
-HillPl:OnChanged(function(Value)
-    _G.WeaponKillPl = Value
-end)
-
 local HKillPl = Tabs.Race:AddDropdown("K", {
 	Title = "Select Kill Player Trials Mode",
 	Values = {"Spam Click","Spam Skill"},
