@@ -7270,14 +7270,24 @@ spawn(function()
     end)
 end)
 
-local WeaponKillPl = Tabs.Farm:AddDropdown("SelectWeaponFarm", {
+local HillPl = Tabs.Race:AddDropdown("J", {
+	Title = "Select Weapon Skill Player Trials",
+	Values = {"Melee","Sword","Gun","Devil Fruit"},
+	Multi = false,
+	Default = 1,
+})
+HillPl:OnChanged(function(Value)
+    _G.WeaponKillPl = Value
+end)
+
+local HKillPl = Tabs.Race:AddDropdown("K", {
 	Title = "Select Kill Player Trials Mode",
 	Values = {"Spam Click","Spam Skill"},
 	Multi = false,
 	Default = 1,
 })
-WeaponKillPl:OnChanged(function(Value)
-    _G.WeaponKillPl = Value
+HKillPl:OnChanged(function(Value)
+    ModeKillPl = Value
 end)
 
 local KillPl = Tabs.Race:AddToggle("KillPl1", {Title = "Auto Kill Player After Trials", Default = false })
@@ -7309,6 +7319,26 @@ spawn(function()
             end
         end)
     end
+end)
+
+local KillPlZ = Tabs.Race:AddToggle("KillPl4", {Title = "Skill Z", Default = false })
+KillPlZ:OnChanged(function(Value)
+    _G.Z = Value
+end)
+
+local KillPlX = Tabs.Race:AddToggle("KillPl6", {Title = "Skill X", Default = false })
+KillPlX:OnChanged(function(Value)
+    _G.X = Value
+end)
+
+local KillPlC = Tabs.Race:AddToggle("KillPl5", {Title = "Skill V", Default = false })
+KillPlC:OnChanged(function(Value)
+    _G.C = Value
+end)
+
+local KillPlV = Tabs.Race:AddToggle("KillPl9", {Title = "Skill V", Default = false })
+KillPlV:OnChanged(function(Value)
+    _G.V = Value
 end)
 
 local Section = Tabs.Race:AddSection("Train")
