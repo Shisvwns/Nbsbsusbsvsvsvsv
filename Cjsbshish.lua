@@ -3658,7 +3658,9 @@ spawn(function()
 	end
 end)
 
-local Section = Farm:AddSection("Farm Level")
+local Section = Farm:AddSection({
+    Name = "Settings Farm"
+})
 
 local Paragraph = Farm:AddParagraph({
     Name = "Your Level",
