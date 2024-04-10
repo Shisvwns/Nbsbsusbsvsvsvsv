@@ -7321,23 +7321,23 @@ spawn(function()
     end
 end)
 
-local KillPlZ = Tabs.Race:AddToggle("KillPl4", {Title = "Skill Z", Default = false })
-KillPlZ:OnChanged(function(Value)
+local KSKZ = Tabs.Race:AddToggle("KSK3", {Title = "Skill Z", Default = false })
+KSKZ:OnChanged(function(Value)
     _G.Z = Value
 end)
 
-local KillPlX = Tabs.Race:AddToggle("KillPl6", {Title = "Skill X", Default = false })
-KillPlX:OnChanged(function(Value)
+local KSKX = Tabs.Race:AddToggle("KSK6", {Title = "Skill X", Default = false })
+KSKX:OnChanged(function(Value)
     _G.X = Value
 end)
 
-local KillPlC = Tabs.Race:AddToggle("KillPl5", {Title = "Skill V", Default = false })
-KillPlC:OnChanged(function(Value)
+local KSKC = Tabs.Race:AddToggle("KSK5", {Title = "Skill V", Default = false })
+KSKC:OnChanged(function(Value)
     _G.C = Value
 end)
 
-local KillPlV = Tabs.Race:AddToggle("KillPl9", {Title = "Skill V", Default = false })
-KillPlV:OnChanged(function(Value)
+local KSKV = Tabs.Race:AddToggle("KSK9", {Title = "Skill V", Default = false })
+KSKV:OnChanged(function(Value)
     _G.V = Value
 end)
 
