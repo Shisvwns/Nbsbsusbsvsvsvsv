@@ -3167,6 +3167,7 @@ task.spawn(function()
         end
     end)
 end)
+
 local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
 CamShake:Stop()
 local Client = game.Players.LocalPlayer
@@ -3229,10 +3230,13 @@ spawn(function()
     end
 end)
 
-local BringMon = Tabs.Farm:AddToggle("BringMo", {Title = "Bring Monster", Default = true })
-BringMon:OnChanged(function(Value)
-    _G.BringMonster = Value
-end)
+Farm:AddToggle({
+	Name = "Bring Monster",
+	Default = true,
+	Callback = function(Value)
+		_G.BringMonster = Value
+	end
+})
 
 spawn(function()
     while task.wait() do
@@ -3545,7 +3549,7 @@ function InMyNetWork(object)
 	end
 end
 
-task.spawn(function()
+spawn(function()
 	while task.wait() do
 		pcall(function()
 			if MakoriGayMag and _G.BringMonster then
@@ -3573,7 +3577,7 @@ task.spawn(function()
 end)
 
 
-task.spawn(function()
+spawn(function()
 	while task.wait() do
 		pcall(function()
 			if _G.AutoSwordMastery and AutoSwordMasteryMag and _G.BringMonster then
@@ -3600,7 +3604,7 @@ task.spawn(function()
 	end
 end)
 
-task.spawn(function()
+spawn(function()
 	while task.wait() do
 		pcall(function()
 			if SEvent and _G.BringMonster then
@@ -3627,7 +3631,7 @@ task.spawn(function()
 	end
 end)
     
-task.spawn(function()
+spawn(function()
 	while task.wait() do
 		pcall(function()
 			if _G.AutoFarmNearest and AutoFarmNearestMagnet or SelectMag and _G.BringMonster then
