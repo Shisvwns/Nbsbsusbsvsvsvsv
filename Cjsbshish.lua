@@ -2600,7 +2600,7 @@ function topos(Pos)
         PartTele.CanCollide = false
         PartTele.CFrame = WaitHRP(game.Players.LocalPlayer).CFrame 
         PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
-            task.wait(0.01)
+            task.wait()
             WaitHRP(game.Players.LocalPlayer).CFrame = PartTele.CFrame
         end)
     end
