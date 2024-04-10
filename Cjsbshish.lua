@@ -2963,7 +2963,7 @@ local Section = Tabs.Farm:AddSection("Setting Farm")
 
 local SelectWeaponFarm = Tabs.Farm:AddDropdown("SelectWeaponFarm", {
 	Title = "Select Weapon",
-	Values = {"Melee","Sword","Gun","Blox Fruit"},
+	Values = {"Melee","Sword","Gun","Devil Fruit"},
 	Multi = false,
 	Default = 1,
 })
@@ -2998,7 +2998,7 @@ spawn(function()
 						end
 					end
 				end
-			elseif _G.SelectWeapon == "Blox Fruit" then
+			elseif _G.SelectWeapon == "Devil Fruit" then
 				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
 					if v.ToolTip == "Blox Fruit" then
 						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
@@ -7270,6 +7270,16 @@ spawn(function()
     end)
 end)
 
+local WeaponKillPl = Tabs.Farm:AddDropdown("SelectWeaponFarm", {
+	Title = "Select Kill Player Trials Mode",
+	Values = {"Spam Click","Spam Skill"},
+	Multi = false,
+	Default = 1,
+})
+WeaponKillPl:OnChanged(function(Value)
+    _G.WeaponKillPl = Value
+end)
+
 local KillPl = Tabs.Race:AddToggle("KillPl1", {Title = "Auto Kill Player After Trials", Default = false })
 KillPl:OnChanged(function(Value)
     _G.KillAfterTrials = Value
@@ -7340,7 +7350,7 @@ local AnOn = Tabs.Race:AddParagraph({
 spawn(function()
     while wait() do
         pcall(function()
-            AnOn:SetDesc("Ancient One"..CheckAncientOneStatus())
+            AnOn:SetDesc("Ancient One: "..CheckAncientOneStatus())
         end)
     end
 end)
