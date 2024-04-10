@@ -3659,13 +3659,10 @@ spawn(function()
 end)
 
 local Section = Farm:AddSection({
-    Name = "Settings Farm"
+    Name = "Farm Level"
 })
 
-local Paragraph = Farm:AddParagraph({
-    Name = "Your Level",
-    Content = "..."
-})
+local YourLevel = Farm:AddParagraph("Your Level")
 
 Farm:AddDropdown({
 	Name = "Select Farm Mode",
