@@ -7105,7 +7105,7 @@ local StatusMirage = Tabs.Race:AddParagraph({
 spawn(function()
     while task.wait() do
         pcall(function()
-            StatusMirage:SetDesc("Mirage Island: "MirageIslandStatus())
+            StatusMirage:SetDesc("Mirage Island: "..MirageIslandStatus())
         end)
     end
 end)
