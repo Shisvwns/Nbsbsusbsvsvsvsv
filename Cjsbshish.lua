@@ -7307,6 +7307,33 @@ spawn(function()
     end
 end)
 
+spawn(function()
+    while wait() do 
+        pcall(function()
+            if SelectSpamKillPl == "Spam Skill" and _G.KillAfterTrials then
+                for i,v in pairs(game:GetService("Workspace").Characters:GetChildren()) do
+                    if v.Name ~= game.Players.LocalPlayer.Name and (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
+                        if v.Humanoid.Health > 0 then
+                            repeat task.wait()
+                                AutoHaki()
+                                EquipWeapon(_G.SelectSpamSkillPl)
+                                NameTarget = v.Name
+                                topos(v.HumanoidRootPart.CFrame * CFrame.new(0,0,5))
+                                v.HumanoidRootPart.CanCollide = false
+                                v.Head.CanCollide = false
+                                v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                                useskilltrial = true
+                                Click()
+                            until not _G.KillAfterTrials or not v.Parent or v.Humanoid.Health <= 0
+                            useskilltrial = false
+                        end
+                    end
+                end
+            end
+        end)
+    end
+end)
+
 local KillPlT = Tabs.Player:AddDropdown("KillP", {
 	Title = "Select Weapon Kill Player Trials",
 	Values = {"Melee","Sword","Devil Fruit"},
@@ -7349,31 +7376,24 @@ spawn(function()
 	end
 end)
 
-spawn(function()
-    while wait() do
-        if SelectSpamKillPl == "Spam Skill" and _G.KillAfterTrials then
-            pcall(function()
-                for i, v in pairs(game.Workspace.Characters:GetChildren()) do
-                    if v.Name ~= game.Players.LocalPlayer.Name then
-                        if v.Humanoid.Health > 0 and v:FindFirstChild("HumanoidRootPart") and v.Parent and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).Magnitude <= 150 then
-                            repeat task.wait()
-                                AutoHaki()
-                                EquipWeapon(_G.SelectSpamSkillPl)
-                                topos(v.HumanoidRootPart.CFrame * CFrame.new(0,0,5))
-                                v.HumanoidRootPart.CanCollide = false
-                                v.Head.CanCollide = false
-                                v.Humanoid.WalkSpeed = 0
-                                v.HumanoidRootPart.Size = Vector3.new(100, 100, 100)
-                                useskilltrial = true
-                                Click()
-                            until _G.KillAfterTrials == false or v.Humanoid.Health <= 0 or not v.Parent or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid")
-                            useskilltrial = false
-                        end
-                    end
-                end
-            end)
-        end
-    end
+local KillPlZ = Tabs.Race:AddToggle("KillPl4", {Title = "Skill Z", Default = false })
+KillPlZ:OnChanged(function(Value)
+    _G.Z = Value
+end)
+
+local KillPlX = Tabs.Race:AddToggle("KillPl6", {Title = "Skill X", Default = false })
+KillPlX:OnChanged(function(Value)
+    _G.X = Value
+end)
+
+local KillPlC = Tabs.Race:AddToggle("KillPl5", {Title = "Skill V", Default = false })
+KillPlC:OnChanged(function(Value)
+    _G.C = Value
+end)
+
+local KillPlV = Tabs.Race:AddToggle("KillPl9", {Title = "Skill V", Default = false })
+KillPlV:OnChanged(function(Value)
+    _G.V = Value
 end)
 
 spawn(function()
@@ -7403,41 +7423,6 @@ spawn(function()
             end)
         end
     end
-end)
-
-spawn(function()
-    while wait() do
-        if SelectSpamKillPl == "Spam Skill" and _G.KillAfterTrials then
-            repeat task.wait()
-                if not game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") then
-                    game:GetService("VirtualUser"):CaptureController()
-                    game:GetService("VirtualUser"):SetKeyDown("0x65")
-                    wait(2)
-                    game:GetService("VirtualUser"):SetKeyUp("0x65")
-                end
-            until game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") or not _G.KillV4
-        end
-    end
-end)
-
-local KillPlZ = Tabs.Race:AddToggle("KillPl1", {Title = "Skill Z", Default = false })
-KillPlZ:OnChanged(function(Value)
-    _G.Z = Value
-end)
-
-local KillPlX = Tabs.Race:AddToggle("KillPl1", {Title = "Skill X", Default = false })
-KillPlX:OnChanged(function(Value)
-    _G.X = Value
-end)
-
-local KillPlC = Tabs.Race:AddToggle("KillPl1", {Title = "Skill V", Default = false })
-KillPlC:OnChanged(function(Value)
-    _G.C = Value
-end)
-
-local KillPlV = Tabs.Race:AddToggle("KillPl1", {Title = "Skill V", Default = false })
-KillPlV:OnChanged(function(Value)
-    _G.V = Value
 end)
 
 local Section = Tabs.Race:AddSection("Train")
