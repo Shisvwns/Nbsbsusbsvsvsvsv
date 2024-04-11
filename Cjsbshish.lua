@@ -3066,7 +3066,6 @@ function GetBladeHit()
     end
     return weapon
 end
-
 function AttackHit()
     local CombatFrameworkLib = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework))
     local CmrFwLib = CombatFrameworkLib[2]
@@ -3097,12 +3096,11 @@ function AttackHit()
         end
     end
 end
-
-task.spawn(function()
-    while wait() do
+spawn(function()
+    while task.wait() do
         if _G.FastAttack then
             pcall(function()
-                repeat wait(_G.FastAttackDelay)
+                repeat task.wait(_G.FastAttackDelay)
                     AttackHit()
                 until not _G.FastAttack
             end)
@@ -3139,7 +3137,6 @@ spawn(function()
         end
     end)
 end)
-
 task.spawn(function()
     game:GetService("RunService").RenderStepped:Connect(function()
         if _G.FastAttack or _G.FastAttackCambodiakak == true then
@@ -3148,7 +3145,6 @@ task.spawn(function()
         end
     end)
 end)
-
 local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
 CamShake:Stop()
 local Client = game.Players.LocalPlayer
@@ -3525,7 +3521,7 @@ function InMyNetWork(object)
 	end
 end
 
-spawn(function()
+task.spawn(function()
 	while task.wait() do
 		pcall(function()
 			if MakoriGayMag and _G.BringMonster then
@@ -3553,7 +3549,7 @@ spawn(function()
 end)
 
 
-spawn(function()
+task.spawn(function()
 	while task.wait() do
 		pcall(function()
 			if _G.AutoSwordMastery and AutoSwordMasteryMag and _G.BringMonster then
@@ -3580,7 +3576,7 @@ spawn(function()
 	end
 end)
 
-spawn(function()
+task.spawn(function()
 	while task.wait() do
 		pcall(function()
 			if SEvent and _G.BringMonster then
@@ -3607,7 +3603,7 @@ spawn(function()
 	end
 end)
     
-spawn(function()
+task.spawn(function()
 	while task.wait() do
 		pcall(function()
 			if _G.AutoFarmNearest and AutoFarmNearestMagnet or SelectMag and _G.BringMonster then
