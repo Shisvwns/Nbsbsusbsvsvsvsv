@@ -1,6 +1,8 @@
 -- [ Ui Fluent ]
 
-local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/HuyLocDz/Ui/main/FluentFixed.lua"))()
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
 -- [ Name Hub ]
 local Window = Fluent:CreateWindow({
@@ -61,6 +63,7 @@ local Tabs = {
 }
 
 local Options = Fluent.Options
+do
 
 -- [ Anti Ban & Anti Afk ]
 
@@ -8428,3 +8431,5 @@ Fluent:Notify({
     SubContent = "",
     Duration = 5
 })
+
+end
