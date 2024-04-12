@@ -5640,7 +5640,7 @@ spawn(function()
                     end
                     if not game:GetService("Players").LocalPlayer.Character.Humanoid.Sit then
                         _G.Clip = true
-                        topos(checkboat().VehicleSeat.CFrame * CFrame.new(0,1,0))
+                        topos(checkboat().VehicleSeat.CFrame * CFrame.new(0,0,0))
                     else
                         _G.Clip = false
                     end
