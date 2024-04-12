@@ -5563,21 +5563,25 @@ SeaEvent:AddDropdown({
 	Options = {"Zone 0 [ None ]", "Zone 1 [ Low ]","Zone 2 [ Medium ]","Zone 3 [ High ]","Zone 4 [ Extreme ]","Zone 5 [ Crazy ]","Zone 6 [ ??? ]"},
 	Callback = function(Value)
 		_G.Zone = Value
-    	if _G.Zone == "Zone 0 [ None ]" then
-  	      ZoneCFrame = CFrame.new(-19118.041015625, 24.44040298461914, 858.4185791015625)
-    	elseif _G.Zone == "Zone 1 [ Low ]" then
- 	       ZoneCFrame = CFrame.new(-21313.607421875, 12.560698509216309, 1330.6165771484375)
- 	   elseif _G.Zone == "Zone 2 [ Medium ]" then
- 	       ZoneCFrame = CFrame.new(-24815.267578125, 12.560657501220703, 5262.62060546875)
- 	   elseif _G.Zone == "Zone 3 [ High ]" then
-   	     ZoneCFrame = CFrame.new(-28464.876953125, 12.553319931030273, 6896.8076171875)
- 	   elseif _G.Zone == "Zone 4 [ Extreme ]" then
-   	     ZoneCFrame = CFrame.new(-30294.8515625, 12.554117202758789, 10409.8564453125)
-   	 elseif _G.Zone == "Zone 5 [ Crazy ]" then
-  	      ZoneCFrame = CFrame.new(-37704.828125, 12.561018943786621, 6750.69873046875)
-  	  elseif _G.Zone == "Zone 6 [ ??? ]" then
-    	    ZoneCFrame = CFrame.new(-32704.103515625, 12.557344436645508, 24089.923828125)
- 	   end
+		if _G.SailBoat == true then
+			repeat wait()
+    			if _G.Zone == "Zone 0 [ None ]" then
+  			      ZoneCFrame = CFrame.new(-19118.041015625, 24.44040298461914, 858.4185791015625)
+    			elseif _G.Zone == "Zone 1 [ Low ]" then
+ 			       ZoneCFrame = CFrame.new(-21313.607421875, 12.560698509216309, 1330.6165771484375)
+ 			   elseif _G.Zone == "Zone 2 [ Medium ]" then
+ 			       ZoneCFrame = CFrame.new(-24815.267578125, 12.560657501220703, 5262.62060546875)
+ 			   elseif _G.Zone == "Zone 3 [ High ]" then
+   			     ZoneCFrame = CFrame.new(-28464.876953125, 12.553319931030273, 6896.8076171875)
+ 			   elseif _G.Zone == "Zone 4 [ Extreme ]" then
+   			     ZoneCFrame = CFrame.new(-30294.8515625, 12.554117202758789, 10409.8564453125)
+   			 elseif _G.Zone == "Zone 5 [ Crazy ]" then
+  	   		   ZoneCFrame = CFrame.new(-37704.828125, 12.561018943786621, 6750.69873046875)
+  			  elseif _G.Zone == "Zone 6 [ ??? ]" then
+   		 	    ZoneCFrame = CFrame.new(-32704.103515625, 12.557344436645508, 24089.923828125)
+ 			   end
+            until not _G.SailBoat
+        end
 	end    
 })
 
@@ -5647,6 +5651,18 @@ spawn(function()
             until not _G.SailBoat
         end
     end
+end)
+
+spawn(function()
+	pcall(function()
+		while wait() do
+			if _G.SailBoat then
+				if game:GetService("Workspace").Enemies:FindFirstChild("Shark") or game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") or game:GetService("Workspace").Enemies:FindFirstChild("Piranha") or game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") then
+				    game.Players.LocalPlayer.Character.Humanoid.Sit = false
+				end
+			end
+		end
+	end)
 end)
 
 SeaEvent:AddToggle({
@@ -6054,8 +6070,8 @@ SeaEvent:AddToggle({
 	Name = "Auto Kill Pirate Ships & Ghost Ships",
 	Default = false,
 	Callback = function(Value)
-		_G.farmpiranya = Value
-		StopTween(_G.farmpiranya)
+		_G.bjirFishBoat = Value
+		StopTween(_G.bjirFishBoat)
 	end
 })
 
