@@ -5563,6 +5563,14 @@ SeaEvent:AddDropdown({
 	Options = {"Zone 0 [ None ]", "Zone 1 [ Low ]","Zone 2 [ Medium ]","Zone 3 [ High ]","Zone 4 [ Extreme ]","Zone 5 [ Crazy ]","Zone 6 [ ??? ]"},
 	Callback = function(Value)
 		_G.Zone = Value
+	end    
+})
+
+SeaEvent:AddToggle({
+	Name = "Auto Sail Boats",
+	Default = false,
+	Callback = function(Value)
+		_G.SailBoat = Value
 		if _G.SailBoat == true then
 			repeat wait()
     			if _G.Zone == "Zone 0 [ None ]" then
@@ -5582,14 +5590,6 @@ SeaEvent:AddDropdown({
  			   end
             until not _G.SailBoat
         end
-	end    
-})
-
-SeaEvent:AddToggle({
-	Name = "Auto Sail Boats",
-	Default = false,
-	Callback = function(Value)
-		_G.SailBoat = Value
 		StopTween(_G.SailBoat)
 	end
 })
