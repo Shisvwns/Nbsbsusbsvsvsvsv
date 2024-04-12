@@ -2517,9 +2517,6 @@ end
 
 function topos(Pos)
     Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-    if not Pos then return end 
-    game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart", 9)
-    game.Players.LocalPlayer.Character:WaitForChild("Head", 9)
     if not game.Players.LocalPlayer.Character:FindFirstChild("PartTele") then
         local PartTele = Instance.new("Part", game.Players.LocalPlayer.Character)
         PartTele.Size = Vector3.new(10,1,10)
