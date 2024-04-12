@@ -2515,12 +2515,17 @@ function TP(Pos)
     _G.Clip = false
 end
 
+function WaitHRP(q0) 
+    if not q0 then return end
+    return q0.Character:WaitForChild("HumanoidRootPart", 9) 
+end
+
 function topos(Pos)
     Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
     if not Pos then return end 
     game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart", 9)
     game.Players.LocalPlayer.Character:WaitForChild("Head", 9)
-    if not game.Players.LocalPlayer.Character:FindFirstChild("PartTele") then
+    if game.Players.LocalPlayer.Character:FindFirstChild("PartTele") then
         local PartTele = Instance.new("Part", game.Players.LocalPlayer.Character)
         PartTele.Size = Vector3.new(10,1,10)
         PartTele.Name = "PartTele"
@@ -2543,11 +2548,6 @@ if _G.StopTween == true then
     Tween:Cancel()
     _G.Clip = false
 end
-end
-
-function WaitHRP(q0) 
-    if not q0 then return end
-    return q0.Character:WaitForChild("HumanoidRootPart", 9) 
 end
 
 -- [ Tween Boat ]
@@ -3199,7 +3199,7 @@ end)
 
 Farm:AddToggle({
 	Name = "Auto Click",
-	Default = true,
+	Default = false,
 	Callback = function(Value)
 		_G.AutoClick = Value
 	end
