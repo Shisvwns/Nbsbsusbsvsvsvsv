@@ -5640,7 +5640,7 @@ spawn(function()
                     end
                     if not game:GetService("Players").LocalPlayer.Character.Humanoid.Sit then
                         _G.Clip = true
-                        topos(checkboat().VehicleSeat.CFrame * CFrame.new(0,0,0))
+                        topos(checkboat().VehicleSeat.CFrame * CFrame.new(0,1,0))
                     else
                         _G.Clip = false
                     end
@@ -5732,9 +5732,9 @@ SeaEvent:AddSlider({
 	Max = 600,
 	Default = 200,
 	Color = Color3.fromRGB(255, 255, 255),
-	Increments = 1,
+	Increment = 1,
 	ValueName = "",
-	Callback = function(Vaule)
-		_G.SpeedBoat = Vaule
+	Callback = function(Value)
+		_G.SpeedBoat = Value
 	end
 })
