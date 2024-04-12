@@ -5653,7 +5653,7 @@ spawn(function()
 	pcall(function()
 		while wait() do
 			if _G.SailBoat then
-				if game:GetService("Workspace").Enemies:FindFirstChild("Shark") or game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") or game:GetService("Workspace").Enemies:FindFirstChild("Piranha") or game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") then
+				if game:GetService("Workspace").Enemies:FindFirstChild("Shark") or game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") or game:GetService("Workspace").Enemies:FindFirstChild("Piranha") or game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") or game:GetService("Workspace").Enemies:FindFirstChild("Sea Beast") then
 				    game.Players.LocalPlayer.Character.Humanoid.Sit = false
 				end
 			end
@@ -5829,7 +5829,7 @@ end)
 
 SeaEvent:AddDropdown({
 	Name = "Select Weapon 2",
-	Default = "Devil Fruit",
+	Default = "Sword",
 	Options = {"Melee", "Sword","Gun","Devil Fruit"},
 	Callback = function(Value)
 		_G.WeaponSea2 = Value
