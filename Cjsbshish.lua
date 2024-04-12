@@ -4965,7 +4965,7 @@ FruitRaid:AddToggle({
 	Name = "Auto Start Raid",
 	Default = false,
 	Callback = function(Value)
-		_G.AutoBuyChip = Value
+		_G.Auto_StartRaid = Value
 	end
 })
 
@@ -5559,13 +5559,13 @@ end)
 
 -- [ Tab Sea Event ]
 
-local Section = Misc:AddSection({
+local Section = SeaEvent:AddSection({
     Name = "Boats Settings"
 })
 
 SeaEvent:AddDropdown({
 	Name = "Select Boats",
-	Default = "",
+	Default = "PirateBrigade",
 	Options = {"PirateBrigade", "PirateGrandBrigade","PirateSloop","MarineBrigade","MarineGrandBrigade"},
 	Callback = function(Value)
 		_G.Boat = Value
@@ -5574,7 +5574,7 @@ SeaEvent:AddDropdown({
 
 SeaEvent:AddDropdown({
 	Name = "Select Zone",
-	Default = "",
+	Default = "Zone 5 [ Crazy ]",
 	Options = {"Zone 0 [ None ]", "Zone 1 [ Low ]","Zone 2 [ Medium ]","Zone 3 [ High ]","Zone 4 [ Extreme ]","Zone 5 [ Crazy ]","Zone 6 [ ??? ]"},
 	Callback = function(Value)
 		_G.Zone = Value
@@ -5727,14 +5727,14 @@ spawn(function()
 end)
 
 SeaEvent:AddSlider({
-	Name = "Pos X",
-	Min = 0,
-	Max = 60,
-	Default = 0,
+	Name = "Speed Boats",
+	Min = 120,
+	Max = 600,
+	Default = 200,
 	Color = Color3.fromRGB(255, 255, 255),
-	Increment =1,
-	ValueName = "%",
+	Increments = 1,
+	ValueName = "",
 	Callback = function(Vaule)
-		PosX = Vaule
+		_G.SpeedBoat = Vaule
 	end
 })
