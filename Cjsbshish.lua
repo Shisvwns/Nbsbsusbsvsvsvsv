@@ -2517,29 +2517,17 @@ end
 
 function topos(Pos)
     Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-    if not game.Players.LocalPlayer.Character:FindFirstChild("PartTele") then
-        local PartTele = Instance.new("Part", game.Players.LocalPlayer.Character)
-        PartTele.Size = Vector3.new(10,1,10)
-        PartTele.Name = "PartTele"
-        PartTele.Anchored = true
-        PartTele.Transparency = 1
-        PartTele.CanCollide = true
-        PartTele.CFrame = WaitHRP(game.Players.LocalPlayer).CFrame 
-        PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
-            task.wait(0.01)
-            WaitHRP(game.Players.LocalPlayer).CFrame = PartTele.CFrame
-        end)
+    if game.Players.LocalPlayer.Character.Humanoid.Sit == true then game.Players.LocalPlayer.Character.Humanoid.Sit = false end
+    pcall(function() tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/290, Enum.EasingStyle.Linear),{CFrame = Pos}) end)
+    tween:Play()
+    if Distance <= 250 then
+        tween:Cancel()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
     end
-pcall(function() Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.PartTele, TweenInfo.new(Distance / 300, Enum.EasingStyle.Linear),{CFrame = Pos}) end)
-Tween:Play()
-if Distance <= 250 then
-    Tween:Cancel()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
-end
-if _G.StopTween == true then
-    Tween:Cancel()
-    _G.Clip = false
-end
+    if _G.StopTween == true then
+        tween:Cancel()
+        _G.Clip = false
+    end
 end
 
 function WaitHRP(q0) 
@@ -5807,7 +5795,7 @@ end)
 
 SeaEvent:AddDropdown({
 	Name = "Select Weapon 2",
-	Default = "Melee",
+	Default = "Devil Fruit",
 	Options = {"Melee", "Sword","Gun","Devil Fruit"},
 	Callback = function(Value)
 		_G.WeaponSea2 = Value
@@ -5854,55 +5842,6 @@ spawn(function()
 	end
 end)
 
-SeaEvent:AddDropdown({
-	Name = "Select Weapon 3",
-	Default = "Melee",
-	Options = {"Melee", "Sword","Gun","Devil Fruit"},
-	Callback = function(Value)
-		_G.WeaponSea3 = Value
-	end    
-})
-
-spawn(function()
-	while task.wait() do
-		pcall(function()
-			if _G.WeaponSea3 == "Melee" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Melee" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.WeaponSea3 = v.Name
-						end
-					end
-				end
-			elseif _G.WeaponSea3 == "Sword" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Sword" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.WeaponSea3 = v.Name
-						end
-					end
-				end
-			elseif _G.WeaponSea3 == "Gun" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Gun" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.WeaponSea3 = v.Name
-						end
-					end
-				end
-			elseif _G.WeaponSea3 == "Devil Fruit" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Blox Fruit" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.WeaponSea3 = v.Name
-						end
-					end
-				end
-			end
-		end)
-	end
-end)
-
 SeaEvent:AddToggle({
 	Name = "Skill Z",
 	Default = false,
@@ -5934,35 +5873,6 @@ SeaEvent:AddToggle({
 		Skillv = Value
 	end
 })
-
-spawn(function()
-    while wait() do
-        pcall(function()
-            if AutoSkill then
-                if Skillz then
-                    game:service('VirtualInputManager'):SendKeyEvent(true, "Z", false, game)
-                    wait(.1)
-                    game:service('VirtualInputManager'):SendKeyEvent(false, "Z", false, game)
-                end
-                if Skillx then
-                    game:service('VirtualInputManager'):SendKeyEvent(true, "X", false, game)
-                    wait(.1)
-                    game:service('VirtualInputManager'):SendKeyEvent(false, "X", false, game)
-                end
-                if Skillc then
-                    game:service('VirtualInputManager'):SendKeyEvent(true, "C", false, game)
-                    wait(.1)
-                    game:service('VirtualInputManager'):SendKeyEvent(false, "C", false, game)
-                end
-                if Skillv then
-                    game:service('VirtualInputManager'):SendKeyEvent(true, "V", false, game)
-                    wait(.1)
-                    game:service('VirtualInputManager'):SendKeyEvent(false, "V", false, game)
-                end
-            end
-        end)
-    end
-end)
 
 local Section = SeaEvent:AddSection({
     Name = "Monster Sea Event"
@@ -6141,7 +6051,7 @@ spawn(function()
 end)
 
 SeaEvent:AddToggle({
-	Name = "Auto Kill Ships",
+	Name = "Auto Kill Pirate Ships & Ghost Ships",
 	Default = false,
 	Callback = function(Value)
 		_G.farmpiranya = Value
@@ -6171,7 +6081,8 @@ spawn(function()
             end
         end)
     end
-end)   
+end)
+
 spawn(function()
     while wait() do
         if _G.bjirFishBoat then
@@ -6187,16 +6098,26 @@ spawn(function()
                                 end
                             end
                         end
-                        game:GetService("VirtualInputManager"):SendKeyEvent(true,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
-                        game:GetService("VirtualInputManager"):SendKeyEvent(false,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
-                        wait(.2)
-                        game:GetService("VirtualInputManager"):SendKeyEvent(true,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
-                        game:GetService("VirtualInputManager"):SendKeyEvent(false,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
-                        wait(.2)
-                        game:GetService("VirtualInputManager"):SendKeyEvent(true,99,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
-                        game:GetService("VirtualInputManager"):SendKeyEvent(false,99,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
-                        wait(.2)
-                        game:GetService("VirtualInputManager"):SendKeyEvent(false,"C",false,game.Players.LocalPlayer.Character.HumanoidRootPart)
+                        if Skillz then
+                            game:service('VirtualInputManager'):SendKeyEvent(true, "Z", false, game)
+                            wait(.1)
+                            game:service('VirtualInputManager'):SendKeyEvent(false, "Z", false, game)
+                        end
+                        if Skillx then
+                            game:service('VirtualInputManager'):SendKeyEvent(true, "X", false, game)
+                            wait(.1)
+                            game:service('VirtualInputManager'):SendKeyEvent(false, "X", false, game)
+                        end
+                        if Skillc then
+                            game:service('VirtualInputManager'):SendKeyEvent(true, "C", false, game)
+                            wait(.1)
+                            game:service('VirtualInputManager'):SendKeyEvent(false, "C", false, game)
+                        end
+                        if Skillv then
+                            game:service('VirtualInputManager'):SendKeyEvent(true, "V", false, game)
+                            wait(.1)
+                            game:service('VirtualInputManager'):SendKeyEvent(false, "V", false, game)
+                        end
                         for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
                             if v:IsA("Tool") then
                                 if v.ToolTip == _G.WeaponSea2 then
@@ -6204,33 +6125,26 @@ spawn(function()
                                 end
                             end
                         end
-                        game:GetService("VirtualInputManager"):SendKeyEvent(true,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
-                        game:GetService("VirtualInputManager"):SendKeyEvent(false,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
-                        wait(.2)
-                        game:GetService("VirtualInputManager"):SendKeyEvent(true,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
-                        game:GetService("VirtualInputManager"):SendKeyEvent(false,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
-                        wait(.2)
-                        game:GetService("VirtualInputManager"):SendKeyEvent(true,99,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
-                        game:GetService("VirtualInputManager"):SendKeyEvent(false,99,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
-                        wait(.2)
-                        game:GetService("VirtualInputManager"):SendKeyEvent(true,"V",false,game.Players.LocalPlayer.Character.HumanoidRootPart)
-                        game:GetService("VirtualInputManager"):SendKeyEvent(false,"V",false,game.Players.LocalPlayer.Character.HumanoidRootPart)
-                        wait(0.6)
-                        for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-                            if v:IsA("Tool") then
-                                if v.ToolTip == _G.WeaponSea3 then
-                                    game.Players.LocalPlayer.Character.Humanoid:EquipTool(v)
-                                end
-                            end
+                        if Skillz then
+                            game:service('VirtualInputManager'):SendKeyEvent(true, "Z", false, game)
+                            wait(.1)
+                            game:service('VirtualInputManager'):SendKeyEvent(false, "Z", false, game)
                         end
-                        game:GetService("VirtualInputManager"):SendKeyEvent(true,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
-                        game:GetService("VirtualInputManager"):SendKeyEvent(false,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
-                        wait(.2)
-                        game:GetService("VirtualInputManager"):SendKeyEvent(true,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
-                        game:GetService("VirtualInputManager"):SendKeyEvent(false,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
-                        wait(.2)
-                        game:GetService("VirtualInputManager"):SendKeyEvent(true,99,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
-                        game:GetService("VirtualInputManager"):SendKeyEvent(false,99,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
+                        if Skillx then
+                            game:service('VirtualInputManager'):SendKeyEvent(true, "X", false, game)
+                            wait(.1)
+                            game:service('VirtualInputManager'):SendKeyEvent(false, "X", false, game)
+                        end
+                        if Skillc then
+                            game:service('VirtualInputManager'):SendKeyEvent(true, "C", false, game)
+                            wait(.1)
+                            game:service('VirtualInputManager'):SendKeyEvent(false, "C", false, game)
+                        end
+                        if Skillv then
+                            game:service('VirtualInputManager'):SendKeyEvent(true, "V", false, game)
+                            wait(.1)
+                            game:service('VirtualInputManager'):SendKeyEvent(false, "V", false, game)
+                        end
                     end
                 end)
             end
