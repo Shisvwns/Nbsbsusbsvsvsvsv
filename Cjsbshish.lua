@@ -6764,8 +6764,11 @@ local Slplayer = Player:AddDropdown({
 Player:AddButton({
     Name = "Refresh Player",
     Callback = function()
-        Slplayer:Refresh(Playerslist,true)
-        Slplayer:Set(Playerslist)
+        NewPlayerList = {}
+        for i,v in pairs(game:GetService("Players"):GetChildren()) do
+            table.insert(NewPlayerList, v.Name)
+        end
+        Slplayer:Refresh(NewPlayerList)
     end
 })
 
