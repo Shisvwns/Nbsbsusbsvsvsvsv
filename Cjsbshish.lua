@@ -6818,17 +6818,20 @@ Player:AddToggle({
 	Default = false,
 	Callback = function(Value)
 		_G.Teleport = Value
-		if _G.Teleport == false then
-            game.Players:FindFirstChild(_G.SelectPly).Character.HumanoidRootPart.Size = Vector3.new(2, 2, 1)
-        end
-        while _G.Teleport do task.wait()
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players:FindFirstChild(_G.SelectPly).Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 0)
-            game.Players:FindFirstChild(_G.SelectPly).Character.HumanoidRootPart.Size = Vector3.new(60,60,60)
-            game:GetService'VirtualUser':CaptureController()
-            game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
-        end
 	end
 })
+
+spawn(function()
+	while wait() do
+		if _G.Teleport then
+			pcall(function()
+				if game.Players:FindFirstChild(_G.SelectPly) then
+					topos(game.Players[_G.SelectPly].Character.HumanoidRootPart.CFrame)
+				end
+			end)
+		end
+	end
+end)
 
 local Section = Player:AddSection({
     Name = "Haki State"
