@@ -4330,7 +4330,7 @@ local BossName = Farm:AddDropdown({
 })
 
 Farm:AddButton({
-    Name = "Refresh Boss",
+    Name = "Refresh Boss List",
     Callback = function()
         BossName:Refresh(bossCheck,true)
         local BossNew = {}
@@ -5982,16 +5982,15 @@ spawn(function()
         if _G.Auto_Holy_Torch then
             pcall(function()
                 repeat wait()
+                    topos(CFrame.new(-10752, 417, -9366))
                     wait(1)
-                    repeat topos(CFrame.new(-10752, 417, -9366)) wait() until not _G.Auto_Holy_Torch or (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-Vector3.new(-10752, 417, -9366)).Magnitude <= 10
+                    topos(CFrame.new(-11672, 334, -9474))
                     wait(1)
-                    repeat topos(CFrame.new(-11672, 334, -9474)) wait() until not _G.Auto_Holy_Torch or (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-Vector3.new(-11672, 334, -9474)).Magnitude <= 10
+                    topos(CFrame.new(-12132, 521, -10655))
                     wait(1)
-                    repeat topos(CFrame.new(-12132, 521, -10655)) wait() until not _G.Auto_Holy_Torch or (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-Vector3.new(-12132, 521, -10655)).Magnitude <= 10
+                    topos(CFrame.new(-13336, 486, -6985))
                     wait(1)
-                    repeat topos(CFrame.new(-13336, 486, -6985)) wait() until not _G.Auto_Holy_Torch or (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-Vector3.new(-13336, 486, -6985)).Magnitude <= 10
-                    wait(1)
-                    repeat topos(CFrame.new(-13489, 332, -7925)) wait() until not _G.Auto_Holy_Torch or (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-Vector3.new(-13489, 332, -7925)).Magnitude <= 10
+                    topos(CFrame.new(-13489, 332, -7925))
                 until not _G.Auto_Holy_Torch
             end)
         end
@@ -6640,7 +6639,7 @@ spawn(function()
 end)
 
 ItemQuest:AddToggle({
-	Name = "Auto Second Sea",
+	Name = "Auto Quest Second Sea",
 	Default = false,
 	Callback = function(Value)
 		_G.AutoSecondSea = Value
@@ -6704,7 +6703,7 @@ spawn(function()
 end)
 
 ItemQuest:AddToggle({
-	Name = "Auto Third Sea",
+	Name = "Auto Quest Third Sea",
 	Default = false,
 	Callback = function(Value)
 		_G.AutoThirdSea = Value
@@ -6793,7 +6792,7 @@ local Slplayer = Player:AddDropdown({
 })
 
 Player:AddButton({
-    Name = "Refresh Player",
+    Name = "Refresh Player List",
     Callback = function()
         Slplayer:Refresh(Playerslist,true)
         NewPlayerList = {}
@@ -6875,7 +6874,7 @@ Player:AddToggle({
 	Default = false,
 	Callback = function(Value)
 		InfAbility = Value
-        if Value == false then
+        if InfAbility = false then
             game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("Agility"):Destroy()
         end
 	end
