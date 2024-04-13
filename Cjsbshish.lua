@@ -6874,7 +6874,7 @@ Player:AddToggle({
 	Default = false,
 	Callback = function(Value)
 		InfAbility = Value
-        if InfAbility = false then
+        if InfAbility == false then
             game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("Agility"):Destroy()
         end
 	end
