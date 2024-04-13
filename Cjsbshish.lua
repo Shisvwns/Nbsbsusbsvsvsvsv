@@ -6765,10 +6765,7 @@ Player:AddButton({
     Name = "Refresh Player",
     Callback = function()
         Slplayer:Refresh(Playerslist,true)
-        local Playerslist = {}
-        for i,v in pairs(game:GetService("Players"):GetChildren()) do
-            Slplayer:Set(Playerslist,v.Name)
-        end
+        Slplayer:Set(Playerslist)
     end
 })
 
