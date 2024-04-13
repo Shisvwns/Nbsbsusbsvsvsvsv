@@ -6734,11 +6734,11 @@ spawn(function()
         pcall(function()
             for i,v in pairs(game:GetService("Players"):GetPlayers()) do
                 if i == 12 then
-                    plyserv:Set("Player:".." "..i.." ".."/".." ".."12".." ".."(Max)")
+                    plyserv:Set("Player:"..i.."/".."12".." ".."[ Max ]")
                 elseif i == 1 then
-                    plyserv:Set("Player:".." "..i.." ".."/".." ".."12")
+                    plyserv:Set("Player:"..i.."/".."12")
                 else
-                    plyserv:Set("Player:".." "..i.." ".."/".." ".."12")
+                    plyserv:Set("Player:"..i.."/".."12")
                 end
             end
         end)
@@ -6750,7 +6750,7 @@ for i,v in pairs(game:GetService("Players"):GetChildren()) do
     table.insert(Playerslist,v.Name)
 end
 
-Player:AddDropdown({
+local Slplayer = Player:AddDropdown({
 	Name = "Select Player",
 	Default = "",
 	Options = Playerslist,
@@ -6762,10 +6762,7 @@ Player:AddDropdown({
 Player:AddButton({
     Name = "Refresh Player",
     Callback = function()
-        table.clear(Playerslist)
-        for i,v in pairs(game:GetService("Players"):GetChildren()) do
-            table.insert(Playerslist,v.Name)
-        end
+        Slplayer:Refresh(Playerslist,true)
     end
 })
 
