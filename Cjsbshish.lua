@@ -2524,7 +2524,7 @@ function topos(Pos)
         local PartTele = Instance.new("Part", game.Players.LocalPlayer.Character)
         PartTele.Size = Vector3.new(10,1,10)
         PartTele.Name = "PartTele"
-        PartTele.Anchored = false
+        PartTele.Anchored = true
         PartTele.Transparency = 1
         PartTele.CanCollide = true
         PartTele.CFrame = WaitHRP(game.Players.LocalPlayer).CFrame 
