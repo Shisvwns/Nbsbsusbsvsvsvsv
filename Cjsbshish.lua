@@ -6734,7 +6734,7 @@ spawn(function()
         pcall(function()
             for i,v in pairs(game:GetService("Players"):GetPlayers()) do
                 if i == 12 then
-                    plyserv:Set("Player: "..i.."/".."12".." [ Max ]")
+                    plyserv:Set("Player: "..i.."/".."12")
                 elseif i == 1 then
                     plyserv:Set("Player: "..i.."/".."12")
                 else
@@ -6762,7 +6762,8 @@ local Slplayer = Player:AddDropdown({
 Player:AddButton({
     Name = "Refresh Player",
     Callback = function()
-        table.clear(Playerslist)
+        Slplayer:Refresh(Playerslist, true)
+        local Playerslist = {}
         for i,v in pairs(game:GetService("Players"):GetChildren()) do
             table.insert(Playerslist,v.Name)
         end
