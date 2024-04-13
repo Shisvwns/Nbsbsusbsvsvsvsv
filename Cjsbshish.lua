@@ -6734,11 +6734,11 @@ spawn(function()
         pcall(function()
             for i,v in pairs(game:GetService("Players"):GetPlayers()) do
                 if i == 12 then
-                    plyserv:Set("Player:"..i.."/".."12".." ".."[ Max ]")
+                    plyserv:Set("Player: "..i.."/".."12".." [ Max ]")
                 elseif i == 1 then
-                    plyserv:Set("Player:"..i.."/".."12")
+                    plyserv:Set("Player: "..i.."/".."12")
                 else
-                    plyserv:Set("Player:"..i.."/".."12")
+                    plyserv:Set("Player: "..i.."/".."12")
                 end
             end
         end)
@@ -6763,6 +6763,9 @@ Player:AddButton({
     Name = "Refresh Player",
     Callback = function()
         Slplayer:Refresh(Playerslist,true)
+        for i,v in pairs(game:GetService("Players"):GetChildren()) do
+            table.insert(Playerslist,v.Name)
+        end
     end
 })
 
