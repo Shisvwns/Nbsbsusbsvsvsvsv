@@ -5322,10 +5322,12 @@ local Section = Misc:AddSection({
     Name = "Rip Indra"
 })
 
-Misc:AddButton({
+Misc:AddToggle({
 	Name = "Auto Press Haki Button",
+	Default = false,
 	Callback = function(Value)
 		Open_Color_Haki = Value
+		StopTween(Open_Color_Haki)
 	end
 })
 
@@ -5977,10 +5979,12 @@ spawn(function()
     end
 end)
 
-ItemQuest:AddButton({
+ItemQuest:AddToggle({
 	Name = "Auto Holy Torch",
+	Default = false,
 	Callback = function(Value)
 		_G.Auto_Holy_Torch = Value
+		StopTween(_G.Auto_Holy_Torch)
 	end
 })
 
@@ -5989,15 +5993,15 @@ spawn(function()
         if _G.Auto_Holy_Torch then
             pcall(function()
                 wait(1)
-                repeat Tween(CFrame.new(-10752, 417, -9366)) wait() until not _G.Auto_Holy_Torch or (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-Vector3.new(-10752, 417, -9366)).Magnitude <= 10
+                repeat topos(CFrame.new(-10752, 417, -9366)) wait() until not _G.Auto_Holy_Torch or (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-Vector3.new(-10752, 417, -9366)).Magnitude <= 10
                 wait(1)
-                repeat Tween(CFrame.new(-11672, 334, -9474)) wait() until not _G.Auto_Holy_Torch or (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-Vector3.new(-11672, 334, -9474)).Magnitude <= 10
+                repeat topos(CFrame.new(-11672, 334, -9474)) wait() until not _G.Auto_Holy_Torch or (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-Vector3.new(-11672, 334, -9474)).Magnitude <= 10
                 wait(1)
-                repeat Tween(CFrame.new(-12132, 521, -10655)) wait() until not _G.Auto_Holy_Torch or (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-Vector3.new(-12132, 521, -10655)).Magnitude <= 10
+                repeat topos(CFrame.new(-12132, 521, -10655)) wait() until not _G.Auto_Holy_Torch or (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-Vector3.new(-12132, 521, -10655)).Magnitude <= 10
                 wait(1)
-                repeat Tween(CFrame.new(-13336, 486, -6985)) wait() until not _G.Auto_Holy_Torch or (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-Vector3.new(-13336, 486, -6985)).Magnitude <= 10
+                repeat topos(CFrame.new(-13336, 486, -6985)) wait() until not _G.Auto_Holy_Torch or (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-Vector3.new(-13336, 486, -6985)).Magnitude <= 10
                 wait(1)
-                repeat Tween(CFrame.new(-13489, 332, -7925)) wait() until not _G.Auto_Holy_Torch or (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-Vector3.new(-13489, 332, -7925)).Magnitude <= 10
+                repeat topos(CFrame.new(-13489, 332, -7925)) wait() until not _G.Auto_Holy_Torch or (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-Vector3.new(-13489, 332, -7925)).Magnitude <= 10
             end)
         end
     end
@@ -6809,6 +6813,37 @@ Player:AddButton({
     end
 })
 
+Player:AddToggle({
+	Name = "Spectate Player",
+	Default = false,
+	Callback = function(Value)
+		SpectatePlys = Value
+		local plr1 = game:GetService("Players").LocalPlayer.Character.Humanoid
+        local plr2 = game:GetService("Players"):FindFirstChild(_G.SelectPly)
+        repeat wait(.1)
+            game:GetService("Workspace").Camera.CameraSubject = game:GetService("Players"):FindFirstChild(_G.SelectPly).Character.Humanoid
+        until SpectatePlys == false 
+        game:GetService("Workspace").Camera.CameraSubject = game:GetService("Players").LocalPlayer.Character.Humanoid
+	end
+})
+
+Player:AddToggle({
+	Name = "Teleport To Player",
+	Default = false,
+	Callback = function(Value)
+		_G.Teleport = Value
+		if _G.Teleport == false then
+            game.Players:FindFirstChild(_G.SelectPly).Character.HumanoidRootPart.Size = Vector3.new(2, 2, 1)
+        end
+        while _G.Teleport do task.wait()
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players:FindFirstChild(_G.SelectPly).Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 0)
+            game.Players:FindFirstChild(_G.SelectPly).Character.HumanoidRootPart.Size = Vector3.new(60,60,60)
+            game:GetService'VirtualUser':CaptureController()
+            game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
+        end
+	end
+})
+
 local Section = Player:AddSection({
     Name = "Haki State"
 })
@@ -6875,10 +6910,14 @@ spawn(function()
     end
 end)
 
-Player:AddButton({
+Player:AddToggle({
 	Name = "Infinite Ability",
+	Default = false,
 	Callback = function(Value)
 		InfAbility = Value
+	    if Value == false then
+            game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("Agility"):Destroy()
+        end
 	end
 })
 
