@@ -2514,7 +2514,7 @@ function topos(Pos)
         PartTele.Name = "PartTele"
         PartTele.Anchored = true
         PartTele.Transparency = 1
-        PartTele.CanCollide = true
+        PartTele.CanCollide = false
         PartTele.CFrame = WaitHRP(game.Players.LocalPlayer).CFrame 
         PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
             task.wait(0.01)
@@ -7500,5 +7500,163 @@ spawn(function()
                 end
             until game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") or not _G.KillV4
         end
+    end
+end)
+
+local Section = Race:AddSection({
+    Name = "Train"
+})
+
+function CheckAncientOneStatus()
+    if not game.Players.LocalPlayer.Character:FindFirstChild("RaceTransformed") then
+        return "You Have Yet To Achieve Greatness"
+    end
+    local v227 = nil
+    local v228 = nil
+    local v229 = nil
+    v229, v228, v227 = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("UpgradeRace", "Check")
+    if v229 == 1 then
+        return "Required Train More"
+    elseif v229 == 2 or v229 == 4 or v229 == 7 then
+        return "Can Buy Gear With " .. v227 .. " Fragments"
+    elseif v229 == 3 then
+        return "Required Train More"
+    elseif v229 == 5 then
+        return "You Are Done Your Race."
+    elseif v229 == 6 then
+        return "Upgrades completed: " .. v228 - 2 .. "/3, Need Trains More"
+    end
+    if v229 ~= 8 then
+        if v229 == 0 then
+            return "Ready For Trial"
+        else
+            return "You Have Yet To Achieve Greatness"
+        end
+    end
+    return "Remaining " .. 10 - v228 .. " Training Sessions"
+end
+
+local AnOn = Race:AddParagraph("Ancient One Status")
+
+spawn(function()
+    while wait() do
+        pcall(function()
+            AnOn:Set("Ancient One: "..CheckAncientOneStatus())
+        end)
+    end
+end)
+
+Race:AddToggle({
+	Name = "Auto Buy Gear",
+	Default = false,
+	Callback = function(Value)
+		_G.AutoBuyGear = Value
+	end
+})
+
+spawn(function()
+    pcall(function()
+        while wait(0.1) do
+            if _G.AutoBuyGear then
+                local args = {
+                [1] = true
+                }
+                local args = {
+                    [1] = "UpgradeRace",
+                    [2] = "Buy"
+                }
+                game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(unpack(args))
+            end
+        end 
+    end)  
+end)
+
+Race:AddToggle({
+	Name = "Auto Ancient One Quest",
+	Default = false,
+	Callback = function(Value)
+		_G.AutoRace = Value
+		StardFarm = Value
+		StopTween(_G.AutoRace)
+	end
+})
+
+spawn(function()
+    pcall(function()
+        while wait() do
+            if _G.AutoRace then
+                if game.Players.LocalPlayer.Character.RaceTransformed.Value == true then
+                    StardFarm = false
+                    topos(CFrame.new(216.211181640625, 126.9352035522461, -12599.0732421875))
+                end
+            end
+        end
+    end)
+end)
+
+spawn(function()
+    while wait() do 
+        if StardFarm and World3 then
+            pcall(function()
+                if game:GetService("Workspace").Enemies:FindFirstChild("Cocoa Warrior") or game:GetService("Workspace").Enemies:FindFirstChild("Chocolate Bar Battler") or game:GetService("Workspace").Enemies:FindFirstChild("Sweet Thief") or game:GetService("Workspace").Enemies:FindFirstChild("Candy Rebel") then
+                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        if v.Name == "Cocoa Warrior" or v.Name == "Chocolate Bar Battler" or v.Name == "Sweet Thief" or v.Name == "Candy Rebel" then
+                           if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                               repeat task.wait()
+                                    AutoHaki()
+                                    EquipWeapon(_G.SelectWeapon)
+                                    v.HumanoidRootPart.CanCollide = false
+                                    v.Humanoid.WalkSpeed = 0
+                                    v.Head.CanCollide = false 
+                                    FarmMag = true
+                                    PosGG = v.HumanoidRootPart.CFrame
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
+                                    game:GetService("VirtualUser"):CaptureController()
+                                    game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
+                                until not StardFarm or not v.Parent or v.Humanoid.Health <= 0
+                            end
+                        end
+                    end
+                else
+                    FarmMag = false
+                    topos(CFrame.new(216.211181640625, 126.9352035522461, -12599.0732421875))
+                    for i,v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do 
+                        if v.Name == "Cocoa Warrior" then
+                            topos(v.HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                        elseif v.Name == "Chocolate Bar Battler" then
+                            topos(v.HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                        elseif v.Name == "Sweet Thief" then
+                            topos(v.HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                        elseif v.Name == "Candy Rebel" then
+                            topos(v.HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                        end
+                    end
+                end
+            end)
+        end
+    end
+end)
+
+spawn(function()
+    pcall(function()
+        while wait() do
+            if _G.AutoRace then
+                if game.Players.LocalPlayer.Character.RaceTransformed.Value == false then
+                    StardFarm = true
+                end
+            end
+        end
+    end)
+end)
+
+spawn(function()
+    while wait() do
+		pcall(function()
+			if _G.AutoRace then
+				game:GetService("VirtualInputManager"):SendKeyEvent(true,"Y",false,game)
+				wait(0.1)
+                game:GetService("VirtualInputManager"):SendKeyEvent(false,"Y",false,game)
+			end
+		end)
     end
 end)
