@@ -6834,6 +6834,16 @@ spawn(function()
 	end
 end)
 
+spawn(function()
+	while wait() do
+		if _G.Teleport == false then
+			pcall(function()
+				topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
+			end)
+		end
+	end
+end)
+
 local Section = Player:AddSection({
     Name = "Haki State"
 })
