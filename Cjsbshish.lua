@@ -6818,6 +6818,7 @@ Player:AddToggle({
 	Default = false,
 	Callback = function(Value)
 		_G.Teleport = Value
+		StopTween(_G.Teleport)
 	end
 })
 
