@@ -6834,6 +6834,18 @@ spawn(function()
 	end
 end)
 
+Player:AddToggle({
+	Name = "Spectate Player",
+	Default = false,
+	Callback = function(Value)
+		SpectatePlys = Value
+		local plr1 = game:GetService("Players").LocalPlayer.Character.Humanoid
+	    local plr2 = game:GetService("Players"):FindFirstChild(_G.SelectPly)
+  	  repeat wait(.1)
+   	     game:GetService("Workspace").Camera.CameraSubject = game:GetService("Players"):FindFirstChild(_G.SelectPly).Character.Humanoid
+	end
+})
+
 local Section = Player:AddSection({
     Name = "Haki State"
 })
@@ -6905,9 +6917,6 @@ Player:AddToggle({
 	Default = false,
 	Callback = function(Value)
 		InfAbility = Value
-	    if Value == false then
-            game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("Agility"):Destroy()
-        end
 	end
 })
 
