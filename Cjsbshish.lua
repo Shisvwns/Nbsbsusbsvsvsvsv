@@ -91,18 +91,6 @@ spawn(function()
    end
 end)
 
-spawn(function()
-    while _G.AntiFlagReset do task.wait()
-        if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
-            local HealthPercent = game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100
-            if HealthPercent < 50 then
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, 100, 0)
-            end
-        end
-        task.wait()
-    end
-end)
-
 local Players = game:GetService("Players")
 
 local function onCharacterAdded(character)
