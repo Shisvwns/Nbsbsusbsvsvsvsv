@@ -7833,6 +7833,7 @@ Teleport:AddDropdown({
     Options = {"WindMill","Marine","Middle Town","Jungle","Pirate Village","Desert","Snow Island","MarineFord","Colosseum","Sky Island 1","Sky Island 2","Sky Island 3","Prison","Magma Village","Under Water Island","Fountain City","Shank Room","Mob Island"},
     Callback = function(Value)
 		_G.SelectIsland = Value
+	end
 })
 end
 
@@ -7843,6 +7844,7 @@ Teleport:AddDropdown({
     Options = {"The Cafe","Frist Spot","Dark Area","Flamingo Mansion","Flamingo Room","Green Zone","Factory","Colossuim","Zombie Island","Raid Lab","Two Snow Mountains","Punk Hazard","Cursed Ship","Ice Castle","Forgotten Island","Ussop Island","Mini Sky Island"},
     Callback = function(Value)
 		_G.SelectIsland = Value
+	end
 })
 end
 
@@ -7853,6 +7855,7 @@ Teleport:AddDropdown({
     Options = {"Mansion","Port Town","Great Tree","Castle On The Sea","Raid Lab ","MiniSky", "Hydra Island","Floating Turtle","Haunted Castle","Ice Cream Island","Peanut Island","Cake Island","Cocoa Island","Candy Island","Tiki Outpost"},
     Callback = function(Value)
 		_G.SelectIsland = Value
+	end
 })
 end
 
