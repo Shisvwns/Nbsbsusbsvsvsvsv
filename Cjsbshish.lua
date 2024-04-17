@@ -2120,18 +2120,6 @@ function infinitestam()
     end)
 end
 
-spawn(function()
-    pcall(function()
-        while wait(.1) do
-            if InfiniteEnergy then
-                wait(0.1)
-                originalstam = LocalPlayer.Character.Energy.Value
-                infinitestam()
-            end
-        end
-    end)
-end)
-
 function Click()
     game:GetService'VirtualUser':CaptureController()
     game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
@@ -5159,11 +5147,11 @@ spawn(function()
         while wait() do
             if _G.AutoObservation then
                 if game:GetService("Players").LocalPlayer.VisionRadius.Value >= 5000 then
-                        Fluent:Notify({
-                            Title = "Tinh Linh Hub",
+                        OrionLib:MakeNotification({
+                            Name = "Tinh Linh Hub",
                             Content = "You Have Max Points",
-                            SubContent = "",
-                            Duration = 5
+                            Image = "rbxassetid://16730867128",
+                            Time = 5
                         })
                     wait(2)
                 else
@@ -7730,3 +7718,135 @@ Teleport:AddToggle({
   	  StopTween(_G.TeleportIsland)
 	end
 })
+
+-- [ Tab Status & Server ]
+
+local Section = StatusServer:AddSection({
+    Name = "Status"
+})
+
+local Time = StatusServer:AddParagraph("Time Played")
+
+function UpdateTime()
+local GameTime = math.floor(workspace.DistributedGameTime+0.5)
+local Hour = math.floor(GameTime/(60^2))%24
+local Minute = math.floor(GameTime/(60^1))%60
+local Second = math.floor(GameTime/(60^0))%60
+Time:Set("Hour: "..Hour.." | Minute: "..Minute.." | Seconds: "..Second)
+end
+
+spawn(function()
+    while task.wait() do
+        pcall(function()
+            UpdateTime()
+        end)
+    end
+end)
+
+local Moon = StatusServer:AddParagraph("Full Moon Status")
+
+spawn(function()
+    while task.wait() do
+        pcall(function()
+            Moon:Set("Moon: "..CheckMoon())
+        end)
+    end
+end)
+
+local KillCake = StatusServer:AddParagraph("Cake Prince Status")
+
+spawn(function()
+    while wait() do
+        pcall(function()
+            if string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 88 then
+                KillCake:Set("Defeat: "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,41))
+            elseif string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 87 then
+                KillCake:Set("Defeat: "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,40))
+            elseif string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 86 then
+                KillCak:Set("Defeat: "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,39))
+            else
+                KillCake:Set("Boss Is Spawning")
+            end
+        end)
+    end
+end)
+
+local LegendSwords1 = StatusServer:AddParagraph("Legendary Sword Dealer Status")
+
+spawn(function()
+    pcall(function()
+        while wait() do
+            if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer", "1") then
+                LegendSwords1:Set("Sword Name: Shisui")
+            elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer","2") then
+                LegendSwords1:Set("Sword Name: Wando")
+            elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer","3") then
+                LegendSwords1:Set("Sword Name: Saddi")
+            else
+                LegendSwords1:Set("Not Found Legendary Sword Dealer")
+            end
+        end
+    end)
+end)
+
+local ColorHaki1 = StatusServer:AddParagraph("Haki Dealer Status")
+
+spawn(function()
+    pcall(function()
+        while wait() do
+            if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer", "1") then
+                ColorHaki1:Set("Haki Colors: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer", "1"))
+            else
+                ColorHaki1:Set("Not Found Haki Dealer")
+            end
+        end
+    end)
+end)
+
+local Elite = StatusServer:AddParagraph("Elite Status")
+
+spawn(function()
+    while wait() do
+        if game:GetService("ReplicatedStorage"):FindFirstChild("Diablo") or game:GetService("ReplicatedStorage"):FindFirstChild("Deandre") or game:GetService("ReplicatedStorage"):FindFirstChild("Urban") or game:GetService("Workspace").Enemies:FindFirstChild("Diablo") or game:GetService("Workspace").Enemies:FindFirstChild("Deandre") or game:GetService("Workspace").Enemies:FindFirstChild("Urban") then
+            Elite:Set("Elite: 🟢")	
+        else
+            Elite:Set("Elite: 🔴")	
+        end
+    end
+end)
+
+local Mirage = StatusServer:AddParagraph("Mirage Island Status")
+
+spawn(function()
+    while wait() do
+        if game.Workspace._WorldOrigin.Locations:FindFirstChild('Mirage Island') then
+            Mirage:Set("Mirage Island: 🟢")
+        else
+            Mirage:Set("Mirage Island: 🔴")
+        end
+    end
+end)
+
+local Kitsune = StatusServer:AddParagraph("Kitsune Island Status")
+
+spawn(function()
+    while wait() do
+        if game:GetService("Workspace").Map:FindFirstChild('KitsuneIsland') then
+            Kitsune:Set("Kitsune Island: 🟢")
+        else
+            Kitsune:Set("Kitsune Island: 🔴")
+        end
+    end
+end)
+
+local Frozen = StatusServer:AddParagraph("Frozen Dimension Status")
+
+spawn(function()
+    while wait() do
+        if game.Workspace._WorldOrigin.Locations:FindFirstChild('Frozen Dimension') then
+            Frozen:Set("Frozen Dimension: 🟢")
+        else
+            Frozen:Set("Frozen Dimension: 🔴")
+        end
+    end
+end)
