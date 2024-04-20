@@ -6870,12 +6870,12 @@ local Section = Race:AddSection({
     Name = "Trials"
 })
 
-local Moon1 = Race:AddParagraph("Full Moon")
+local Moon1 = Race:AddParagraph("Moon")
 
 spawn(function()
     while task.wait() do
         pcall(function()
-            Moon1:Set("Moon: "..CheckMoon())
+            Moon1:Set(CheckMoon().." | "..function8())
         end)
     end
 end)
@@ -7238,7 +7238,7 @@ local AnOn = Race:AddParagraph("Ancient One")
 spawn(function()
     while wait() do
         pcall(function()
-            AnOn:Set("Ancient One: "..CheckAncientOneStatus())
+            AnOn:Set(CheckAncientOneStatus())
         end)
     end
 end)
@@ -7745,12 +7745,12 @@ spawn(function()
     end
 end)
 
-local Moon = StatusServer:AddParagraph("Full Moon")
+local Moon = StatusServer:AddParagraph("Moon")
 
 spawn(function()
     while task.wait() do
         pcall(function()
-            Moon:Set("Moon: "..function8())
+            Moon:Set(CheckMoon().." | "..function8())
         end)
     end
 end)
