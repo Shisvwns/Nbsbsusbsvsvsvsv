@@ -2203,10 +2203,9 @@ function TP(Pos)
 end
 
 function topos(Pos)
-    Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
     if not Pos then return end 
-    game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart", 9)
-    game.Players.LocalPlayer.Character:WaitForChild("Head", 9)
+    local Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    
     if not game.Players.LocalPlayer.Character:FindFirstChild("PartTele") then
         local PartTele = Instance.new("Part", game.Players.LocalPlayer.Character)
         PartTele.Size = Vector3.new(0,0,0)
@@ -2215,17 +2214,20 @@ function topos(Pos)
         PartTele.Transparency = 1
         PartTele.CanCollide = false
         PartTele.CFrame = WaitHRP(game.Players.LocalPlayer).CFrame 
+        
         PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
             task.wait(0.01)
             WaitHRP(game.Players.LocalPlayer).CFrame = PartTele.CFrame
         end)
     end
-pcall(function() Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear),{CFrame = Pos}) end)
-Tween:Play()
-if _G.StopTween == true then
-    Tween:Cancel()
-    _G.Clip = false
-end
+    
+    local Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear),{CFrame = Pos.CFrame})
+    Tween:Play()
+    
+    if _G.StopTween == true then
+        Tween:Cancel()
+        _G.Clip = false
+    end
 end
 
 function WaitHRP(q0) 
@@ -5070,7 +5072,7 @@ spawn(function()
                                     v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                                     topos(v.HumanoidRootPart.CFrame * Pos)
                                     game:GetService("VirtualUser"):CaptureController()
-                                    game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 670),workspace.CurrentCamera.CFrame)
+                                    game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
                                 end)
                             until _G.AutoKillRipIndra == false or v.Humanoid.Health <= 0
                         end
