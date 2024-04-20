@@ -2203,9 +2203,8 @@ function TP(Pos)
 end
 
 function topos(Pos)
+    Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
     if not Pos then return end 
-    local Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-    
     if not game.Players.LocalPlayer.Character:FindFirstChild("PartTele") then
         local PartTele = Instance.new("Part", game.Players.LocalPlayer.Character)
         PartTele.Size = Vector3.new(0,0,0)
@@ -2214,20 +2213,17 @@ function topos(Pos)
         PartTele.Transparency = 1
         PartTele.CanCollide = false
         PartTele.CFrame = WaitHRP(game.Players.LocalPlayer).CFrame 
-        
         PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
             task.wait(0.01)
             WaitHRP(game.Players.LocalPlayer).CFrame = PartTele.CFrame
         end)
     end
-    
-    local Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear),{CFrame = Pos.CFrame})
-    Tween:Play()
-    
-    if _G.StopTween == true then
-        Tween:Cancel()
-        _G.Clip = false
-    end
+pcall(function() Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear),{CFrame = Pos}) end)
+Tween:Play()
+if _G.StopTween == true then
+    Tween:Cancel()
+    _G.Clip = false
+end
 end
 
 function WaitHRP(q0) 
@@ -7754,7 +7750,7 @@ local Moon = StatusServer:AddParagraph("Full Moon")
 spawn(function()
     while task.wait() do
         pcall(function()
-            Moon:Set("Moon: "..CheckMoon())
+            Moon:Set("Moon: "..function8())
         end)
     end
 end)
@@ -7894,7 +7890,7 @@ StatusServer:AddButton({
 })
 
 StatusServer:AddButton({
-    Name = "Copy Current Server Job Id",
+    Name = "Copy Server Job Id",
     Callback = function()
         setclipboard(tostring(game.JobId))
         OrionLib:MakeNotification({
