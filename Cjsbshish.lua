@@ -2209,7 +2209,7 @@ function topos(Pos)
     game.Players.LocalPlayer.Character:WaitForChild("Head", 9)
     if not game.Players.LocalPlayer.Character:FindFirstChild("PartTele") then
         local PartTele = Instance.new("Part", game.Players.LocalPlayer.Character)
-        PartTele.Size = Vector3.new(10,1,10)
+        PartTele.Size = Vector3.new(0,0,0)
         PartTele.Name = "PartTele"
         PartTele.Anchored = true
         PartTele.Transparency = 1
@@ -3535,7 +3535,7 @@ local Section = Farm:AddSection({
     Name = "Katakuri"
 })
 
-local StatusCakePrince = Farm:AddParagraph("Cake Prince Status")
+local StatusCakePrince = Farm:AddParagraph("Cake Prince")
 
 spawn(function()
     while wait() do
@@ -4940,7 +4940,7 @@ local Section = Misc:AddSection({
     Name = "Elite Hunter"
 })
 
-local EliteStatus = Misc:AddParagraph("Elite Status")
+local EliteStatus = Misc:AddParagraph("Elite")
 
 spawn(function()
     while wait() do
@@ -5271,7 +5271,7 @@ local Section = ItemQuest:AddSection({
     Name = "Legendary Sword"
 })
 
-local LegendSwords = ItemQuest:AddParagraph("Legendary Sword Dealer Status")
+local LegendSwords = ItemQuest:AddParagraph("Legendary Sword Dealer")
 
 spawn(function()
     pcall(function()
@@ -5325,7 +5325,7 @@ local Section = ItemQuest:AddSection({
     Name = "Haki Colors"
 })
 
-local ColorHaki = ItemQuest:AddParagraph("Haki Dealer Status")
+local ColorHaki = ItemQuest:AddParagraph("Haki Dealer")
 
 spawn(function()
     pcall(function()
@@ -5635,7 +5635,7 @@ local Section = ItemQuest:AddSection({
     Name = "Cursed Dual Katana"
 })
 
-local Yama = ItemQuest:AddParagraph("Elite Killed Status")
+local Yama = ItemQuest:AddParagraph("Elite Killed")
 
 spawn(function()
     while wait() do
@@ -6763,7 +6763,7 @@ local Section = Race:AddSection({
     Name = "Mirage Island"
 })
 
-local StatusMirage = Race:AddParagraph("Mirage Island Status")
+local StatusMirage = Race:AddParagraph("Mirage Island")
 
 spawn(function()
     while wait() do
@@ -6872,7 +6872,7 @@ local Section = Race:AddSection({
     Name = "Trials"
 })
 
-local Moon1 = Race:AddParagraph("Full Moon Status")
+local Moon1 = Race:AddParagraph("Full Moon")
 
 spawn(function()
     while task.wait() do
@@ -7235,7 +7235,7 @@ function CheckAncientOneStatus()
     return "Remaining " .. 10 - v228 .. " Training Sessions"
 end
 
-local AnOn = Race:AddParagraph("Ancient One Status")
+local AnOn = Race:AddParagraph("Ancient One")
 
 spawn(function()
     while wait() do
@@ -7562,6 +7562,10 @@ Teleport:AddButton({
     end
 })
 
+local Section = Teleport:AddSection({
+    Name = "Island"
+})
+
 if World1 then
 Teleport:AddDropdown({
     Name = "Select Island",
@@ -7722,7 +7726,7 @@ Teleport:AddToggle({
 -- [ Tab Status & Server ]
 
 local Section = StatusServer:AddSection({
-    Name = "Status"
+    Name = "Status Server"
 })
 
 local Time = StatusServer:AddParagraph("Time Played")
@@ -7743,7 +7747,7 @@ spawn(function()
     end
 end)
 
-local Moon = StatusServer:AddParagraph("Full Moon Status")
+local Moon = StatusServer:AddParagraph("Full Moon")
 
 spawn(function()
     while task.wait() do
@@ -7753,7 +7757,7 @@ spawn(function()
     end
 end)
 
-local KillCake = StatusServer:AddParagraph("Cake Prince Status")
+local KillCake = StatusServer:AddParagraph("Cake Prince")
 
 spawn(function()
     while wait() do
@@ -7771,7 +7775,7 @@ spawn(function()
     end
 end)
 
-local LegendSwords1 = StatusServer:AddParagraph("Legendary Sword Dealer Status")
+local LegendSwords1 = StatusServer:AddParagraph("Legendary Sword Dealer")
 
 spawn(function()
     pcall(function()
@@ -7789,7 +7793,7 @@ spawn(function()
     end)
 end)
 
-local ColorHaki1 = StatusServer:AddParagraph("Haki Dealer Status")
+local ColorHaki1 = StatusServer:AddParagraph("Haki Dealer")
 
 spawn(function()
     pcall(function()
@@ -7803,7 +7807,7 @@ spawn(function()
     end)
 end)
 
-local Elite = StatusServer:AddParagraph("Elite Status")
+local Elite = StatusServer:AddParagraph("Elite")
 
 spawn(function()
     while wait() do
@@ -7815,7 +7819,7 @@ spawn(function()
     end
 end)
 
-local Mirage = StatusServer:AddParagraph("Mirage Island Status")
+local Mirage = StatusServer:AddParagraph("Mirage Island")
 
 spawn(function()
     while wait() do
@@ -7827,7 +7831,7 @@ spawn(function()
     end
 end)
 
-local Kitsune = StatusServer:AddParagraph("Kitsune Island Status")
+local Kitsune = StatusServer:AddParagraph("Kitsune Island")
 
 spawn(function()
     while wait() do
@@ -7839,7 +7843,7 @@ spawn(function()
     end
 end)
 
-local Frozen = StatusServer:AddParagraph("Frozen Dimension Status")
+local Frozen = StatusServer:AddParagraph("Frozen Dimension")
 
 spawn(function()
     while wait() do
@@ -7850,3 +7854,66 @@ spawn(function()
         end
     end
 end)
+
+local Section = StatusServer:AddSection({
+    Name = "Server"
+})
+
+StatusServer:AddTextbox({
+	Name = "Input Job Id",
+	Default = "",
+	TextDisappear = true,
+	Callback = function(Value)
+		_G.Job = Value
+	end	  
+})
+
+StatusServer:AddToggle({
+	Name = "Spam Join Server",
+	Default = false,
+	Callback = function(Value)
+		_G.Join = Value
+	end
+})
+
+spawn(function()
+    while wait(0) do
+        if _G.Join then
+            game:GetService("TeleportService"):TeleportToPlaceInstance(game.placeId,_G.Job, game.Players.LocalPlayer)
+        end
+    end
+end)
+
+StatusServer:AddButton({
+    Name = "Join Server",
+    Callback = function()
+        game:GetService("TeleportService"):TeleportToPlaceInstance(game.placeId,_G.Job, game.Players.LocalPlayer)
+    end
+})
+
+StatusServer:AddButton({
+    Name = "Copy Current Server Job Id",
+    Callback = function()
+        setclipboard(tostring(game.JobId))
+        OrionLib:MakeNotification({
+        	Name = "Tinh Linh Hub!",
+        	Content = "Copied Server Job Id !",
+        	Image = "rbxassetid://16730867128",
+        	Time = 5
+        })
+    end
+})
+
+StatusServer:AddButton({
+    Name = "Rejoin Server",
+    Callback = function()
+        game:GetService("TeleportService"):Teleport(game.PlaceId, game:GetService("Players").LocalPlayer)
+    end
+})
+
+StatusServer:AddButton({
+    Name = "Hop Server",
+    Callback = function()
+        Hop()
+    end
+})
