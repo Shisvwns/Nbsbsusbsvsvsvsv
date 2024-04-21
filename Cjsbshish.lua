@@ -1638,7 +1638,7 @@ function MaterialMon()
     end
 end
 
--- [ Misc ]
+-- [ Other ]
 
 function Hop()
     local PlaceID = game.PlaceId
@@ -2596,8 +2596,8 @@ local FruitRaid = Window:MakeTab({
 	PremiumOnly = false
 })
 
-local Misc = Window:MakeTab({
-	Name = "Misc",
+local Other = Window:MakeTab({
+	Name = "Other",
 	Icon = "rbxassetid://4483345998",
 	PremiumOnly = false
 })
@@ -2644,7 +2644,7 @@ local Shop = Window:MakeTab({
 	PremiumOnly = false
 })
 
-local Settings = Window:MakeTab({
+local Setting = Window:MakeTab({
 	Name = "Settings",
 	Icon = "rbxassetid://4483345998",
 	PremiumOnly = false
@@ -4851,13 +4851,13 @@ spawn(function()
     end)
 end)
 
--- [ Tab Misc ]
+-- [ Tab Other ]
 
-local Section = Misc:AddSection({
+local Section = Other:AddSection({
     Name = "Game Event"
 })
 
-Misc:AddToggle({
+Other:AddToggle({
 	Name = "Auto Pirate Raid",
 	Default = false,
 	Callback = function(Value)
@@ -4901,7 +4901,7 @@ spawn(function()
     end
 end)
 
-Misc:AddToggle({
+Other:AddToggle({
 	Name = "Auto Factory",
 	Default = false,
 	Callback = function(Value)
@@ -4934,11 +4934,11 @@ spawn(function()
     end
 end)
 
-local Section = Misc:AddSection({
+local Section = Other:AddSection({
     Name = "Elite Hunter"
 })
 
-local EliteStatus = Misc:AddParagraph("Elite")
+local EliteStatus = Other:AddParagraph("Elite")
 
 spawn(function()
     while wait() do
@@ -4950,7 +4950,7 @@ spawn(function()
     end
 end)
 
-Misc:AddToggle({
+Other:AddToggle({
 	Name = "Auto Kill Elite",
 	Default = false,
 	Callback = function(Value)
@@ -5003,11 +5003,11 @@ spawn(function()
     end
 end)
 
-local Section = Misc:AddSection({
+local Section = Other:AddSection({
     Name = "Rip Indra"
 })
 
-Misc:AddToggle({
+Other:AddToggle({
 	Name = "Auto Press Haki Button",
 	Default = false,
 	Callback = function(Value)
@@ -5043,7 +5043,7 @@ spawn(function()
     end
 end)
 
-Misc:AddToggle({
+Other:AddToggle({
 	Name = "Auto Kill Rip_Indra",
 	Default = false,
 	Callback = function(Value)
@@ -5091,11 +5091,11 @@ spawn(function()
     end)
 end)
 
-local Section = Misc:AddSection({
+local Section = Other:AddSection({
     Name = "Observation Haki"
 })
 
-local ObservationStatus = Misc:AddParagraph("Observation Level")
+local ObservationStatus = Other:AddParagraph("Observation Level")
 
 spawn(function()
     while wait() do
@@ -5105,7 +5105,7 @@ spawn(function()
     end
 end)
 
-Misc:AddToggle({
+Other:AddToggle({
 	Name = "Auto Farm Observation",
 	Default = false,
 	Callback = function(Value)
@@ -5132,7 +5132,7 @@ spawn(function()
     end
 end)
 
-Misc:AddToggle({
+Other:AddToggle({
 	Name = "Auto Farm Observation [ Hop ]",
 	Default = false,
 	Callback = function(Value)
@@ -5214,7 +5214,7 @@ spawn(function()
     end)
 end)
 
-Misc:AddToggle({
+Other:AddToggle({
 	Name = "Auto Upgrade Observation Haki V2",
 	Default = false,
 	Callback = function(Value)
@@ -7913,5 +7913,513 @@ StatusServer:AddButton({
     Name = "Hop Server",
     Callback = function()
         Hop()
+    end
+})
+
+-- [ Tab Shop ]
+
+local Section = Shop:AddSection({
+    Name = "Code"
+})
+
+CodeA = {
+    "KITTGAMING",
+    "ENYU_IS_PRO",
+    "FUDD10",
+    "BIGNEWS",
+    "THEGREATACE",
+    "SUB2GAMERROBOT_EXP1",
+    "STRAWHATMAIME",
+    "KITT_RESET",
+    "SUB2OFFICIALNOOBIE",
+    "SUB2NOOBMASTER123",
+    "SUB2DAIGROCK",
+    "AXIORE",
+    "TANTAIGAMIMG",
+    "STRAWHATMAINE",
+    "JCWK",
+    "SUB2GAMERROBOT_RESET1",
+    "FUDD10_V2",
+    "SUB2FER999",
+    "MAGICBIS",
+    "Sub2UncleKizaru",
+    "TY_FOR_WATCHING",
+    "STARCODEHEO"
+}
+
+Shop:AddDropdown({
+    Name = "Select Code",
+    Default = "",
+    Options = CodeA,
+    Callback = function(Value)
+		_G.CodeA = Value
+	end
+})
+
+Shop:AddButton({
+    Name = "Redeem Code",
+    Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer(_G.CodeA)
+    end
+})
+
+local X2Code = {
+    "KITTGAMING",
+    "ENYU_IS_PRO",
+    "FUDD10",
+    "BIGNEWS",
+    "THEGREATACE",
+    "SUB2GAMERROBOT_EXP1",
+    "STRAWHATMAIME",
+    "SUB2OFFICIALNOOBIE",
+    "SUB2NOOBMASTER123",
+    "SUB2DAIGROCK",
+    "AXIORE",
+    "TANTAIGAMIMG",
+    "STRAWHATMAINE",
+    "JCWK",
+    "FUDD10_V2",
+    "SUB2FER999",
+    "KITT_RESET",
+    "SUB2GAMERROBOT_RESET1",
+    "Sub2UncleKizaru",
+    "MAGICBIS",
+    "TY_FOR_WATCHING",
+    "STARCODEHEO"
+}
+
+Shop:AddButton({
+    Name = "Redeem All Code",
+    Callback = function()
+        function RedeemCode(value)
+            game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer(value)
+        end
+        for i,v in pairs(x2Code) do
+            RedeemCode(v)
+        end
+    end
+})
+
+local Section = Shop:AddSection({
+    Name = "Fighting Style"
+})
+
+SelectMelee = {
+	"Black Leg",
+	"Electro",
+	"Fishman Karate",
+	"Dragon Claw",
+	"SuperHuman",
+	"Death Step",
+	"Sharkman Karate",
+	"Electric Claw",
+	"Dragon Talon",
+	"GodHuman",
+	"Sanguine Art"
+}
+
+Shop:AddDropdown({
+    Name = "Select Fighting Style",
+    Default = "",
+    Options = SelectMelee,
+    Callback = function(Value)
+		_G.SelectMelee = Value
+	end
+})
+
+Shop:AddButton({
+    Name = "Buy Fighting Style",
+    Callback = function()
+        if _G.SelectMelee == "Black Leg" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyBlackLeg")
+        elseif _G.SelectMelee == "Electro" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyElectro")
+        elseif _G.SelectMelee == "Fishman Karate" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyFishmanKarate")
+        elseif _G.SelectMelee == "Dragon Claw" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","DragonClaw","1")
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","DragonClaw","2")
+        elseif _G.SelectMelee == "SuperHuman" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySuperhuman")
+        elseif _G.SelectMelee == "Death Step" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyDeathStep")
+        elseif _G.SelectMelee == "Sharkman Karate" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySharkmanKarate",true)
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySharkmanKarate")
+        elseif _G.SelectMelee == "Electric Claw" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyElectricClaw")
+        elseif _G.SelectMelee == "Dragon Talon" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyDragonTalon")
+        elseif _G.SelectMelee == "GodHuman" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyGodhuman")
+        elseif _G.SelectMelee == "Sanguine Art" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySanguineArt", true)
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySanguineArt")
+        end
+    end
+})
+
+local Section = Shop:AddSection({
+    Name = "Abilities"
+})
+
+SelectAbilities = {
+	"Sky Jump [ Geppo ]",
+	"Buso Haki",
+	"Soru",
+	"Observation Haki"
+}
+
+Shop:AddDropdown({
+    Name = "Select Abilities",
+    Default = "",
+    Options = SelectAbilities,
+    Callback = function(Value)
+		_G.SelectAbilities = Value
+	end
+})
+
+Shop:AddButton({
+    Name = "Buy Abilities",
+    Callback = function()
+        if _G.SelectAbilities == "Sky Jump [ Geppo ]" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyHaki","Geppo")
+        elseif _G.SelectAbilities == "Buso Haki" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyHaki","Buso")
+        elseif _G.SelectAbilities == "Soru" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyHaki","Soru")
+        elseif _G.SelectAbilities == "Observation Haki" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("KenTalk","Buy")
+        end
+    end
+})
+
+local Section = Shop:AddSection({
+    Name = "Sword"
+})
+
+SelectSword = {
+	"Cutlass",
+    "Katana",
+    "Iron Mace",
+    "Dual Katana",
+    "Triple Katana",
+    "Pipe",
+    "Dual-Headed Blade",
+    "Bisento",
+    "Soul Cane",
+    "Pole V2"
+}
+
+Shop:AddDropdown({
+    Name = "Select Sword",
+    Default = "",
+    Options = SelectSword,
+    Callback = function(Value)
+		_G.SelectSword = Value
+	end
+})
+
+Shop:AddButton({
+    Name = "Buy Sword",
+    Callback = function()
+        if _G.SelectSword == "Cutlass" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Cutlass")
+        elseif _G.SelectSword == "Katana" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Katana")
+        elseif _G.SelectSword == "Iron Mace" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Iron Mace")
+        elseif _G.SelectSword == "Dual Katana" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Duel Katana")
+        elseif _G.SelectSword == "Triple Katana" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Triple Katana")
+        elseif _G.SelectSword == "Pipe" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Pipe")
+        elseif _G.SelectSword == "Dual-Headed Blade" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Dual-Headed Blade")
+        elseif _G.SelectSword == "Bisento" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Bisento")
+        elseif _G.SelectSword == "Soul Cane" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Soul Cane")
+        elseif _G.SelectSword == "Pole V2" then
+            game.ReplicatedStorage.Remotes.CommF_:InvokeServer("ThunderGodTalk")
+        end
+    end
+})
+
+local Section = Shop:AddSection({
+    Name = "Gun"
+})
+
+SelectGun = {
+	"Slingshot",
+	"Flintlock",
+	"Musket",
+	"Cannon",
+	"Refined Flintlock",
+	"Refined Slingshot",
+	"Bizarre Rifle",
+	"Kabucha"
+}
+
+Shop:AddDropdown({
+    Name = "Select Gun",
+    Default = "",
+    Options = SelectGun,
+    Callback = function(Value)
+		_G.SelectGun = Value
+	end
+})
+
+Shop:AddButton({
+    Name = "Buy Gun",
+    Callback = function()
+        if _G.SelectGun == "Slingshot" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Slingshot")
+        elseif _G.SelectGun == "Flintlock" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Flintlock")
+        elseif _G.SelectGun == "Musket" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Musket")
+        elseif _G.SelectGun == "Cannon" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Cannon")
+        elseif _G.SelectGun == "Refined Flintlock" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Refined Flintlock")
+        elseif _G.SelectGun == "Refined Slingshot" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Refined Slingshot")
+        elseif _G.SelectGun == "Kabucha" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Kabucha")
+        elseif _G.SelectGun == "Bizarre Rifle" then
+            local A_1 = "Ectoplasm"
+            local A_2 = "Buy"
+            local A_3 = 1
+            local Event = game:GetService("ReplicatedStorage").Remotes["CommF_"]
+            Event:InvokeServer(A_1, A_2, A_3) 
+            local A_1 = "Ectoplasm"
+            local A_2 = "Buy"
+            local A_3 = 1
+            local Event = game:GetService("ReplicatedStorage").Remotes["CommF_"]
+            Event:InvokeServer(A_1, A_2, A_3)
+        end
+    end
+})
+
+local Section = Shop:AddSection({
+    Name = "Other"
+})
+
+SelectOther = {
+	"Reroll Race",
+	"Reset Stats",
+	"Cyborg Race",
+	"Ghoul Race"
+}
+
+Shop:AddDropdown({
+    Name = "Select Other Things",
+    Default = "",
+    Options = SelectOther,
+    Callback = function(Value)
+		_G.SelectOther = Value
+	end
+})
+
+Shop:AddButton({
+    Name = "Buy Other Things Selected",
+    Callback = function()
+        if _G.SelectOther == "Reroll Race" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Reroll","1")
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Reroll","2")
+        elseif _G.SelectOther == "Reset Stats" then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Refund","1")
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Refund","2")
+        elseif _G.SelectOther == "Cyborg Race" then
+            local a = {
+                [1] = "CyborgTrainer",
+                [2] = "Buy"
+            }
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(a))
+        elseif _G.SelectOther == "Ghoul Race" then
+            local a = {
+                [1] = "Ectoplasm",
+                [2] = "BuyCheck",
+                [3] = 4
+            }
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(a))
+            local a = {
+                [1] = "Ectoplasm",
+                [2] = "Change",
+                [3] = 4
+            }
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(a))
+        end
+    end
+})
+
+-- [ Tab Settings]
+
+local Section = Setting:AddSection({
+    Name = "Graphic & Reduce Lag"
+})
+
+Setting:AddToggle({
+	Name = "White Screen",
+	Default = false,
+	Callback = function(Value)
+		_G.WhiteScreen = Value
+		if _G.WhiteScreen == true then
+   	     game:GetService("RunService"):Set3dRenderingEnabled(false)
+	    elseif _G.WhiteScreen == false then
+ 	       game:GetService("RunService"):Set3dRenderingEnabled(true)
+	    end
+	end
+})
+
+spawn(function()
+    while wait() do
+        if _G.WhiteScreen then
+            for i, v in pairs(game.Workspace["_WorldOrigin"]:GetChildren()) do
+                if v.Name == "CurvedRing" or v.Name == "SlashHit" or v.Name == "DamageCounter" or v.Name == "SwordSlash" or v.Name == "SlashTail" or v.Name == "Sounds" then
+                    v:Destroy() 
+                end
+            end
+        end
+    end
+end)
+
+Setting:AddButton({
+    Name = "Remove Fog",
+    Callback = function()
+        game:GetService("Lighting").LightingLayers:Destroy()
+    	game:GetService("Lighting").Sky:Destroy()
+    end
+})
+
+Setting:AddButton({
+    Name = "Fps Booster",
+    Callback = function()
+        FPSBooster()
+    end
+})
+
+function FPSBooster()
+    local decalsyeeted = true
+    local g = game
+    local w = g.Workspace
+    local l = g.Lighting
+    local t = w.Terrain
+    sethiddenproperty(l,"Technology",2)
+    sethiddenproperty(t,"Decoration",false)
+    t.WaterWaveSize = 0
+    t.WaterWaveSpeed = 0
+    t.WaterReflectance = 0
+    t.WaterTransparency = 0
+    l.GlobalShadows = false
+    l.FogEnd = 9e9
+    l.Brightness = 0
+    settings().Rendering.QualityLevel = "Level01"
+    for i, v in pairs(g:GetDescendants()) do
+        if v:IsA("Part") or v:IsA("Union") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
+            v.Material = "Plastic"
+            v.Reflectance = 0
+        elseif v:IsA("Decal") or v:IsA("Texture") and decalsyeeted then
+            v.Transparency = 1
+        elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
+            v.Lifetime = NumberRange.new(0)
+        elseif v:IsA("Explosion") then
+            v.BlastPressure = 1
+            v.BlastRadius = 1
+        elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") or v:IsA("Sparkles") then
+            v.Enabled = false
+        elseif v:IsA("MeshPart") then
+            v.Material = "Plastic"
+            v.Reflectance = 0
+            v.TextureID = 10385902758728957
+        end
+    end
+    for i, e in pairs(l:GetChildren()) do
+        if e:IsA("BlurEffect") or e:IsA("SunRaysEffect") or e:IsA("ColorCorrectionEffect") or e:IsA("BloomEffect") or e:IsA("DepthOfFieldEffect") then
+            e.Enabled = false
+        end
+    end
+end
+
+local Section = Setting:AddSection({
+    Name = "Team"
+})
+
+Setting:AddButton({
+    Name = "Join Pirates Team",
+    Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetTeam","Pirates")
+    end
+})
+
+Setting:AddButton({
+    Name = "Join Marines Team",
+    Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetTeam","Marines")
+    end
+})
+
+local Section = Setting:AddSection({
+    Name = "Other"
+})
+
+Setting:AddToggle({
+	Name = "Auto Rejoin When Disconnect",
+	Default = true,
+	Callback = function(Value)
+		_G.AutoRejoin = Value
+	end
+})
+
+spawn(function()
+	while wait() do
+		if _G.AutoRejoin then
+			getgenv().rejoin = game:GetService("CoreGui").RobloxPromptGui.promptOverlay.ChildAdded:Connect(function(child)
+				if child.Name == 'ErrorPrompt' and child:FindFirstChild('MessageArea') and child.MessageArea:FindFirstChild("ErrorFrame") then
+					game:GetService("TeleportService"):Teleport(game.PlaceId)
+				end
+			 end)
+		end
+	end
+end)
+
+Setting:AddToggle({
+	Name = "Bypass Teleport",
+	Default = false,
+	Callback = function(Value)
+		BypassTP = Value
+	end
+})
+
+Setting:AddToggle({
+	Name = "Teleport To Y If Low Health",
+	Default = false,
+	Callback = function(Value)
+		_G.LowHealth = Value
+	end
+})
+
+spawn(function()
+    while _G.LowHealth do task.wait()
+        if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
+            local HealthPercent = game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100
+            if HealthPercent < 50 then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, 100, 0)
+            end
+        end
+        task.wait()
+    end
+end)
+
+local Section = Setting:AddSection({
+    Name = "Other"
+})
+
+Setting:AddButton({
+    Name = "Show Item",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/HuyLocDz/ShowItem/main/ShowItem.lua"))()
     end
 })
