@@ -130,11 +130,11 @@ end
 -- [ World Check ]
 
 if game.PlaceId == 2753915549 then
-        World1 = true
-    elseif game.PlaceId == 4442272183 then
-        World2 = true
-    elseif game.PlaceId == 7449423635 then
-        World3 = true
+    World1 = true
+elseif game.PlaceId == 4442272183 then
+    World2 = true
+elseif game.PlaceId == 7449423635 then
+    World3 = true
 end
 
 -- [ Quest Check ]
@@ -8423,3 +8423,82 @@ Setting:AddButton({
         loadstring(game:HttpGet("https://raw.githubusercontent.com/HuyLocDz/ShowItem/main/ShowItem.lua"))()
     end
 })
+
+local PlayerCount = #game:GetService("Players"):GetPlayers()
+
+function CheckSea()
+    if game.PlaceId == 2753915549 then
+        return "First Sea"
+    elseif game.PlaceId == 4442272183 then
+        return "Second Sea"
+    elseif game.PlaceId == 7449423635 then
+        return "Third Sea"
+    end
+end
+
+function CheckBoss()
+    if game:GetService("ReplicatedStorage"):FindFirstChild("rip_indra True Form") or game:GetService("ReplicatedStorage"):FindFirstChild("rip_indra") then
+        return "rip_indra True Form [Lv. 5000] [Raid Boss]"
+    elseif game:GetService("ReplicatedStorage"):FindFirstChild("Soul Reaper") then
+        return "Soul Reaper [Lv. 2100] [Raid Boss]"
+    elseif game:GetService("ReplicatedStorage"):FindFirstChild("Dough King") then
+        return "Dough King [Lv. 2300] [Raid Boss]"
+    elseif game:GetService("ReplicatedStorage"):FindFirstChild("Terrorshark") then
+        return "Terrorshark [Lv. 2000] [Raid Boss]"
+    elseif game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince") then
+        return "Cake Prince [Lv. 2300] [Raid Boss]"
+    elseif game:GetService("ReplicatedStorage"):FindFirstChild("Cursed Captain") then
+        return "Cursed Captain [Lv. 1325] [Raid Boss]"
+    elseif game:GetService("ReplicatedStorage"):FindFirstChild("Greybeard") then
+        return "Greybeard [Lv. 750] [Raid Boss]"
+    elseif game:GetService("ReplicatedStorage"):FindFirstChild("Darkbeard") then
+        return "Darkbeard [Lv. 1000] [Raid Boss]"
+    end
+end
+
+if game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince") or game:GetService("ReplicatedStorage"):FindFirstChild("Cursed Captain") or game:GetService("ReplicatedStorage"):FindFirstChild("Greybeard") or game:GetService("ReplicatedStorage"):FindFirstChild("rip_indra True Form") or game:GetService("ReplicatedStorage"):FindFirstChild("Soul Reaper") or game:GetService("ReplicatedStorage"):FindFirstChild("Dough King") or game:GetService("ReplicatedStorage"):FindFirstChild("Terrorshark") or game:GetService("ReplicatedStorage"):FindFirstChild("Darkbeard") then
+    WebhookBoss = "https://discord.com/api/webhooks/1183763092501430373/l2xLBKXlLKzAlXuVB47vKhVjbnwfXLIETmkeategYL0BCIqCYN4A_wWsDJPPu3aOeosl"
+    local HttpService = game:GetService("HttpService")
+    local Data = {
+        ["embeds"]= {
+            {            
+                ["title"]= "ɴᴏᴛɪғʏ ʙᴏss sᴘᴀᴡɴ";
+                ["color"]= tonumber(0x07f6da);
+                ["fields"]= {
+                    {
+                        ["name"] = "**[👺] - __Boss Name:__**",
+                        ["value"] = "```"..CheckBoss().."```",
+                        ["inline"] = false
+                    },
+                    {
+                        ["name"] = "**[🎋] - __Location ( Sea ):__**",
+                        ["value"] = "```"..CheckSea().."```",
+                        ["inline"] = false
+                    },
+                    {
+                        ["name"] = "**[👥] - __Players In Server:__**",
+                        ["value"] = "```"..PlayerCount.."/12```",
+                        ["inline"] = false
+                    },
+                    {
+                        ["name"] = "**[🔗] - __Job ID:__**",
+                        ["value"] = "```"..game.JobId.."```",
+                        ["inline"] = false
+                    },
+                    {
+                        ["name"] = "**[📋] - __Script Join:__**",
+                        ["value"]= '```game:GetService("TeleportService"):TeleportToPlaceInstance('..game.PlaceId..', "'..game.JobId..'", game.Players.LocalPlayer)```',
+                        ["inline"] = false
+                    },
+                }              
+            }
+        }
+    }
+    local Headers = {["Content-Type"]="application/json"}
+    local Encoded = HttpService:JSONEncode(Data)
+    
+    Request = http_request or request or HttpPost or syn.request
+    local Final1 = {Url = WebhookBoss , Body = Encoded, Method = "POST", Headers = Headers}
+    
+    Request(Final1)
+end
