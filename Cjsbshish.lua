@@ -2208,7 +2208,6 @@ function topos(Pos)
     if not Pos then return end 
     if not game.Players.LocalPlayer.Character:FindFirstChild("PartTele") then
         local PartTele = Instance.new("Part", game.Players.LocalPlayer.Character)
-        PartTele.Size = Vector3.new(0,0,0)
         PartTele.Name = "PartTele"
         PartTele.Anchored = true
         PartTele.Transparency = 0
