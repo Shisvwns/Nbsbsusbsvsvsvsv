@@ -8459,7 +8459,7 @@ end
 spawn(function()
     pcall(function()
         while wait() do
-            if game:GetService("ReplicatedStorage"):FindFirstChild("rip_indra True Form") or game:GetService("ReplicatedStorage"):FindFirstChild("Soul Reaper") or game:GetService("ReplicatedStorage"):FindFirstChild("Dough King") or game:GetService("ReplicatedStorage"):FindFirstChild("Terrorshark") then
+            if game:GetService("ReplicatedStorage"):FindFirstChild("rip_indra True Form") or game:GetService("ReplicatedStorage"):FindFirstChild("Soul Reaper") or game:GetService("ReplicatedStorage"):FindFirstChild("Dough King") or game:GetService("ReplicatedStorage"):FindFirstChild("Terrorshark") or game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince") or game:GetService("ReplicatedStorage"):FindFirstChild("Cursed Captain") or game:GetService("ReplicatedStorage"):FindFirstChild("Greybeard") or game:GetService("ReplicatedStorage"):FindFirstChild("Darkbeard") then
                 WebhookBoss = "https://discord.com/api/webhooks/1199318124319735878/VEseTtAbhD_DIRRF26VCxtD8aT7TtKuGPfDee4AzruQcuD_CCFuGemX9_ZT26KQDt0wb"
                 local HttpService = game:GetService("HttpService")
                 local Data = {
