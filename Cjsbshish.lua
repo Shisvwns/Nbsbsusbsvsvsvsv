@@ -8456,49 +8456,55 @@ function CheckBoss()
     end
 end
 
-if game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince") or game:GetService("ReplicatedStorage"):FindFirstChild("Cursed Captain") or game:GetService("ReplicatedStorage"):FindFirstChild("Greybeard") or game:GetService("ReplicatedStorage"):FindFirstChild("rip_indra True Form") or game:GetService("ReplicatedStorage"):FindFirstChild("Soul Reaper") or game:GetService("ReplicatedStorage"):FindFirstChild("Dough King") or game:GetService("ReplicatedStorage"):FindFirstChild("Terrorshark") or game:GetService("ReplicatedStorage"):FindFirstChild("Darkbeard") then
-    WebhookBoss = "https://discord.com/api/webhooks/1183763092501430373/l2xLBKXlLKzAlXuVB47vKhVjbnwfXLIETmkeategYL0BCIqCYN4A_wWsDJPPu3aOeosl"
-    local HttpService = game:GetService("HttpService")
-    local Data = {
-        ["embeds"]= {
-            {            
-                ["title"]= "ɴᴏᴛɪғʏ ʙᴏss sᴘᴀᴡɴ";
-                ["color"]= tonumber(0x07f6da);
-                ["fields"]= {
-                    {
-                        ["name"] = "**[👺] - __Boss Name:__**",
-                        ["value"] = "```"..CheckBoss().."```",
-                        ["inline"] = false
-                    },
-                    {
-                        ["name"] = "**[🎋] - __Location ( Sea ):__**",
-                        ["value"] = "```"..CheckSea().."```",
-                        ["inline"] = false
-                    },
-                    {
-                        ["name"] = "**[👥] - __Players In Server:__**",
-                        ["value"] = "```"..PlayerCount.."/12```",
-                        ["inline"] = false
-                    },
-                    {
-                        ["name"] = "**[🔗] - __Job ID:__**",
-                        ["value"] = "```"..game.JobId.."```",
-                        ["inline"] = false
-                    },
-                    {
-                        ["name"] = "**[📋] - __Script Join:__**",
-                        ["value"]= '```game:GetService("TeleportService"):TeleportToPlaceInstance('..game.PlaceId..', "'..game.JobId..'", game.Players.LocalPlayer)```',
-                        ["inline"] = false
-                    },
-                }              
-            }
-        }
-    }
-    local Headers = {["Content-Type"]="application/json"}
-    local Encoded = HttpService:JSONEncode(Data)
+spawn(function()
+    pcall(function()
+        while wait() do
+            if game:GetService("ReplicatedStorage"):FindFirstChild("rip_indra True Form") or game:GetService("ReplicatedStorage"):FindFirstChild("Soul Reaper") or game:GetService("ReplicatedStorage"):FindFirstChild("Dough King") or game:GetService("ReplicatedStorage"):FindFirstChild("Terrorshark") then
+                WebhookBoss = "https://discord.com/api/webhooks/1199318124319735878/VEseTtAbhD_DIRRF26VCxtD8aT7TtKuGPfDee4AzruQcuD_CCFuGemX9_ZT26KQDt0wb"
+                local HttpService = game:GetService("HttpService")
+                local Data = {
+                    ["embeds"]= {
+                        {            
+                            ["title"] = "ɴᴏᴛɪғʏ ʙᴏss sᴘᴀᴡɴ";
+                            ["color"] = tonumber(0x07f6da);
+                            ["fields"] = {
+                                {
+                                    ["name"] = "**[👺] - __Boss Name:__**",
+                                    ["value"] = "```"..CheckBoss().."```",
+                                    ["inline"] = false
+                                },
+                                {
+                                    ["name"] = "**[🎋] - __Location ( Sea ):__**",
+                                    ["value"] = "```"..CheckSea().."```",
+                                    ["inline"] = false
+                                },
+                                {
+                                    ["name"] = "**[👥] - __Players In Server:__**",
+                                    ["value"] = "```"..PlayerCount.."/12```",
+                                    ["inline"] = false
+                                },
+                                {
+                                    ["name"] = "**[🔗] - __Job ID:__**",
+                                    ["value"] = "```"..game.JobId.."```",
+                                    ["inline"] = false
+                                },
+                                {
+                                    ["name"] = "**[📋] - __Script Join:__**",
+                                    ["value"] = '```game:GetService("TeleportService"):TeleportToPlaceInstance('..game.PlaceId..', "'..game.JobId..'", game.Players.LocalPlayer)```',
+                                    ["inline"] = false
+                                },
+                            }              
+                        }
+                    }
+                }
+                local Headers = {["Content-Type"]="application/json"}
+                local Encoded = HttpService:JSONEncode(Data)
     
-    Request = http_request or request or HttpPost or syn.request
-    local Final1 = {Url = WebhookBoss , Body = Encoded, Method = "POST", Headers = Headers}
+                Request = http_request or request or HttpPost or syn.request
+                local Final1 = {Url = WebhookBoss , Body = Encoded, Method = "POST", Headers = Headers}
     
-    Request(Final1)
-end
+                Request(Final1)
+            end
+        end
+    end)
+end)
