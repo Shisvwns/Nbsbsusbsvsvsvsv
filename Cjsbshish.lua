@@ -3964,48 +3964,6 @@ spawn(function()
     end)
 end)
 
-Farm:AddToggle({
-	Name = "Auto Pray",
-	Default = false,
-	Callback = function(Value)
-		_G.Pray = Value
-		StopTween(_G.Pray)
-	end
-})
-
-spawn(function()
-    pcall(function()
-        while wait(.1) do
-            if _G.Pray then    
-                topos(CFrame.new(-8652.99707, 143.450119, 6170.50879, -0.983064115, -2.48005533e-10, 0.18326205, -1.78910387e-09, 1, -8.24392288e-09, -0.18326205, -8.43218029e-09, -0.983064115))
-                wait()
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("gravestoneEvent",1)
-            end
-        end
-    end)
-end)
-
-Farm:AddToggle({
-	Name = "Auto Try Luck",
-	Default = false,
-	Callback = function(Value)
-		_G.Trylux = Value
-		StopTween(_G.Trylux)
-	end
-})
-
-spawn(function()
-    pcall(function()
-        while wait(.1) do
-            if _G.Trylux then    
-                topos(CFrame.new(-8652.99707, 143.450119, 6170.50879, -0.983064115, -2.48005533e-10, 0.18326205, -1.78910387e-09, 1, -8.24392288e-09, -0.18326205, -8.43218029e-09, -0.983064115))
-                wait()
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("gravestoneEvent",2)
-            end
-        end
-    end)
-end)
-
 local Section = Farm:AddSection({
     Name = "Mastery"
 })
@@ -4421,21 +4379,6 @@ spawn(function()
     end
 end)
 spawn(function()
-    game:GetService("RunService").RenderStepped:Connect(function()
-        pcall(function()
-            if UseSkill then
-                for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.Notifications:GetChildren()) do
-                    if v.Name == "NotificationTemplate" then
-                        if string.find(v.Text,"Skill locked!") then
-                            v:Destroy()
-                        end
-                    end
-                end
-            end
-        end)
-    end)
-end)
-spawn(function()
     pcall(function()
         game:GetService("RunService").RenderStepped:Connect(function()
             if UseSkill then
@@ -4580,21 +4523,6 @@ spawn(function()
             end)
         end
     end
-end)
-spawn(function()
-    game:GetService("RunService").RenderStepped:Connect(function()
-        pcall(function()
-            if UseSkillKub then
-                for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.Notifications:GetChildren()) do
-                    if v.Name == "NotificationTemplate" then
-                        if string.find(v.Text,"Skill locked!") then
-                            v:Destroy()
-                        end
-                    end
-                end
-            end
-        end)
-    end)
 end)
 spawn(function()
     pcall(function()
