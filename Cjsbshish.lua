@@ -3982,7 +3982,7 @@ Farm:AddToggle({
 	Default = false,
 	Callback = function(Value)
 		_G.AutoFarmFruitMastery = Value
-		StopTween(_G.AutoFarmFruitMastery
+		StopTween(_G.AutoFarmFruitMastery)
         if _G.AutoFarmFruitMastery == false then
             UseSkill = false 
         end
@@ -4536,15 +4536,6 @@ spawn(function()
         end)
     end)
 end)
-
-Farm:AddToggle({
-	Name = "Auto Farm Mastery Gun",
-	Default = false,
-	Callback = function(Value)
-		_G.AutoAllBoss = Value
-		StopTween(_G.AutoAllBoss)
-	end
-})
 
 Farm:AddSlider({
 	Name = "Kill Monster At % Health",
