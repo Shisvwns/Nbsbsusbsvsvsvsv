@@ -2462,6 +2462,17 @@ spawn(function()
     end)
 end)
 
+function EquipWeaponSword()
+	pcall(function()
+		for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+			if v.ToolTip == "Sword" and v:IsA('Tool') then
+				local ToolHumanoid = game.Players.LocalPlayer.Backpack:FindFirstChild(v.Name) 
+				game.Players.LocalPlayer.Character.Humanoid:EquipTool(ToolHumanoid) 
+			end
+		end
+	end)
+end
+
 spawn(function()
     while wait() do
         if sethiddenproperty then
@@ -3968,17 +3979,8 @@ local Section = Farm:AddSection({
     Name = "Mastery"
 })
 
-Farm:AddDropdown({
-	Name = "Select Mode Farm Mastery",
-	Default = "",
-	Options = {"Level","Bone","Katakuri"},
-	Callback = function(Value)
-		ModeMastery = Value
-	end    
-})
-
 Farm:AddToggle({
-	Name = "Auto Farm Mastery Devil Fruit",
+	Name = "Auto Farm Devil Fruit Mastery",
 	Default = false,
 	Callback = function(Value)
 		_G.AutoFarmFruitMastery = Value
@@ -3991,7 +3993,7 @@ Farm:AddToggle({
 
 spawn(function()
     while wait() do
-        if ModeMastery == "Level" and _G.AutoFarmFruitMastery then
+        if _G.AutoFarmFruitMastery then
             pcall(function()
                 local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
                 if not string.find(QuestTitle, NameMon) then
@@ -4073,77 +4075,83 @@ spawn(function()
         end
     end
 end)
+
+Farm:AddToggle({
+	Name = "Auto Farm Gun Mastery",
+	Default = false,
+	Callback = function(Value)
+		_G.AutoFarmGunMastery = Value
+		StopTween(_G.AutoFarmGunMastery)
+	end
+})
+
 spawn(function()
-    while wait() do
-        if ModeMastery == "Bone" and _G.AutoFarmFruitMastery and World3 then
-            pcall(function()
+    pcall(function()
+        while wait() do
+            if _G.AutoFarmGunMastery then
                 local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
-                if not string.find(QuestTitle, "Demonic Soul") then
-                    StartMagnetBoneMon = false
-                    UseSkillKub = false
+                if not string.find(QuestTitle, NameMon) then
+                    Magnet = false                                      
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
                 end
                 if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
-                    StartMagnetBoneMon = false
-                    UseSkillKub = false
-                    if BypassTP then
-                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - BoneQuestPos.Position).Magnitude > 1500 then
-                    BTP(BoneQuestPos)
-                    elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - BoneQuestPos.Position).Magnitude < 1500 then
-                    topos(BoneQuestPos)
+                    StartMasteryGunMagnet = false
+                    CheckQuest()
+                    TP1(CFrameQuest)
+                    if (CFrameQuest.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 10 then
+                        wait(0.1)
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NameQuest, LevelQuest)
                     end
-                else
-                    topos(BoneQuestPos)
-                end
-                if (BoneQuestPos.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3 then                            
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest","HauntedQuest2",1)
-                end
                 elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
-                    if game:GetService("Workspace").Enemies:FindFirstChild("Reborn Skeleton") or game:GetService("Workspace").Enemies:FindFirstChild("Living Zombie") or game:GetService("Workspace").Enemies:FindFirstChild("Demonic Soul") or game:GetService("Workspace").Enemies:FindFirstChild("Posessed Mummy") then
-                        for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                            if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
-                                if v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy" then
-                                    if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, "Demonic Soul") then
-                                        HealthMs = v.Humanoid.MaxHealth * _G.Kill_At/100
-                                        repeat task.wait()
-                                            if v.Humanoid.Health <= HealthMs then
-                                                AutoHaki()
-                                                EquipWeapon(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value)
-                                                topos(v.HumanoidRootPart.CFrame * CFrame.new(0,10,0))
-                                                v.HumanoidRootPart.CanCollide = false
-                                                PosMonBone = v.HumanoidRootPart.CFrame
+                    CheckQuest()
+                    if game:GetService("Workspace").Enemies:FindFirstChild(Mon) then
+                        pcall(function()
+                            for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                                if v.Name == Mon then
+                                    repeat task.wait()
+                                        if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
+                                            HealthMin = v.Humanoid.MaxHealth * _G.Kill_At/100
+                                            if v.Humanoid.Health <= HealthMin then                                                
+                                                EquipWeapon(SelectWeaponGun)
+                                                TP1(v.HumanoidRootPart.CFrame * CFrame.new(0,10,0))
                                                 v.Humanoid.WalkSpeed = 0
-                                                v.Head.CanCollide = false
-                                                UseSkillKub = true
-                                            else           
-                                                UseSkillKub = false 
+                                                v.HumanoidRootPart.CanCollide = false
+                                                v.HumanoidRootPart.Size = Vector3.new(2,2,1)
+                                                v.Head.CanCollide = false                                                
+                                                local args = {
+                                                    [1] = v.HumanoidRootPart.Position,
+                                                    [2] = v.HumanoidRootPart
+                                                }
+                                                game:GetService("Players").LocalPlayer.Character[SelectWeaponGun].RemoteFunctionShoot:InvokeServer(unpack(args))
+                                            else
                                                 AutoHaki()
                                                 EquipWeapon(_G.SelectWeapon)
-                                                topos(v.HumanoidRootPart.CFrame * Pos)
-                                                v.HumanoidRootPart.CanCollide = false
-                                                v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                                PosMonBone = v.HumanoidRootPart.CFrame
                                                 v.Humanoid.WalkSpeed = 0
-                                                v.Head.CanCollide = false
+                                                v.HumanoidRootPart.CanCollide = false
+                                                v.Head.CanCollide = false               
+                                                v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                                                TP1(v.HumanoidRootPart.CFrame * Pos)
+                                                game:GetService'VirtualUser':CaptureController()
+                                                game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
                                             end
-                                            StartMagnetBoneMon = true
-                                            game:GetService'VirtualUser':CaptureController()
-                                            game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
-                                        until not _G.AutoFarmFruitMastery or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
-                                    else
-                                        UseSkillKub = false
-                                        StartMagnetBoneMon = false
-                                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
-                                    end
+                                            StartMasteryGunMagnet = true 
+                                            PosMonMasteryGun = v.HumanoidRootPart.CFrame
+                                        else
+                                            StartMasteryGunMagnet = false
+                                            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+                                        end
+                                    until v.Humanoid.Health <= 0 or _G.AutoFarmGunMastery == false or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
+                                    StartMasteryGunMagnet = false
                                 end
                             end
-                        end
+                        end)
                     else
-                        StartMagnetBoneMon = false   
-                        UseSkillKub = false 
-                        local Mob = game:GetService("ReplicatedStorage"):FindFirstChild("Demonic Soul") 
+                       TP1(CFrameMon)
+                       UnEquipWeapon(_G.SelectWeapon)
+                        _G.AutoFarmGunMastery = false
+                        local Mob = game:GetService("ReplicatedStorage"):FindFirstChild(Mon) 
                         if Mob then
-                            topos(Mob.HumanoidRootPart.CFrame * CFrame.new(0,0,10))
+                            TP1(Mob.HumanoidRootPart.CFrame * CFrame.new(0,0,10))
                         else
                             if game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame.Y <= 1 then
                                 game:GetService("Players").LocalPlayer.Character.Humanoid.Jump = true
@@ -4151,85 +4159,86 @@ spawn(function()
                                 game:GetService("Players").LocalPlayer.Character.Humanoid.Jump = false
                             end
                         end
-                    end
+                    end 
                 end
-            end)
+            end
         end
-    end
+    end)
 end)
+
+Farm:AddToggle({
+	Name = "Auto Farm Sword Mastery",
+	Default = false,
+	Callback = function(Value)
+		_G.AutoSwordMastery = Value
+		StopTween(_G.AutoSwordMastery)
+	end
+})
+
 spawn(function()
-    while wait() do
-        if ModeMastery == "Katakuri" and _G.AutoFarmFruitMastery and World3 and not game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince")  then
-            pcall(function()
+    pcall(function()
+        while wait() do
+            if _G.AutoSwordMastery then
                 local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
-                if not string.find(QuestTitle, "Cookie Crafter") then
-                    Magnet = false
-                    UseSkillKub = false
+                if not string.find(QuestTitle, NameMon) then
+                    Magnet = false                                      
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
                 end
                 if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
-                    MagnetDought = false
-                    UseSkill = false
-                    if BypassTP then
-                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CakeQuestPos.Position).Magnitude > 1500 then
-                    BTP(CakeQuestPos)
-                    elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CakeQuestPos.Position).Magnitude < 1500 then
-                    topos(CakeQuestPos)
+                    AutoSwordMasteryMag = false
+                    CheckQuest()
+                    TP1(CFrameQuest)
+                    if (CFrameQuest.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 10 then
+                        wait(0.1)
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NameQuest, LevelQuest)
                     end
-                else
-                    topos(CakeQuestPos)
-                end
-                if (CakeQuestPos.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3 then                            
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest","CakeQuest1",1)
-                end
                 elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
-                    if game:GetService("Workspace").Enemies:FindFirstChild("Cookie Crafter") or game:GetService("Workspace").Enemies:FindFirstChild("Cake Guard") or game:GetService("Workspace").Enemies:FindFirstChild("Baking Staff") or game:GetService("Workspace").Enemies:FindFirstChild("Head Baker") then
-                        for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                            if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
-                                if v.Name == "Cookie Crafter" or v.Name == "Cake Guard" or v.Name == "Baking Staff" or v.Name == "Head Baker" then
-                                    if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, "Cookie Crafter") then
-                                        HealthMs = v.Humanoid.MaxHealth * _G.Kill_At/100
-                                        repeat task.wait()
-                                            if v.Humanoid.Health <= HealthMs then
-                                                AutoHaki()
-                                                EquipWeapon(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value)
-                                                topos(v.HumanoidRootPart.CFrame * CFrame.new(0,10,0))
-                                                v.HumanoidRootPart.CanCollide = false
-                                                PosMonCake = v.HumanoidRootPart.CFrame
-                                                PosMonDoughtOpenDoor = v.HumanoidRootPart.CFrame
+                    CheckQuest()
+                    if game:GetService("Workspace").Enemies:FindFirstChild(Mon) then
+                        pcall(function()
+                            for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                                if v.Name == Mon then
+                                    repeat task.wait()
+                                        if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
+                                            HealthMin = v.Humanoid.MaxHealth * _G.Kill_At/100
+                                            if v.Humanoid.Health <= HealthMin then                                                
+                                                EquipWeaponSword()
+                                                TP1(v.HumanoidRootPart.CFrame * Pos)
                                                 v.Humanoid.WalkSpeed = 0
-                                                v.Head.CanCollide = false
-                                                UseSkillKub = true
-                                            else           
-                                                UseSkillKub = false 
-                                                AutoHaki()
-                                                EquipWeapon(_G.SelectWeapon)
-                                                topos(v.HumanoidRootPart.CFrame * Pos)
                                                 v.HumanoidRootPart.CanCollide = false
                                                 v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                                PosMonCake = v.HumanoidRootPart.CFrame
+                                                game:GetService'VirtualUser':CaptureController()
+                                                game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
+                                                v.Head.CanCollide = false                                                
+                                            else
+                                                AutoHaki()
+                                                EquipWeapon(_G.SelectWeapon)
                                                 v.Humanoid.WalkSpeed = 0
-                                                v.Head.CanCollide = false
+                                                v.HumanoidRootPart.CanCollide = false
+                                                v.Head.CanCollide = false               
+                                                v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                                                TP1(v.HumanoidRootPart.CFrame * Pos)
+                                                game:GetService'VirtualUser':CaptureController()
+                                                game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
                                             end
-                                            MagnetDought = true
-                                            PosMonDoughtOpenDoor = v.HumanoidRootPart.CFrame
-                                            game:GetService'VirtualUser':CaptureController()
-                                            game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
-                                        until not _G.AutoFarmFruitMastery or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
-                                    else
-                                        UseSkillKub = false
-                                        MagnetDought = false
-                                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
-                                    end
+                                            AutoSwordMasteryMag = true 
+                                            PosMon = v.HumanoidRootPart.CFrame
+                                        else
+                                            AutoSwordMasteryMag = false
+                                            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+                                        end
+                                    until v.Humanoid.Health <= 0 or _G.AutoSwordMastery == false or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
+                                    AutoSwordMasteryMag = false
                                 end
                             end
-                        end
+                        end)
                     else
-                        MagnetDought = false   
-                        UseSkillKub = false 
-                        local Mob = game:GetService("ReplicatedStorage"):FindFirstChild("Cookie Crafter") 
+                       TP1(CFrameMon)
+                       UnEquipWeapon(_G.SelectWeapon)
+                        AutoSwordMasteryMag = false
+                        local Mob = game:GetService("ReplicatedStorage"):FindFirstChild(Mon) 
                         if Mob then
-                            topos(Mob.HumanoidRootPart.CFrame * CFrame.new(0,0,10))
+                            TP1(Mob.HumanoidRootPart.CFrame * CFrame.new(0,0,10))
                         else
                             if game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame.Y <= 1 then
                                 game:GetService("Players").LocalPlayer.Character.Humanoid.Jump = true
@@ -4237,12 +4246,58 @@ spawn(function()
                                 game:GetService("Players").LocalPlayer.Character.Humanoid.Jump = false
                             end
                         end
-                    end
+                    end 
                 end
-            end)
+            end
         end
-    end
+    end)
 end)
+
+Farm:AddSlider({
+	Name = "Kill Monster At % Health",
+	Min = 0,
+	Max = 100,
+	Default = 20,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "%",
+	Callback = function(Value)
+		_G.Kill_At = Value
+	end
+})
+
+Farm:AddToggle({
+	Name = "Skill Z",
+	Default = false,
+	Callback = function(Value)
+		_G.SkillZ = Value
+	end
+})
+
+Farm:AddToggle({
+	Name = "Skill X",
+	Default = false,
+	Callback = function(Value)
+		_G.SkillX = Value
+	end
+})
+
+Farm:AddToggle({
+	Name = "Skill C",
+	Default = false,
+	Callback = function(Value)
+		_G.SkillC = Value
+	end
+})
+
+Farm:AddToggle({
+	Name = "Skill V",
+	Default = false,
+	Callback = function(Value)
+		_G.SkillV = Value
+	end
+})
+
 spawn(function()
     while wait() do
         if UseSkill then
@@ -4378,6 +4433,7 @@ spawn(function()
         end
     end
 end)
+
 spawn(function()
     pcall(function()
         game:GetService("RunService").RenderStepped:Connect(function()
@@ -4390,6 +4446,7 @@ spawn(function()
         end)
     end)
 end)
+
 spawn(function()
     while wait() do
         if UseSkillKub then
@@ -4524,6 +4581,7 @@ spawn(function()
         end
     end
 end)
+
 spawn(function()
     pcall(function()
         game:GetService("RunService").RenderStepped:Connect(function()
@@ -4536,51 +4594,6 @@ spawn(function()
         end)
     end)
 end)
-
-Farm:AddSlider({
-	Name = "Kill Monster At % Health",
-	Min = 0,
-	Max = 100,
-	Default = 20,
-	Color = Color3.fromRGB(255,255,255),
-	Increment = 1,
-	ValueName = "%",
-	Callback = function(Value)
-		_G.Kill_At = Value
-	end
-})
-
-Farm:AddToggle({
-	Name = "Skill Z",
-	Default = false,
-	Callback = function(Value)
-		_G.SkillZ = Value
-	end
-})
-
-Farm:AddToggle({
-	Name = "Skill X",
-	Default = false,
-	Callback = function(Value)
-		_G.SkillX = Value
-	end
-})
-
-Farm:AddToggle({
-	Name = "Skill C",
-	Default = false,
-	Callback = function(Value)
-		_G.SkillC = Value
-	end
-})
-
-Farm:AddToggle({
-	Name = "Skill V",
-	Default = false,
-	Callback = function(Value)
-		_G.SkillV = Value
-	end
-})
 
 local Section = Farm:AddSection({
     Name = "Boss"
