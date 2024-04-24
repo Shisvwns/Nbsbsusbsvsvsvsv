@@ -2668,54 +2668,35 @@ local Section = Farm:AddSection({
     Name = "Setting Farm"
 })
 
-Farm:AddDropdown({
+Weapon = {}
+for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do  
+   if v:IsA("Tool") then
+       table.insert(Weapon ,v.Name)
+   end
+end
+
+local CheckWeapon = Farm:AddDropdown({
 	Name = "Select Weapon",
 	Default = "Melee",
-	Options = {"Melee","Sword","Gun","Devil Fruit"},
+	Options = Weapon,
 	Callback = function(Value)
 		_G.SelectWeapon = Value
 	end    
 })
 
-spawn(function()
-	while task.wait() do
-		pcall(function()
-			if _G.SelectWeapon == "Melee" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Melee" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.SelectWeapon = v.Name
-						end
-					end
-				end
-			elseif _G.SelectWeapon == "Sword" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Sword" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.SelectWeapon = v.Name
-						end
-					end
-				end
-			elseif _G.SelectWeapon == "Gun" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Gun" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.SelectWeapon = v.Name
-						end
-					end
-				end
-			elseif _G.SelectWeapon == "Devil Fruit" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Blox Fruit" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.SelectWeapon = v.Name
-						end
-					end
-				end
-			end
-		end)
-	end
-end)
+Farm:AddButton({
+    Name = "Refresh Boss List",
+    Callback = function()
+        CheckWeapon:Refresh(Weapon,true)
+        local WeaponNew = {}
+        for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do  
+            if v:IsA("Tool") then
+                table.insert(v.Name)
+           end
+        end
+        CheckWeapon:Refresh(WeaponNew)
+    end
+})
 
 Farm:AddDropdown({
 	Name = "Select Fast Attack",
@@ -2727,7 +2708,7 @@ Farm:AddDropdown({
 })
 
 task.spawn(function()
-    while task.wait() do
+    while wait() do
         if _G.FastAttackDelay then
             pcall(function()
                 if _G.FastAttackDelay == "0" then
@@ -2801,11 +2782,11 @@ function AttackHit()
         end
     end
 end
-spawn(function()
-    while task.wait() do
+taks.spawn(function()
+    while wait() do
         if _G.FastAttack then
             pcall(function()
-                repeat task.wait(_G.FastAttackDelay)
+                repeat wait(_G.FastAttackDelay)
                     AttackHit()
                 until not _G.FastAttack
             end)
@@ -2824,7 +2805,7 @@ Farm:AddToggle({
 local CameraShaker = require(game.ReplicatedStorage.Util.CameraShaker)
 CombatFrameworkR = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
 y = debug.getupvalues(CombatFrameworkR)[2]
-spawn(function()
+task.spawn(function()
     game:GetService("RunService").RenderStepped:Connect(function()
         if _G.FastAttack then
             if typeof(y) == "table" then
@@ -2861,7 +2842,7 @@ local Client = game.Players.LocalPlayer
 local STOP = require(Client.PlayerScripts.CombatFramework.Particle)
 local STOPRL = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib)
 task.spawn(function()
-    while task.wait() do
+    while wait() do
         pcall(function()
             if not shared.orl then shared.orl = STOPRL.wrapAttackAnimationAsync end
             if not shared.cpc then shared.cpc = STOP.play end
@@ -7752,38 +7733,6 @@ Race:AddDropdown({
 })
 
 Race:AddToggle({
-	Name = "Skill Z",
-	Default = false,
-	Callback = function(Value)
-		_G.Z = Value
-	end
-})
-
-Race:AddToggle({
-	Name = "Skill X",
-	Default = false,
-	Callback = function(Value)
-		_G.X = Value
-	end
-})
-
-Race:AddToggle({
-	Name = "Skill C",
-	Default = false,
-	Callback = function(Value)
-		_G.C = Value
-	end
-})
-
-Race:AddToggle({
-	Name = "Skill V",
-	Default = false,
-	Callback = function(Value)
-		_G.V = Value
-	end
-})
-
-Race:AddToggle({
 	Name = "Auto Kill Players After Trials",
 	Default = false,
 	Callback = function(Value)
@@ -7843,6 +7792,38 @@ spawn(function()
         end
     end
 end)
+
+Race:AddToggle({
+	Name = "Skill Z",
+	Default = false,
+	Callback = function(Value)
+		_G.Z = Value
+	end
+})
+
+Race:AddToggle({
+	Name = "Skill X",
+	Default = false,
+	Callback = function(Value)
+		_G.X = Value
+	end
+})
+
+Race:AddToggle({
+	Name = "Skill C",
+	Default = false,
+	Callback = function(Value)
+		_G.C = Value
+	end
+})
+
+Race:AddToggle({
+	Name = "Skill V",
+	Default = false,
+	Callback = function(Value)
+		_G.V = Value
+	end
+})
 
 spawn(function()
     while task.wait() do
