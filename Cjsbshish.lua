@@ -2685,13 +2685,13 @@ local CheckWeapon = Farm:AddDropdown({
 })
 
 Farm:AddButton({
-    Name = "Refresh Boss List",
+    Name = "Refresh Weapon List",
     Callback = function()
         CheckWeapon:Refresh(Weapon,true)
         local WeaponNew = {}
         for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do  
             if v:IsA("Tool") then
-                table.insert(v.Name)
+                table.insert(WeaponNew, v.Name)
            end
         end
         CheckWeapon:Refresh(WeaponNew)
@@ -2708,7 +2708,7 @@ Farm:AddDropdown({
 })
 
 task.spawn(function()
-    while wait() do
+    while task.wait() do
         if _G.FastAttackDelay then
             pcall(function()
                 if _G.FastAttackDelay == "0" then
@@ -2782,11 +2782,11 @@ function AttackHit()
         end
     end
 end
-taks.spawn(function()
-    while wait() do
+spawn(function()
+    while task.wait() do
         if _G.FastAttack then
             pcall(function()
-                repeat wait(_G.FastAttackDelay)
+                repeat task.wait(_G.FastAttackDelay)
                     AttackHit()
                 until not _G.FastAttack
             end)
@@ -2805,7 +2805,7 @@ Farm:AddToggle({
 local CameraShaker = require(game.ReplicatedStorage.Util.CameraShaker)
 CombatFrameworkR = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
 y = debug.getupvalues(CombatFrameworkR)[2]
-task.spawn(function()
+spawn(function()
     game:GetService("RunService").RenderStepped:Connect(function()
         if _G.FastAttack then
             if typeof(y) == "table" then
@@ -2842,7 +2842,7 @@ local Client = game.Players.LocalPlayer
 local STOP = require(Client.PlayerScripts.CombatFramework.Particle)
 local STOPRL = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib)
 task.spawn(function()
-    while wait() do
+    while task.wait() do
         pcall(function()
             if not shared.orl then shared.orl = STOPRL.wrapAttackAnimationAsync end
             if not shared.cpc then shared.cpc = STOP.play end
