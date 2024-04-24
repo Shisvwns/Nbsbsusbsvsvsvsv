@@ -4097,7 +4097,7 @@ spawn(function()
                 if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
                     StartMasteryGunMagnet = false
                     CheckQuest()
-                    TP1(CFrameQuest)
+                    topos(CFrameQuest)
                     if (CFrameQuest.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 10 then
                         wait(0.1)
                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NameQuest, LevelQuest)
@@ -4113,7 +4113,7 @@ spawn(function()
                                             HealthMin = v.Humanoid.MaxHealth * _G.Kill_At/100
                                             if v.Humanoid.Health <= HealthMin then                                                
                                                 EquipWeapon(SelectWeaponGun)
-                                                TP1(v.HumanoidRootPart.CFrame * CFrame.new(0,10,0))
+                                                topos(v.HumanoidRootPart.CFrame * CFrame.new(0,10,0))
                                                 v.Humanoid.WalkSpeed = 0
                                                 v.HumanoidRootPart.CanCollide = false
                                                 v.HumanoidRootPart.Size = Vector3.new(2,2,1)
@@ -4130,7 +4130,7 @@ spawn(function()
                                                 v.HumanoidRootPart.CanCollide = false
                                                 v.Head.CanCollide = false               
                                                 v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                                TP1(v.HumanoidRootPart.CFrame * Pos)
+                                                topos(v.HumanoidRootPart.CFrame * Pos)
                                                 game:GetService'VirtualUser':CaptureController()
                                                 game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
                                             end
@@ -4146,12 +4146,12 @@ spawn(function()
                             end
                         end)
                     else
-                       TP1(CFrameMon)
+                       topos(CFrameMon)
                        UnEquipWeapon(_G.SelectWeapon)
                         _G.AutoFarmGunMastery = false
                         local Mob = game:GetService("ReplicatedStorage"):FindFirstChild(Mon) 
                         if Mob then
-                            TP1(Mob.HumanoidRootPart.CFrame * CFrame.new(0,0,10))
+                            topos(Mob.HumanoidRootPart.CFrame * CFrame.new(0,0,10))
                         else
                             if game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame.Y <= 1 then
                                 game:GetService("Players").LocalPlayer.Character.Humanoid.Jump = true
@@ -4187,7 +4187,7 @@ spawn(function()
                 if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
                     AutoSwordMasteryMag = false
                     CheckQuest()
-                    TP1(CFrameQuest)
+                    topos(CFrameQuest)
                     if (CFrameQuest.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 10 then
                         wait(0.1)
                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NameQuest, LevelQuest)
@@ -4203,7 +4203,7 @@ spawn(function()
                                             HealthMin = v.Humanoid.MaxHealth * _G.Kill_At/100
                                             if v.Humanoid.Health <= HealthMin then                                                
                                                 EquipWeaponSword()
-                                                TP1(v.HumanoidRootPart.CFrame * Pos)
+                                                topos(v.HumanoidRootPart.CFrame * Pos)
                                                 v.Humanoid.WalkSpeed = 0
                                                 v.HumanoidRootPart.CanCollide = false
                                                 v.HumanoidRootPart.Size = Vector3.new(50,50,50)
@@ -4217,7 +4217,7 @@ spawn(function()
                                                 v.HumanoidRootPart.CanCollide = false
                                                 v.Head.CanCollide = false               
                                                 v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                                TP1(v.HumanoidRootPart.CFrame * Pos)
+                                                topos(v.HumanoidRootPart.CFrame * Pos)
                                                 game:GetService'VirtualUser':CaptureController()
                                                 game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
                                             end
@@ -4233,12 +4233,12 @@ spawn(function()
                             end
                         end)
                     else
-                       TP1(CFrameMon)
+                       topos(CFrameMon)
                        UnEquipWeapon(_G.SelectWeapon)
                         AutoSwordMasteryMag = false
                         local Mob = game:GetService("ReplicatedStorage"):FindFirstChild(Mon) 
                         if Mob then
-                            TP1(Mob.HumanoidRootPart.CFrame * CFrame.new(0,0,10))
+                            topos(Mob.HumanoidRootPart.CFrame * CFrame.new(0,0,10))
                         else
                             if game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame.Y <= 1 then
                                 game:GetService("Players").LocalPlayer.Character.Humanoid.Jump = true
