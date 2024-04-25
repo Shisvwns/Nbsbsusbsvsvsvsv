@@ -2654,10 +2654,10 @@ for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
    end
 end
 
-function EquipToolTip(tooltip)
-    for _,tool in pairs(Player.Backpack:GetChildren()) do
+function EquipWeapon()
+    for _,tool in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
         if tool and tool.ToolTip == _G.SelectWeapon then
-            EquipWeapon(tool.Name) return
+            EquipToolName(tool.Name) return
         end
     end
 end
