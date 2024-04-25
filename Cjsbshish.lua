@@ -2141,16 +2141,12 @@ function UnEquipWeapon(Weapon)
     end
 end
 
-local function EquipWeapon(Name)
-    local lplr = game.Players.LocalPlayer
-    if lplr.Backpack:FindFirstChild(Name) then
-        local tool = lplr.Backpack:FindFirstChild(Name)
-        if tool:IsA("Tool") then
-            tool.Parent = lplr.Character
-            lplr.Character:WaitForChild("Humanoid"):EquipTool(tool)
-            return true
-        end
-    end
+function EquipWeapon(ToolSe)
+  if game.Players.LocalPlayer.Backpack:FindFirstChild(ToolSe) then
+      local Tool = game.Players.LocalPlayer.Backpack:FindFirstChild(ToolSe)
+      wait(.1)
+      game.Players.LocalPlayer.Character.Humanoid:EquipTool(Tool)
+  end
 end
 
 
@@ -2659,27 +2655,50 @@ end
 local CheckWeapon1 = Farm:AddDropdown({
 	Name = "Select Weapon",
 	Default = "",
-	Options = {"Melee","Sword","Gun","Blox Fruit"},
+	Options = {"Melee","Sword","Gun","Devil Fruit"},
 	Callback = function(Value)
 		_G.SelectWeapon = Value
 	end
 })
 
-task.spawn(function()
-    while task.wait() do
-        pcall(function()
-            local plr = game.Players
-            local backpack = plr.LocalPlayer.Backpack
-            local WeaponTypes = {Melee = "Melee",Sword = "Sword",Gun = "Gun",DevilFruit = "Blox Fruit"}
-            for _, Tool in pairs(backpack:GetChildren()) do
-                local toolTip = Tool.ToolTip
-                if WeaponTypes[_G.SelectWeapon] == toolTip and backpack:FindFirstChild(tostring(Tool.Name)) then
-                    _G.SelectWeapon = Tool.Name
-                    break
-                end
-            end
-        end)
-    end
+spawn(function()
+	while task.wait() do
+		pcall(function()
+			if _G.SelectWeapon == "Melee" then
+				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+					if v.ToolTip == "Melee" then
+						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+							_G.SelectWeapon = v.Name
+						end
+					end
+				end
+			elseif _G.SelectWeapon == "Sword" then
+				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+					if v.ToolTip == "Sword" then
+						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+							_G.SelectWeapon = v.Name
+						end
+					end
+				end
+			elseif _G.SelectWeapon == "Gun" then
+				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+					if v.ToolTip == "Gun" then
+						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+							_G.SelectWeapon = v.Name
+						end
+					end
+				end
+			elseif _G.SelectWeapon == "Devil Fruit" then
+				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+					if v.ToolTip == "Blox Fruit" then
+						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+							_G.SelectWeapon = v.Name
+						end
+					end
+				end
+			end
+		end)
+	end
 end)
 
 Farm:AddButton({
