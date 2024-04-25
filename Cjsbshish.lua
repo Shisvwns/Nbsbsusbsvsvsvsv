@@ -2141,14 +2141,17 @@ function UnEquipWeapon(Weapon)
     end
 end
 
-function EquipWeapon(ToolSe)
-  if game.Players.LocalPlayer.Backpack:FindFirstChild(ToolSe) then
-      local Tool = game.Players.LocalPlayer.Backpack:FindFirstChild(ToolSe)
-      wait(.1)
-      game.Players.LocalPlayer.Character.Humanoid:EquipTool(Tool)
-  end
+function EquipWeapon(Name)
+    local lplr = game.Players.LocalPlayer
+    if lplr.Backpack:FindFirstChild(Name) then
+        local tool = lplr.Backpack:FindFirstChild(Name)
+        if tool:IsA("Tool") then
+            tool.Parent = lplr.Character
+            lplr.Character:WaitForChild("Humanoid"):EquipTool(tool)
+            return true
+        end
+    end
 end
-
 
 function GetDistance(target)
     return math.floor((target.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude)
