@@ -2141,12 +2141,14 @@ function UnEquipWeapon(Weapon)
     end
 end
 
-function EquipWeapon(ToolSe)
-    if not _G.NotAutoEquip then
-        if game.Players.LocalPlayer.Backpack:FindFirstChild(ToolSe) then
-            Tool = game.Players.LocalPlayer.Backpack:FindFirstChild(ToolSe)
-            wait(.1)
-            game.Players.LocalPlayer.Character.Humanoid:EquipTool(Tool)
+local function EquipWeapon(Name)
+    local lplr = game.Players.LocalPlayer
+    if lplr.Backpack:FindFirstChild(Name) then
+        local tool = lplr.Backpack:FindFirstChild(Name)
+        if tool:IsA("Tool") then
+            tool.Parent = lplr.Character
+            lplr.Character:WaitForChild("Humanoid"):EquipTool(tool)
+            return true
         end
     end
 end
@@ -2668,7 +2670,7 @@ task.spawn(function()
         pcall(function()
             local plr = game.Players
             local backpack = plr.LocalPlayer.Backpack
-            local WeaponTypes = {Melee = "Melee",Sword = "Sword",Gun = "Gun",BloxFruit = "Blox Fruit"}
+            local WeaponTypes = {Melee = "Melee",Sword = "Sword",Gun = "Gun",DevilFruit = "Blox Fruit"}
             for _, Tool in pairs(backpack:GetChildren()) do
                 local toolTip = Tool.ToolTip
                 if WeaponTypes[_G.SelectWeapon] == toolTip and backpack:FindFirstChild(tostring(Tool.Name)) then
