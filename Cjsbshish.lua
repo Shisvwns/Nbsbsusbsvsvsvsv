@@ -2677,7 +2677,7 @@ end
 
 local CheckWeapon = Farm:AddDropdown({
 	Name = "Select Weapon",
-	Default = "Melee",
+	Default = "",
 	Options = Weapon,
 	Callback = function(Value)
 		_G.SelectWeapon = Value
@@ -2697,21 +2697,6 @@ Farm:AddButton({
         CheckWeapon:Refresh(WeaponNew)
     end
 })
-
-spawn(function()
-    while wait() do
-        pcall(function()
-            CheckWeapon:Refresh(Weapon,true)
-            local WeaponNew = {}
-            for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do  
-                if v:IsA("Tool") then
-                    table.insert(WeaponNew, v.Name)
-               end
-            end
-            CheckWeapon:Refresh(WeaponNew)
-        end)
-    end
-end)
 
 Farm:AddDropdown({
 	Name = "Select Fast Attack",
@@ -4595,32 +4580,22 @@ local Section = Farm:AddSection({
     Name = "Boss"
 })
 
-local Boss = {}
-for i, v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
-    if string.find(v.Name, "Boss") then
-        if v.Name == "Ice Admiral" then
-            else
-            table.insert(Boss, v.Name)
-        end
-    end
+BossCheck = {}
+for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
+	if string.find(v.Name,"Boss") then
+		table.insert(Boss,v.Name)
+	end
 end
-local bossCheck = {}
-local bossNames = { "The Gorilla King", "Bobby", "The Saw", "Yeti", "Mob Leader", "Vice Admiral", "Warden", "Chief Warden", "Swan", "Saber Expert", "Magma Admiral", "Fishman Lord", "Wysper", "Thunder God", "Cyborg", "Greybeard", "Diamond", "Jeremy", "Fajita", "Don Swan", "Smoke Admiral", "Awakened Ice Admiral", "Tide Keeper", "Order", "Darkbeard", "Cursed Captain", "Stone", "Island Empress", "Kilo Admiral", "Captain Elephant", "Beautiful Pirate", "Longma", "Cake Queen", "Soul Reaper", "Rip_Indra", "Cake Prince", "Dough King" }
-if World1 or World2 or World3 then
-    for _, bossName in pairs(bossNames) do
-        if game:GetService("ReplicatedStorage"):FindFirstChild(bossName) then
-            table.insert(bossCheck, bossName)
-        end
-    end
-end
-for _, name in pairs(Boss) do
-    table.insert(bossCheck, name)
+for i,v in pairs(game.ReplicatedStorage:GetChildren()) do
+	if string.find(v.Name,"Boss") then
+		table.insert(Boss,v.Name)
+	end
 end
 
 local BossName = Farm:AddDropdown({
 	Name = "Select Boss",
 	Default = "",
-	Options = bossCheck,
+	Options = BossCheck,
 	Callback = function(Value)
 		_G.SelectBoss = Value
 	end    
@@ -4629,15 +4604,17 @@ local BossName = Farm:AddDropdown({
 Farm:AddButton({
     Name = "Refresh Boss List",
     Callback = function()
-        BossName:Refresh(bossCheck,true)
+        BossName:Refresh(BossCheck,true)
         local BossNew = {}
-        for i, v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
-            if (v.Name == "rip_indra" or v.Name == "Ice Admiral")
-                                or (v.Name == "Saber Expert" or v.Name == "The Saw" or v.Name == "Greybeard" or v.Name == "Mob Leader" or v.Name == "The Gorilla King" or v.Name == "Bobby" or v.Name == "Yeti" or v.Name == "Vice Admiral" or v.Name == "Warden" or v.Name == "Chief Warden" or v.Name == "Swan" or v.Name == "Magma Admiral" or v.Name == "Fishman Lord" or v.Name == "Wysper" or v.Name == "Thunder God" or v.Name == "Cyborg")
-                                or (v.Name == "Don Swan" or v.Name == "Diamond" or v.Name == "Jeremy" or v.Name == "Fajita" or v.Name == "Smoke Admiral" or v.Name == "Awakened Ice Admiral" or v.Name == "Tide Keeper" or v.Name == "Order" or v.Name == "Darkbeard")
-                                or (v.Name == "Stone" or v.Name == "Island Empress" or v.Name == "Kilo Admiral" or v.Name == "Captain Elephant" or v.Name == "Beautiful Pirate" or v.Name == "Cake Queen" or v.Name == "rip_indra True Form" or v.Name == "Longma" or v.Name == "Soul Reaper" or v.Name == "Cake Prince" or v.Name == "Dough King") then
-                table.insert(BossNew, v.Name)
-            end
+        for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
+        	if string.find(v.Name,"Boss") then
+        		table.insert(BossNew,v.Name)
+        	end
+        end
+        for i,v in pairs(game.ReplicatedStorage:GetChildren()) do
+        	if string.find(v.Name,"Boss") then
+        		table.insert(BossNew,v.Name)
+        	end
         end
         BossName:Refresh(BossNew)
     end
@@ -9107,88 +9084,3 @@ Setting:AddButton({
         loadstring(game:HttpGet("https://raw.githubusercontent.com/HuyLocDz/ShowItem/main/ShowItem.lua"))()
     end
 })
-
-local PlayerCount = #game:GetService("Players"):GetPlayers()
-
-function CheckSea()
-    if game.PlaceId == 2753915549 then
-        return "First Sea"
-    elseif game.PlaceId == 4442272183 then
-        return "Second Sea"
-    elseif game.PlaceId == 7449423635 then
-        return "Third Sea"
-    end
-end
-
-function CheckBoss()
-    if game:GetService("ReplicatedStorage"):FindFirstChild("rip_indra True Form") or game:GetService("ReplicatedStorage"):FindFirstChild("rip_indra") then
-        return "rip_indra True Form [Lv. 5000] [Raid Boss]"
-    elseif game:GetService("ReplicatedStorage"):FindFirstChild("Soul Reaper") then
-        return "Soul Reaper [Lv. 2100] [Raid Boss]"
-    elseif game:GetService("ReplicatedStorage"):FindFirstChild("Dough King") then
-        return "Dough King [Lv. 2300] [Raid Boss]"
-    elseif game:GetService("ReplicatedStorage"):FindFirstChild("Terrorshark") then
-        return "Terrorshark [Lv. 2000] [Raid Boss]"
-    elseif game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince") then
-        return "Cake Prince [Lv. 2300] [Raid Boss]"
-    elseif game:GetService("ReplicatedStorage"):FindFirstChild("Cursed Captain") then
-        return "Cursed Captain [Lv. 1325] [Raid Boss]"
-    elseif game:GetService("ReplicatedStorage"):FindFirstChild("Greybeard") then
-        return "Greybeard [Lv. 750] [Raid Boss]"
-    elseif game:GetService("ReplicatedStorage"):FindFirstChild("Darkbeard") then
-        return "Darkbeard [Lv. 1000] [Raid Boss]"
-    end
-end
-
-spawn(function()
-    pcall(function()
-        while wait() do
-            if game:GetService("ReplicatedStorage"):FindFirstChild("rip_indra True Form") or game:GetService("ReplicatedStorage"):FindFirstChild("Soul Reaper") or game:GetService("ReplicatedStorage"):FindFirstChild("Dough King") or game:GetService("ReplicatedStorage"):FindFirstChild("Terrorshark") or game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince") or game:GetService("ReplicatedStorage"):FindFirstChild("Cursed Captain") or game:GetService("ReplicatedStorage"):FindFirstChild("Greybeard") or game:GetService("ReplicatedStorage"):FindFirstChild("Darkbeard") then
-                WebhookBoss = "https://discord.com/api/webhooks/1199318124319735878/VEseTtAbhD_DIRRF26VCxtD8aT7TtKuGPfDee4AzruQcuD_CCFuGemX9_ZT26KQDt0wb"
-                local HttpService = game:GetService("HttpService")
-                local Data = {
-                    ["embeds"]= {
-                        {            
-                            ["title"] = "ɴᴏᴛɪғʏ ʙᴏss sᴘᴀᴡɴ";
-                            ["color"] = tonumber(0x07f6da);
-                            ["fields"] = {
-                                {
-                                    ["name"] = "**[👺] - __Boss Name:__**",
-                                    ["value"] = "```"..CheckBoss().."```",
-                                    ["inline"] = false
-                                },
-                                {
-                                    ["name"] = "**[🎋] - __Location ( Sea ):__**",
-                                    ["value"] = "```"..CheckSea().."```",
-                                    ["inline"] = false
-                                },
-                                {
-                                    ["name"] = "**[👥] - __Players In Server:__**",
-                                    ["value"] = "```"..PlayerCount.."/12```",
-                                    ["inline"] = false
-                                },
-                                {
-                                    ["name"] = "**[🔗] - __Job ID:__**",
-                                    ["value"] = "```"..game.JobId.."```",
-                                    ["inline"] = false
-                                },
-                                {
-                                    ["name"] = "**[📋] - __Script Join:__**",
-                                    ["value"] = '```game:GetService("TeleportService"):TeleportToPlaceInstance('..game.PlaceId..', "'..game.JobId..'", game.Players.LocalPlayer)```',
-                                    ["inline"] = false
-                                },
-                            }              
-                        }
-                    }
-                }
-                local Headers = {["Content-Type"]="application/json"}
-                local Encoded = HttpService:JSONEncode(Data)
-    
-                Request = http_request or request or HttpPost or syn.request
-                local Final1 = {Url = WebhookBoss , Body = Encoded, Method = "POST", Headers = Headers}
-    
-                Request(Final1)
-            end
-        end
-    end)
-end)
