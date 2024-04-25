@@ -7359,12 +7359,9 @@ function PullLever()
     local bn = CFrame.new(28576.4688,14939.2832,76.5164413,-1,0,0,0,0.707134247,-0.707079291,-0,-0.707079291,-0.707134247)
     local bo = CFrame.new(28576.4688,14935.9512,75.469101,-1,-4.22219593e-08,1.13133396e-08,0,-0.258819044,-0.965925813,4.37113883e-08,-0.965925813,0.258819044)
     local bp = 0.2
-    if
-        game:GetService("Workspace").Map["Temple of Time"].Lever.Lever.CFrame.Z > bo.Z + bp or
-            game:GetService("Workspace").Map["Temple of Time"].Lever.Lever.CFrame.Z < bo.Z - bp
-     then
+    if game:GetService("Workspace").Map["Temple of Time"].Lever.Lever.CFrame.Z > bo.Z + bp or game:GetService("Workspace").Map["Temple of Time"].Lever.Lever.CFrame.Z < bo.Z - bp then
         CheckAndTweenTemple()
-        TP(game:GetService("Workspace").Map["Temple of Time"].Lever.Part.CFrame)
+        topos(game:GetService("Workspace").Map["Temple of Time"].Lever.Part.CFrame)
         for r, v in pairs(game:GetService("Workspace").Map["Temple of Time"].Lever:GetDescendants()) do
             if v.Name == "ProximityPrompt" then
                 fireproximityprompt(v)
