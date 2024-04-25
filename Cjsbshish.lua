@@ -4602,7 +4602,7 @@ local BossName = Farm:AddDropdown({
 Farm:AddButton({
     Name = "Refresh Boss List",
     Callback = function()
-        BossName:Refresh(bossCheck,true)
+        BossName:Refresh(BossCheck,true)
         local BossNew = {}
         for i, v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
             if (v.Name == "rip_indra" or v.Name == "Ice Admiral")
