@@ -2157,6 +2157,15 @@ function EquipWeapon(tooltip)
     return false
 end
 
+function EquipWeapon(a)
+    pcall(function()
+        if game.Players.LocalPlayer.Backpack:FindFirstChild(a) then
+            local a = game.Players.LocalPlayer.Backpack:FindFirstChild(a)
+            game.Players.LocalPlayer.Character.Humanoid:EquipTool(a)
+        end
+    end)
+end
+
 function GetDistance(target)
     return math.floor((target.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude)
 end
@@ -2661,17 +2670,17 @@ end
 
 local CheckWeapon1 = Farm:AddDropdown({
 	Name = "Select Weapon",
-	Default = "",
+	Default = "Melee",
 	Options = {"Melee","Sword","Gun","Devil Fruit"},
 	Callback = function(Value)
-		_G.SelectWeapon = Value
+		SelectWeapon = Value
 	end
 })
 
 spawn(function()
 	while task.wait() do
 		pcall(function()
-			if _G.SelectWeapon == "Melee" then
+			if SelectWeapon == "Melee" then
 				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
 					if v.ToolTip == "Melee" then
 						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
@@ -2679,7 +2688,7 @@ spawn(function()
 						end
 					end
 				end
-			elseif _G.SelectWeapon == "Sword" then
+			elseif SelectWeapon == "Sword" then
 				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
 					if v.ToolTip == "Sword" then
 						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
@@ -2687,7 +2696,7 @@ spawn(function()
 						end
 					end
 				end
-			elseif _G.SelectWeapon == "Gun" then
+			elseif SelectWeapon == "Gun" then
 				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
 					if v.ToolTip == "Gun" then
 						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
@@ -2695,7 +2704,7 @@ spawn(function()
 						end
 					end
 				end
-			elseif _G.SelectWeapon == "Devil Fruit" then
+			elseif SelectWeapon == "Devil Fruit" then
 				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
 					if v.ToolTip == "Blox Fruit" then
 						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
