@@ -2654,14 +2654,6 @@ for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
    end
 end
 
-function EquipWeapon()
-    for _,tool in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-        if tool and tool.ToolTip == _G.SelectWeapon then
-            EquipTool(tool.Name) return
-        end
-    end
-end
-
 local CheckWeapon1 = Farm:AddDropdown({
 	Name = "Select Weapon",
 	Default = "",
@@ -2670,6 +2662,23 @@ local CheckWeapon1 = Farm:AddDropdown({
 		_G.SelectWeapon = Value
 	end
 })
+
+task.spawn(function()
+    while task.wait() do
+        pcall(function()
+            local plr = game.Players
+            local backpack = plr.LocalPlayer.Backpack
+            local WeaponTypes = {Melee = "Melee",Sword = "Sword",Gun = "Gun",BloxFruit = "Blox Fruit"}
+            for _, Tool in pairs(backpack:GetChildren()) do
+                local toolTip = Tool.ToolTip
+                if WeaponTypes[_G.SelectWeapon] == toolTip and backpack:FindFirstChild(tostring(Tool.Name)) then
+                    _G.SelectWeapon = Tool.Name
+                    break
+                end
+            end
+        end)
+    end
+end)
 
 Farm:AddButton({
     Name = "Refresh Weapon List",
