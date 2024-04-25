@@ -2654,10 +2654,18 @@ for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
    end
 end
 
-local CheckWeapon = Farm:AddDropdown({
+function EquipToolTip(tooltip)
+    for _,tool in pairs(Player.Backpack:GetChildren()) do
+        if tool and tool.ToolTip == _G.SelectWeapon then
+            EquipWeapon(tool.Name) return
+        end
+    end
+end
+
+local CheckWeapon1 = Farm:AddDropdown({
 	Name = "Select Weapon",
 	Default = "",
-	Options = Weapon,
+	Options = {"Melee","Sword","Gun","Blox Fruit"},
 	Callback = function(Value)
 		_G.SelectWeapon = Value
 	end
@@ -4599,7 +4607,6 @@ Farm:AddToggle({
 	Name = "Auto Farm Boss",
 	Default = false,
 	Callback = function(Value)
-	    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
 		_G.AutoFarmBoss = Value
 		StopTween(_G.AutoFarmBoss)
 	end
