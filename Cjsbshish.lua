@@ -2141,22 +2141,6 @@ function UnEquipWeapon(Weapon)
     end
 end
 
-function EquipWeapon(tooltip)
-    local player = game.Players.LocalPlayer
-    local character = player.Character or player.CharacterAdded:Wait()
-    for _, item in pairs(player.Backpack:GetChildren()) do
-        if item:IsA("Tool") and item.ToolTip == tooltip then
-            local humanoid = character:FindFirstChildOfClass("Humanoid")
-            if humanoid and not humanoid:IsDescendantOf(item) then
-                humanoid:UnequipTools()
-                game.Players.LocalPlayer.Character.Humanoid:EquipTool(item)
-                return true
-            end
-        end
-    end
-    return false
-end
-
 function EquipWeapon(a)
     pcall(function()
         if game.Players.LocalPlayer.Backpack:FindFirstChild(a) then
@@ -6366,18 +6350,60 @@ ItemQuest:AddToggle({
 spawn(function()
     while wait() do
         if _G.Auto_Holy_Torch then
-            pcall(function()
-                wait(1)
-                repeat topos(CFrame.new(-10752, 417, -9366)) wait() until not _G.Auto_Holy_Torch or (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-Vector3.new(-10752, 417, -9366)).Magnitude <= 10
-                wait(1)
-                repeat topos(CFrame.new(-11672, 334, -9474)) wait() until not _G.Auto_Holy_Torch or (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-Vector3.new(-11672, 334, -9474)).Magnitude <= 10
-                wait(1)
-                repeat topos(CFrame.new(-12132, 521, -10655)) wait() until not _G.Auto_Holy_Torch or (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-Vector3.new(-12132, 521, -10655)).Magnitude <= 10
-                wait(1)
-                repeat topos(CFrame.new(-13336, 486, -6985)) wait() until not _G.Auto_Holy_Torch or (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-Vector3.new(-13336, 486, -6985)).Magnitude <= 10
-                wait(1)
-                repeat topos(CFrame.new(-13489, 332, -7925)) wait() until not _G.Auto_Holy_Torch or (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-Vector3.new(-13489, 332, -7925)).Magnitude <= 10
-            end)
+            if game.ReplicatedStorage:FindFirstChild("rip_indra True Form [Lv. 5000] [Raid Boss]") or game.Workspace.Enemies:FindFirstChild("rip_indra True Form [Lv. 5000] [Raid Boss]") and game:GetService("Workspace").Map.Turtle.TushitaGate.TushitaGate.Transparency == 1 then
+                if game.Players.LocalPlayer.Backpack:FindFirstChild("Holy Torch") then
+                    EquipWeapon("Holy Torch")
+                elseif game.Players.LocalPlayer.Character:FindFirstChild("Holy Torch") then
+                    if game:GetService("Workspace").Map.Turtle.QuestTorches.Torch1.Particles.Main.Enabled ~= true then
+                        if (game:GetService("Workspace").Map.Turtle.QuestTorches.Torch1.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude > 300 then
+                            HolyTorchtween = topos(game:GetService("Workspace").Map.Turtle.QuestTorches.Torch1.Position, game:GetService("Workspace").Map.Turtle.QuestTorches.Torch1.CFrame)
+                        elseif (game:GetService("Workspace").Map.Turtle.QuestTorches.Torch1.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 300 then
+                            if HolyTorchtween then
+                                HolyTorchtween:Stop()
+                            end
+                            game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.Map.Turtle.QuestTorches.Torch1.CFrame
+                        end
+                    elseif game:GetService("Workspace").Map.Turtle.QuestTorches.Torch2.Particles.Main.Enabled ~= true then
+                        if (game:GetService("Workspace").Map.Turtle.QuestTorches.Torch2.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude > 300 then
+                            HolyTorchtween = topos(game:GetService("Workspace").Map.Turtle.QuestTorches.Torch2.Position, game:GetService("Workspace").Map.Turtle.QuestTorches.Torch2.CFrame)
+                        elseif (game:GetService("Workspace").Map.Turtle.QuestTorches.Torch2.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 300 then
+                            if HolyTorchtween then
+                                HolyTorchtween:Stop()
+                            end
+                            game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.Map.Turtle.QuestTorches.Torch2.CFrame
+                        end
+                    elseif game:GetService("Workspace").Map.Turtle.QuestTorches.Torch3.Particles.Main.Enabled ~= true then
+                        if (game:GetService("Workspace").Map.Turtle.QuestTorches.Torch3.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude > 300 then
+                            HolyTorchtween = topos(game:GetService("Workspace").Map.Turtle.QuestTorches.Torch3.Position, game:GetService("Workspace").Map.Turtle.QuestTorches.Torch3.CFrame)
+                        elseif (game:GetService("Workspace").Map.Turtle.QuestTorches.Torch3.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 300 then
+                            if HolyTorchtween then
+                                HolyTorchtween:Stop()
+                            end
+                            game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.Map.Turtle.QuestTorches.Torch3.CFrame
+                        end
+                    elseif game:GetService("Workspace").Map.Turtle.QuestTorches.Torch4.Particles.Main.Enabled ~= true then
+                        if (game:GetService("Workspace").Map.Turtle.QuestTorches.Torch4.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude > 300 then
+                            HolyTorchtween = topos(game:GetService("Workspace").Map.Turtle.QuestTorches.Torch4.Position, game:GetService("Workspace").Map.Turtle.QuestTorches.Torch4.CFrame)
+                        elseif (game:GetService("Workspace").Map.Turtle.QuestTorches.Torch4.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 300 then
+                            if HolyTorchtween then
+                                HolyTorchtween:Stop()
+                            end
+                            game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.Map.Turtle.QuestTorches.Torch4.CFrame
+                        end
+                     elseif game:GetService("Workspace").Map.Turtle.QuestTorches.Torch5.Particles.Main.Enabled ~= true then
+                        if (game:GetService("Workspace").Map.Turtle.QuestTorches.Torch5.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude > 300 then
+                           HolyTorchtween = topos(game:GetService("Workspace").Map.Turtle.QuestTorches.Torch5.Position, game:GetService("Workspace").Map.Turtle.QuestTorches.Torch5.CFrame)
+                        elseif (game:GetService("Workspace").Map.Turtle.QuestTorches.Torch5.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 300 then
+                            if HolyTorchtween then
+                                HolyTorchtween:Stop()
+                            end
+                            game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.Map.Turtle.QuestTorches.Torch5.CFrame
+                        end
+                    end
+                else
+                    game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Map.Waterfall.SecretRoom.Room.Door.Door.Hitbox.CFrame
+                end
+            end
         end
     end
 end)
