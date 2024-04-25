@@ -1700,7 +1700,7 @@ function Hop()
         end
     end
     Teleport()
-end       
+end
 
 function UpdateIslandESP() 
     for i,v in pairs(game:GetService("Workspace")["_WorldOrigin"].Locations:GetChildren()) do
@@ -1901,7 +1901,7 @@ function UpdateFlowerChams()
 					v:FindFirstChild('NameEsp'..Number):Destroy()
 					end
 				end
-			end   
+			end
 		end)
 	end
 end
@@ -2105,7 +2105,7 @@ function UpdateFlowerChams()
 					v:FindFirstChild('NameEsp'..Number):Destroy()
 					end
 				end
-			end   
+			end
 		end)
 	end
 end
@@ -2387,7 +2387,7 @@ spawn(function()
             pcall(function()
                 game:GetService("ReplicatedStorage").Remotes.CommE:FireServer("Ken",true)
             end)
-        end    
+        end
     end
 end)
 
@@ -2656,11 +2656,11 @@ end
 
 local CheckWeapon = Farm:AddDropdown({
 	Name = "Select Weapon",
-	Default = 1,
+	Default = "",
 	Options = Weapon,
 	Callback = function(Value)
 		_G.SelectWeapon = Value
-	end    
+	end
 })
 
 Farm:AddButton({
@@ -3298,7 +3298,7 @@ Farm:AddDropdown({
 	Options = {"Normal","Not Tween To Npc Quest"},
 	Callback = function(Value)
 		FarmMode = Value
-	end    
+	end
 })
 
 Farm:AddToggle({
@@ -3502,7 +3502,7 @@ Farm:AddDropdown({
 	Options = {"No Quest","Get Quest"},
 	Callback = function(Value)
 		CakeFMode = Value
-	end    
+	end
 })
 
 Farm:AddToggle({
@@ -3556,7 +3556,7 @@ spawn(function()
                         topos(game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince [Lv. 2300] [Raid Boss]").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
                     else
                         if KillMob == 0 then
-                        end                    
+                        end
                         if game:GetService("Workspace").Map.CakeLoaf.BigMirror.Other.Transparency == 1 then
                             if game:GetService("Workspace").Enemies:FindFirstChild("Cookie Crafter") or game:GetService("Workspace").Enemies:FindFirstChild("Cake Guard") or game:GetService("Workspace").Enemies:FindFirstChild("Baking Staff") or game:GetService("Workspace").Enemies:FindFirstChild("Head Baker") then
                                 for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
@@ -3605,7 +3605,7 @@ spawn(function()
                                             end
                                         end
                                     end
-                                end                       
+                                end
                             end
                         else
                             if game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince") then
@@ -3789,7 +3789,7 @@ Farm:AddDropdown({
 	Options = {"No Quest","Get Quest"},
 	Callback = function(Value)
 		BoneFMode = Value
-	end    
+	end
 })
 
 Farm:AddToggle({
@@ -4575,7 +4575,7 @@ local BossName = Farm:AddDropdown({
 	Options = BossCheck,
 	Callback = function(Value)
 		_G.SelectBoss = Value
-	end    
+	end
 })
 
 Farm:AddButton({
@@ -4589,6 +4589,8 @@ Farm:AddButton({
                                 or (v.Name == "Don Swan" or v.Name == "Diamond" or v.Name == "Jeremy" or v.Name == "Fajita" or v.Name == "Smoke Admiral" or v.Name == "Awakened Ice Admiral" or v.Name == "Tide Keeper" or v.Name == "Order" or v.Name == "Darkbeard")
                                 or (v.Name == "Stone" or v.Name == "Island Empress" or v.Name == "Kilo Admiral" or v.Name == "Captain Elephant" or v.Name == "Beautiful Pirate" or v.Name == "Cake Queen" or v.Name == "rip_indra True Form" or v.Name == "Longma" or v.Name == "Soul Reaper" or v.Name == "Cake Prince" or v.Name == "Dough King") then
                 table.insert(BossNew, v.Name)
+            else
+                table.insert("No Boss")
             end
         end
         BossName:Refresh(BossNew)
@@ -4736,7 +4738,7 @@ Farm:AddDropdown({
 	Options = TableMon,
 	Callback = function(Value)
 		_G.SelectMob = Value
-	end    
+	end
 })
 
 Farm:AddToggle({
@@ -4800,7 +4802,7 @@ Farm:AddDropdown({
 	Options = MaterialList,
 	Callback = function(Value)
 		SelectMaterial = Value
-	end    
+	end
 })
 
 Farm:AddToggle({
@@ -4957,7 +4959,7 @@ FruitRaid:AddDropdown({
 	Options = Table_DevilFruitSniper,
 	Callback = function(Value)
 		_G.SelectFruit = Value
-	end    
+	end
 })
 
 FruitRaid:AddToggle({
@@ -5234,7 +5236,7 @@ FruitRaid:AddDropdown({
 	Options = Raidslist,
 	Callback = function(Value)
 		_G.SelectChip = Value
-	end    
+	end
 })
 
 FruitRaid:AddToggle({
@@ -5586,7 +5588,7 @@ spawn(function()
                             elseif game:GetService("ReplicatedStorage"):FindFirstChild("Urban") then
                                 topos(game:GetService("ReplicatedStorage"):FindFirstChild("Urban").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
                             end
-                        end                    
+                        end
                     end
                 else
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter")
@@ -5846,7 +5848,7 @@ spawn(function()
                                 firetouchinterest(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,v.Handle,0)    
                                 wait()
                             end
-                        end   
+                        end
                     end
                 else
                     _G.AutoMusketeerHat = true
@@ -6278,7 +6280,7 @@ spawn(function()
                             elseif game:GetService("ReplicatedStorage"):FindFirstChild("Urban") then
                                 topos(game:GetService("ReplicatedStorage"):FindFirstChild("Urban").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
                             end
-                        end                    
+                        end
                     end
                 else
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter")
@@ -6514,7 +6516,7 @@ spawn(function()
                             topos(CFrame.new(-12253.5419921875, 598.8999633789062, -6546.8388671875))
                         else
                             topos(CFrame.new(-12361.7060546875, 603.3547973632812, -6550.5341796875))
-                        end   
+                        end
                     end
                 end
             end
@@ -6604,7 +6606,7 @@ spawn(function()
                                 if v.Humanoid.Health <= 0 and v.Humanoid:FindFirstChild("Animator") then
                                     v.Humanoid.Animator:Destroy()
                                 end							
-                            end      
+                            end
                         until Auto_Cursed_Dual_Katana == false or Auto_Quest_Yama_2 == false or not v.Parent or v.Humanoid.Health <= 0 or not v:FindFirstChild("HazeESP")
                     else
                         for x,y in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
@@ -7119,7 +7121,7 @@ local Slplayer = Player:AddDropdown({
 	Options = Playerslist,
 	Callback = function(Value)
 		_G.SelectPly = Value
-	end    
+	end
 })
 
 Player:AddButton({
@@ -7165,7 +7167,7 @@ Player:AddDropdown({
 	Options = {"State 0","State 1","State 2","State 3","State 4","State 5"},
 	Callback = function(Value)
 		_G.SelectStateHaki = Value
-	end    
+	end
 })
 
 Player:AddButton({
@@ -7388,7 +7390,7 @@ Race:AddButton({
             elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Mink" then
                 wait(0.01)
                 topos(CFrame.new(29020.66015625, 14889.4267578125, -379.2682800292969))
-            end     
+            end
         end
     end
 })
@@ -7647,7 +7649,7 @@ Race:AddDropdown({
 	Options = {"Melee","Sword","Gun","Devil Fruit"},
 	Callback = function(Value)
 		_G.SelectWeaponTrials = Value
-	end    
+	end
 })
 
 spawn(function()
@@ -7696,7 +7698,7 @@ Race:AddDropdown({
 	Options = {"Spam Click","Spam Skill"},
 	Callback = function(Value)
 		ModeTrials = Value
-	end    
+	end
 })
 
 Race:AddToggle({
@@ -8010,7 +8012,7 @@ StatsEsp:AddSlider({
 	ValueName = "",
 	Callback = function(Value)
 		PointStats = Value
-	end    
+	end
 })
 
 StatsEsp:AddToggle({
@@ -8180,7 +8182,7 @@ Teleport:AddDropdown({
 	Options = {"First Sea","Second Sea","Third Sea"},
 	Callback = function(Value)
 		_G.SelectSea = Value
-	end    
+	end
 })
 
 Teleport:AddButton({
