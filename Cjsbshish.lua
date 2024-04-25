@@ -2657,7 +2657,7 @@ end
 function EquipWeapon()
     for _,tool in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
         if tool and tool.ToolTip == _G.SelectWeapon then
-            EquipToolName(tool.Name) return
+            EquipTool(tool.Name) return
         end
     end
 end
