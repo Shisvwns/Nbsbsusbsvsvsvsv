@@ -4589,8 +4589,6 @@ Farm:AddButton({
                                 or (v.Name == "Don Swan" or v.Name == "Diamond" or v.Name == "Jeremy" or v.Name == "Fajita" or v.Name == "Smoke Admiral" or v.Name == "Awakened Ice Admiral" or v.Name == "Tide Keeper" or v.Name == "Order" or v.Name == "Darkbeard")
                                 or (v.Name == "Stone" or v.Name == "Island Empress" or v.Name == "Kilo Admiral" or v.Name == "Captain Elephant" or v.Name == "Beautiful Pirate" or v.Name == "Cake Queen" or v.Name == "rip_indra True Form" or v.Name == "Longma" or v.Name == "Soul Reaper" or v.Name == "Cake Prince" or v.Name == "Dough King") then
                 table.insert(BossNew, v.Name)
-            else
-                table.insert(BossNew, "No Boss")
             end
         end
         BossName:Refresh(BossNew)
@@ -4601,6 +4599,7 @@ Farm:AddToggle({
 	Name = "Auto Farm Boss",
 	Default = false,
 	Callback = function(Value)
+	    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
 		_G.AutoFarmBoss = Value
 		StopTween(_G.AutoFarmBoss)
 	end
