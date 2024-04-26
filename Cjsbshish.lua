@@ -7365,43 +7365,6 @@ spawn(function()
     end
 end)
 
-ItemQuest:AddToggle({
-	Name = "Auto Get Serpent Bow",
-	Default = false,
-	Callback = function(Value)
-		_G.AutoSerpentBow = Value
-		StopTween(_G.AutoSerpentBow)
-	end
-})
-
-spawn(function()
-    while wait() do
-        if  _G.AutoSerpentBow and World3 then
-            pcall(function()
-                if game:GetService("Workspace").Enemies:FindFirstChild("Island Empress") then
-                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                        if v.Name == "Island Empress" then
-                            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                repeat task.wait()
-                                    AutoHaki()
-                                    EquipWeapon(_G.SelectWeapon)
-                                    v.HumanoidRootPart.CanCollide = false
-                                    v.Humanoid.WalkSpeed = 0
-                                    v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                    topos(v.HumanoidRootPart.CFrame * Pos)
-                                    game:GetService("VirtualUser"):CaptureController()
-                                    game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
-                                    sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",math.huge)
-                                until not  _G.AutoSerpentBow or not v.Parent or v.Humanoid.Health <= 0
-                            end
-                        end
-                    end
-                end
-            end)
-        end
-    end
-end)
-
 local Section = ItemQuest:AddSection({
     Name = "Other"
 })
