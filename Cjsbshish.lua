@@ -2212,7 +2212,7 @@ function topos(Pos)
         PartTele.Transparency = 1
         PartTele.CanCollide = false
         PartTele.CFrame = WaitHRP(game.Players.LocalPlayer).CFrame 
-        PartTele:GetPropertyChangedSignal("CFrame"):Connect
+        PartTele:GetPropertyChangedSignal("CFrame"):Connect(game.Players.LocalPlayer).CFrame = PartTele.CFrame)
     end
 pcall(function() Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear),{CFrame = Pos}) end)
 Tween:Play()
