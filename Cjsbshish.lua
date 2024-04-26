@@ -2426,22 +2426,17 @@ function StopTween(target)
 end
 
 spawn(function()
-    while wait() do
-        for a, a in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-            if a:IsA("Tool") then
-                if a.ToolTip == "Gun" then
-                    SelectWeaponGun = a.Name
+    pcall(function()
+        while wait() do
+            for i,v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do  
+                if v:IsA("Tool") then
+                    if v:FindFirstChild("RemoteFunctionShoot") then 
+                        SelectWeaponGun = v.Name
+                    end
                 end
             end
         end
-        for a, a in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
-            if a:IsA("Tool") then
-                if a.ToolTip == "Gun" then
-                    SelectWeaponGun = a.Name
-                end
-            end
-        end
-    end
+    end)
 end)
 
 function EquipWeaponSword()
