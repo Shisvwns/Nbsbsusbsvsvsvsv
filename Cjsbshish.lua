@@ -2212,7 +2212,10 @@ function topos(Pos)
         PartTele.Transparency = 1
         PartTele.CanCollide = false
         PartTele.CFrame = WaitHRP(game.Players.LocalPlayer).CFrame 
-        PartTele:GetPropertyChangedSignal("CFrame"):Connect(game.Players.LocalPlayer).CFrame = PartTele.CFrame)
+        PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
+            task.wait()
+            WaitHRP(game.Players.LocalPlayer).CFrame = PartTele.CFrame
+        end)
     end
 pcall(function() Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear),{CFrame = Pos}) end)
 Tween:Play()
@@ -9620,14 +9623,14 @@ Setting:AddToggle({
 })
 
 spawn(function()
-    while _G.LowHealth do task.wait()
-        if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
-            local HealthPercent = game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100
-            if HealthPercent < 50 then
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, 100, 0)
+    while task.wait() do
+        if _G.LowHealth then
+            if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
+                if game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 < 50 then
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, 100, 0)
+                end
             end
         end
-        task.wait()
     end
 end)
 
