@@ -6959,7 +6959,7 @@ spawn(function()
                                                  end
                                             end
                                             if game:GetService("ReplicatedStorage"):FindFirstChild("Mob Leader") then
-                                                topos(game:GetService("ReplicatedStorage"):FindFirstChild("Mob Leader").HumanoidRootPart.CFrame * Farm_Mode)
+                                                topos(game:GetService("ReplicatedStorage"):FindFirstChild("Mob Leader").HumanoidRootPart.CFrame * Pos)
                                             end
                                         end
                                     end
@@ -9544,7 +9544,7 @@ Setting:AddButton({
 
 Setting:AddToggle({
 	Name = "Enabled PvP",
-	Default = true,
+	Default = false,
 	Callback = function(Value)
 		_G.EnabledPvP = Value
 	end
@@ -9564,7 +9564,7 @@ end)
 
 Setting:AddToggle({
 	Name = "Auto Set Spawn Point",
-	Default = true,
+	Default = false,
 	Callback = function(Value)
 		_G.Pos_Spawn = Value
 	end
@@ -9580,27 +9580,6 @@ spawn(function()
             end
         end
     end)
-end)
-
-Setting:AddToggle({
-	Name = "Teleport To Position Spawn",
-	Default = true,
-	Callback = function(Value)
-		_G.Position_Spawn = Value
-		StopTween(_G.Position_Spawn)
-	end
-})
-
-spawn(function()
-	while wait(1) do
-		pcall(function()
-			if _G.Position_Spawn then
-				if _G.Pos_Spawn ~= nil and game.Players.LocalPlayer.Character.Humanoid.Health > 0 then
-					topos(_G.Pos_Spawn)
-				end
-			end
-		end)
-	end
 end)
 
 local Section = Setting:AddSection({
