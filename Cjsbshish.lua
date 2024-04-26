@@ -2218,9 +2218,9 @@ function topos(Pos)
             WaitHRP(LocalPlayer).CFrame = PartTele.CFrame
         end)
     end
-    local Tween = game:GetService("TweenService"):Create(
-    Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear), 
-    {CFrame = Pos}):Play()
+    pcall(function()
+        local Tween = game:GetService("TweenService"):Create(Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear), {CFrame = Pos}):Play()
+    end)
     if _G.StopTween then
         Tween:Cancel()
         _G.Clip = false
