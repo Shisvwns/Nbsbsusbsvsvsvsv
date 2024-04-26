@@ -3781,7 +3781,11 @@ local YourBone = Farm:AddParagraph("Your Bone")
 spawn(function()
     pcall(function()
         while task.wait() do
-            YourBone:Set("Bone: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Bones","Check"))
+            if World3 then
+                YourBone:Set("Bone: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Bones","Check"))
+            elseif Word1 and Word2 then
+                YourBone:Set("Only Third Sea")
+            end
         end
     end)
 end)
@@ -5337,18 +5341,16 @@ spawn(function()
     pcall(function()
         while wait(.1) do
             if _G.NextIsland then
-                if game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Timer.Visible == true then
-                    if game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5") then
-                        topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5").CFrame * RaidPos)
-                    elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4") then
-                        topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4").CFrame * RaidPos)
-                    elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3") then
-                        topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3").CFrame * RaidPos)
-                    elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2") then
-                        topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2").CFrame * RaidPos)
-                    elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1") then
-                        topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1").CFrame * RaidPos)
-                    end
+                if game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5") then
+                    topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5").CFrame * RaidPos)
+                elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4") then
+                    topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4").CFrame * RaidPos)
+                elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3") then
+                    topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3").CFrame * RaidPos)
+                elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2") then
+                    topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2").CFrame * RaidPos)
+                elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1") then
+                    topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1").CFrame * RaidPos)
                 end
             end
         end
@@ -8861,8 +8863,8 @@ Teleport:AddToggle({
        	     elseif _G.SelectIsland == "Tiki Outpost" then
             	    topos(CFrame.new(-16101.1885,12.8422165,380.942291))
           	  end
-  	  	    until not _G.TeleportIsland
- 		   end
+  	  	until not _G.TeleportIsland
+ 	   end
   	  StopTween(_G.TeleportIsland)
 	end
 })
@@ -9004,7 +9006,7 @@ local Section = StatusServer:AddSection({
 })
 
 StatusServer:AddTextbox({
-	Name = "Input Job Id",
+	Name = "Input Job-Id",
 	Default = "",
 	TextDisappear = true,
 	Callback = function(Value)
@@ -9036,12 +9038,12 @@ StatusServer:AddButton({
 })
 
 StatusServer:AddButton({
-    Name = "Copy Server Job Id",
+    Name = "Copy Server Job-Id",
     Callback = function()
         setclipboard(tostring(game.JobId))
         OrionLib:MakeNotification({
         	Name = "Tinh Linh Hub!",
-        	Content = "Copied Server Job Id !",
+        	Content = "Copied Server Job-Id !",
         	Image = "rbxassetid://16730867128",
         	Time = 5
         })
