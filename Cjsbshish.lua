@@ -2666,20 +2666,6 @@ spawn(function()
 	end
 end)
 
-Farm:AddButton({
-    Name = "Refresh Weapon List",
-    Callback = function()
-        CheckWeapon:Refresh(Weapon,true)
-        local WeaponNew = {}
-        for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do  
-            if v:IsA("Tool") then
-                table.insert(WeaponNew, v.Name)
-           end
-        end
-        CheckWeapon:Refresh(WeaponNew)
-    end
-})
-
 Farm:AddDropdown({
 	Name = "Select Fast Attack",
 	Default = "0.175",
@@ -2690,7 +2676,7 @@ Farm:AddDropdown({
 })
 
 task.spawn(function()
-    while task.wait() do
+    while wait() do
         if _G.FastAttackDelay then
             pcall(function()
                 if _G.FastAttackDelay == "0" then
@@ -2713,8 +2699,6 @@ task.spawn(function()
                     _G.FastAttackDelay = 0.18
                 elseif _G.FastAttackDelay == "0.185" then
                     _G.FastAttackDelay = 0.185
-                elseif _G.FastAttackDelay == "10" then
-                    _G.FastAttackDelay = 10
                 end
             end)
         end
@@ -2764,11 +2748,11 @@ function AttackHit()
         end
     end
 end
-spawn(function()
-    while task.wait() do
+task.spawn(function()
+    while wait() do
         if _G.FastAttack then
             pcall(function()
-                repeat task.wait(_G.FastAttackDelay)
+                repeat wait(_G.FastAttackDelay)
                     AttackHit()
                 until not _G.FastAttack
             end)
@@ -2787,7 +2771,7 @@ Farm:AddToggle({
 local CameraShaker = require(game.ReplicatedStorage.Util.CameraShaker)
 CombatFrameworkR = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
 y = debug.getupvalues(CombatFrameworkR)[2]
-spawn(function()
+task.spawn(function()
     game:GetService("RunService").RenderStepped:Connect(function()
         if _G.FastAttack then
             if typeof(y) == "table" then
@@ -2824,7 +2808,7 @@ local Client = game.Players.LocalPlayer
 local STOP = require(Client.PlayerScripts.CombatFramework.Particle)
 local STOPRL = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib)
 task.spawn(function()
-    while task.wait() do
+    while wait() do
         pcall(function()
             if not shared.orl then shared.orl = STOPRL.wrapAttackAnimationAsync end
             if not shared.cpc then shared.cpc = STOP.play end
@@ -5342,19 +5326,17 @@ spawn(function()
         while wait(.1) do
             if _G.NextIsland then
                 if game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Timer.Visible == true then
-                    repeat wait()
-                        if game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5") then
-                            topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5").CFrame * RaidPos)
-                        elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4") then
-                            topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4").CFrame * RaidPos)
-                        elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3") then
-                            topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3").CFrame * RaidPos)
-                        elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2") then
-                            topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2").CFrame * RaidPos)
-                        elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1") then
-                            topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1").CFrame * RaidPos)
-                        end
-                    until not _G.NextIsland
+                    if game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5") then
+                        topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5").CFrame * RaidPos)
+                    elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4") then
+                        topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4").CFrame * RaidPos)
+                    elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3") then
+                        topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3").CFrame * RaidPos)
+                    elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2") then
+                        topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2").CFrame * RaidPos)
+                    elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1") then
+                        topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1").CFrame * RaidPos)
+                    end
                 end
             end
         end
@@ -8162,14 +8144,14 @@ Race:AddDropdown({
 	Default = "Melee",
 	Options = {"Melee","Sword","Gun","Devil Fruit"},
 	Callback = function(Value)
-		_G.SelectWeaponTrials = Value
+		SelectWeaponTrials = Value
 	end
 })
 
 spawn(function()
 	while task.wait() do
 		pcall(function()
-			if _G.SelectWeaponTrials == "Melee" then
+			if SelectWeaponTrials == "Melee" then
 				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
 					if v.ToolTip == "Melee" then
 						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
@@ -8177,7 +8159,7 @@ spawn(function()
 						end
 					end
 				end
-			elseif _G.SelectWeaponTrials == "Sword" then
+			elseif SelectWeaponTrials == "Sword" then
 				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
 					if v.ToolTip == "Sword" then
 						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
@@ -8185,7 +8167,7 @@ spawn(function()
 						end
 					end
 				end
-			elseif _G.SelectWeaponTrials == "Gun" then
+			elseif SelectWeaponTrials == "Gun" then
 				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
 					if v.ToolTip == "Gun" then
 						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
@@ -8193,7 +8175,7 @@ spawn(function()
 						end
 					end
 				end
-			elseif _G.SelectWeaponTrials == "Devil Fruit" then
+			elseif SelectWeaponTrials == "Devil Fruit" then
 				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
 					if v.ToolTip == "Blox Fruit" then
 						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
