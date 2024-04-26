@@ -2206,9 +2206,9 @@ pcall(function()
             if not Player then return end
             return Player.Character:WaitForChild("HumanoidRootPart", 9)
         end
-        local Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
         local LocalPlayer = game.Players.LocalPlayer
         local Character = LocalPlayer.Character
+        local Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
         if Character.Humanoid.Sit then Character.Humanoid.Sit = false end
         if not Character:FindFirstChild("PartTele") then
             local PartTele = Instance.new("Part", Character)
