@@ -2225,10 +2225,6 @@ pcall(function()
         end
         local Tween = game:GetService("TweenService"):Create(Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear), {CFrame = Pos})
         Tween:Play()
-        if _G.StopTween then
-            Tween:Cancel()
-            _G.Clip = false
-        end
     end
 end)
 
