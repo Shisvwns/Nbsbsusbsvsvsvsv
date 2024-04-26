@@ -6942,9 +6942,9 @@ spawn(function()
                                 if game:GetService("Workspace").Enemies:FindFirstChild("Mob Leader") or game:GetService("ReplicatedStorage"):FindFirstChild("Mob Leader") then
                                     topos(CFrame.new(-2967.59521, -4.91089821, 5328.70703, 0.342208564, -0.0227849055, 0.939347804, 0.0251603816, 0.999569714, 0.0150796166, -0.939287126, 0.0184739735, 0.342634559)) 
                                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                                            if v.Name == "Mob Leader" then
-                                               if game:GetService("Workspace").Enemies:FindFirstChild("Mob Leader]") then
-                                                if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                                            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                                                if v.Name == "Mob Leader" then
+                                                   if game:GetService("Workspace").Enemies:FindFirstChild("Mob Leader") then
                                                     repeat task.wait()
                                                     AutoHaki()
                                                     EquipWeapon(_G.SelectWeapon)
