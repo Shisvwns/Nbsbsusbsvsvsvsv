@@ -2201,10 +2201,6 @@ function TP(Pos)
 end
 
 function topos(Pos)
-    function WaitHRP(Player)
-        if not Player then return end
-        return Player.Character:WaitForChild("HumanoidRootPart", 9)
-    end
     local Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
     local LocalPlayer = game.Players.LocalPlayer
     local Character = LocalPlayer.Character
@@ -2222,14 +2218,18 @@ function topos(Pos)
             WaitHRP(LocalPlayer).CFrame = PartTele.CFrame
         end)
     end
-    pcall(function()
-        local Tween = game:GetService("TweenService"):Create(Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear), {CFrame = Pos})
-    end)
-    Tween:Play()
+    local Tween = game:GetService("TweenService"):Create(
+    Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear), 
+    {CFrame = Pos}):Play()
     if _G.StopTween then
         Tween:Cancel()
         _G.Clip = false
     end
+end
+
+function WaitHRP(Player)
+    if not Player then return end
+    return Player.Character:WaitForChild("HumanoidRootPart", 9)
 end
 
 getgenv().ToTargets = function(p)
