@@ -5341,8 +5341,8 @@ spawn(function()
     pcall(function()
         while wait(.1) do
             if _G.NextIsland then
-                repeat wait()
-                    if game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Timer.Visible == true then
+                if game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Timer.Visible == true then
+                    repeat wait()
                         if game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5") then
                             topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5").CFrame * RaidPos)
                         elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4") then
@@ -5354,8 +5354,8 @@ spawn(function()
                         elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1") then
                             topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1").CFrame * RaidPos)
                         end
-                    end
-                until not _G.NextIsland
+                    until not _G.NextIsland
+                end
             end
         end
     end)
