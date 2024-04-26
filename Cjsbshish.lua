@@ -3765,10 +3765,9 @@ local YourBone = Farm:AddParagraph("Your Bone")
 spawn(function()
     pcall(function()
         while task.wait() do
-            if World3 then
+            if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Bones","Check") then
                 YourBone:Set("Bone: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Bones","Check"))
-            end
-            if Word1 and Word2 then
+            else
                 YourBone:Set("Only Third Sea")
             end
         end
@@ -5325,19 +5324,17 @@ FruitRaid:AddToggle({
 spawn(function()
     pcall(function()
         while wait(.1) do
-            if _G.NextIsland then
-                if game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Timer.Visible == true then
-                    if game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5") then
-                        topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5").CFrame * RaidPos)
-                    elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4") then
-                        topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4").CFrame * RaidPos)
-                    elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3") then
-                        topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3").CFrame * RaidPos)
-                    elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2") then
-                        topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2").CFrame * RaidPos)
-                    elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1") then
-                        topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1").CFrame * RaidPos)
-                    end
+            if _G.NextIsland and game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Timer.Visible == true then
+                if game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5") then
+                    topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5").CFrame * RaidPos)
+                elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4") then
+                    topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4").CFrame * RaidPos)
+                elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3") then
+                    topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3").CFrame * RaidPos)
+                elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2") then
+                    topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2").CFrame * RaidPos)
+                elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1") then
+                    topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1").CFrame * RaidPos)
                 end
             end
         end
@@ -5399,10 +5396,8 @@ FruitRaid:AddToggle({
 spawn(function()
     while task.wait() do
         pcall(function()
-            if _G.StartRaidLaw then
-                if World2 then
-                    fireclickdetector(game:GetService("Workspace").Map.CircleIsland.RaidSummon.Button.Main.ClickDetector)
-                end
+            if _G.StartRaidLaw and World2 then
+                fireclickdetector(game:GetService("Workspace").Map.CircleIsland.RaidSummon.Button.Main.ClickDetector)
             end
         end)
     end
@@ -5463,7 +5458,7 @@ Other:AddToggle({
 spawn(function()
     while wait() do
         pcall(function()
-            if _G.RaidPirate then
+            if _G.RaidPirate and World3 then
                 if (CFrame.new(-5118.48682, 314.54129, -2958.64404, -0.387232125, 1.81507858e-08, 0.921982229, -7.54388907e-08, 1, -5.13709999e-08, -0.921982229, -8.94458196e-08, -0.387232125).Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 2000 then
                     for a, a in pairs(game.Workspace.Enemies:GetChildren()) do
                         if a:FindFirstChild("Humanoid") and a:FindFirstChild("HumanoidRootPart") and a.Humanoid.Health > 0 and (a.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 1000 then
@@ -6194,10 +6189,20 @@ spawn(function()
                                 end
                             else    
                                 if string.find(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("gravestoneEvent",2), "Error") then
-                                    print("Go to Grave")
-                                    topos(CFrame.new(-8653.2060546875, 140.98487854003906, 6160.033203125))
-                                elseif string.find(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("gravestoneEvent",2), "Nothing") then
-                                    print("Wait Next Night")
+                                    OrionLib:MakeNotification({
+									    Name = "Tinh Linh Hub",
+									    Content = "Go to Grave",
+									    Image = "rbxassetid://16730867128",
+									    Time = 5
+									})
+									topos(CFrame.new(-8653.2060546875, 140.98487854003906, 6160.033203125))
+								elseif string.find(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("gravestoneEvent",2), "Nothing") then
+									OrionLib:MakeNotification({
+									    Name = "Tinh Linh Hub",
+									    Content = "Wait Next Night",
+									    Image = "rbxassetid://16730867128",
+									    Time = 5
+									})
                                 else
                                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("gravestoneEvent",2,true)
                                 end
@@ -6208,7 +6213,7 @@ spawn(function()
                     end
                 else
                     if _G.soulGuitarhop then
-                        hop()
+                        Hop()
                     end
                 end
             end
@@ -6960,6 +6965,48 @@ spawn(function()
             end)
         end
     end
+end)
+
+ItemQuest:AddToggle({
+	Name = "Auto Get Rengoku",
+	Default = false,
+	Callback = function(Value)
+		_G.AutoRengoku = Value
+		StopTween(_G.AutoRengoku)
+	end
+})
+
+spawn(function()
+    pcall(function()
+        while wait() do
+            if _G.AutoRengoku then
+                if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Hidden Key") or game:GetService("Players").LocalPlayer.Character:FindFirstChild("Hidden Key") then
+                    EquipWeapon("Hidden Key")
+                    topos(CFrame.new(6571.1201171875, 299.23028564453, -6967.841796875))
+                elseif game:GetService("Workspace").Enemies:FindFirstChild("Snow Lurker") or game:GetService("Workspace").Enemies:FindFirstChild("Arctic Warrior") then
+                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        if (v.Name == "Snow Lurker" or v.Name == "Arctic Warrior") and v.Humanoid.Health > 0 then
+                            repeat task.wait()
+                                EquipWeapon(_G.SelectWeapon)
+                                AutoHaki()
+                                v.HumanoidRootPart.CanCollide = false
+                                v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                                RengokuMon = v.HumanoidRootPart.CFrame
+                                topos(v.HumanoidRootPart.CFrame * Pos)
+                                game:GetService'VirtualUser':CaptureController()
+                                game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
+                                StartRengokuMagnet = true
+                            until game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Hidden Key") or _G.AutoRengoku == false or not v.Parent or v.Humanoid.Health <= 0
+                            StartRengokuMagnet = false
+                        end
+                    end
+                else
+                    StartRengokuMagnet = false
+                    topos(CFrame.new(5439.716796875, 84.420944213867, -6715.1635742188))
+                end
+            end
+        end
+    end)
 end)
 
 ItemQuest:AddToggle({
