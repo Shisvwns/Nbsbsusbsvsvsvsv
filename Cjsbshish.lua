@@ -2197,6 +2197,7 @@ pcall(function()
         local Tween = game:GetService("TweenService"):Create(Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear), {CFrame = Pos})
         Tween:Play()
         if Distance <= 1 then
+            local Tween = game:GetService("TweenService"):Create(Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear), {CFrame = Pos})
             Tween:Cancel()
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
         end
