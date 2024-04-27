@@ -2189,7 +2189,7 @@ function topos(Pos)
         PartTele.CanCollide = false
         PartTele.CFrame = WaitHRP(LocalPlayer).CFrame
         PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
-            task.wait()
+            wait(1)
             WaitHRP(LocalPlayer).CFrame = PartTele.CFrame
         end)
     end
@@ -2634,7 +2634,7 @@ function AttackHit()
     local CmrFwLib = CombatFrameworkLib[2]
     local plr = game.Players.LocalPlayer
     for i = 1, 1 do
-        local bladehit = require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(plr.Character,{plr.Character.HumanoidRootPart},60)
+        local bladehit = require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(plr.Character,{plr.Character.HumanoidRootPart},100)
         local cac = {}
         local hash = {}
         for k, v in pairs(bladehit) do
