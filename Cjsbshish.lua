@@ -2171,6 +2171,11 @@ function TelePPlayer(P)
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = P
 end
 
+function WaitHRP(Player)
+    if not Player then return end
+    return Player.Character:WaitForChild("HumanoidRootPart", 9)
+end
+
 topos = function(p)
     task.spawn(function()
         pcall(function()
@@ -2184,6 +2189,10 @@ topos = function(p)
                 K.Transparency = 1
                 K.CanCollide = false
                 K.CFrame = WaitHRP(game.Players.LocalPlayer).CFrame
+                K:GetPropertyChangedSignal("CFrame"):Connect(function()
+                    task.wait(0.01)
+                    WaitHRP(game.Players.LocalPlayer).CFrame = PartTele.CFrame
+                end)
             end
             local U = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-p.Position).Magnitude
             local z = game:service("TweenService")
@@ -2217,11 +2226,6 @@ topos = function(p)
             end
 	    end)
     end)
-end
-
-function WaitHRP(Player)
-    if not Player then return end
-    return Player.Character:WaitForChild("HumanoidRootPart", 9)
 end
 
 Type = 1
