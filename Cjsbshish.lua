@@ -2754,6 +2754,7 @@ task.spawn(function()
             pcall(function()
                 repeat wait(_G.FastAttackDelay)
                     AttackHit()
+                    AttackFunction()
                 until not _G.FastAttack
             end)
         end
@@ -2830,6 +2831,41 @@ task.spawn(function()
         end)
     end
 end)
+
+function AttackFunction()
+	local ac = CombatFrameworkR.activeController
+	if ac and ac.equipped then
+		for indexincrement = 1, 1 do
+			local bladehit = getAllBladeHits(60)
+			if #bladehit > 0 then
+				local AcAttack8 = debug.getupvalue(ac.attack, 5)
+				local AcAttack9 = debug.getupvalue(ac.attack, 6)
+				local AcAttack7 = debug.getupvalue(ac.attack, 4)
+				local AcAttack10 = debug.getupvalue(ac.attack, 7)
+				local NumberAc12 = (AcAttack8 * 798405 + AcAttack7 * 727595) % AcAttack9
+				local NumberAc13 = AcAttack7 * 798405
+				(function()
+					NumberAc12 = (NumberAc12 * AcAttack9 + NumberAc13) % 1099511627776
+					AcAttack8 = math.floor(NumberAc12 / AcAttack9)
+					AcAttack7 = NumberAc12 - AcAttack8 * AcAttack9
+				end)()
+				AcAttack10 = AcAttack10 + 1
+				debug.setupvalue(ac.attack, 5, AcAttack8)
+				debug.setupvalue(ac.attack, 6, AcAttack9)
+				debug.setupvalue(ac.attack, 4, AcAttack7)
+				debug.setupvalue(ac.attack, 7, AcAttack10)
+				for k, v in pairs(ac.animator.anims.basic) do
+					v:Play(0.1,0.5,0.2,0.8)
+				end                 
+				if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") and ac.blades and ac.blades[1] then 
+					game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange",tostring(CurrentWeapon()))
+					game.ReplicatedStorage.Remotes.Validator:FireServer(math.floor(NumberAc12 / 1099511627776 * 16777215), AcAttack10)
+					game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, 2, "") 
+				end
+			end
+		end
+	end
+end
 
 Farm:AddToggle({
 	Name = "Auto Click",
@@ -5323,7 +5359,7 @@ FruitRaid:AddToggle({
 
 spawn(function()
     pcall(function()
-        while wait(.1) do
+        while task.wait() do
             if _G.NextIsland and game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Timer.Visible == true then
                 if game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5") then
                     topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5").CFrame * RaidPos)
@@ -5414,7 +5450,7 @@ FruitRaid:AddToggle({
 
 spawn(function()
     pcall(function()
-        while wait(0.4) do
+        while task.wait() do
             if _G.AutoOderSword then
                 if game:GetService("ReplicatedStorage"):FindFirstChild("Order") or game:GetService("Workspace").Enemies:FindFirstChild("Order") then
                     if game:GetService("Workspace").Enemies:FindFirstChild("Order") then
@@ -6983,12 +7019,12 @@ spawn(function()
                 if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Hidden Key") or game:GetService("Players").LocalPlayer.Character:FindFirstChild("Hidden Key") then
                     EquipWeapon("Hidden Key")
                     topos(CFrame.new(6571.1201171875, 299.23028564453, -6967.841796875))
-                elseif game:GetService("Workspace").Enemies:FindFirstChild("Snow Lurker") or game:GetService("Workspace").Enemies:FindFirstChild("Arctic Warrior") then
+                elseif game:GetService("Workspace").Enemies:FindFirstChild("Snow Lurker") or game:GetService("Workspace").Enemies:FindFirstChild("Arctic Warrior") or game:GetService("Workspace").Enemies:FindFirstChild("Awakened Ice Admiral") then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                        if (v.Name == "Snow Lurker" or v.Name == "Arctic Warrior") and v.Humanoid.Health > 0 then
+                        if (v.Name == "Snow Lurker" or v.Name == "Arctic Warrior" or v.Name == "Awakened Ice Admiral") and v.Humanoid.Health > 0 then
                             repeat task.wait()
-                                EquipWeapon(_G.SelectWeapon)
                                 AutoHaki()
+                                EquipWeapon(_G.SelectWeapon)
                                 v.HumanoidRootPart.CanCollide = false
                                 v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                                 RengokuMon = v.HumanoidRootPart.CFrame
