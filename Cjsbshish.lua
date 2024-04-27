@@ -2181,7 +2181,7 @@ pcall(function()
         local Character = LocalPlayer.Character
         local Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
         if game.Players.LocalPlayer.Character.Humanoid.Sit == true then game.Players.LocalPlayer.Character.Humanoid.Sit = false end
-        if not Character:FindFirstChild("PartTele") then
+        if Character:FindFirstChild("PartTele") then
             local PartTele = Instance.new("Part", Character)
             PartTele.Size = Vector3.new(0, 0, 0)
             PartTele.Name = "PartTele"
@@ -2196,16 +2196,6 @@ pcall(function()
         end
         local Tween = game:GetService("TweenService"):Create(Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear), {CFrame = Pos})
         Tween:Play()
-        if Distance <= 1 then
-            local Tween = game:GetService("TweenService"):Create(Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear), {CFrame = Pos})
-            Tween:Cancel()
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
-        end
-        if StopTween == true then
-            local Tween = game:GetService("TweenService"):Create(Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear), {CFrame = Pos})
-            Tween:Cancel()
-            _G.Clip = false
-        end
     end
 end)
 
