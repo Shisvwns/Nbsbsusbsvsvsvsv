@@ -2167,6 +2167,10 @@ function BTP(p)
     end)
 end
 
+function TelePPlayer(P)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = P
+end
+
 pcall(function()
     function topos(Pos)
         function WaitHRP(Player)
@@ -2192,6 +2196,10 @@ pcall(function()
         end
         local Tween = game:GetService("TweenService"):Create(Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear), {CFrame = Pos})
         Tween:Play()
+        if Distance <= 1 then
+            Tween:Cancel()
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
+        end
     end
 end)
 
@@ -2254,14 +2262,6 @@ spawn(function()
         end)
     end)
 end)
-    
-function InstancePos(pos)
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = pos
-end
-
-function TP3(pos)
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = pos
-end
 
 spawn(function()
     while wait() do
@@ -2312,11 +2312,11 @@ end
 spawn(function()
     pcall(function()
         while wait() do
-            for i,v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do  
-                if v:IsA("Tool") then
-                    if v:FindFirstChild("RemoteFunctionShoot") then 
-                        SelectWeaponGun = v.Name
-                    end
+			for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+				if v.ToolTip == "Gun" then
+					if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+						SelectWeaponGun = v.Name
+					end
                 end
             end
         end
