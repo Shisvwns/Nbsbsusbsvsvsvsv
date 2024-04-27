@@ -2200,31 +2200,33 @@ function TP(Pos)
     _G.Clip = false
 end
 
+local block = Instance.new("Part", workspace)
+block.Size = Vector3.new(1, 1, 1)
+block.Name = "player platform ............."
+block.Anchored = true
+block.CanCollide = false
+block.CanTouch = false
+block.Transparency = 1
+
 pcall(function()
-    function topos(Pos)
-        function WaitHRP(Player)
-            if not Player then return end
-            return Player.Character:WaitForChild("HumanoidRootPart", 9)
+    function topos(Tween_Pos)
+        local TeleportPos = Tween_Pos.p
+        local plrPP = Player.Character and Player.Character.PrimaryPart
+        if not plrPP then return end
+        local Distance = (plrPP.Position - Tween_Pos.p).Magnitude
+        local PortalPos = GetTPPos(Tween_Pos.p)
+        if (plrPP.Position - Tween_Pos.p).Magnitude > (Tween_Pos.p - PortalPos).Magnitude + 250 then
+            plrPP.CFrame = CFrame.new(PortalPos)
+            block.CFrame = CFrame.new(PortalPos)
+        elseif block then
+            if Distance <= 450 then
+                local Tween = game:GetService("TweenService"):Create(block,TweenInfo.new(Distance / tonumber(350 * 1.8), Enum.EasingStyle.Linear),{CFrame = Tween_Pos})
+                Tween:Play()
+            else
+                local Tween = game:GetService("TweenService"):Create(block,TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear),{CFrame = Tween_Pos})
+                Tween:Play()
+            end
         end
-        local LocalPlayer = game.Players.LocalPlayer
-        local Character = LocalPlayer.Character
-        local Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-        if Character.Humanoid.Sit then Character.Humanoid.Sit = false end
-        if not Character:FindFirstChild("PartTele") then
-            local PartTele = Instance.new("Part", Character)
-            PartTele.Size = Vector3.new(0, 0, 0)
-            PartTele.Name = "PartTele"
-            PartTele.Anchored = true
-            PartTele.Transparency = 1
-            PartTele.CanCollide = false
-            PartTele.CFrame = WaitHRP(LocalPlayer).CFrame
-            PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
-                task.wait()
-                WaitHRP(LocalPlayer).CFrame = PartTele.CFrame
-            end)
-        end
-        local Tween = game:GetService("TweenService"):Create(Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear), {CFrame = Pos})
-        Tween:Play()
     end
 end)
 
@@ -6233,12 +6235,12 @@ local Section = ItemQuest:AddSection({
     Name = "Cursed Dual Katana"
 })
 
-local Yama = ItemQuest:AddParagraph("Elite Killed")
+local Yama = ItemQuest:AddParagraph("Elite Progress")
 
 spawn(function()
     while wait() do
         pcall(function()
-            Yama:Set("Elite Hunter Progress: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter","Progress"))
+            Yama:Set("Elite: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter","Progress"))
         end)
     end
 end)
