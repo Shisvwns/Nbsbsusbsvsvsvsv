@@ -2171,53 +2171,76 @@ function TelePPlayer(P)
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = P
 end
 
-topos = function(p)
-    task.spawn(function()
-        pcall(function()
-            if game:GetService("Players").LocalPlayer:DistanceFromCharacter(p.Position) <= 250 then 
-                game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = p
-            elseif not game.Players.LocalPlayer.Character:FindFirstChild("Root") then 
-                local K = Instance.new("Part",game.Players.LocalPlayer.Character)
-                K.Size = Vector3.new(1,0.5,1)
-                K.Name = "Root"
-                K.Anchored = true
-                K.Transparency = 1
-                K.CanCollide = false
-                K.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0,20,0)
-            end
-            local U = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-p.Position).Magnitude
-            local z = game:service("TweenService")
-            local B = TweenInfo.new((p.Position-game.Players.LocalPlayer.Character.Root.Position).Magnitude/300,Enum.EasingStyle.Linear)
-            local S,g = pcall(function()
-            local q = z:Create(game.Players.LocalPlayer.Character.Root,B,{CFrame = p})
-            q:Play()
-        end)
-        if not S then 
-            return g
+pcall(function()
+    function topos(Pos)
+        function WaitHRP(Player)
+            if not Player then return end
+            return Player.Character:WaitForChild("HumanoidRootPart", 9)
         end
-        game.Players.LocalPlayer.Character.Root.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-            if S and game.Players.LocalPlayer.Character:FindFirstChild("Root") then 
-                pcall(function()
-                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-p.Position).Magnitude >= 20 then 
-                        spawn(function()
-                            pcall(function()
-                                if (game.Players.LocalPlayer.Character.Root.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 150 then 
-                                    game.Players.LocalPlayer.Character.Root.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-                                else 
-                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame=game.Players.LocalPlayer.Character.Root.CFrame
-                                end
-                            end)
-                        end)
-                    elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-p.Position).Magnitude >= 10 and(game.Players.LocalPlayer.Character.HumanoidRootPart.Position-p.Position).Magnitude < 20 then 
-                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = p
-                    elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-p.Position).Magnitude < 10 then 
-                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = p
-                    end
-                end)
+        local LocalPlayer = game.Players.LocalPlayer
+        if not LocalPlayer.Character then return end -- Kiểm tra xem Character của LocalPlayer có tồn tại không
+        local Character = LocalPlayer.Character
+        local Distance = (Pos.Position - Character.HumanoidRootPart.Position).Magnitude
+        if Character.Humanoid.Sit == true then 
+            Character.Humanoid.Sit = false 
+        end
+        local PartTele = Character:FindFirstChild("PartTele")
+        if not PartTele then
+            PartTele = Instance.new("Part", Character)
+            PartTele.Size = Vector3.new(0, 0, 0)
+            PartTele.Name = "PartTele"
+            PartTele.Anchored = true
+            PartTele.Transparency = 1
+            PartTele.CanCollide = false
+        end
+        PartTele.CFrame = Character.HumanoidRootPart.CFrame * CFrame.new(0, 20, 0)
+        PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
+            task.wait()
+            WaitHRP(LocalPlayer).CFrame = PartTele.CFrame
+        end)
+        local Tween = game:GetService("TweenService"):Create(PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear), {CFrame = Pos})
+        Tween:Play()
+    end
+end)
+
+pcall(function()
+    function topos(Pos)
+        function WaitHRP(Player)
+            if not Player then return end
+            return Player.Character:WaitForChild("HumanoidRootPart", 9)
+        end
+        local LocalPlayer = game.Players.LocalPlayer
+        if not LocalPlayer or not LocalPlayer.Character then return end -- Kiểm tra xem LocalPlayer và Character của nó có tồn tại không
+        local Character = LocalPlayer.Character
+        local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart", 9) -- Đợi cho HumanoidRootPart xuất hiện
+        if not HumanoidRootPart then return end
+        local Distance = (Pos.Position - HumanoidRootPart.Position).Magnitude
+        if Character.Humanoid.Sit == true then 
+            Character.Humanoid.Sit = false 
+        end
+        local PartTele = Character:FindFirstChild("PartTele")
+        if not PartTele then
+            PartTele = Instance.new("Part", Character)
+            PartTele.Size = Vector3.new(0, 0, 0)
+            PartTele.Name = "PartTele"
+            PartTele.Anchored = true
+            PartTele.Transparency = 1
+            PartTele.CanCollide = false
+        end
+        PartTele.CFrame = HumanoidRootPart.CFrame * CFrame.new(0, 20, 0)
+        PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
+            task.wait()
+            WaitHRP(LocalPlayer).CFrame = PartTele.CFrame
+        end)
+        local Tween = game:GetService("TweenService"):Create(PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear), {CFrame = Pos})
+        Tween:Play()
+        Tween.Completed:Connect(function()
+            if PartTele then
+                PartTele:Destroy()
             end
-	    end)
-    end)
-end
+        end)
+    end
+end)
 
 Type = 1
 spawn(function()
