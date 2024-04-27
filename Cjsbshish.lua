@@ -4815,7 +4815,7 @@ Farm:AddToggle({
 spawn(function()
     pcall(function()
         while wait() do
-            if SelectMaterial == "Ectoplasm" and _G.AutoMaterial and World2 then
+            if SelectMaterial == "Ectoplasm" and _G.AutoMaterial then
                 if game:GetService("Workspace").Enemies:FindFirstChild("Ship Deckhand") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Engineer") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Steward") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Officer") then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == "Ship Deckhand" or v.Name == "Ship Engineer" or v.Name == "Ship Steward" or v.Name == "Ship Officer" then
@@ -6979,7 +6979,7 @@ ItemQuest:AddToggle({
 spawn(function()
     pcall(function()
         while wait() do
-            if _G.AutoRengoku and World3 then
+            if _G.AutoRengoku and World2 then
                 if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Hidden Key") or game:GetService("Players").LocalPlayer.Character:FindFirstChild("Hidden Key") then
                     EquipWeapon("Hidden Key")
                     topos(CFrame.new(6571.1201171875, 299.23028564453, -6967.841796875))
