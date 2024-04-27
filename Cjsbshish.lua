@@ -2171,31 +2171,35 @@ function TelePPlayer(P)
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = P
 end
 
-function topos(Pos)
-    function WaitHRP(Player)
-        if not Player then return end
-        return Player.Character:WaitForChild("HumanoidRootPart", 9)
+pcall(function()
+    function topos(Pos)
+        function WaitHRP(Player)
+            if not Player then return end
+            return Player.Character:WaitForChild("HumanoidRootPart", 9)
+        end
+        local LocalPlayer = game.Players.LocalPlayer
+        local Character = LocalPlayer.Character
+        local Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+        if game.Players.LocalPlayer.Character.Humanoid.Sit == true then
+            game.Players.LocalPlayer.Character.Humanoid.Sit = false
+        end
+        if not Character:FindFirstChild("PartTele") then
+            local PartTele = Instance.new("Part", Character)
+            PartTele.Size = Vector3.new(0, 0, 0)
+            PartTele.Name = "PartTele"
+            PartTele.Anchored = true
+            PartTele.Transparency = 1
+            PartTele.CanCollide = false
+            PartTele.CFrame = WaitHRP(LocalPlayer).CFrame
+            PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
+                task.wait()
+                WaitHRP(LocalPlayer).CFrame = PartTele.CFrame
+            end)
+        end
+        local Tween = game:GetService("TweenService"):Create(Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear), {CFrame = Pos})
+        Tween:Play()
     end
-    local LocalPlayer = game.Players.LocalPlayer
-    local Character = LocalPlayer.Character
-    local Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-    if game.Players.LocalPlayer.Character.Humanoid.Sit == true then game.Players.LocalPlayer.Character.Humanoid.Sit = false end
-    if not Character:FindFirstChild("PartTele") then
-        local PartTele = Instance.new("Part", Character)
-        PartTele.Size = Vector3.new(0, 0, 0)
-        PartTele.Name = "PartTele"
-        PartTele.Anchored = true
-        PartTele.Transparency = 1
-        PartTele.CanCollide = false
-        PartTele.CFrame = WaitHRP(LocalPlayer).CFrame
-        PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
-            wait(1)
-            WaitHRP(LocalPlayer).CFrame = PartTele.CFrame
-        end)
-    end
-    local Tween = game:GetService("TweenService"):Create(Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear), {CFrame = Pos})
-    Tween:Play()
-end
+end)
 
 Type = 1
 spawn(function()
@@ -8703,20 +8707,14 @@ Teleport:AddToggle({
     	            topos(CFrame.new(-4869.1025390625, 733.46051025391, -2667.0180664063))
      	       elseif _G.SelectIsland == "Sky Island 2" then
      	           game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-4607.82275, 872.54248, -1667.55688))
-      	          game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-4607.82275, 872.54248, -1667.55688))
-       	         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-4607.82275, 872.54248, -1667.55688))
        	     elseif _G.SelectIsland == "Sky Island 3" then
       	          game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-7894.6176757813, 5547.1416015625, -380.29119873047))
-    	            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-7894.6176757813, 5547.1416015625, -380.29119873047))
-     	           game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-7894.6176757813, 5547.1416015625, -380.29119873047))
      	       elseif _G.SelectIsland == "Prison" then
        	         topos(CFrame.new(4875.330078125, 5.6519818305969, 734.85021972656))
       	      elseif _G.SelectIsland == "Magma Village" then
        	         topos(CFrame.new(-5247.7163085938, 12.883934020996, 8504.96875))
      	       elseif _G.SelectIsland == "Under Water Island" then
        	         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(61163.8515625, 11.6796875, 1819.7841796875))
-       	         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(61163.8515625, 11.6796875, 1819.7841796875))
-        	        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(61163.8515625, 11.6796875, 1819.7841796875))
     	        elseif _G.SelectIsland == "Fountain City" then
      	           topos(CFrame.new(5127.1284179688, 59.501365661621, 4105.4458007813))
    	         elseif _G.SelectIsland == "Shank Room" then
@@ -8750,7 +8748,7 @@ Teleport:AddToggle({
       	      elseif _G.SelectIsland == "Punk Hazard" then
         	        topos(CFrame.new(-6127.654296875, 15.951762199402, -5040.2861328125))
       	      elseif _G.SelectIsland == "Cursed Ship" then
-          	      topos(CFrame.new(923.40197753906, 125.05712890625, 32885.875))
+          	      game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.40197753906, 125.05712890625, 32885.875))
       	      elseif _G.SelectIsland == "Ice Castle" then
            	     topos(CFrame.new(6148.4116210938, 294.38687133789, -6741.1166992188))
         	    elseif _G.SelectIsland == "Forgotten Island" then
@@ -8763,8 +8761,6 @@ Teleport:AddToggle({
              	   topos(CFrame.new(2681.2736816406, 1682.8092041016, -7190.9853515625))
        	     elseif _G.SelectIsland == "Castle On The Sea" then
            	     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-5071.82324,314.858734,-3150.69922))
-             	   game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-5071.82324,314.858734,-3150.69922))
-             	   game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-5071.82324,314.858734,-3150.69922))
            	 elseif _G.SelectIsland == "MiniSky" then
         	        topos(CFrame.new(-260.65557861328, 49325.8046875, -35253.5703125))
         	    elseif _G.SelectIsland == "Port Town" then
@@ -8775,8 +8771,6 @@ Teleport:AddToggle({
           	      topos(CFrame.new(-13274.528320313, 531.82073974609, -7579.22265625))
         	    elseif _G.SelectIsland == "Mansion" then
              	   game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-12471.169921875, 374.94024658203, -7551.677734375))
-           	     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-12471.169921875, 374.94024658203, -7551.677734375))
-           	     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-12471.169921875, 374.94024658203, -7551.677734375))
          	   elseif _G.SelectIsland == "Haunted Castle" then
           	      topos(CFrame.new(-9515.3720703125, 164.00624084473, 5786.0610351562))
         	    elseif _G.SelectIsland == "Ice Cream Island" then
