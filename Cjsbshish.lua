@@ -4815,7 +4815,7 @@ Farm:AddToggle({
 spawn(function()
     pcall(function()
         while wait() do
-            if SelectMaterial == "Ectoplasm" and _G.AutoMaterial then
+            if SelectMaterial == "Ectoplasm" and _G.AutoMaterial and World2 then
                 if game:GetService("Workspace").Enemies:FindFirstChild("Ship Deckhand") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Engineer") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Steward") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Officer") then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == "Ship Deckhand" or v.Name == "Ship Engineer" or v.Name == "Ship Steward" or v.Name == "Ship Officer" then
@@ -4835,7 +4835,7 @@ spawn(function()
                                     StartEctoplasmMagnet = false
                                     topos(CFrame.new(911.35827636719, 125.95812988281, 33159.5390625))
                                 end
-                            until _G.AutoEctoplasm == false or not v.Parent or v.Humanoid.Health <= 0
+                            until _G.AutoMaterial == false or not v.Parent or v.Humanoid.Health <= 0
                         end
                     end
                 else
@@ -5959,7 +5959,7 @@ ItemQuest:AddToggle({
 spawn(function()
     pcall(function()
         while wait(.1) do
-            if _G.Auto_Rainbow_Haki then
+            if _G.Auto_Rainbow_Haki and World3 then
                 if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
                     topos(CFrame.new(-11892.0703125, 930.57672119141, -8760.1591796875))
                     if (Vector3.new(-11892.0703125, 930.57672119141, -8760.1591796875) - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 30 then
@@ -6094,7 +6094,7 @@ ItemQuest:AddToggle({
 spawn(function()
     while wait() do
         pcall(function()
-            if _G.AutoNevaSoulGuitar then
+            if _G.AutoNevaSoulGuitar and World3 then
                 if GetWeaponInventory("Soul Guitar") == false then
                     if (CFrame.new(-9681.458984375, 6.139880657196045, 6341.3720703125).Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5000 then
                         if game:GetService("Workspace").NPCs:FindFirstChild("Skeleton Machine") then
@@ -6419,7 +6419,7 @@ ItemQuest:AddToggle({
 spawn(function()
     while wait() do
         pcall(function()
-            if Auto_Cursed_Dual_Katana then
+            if Auto_Cursed_Dual_Katana and World3 then
                 if game.Players.LocalPlayer.Character:FindFirstChild("Tushita") or game.Players.LocalPlayer.Backpack:FindFirstChild("Tushita") or game.Players.LocalPlayer.Character:FindFirstChild("Yama") or game.Players.LocalPlayer.Backpack:FindFirstChild("Yama") then
                     if game.Players.LocalPlayer.Character:FindFirstChild("Tushita") or game.Players.LocalPlayer.Backpack:FindFirstChild("Tushita") then
                         if game.Players.LocalPlayer.Backpack:FindFirstChild("Tushita") then
@@ -6858,7 +6858,7 @@ ItemQuest:AddToggle({
 
 spawn(function()
     while task.wait() do
-        if _G.Auto_Saber and game.Players.LocalPlayer.Data.Level.Value >= 200 then
+        if _G.Auto_Saber and World1 and game.Players.LocalPlayer.Data.Level.Value >= 200 then
             pcall(function()
                 if game:GetService("Workspace").Map.Jungle.Final.Part.Transparency == 0 then
                     if game:GetService("Workspace").Map.Jungle.QuestPlates.Door.Transparency == 0 then
@@ -6979,7 +6979,7 @@ ItemQuest:AddToggle({
 spawn(function()
     pcall(function()
         while wait() do
-            if _G.AutoRengoku then
+            if _G.AutoRengoku and World3 then
                 if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Hidden Key") or game:GetService("Players").LocalPlayer.Character:FindFirstChild("Hidden Key") then
                     EquipWeapon("Hidden Key")
                     topos(CFrame.new(6571.1201171875, 299.23028564453, -6967.841796875))
@@ -7126,7 +7126,7 @@ ItemQuest:AddToggle({
 
 spawn(function()
     while wait() do
-        if _G.AutoFarmBossHallow then
+        if _G.AutoFarmBossHallow and Wolrd3 then
             pcall(function()
                 if game:GetService("Workspace").Enemies:FindFirstChild("Soul Reaper") then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
@@ -7380,7 +7380,7 @@ ItemQuest:AddToggle({
 spawn(function()
     pcall(function()
         while wait() do
-            if _G.AutoSerpentBow then
+            if _G.AutoSerpentBow and World3 then
                 if game:GetService("Workspace").Enemies:FindFirstChild("Island Empress") then
                     for a, a in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if a.Name == ("Island Empress" or a.Name == "Island Empress") and a.Humanoid.Health > 0 and a:IsA("Model") and a:FindFirstChild("Humanoid") and a:FindFirstChild("HumanoidRootPart") then
