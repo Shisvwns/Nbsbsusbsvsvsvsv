@@ -2171,35 +2171,6 @@ function TelePPlayer(P)
 	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = P
 end
 
-function TP(Pos)
-    Distance = (Pos.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-    if Distance < 10 then
-        Speed = 20000
-    elseif Distance < 25 then
-        Speed = 10000
-    elseif Distance < 50 then
-        Speed = 5000
-    elseif Distance < 150 then
-        Speed = 2500
-    elseif Distance < 250 then
-        Speed = 1250
-    elseif Distance < 500 then
-        Speed = 625
-    elseif Distance < 750 then
-        Speed = 450
-    elseif Distance >= 1000 then
-        Speed = 370
-    end
-    game:GetService("TweenService"):Create(
-        game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,
-        TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear),
-        {CFrame = Pos}
-    ):Play()
-    _G.Clip = true
-    wait(Distance/Speed)
-    _G.Clip = false
-end
-
 local workspace = game.Players.LocalPlayer.Character
 local block = Instance.new("Part", workspace)
 block.Size = Vector3.new(1, 1, 1)
@@ -2266,64 +2237,16 @@ local function topos(Tween_Pos)
     elseif block then
         if Distance <= 450 then
             local tween = game:GetService("TweenService"):Create(block,
-            TweenInfo.new(Distance / tonumber(getgenv().TweenSpeed * 1.8), Enum.EasingStyle.Linear),
+            TweenInfo.new(Distance / tonumber(350 * 1.8), Enum.EasingStyle.Linear),
             {CFrame = Tween_Pos}):Play()
         else
             local tween = game:GetService("TweenService"):Create(block,
-            TweenInfo.new(Distance / getgenv().TweenSpeed, Enum.EasingStyle.Linear),
+            TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear),
             {CFrame = Tween_Pos}):Play()
         end
     end
 end
 
-getgenv().ToTargets = function(p)
-    task.spawn(function()
-        pcall(function()
-            if game:GetService("Players").LocalPlayer:DistanceFromCharacter(p.Position) <= 250 then 
-                game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = p
-            elseif not game.Players.LocalPlayer.Character:FindFirstChild("Root") then 
-                local K = Instance.new("Part",game.Players.LocalPlayer.Character)
-                K.Size = Vector3.new(1,0.5,1)
-                K.Name = "Root"
-                K.Anchored = true
-                K.Transparency = 1
-                K.CanCollide = false
-                K.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0,20,0)
-            end
-            local U = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-p.Position).Magnitude
-            local z = game:service("TweenService")
-            local B = TweenInfo.new((p.Position-game.Players.LocalPlayer.Character.Root.Position).Magnitude/300,Enum.EasingStyle.Linear)
-            local S,g = pcall(function()
-            local q = z:Create(game.Players.LocalPlayer.Character.Root,B,{CFrame = p})
-            q:Play()
-        end)
-        if not S then 
-            return g
-        end
-        game.Players.LocalPlayer.Character.Root.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-            if S and game.Players.LocalPlayer.Character:FindFirstChild("Root") then 
-                pcall(function()
-                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-p.Position).Magnitude >= 20 then 
-                        spawn(function()
-                            pcall(function()
-                                if (game.Players.LocalPlayer.Character.Root.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 150 then 
-                                    game.Players.LocalPlayer.Character.Root.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-                                else 
-                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame=game.Players.LocalPlayer.Character.Root.CFrame
-                                end
-                            end)
-                        end)
-                    elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-p.Position).Magnitude >= 10 and(game.Players.LocalPlayer.Character.HumanoidRootPart.Position-p.Position).Magnitude < 20 then 
-                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = p
-                    elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-p.Position).Magnitude < 10 then 
-                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = p
-                    end
-                end)
-            end
-	    end)
-    end)
-end
-    
 Type = 1
 spawn(function()
     while wait(.1) do
