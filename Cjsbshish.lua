@@ -2171,76 +2171,31 @@ function TelePPlayer(P)
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = P
 end
 
-pcall(function()
     function topos(Pos)
         function WaitHRP(Player)
             if not Player then return end
             return Player.Character:WaitForChild("HumanoidRootPart", 9)
         end
         local LocalPlayer = game.Players.LocalPlayer
-        if not LocalPlayer.Character then return end -- Kiểm tra xem Character của LocalPlayer có tồn tại không
         local Character = LocalPlayer.Character
-        local Distance = (Pos.Position - Character.HumanoidRootPart.Position).Magnitude
-        if Character.Humanoid.Sit == true then 
-            Character.Humanoid.Sit = false 
-        end
-        local PartTele = Character:FindFirstChild("PartTele")
-        if not PartTele then
-            PartTele = Instance.new("Part", Character)
+        local Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+        if game.Players.LocalPlayer.Character.Humanoid.Sit == true then game.Players.LocalPlayer.Character.Humanoid.Sit = false end
+        if not Character:FindFirstChild("PartTele") then
+            local PartTele = Instance.new("Part", Character)
             PartTele.Size = Vector3.new(0, 0, 0)
             PartTele.Name = "PartTele"
             PartTele.Anchored = true
             PartTele.Transparency = 1
             PartTele.CanCollide = false
+            PartTele.CFrame = WaitHRP(LocalPlayer).CFrame
+            PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
+                task.wait()
+                WaitHRP(LocalPlayer).CFrame = PartTele.CFrame
+            end)
         end
-        PartTele.CFrame = Character.HumanoidRootPart.CFrame * CFrame.new(0, 20, 0)
-        PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
-            task.wait()
-            WaitHRP(LocalPlayer).CFrame = PartTele.CFrame
-        end)
-        local Tween = game:GetService("TweenService"):Create(PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear), {CFrame = Pos})
+        local Tween = game:GetService("TweenService"):Create(Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear), {CFrame = Pos})
         Tween:Play()
     end
-end)
-
-pcall(function()
-    function topos(Pos)
-        function WaitHRP(Player)
-            if not Player then return end
-            return Player.Character:WaitForChild("HumanoidRootPart", 9)
-        end
-        local LocalPlayer = game.Players.LocalPlayer
-        if not LocalPlayer or not LocalPlayer.Character then return end -- Kiểm tra xem LocalPlayer và Character của nó có tồn tại không
-        local Character = LocalPlayer.Character
-        local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart", 9) -- Đợi cho HumanoidRootPart xuất hiện
-        if not HumanoidRootPart then return end
-        local Distance = (Pos.Position - HumanoidRootPart.Position).Magnitude
-        if Character.Humanoid.Sit == true then 
-            Character.Humanoid.Sit = false 
-        end
-        local PartTele = Character:FindFirstChild("PartTele")
-        if not PartTele then
-            PartTele = Instance.new("Part", Character)
-            PartTele.Size = Vector3.new(0, 0, 0)
-            PartTele.Name = "PartTele"
-            PartTele.Anchored = true
-            PartTele.Transparency = 1
-            PartTele.CanCollide = false
-        end
-        PartTele.CFrame = HumanoidRootPart.CFrame * CFrame.new(0, 20, 0)
-        PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
-            task.wait()
-            WaitHRP(LocalPlayer).CFrame = PartTele.CFrame
-        end)
-        local Tween = game:GetService("TweenService"):Create(PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear), {CFrame = Pos})
-        Tween:Play()
-        Tween.Completed:Connect(function()
-            if PartTele then
-                PartTele:Destroy()
-            end
-        end)
-    end
-end)
 
 Type = 1
 spawn(function()
