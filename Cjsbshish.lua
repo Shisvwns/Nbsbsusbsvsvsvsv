@@ -2198,6 +2198,11 @@ pcall(function()
         end
         local Tween = game:GetService("TweenService"):Create(Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear), {CFrame = Pos})
         Tween:Play()
+        if StopTween == true then
+            local Tween = game:GetService("TweenService"):Create(Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear), {CFrame = Pos})
+            Tween:Cancel()
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
+        end
     end
 end)
 
@@ -2270,14 +2275,14 @@ spawn(function()
 end)
 
 spawn(function()
-game:GetService("RunService").RenderStepped:Connect(function()
-    if _G.AutoClick or Fastattack then
-         pcall(function()
-            game:GetService'VirtualUser':CaptureController()
-            game:GetService'VirtualUser':Button1Down(Vector2.new(0,1,0,1))
-        end)
-    end
-end)
+    game:GetService("RunService").RenderStepped:Connect(function()
+        if _G.AutoClick or Fastattack then
+            pcall(function()
+                game:GetService'VirtualUser':CaptureController()
+                game:GetService'VirtualUser':Button1Down(Vector2.new(0,1,0,1))
+            end)
+        end
+    end)
 end)
 
 function TweenObject(TweenCFrame,obj,ts)
