@@ -2754,7 +2754,6 @@ task.spawn(function()
             pcall(function()
                 repeat wait(_G.FastAttackDelay)
                     AttackHit()
-                    AttackFunction()
                 until not _G.FastAttack
             end)
         end
@@ -2831,41 +2830,6 @@ task.spawn(function()
         end)
     end
 end)
-
-function AttackFunction()
-	local ac = CombatFrameworkR.activeController
-	if ac and ac.equipped then
-		for indexincrement = 1, 1 do
-			local bladehit = getAllBladeHits(60)
-			if #bladehit > 0 then
-				local AcAttack8 = debug.getupvalue(ac.attack, 5)
-				local AcAttack9 = debug.getupvalue(ac.attack, 6)
-				local AcAttack7 = debug.getupvalue(ac.attack, 4)
-				local AcAttack10 = debug.getupvalue(ac.attack, 7)
-				local NumberAc12 = (AcAttack8 * 798405 + AcAttack7 * 727595) % AcAttack9
-				local NumberAc13 = AcAttack7 * 798405
-				(function()
-					NumberAc12 = (NumberAc12 * AcAttack9 + NumberAc13) % 1099511627776
-					AcAttack8 = math.floor(NumberAc12 / AcAttack9)
-					AcAttack7 = NumberAc12 - AcAttack8 * AcAttack9
-				end)()
-				AcAttack10 = AcAttack10 + 1
-				debug.setupvalue(ac.attack, 5, AcAttack8)
-				debug.setupvalue(ac.attack, 6, AcAttack9)
-				debug.setupvalue(ac.attack, 4, AcAttack7)
-				debug.setupvalue(ac.attack, 7, AcAttack10)
-				for k, v in pairs(ac.animator.anims.basic) do
-					v:Play(0.1,0.5,0.2,0.8)
-				end                 
-				if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") and ac.blades and ac.blades[1] then 
-					game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange",tostring(CurrentWeapon()))
-					game.ReplicatedStorage.Remotes.Validator:FireServer(math.floor(NumberAc12 / 1099511627776 * 16777215), AcAttack10)
-					game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, 2, "") 
-				end
-			end
-		end
-	end
-end
 
 Farm:AddToggle({
 	Name = "Auto Click",
@@ -4849,6 +4813,46 @@ Farm:AddToggle({
 })
 
 spawn(function()
+    pcall(function()
+        while wait() do
+            if SelectMaterial == "Ectoplasm" and _G.AutoMaterial then
+                if game:GetService("Workspace").Enemies:FindFirstChild("Ship Deckhand") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Engineer") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Steward") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Officer") then
+                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        if v.Name == "Ship Deckhand" or v.Name == "Ship Engineer" or v.Name == "Ship Steward" or v.Name == "Ship Officer" then
+                            repeat task.wait()
+                                EquipWeapon(_G.SelectWeapon)
+                                AutoHaki()
+                                if string.find(v.Name,"Ship") then
+                                    v.HumanoidRootPart.CanCollide = false
+                                    v.Head.CanCollide = false
+                                    v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
+                                    game:GetService'VirtualUser':CaptureController()
+                                    game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
+                                    EctoplasmMon = v.HumanoidRootPart.CFrame
+                                    StartEctoplasmMagnet = true
+                                else
+                                    StartEctoplasmMagnet = false
+                                    topos(CFrame.new(911.35827636719, 125.95812988281, 33159.5390625))
+                                end
+                            until _G.AutoEctoplasm == false or not v.Parent or v.Humanoid.Health <= 0
+                        end
+                    end
+                else
+                    topos(v.HumanoidRootPart.CFrame * CFrame.new(2,20,2))                         
+                    StartEctoplasmMagnet = false
+                    local Distance = (Vector3.new(911.35827636719, 125.95812988281, 33159.5390625) - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+                    if Distance > 18000 then
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
+                    end
+                    topos(CFrame.new(911.35827636719, 125.95812988281, 33159.5390625))
+                end
+            end
+        end
+    end)
+end)
+
+spawn(function()
     while wait() do
         if _G.AutoMaterial then
             pcall(function()
@@ -4888,46 +4892,6 @@ spawn(function()
             end)
         end
     end
-end)
-
-spawn(function()
-    pcall(function()
-        while wait() do
-            if SelectMaterial == "Ectoplasm" and _G.AutoMaterial then
-                if game:GetService("Workspace").Enemies:FindFirstChild("Ship Deckhand") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Engineer") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Steward") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Officer") then
-                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                        if v.Name == "Ship Deckhand" or v.Name == "Ship Engineer" or v.Name == "Ship Steward" or v.Name == "Ship Officer" then
-                            repeat task.wait()
-                                EquipWeapon(_G.SelectWeapon)
-                                AutoHaki()
-                                if string.find(v.Name,"Ship") then
-                                    v.HumanoidRootPart.CanCollide = false
-                                    v.Head.CanCollide = false
-                                    v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                    topos(v.HumanoidRootPart.CFrame * Pos)
-                                    game:GetService'VirtualUser':CaptureController()
-                                    game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
-                                    EctoplasmMon = v.HumanoidRootPart.CFrame
-                                    StartEctoplasmMagnet = true
-                                else
-                                    StartEctoplasmMagnet = false
-                                    topos(CFrame.new(911.35827636719, 125.95812988281, 33159.5390625))
-                                end
-                            until _G.AutoEctoplasm == false or not v.Parent or v.Humanoid.Health <= 0
-                        end
-                    end
-                else
-                    topos(v.HumanoidRootPart.CFrame * CFrame.new(2,20,2))                         
-                    StartEctoplasmMagnet = false
-                    local Distance = (Vector3.new(911.35827636719, 125.95812988281, 33159.5390625) - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-                    if Distance > 18000 then
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
-                    end
-                    topos(CFrame.new(911.35827636719, 125.95812988281, 33159.5390625))
-                end
-            end
-        end
-    end)
 end)
 
 local Section = FruitRaid:AddSection({
@@ -6274,7 +6238,7 @@ local Yama = ItemQuest:AddParagraph("Elite Killed")
 spawn(function()
     while wait() do
         pcall(function()
-            Yama:Set("Elite Killed: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter","Progress"))
+            Yama:Set("Elite Hunter Progress: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter","Progress"))
         end)
     end
 end)
@@ -7402,6 +7366,43 @@ spawn(function()
             end)
         end
     end
+end)
+
+ItemQuest:AddToggle({
+	Name = "Auto Serpent Bow",
+	Default = false,
+	Callback = function(Value)
+		_G.AutoSerpentBow = Value
+		StopTween(_G.AutoSerpentBow)
+	end
+})
+
+spawn(function()
+    pcall(function()
+        while wait() do
+            if _G.AutoSerpentBow then
+                if game:GetService("Workspace").Enemies:FindFirstChild("Island Empress") then
+                    for a, a in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        if a.Name == ("Island Empress" or a.Name == "Island Empress") and a.Humanoid.Health > 0 and a:IsA("Model") and a:FindFirstChild("Humanoid") and a:FindFirstChild("HumanoidRootPart") then
+                            repeat task.wait()
+                                StartMagnet = true
+                                EquipWeapon(_G.SelectWeapon)
+                                topos(v.HumanoidRootPart.CFrame * Pos)
+                                PosMon = a.HumanoidRootPart.CFrame
+                                a.HumanoidRootPart.Size = Vector3.new(80, 80, 80)
+                                a.HumanoidRootPart.CanCollide = false
+                                game:GetService "VirtualUser":CaptureController()
+                                game:GetService "VirtualUser":Button1Down(Vector2.new(1280, 672))
+                            until not _G.AutoSerpentBow or not a.Parent or a.Humanoid.Health <= 0
+                            StartMagnet = false
+                        end
+                    end
+                else
+                    topos(CFrame.new(5543.86328125, 668.97399902344, 199.0341796875))
+                end
+            end
+        end
+    end)
 end)
 
 local Section = ItemQuest:AddSection({
