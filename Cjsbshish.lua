@@ -2531,8 +2531,8 @@ local Window =
         IntroText = "Tinh Linh Hub Library",
         IntroIcon = "rbxassetid://16730867128",
         HidePremium = false,
-        SaveConfig = false,
-        ConfigFolder = "OrionTest"
+        SaveConfig = true,
+        ConfigFolder = "TinhLinhHub"
     }
 )
 
