@@ -2192,9 +2192,6 @@ function topos(Pos)
             task.wait()
             WaitHRP(LocalPlayer).CFrame = PartTele.CFrame
         end)
-        local bodyVelocity = Instance.new("BodyVelocity", PartTele)
-        bodyVelocity.Velocity = Vector3.new(0, 0, 0)
-        bodyVelocity.MaxForce = Vector3.new(100000, 100000, 100000)
     end
     local Tween = game:GetService("TweenService"):Create(Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear), {CFrame = Pos})
     Tween:Play()
