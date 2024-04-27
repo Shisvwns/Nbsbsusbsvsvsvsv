@@ -2200,35 +2200,81 @@ function TP(Pos)
     _G.Clip = false
 end
 
+local workspace = game.Players.LocalPlayer.Character
 local block = Instance.new("Part", workspace)
 block.Size = Vector3.new(1, 1, 1)
-block.Name = "player platform ............."
+block.Name = "PartTele"
 block.Anchored = true
 block.CanCollide = false
 block.CanTouch = false
 block.Transparency = 1
 
-pcall(function()
-    function topos(Tween_Pos)
-        local TeleportPos = Tween_Pos.p
-        local plrPP = Player.Character and Player.Character.PrimaryPart
-        if not plrPP then return end
-        local Distance = (plrPP.Position - Tween_Pos.p).Magnitude
-        local PortalPos = GetTPPos(Tween_Pos.p)
-        if (plrPP.Position - Tween_Pos.p).Magnitude > (Tween_Pos.p - PortalPos).Magnitude + 250 then
-            plrPP.CFrame = CFrame.new(PortalPos)
-            block.CFrame = CFrame.new(PortalPos)
-        elseif block then
-            if Distance <= 450 then
-                local Tween = game:GetService("TweenService"):Create(block,TweenInfo.new(Distance / tonumber(350 * 1.8), Enum.EasingStyle.Linear),{CFrame = Tween_Pos})
-                Tween:Play()
-            else
-                local Tween = game:GetService("TweenService"):Create(block,TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear),{CFrame = Tween_Pos})
-                Tween:Play()
-            end
+local blockfind = game.Players.LocalPlayer.Character:FindFirstChild(block.Name)
+if blockfind and blockfind ~= block then
+    blockfind:Destroy()
+end
+
+task.spawn(function()
+    local PortalPos = {}
+    if World1 then
+        PortalPos = {
+            Vector3.new(-4652, 873, -1754), -- Sky Island 1
+            Vector3.new(-7895, 5547, -380), -- Sky Island 2
+            Vector3.new(61164, 5, 1820), -- Under Water Island
+            Vector3.new(3865, 5, -1926) -- Under Water Island Entrace
+            }
+        elseif World2 then
+            PortalPos = {
+                Vector3.new(-317, 331, 597), -- Flamingo Mansion
+                Vector3.new(2283, 15, 867), -- Flamingo Room
+                Vector3.new(923, 125, 32853), -- Cursed Ship
+                Vector3.new(-6509, 83, -133) -- Zombie Island0
+            }
+        elseif World3 then
+            PortalPos = {
+                Vector3.new(-12471, 374, -7551), -- Mansion
+                Vector3.new(5756, 610, -282), -- Hydra Island
+                Vector3.new(-5092, 315, -3130), -- Castle on the Sea
+                Vector3.new(-12001, 332, -8861), -- Floating Turtle
+                Vector3.new(5319, 23, -93), -- Beautiful Pirate
+                Vector3.new(28286, 14897, 103) -- Temple of Time
+            }
         end
+    function GetTPPos(position)
+        local NearPos = math.huge
+        local TpPos = Vector3.new()
+        table.foreach(PortalPos, function(___, pos)
+            if (pos - position).Magnitude <= NearPos then
+                NearPos = (pos - position).Magnitude
+                TpPos = pos
+            end
+        end)
+        return TpPos
     end
 end)
+
+local TeleportPos
+local function topos(Tween_Pos)
+    TeleportPos = Tween_Pos.p
+    local plrPP = Player.Character and Player.Character.PrimaryPart
+    if not plrPP then return end
+    local Distance = (plrPP.Position - Tween_Pos.p).Magnitude
+    local PortalPos = GetTPPos(Tween_Pos.p)
+    if (plrPP.Position - Tween_Pos.p).Magnitude > (Tween_Pos.p - PortalPos).Magnitude + 250 then
+        plrPP.CFrame = CFrame.new(PortalPos)
+        block.CFrame = CFrame.new(PortalPos)
+    elseif block then
+        if Distance <= 450 then
+            local tween = game:GetService("TweenService"):Create(block,
+            TweenInfo.new(Distance / tonumber(getgenv().TweenSpeed * 1.8), Enum.EasingStyle.Linear),
+            {CFrame = Tween_Pos}):Play()
+        else
+            local tween = game:GetService("TweenService"):Create(block,
+            TweenInfo.new(Distance / getgenv().TweenSpeed, Enum.EasingStyle.Linear),
+            {CFrame = Tween_Pos}):Play()
+        end
+    end
+end
 
 getgenv().ToTargets = function(p)
     task.spawn(function()
