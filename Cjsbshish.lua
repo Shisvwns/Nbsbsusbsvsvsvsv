@@ -2417,10 +2417,6 @@ if game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit') then
     game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit'):Destroy()
 end
 
-if game:GetService("ReplicatedStorage"):FindFirstChild("GodHuman") then
-    game:GetService("ReplicatedStorage"):FindFirstChild("GodHuman"):Destroy()
-end
-
 getgenv().NoDieEffect = true
 if getgenv().NoDieEffect then
     local effectContainer = game:GetService("ReplicatedStorage").Effect.Container
@@ -2429,6 +2425,25 @@ if getgenv().NoDieEffect then
     end
     if effectContainer:FindFirstChild("Respawn") then
         effectContainer.Respawn:Destroy()
+    end
+end
+
+function GiamLag()
+    for _, descendant in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
+        if descendant:IsA("LocalScript") then
+            local blacklistNames = {"General", "Shiftlock", "FallDamage", "4444", "CamBob", "JumpCD", "Looking", "Run"}
+            if table.find(blacklistNames, descendant.Name) then
+                descendant:Destroy()
+            end
+        end
+    end
+    for _, descendant in pairs(game:GetService("Players").LocalPlayer.PlayerScripts:GetDescendants()) do
+        if descendant:IsA("LocalScript") then
+            local blacklistNames = {"RobloxMotor6DBugFix", "Clans", "Codes", "CustomForceField", "MenuBloodSp", "PlayerList"}
+            if table.find(blacklistNames, descendant.Name) then
+                descendant:Destroy()
+            end
+        end
     end
 end
 
