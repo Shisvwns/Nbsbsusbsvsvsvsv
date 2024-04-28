@@ -2195,7 +2195,7 @@ function topos(Pos)
     Tween:Play()
     if _G.StopTween == true then
         Tween:Cancel()
-        game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame = Pos
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
     end
 end
 
