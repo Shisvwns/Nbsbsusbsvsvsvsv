@@ -2428,28 +2428,16 @@ if getgenv().NoDieEffect then
     end
 end
 
-function GiamLag()
-    for _, descendant in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
-        if descendant:IsA("LocalScript") then
-            local blacklistNames = {"General", "Shiftlock", "FallDamage", "4444", "CamBob", "JumpCD", "Looking", "Run"}
-            if table.find(blacklistNames, descendant.Name) then
-                descendant:Destroy()
-            end
-        end
-    end
-    for _, descendant in pairs(game:GetService("Players").LocalPlayer.PlayerScripts:GetDescendants()) do
-        if descendant:IsA("LocalScript") then
-            local blacklistNames = {"RobloxMotor6DBugFix", "Clans", "Codes", "CustomForceField", "MenuBloodSp", "PlayerList"}
-            if table.find(blacklistNames, descendant.Name) then
-                descendant:Destroy()
-            end
-        end
-    end
-end
-
 spawn(function()
-    while task.wait() do
-        GiamLag()
+    while wait(0) do
+        local rs = game:GetService("ReplicatedStorage")
+        local guiAssets = rs.Assets.GUI
+        local soundStorage = rs.Util.Sound.Storage.Other
+        guiAssets.DamageCounter.Enabled = false
+        soundStorage:FindFirstChild("LevelUp_Proxy"):Destroy()
+        soundStorage:FindFirstChild("LevelUp"):Destroy()
+        effectContainer.Respawn:Destroy()  
+        effectContainer.LevelUp:Destroy()
     end
 end)
 
