@@ -2447,6 +2447,12 @@ function GiamLag()
     end
 end
 
+spawn(function()
+    while task.wait() do
+        GiamLag()
+    end
+end)
+
 -- [ Ui Orion ]
 
 local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/HuyLocDz/Ui/main/OrionUi.lua"))()
