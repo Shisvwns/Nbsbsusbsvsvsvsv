@@ -2172,12 +2172,10 @@ function topos(Pos)
         if not Player then return end
         return Player.Character:WaitForChild("HumanoidRootPart", 9)
     end
+    local Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
     local LocalPlayer = game.Players.LocalPlayer
     local Character = LocalPlayer.Character
-    local Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-    if game.Players.LocalPlayer.Character.Humanoid.Sit == true then
-        game.Players.LocalPlayer.Character.Humanoid.Sit = false
-    end
+    if Character.Humanoid.Sit then Character.Humanoid.Sit = false end
     if not Character:FindFirstChild("PartTele") then
         local PartTele = Instance.new("Part", Character)
         PartTele.Size = Vector3.new(0, 0, 0)
@@ -2193,10 +2191,6 @@ function topos(Pos)
     end
     local Tween = game:GetService("TweenService"):Create(Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear), {CFrame = Pos})
     Tween:Play()
-    if _G.StopTween == true then
-        Tween:Cancel()
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
-    end
 end
 
 function TelePPlayer(P)
