@@ -2167,10 +2167,6 @@ function BTP(p)
     end)
 end
 
-function TelePPlayer(P)
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = P
-end
-
 function topos(Pos)
     function WaitHRP(Player)
         if not Player then return end
@@ -2199,7 +2195,12 @@ function topos(Pos)
     Tween:Play()
     if _G.StopTween == true then
         Tween:Cancel()
+        game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame = Pos
     end
+end
+
+function TelePPlayer(P)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = P
 end
 
 Type = 1
