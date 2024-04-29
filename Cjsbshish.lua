@@ -2191,10 +2191,6 @@ function topos(Pos)
     end
     local Tween = game:GetService("TweenService"):Create(Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear), {CFrame = Pos})
     Tween:Play()
-    if _G.StopTween == true then
-        Tween:Cancel()
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
-    end
 end
 
 function TelePPlayer(P)
@@ -2427,19 +2423,6 @@ if getgenv().NoDieEffect then
         effectContainer.Respawn:Destroy()
     end
 end
-
-spawn(function()
-    while wait(0) do
-        local rs = game:GetService("ReplicatedStorage")
-        local guiAssets = rs.Assets.GUI
-        local soundStorage = rs.Util.Sound.Storage.Other
-        guiAssets.DamageCounter.Enabled = false
-        soundStorage:FindFirstChild("LevelUp_Proxy"):Destroy()
-        soundStorage:FindFirstChild("LevelUp"):Destroy()
-        effectContainer.Respawn:Destroy()  
-        effectContainer.LevelUp:Destroy()
-    end
-end)
 
 -- [ Ui Orion ]
 
@@ -5411,7 +5394,6 @@ Other:AddToggle({
 	Default = false,
 	Callback = function(Value)
 		_G.AutoElitehunter = Value
-		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
 		StopTween(_G.AutoElitehunter)
 	end
 })
@@ -5455,6 +5437,42 @@ spawn(function()
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter")
                 end
             end)
+        end
+    end
+end)
+
+local Section = Other:AddSection({
+    Name = "Chest"
+})
+
+Other:AddToggle({
+	Name = "Auto Farm Chest",
+	Default = false,
+	Callback = function(Value)
+		_G.AutoFarmChest = Value
+		StopTween(_G.AutoFarmChest)
+	end
+})
+
+spawn(function()
+    while wait() do
+        if _G.AutoFarmChest then
+            for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
+                if v.Name:find("Chest") then
+                    if game:GetService("Workspace"):FindFirstChild(v.Name) then
+                        if (v.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5000 + _G.MagnitudeAdd then
+                            repeat wait()
+                                if game:GetService("Workspace"):FindFirstChild(v.Name) then
+                                    topos(v.CFrame)
+                                end
+                            until AutoFarmChest == false or not v.Parent
+                            topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
+                            _G.MagnitudeAdd = _G.MagnitudeAdd+1500
+                            break
+                        end
+                    end
+                end
+            end
         end
     end
 end)
