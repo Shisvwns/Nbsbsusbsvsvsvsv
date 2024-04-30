@@ -74,6 +74,7 @@ function intiTinhLinhHub()
     getgenv().B = require(game.Players.LocalPlayer.PlayerScripts.CombatFramework.Particle).play
     _G.setfflag = true
 end
+
 spawn(function()
     while wait() do
         if _G.setfflag then
@@ -2654,26 +2655,6 @@ Setting:AddButton({
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetTeam","Marines")
     end
 })
-
-Setting:AddToggle({
-	Name = "Enabled PvP",
-	Default = false,
-	Callback = function(Value)
-		_G.EnabledPvP = Value
-	end
-})
-
-spawn(function()
-    pcall(function()
-        while wait(.1) do
-            if _G.EnabledPvP then
-                if game:GetService("Players").LocalPlayer.PlayerGui.Main.PvpDisabled.Visible == true then
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EnablePvp")
-                end
-            end
-        end
-    end)
-end)
 
 Setting:AddToggle({
 	Name = "Auto Set Spawn Point",
@@ -7944,6 +7925,121 @@ spawn(function()
 			end)
 		end
 	end
+end)
+
+local Section = Player:AddSection({
+    Name = "PvP"
+})
+
+Player:AddSlider({
+	Name = "Size Fov Aimbot Skill",
+	Min = 0,
+	Max = 500,
+	Default = 100,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "",
+	Callback = function(Value)
+		_G.Select_Size_Fov = Value
+	end
+})
+
+Player:AddToggle({
+	Name = "Show Fov Aimbot Skill",
+	Default = false,
+	Callback = function(Value)
+		_G.Show_Fov = Value
+	end
+})
+
+Player:AddToggle({
+	Name = "Aimbot Skill To Player Near",
+	Default = false,
+	Callback = function(Value)
+		_G.Aimbot_Skill_Fov = Value
+	end
+})
+
+local lp = game:GetService('Players').LocalPlayer
+local mouse = lp:GetMouse()
+spawn(function()
+	while wait() do
+		if _G.Aimbot_Skill_Fov then
+			pcall(function()
+				local MaxDist, Closest = math.huge
+				for i,v in pairs(game:GetService("Players"):GetChildren()) do 
+					local Head = v.Character:FindFirstChild("HumanoidRootPart")
+					local Pos, Vis = game.Workspace.CurrentCamera.WorldToScreenPoint(game.Workspace.CurrentCamera, Head.Position)
+					local MousePos, TheirPos = Vector2.new(mouse.X, mouse.Y), Vector2.new(Pos.X, Pos.Y)
+					local Dist = (TheirPos - MousePos).Magnitude
+					if Dist < MaxDist and Dist <= _G.Select_Size_Fov and v.Name ~= game.Players.LocalPlayer.Name then
+						MaxDist = Dist
+						_G.Aim_Players = v
+					end
+				end
+			end)
+		end
+	end
+end)
+spawn(function()
+	local gg = getrawmetatable(game)
+	local old = gg.__namecall
+	setreadonly(gg,false)
+	gg.__namecall = newcclosure(function(...)
+		local method = getnamecallmethod()
+		local args = {...}
+		if tostring(method) == "FireServer" then
+			if tostring(args[1]) == "RemoteEvent" then
+				if tostring(args[2]) ~= "true" and tostring(args[2]) ~= "false" then
+					if _G.Aimbot_Skill_Fov then
+						args[2] = _G.Aim_Players.Character.HumanoidRootPart.Position
+						return old(unpack(args))
+					end
+				end
+			end
+		end
+		return old(...)
+	end)
+end)
+
+Player:AddToggle({
+	Name = "Enabled PvP",
+	Default = false,
+	Callback = function(Value)
+		_G.EnabledPvP = Value
+	end
+})
+
+spawn(function()
+    pcall(function()
+        while wait(.1) do
+            if _G.EnabledPvP then
+                if game:GetService("Players").LocalPlayer.PlayerGui.Main.PvpDisabled.Visible == true then
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EnablePvp")
+                end
+            end
+        end
+    end)
+end)
+
+local Circle = Drawing.new("Circle")
+Circle.Color =  Color3.fromRGB(0, 244, 0)
+Circle.Thickness = 1
+Circle.Radius = 250
+Circle.NumSides = 460
+Circle.Filled = false
+Circle.Transparency = 1
+
+game:GetService("RunService").Stepped:Connect(function()
+    Circle.Radius = _G.Select_Size_Fov
+    Circle.Thickness = 1
+    Circle.NumSides = 460
+    Circle.Position = game:GetService('UserInputService'):GetMouseLocation()
+    if _G.Show_Fov then
+        Circle.Visible = true
+    else
+        Circle.Visible = false
+    end
 end)
 
 local Section = Player:AddSection({
