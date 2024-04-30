@@ -5722,32 +5722,27 @@ Other:AddToggle({
 spawn(function()
     while task.wait() do
         if _G.ChestBypass then
-            local ohString1 = "SetTeam"
-            local ohString2 = _G.TeamChest
-            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(ohString1, ohString2)
-        end
-    end
-end)
-
-spawn(function()
-    while wait(.1) do
-        if _G.ChestBypass then
-            pcall(function()
-                for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
-                    if string.find(v.Name, "Chest") then
-                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
-                        wait(.15)
-                    end
+            local ActiveTick = tick()
+            local plrRP = Player and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart")
+            local Chest3 = workspace:FindFirstChild("Chest3")
+            local Chest2 = workspace:FindFirstChild("Chest2")
+            local Chest1 = workspace:FindFirstChild("Chest1")
+            if not EquipWeapon("God's Chalice") and not EquipWeapon("Fist of Darkness") then
+                if plrRP and Chest3 and Chest3.Transparency < 1 then
+                    plrRP.CFrame = Chest3.CFrame
+                elseif plrRP and Chest2 and Chest2.Transparency < 1 then
+                    plrRP.CFrame = Chest2.CFrame
+                elseif plrRP and Chest1 and Chest1.Transparency < 1 then
+                    plrRP.CFrame = Chest1.CFrame
                 end
-                game.Players.LocalPlayer.Character.Head:Destroy()
-                for _,v in pairs(game:GetService("Workspace"):GetDescendants()) do
-                    if string.find(v.Name, "Chest") and v:IsA("TouchTransmitter") then
-                        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 0)
-                        wait()
-                        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 1)
-                    end
+            end
+            if not EquipWeapon("God's Chalice") and not EquipWeapon("Fist of Darkness") and tick() - ActiveTick > 10 then
+                local plrH = Player and Player.Character and Player.Character:FindFirstChild("Humanoid")
+                if plrH then
+                    plrH.Health = 0
+                    ActiveTick = tick()
                 end
-            end)
+            end
         end
     end
 end)
