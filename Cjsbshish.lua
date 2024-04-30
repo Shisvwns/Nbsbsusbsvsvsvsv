@@ -5715,7 +5715,7 @@ Other:AddToggle({
 	Name = "Auto Farm Chest [ Bypass ]",
 	Default = false,
 	Callback = function(Value)
-		AutoChestBypass() = Value
+		_G.ChestBypass = Value
 	end
 })
 
