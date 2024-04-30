@@ -2299,7 +2299,7 @@ spawn(function()
 			for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
 				if v.ToolTip == "Gun" then
 					if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-						SelectWeaponGun = v.Name
+						_G.SelectWeaponGun = v.Name
 					end
                 end
             end
@@ -4373,7 +4373,7 @@ spawn(function()
                                         if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
                                             HealthMin = v.Humanoid.MaxHealth * _G.Kill_At/100
                                             if v.Humanoid.Health <= HealthMin then                                                
-                                                EquipWeapon(SelectWeaponGun)
+                                                EquipWeapon(_G.SelectWeaponGun)
                                                 topos(v.HumanoidRootPart.CFrame * CFrame.new(0,10,0))
                                                 v.Humanoid.WalkSpeed = 0
                                                 v.HumanoidRootPart.CanCollide = false
@@ -4383,7 +4383,7 @@ spawn(function()
                                                     [1] = v.HumanoidRootPart.Position,
                                                     [2] = v.HumanoidRootPart
                                                 }
-                                                game:GetService("Players").LocalPlayer.Character[SelectWeaponGun].RemoteFunctionShoot:InvokeServer(unpack(args))
+                                                game:GetService("Players").LocalPlayer.Character[_G.SelectWeaponGun].RemoteFunctionShoot:InvokeServer(unpack(args))
                                             else
                                                 AutoHaki()
                                                 EquipWeapon(_G.SelectWeapon)
@@ -5252,6 +5252,28 @@ spawn(function()
                 end
             end)
         end
+    end
+end)
+
+FruitRaid:AddToggle({
+	Name = "Devil Fruit Notification",
+	Default = false,
+	Callback = function(Value)
+		_G.FruitCheck = Value
+	end
+})
+
+spawn(function()
+	while wait(.1) do
+		if _G.FruitCheck then
+			for i,v in pairs(game.Workspace:GetChildren()) do
+				if string.find(v.Name, "Fruit") then
+					require(game:GetService("ReplicatedStorage").Notification).new("Fruit Spawn"):Display();
+					wait()
+					setthreadcontext(5)
+				end
+			end
+		end
     end
 end)
 
