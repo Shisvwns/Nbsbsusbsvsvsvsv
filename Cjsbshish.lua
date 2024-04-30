@@ -2189,7 +2189,7 @@ function topos(Pos)
             WaitHRP(LocalPlayer).CFrame = PartTele.CFrame
         end)
     end
-    local Tween = game:GetService("TweenService"):Create(Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear), {CFrame = Pos})
+    local Tween = game:GetService("TweenService"):Create(Character.PartTele, TweenInfo.new(Distance / _G.SpeedTween, Enum.EasingStyle.Linear), {CFrame = Pos})
     Tween:Play()
     if _G.StopTween then
         Tween:Cancel()
@@ -2603,6 +2603,19 @@ local Section = Setting:AddSection({
     Name = "Player"
 })
 
+Setting:AddSlider({
+	Name = "Tween Speed",
+	Min = 0,
+	Max = 350,
+	Default = 300,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "",
+	Callback = function(Value)
+		_G.SpeedTween = Value
+	end
+})
+
 Setting:AddButton({
     Name = "Join Pirates Team",
     Callback = function()
@@ -2715,10 +2728,7 @@ spawn(function()
         if _G.LowHealth then
             if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
                 if game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 < _G.Health then
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, 70, 0)
-                    _G.NoClip = true
-                else
-                    _G.NoClip = false
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, 100, 0)
                 end
             end
         end
