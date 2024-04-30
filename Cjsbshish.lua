@@ -5699,6 +5699,60 @@ spawn(function()
 end)
 
 local Section = Other:AddSection({
+    Name = "Chest"
+})
+
+FruitRaid:AddDropdown({
+	Name = "Select Team",
+	Default = "Pirates",
+	Options = {"Pirates","Marines"},
+	Callback = function(Value)
+		_G.TeamChest = Value
+	end
+})
+
+Other:AddToggle({
+	Name = "Auto Farm Chest [ Bypass ]",
+	Default = false,
+	Callback = function(Value)
+		_G.ChestBypass = Value
+	end
+})
+
+spawn(function()
+    while task.wait() do
+        if _G.ChestBypass then
+            local ohString1 = "SetTeam"
+            local ohString2 = _G.TeamChest
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(ohString1, ohString2)
+        end
+    end
+end)
+
+spawn(function()
+    while wait(.1) do
+        if _G.ChestBypass then
+            pcall(function()
+                for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
+                    if string.find(v.Name, "Chest") then
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+                        wait(.15)
+                    end
+                end
+                game.Players.LocalPlayer.Character.Head:Destroy()
+                for _,v in pairs(game:GetService("Workspace"):GetDescendants()) do
+                    if string.find(v.Name, "Chest") and v:IsA("TouchTransmitter") then
+                        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 0) --0 is touch
+                        wait()
+                        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 1) -- 1 is untouch
+                    end
+                end
+            end)
+        end
+    end
+end)
+
+local Section = Other:AddSection({
     Name = "Rip Indra"
 })
 
