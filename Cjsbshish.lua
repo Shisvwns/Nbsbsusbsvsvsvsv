@@ -2168,14 +2168,29 @@ function BTP(p)
 end
 
 function topos(Pos)
-    Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-    if game.Players.LocalPlayer.Character.Humanoid.Sit == true then game.Players.LocalPlayer.Character.Humanoid.Sit = false end
-    pcall(function() Tween = game:GetService("TweenService"):Create(LocalPlayer.Character.Instance.new("Part", LocalPlayer.Character), TweenInfo.new(Distance / getgenv().TweenSpeed, Enum.EasingStyle.Linear), {CFrame = Pos}) end)
-    Tween:Play()
-    if _G.StopTween == true then
-        Tween:Cancel()
-        _G.Clip = false
+    function WaitHRP(Player)
+        if not Player then return end
+        return Player.Character:WaitForChild("HumanoidRootPart", 9)
     end
+    local Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    local LocalPlayer = game.Players.LocalPlayer
+    local Character = LocalPlayer.Character
+    if Character.Humanoid.Sit then Character.Humanoid.Sit = false end
+    if not Character:FindFirstChild("PartTele") then
+        local PartTele = Instance.new("Part", Character)
+        PartTele.Size = Vector3.new(0, 0, 0)
+        PartTele.Name = "PartTele"
+        PartTele.Anchored = true
+        PartTele.Transparency = 1
+        PartTele.CanCollide = false
+        PartTele.CFrame = WaitHRP(LocalPlayer).CFrame
+        PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
+            task.wait()
+            WaitHRP(LocalPlayer).CFrame = PartTele.CFrame
+        end)
+    end
+    local Tween = game:GetService("TweenService"):Create(Character.PartTele, TweenInfo.new(Distance / getgenv().TweenSpeed, Enum.EasingStyle.Linear), {CFrame = Pos})
+    Tween:Play()
 end
 
 function TelePlayer(P)
