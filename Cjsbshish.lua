@@ -2191,6 +2191,11 @@ function topos(Pos)
     end
     local Tween = game:GetService("TweenService"):Create(Character.PartTele, TweenInfo.new(Distance / getgenv().TweenSpeed, Enum.EasingStyle.Linear), {CFrame = Pos})
     Tween:Play()
+    if _G.StopTween == true then
+        Tween:Cancel()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
+        _G.Clip = false
+    end
 end
 
 function TelePlayer(P)
@@ -2595,6 +2600,22 @@ function FPSBooster()
     end
 end
 
+Setting:AddButton({
+    Name = "Remove Lava",
+    Callback = function()
+        for i,v in pairs(game.Workspace:GetDescendants()) do
+			if v.Name == "Lava" then   
+				v:Destroy()
+			end
+		end
+		for i,v in pairs(game.ReplicatedStorage:GetDescendants()) do
+			if v.Name == "Lava" then   
+				v:Destroy()
+			end
+		end
+    end
+})
+
 local Section = Setting:AddSection({
     Name = "Player"
 })
@@ -2689,14 +2710,6 @@ spawn(function()
 		end
 	end
 end)
-
-Setting:AddToggle({
-	Name = "Bypass Teleport",
-	Default = false,
-	Callback = function(Value)
-		BypassTP = Value
-	end
-})
 
 Setting:AddSlider({
 	Name = "Value Health",
@@ -7962,17 +7975,17 @@ local Section = Player:AddSection({
 })
 
 Player:AddToggle({
-	Name = "Soru Cooldown",
+	Name = "Soru No CD",
 	Default = false,
 	Callback = function(Value)
-		getgenv().InfSoru = Value
+		_G.SoruNoCD = Value
 	end
 })
 
 spawn(function()
     while wait() do
         pcall(function()
-            if getgenv().InfSoru and game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart") ~= nil  then
+            if _G.SoruNoCD and game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart") ~= nil  then
                 for i,v in next, getgc() do
                     if game:GetService("Players").LocalPlayer.Character.Soru then
                         if typeof(v) == "function" and getfenv(v).script == game:GetService("Players").LocalPlayer.Character.Soru then
@@ -7981,6 +7994,35 @@ spawn(function()
                                     repeat wait(0.1)
                                         v2.LastUse = 0
                                     until not getgenv().InfSoru or game:GetService("Players").LocalPlayer.Character.Humanoid.Health <= 0
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end)
+    end
+end)
+
+Player:AddToggle({
+	Name = "Geppo No CD",
+	Default = false,
+	Callback = function(Value)
+		_G.InfinitiesSkyJump = Value
+	end
+})
+spawn(function()
+    while wait() do
+        pcall(function()
+            if _G.InfinitiesSkyJump then
+                for a, a in next, getgc() do
+                    if game.Players.LocalPlayer.Character.Geppo then
+                        if typeof(a) == "function" and getfenv(a).script == game.Players.LocalPlayer.Character.Geppo then
+                            for b, c in next, getupvalues(a) do
+                                if tostring(c) == "0" then
+                                    repeat wait(.1)
+                                        setupvalue(a, b, 0)
+                                    until not _G.InfinitiesSkyJump
                                 end
                             end
                         end
@@ -8032,22 +8074,6 @@ spawn(function()
         end)
     end)
 end)
-
-Player:AddButton({
-    Name = "Remove Lava",
-    Callback = function()
-        for i,v in pairs(game.Workspace:GetDescendants()) do
-			if v.Name == "Lava" then   
-				v:Destroy()
-			end
-		end
-		for i,v in pairs(game.ReplicatedStorage:GetDescendants()) do
-			if v.Name == "Lava" then   
-				v:Destroy()
-			end
-		end
-    end
-})
 
 -- [ Tab Race ]
 
