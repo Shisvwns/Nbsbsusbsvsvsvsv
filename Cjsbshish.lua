@@ -5446,43 +5446,6 @@ spawn(function()
 end)
 
 local Section = Other:AddSection({
-    Name = "Chest"
-})
-
-Other:AddToggle({
-	Name = "Auto Farm Chest [ Tween ]",
-	Default = false,
-	Callback = function(Value)
-		_G.AutoFarmChest = Value
-		StopTween(_G.AutoFarmChest)
-	end
-})
-
-_G.MagnitudeAdd = 0
-spawn(function()
-	while wait() do 
-		if _G.AutoFarmChest then
-			for i,v in pairs(game:GetService("Workspace"):GetChildren()) do 
-				if v.Name:find("Chest") then
-					if game:GetService("Workspace"):FindFirstChild(v.Name) then
-						if (v.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5000+_G.MagnitudeAdd then
-							repeat wait()
-								if game:GetService("Workspace"):FindFirstChild(v.Name) then
-									topos(v.CFrame)
-								end
-							until _G.AutoFarmChest == false or not v.Parent
-							topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
-							_G.MagnitudeAdd = _G.MagnitudeAdd+1500
-							break
-						end
-					end
-				end
-			end
-		end
-	end
-end)
-
-local Section = Other:AddSection({
     Name = "Rip Indra"
 })
 
