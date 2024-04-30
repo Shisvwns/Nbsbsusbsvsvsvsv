@@ -7633,23 +7633,12 @@ Player:AddToggle({
 	Default = false,
 	Callback = function(Value)
 		_G.SpectatePlys = Value
+		repeat wait(.1)
+	    	game:GetService("Workspace").Camera.CameraSubject = game:GetService("Players"):FindFirstChild(_G.SelectPly).Character.Humanoid
+		until _G.SpectatePlys == false
+		game:GetService("Workspace").Camera.CameraSubject = game:GetService("Players").LocalPlayer.Character.Humanoid
 	end
 })
-
-spawn(function()
-	while wait() do
-		if _G.SpectatePlys then
-			pcall(function()
-				if game.Players:FindFirstChild(_G.SelectPly) then
-				    repeat wait(.1)
-				    	game:GetService("Workspace").Camera.CameraSubject = game:GetService("Players"):FindFirstChild(_G.SelectPly).Character.Humanoid
-					until _G.SpectatePlys == false
-					game:GetService("Workspace").Camera.CameraSubject = game:GetService("Players").LocalPlayer.Character.Humanoid
-				end
-			end)
-		end
-	end
-end)
 
 local Section = Player:AddSection({
     Name = "Haki State"
