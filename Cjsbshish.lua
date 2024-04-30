@@ -2189,15 +2189,8 @@ function topos(Pos)
             WaitHRP(LocalPlayer).CFrame = PartTele.CFrame
         end)
     end
-    if Instance.new("Part", Character) then
-        if Distance <= 450 then
-            local Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / tonumber(getgenv().TweenSpeed * 1.8), Enum.EasingStyle.Linear), {CFrame = Tween_Pos})
-            Tween:Play()
-        else
-            local Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / getgenv().TweenSpeed, Enum.EasingStyle.Linear), {CFrame = Pos})
-            Tween:Play()
-        end
-    end
+    local Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / getgenv().TweenSpeed, Enum.EasingStyle.Linear), {CFrame = Pos})
+    Tween:Play()
 end
 
 function TelePlayer(P)
@@ -2615,7 +2608,7 @@ Setting:AddSlider({
 	Increment = 1,
 	ValueName = "",
 	Callback = function(Value)
-		_G.SpeedTween = Value
+		getgenv().TweenSpeed = Value
 	end
 })
 
