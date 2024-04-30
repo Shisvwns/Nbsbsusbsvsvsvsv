@@ -1,6 +1,5 @@
 --[ Anti Ban & Anti Afk]
 
-_G.SafeFarm = true
 assert(getrawmetatable)
     grm = getrawmetatable(game)
     setreadonly(grm, false)
@@ -32,6 +31,7 @@ assert(getrawmetatable)
         end
         return old(self, ...)
     end)
+    
 function CheckAntiCheatBypass()
     for i,v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
         if v:IsA("LocalScript") then
@@ -56,6 +56,7 @@ local function bypassAntiExploit()
         end
     end
 end
+
 spawn(function()
     while wait() do
         if _G.SafeFarm then
@@ -66,11 +67,12 @@ spawn(function()
         end
     end
 end)
+
 function intiTinhLinhHub() 
-_G.antiscan = true
-getgenv().A = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib).wrapAttackAnimationAsync
-getgenv().B = require(game.Players.LocalPlayer.PlayerScripts.CombatFramework.Particle).play
-_G.setfflag = true
+    _G.antiscan = true
+    getgenv().A = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib).wrapAttackAnimationAsync
+    getgenv().B = require(game.Players.LocalPlayer.PlayerScripts.CombatFramework.Particle).play
+    _G.setfflag = true
 end
 spawn(function()
     while wait() do
@@ -80,35 +82,41 @@ spawn(function()
         end
     end
 end)
+
 _G.AntiFlagReset = true
 spawn(function()
     while wait(2000) do
-        if _G.AntiFlagReset then
-           pcall(function()
-               game:GetService("TeleportService"):Teleport(game.PlaceId, game:GetService("Players").LocalPlayer)
-           end)
-       end
-   end
-end)
-
-local Players = game:GetService("Players")
-
-local function onCharacterAdded(character)
-    local humanoid = character:WaitForChild("Humanoid")
-    humanoid.Died:Connect(function()
-        humanoid.Health = 0
-    end)
-end
-
-Players.PlayerAdded:Connect(function(player)
-    player.CharacterAdded:Connect(onCharacterAdded)
-end)
-
-for _, player in ipairs(Players:GetPlayers()) do
-    if player.Character then
-        onCharacterAdded(player.Character)
+         if _G.AntiFlagReset then
+            pcall(function()
+                game:GetService("TeleportService"):Teleport(game.PlaceId, game:GetService("Players").LocalPlayer)
+            end)
+        end
     end
-end
+end)
+
+_G.SafeFarm = true
+spawn(function()
+    while wait() do
+        if _G.SafeFarm then
+            for i, v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
+                if v:IsA("LocalScript") then
+                    if v.Name == "General" or v.Name == "Shiftlock" or v.Name == "FallDamage" or v.Name == "4444" or v.Name == "CamBob" or v.Name == "JumpCD" or v.Name == "Looking" or v.Name == "Run" then
+                        v:Destroy()
+                    end
+                end
+            end
+            for i, v in pairs(game:GetService("Players").LocalPlayer.PlayerScripts:GetDescendants()) do
+                if v:IsA("LocalScript") then
+                    if v.Name == "RobloxMotor6DBugFix" or v.Name == "Clans" or v.Name == "Codes" or v.Name == "CustomForceField" or v.Name == "MenuBloodSp" or v.Name == "PlayerList" then
+                        v:Destroy()
+                    end
+                end
+            end
+        else
+            game.Players.LocalPlayer:Kick("Please don't turn off safe farm if you don't want to get banned")
+        end
+    end
+end)
 
 repeat wait() until game:IsLoaded()
 if game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseTeam") then
@@ -7994,36 +8002,6 @@ spawn(function()
                                     repeat wait(0.1)
                                         v2.LastUse = 0
                                     until not getgenv().InfSoru or game:GetService("Players").LocalPlayer.Character.Humanoid.Health <= 0
-                                end
-                            end
-                        end
-                    end
-                end
-            end
-        end)
-    end
-end)
-
-Player:AddToggle({
-	Name = "Geppo No CD",
-	Default = false,
-	Callback = function(Value)
-		getgenv().InfGeppo = Value
-	end
-})
-
-spawn(function()
-    while wait() do
-        pcall(function()
-            if getgenv().InfGeppo then
-                for i,v in next, getgc() do
-                    if game:GetService("Players").LocalPlayer.Character.Geppo then
-                        if typeof(v) == "function" and getfenv(v).script == game:GetService("Players").LocalPlayer.Character.Geppo then
-                            for i2,v2 in next, getupvalues(v) do
-                                if tostring(i2) == "9" then
-                                    repeat wait(.1)
-                                        setupvalue(v,i2,0)
-                                    until not getgenv().InfGeppo or game:GetService("Players").LocalPlayer.Character.Humanoid.Health <= 0
                                 end
                             end
                         end
