@@ -5752,7 +5752,6 @@ spawn(function()
                 end
             end
         end
-        task.wait()
     end
 end)
 
