@@ -2189,8 +2189,12 @@ function topos(Pos)
             WaitHRP(LocalPlayer).CFrame = PartTele.CFrame
         end)
     end
-    local Tween = game:GetService("TweenService"):Create(Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear), {CFrame = Pos})
+    local Tween = game:GetService("TweenService"):Create(Character.PartTele, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear), {CFrame = Pos})
     Tween:Play()
+    if _G.StopTween == false then
+        Tween:Cancel()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
+    end
 end
 
 function TelePPlayer(P)
@@ -5453,23 +5457,6 @@ Other:AddToggle({
 		StopTween(_G.AutoFarmChest)
 	end
 })
-
-spawn(function()
-    while wait() do
-        if _G.AutoFarmChest then
-            for a, a in ipairs(Workspace:GetChildren()) do
-                if string.find(a.Name, "Chest") then
-                    topos(a.CFrame * CFrame.new(0, 0, 0))
-                    if (a.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1 then
-                        UnEquipWeapon(_G.SelectWeapon)
-                    else
-                        EquipWeapon(_G.SelectWeapon)
-                    end
-                end
-            end
-        end
-    end
-end)
 
 _G.MagnitudeAdd = 0
 spawn(function()
@@ -9459,6 +9446,19 @@ local Section = Setting:AddSection({
     Name = "Player"
 })
 
+Setting:AddSlider({
+	Name = "Tween Speed",
+	Min = 0,
+	Max = 350,
+	Default = 300,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "",
+	Callback = function(Value)
+		_G.TweenSpeed = Value
+	end
+})
+
 Setting:AddButton({
     Name = "Join Pirates Team",
     Callback = function()
@@ -9545,6 +9545,19 @@ Setting:AddToggle({
 	end
 })
 
+Setting:AddSlider({
+	Name = "Value Health",
+	Min = 0,
+	Max = 100,
+	Default = 30,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "",
+	Callback = function(Value)
+		_G.Health = Value
+	end
+})
+
 Setting:AddToggle({
 	Name = "Teleport To Y If Low Health",
 	Default = false,
@@ -9557,7 +9570,7 @@ spawn(function()
     while task.wait() do
         if _G.LowHealth then
             if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
-                if game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 < 50 then
+                if game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 < _G.Health then
                     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, 100, 0)
                 end
             end
