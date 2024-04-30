@@ -7628,6 +7628,20 @@ spawn(function()
 	end
 end)
 
+Player:AddToggle({
+	Name = "Spectate Player",
+	Default = false,
+	Callback = function(Value)
+		SpectatePlys = Value
+		local plr1 = game:GetService("Players").LocalPlayer.Character.Humanoid
+        local plr2 = game:GetService("Players"):FindFirstChild(_G.SelectPly)
+        repeat wait(.1)
+            game:GetService("Workspace").Camera.CameraSubject = game:GetService("Players"):FindFirstChild(_G.SelectPly).Character.Humanoid
+        until SpectatePlys == false 
+        game:GetService("Workspace").Camera.CameraSubject = game:GetService("Players").LocalPlayer.Character.Humanoid
+	end
+})
+
 local Section = Player:AddSection({
     Name = "Haki State"
 })
@@ -9444,19 +9458,6 @@ end
 
 local Section = Setting:AddSection({
     Name = "Player"
-})
-
-Setting:AddSlider({
-	Name = "Tween Speed",
-	Min = 0,
-	Max = 350,
-	Default = 300,
-	Color = Color3.fromRGB(255,255,255),
-	Increment = 1,
-	ValueName = "",
-	Callback = function(Value)
-		_G.TweenSpeed = Value
-	end
 })
 
 Setting:AddButton({
