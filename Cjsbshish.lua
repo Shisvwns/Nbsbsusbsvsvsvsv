@@ -5716,6 +5716,7 @@ Other:AddToggle({
 	Default = false,
 	Callback = function(Value)
 		_G.ChestBypass = Value
+		StopTween(_G.ChestBypass)
 	end
 })
 
