@@ -7978,14 +7978,14 @@ Player:AddToggle({
 	Name = "Soru No CD",
 	Default = false,
 	Callback = function(Value)
-		_G.SoruNoCD = Value
+		getgenv().InfSoru = Value
 	end
 })
 
 spawn(function()
     while wait() do
         pcall(function()
-            if _G.SoruNoCD and game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart") ~= nil  then
+            if getgenv().InfSoru and game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart") ~= nil  then
                 for i,v in next, getgc() do
                     if game:GetService("Players").LocalPlayer.Character.Soru then
                         if typeof(v) == "function" and getfenv(v).script == game:GetService("Players").LocalPlayer.Character.Soru then
@@ -8008,21 +8008,22 @@ Player:AddToggle({
 	Name = "Geppo No CD",
 	Default = false,
 	Callback = function(Value)
-		_G.InfinitiesSkyJump = Value
+		getgenv().InfGeppo = Value
 	end
 })
+
 spawn(function()
     while wait() do
         pcall(function()
-            if _G.InfinitiesSkyJump then
-                for a, a in next, getgc() do
-                    if game.Players.LocalPlayer.Character.Geppo then
-                        if typeof(a) == "function" and getfenv(a).script == game.Players.LocalPlayer.Character.Geppo then
-                            for b, c in next, getupvalues(a) do
-                                if tostring(c) == "0" then
+            if getgenv().InfGeppo then
+                for i,v in next, getgc() do
+                    if game:GetService("Players").LocalPlayer.Character.Geppo then
+                        if typeof(v) == "function" and getfenv(v).script == game:GetService("Players").LocalPlayer.Character.Geppo then
+                            for i2,v2 in next, getupvalues(v) do
+                                if tostring(i2) == "9" then
                                     repeat wait(.1)
-                                        setupvalue(a, b, 0)
-                                    until not _G.InfinitiesSkyJump
+                                        setupvalue(v,i2,0)
+                                    until not getgenv().InfGeppo or game:GetService("Players").LocalPlayer.Character.Humanoid.Health <= 0
                                 end
                             end
                         end
