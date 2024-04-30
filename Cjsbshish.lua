@@ -5728,34 +5728,33 @@ spawn(function()
         end
     end
 end)
-
-local function AutoChestBypass()
-  local ActiveTick = tick()
-  while getgenv().AutoChestBypass do task.wait()
-    local plrRP = Player and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart")
-    local Chest3 = workspace:FindFirstChild("Chest3")
-    local Chest2 = workspace:FindFirstChild("Chest2")
-    local Chest1 = workspace:FindFirstChild("Chest1")
-    
-    if not VerifyTool("God's Chalice") and not VerifyTool("Fist of Darkness") then
-      if plrRP and Chest3 and Chest3.Transparency < 1 then
-        plrRP.CFrame = Chest3.CFrame
-      elseif plrRP and Chest2 and Chest2.Transparency < 1 then
-        plrRP.CFrame = Chest2.CFrame
-      elseif plrRP and Chest1 and Chest1.Transparency < 1 then
-        plrRP.CFrame = Chest1.CFrame
-      end
+spawn(function()
+    while task.wait() do
+        if _G.ChestBypass then
+            local ActiveTick = tick()
+            local plrRP = Player and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart")
+            local Chest3 = workspace:FindFirstChild("Chest3")
+            local Chest2 = workspace:FindFirstChild("Chest2")
+            local Chest1 = workspace:FindFirstChild("Chest1")
+            if not EquipWeapon("God's Chalice") and not EquipWeapon("Fist of Darkness") then
+                if plrRP and Chest3 and Chest3.Transparency < 1 then
+                    plrRP.CFrame = Chest3.CFrame
+                elseif plrRP and Chest2 and Chest2.Transparency < 1 then
+                    plrRP.CFrame = Chest2.CFrame
+                elseif plrRP and Chest1 and Chest1.Transparency < 1 then
+                    plrRP.CFrame = Chest1.CFrame
+                end
+            end
+            if not EquipWeapon("God's Chalice") and not EquipWeapon("Fist of Darkness") and tick() - ActiveTick > 10 then
+                local plrH = Player and Player.Character and Player.Character:FindFirstChild("Humanoid")
+                if plrH then
+                    plrH.Health = 0
+                    ActiveTick = tick()
+                end
+            end
+        end
     end
-    
-    if not VerifyTool("God's Chalice") and not VerifyTool("Fist of Darkness") and tick() - ActiveTick > 10 then
-      local plrH = Player and Player.Character and Player.Character:FindFirstChild("Humanoid")
-      if plrH then
-        plrH.Health = 0
-        ActiveTick = tick()
-      end
-    end
-  end
-end
+end)
 
 local Section = Other:AddSection({
     Name = "Rip Indra"
