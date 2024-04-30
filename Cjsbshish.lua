@@ -2191,13 +2191,13 @@ function topos(Pos)
     end
     local Tween = game:GetService("TweenService"):Create(Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear), {CFrame = Pos})
     Tween:Play()
-    if _G.StopTween == false then
+    if _G.StopTween then
         Tween:Cancel()
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
     end
 end
 
-function TelePPlayer(P)
+function TelePlayer(P)
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = P
 end
 
@@ -7632,15 +7632,24 @@ Player:AddToggle({
 	Name = "Spectate Player",
 	Default = false,
 	Callback = function(Value)
-		SpectatePlys = Value
-		local plr1 = game:GetService("Players").LocalPlayer.Character.Humanoid
-        local plr2 = game:GetService("Players"):FindFirstChild(_G.SelectPly)
-        repeat wait(.1)
-            game:GetService("Workspace").Camera.CameraSubject = game:GetService("Players"):FindFirstChild(_G.SelectPly).Character.Humanoid
-        until SpectatePlys == false 
-        game:GetService("Workspace").Camera.CameraSubject = game:GetService("Players").LocalPlayer.Character.Humanoid
+		_G.SpectatePlys = Value
 	end
 })
+
+spawn(function()
+	while wait() do
+		if _G.SpectatePlys then
+			pcall(function()
+				if game.Players:FindFirstChild(_G.SelectPly) then
+				    repeat wait(.1)
+				    	game:GetService("Workspace").Camera.CameraSubject = game:GetService("Players"):FindFirstChild(_G.SelectPly).Character.Humanoid
+					until _G.SpectatePlys == false
+					game:GetService("Workspace").Camera.CameraSubject = game:GetService("Players").LocalPlayer.Character.Humanoid
+				end
+			end)
+		end
+	end
+end)
 
 local Section = Player:AddSection({
     Name = "Haki State"
