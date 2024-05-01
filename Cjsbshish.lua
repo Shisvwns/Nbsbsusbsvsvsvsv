@@ -2181,7 +2181,10 @@ function topos(Pos)
         if not Player then return end
         return Player.Character:WaitForChild("HumanoidRootPart", 9)
     end
+    local Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    local Character = LocalPlayer.Character
     local Your = game.Players.LocalPlayer
+    local PartTele = Instance.new("Part", Character)
     args = {"requestEntrance", Pos}
     game.ReplicatedStorage.Remotes.CommF_:InvokeServer(unpack(args))
     oldcframe = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
@@ -2191,7 +2194,7 @@ function topos(Pos)
         Your.Character.PartTele.CFrame = WaitHRP(Your).CFrame 
     end
     task.wait()
-    local Tween = game:GetService("TweenService"):Create(LocalPlayer.Character.Instance.new("Part", LocalPlayer.Character), TweenInfo.new(Distance / getgenv().TweenSpeed, Enum.EasingStyle.Linear), {CFrame = Pos})
+    local Tween = game:GetService("TweenService"):Create(Character.PartTele, TweenInfo.new(Distance / getgenv().TweenSpeed, Enum.EasingStyle.Linear), {CFrame = Pos})
     Tween:Play()
 end
 
