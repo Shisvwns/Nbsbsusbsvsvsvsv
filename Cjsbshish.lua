@@ -5770,17 +5770,22 @@ Other:AddToggle({
 spawn(function()
     while wait() do
         if _G.AutoFarmChest then
-            pcall(function()
-                if game:GetService("Workspace"):FindFirstChild("Chest1") or game:GetService("Workspace"):FindFirstChild("Chest2") or game:GetService("Workspace"):FindFirstChild("Chest3") then
-                    for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
-                        if v.Name == "Chest1" or v.Name == "Chest2" or v.Name == "Chest3" then
-                            repeat wait()
-                                topos(v.CFrame)
-                            until not v.Parent or _G.AutoFarmChest == false
+            local ChestDistance = math.huge
+            local Chest = nil
+            local plrChar = Player and Player.Character and Player.Character.PrimaryPart
+            for _,v in pairs(workspace:GetChildren()) do
+                if v:IsA("BasePart") and v.Transparency < 1 then
+                    if v.Name == "Chest3" or v.Name == "Chest2" or v.Name == "Chest1" then
+                        if plrChar and (plrChar.Position - v.Position).Magnitude <= ChestDistance then
+                            ChestDistance = (plrChar.Position - v.Position).Magnitude
+                            Chest = v
                         end
                     end
                 end
-            end)
+            end
+            if Chest then
+                topos(Chest.CFrame)
+            end
         end
     end
 end)
@@ -9225,7 +9230,7 @@ Teleport:AddToggle({
                elseif _G.SelectIsland == "Beautiful Pirate" then
            	     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(5319, 23, -93))
        	     elseif _G.SelectIsland == "Floating Turtle" then
-          	      game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(5756, 610, -282))
+          	      game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-12001, 332, -8861))
         	    elseif _G.SelectIsland == "Mansion" then
              	   game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-12471, 374, -7551))
          	   elseif _G.SelectIsland == "Haunted Castle" then
