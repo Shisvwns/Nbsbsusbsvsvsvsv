@@ -2177,6 +2177,10 @@ function BTP(p)
 end
 
 function topos(aJ)
+    function WaitHRP(Player)
+        if not Player then return end
+        return Player.Character:WaitForChild("HumanoidRootPart", 9)
+    end
     local Your = game.Players.LocalPlayer
     args = {"requestEntrance", aJ}
     game.ReplicatedStorage.Remotes.CommF_:InvokeServer(unpack(args))
@@ -2187,6 +2191,8 @@ function topos(aJ)
         Your.Character.PartTele.CFrame = WaitHRP(Your).CFrame 
     end
     task.wait()
+    local Tween = game:GetService("TweenService"):Create(LocalPlayer.Character.Instance.new("Part", LocalPlayer.Character), TweenInfo.new(Distance / getgenv().TweenSpeed, Enum.EasingStyle.Linear), {CFrame = Pos})
+    Tween:Play()
 end
 
 function TelePlayer(P)
