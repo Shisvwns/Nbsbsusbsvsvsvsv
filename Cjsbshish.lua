@@ -1577,7 +1577,7 @@ function MaterialMon()
         MPos = CFrame.new(-4698,845,-1912)
         SP = "Default"
     if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(-7859.09814, 5544.19043, -381.476196)).Magnitude >= 5000 then
-        topos(Vector3.new(-7859.09814, 5544.19043, -381.476196))
+        RETeleport(Vector3.new(-7859.09814, 5544.19043, -381.476196))
     end
     elseif SelectMaterial == "Leather" then
     if World1 then
@@ -1617,7 +1617,7 @@ function MaterialMon()
         MPos = CFrame.new(61123,19,1569)
         SP = "Default"
     if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(61163.8515625, 5.342342376708984, 1819.7841796875)).Magnitude >= 17000 then
-        topos(Vector3.new(61163.8515625, 5.342342376708984, 1819.7841796875))
+        RETeleport(Vector3.new(61163.8515625, 5.342342376708984, 1819.7841796875))
     end
     end
     elseif SelectMaterial == "Demonic Wisp" then
@@ -2182,10 +2182,28 @@ function topos(Pos)
         return Player.Character:WaitForChild("HumanoidRootPart", 9)
     end
     local Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    local LocalPlayer = game.Players.LocalPlayer
     local Character = LocalPlayer.Character
-    local Your = game.Players.LocalPlayer
-    local PartTele = Instance.new("Part", Character)
-    args = {"requestEntrance", Pos}
+    if Character.Humanoid.Sit == true then Character.Humanoid.Sit = false end
+    if not Character:FindFirstChild("PartTele") then
+        local PartTele = Instance.new("Part", Character)
+        PartTele.Size = Vector3.new(0, 0, 0)
+        PartTele.Name = "PartTele"
+        PartTele.Anchored = true
+        PartTele.Transparency = 1
+        PartTele.CanCollide = false
+        PartTele.CFrame = WaitHRP(LocalPlayer).CFrame
+        PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
+            task.wait()
+            WaitHRP(LocalPlayer).CFrame = PartTele.CFrame
+        end)
+    end
+    local Tween = game:GetService("TweenService"):Create(Character.PartTele, TweenInfo.new(Distance / getgenv().TweenSpeed, Enum.EasingStyle.Linear), {CFrame = Pos})
+    Tween:Play()
+end
+
+function RETeleport(aJ)
+    args = {"requestEntrance", aJ}
     game.ReplicatedStorage.Remotes.CommF_:InvokeServer(unpack(args))
     oldcframe = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
     char = game.Players.LocalPlayer.Character.HumanoidRootPart
@@ -2193,9 +2211,7 @@ function topos(Pos)
     if Your.Character:FindFirstChild("PartTele") then
         Your.Character.PartTele.CFrame = WaitHRP(Your).CFrame 
     end
-    task.wait()
-    local Tween = game:GetService("TweenService"):Create(Character.PartTele, TweenInfo.new(Distance / getgenv().TweenSpeed, Enum.EasingStyle.Linear), {CFrame = Pos})
-    Tween:Play()
+    task.wait(0.01)
 end
 
 function TelePlayer(P)
@@ -4974,7 +4990,7 @@ spawn(function()
                     StartEctoplasmMagnet = false
                     local Distance = (Vector3.new(911.35827636719, 125.95812988281, 33159.5390625) - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
                     if Distance > 18000 then
-                        topos(Vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
+                        RETeleport(Vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
                     end
                     topos(CFrame.new(911.35827636719, 125.95812988281, 33159.5390625))
                 end
@@ -5761,22 +5777,17 @@ Other:AddToggle({
 spawn(function()
     while wait() do
         if _G.AutoFarmChest then
-            local ChestDistance = math.huge
-            local Chest = nil
-            local plrChar = Player and Player.Character and Player.Character.PrimaryPart
-            for _,v in pairs(workspace:GetChildren()) do
-                if v:IsA("BasePart") and v.Transparency < 1 then
-                    if v.Name == "Chest3" or v.Name == "Chest2" or v.Name == "Chest1" then
-                        if plrChar and (plrChar.Position - v.Position).Magnitude <= ChestDistance then
-                            ChestDistance = (plrChar.Position - v.Position).Magnitude
-                            Chest = v
+            pcall(function()
+                if game:GetService("Workspace"):FindFirstChild("Chest1") or game:GetService("Workspace"):FindFirstChild("Chest2") or game:GetService("Workspace"):FindFirstChild("Chest3") then
+                    for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
+                        if v.Name == "Chest1" or v.Name == "Chest2" or v.Name == "Chest3" then
+                            repeat wait()
+                                topos(v.CFrame)
+                            until not v.Parent or _G.AutoFarmChest == false
                         end
                     end
                 end
-            end
-            if Chest then
-                topos(Chest.CFrame)
-            end
+            end)
         end
     end
 end)
@@ -8217,8 +8228,8 @@ Race:AddButton({
 
 local PosTemplete = CFrame.new(28282.5703125, 14896.8505859375, 105.1042709350586)
 function Templeteleport()
-    topos(Vector3.new(28282.5703125, 14896.8505859375, 105.1042709350586))
-    topos(Vector3.new(28282.5703125, 14896.8505859375, 105.1042709350586))
+    RETeleport(Vector3.new(28282.5703125, 14896.8505859375, 105.1042709350586))
+    RETeleport(Vector3.new(28282.5703125, 14896.8505859375, 105.1042709350586))
 end
 
 Race:AddButton({
@@ -9155,15 +9166,15 @@ Teleport:AddToggle({
      	       elseif _G.SelectIsland == "Sky Island 1" then
     	            topos(CFrame.new(-4869.1025390625, 733.46051025391, -2667.0180664063))
      	       elseif _G.SelectIsland == "Sky Island 2" then
-     	           topos(Vector3.new(-4652, 873, -1754))
+     	           RETeleport(Vector3.new(-4652, 873, -1754))
        	     elseif _G.SelectIsland == "Sky Island 3" then
-      	          topos(Vector3.new(-7895, 5547, -380))
+      	          RETeleport(Vector3.new(-7895, 5547, -380))
      	       elseif _G.SelectIsland == "Prison" then
        	         topos(CFrame.new(4875.330078125, 5.6519818305969, 734.85021972656))
       	      elseif _G.SelectIsland == "Magma Village" then
        	         topos(CFrame.new(-5247.7163085938, 12.883934020996, 8504.96875))
      	       elseif _G.SelectIsland == "Under Water Island" then
-       	         topos(Vector3.new(61164, 5, 1820))
+       	         RETeleport(Vector3.new(61164, 5, 1820))
     	        elseif _G.SelectIsland == "Fountain City" then
      	           topos(CFrame.new(5127.1284179688, 59.501365661621, 4105.4458007813))
    	         elseif _G.SelectIsland == "Shank Room" then
@@ -9181,9 +9192,9 @@ Teleport:AddToggle({
      	       elseif _G.SelectIsland == "Dark Area" then
     	            topos(CFrame.new(3780.0302734375, 22.652164459229, -3498.5859375))
      	       elseif _G.SelectIsland == "Flamingo Mansion" then
-       	         topos(Vector3.new(-317, 331, 597))
+       	         RETeleport(Vector3.new(-317, 331, 597))
       	      elseif _G.SelectIsland == "Flamingo Room" then
-           	     topos(Vector3.new(2283, 15, 867))
+           	     RETeleport(Vector3.new(2283, 15, 867))
       	      elseif _G.SelectIsland == "Green Zone" then
             	    topos(CFrame.new(-2448.5300292969, 73.016105651855, -3210.6306152344))
 	            elseif _G.SelectIsland == "Factory" then
@@ -9191,13 +9202,13 @@ Teleport:AddToggle({
     	        elseif _G.SelectIsland == "Colossuim" then
         	        topos(CFrame.new(-1503.6224365234, 219.7956237793, 1369.3101806641))
        	     elseif _G.SelectIsland == "Zombie Island" then
-       	         topos(Vector3.new(-6509, 83, -133))
+       	         RETeleport(Vector3.new(-6509, 83, -133))
        	     elseif _G.SelectIsland == "Two Snow Mountain" then
           	      topos(CFrame.new(753.14288330078, 408.23559570313, -5274.6147460938))
       	      elseif _G.SelectIsland == "Punk Hazard" then
         	        topos(CFrame.new(-6127.654296875, 15.951762199402, -5040.2861328125))
       	      elseif _G.SelectIsland == "Cursed Ship" then
-          	      topos(Vector3.new(923.40197753906, 125.05712890625, 32885.875))
+          	      RETeleport(Vector3.new(923.40197753906, 125.05712890625, 32885.875))
       	      elseif _G.SelectIsland == "Ice Castle" then
            	     topos(CFrame.new(6148.4116210938, 294.38687133789, -6741.1166992188))
         	    elseif _G.SelectIsland == "Forgotten Island" then
@@ -9209,21 +9220,21 @@ Teleport:AddToggle({
      	       elseif _G.SelectIsland == "Great Tree" then
              	   topos(CFrame.new(2681.2736816406, 1682.8092041016, -7190.9853515625))
        	     elseif _G.SelectIsland == "Castle On The Sea" then
-           	     topos(Vector3.new(-5092, 315, -3130))
+           	     RETeleport(Vector3.new(-5092, 315, -3130))
            	 elseif _G.SelectIsland == "MiniSky" then
         	        topos(CFrame.new(-260.65557861328, 49325.8046875, -35253.5703125))
         	    elseif _G.SelectIsland == "Port Town" then
           	      topos(CFrame.new(-290.7376708984375, 6.729952812194824, 5343.5537109375))
         	    elseif _G.SelectIsland == "Hydra Island" then
-           	     topos(Vector3.new(5756, 610, -282))
+           	     RETeleport(Vector3.new(5756, 610, -282))
         	    elseif _G.SelectIsland == "Beautiful Pirate" then
-           	     topos(Vector3.new(5319, 23, -93))
+           	     RETeleport(Vector3.new(5319, 23, -93))
                elseif _G.SelectIsland == "Beautiful Pirate" then
-           	     topos(Vector3.new(5319, 23, -93))
+           	     RETeleport(Vector3.new(5319, 23, -93))
        	     elseif _G.SelectIsland == "Floating Turtle" then
-          	      topos(Vector3.new(-12001, 332, -8861))
+          	      RETeleport(Vector3.new(-12001, 332, -8861))
         	    elseif _G.SelectIsland == "Mansion" then
-             	   topos(Vector3.new(-12471, 374, -7551))
+             	   RETeleport(Vector3.new(-12471, 374, -7551))
          	   elseif _G.SelectIsland == "Haunted Castle" then
           	      topos(CFrame.new(-9515.3720703125, 164.00624084473, 5786.0610351562))
         	    elseif _G.SelectIsland == "Ice Cream Island" then
