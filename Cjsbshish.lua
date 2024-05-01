@@ -2176,13 +2176,13 @@ function BTP(p)
     end)
 end
 
-function topos(aJ)
+function topos(Pos)
     function WaitHRP(Player)
         if not Player then return end
         return Player.Character:WaitForChild("HumanoidRootPart", 9)
     end
     local Your = game.Players.LocalPlayer
-    args = {"requestEntrance", aJ}
+    args = {"requestEntrance", Pos}
     game.ReplicatedStorage.Remotes.CommF_:InvokeServer(unpack(args))
     oldcframe = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
     char = game.Players.LocalPlayer.Character.HumanoidRootPart
