@@ -2176,11 +2176,12 @@ function BTP(p)
     end)
 end
 
+function WaitHRP(Player)
+    if not Player then return end
+    return Player.Character:WaitForChild("HumanoidRootPart", 9)
+end
+
 function topos(Pos)
-    function WaitHRP(Player)
-        if not Player then return end
-        return Player.Character:WaitForChild("HumanoidRootPart", 9)
-    end
     local Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
     local LocalPlayer = game.Players.LocalPlayer
     local Character = LocalPlayer.Character
@@ -2207,7 +2208,7 @@ function RETeleport(aJ)
     game.ReplicatedStorage.Remotes.CommF_:InvokeServer(unpack(args))
     oldcframe = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
     char = game.Players.LocalPlayer.Character.HumanoidRootPart
-    char.CFrame = CFrame.new(oldcframe.X, oldcframe.Y + 50, oldcframe.Z)
+    char.CFrame = CFrame.new(oldcframe.X, oldcframe.Y, oldcframe.Z)
     if Your.Character:FindFirstChild("PartTele") then
         Your.Character.PartTele.CFrame = WaitHRP(Your).CFrame 
     end
