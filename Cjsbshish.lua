@@ -2201,18 +2201,22 @@ function topos(Pos)
     end
     local Tween = game:GetService("TweenService"):Create(Character.PartTele, TweenInfo.new(Distance / getgenv().TweenSpeed, Enum.EasingStyle.Linear), {CFrame = Pos})
     Tween:Play()
+    if _G.StopTween == true then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
+    end
 end
 
 function RETeleport(aJ)
     args = {"requestEntrance", aJ}
     game.ReplicatedStorage.Remotes.CommF_:InvokeServer(unpack(args))
+    local Your = game.Players.LocalPlayer
     oldcframe = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
     char = game.Players.LocalPlayer.Character.HumanoidRootPart
     char.CFrame = CFrame.new(oldcframe.X, oldcframe.Y, oldcframe.Z)
     if Your.Character:FindFirstChild("PartTele") then
         Your.Character.PartTele.CFrame = WaitHRP(Your).CFrame 
     end
-    task.wait(0.01)
+    task.wait()
 end
 
 function TelePlayer(P)
@@ -9221,7 +9225,7 @@ Teleport:AddToggle({
      	       elseif _G.SelectIsland == "Great Tree" then
              	   topos(CFrame.new(2681.2736816406, 1682.8092041016, -7190.9853515625))
        	     elseif _G.SelectIsland == "Castle On The Sea" then
-           	     RETeleport(Vector3.new(-5092, 315, -3130))
+           	     RETeleport(Vector3.new(-5071.82324,314.858734,-3150.69922))
            	 elseif _G.SelectIsland == "MiniSky" then
         	        topos(CFrame.new(-260.65557861328, 49325.8046875, -35253.5703125))
         	    elseif _G.SelectIsland == "Port Town" then
