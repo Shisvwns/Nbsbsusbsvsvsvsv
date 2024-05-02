@@ -786,7 +786,7 @@ function WaitHRP(Player)
     return Player.Character:WaitForChild("HumanoidRootPart", 9)
 end
 
-function topos(Pos)
+function Tween(Pos)
     local Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
     local LocalPlayer = game.Players.LocalPlayer
     local Character = LocalPlayer.Character
@@ -1455,7 +1455,7 @@ game:GetService("Players").LocalPlayer.Idled:connect(function()
     game:GetService("VirtualUser"):Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
 end)
 
-local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/HuyLocDz/Ui/main/Ui')))()
+local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/HuyLocDz/Ui/main/OrionUi.lua"))()
 local Window = OrionLib:MakeWindow({Name = "Tinh Linh Hub", HidePremium = false,IntroText = "Tinh Linh Hub Library", SaveConfig = true, ConfigFolder = "Tinh Linh Hub"})
 
 OrionLib:MakeNotification({
