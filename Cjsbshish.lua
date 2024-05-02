@@ -5758,33 +5758,6 @@ spawn(function()
     end
 end)
 
-Other:AddToggle({
-	Name = "Auto Farm Chest [ Tween ]",
-	Default = false,
-	Callback = function(Value)
-		_G.AutoFarmChest = Value
-		StopTween(_G.AutoFarmChest)
-	end
-})
-
-spawn(function()
-    while wait() do
-        if _G.AutoFarmChest then
-            pcall(function()
-                if game:GetService("Workspace"):FindFirstChild("Chest1") or game:GetService("Workspace"):FindFirstChild("Chest2") or game:GetService("Workspace"):FindFirstChild("Chest3") then
-                    for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
-                        if v.Name == "Chest1" or v.Name == "Chest2" or v.Name == "Chest3" then
-                            repeat wait()
-                                topos(v.CFrame)
-                            until not v.Parent or _G.AutoFarmChest == false
-                        end
-                    end
-                end
-            end)
-        end
-    end
-end)
-
 local Section = Other:AddSection({
     Name = "Rip Indra"
 })
