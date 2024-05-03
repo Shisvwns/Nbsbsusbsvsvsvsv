@@ -9362,7 +9362,7 @@ function Abbreviate(x)
     local digits = math.floor(math.log10(x)) + 1
     local index = math.min(#abbreviations, math.floor((digits - 1) / 3))
     local front = x / math.pow(10, index * 3)
-    return string.format("%i%s", front, abbreviations[index])
+    return string.format("%i%s+", front, abbreviations[index])
 end
 function getFruitDealerCountdown()
     local defaulttime = 7200
@@ -9388,7 +9388,7 @@ function getFruitDealerCountdown()
                 "GetFruits",
                 true
             )
-        }
+    }
     }
     fruitstocks.Normal = ""
     fruitstocks.Mirage = ""
@@ -9403,9 +9403,9 @@ function getFruitDealerCountdown()
                                 N = N:split("-")[1]
                             end
                             if v.l then 
-                                fruitstocks.Mirage = fruitstocks.Mirage..N.." : "..Abbreviate(n.Price).."\n"
+                                fruitstocks.Mirage = fruitstocks.Mirage..N..": "..Abbreviate(n.Price).."\n"
                             else
-                                fruitstocks.Normal = fruitstocks.Normal..N.." : "..Abbreviate(n.Price).."\n"
+                                fruitstocks.Normal = fruitstocks.Normal..N..": "..Abbreviate(n.Price).."\n"
                             end
                         end 
                     end
@@ -9413,8 +9413,8 @@ function getFruitDealerCountdown()
             end
         end
     end
-    ren.Text1 = "Normal Dealer re-stock in "..ren.TimeNormalDealer
-    ren.Text2 = "Mirage Dealer re-stock in "..ren.TimeMirageDealer
+    ren.Text1 = "Normal Dealer Re-Stock In "..ren.TimeNormalDealer
+    ren.Text2 = "Mirage Dealer Re-Stock In "..ren.TimeMirageDealer
     ren.Stocks = fruitstocks
     return ren
 end
@@ -9425,7 +9425,7 @@ local NormalStock = StatusServer:AddParagraph("Normal Stock")
 spawn(function()
     while task.wait() do
         pcall(function()
-            NormalStock:Set(geti.Stocks.Normal)
+            NormalStock:Set(geti.Stocks.Normal..ren.Text1)
         end)
     end
 end)
@@ -9435,7 +9435,7 @@ local MirageStock = StatusServer:AddParagraph("Mirage Island Stock")
 spawn(function()
     while task.wait() do
         pcall(function()
-            MirageStock:Set(geti.Stocks.Mirage)
+            MirageStock:Set(geti.Stocks.Mirage..ren.Text2)
         end)
     end
 end)
