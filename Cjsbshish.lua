@@ -9066,7 +9066,7 @@ if World2 then
 Teleport:AddDropdown({
     Name = "Select Island",
     Default = "",
-    Options = {"The Cafe","Frist Spot","Dark Area","Flamingo Mansion","Flamingo Room","Green Zone","Factory","Colossuim","Zombie Island","Raid Lab","Two Snow Mountains","Punk Hazard","Cursed Ship","Ice Castle","Forgotten Island","Ussop Island","Mini Sky Island"},
+    Options = {"The Cafe","Mansion","Frist Spot","Dark Area","Flamingo Mansion","Flamingo Room","Green Zone","Factory","Colossuim","Zombie Island","Raid Lab","Two Snow Mountains","Punk Hazard","Cursed Ship","Ice Castle","Forgotten Island","Ussop Island","Mini Sky Island"},
     Callback = function(Value)
 		_G.SelectIsland = Value
 	end
@@ -9077,7 +9077,7 @@ if World3 then
 Teleport:AddDropdown({
     Name = "Select Island",
     Default = "",
-    Options = {"Mansion","Port Town","Great Tree","Castle On The Sea","Raid Lab ","MiniSky", "Hydra Island","Beautiful Pirate","Floating Turtle","Haunted Castle","Ice Cream Island","Peanut Island","Cake Island","Cocoa Island","Candy Island","Tiki Outpost"},
+    Options = {"Mansion","Port Town","Great Tree","Castle On The Sea","Raid Lab","MiniSky", "Hydra Island","Beautiful Pirate","Floating Turtle","Haunted Castle","Ice Cream Island","Peanut Island","Cake Island","Cocoa Island","Candy Island","Tiki Outpost"},
     Callback = function(Value)
 		_G.SelectIsland = Value
 	end
@@ -9127,13 +9127,13 @@ Teleport:AddToggle({
   	              topos(CFrame.new(-1442.16553, 29.8788261, -28.3547478))
  	           elseif _G.SelectIsland == "Mob Island" then
     	            topos(CFrame.new(-2850.20068, 7.39224768, 5354.99268))
-     	       elseif _G.SelectIsland == "Raid Lab" then
-      	          topos(CFrame.new(-6438.73535, 250.645355, -4501.50684))
-      	      elseif _G.SelectIsland == "Raid Lab " then
-     	           topos(CFrame.new(-5017.40869, 314.844055, -2823.0127, -0.925743818, 4.48217499e-08, -0.378151238, 4.55503146e-09, 1, 1.07377559e-07, 0.378151238, 9.7681621e-08, -0.925743818))
+      	      elseif _G.SelectIsland == "Raid Lab" then
+      	 	 	if World3 then	
+     	         	  topos(CFrame.new(-5017.40869, 314.844055, -2823.0127, -0.925743818, 4.48217499e-08, -0.378151238, 4.55503146e-09, 1, 1.07377559e-07, 0.378151238, 9.7681621e-08, -0.925743818))
+   				elseif World2 then
+						topos(CFrame.new(-6438.73535, 250.645355, -4501.50684))
+   				end
         	    elseif _G.SelectIsland == "The Cafe" then
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-281.93707275390625, 306.130615234375, 609.280029296875))
-                    wait(0.1)
                     topos(CFrame.new(-380.47927856445, 77.220390319824, 255.82550048828))
         	    elseif _G.SelectIsland == "Frist Spot" then
      	           topos(CFrame.new(-11.311455726624, 29.276733398438, 2771.5224609375))
@@ -9182,7 +9182,11 @@ Teleport:AddToggle({
        	     elseif _G.SelectIsland == "Floating Turtle" then
           	      game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-12001, 332, -8861))
         	    elseif _G.SelectIsland == "Mansion" then
-             	   game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-12471.169921875, 374.94024658203, -7551.677734375))
+      	 	 	if World3 then	
+     	         	  game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-12471.169921875, 374.94024658203, -7551.677734375))
+   				elseif World2 then
+						game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-281.93707275390625, 306.130615234375, 609.280029296875))
+   				end
          	   elseif _G.SelectIsland == "Haunted Castle" then
           	      topos(CFrame.new(-9515.3720703125, 164.00624084473, 5786.0610351562))
         	    elseif _G.SelectIsland == "Ice Cream Island" then
@@ -9425,7 +9429,7 @@ local NormalStock = StatusServer:AddParagraph("Normal Stock")
 spawn(function()
     while task.wait() do
         pcall(function()
-            NormalStock:Set(geti.Stocks.Normal..ren.Text1)
+            NormalStock:Set(geti.Stocks.Normal)
         end)
     end
 end)
@@ -9435,7 +9439,7 @@ local MirageStock = StatusServer:AddParagraph("Mirage Island Stock")
 spawn(function()
     while task.wait() do
         pcall(function()
-            MirageStock:Set(geti.Stocks.Mirage..ren.Text2)
+            MirageStock:Set(geti.Stocks.Mirage)
         end)
     end
 end)
