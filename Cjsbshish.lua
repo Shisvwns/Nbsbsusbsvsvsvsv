@@ -2185,7 +2185,6 @@ function topos(Pos)
     local Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
     local LocalPlayer = game.Players.LocalPlayer
     local Character = LocalPlayer.Character
-    if Character.Humanoid.Sit == true then Character.Humanoid.Sit = false end
     if not Character:FindFirstChild("PartTele") then
         local PartTele = Instance.new("Part", Character)
         PartTele.Size = Vector3.new(0, 0, 0)
@@ -2759,7 +2758,7 @@ end
 local CheckWeapon1 = Farm:AddDropdown({
 	Name = "Select Weapon",
 	Default = "Melee",
-	Options = {"Melee","Sword","Gun","Devil Fruit"},
+	Options = {"Melee","Sword","Gun","Blox Fruit"},
 	Callback = function(Value)
 		SelectWeapon = Value
 	end
@@ -2768,33 +2767,9 @@ local CheckWeapon1 = Farm:AddDropdown({
 spawn(function()
 	while task.wait() do
 		pcall(function()
-			if SelectWeapon == "Melee" then
+			if SelectWeapon == SelectWeapon then
 				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Melee" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.SelectWeapon = v.Name
-						end
-					end
-				end
-			elseif SelectWeapon == "Sword" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Sword" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.SelectWeapon = v.Name
-						end
-					end
-				end
-			elseif SelectWeapon == "Gun" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Gun" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.SelectWeapon = v.Name
-						end
-					end
-				end
-			elseif SelectWeapon == "Devil Fruit" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Blox Fruit" then
+					if v.ToolTip == SelectWeapon then
 						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
 							_G.SelectWeapon = v.Name
 						end
