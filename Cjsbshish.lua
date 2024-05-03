@@ -8161,22 +8161,18 @@ local Section = Race:AddSection({
 })
 
 function CheckRace()
-local a = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Wenlocktoad","1")
-local b = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Alchemist","1")
-
-if game.Players.LocalPlayer.Character:FindFirstChild("RaceTransformed") then
-return game:GetService("Players").LocalPlayer.Data.Race.Value.." V4"
-end
-
-if a == -2 then
-return game:GetService("Players").LocalPlayer.Data.Race.Value.." V3"
-end
-
-if b == -2 then
-return game:GetService("Players").LocalPlayer.Data.Race.Value.." V2"
-end
-
-return game:GetService("Players").LocalPlayer.Data.Race.Value.." V1"
+    local a = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Wenlocktoad","1")
+    local b = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Alchemist","1")
+    if game.Players.LocalPlayer.Character:FindFirstChild("RaceTransformed") then
+        return game:GetService("Players").LocalPlayer.Data.Race.Value.." V4"
+    end
+    if a == -2 then
+        return game:GetService("Players").LocalPlayer.Data.Race.Value.." V3"
+    end
+    if b == -2 then
+        return game:GetService("Players").LocalPlayer.Data.Race.Value.." V2"
+    end
+    return game:GetService("Players").LocalPlayer.Data.Race.Value.." V1"
 end
 
 local PosTemplete = CFrame.new(28282.5703125, 14896.8505859375, 105.1042709350586)
@@ -8222,7 +8218,7 @@ function PullLever()
     local bp = 0.2
     if game:GetService("Workspace").Map["Temple of Time"].Lever.Lever.CFrame.Z > bo.Z + bp or game:GetService("Workspace").Map["Temple of Time"].Lever.Lever.CFrame.Z < bo.Z - bp then
         CheckAndTweenTemple()
-        topos(game:GetService("Workspace").Map["Temple of Time"].Lever.Part.CFrame)
+        topos(CFrame.new(28575.181640625, 14936.6279296875, 72.31636810302734))
         for r, v in pairs(game:GetService("Workspace").Map["Temple of Time"].Lever:GetDescendants()) do
             if v.Name == "ProximityPrompt" then
                 fireproximityprompt(v)
@@ -8236,8 +8232,10 @@ Race:AddButton({
     Callback = function()
         if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - PosTemplete.Position).Magnitude > 1000 then
             Templeteleport()
+            wait(0.3)
+            topos(CFrame.new(29551.9941, 15069.002, -85.5179291))
         elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - PosTemplete.Position).Magnitude < 1000 then
-            wait(0.5)
+            wait(0.1)
       	  topos(CFrame.new(29551.9941, 15069.002, -85.5179291))
         end
     end
@@ -8248,39 +8246,42 @@ Race:AddButton({
     Callback = function()
         if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - PosTemplete.Position).Magnitude > 1000 then
             Templeteleport()
+            wait(0.3)
+            topos(CFrame.new(28973.0879, 14889.9756, -120.298691))
         elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - PosTemplete.Position).Magnitude < 1000 then
-            wait(0.2)
+            wait(0.1)
             topos(CFrame.new(28973.0879, 14889.9756, -120.298691))
         end
     end
 })
 
+function RaceDoors()
+    if game:GetService("Players").LocalPlayer.Data.Race.Value == "Fishman" then
+        topos(CFrame.new(28224.056640625, 14889.4267578125, -210.5872039794922))
+    elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Human" then
+        topos(CFrame.new(29237.294921875, 14889.4267578125, -206.94955444335938))
+    elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Cyborg" then
+        topos(CFrame.new(28492.4140625, 14894.4267578125, -422.1100158691406))
+    elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Skypiea" then
+        topos(CFrame.new(28967.408203125, 14918.0751953125, 234.31198120117188))
+    elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Ghoul" then
+        topos(CFrame.new(28672.720703125, 14889.1279296875, 454.5961608886719))
+    elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Mink" then
+        topos(CFrame.new(29020.66015625, 14889.4267578125, -379.2682800292969))
+    end
+end
+    
+
 Race:AddButton({
-    Name = "Teleport To Doors Trial",
+    Name = "Teleport To Race Doors",
     Callback = function()
         if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - PosTemplete.Position).Magnitude > 1000 then
             Templeteleport()
+            wait(0.3)
+            RaceDoors()
         elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - PosTemplete.Position).Magnitude < 1000 then
             wait(0.1)
-            if game:GetService("Players").LocalPlayer.Data.Race.Value == "Fishman" then
-                wait(0.01)
-                topos(CFrame.new(28224.056640625, 14889.4267578125, -210.5872039794922))
-            elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Human" then
-                wait(0.01)
-                topos(CFrame.new(29237.294921875, 14889.4267578125, -206.94955444335938))
-            elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Cyborg" then
-                wait(0.01)
-                topos(CFrame.new(28492.4140625, 14894.4267578125, -422.1100158691406))
-            elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Skypiea" then
-                wait(0.01)
-                topos(CFrame.new(28967.408203125, 14918.0751953125, 234.31198120117188))
-            elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Ghoul" then
-                wait(0.01)
-                topos(CFrame.new(28672.720703125, 14889.1279296875, 454.5961608886719))
-            elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Mink" then
-                wait(0.01)
-                topos(CFrame.new(29020.66015625, 14889.4267578125, -379.2682800292969))
-            end
+            RaceDoors()
         end
     end
 })
