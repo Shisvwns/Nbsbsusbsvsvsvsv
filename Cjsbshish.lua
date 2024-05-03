@@ -8179,6 +8179,19 @@ end
 return game:GetService("Players").LocalPlayer.Data.Race.Value.." V1"
 end
 
+local PosTemplete = CFrame.new(28282.5703125, 14896.8505859375, 105.1042709350586)
+function Templeteleport()
+    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(28282.5703125, 14896.8505859375, 105.1042709350586))
+end
+function CheckAndTweenTemple()
+    if (PosTemplete.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 1200 then
+        Templeteleport()
+    end
+    if (PosTemplete.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 1200 then
+        Templeteleport()
+    end
+end
+
 local CRace = Race:AddParagraph("Your Race")
 
 spawn(function()
@@ -8196,23 +8209,27 @@ Race:AddButton({
     end
 })
 
-local PosTemplete = CFrame.new(28282.5703125, 14896.8505859375, 105.1042709350586)
-function Templeteleport()
-    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(28282.5703125, 14896.8505859375, 105.1042709350586))
-    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(28282.5703125, 14896.8505859375, 105.1042709350586))
-end
-
 Race:AddButton({
-    Name = "Teleport To Pull Lever",
+    Name = "Pull Lever",
     Callback = function()
-        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - PosTemplete.Position).Magnitude > 1000 then
-            Templeteleport()
-        elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - PosTemplete.Position).Magnitude < 1000 then
-            wait(0.2)
-            topos(CFrame.new(28575.181640625, 14936.6279296875, 72.31636810302734))
-        end
+        PullLever()
     end
 })
+
+function PullLever()
+    local bn=CFrame.new(28576.4688,14939.2832,76.5164413,-1,0,0,0,0.707134247,-0.707079291,-0,-0.707079291,-0.707134247)
+    local bo=CFrame.new(28576.4688,14935.9512,75.469101,-1,-4.22219593e-08,1.13133396e-08,0,-0.258819044,-0.965925813,4.37113883e-08,-0.965925813,0.258819044)
+    local bp = 0.2
+    if game:GetService("Workspace").Map["Temple of Time"].Lever.Lever.CFrame.Z > bo.Z + bp or game:GetService("Workspace").Map["Temple of Time"].Lever.Lever.CFrame.Z < bo.Z - bp then
+        CheckAndTweenTemple()
+        topos(game:GetService("Workspace").Map["Temple of Time"].Lever.Part.CFrame)
+        for r, v in pairs(game:GetService("Workspace").Map["Temple of Time"].Lever:GetDescendants()) do
+            if v.Name == "ProximityPrompt" then
+                fireproximityprompt(v)
+            end
+        end
+    end
+end
 
 Race:AddButton({
     Name = "Teleport To Clock",
@@ -8519,7 +8536,7 @@ end)
 Race:AddDropdown({
 	Name = "Select Weapon Kill Players Trials",
 	Default = "Melee",
-	Options = {"Melee","Sword","Gun","Devil Fruit"},
+	Options = {"Melee","Sword","Gun","Blox Fruit"},
 	Callback = function(Value)
 		SelectWeaponTrials = Value
 	end
@@ -9066,7 +9083,7 @@ if World2 then
 Teleport:AddDropdown({
     Name = "Select Island",
     Default = "",
-    Options = {"The Cafe","Mansion","Frist Spot","Dark Area","Flamingo Mansion","Flamingo Room","Green Zone","Factory","Colossuim","Zombie Island","Raid Lab","Two Snow Mountains","Punk Hazard","Cursed Ship","Ice Castle","Forgotten Island","Ussop Island","Mini Sky Island"},
+    Options = {"The Cafe","Frist Spot","Dark Area","Flamingo Mansion","Flamingo Room","Green Zone","Factory","Colossuim","Zombie Island","Raid Lab","Two Snow Mountains","Punk Hazard","Cursed Ship","Ice Castle","Forgotten Island","Ussop Island","Mini Sky Island"},
     Callback = function(Value)
 		_G.SelectIsland = Value
 	end
@@ -9128,7 +9145,7 @@ Teleport:AddToggle({
  	           elseif _G.SelectIsland == "Mob Island" then
     	            topos(CFrame.new(-2850.20068, 7.39224768, 5354.99268))
       	      elseif _G.SelectIsland == "Raid Lab" then
-      	 	 	if World3 then	
+      	 	 	if World3 then
      	         	  topos(CFrame.new(-5017.40869, 314.844055, -2823.0127, -0.925743818, 4.48217499e-08, -0.378151238, 4.55503146e-09, 1, 1.07377559e-07, 0.378151238, 9.7681621e-08, -0.925743818))
    				elseif World2 then
 						topos(CFrame.new(-6438.73535, 250.645355, -4501.50684))
@@ -9140,7 +9157,7 @@ Teleport:AddToggle({
      	       elseif _G.SelectIsland == "Dark Area" then
     	            topos(CFrame.new(3780.0302734375, 22.652164459229, -3498.5859375))
      	       elseif _G.SelectIsland == "Flamingo Mansion" then
-       	         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-317, 331, 597))
+       	         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-281.93707275390625, 306.130615234375, 609.280029296875))
       	      elseif _G.SelectIsland == "Flamingo Room" then
            	     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(2283, 15, 867))
       	      elseif _G.SelectIsland == "Green Zone" then
@@ -9182,11 +9199,7 @@ Teleport:AddToggle({
        	     elseif _G.SelectIsland == "Floating Turtle" then
           	      game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-12001, 332, -8861))
         	    elseif _G.SelectIsland == "Mansion" then
-      	 	 	if World3 then	
-     	         	  game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-12471.169921875, 374.94024658203, -7551.677734375))
-   				elseif World2 then
-						game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-281.93707275390625, 306.130615234375, 609.280029296875))
-   				end
+     	     	  game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-12471.169921875, 374.94024658203, -7551.677734375))
          	   elseif _G.SelectIsland == "Haunted Castle" then
           	      topos(CFrame.new(-9515.3720703125, 164.00624084473, 5786.0610351562))
         	    elseif _G.SelectIsland == "Ice Cream Island" then
