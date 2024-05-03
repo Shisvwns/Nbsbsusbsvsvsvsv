@@ -8209,6 +8209,12 @@ Race:AddButton({
     Name = "Pull Lever",
     Callback = function()
         PullLever()
+        OrionLib:MakeNotification({
+			Name = "Tinh Linh Hub",
+			Content = "Pull Lever Complete !",
+			Image = "rbxassetid://16730867128",
+			Time = 5
+		})
     end
 })
 
@@ -8219,6 +8225,8 @@ function PullLever()
     if game:GetService("Workspace").Map["Temple of Time"].Lever.Lever.CFrame.Z > bo.Z + bp or game:GetService("Workspace").Map["Temple of Time"].Lever.Lever.CFrame.Z < bo.Z - bp then
         CheckAndTweenTemple()
         topos(CFrame.new(28575.181640625, 14936.6279296875, 72.31636810302734))
+        wait(0.01)
+        topos(game:GetService("Workspace").Map["Temple of Time"].Lever.Part.CFrame)
         for r, v in pairs(game:GetService("Workspace").Map["Temple of Time"].Lever:GetDescendants()) do
             if v.Name == "ProximityPrompt" then
                 fireproximityprompt(v)
