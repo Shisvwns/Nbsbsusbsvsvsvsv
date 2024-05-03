@@ -8528,33 +8528,9 @@ Race:AddDropdown({
 spawn(function()
 	while task.wait() do
 		pcall(function()
-			if SelectWeaponTrials == "Melee" then
+			if SelectWeaponTrials == SelectWeaponTrials then
 				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Melee" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.SelectWeaponTrials = v.Name
-						end
-					end
-				end
-			elseif SelectWeaponTrials == "Sword" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Sword" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.SelectWeaponTrials = v.Name
-						end
-					end
-				end
-			elseif SelectWeaponTrials == "Gun" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Gun" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.SelectWeaponTrials = v.Name
-						end
-					end
-				end
-			elseif SelectWeaponTrials == "Devil Fruit" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Blox Fruit" then
+					if v.ToolTip == SelectWeaponTrials then
 						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
 							_G.SelectWeaponTrials = v.Name
 						end
@@ -9357,6 +9333,110 @@ spawn(function()
         else
             Frozen:Set("Frozen Dimension: 🔴")
         end
+    end
+end)
+
+local Section = StatusServer:AddSection({
+    Name = "Devil Fruit Stock"
+})
+
+function Abbreviate(x)
+    local abbreviations = {
+        "K", -- 4 digits
+        "M", -- 7 digits
+        "B", -- 10 digits
+        "T", -- 13 digits
+        "QD", -- 16 digits
+        "QT", -- 19 digits
+        "SXT", -- 22 digits
+        "SEPT", -- 25 digits
+        "OCT", -- 28 digits
+        "NON", -- 31 digits
+        "DEC", -- 34 digits
+        "UDEC", -- 37 digits
+        "DDEC" -- 40 digits
+    }
+    if x < 1000 then
+        return tostring(x)
+    end
+    local digits = math.floor(math.log10(x)) + 1
+    local index = math.min(#abbreviations, math.floor((digits - 1) / 3))
+    local front = x / math.pow(10, index * 3)
+    return string.format("%i%s", front, abbreviations[index])
+end
+function getFruitDealerCountdown()
+    local defaulttime = 7200
+    local dpersent = os.time() % defaulttime;
+    local real1 = defaulttime - dpersent;
+    defaulttime = defaulttime * 2
+    local d2persent = os.time() % defaulttime;
+    local real2 = defaulttime - dpersent;
+    local ren = {
+        TimeNormalDealer = string.format("%d:%02d:%02d:%02d", math.floor(real1 / 86400), math.floor(real1 % 86400 / 3600), math.floor(real1 % 3600 / 60), (math.floor(real1 % 60))),
+        TimeMirageDealer = string.format("%d:%02d:%02d:%02d", math.floor(real2 / 86400), math.floor(real2 % 86400 / 3600), math.floor(real2 % 3600 / 60), (math.floor(real2 % 60))),
+    }
+    local fruitstocks = {
+        a = {
+            ks = game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(
+                "GetFruits",
+                false 
+                )   
+        },
+        b = {
+            l = true,
+            ks = game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(
+                "GetFruits",
+                true
+            )
+        }
+    }
+    fruitstocks.Normal = ""
+    fruitstocks.Mirage = ""
+    for i,v in pairs(fruitstocks) do
+        if type(v) == "table" then  
+            for _,n3 in pairs(v) do 
+                if typeof(n3) == "table" then 
+                    for __,n in pairs(n3) do 
+                        if n.OnSale then 
+                            local N = n.Name 
+                            if N:split("-")[1] == N:split("-")[2] then 
+                                N = N:split("-")[1]
+                            end
+                            if v.l then 
+                                fruitstocks.Mirage = fruitstocks.Mirage..N.." : "..Abbreviate(n.Price).."\n"
+                            else
+                                fruitstocks.Normal = fruitstocks.Normal..N.." : "..Abbreviate(n.Price).."\n"
+                            end
+                        end 
+                    end
+                end
+            end
+        end
+    end
+    ren.Text1 = "Normal Dealer re-stock in "..ren.TimeNormalDealer
+    ren.Text2 = "Mirage Dealer re-stock in "..ren.TimeMirageDealer
+    ren.Stocks = fruitstocks
+    return ren
+end
+local geti = getFruitDealerCountdown()
+
+local NormalStock = StatusServer:AddParagraph("Normal Stock")
+
+spawn(function()
+    while task.wait() do
+        pcall(function()
+            NormalStock:Set(geti.Stocks.Normal)
+        end)
+    end
+end)
+
+local MirageStock = StatusServer:AddParagraph("Mirage Island Stock")
+
+spawn(function()
+    while task.wait() do
+        pcall(function()
+            MirageStock:Set(geti.Stocks.Mirage)
+        end)
     end
 end)
 
