@@ -2203,7 +2203,6 @@ function topos(Pos)
     Tween:Play()
     if _G.StopTween == true then
         Tween:Cancel()
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
     end
 end
 
@@ -2217,7 +2216,7 @@ spawn(function()
 		if Type == 1 then
 			Pos = CFrame.new(0,30,-30)
 		elseif Type == 2 then
-			Pos = CFrame.new(30,3,0)
+			Pos = CFrame.new(30,30,0)
 		elseif Type == 3 then
 			Pos = CFrame.new(0,30,30)	
 		elseif Type == 4 then
@@ -9182,7 +9181,9 @@ Teleport:AddToggle({
       	      elseif _G.SelectIsland == "Raid Lab " then
      	           topos(CFrame.new(-5017.40869, 314.844055, -2823.0127, -0.925743818, 4.48217499e-08, -0.378151238, 4.55503146e-09, 1, 1.07377559e-07, 0.378151238, 9.7681621e-08, -0.925743818))
         	    elseif _G.SelectIsland == "The Cafe" then
-    	            topos(CFrame.new(-380.47927856445, 77.220390319824, 255.82550048828))
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-281.93707275390625, 306.130615234375, 609.280029296875))
+                    wait(0.1)
+                    topos(CFrame.new(-380.47927856445, 77.220390319824, 255.82550048828))
         	    elseif _G.SelectIsland == "Frist Spot" then
      	           topos(CFrame.new(-11.311455726624, 29.276733398438, 2771.5224609375))
      	       elseif _G.SelectIsland == "Dark Area" then
