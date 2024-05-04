@@ -5553,7 +5553,7 @@ SeaEvent:AddDropdown({
 	Default = "PirateBrigade",
 	Options = {"PirateBrigade", "PirateGrandBrigade","PirateSloop","MarineBrigade","MarineGrandBrigade"},
 	Callback = function(Value)
-		_G.Boat = Value
+		GBoat = Value
 	end    
 })
 
@@ -5591,7 +5591,7 @@ SeaEvent:AddToggle({
 })
 
 function checkboat()
-    for r, v in next, game:GetService("Workspace").Boats:GetChildren() do
+    for r, v in next, game:GetService("Workspace").[GBoats]:GetChildren() do
         if v:IsA("Model") then
             if v:FindFirstChild("Owner") and tostring(v.Owner.Value) == game:GetService("Players").LocalPlayer.Name and v.Humanoid.Value > 0 then
                 return v
@@ -5616,21 +5616,44 @@ end)
 spawn(function()
     while wait() do
         if _G.SailBoat then
-            if not checkboat() then
-                if (Vector3.new(-16207.501953125, 9.0863618850708, 475.1490783691406) - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 20 then
-                    topos(CFrame.new(-16207.501953125, 9.0863618850708, 475.1490783691406))
-                else
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyBoat", _G.Boat)
-                end
-            end
-            if checkboat() and not game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Rough Sea") then
-                if (checkboat().VehicleSeat.Position - Vector3.new(-16207.501953125, 9.0863618850708, 475.1490783691406)).Magnitude > 50 then
-                    if game:GetService("Players").LocalPlayer.Character.Humanoid.Sit == true then
-                        TweenObject(ZoneCFrame,checkboat().VehicleSeat, 300)
-                        _G.Nocliprock = true
+            repeat wait()
+                if not checkboat() then
+                    if (Vector3.new(-16207.501953125, 9.0863618850708, 475.1490783691406) - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 20 then
+                        NoClip = true
+                        topos(CFrame.new(-16207.501953125, 9.0863618850708, 475.1490783691406))
+                    else
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyBoat", GBoat)
                     end
                 end
-            end
+                if checkboat() and not game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Rough Sea") then
+                    if (checkboat().VehicleSeat.Position - Vector3.new(-16207.501953125, 9.0863618850708, 475.1490783691406)).Magnitude > 50 then
+                        if game:GetService("Players").LocalPlayer.Character.Humanoid.Sit == true then
+                            TweenObject(ZoneCFrame,checkboat().VehicleSeat, 300)
+                            _G.Nocliprock = true
+                        end
+                    end
+                    if not game:GetService("Players").LocalPlayer.Character.Humanoid.Sit then
+                        _G.Clip = true
+                        topos(checkboat().VehicleSeat.CFrame * CFrame.new(0,0,0))
+                    else
+                        _G.Clip = false
+                    end
+                end
+                if game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Rough Sea") and checkboat() then
+                    if game.Players.LocalPlayer.Character.Humanoid.Sit then
+                        game.Players.LocalPlayer.Character.Humanoid.Sit = false
+                    end
+                    if (checkboat().VehicleSeat.Position - Vector3.new(-16207.501953125, 9.0863618850708, 475.1490783691406)).Magnitude > 100 then
+                        checkboat().VehicleSeat.CFrame = CFrame.new(-28464.876953125, 12.553319931030273, 6896.8076171875)
+                    end
+                    if not game:GetService("Players").LocalPlayer.Character.Humanoid.Sit then
+                        _G.Clip = true
+                        topos(checkboat().VehicleSeat.CFrame)
+                    else
+                        _G.Clip = false
+                    end
+                end
+            until not _G.SailBoat
         end
     end
 end)
@@ -5685,9 +5708,9 @@ spawn(function()
     while wait() do
         if _G.ResetChar then
             for i,v in pairs(game.Workspace.Boats:GetChildren()) do
-                if game:GetService("Workspace").Boats[_G.Boat] then
+                if game:GetService("Workspace").Boats[GBoat] then
                     if not v:FindFirstChild("VehicleSeat") and v:FindFirstChild("Humanoid") then
-                        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - game:GetService("Workspace").Boats[_G.Boat].VehicleSeat.Position).Magnitude > 1500 then
+                        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - game:GetService("Workspace").Boats[GBoat].VehicleSeat.Position).Magnitude > 1500 then
                             game.Players.LocalPlayer.Humanoid.Health = 0
                         end
                     end
