@@ -66,18 +66,6 @@ spawn(function()
     end
 end)
 
-getgenv().A = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib).wrapAttackAnimationAsync
-getgenv().B = require(game.Players.LocalPlayer.PlayerScripts.CombatFramework.Particle).play
-_G.setfflag = true
-spawn(function()
-    while wait() do
-        if _G.setfflag then
-            setfflag("AbuseReportScreenshot", "False")
-            setfflag("AbuseReportScreenshotPercentage", "0")
-        end
-    end
-end)
-
 _G.AntiFlagReset = true
 spawn(function()
     while wait(2000) do
