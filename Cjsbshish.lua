@@ -2144,7 +2144,7 @@ function topos(Pos)
     local LocalPlayer = game.Players.LocalPlayer
     local Character = LocalPlayer.Character
     if not Character:FindFirstChild("PartTele") then
-        local PartTele = Instance.new("Part", Character)
+        local PartTele = Instance.new("Part", Character.HumanoidRootPart)
         PartTele.Size = Vector3.new(0, 0, 0)
         PartTele.Name = "PartTele"
         PartTele.Anchored = true
@@ -2156,7 +2156,7 @@ function topos(Pos)
             WaitHRP(LocalPlayer).CFrame = PartTele.CFrame
         end)
     end
-    local Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart.PartTele, TweenInfo.new(Distance / getgenv().TweenSpeed, Enum.EasingStyle.Linear), {CFrame = Pos})
+    local Tween = game:GetService("TweenService"):Create(Character.PartTele, TweenInfo.new(Distance / getgenv().TweenSpeed, Enum.EasingStyle.Linear), {CFrame = Pos})
     Tween:Play()
     if _G.StopTween == true then
         Tween:Cancel()
