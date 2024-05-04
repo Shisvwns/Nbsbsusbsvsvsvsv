@@ -1619,6 +1619,8 @@ if getgenv().NoDieEffect then
     end
 end
 
+-- [ Super Fast Attacks ]
+
 local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
 CamShake:Stop()
 local r = require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework"))
@@ -1648,10 +1650,7 @@ function getAllBladeHitsPlayers(a)
     for e = 1, #d do
         local d = d[e]
         local e = d:FindFirstChildOfClass("Humanoid")
-        if
-            d.Name ~= game.Players.LocalPlayer.Name and e and e.RootPart and e.Health > 0 and
-                c:DistanceFromCharacter(e.RootPart.Position) < a + 5
-         then
+        if d.Name ~= game.Players.LocalPlayer.Name and e and e.RootPart and e.Health > 0 and c:DistanceFromCharacter(e.RootPart.Position) < a + 5 then
             table.insert(b, e.RootPart)
         end
     end
@@ -1674,8 +1673,9 @@ function AttackFunction()
     local a = r.activeController
     if a and a.equipped then
         for b = 1, 1 do
-            local c = getAllBladeHits(60)
-            if #c > 0 then
+            local c = getAllBladeHits(150)
+            local d = getAllBladeHitsPlayers(150)
+            if #c or #d > 0 then
                 local d = debug.getupvalue(a.attack, 5)
                 local e = debug.getupvalue(a.attack, 6)
                 local f = debug.getupvalue(a.attack, 4)
@@ -1738,7 +1738,6 @@ task.spawn(function()
         end
     end)
 end)
-
 local Client = game.Players.LocalPlayer
 local STOP = require(Client.PlayerScripts.CombatFramework.Particle)
 local STOPRL = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib)
