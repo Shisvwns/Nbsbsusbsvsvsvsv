@@ -720,7 +720,7 @@ function CheckQuest()
             Mon = "Sun-kissed Warrior"
             LevelQuest = 1
             NameQuest = "TikiQuest2"
-            NameMon = "kissed"
+            NameMon = "Sun-kissed Warrio"
             CFrameQuest = CFrame.new(-16539.078125, 55.68632888793945, 1051.5738525390625)
             CFrameMon = CFrame.new(-16349.8779296875, 92.0808334350586, 1123.4169921875)
         elseif MyLevel == 2525 or MyLevel <= 2550 then
@@ -2002,60 +2002,130 @@ task.spawn(function()
     end
 end)
 
-function GetBladeHit()
-    local CombatFrameworkLib = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework))
-    local CmrFwLib = CombatFrameworkLib[2]
-    local p13 = CmrFwLib.activeController
-    local weapon = p13.blades[1]
-    if not weapon then 
-        return weapon
+local r = require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework"))
+local r = getupvalues(r)[2]
+local s = require(game:GetService("Players")["LocalPlayer"].PlayerScripts.CombatFramework.RigController)
+local s = getupvalues(s)[2]
+function CurrentWeapon()
+    local a = r.activeController
+    local a = a.blades[1]
+    if not a then
+        return game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Name
     end
-    while weapon.Parent ~= game.Players.LocalPlayer.Character do
-        weapon = weapon.Parent 
+    pcall(function()
+        while a.Parent ~= game.Players.LocalPlayer.Character do
+            a = a.Parent
+        end
+    end)
+    if not a then
+        return game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Name
     end
-    return weapon
+    return a
 end
-function AttackHit()
-    local CombatFrameworkLib = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework))
-    local CmrFwLib = CombatFrameworkLib[2]
-    local plr = game.Players.LocalPlayer
-    for i = 1, 1 do
-        local bladehit = require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(plr.Character,{plr.Character.HumanoidRootPart},100)
-        local cac = {}
-        local hash = {}
-        for k, v in pairs(bladehit) do
-            if v.Parent:FindFirstChild("HumanoidRootPart") and not hash[v.Parent] then
-                table.insert(cac, v.Parent.HumanoidRootPart)
-                hash[v.Parent] = true
+function getAllBladeHitsPlayers(a)
+    local b = {}
+    local c = game.Players.LocalPlayer
+    local d = game:GetService("Workspace").Characters:GetChildren()
+    for e = 1, #d do
+        local d = d[e]
+        local e = d:FindFirstChildOfClass("Humanoid")
+        if
+            d.Name ~= game.Players.LocalPlayer.Name and e and e.RootPart and e.Health > 0 and
+                c:DistanceFromCharacter(e.RootPart.Position) < a + 5
+         then
+            table.insert(b, e.RootPart)
+        end
+    end
+    return b
+end
+function getAllBladeHits(a)
+    local b = {}
+    local c = game.Players.LocalPlayer
+    local d = game:GetService("Workspace").Enemies:GetChildren()
+    for e = 1, #d do
+        local d = d[e]
+        local d = d:FindFirstChildOfClass("Humanoid")
+        if d and d.RootPart and d.Health > 0 and c:DistanceFromCharacter(d.RootPart.Position) < a + 5 then
+            table.insert(b, d.RootPart)
+        end
+    end
+    return b
+end
+function DamageAura()
+    local a = r.activeController
+    if a and a.equipped then
+        for b = 1, 1 do
+            local c = getAllBladeHits(150)
+            local d = getAllBladeHitsPlayers(150)
+            if #c or #d > 0 then
+                local d = debug.getupvalue(a.attack, 5)
+                local e = debug.getupvalue(a.attack, 6)
+                local f = debug.getupvalue(a.attack, 4)
+                local g = debug.getupvalue(a.attack, 7)
+                local h = (d * 798405 + f * 727595) % e
+                local i = f * 798405
+                (function()
+                    h = (h * e + i) % 1099511627776
+                    d = math.floor(h / e)
+                    f = h - d * e
+                end)()
+                g = g + 1
+                debug.setupvalue(a.attack, 5, d)
+                debug.setupvalue(a.attack, 6, e)
+                debug.setupvalue(a.attack, 4, f)
+                debug.setupvalue(a.attack, 7, g)
+                for a, a in pairs(a.animator.anims.basic) do
+                    a:Play(0.01, 0.01, 0.01)
+                end
+                if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") and a.blades and a.blades[1] then
+                    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer(
+                        "weaponChange",
+                        tostring(CurrentWeapon())
+                    )
+                    game.ReplicatedStorage.Remotes.Validator:FireServer(math.floor(h / 1099511627776 * 16777215), g)
+                    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", c, b, "")
+                end
             end
         end
-        bladehit = cac
-        if #bladehit > 0 then
-            pcall(function()
-                CmrFwLib.activeController.timeToNextAttack = 1
-                CmrFwLib.activeController.attacking = false
-                CmrFwLib.activeController.blocking = false
-                CmrFwLib.activeController.timeToNextBlock = 0
-                CmrFwLib.activeController.increment = 3
-                CmrFwLib.activeController.hitboxMagnitude = 70
-                CmrFwLib.activeController.focusStart = 0
-                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange",tostring(GetBladeHit()))
-                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, i, "")
-            end)
+    end
+end
+function AttackFunction()
+    local a = r.activeController
+    if a and a.equipped then
+        for b = 1, 1 do
+            local c = getAllBladeHits(60)
+            if #c > 0 then
+                local d = debug.getupvalue(a.attack, 5)
+                local e = debug.getupvalue(a.attack, 6)
+                local f = debug.getupvalue(a.attack, 4)
+                local g = debug.getupvalue(a.attack, 7)
+                local h = (d * 798405 + f * 727595) % e
+                local i = f * 798405
+                (function()
+                    h = (h * e + i) % 1099511627776
+                    d = math.floor(h / e)
+                    f = h - d * e
+                end)()
+                g = g + 1
+                debug.setupvalue(a.attack, 5, d)
+                debug.setupvalue(a.attack, 6, e)
+                debug.setupvalue(a.attack, 4, f)
+                debug.setupvalue(a.attack, 7, g)
+                for a, a in pairs(a.animator.anims.basic) do
+                    a:Play(0.01, 0.01, 0.01)
+                end
+                if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") and a.blades and a.blades[1] then
+                    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer(
+                        "weaponChange",
+                        tostring(CurrentWeapon())
+                    )
+                    game.ReplicatedStorage.Remotes.Validator:FireServer(math.floor(h / 1099511627776 * 16777215), g)
+                    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", c, b, "")
+                end
+            end
         end
     end
 end
-task.spawn(function()
-    while wait() do
-        if _G.FastAttack then
-            pcall(function()
-                repeat wait(_G.FastAttackDelay)
-                    AttackHit()
-                until not _G.FastAttack
-            end)
-        end
-    end
-end)
 
 Farm:AddToggle({
 	Name = "Fast Attack",
@@ -2065,66 +2135,15 @@ Farm:AddToggle({
 	end
 })
 
-local CameraShaker = require(game.ReplicatedStorage.Util.CameraShaker)
-CombatFrameworkR = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
-y = debug.getupvalues(CombatFrameworkR)[2]
-task.spawn(function()
-    game:GetService("RunService").RenderStepped:Connect(function()
-        if _G.FastAttack then
-            if typeof(y) == "table" then
-                pcall(function()
-                    CameraShaker:Stop()
-                    y.activeController.timeToNextAttack = (math.huge^math.huge^math.huge)
-                    y.activeController.timeToNextAttack = 0
-                    y.activeController.hitboxMagnitude = 60
-                    y.activeController.active = false
-                    y.activeController.timeToNextBlock = 0
-                    y.activeController.focusStart = 1655503339.0980349
-                    y.activeController.increment = 1
-                    y.activeController.blocking = false
-                    y.activeController.attacking = false
-                    y.activeController.humanoid.AutoRotate = true
-                end)
-            end
-        end
-    end)
-end)
-
-task.spawn(function()
-    game:GetService("RunService").RenderStepped:Connect(function()
-        if _G.FastAttack or _G.FastAttackCambodiakak == true then
-            game.Players.LocalPlayer.Character.Stun.Value = 0
-            game.Players.LocalPlayer.Character.Busy.Value = false        
-        end
-    end)
-end)
-
-local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
-CamShake:Stop()
-local Client = game.Players.LocalPlayer
-local STOP = require(Client.PlayerScripts.CombatFramework.Particle)
-local STOPRL = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib)
 task.spawn(function()
     while wait() do
-        pcall(function()
-            if not shared.orl then shared.orl = STOPRL.wrapAttackAnimationAsync end
-            if not shared.cpc then shared.cpc = STOP.play end
-                STOPRL.wrapAttackAnimationAsync = function(a,b,c,d,func)
-                local Hits = STOPRL.getBladeHits(b,c,d)
-                if Hits then
-                    if _G.FastAttack then
-                        STOP.play = function() end
-                        a:Play(0.01,0.01,0.01)
-                        func(Hits)
-                        STOP.play = shared.cpc
-                        wait(a.length * 0.5)
-                        a:Stop()
-                    else
-                        a:Play()
-                    end
-                end
-            end
-        end)
+        if _G.FastAttack then
+            pcall(function()
+                repeat wait()
+                    AttackFunction()
+                until not _G.FastAttack
+            end)
+        end
     end
 end)
 
