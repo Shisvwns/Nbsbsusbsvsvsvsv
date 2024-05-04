@@ -5616,44 +5616,21 @@ end)
 spawn(function()
     while wait() do
         if _G.SailBoat then
-            repeat wait()
-                if not checkboat() then
-                    if (Vector3.new(-16207.501953125, 9.0863618850708, 475.1490783691406) - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 20 then
-                        NoClip = true
-                        topos(CFrame.new(-16207.501953125, 9.0863618850708, 475.1490783691406))
-                    else
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyBoat", _G.Boat)
+            if not checkboat() then
+                if (Vector3.new(-16207.501953125, 9.0863618850708, 475.1490783691406) - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 20 then
+                    topos(CFrame.new(-16207.501953125, 9.0863618850708, 475.1490783691406))
+                else
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyBoat", _G.Boat)
+                end
+            end
+            if checkboat() and not game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Rough Sea") then
+                if (checkboat().VehicleSeat.Position - Vector3.new(-16207.501953125, 9.0863618850708, 475.1490783691406)).Magnitude > 50 then
+                    if game:GetService("Players").LocalPlayer.Character.Humanoid.Sit == true then
+                        TweenObject(ZoneCFrame,checkboat().VehicleSeat, 300)
+                        _G.Nocliprock = true
                     end
                 end
-                if checkboat() and not game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Rough Sea") then
-                    if (checkboat().VehicleSeat.Position - Vector3.new(-16207.501953125, 9.0863618850708, 475.1490783691406)).Magnitude > 50 then
-                        if game:GetService("Players").LocalPlayer.Character.Humanoid.Sit == true then
-                            TweenObject(ZoneCFrame,checkboat().VehicleSeat, 300)
-                            _G.Nocliprock = true
-                        end
-                    end
-                    if not game:GetService("Players").LocalPlayer.Character.Humanoid.Sit then
-                        _G.Clip = true
-                        topos(checkboat().VehicleSeat.CFrame * CFrame.new(0,0,0))
-                    else
-                        _G.Clip = false
-                    end
-                end
-                if game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Rough Sea") and checkboat() then
-                    if game.Players.LocalPlayer.Character.Humanoid.Sit then
-                        game.Players.LocalPlayer.Character.Humanoid.Sit = false
-                    end
-                    if (checkboat().VehicleSeat.Position - Vector3.new(-16207.501953125, 9.0863618850708, 475.1490783691406)).Magnitude > 100 then
-                        checkboat().VehicleSeat.CFrame = CFrame.new(-28464.876953125, 12.553319931030273, 6896.8076171875)
-                    end
-                    if not game:GetService("Players").LocalPlayer.Character.Humanoid.Sit then
-                        _G.Clip = true
-                        topos(checkboat().VehicleSeat.CFrame)
-                    else
-                        _G.Clip = false
-                    end
-                end
-            until not _G.SailBoat
+            end
         end
     end
 end)
