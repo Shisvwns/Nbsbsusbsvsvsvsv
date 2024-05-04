@@ -1475,6 +1475,8 @@ function StopTween(target)
     if not target then
         _G.StopTween = true
         wait()
+        topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
+        wait()
         if game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
             game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip"):Destroy()
         end
@@ -1668,44 +1670,6 @@ function getAllBladeHits(a)
     end
     return b
 end
-function DamageAura()
-    local a = r.activeController
-    if a and a.equipped then
-        for b = 1, 1 do
-            local c = getAllBladeHits(150)
-            local d = getAllBladeHitsPlayers(150)
-            if #c or #d > 0 then
-                local d = debug.getupvalue(a.attack, 5)
-                local e = debug.getupvalue(a.attack, 6)
-                local f = debug.getupvalue(a.attack, 4)
-                local g = debug.getupvalue(a.attack, 7)
-                local h = (d * 798405 + f * 727595) % e
-                local i = f * 798405
-                (function()
-                    h = (h * e + i) % 1099511627776
-                    d = math.floor(h / e)
-                    f = h - d * e
-                end)()
-                g = g + 1
-                debug.setupvalue(a.attack, 5, d)
-                debug.setupvalue(a.attack, 6, e)
-                debug.setupvalue(a.attack, 4, f)
-                debug.setupvalue(a.attack, 7, g)
-                for a, a in pairs(a.animator.anims.basic) do
-                    a:Play(0.01, 0.01, 0.01)
-                end
-                if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") and a.blades and a.blades[1] then
-                    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer(
-                        "weaponChange",
-                        tostring(CurrentWeapon())
-                    )
-                    game.ReplicatedStorage.Remotes.Validator:FireServer(math.floor(h / 1099511627776 * 16777215), g)
-                    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", c, b, "")
-                end
-            end
-        end
-    end
-end
 function AttackFunction()
     local a = r.activeController
     if a and a.equipped then
@@ -1766,7 +1730,6 @@ task.spawn(function()
         end
     end)
 end)
-
 task.spawn(function()
     game:GetService("RunService").RenderStepped:Connect(function()
         if _G.FastAttack == true then
@@ -1774,6 +1737,33 @@ task.spawn(function()
             game.Players.LocalPlayer.Character.Busy.Value = false        
         end
     end)
+end)
+
+local Client = game.Players.LocalPlayer
+local STOP = require(Client.PlayerScripts.CombatFramework.Particle)
+local STOPRL = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib)
+task.spawn(function()
+    while wait() do
+        pcall(function()
+            if not shared.orl then shared.orl = STOPRL.wrapAttackAnimationAsync end
+            if not shared.cpc then shared.cpc = STOP.play end
+                STOPRL.wrapAttackAnimationAsync = function(a,b,c,d,func)
+                local Hits = STOPRL.getBladeHits(b,c,d)
+                if Hits then
+                    if _G.FastAttack then
+                        STOP.play = function() end
+                        a:Play(0.01,0.01,0.01)
+                        func(Hits)
+                        STOP.play = shared.cpc
+                        wait(a.length * 0.5)
+                        a:Stop()
+                    else
+                        a:Play()
+                    end
+                end
+            end
+        end)
+    end
 end)
 
 -- [ Ui Orion ]
@@ -2087,13 +2077,6 @@ Setting:AddButton({
 local Section = Farm:AddSection({
     Name = "Setting Farm"
 })
-
-Weapon = {}
-for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do  
-   if v:IsA("Tool") then
-       table.insert(Weapon ,v.Name)
-   end
-end
 
 local CheckWeapon1 = Farm:AddDropdown({
 	Name = "Select Weapon",
