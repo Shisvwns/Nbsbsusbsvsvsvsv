@@ -1643,19 +1643,6 @@ function CurrentWeapon()
     end
     return a
 end
-function getAllBladeHitsPlayers(a)
-    local b = {}
-    local c = game.Players.LocalPlayer
-    local d = game:GetService("Workspace").Characters:GetChildren()
-    for e = 1, #d do
-        local d = d[e]
-        local e = d:FindFirstChildOfClass("Humanoid")
-        if d.Name ~= game.Players.LocalPlayer.Name and e and e.RootPart and e.Health > 0 and c:DistanceFromCharacter(e.RootPart.Position) < a + 5 then
-            table.insert(b, e.RootPart)
-        end
-    end
-    return b
-end
 function getAllBladeHits(a)
     local b = {}
     local c = game.Players.LocalPlayer
@@ -1673,9 +1660,8 @@ function AttackFunction()
     local a = r.activeController
     if a and a.equipped then
         for b = 1, 1 do
-            local c = getAllBladeHits(150)
-            local d = getAllBladeHitsPlayers(150)
-            if #c or #d > 0 then
+            local c = getAllBladeHits(60)
+            if #c > 0 then
                 local d = debug.getupvalue(a.attack, 5)
                 local e = debug.getupvalue(a.attack, 6)
                 local f = debug.getupvalue(a.attack, 4)
@@ -2192,6 +2178,49 @@ spawn(function()
     end
 end)
 
+function BringMob()
+    if not BringMobChoosen then
+        repeat
+            task.wait()
+        until BringMobChoosen
+    end
+    sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+    if LockCFrame then
+        for r, v in pairs(game.Workspace.Enemies:GetChildren()) do
+            if
+                (LockCFrame.Position - v.HumanoidRootPart.Position).Magnitude < 350 and
+                    (LockCFrame.Position - v.HumanoidRootPart.Position).Magnitude > 3 and
+                    chodonandngu(v.HumanoidRootPart.Position)
+             then
+                v.HumanoidRootPart.CFrame = LockCFrame
+                SizePart(v)
+                for al, ax in pairs(v:GetDescendants()) do
+                    if ax:IsA("BasePart") or ax:IsA("Part") then
+                        ax.CanCollide = false
+                    end
+                end
+            end
+        end
+    end
+    if BringMobChoosen then
+        for r, v in pairs(game.Workspace.Enemies:GetChildren()) do
+            if
+                (BringMobChoosen.HumanoidRootPart.Position - v.HumanoidRootPart.Position).Magnitude < 350 and
+                    (BringMobChoosen.HumanoidRootPart.Position - v.HumanoidRootPart.Position).Magnitude > 3 and
+                    GetNearestPlayer(v.HumanoidRootPart.Position)
+             then
+                v.HumanoidRootPart.CFrame = BringMobChoosen.HumanoidRootPart.CFrame
+                SizePart(v)
+                for al, ax in pairs(v:GetDescendants()) do
+                    if ax:IsA("BasePart") or ax:IsA("Part") then
+                        ax.CanCollide = false
+                    end
+                end
+            end
+        end
+    end
+end
+
 Farm:AddToggle({
 	Name = "Bring Monster",
 	Default = true,
@@ -2199,6 +2228,16 @@ Farm:AddToggle({
 		_G.BringMonster = Value
 	end
 })
+
+task.spawn(function()
+    while wait() do
+        if StartBringMob then
+            pcall(function()
+                BringMob()
+            end)
+        end
+    end
+end)
 
 spawn(function()
     while task.wait() do
@@ -3181,11 +3220,11 @@ spawn(function()
             pcall(function()
                 local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
                 if not string.find(QuestTitle, "Demonic Soul") then
-                    StartMagnetBoneMon = false
+                    StartBringMob = false
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
                 end
                 if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
-                    StartMagnetBoneMon = false
+                    StartBringMob = false
                     if BypassTP then
                     if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - BoneQuestPos.Position).Magnitude > 1500 then
                     BTP(BoneQuestPos)
@@ -3213,19 +3252,19 @@ spawn(function()
                                             v.Humanoid.WalkSpeed = 0
                                             v.Head.CanCollide = false
                                             v.HumanoidRootPart.Size = Vector3.new(70,70,70)
-                                            StartMagnetBoneMon = true
+                                            StartBringMob = true
                                             game:GetService'VirtualUser':CaptureController()
                                             game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
                                         until not _G.Auto_Bone or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
                                     else
-                                        StartMagnetBoneMon = false
+                                        StartBringMob = false
                                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
                                     end
                                 end
                             end
                         end
                     else
-                        StartMagnetBoneMon = false
+                        StartBringMob = false
                         if game:GetService("ReplicatedStorage"):FindFirstChild("Demonic Soul [Lv. 2025]") then
                          topos(game:GetService("ReplicatedStorage"):FindFirstChild("Demonic Soul [Lv. 2025]").HumanoidRootPart.CFrame * CFrame.new(15,10,2))
                         end
