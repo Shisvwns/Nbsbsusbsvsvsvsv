@@ -2150,13 +2150,13 @@ function topos(Pos)
         PartTele.Anchored = true
         PartTele.Transparency = 1
         PartTele.CanCollide = false
-        PartTele.CFrame.new = WaitHRP(LocalPlayer).CFrame.new
+        PartTele.CFrame = WaitHRP(LocalPlayer).CFrame
         PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
             task.wait()
-            WaitHRP(LocalPlayer).CFrame.new = PartTele.CFrame.new
+            WaitHRP(LocalPlayer).CFrame = PartTele.CFrame
         end)
     end
-    local Tween = game:GetService("TweenService"):Create(Character.PartTele, TweenInfo.new(Distance / getgenv().TweenSpeed, Enum.EasingStyle.Linear), {CFrame.new = Pos})
+    local Tween = game:GetService("TweenService"):Create(Character.PartTele, TweenInfo.new(Distance / getgenv().TweenSpeed, Enum.EasingStyle.Linear), {CFrame = Pos})
     Tween:Play()
     if _G.StopTween == true then
         Tween:Cancel()
