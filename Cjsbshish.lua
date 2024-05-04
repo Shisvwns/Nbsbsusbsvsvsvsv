@@ -1755,7 +1755,7 @@ task.spawn(function()
                     CameraShaker:Stop()
                     y.activeController.timeToNextAttack = (math.huge^math.huge^math.huge)
                     y.activeController.timeToNextAttack = 0
-                    y.activeController.hitboxMagnitude = 60
+                    y.activeController.hitboxMagnitude = 70
                     y.activeController.active = false
                     y.activeController.timeToNextBlock = 0
                     y.activeController.focusStart = 1655503339.0980349
@@ -1765,6 +1765,15 @@ task.spawn(function()
                     y.activeController.humanoid.AutoRotate = true
                 end)
             end
+        end
+    end)
+end)
+
+task.spawn(function()
+    game:GetService("RunService").RenderStepped:Connect(function()
+        if _G.FastAttack == true then
+            game.Players.LocalPlayer.Character.Stun.Value = 0
+            game.Players.LocalPlayer.Character.Busy.Value = false        
         end
     end)
 end)
