@@ -1385,8 +1385,8 @@ function topos(Pos)
     Tween:Play()
     _G.Clip = true
     if _G.StopTween == true then
-        Tween:Cancel()
         _G.Clip = false
+        Tween:Cancel()
     end
 end
 
