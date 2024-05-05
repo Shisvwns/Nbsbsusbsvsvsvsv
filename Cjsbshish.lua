@@ -720,7 +720,7 @@ function CheckQuest()
             Mon = "Sun-kissed Warrior"
             LevelQuest = 1
             NameQuest = "TikiQuest2"
-            NameMon = "Sun-kissed Warrio"
+            NameMon = "Sun-kissed Warrior"
             CFrameQuest = CFrame.new(-16539.078125, 55.68632888793945, 1051.5738525390625)
             CFrameMon = CFrame.new(-16349.8779296875, 92.0808334350586, 1123.4169921875)
         elseif MyLevel == 2525 or MyLevel <= 2550 then
@@ -2178,49 +2178,6 @@ spawn(function()
     end
 end)
 
-function BringMob()
-    if not BringMobChoosen then
-        repeat
-            task.wait()
-        until BringMobChoosen
-    end
-    sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-    if LockCFrame then
-        for r, v in pairs(game.Workspace.Enemies:GetChildren()) do
-            if
-                (LockCFrame.Position - v.HumanoidRootPart.Position).Magnitude < 350 and
-                    (LockCFrame.Position - v.HumanoidRootPart.Position).Magnitude > 3 and
-                    chodonandngu(v.HumanoidRootPart.Position)
-             then
-                v.HumanoidRootPart.CFrame = LockCFrame
-                SizePart(v)
-                for al, ax in pairs(v:GetDescendants()) do
-                    if ax:IsA("BasePart") or ax:IsA("Part") then
-                        ax.CanCollide = false
-                    end
-                end
-            end
-        end
-    end
-    if BringMobChoosen then
-        for r, v in pairs(game.Workspace.Enemies:GetChildren()) do
-            if
-                (BringMobChoosen.HumanoidRootPart.Position - v.HumanoidRootPart.Position).Magnitude < 350 and
-                    (BringMobChoosen.HumanoidRootPart.Position - v.HumanoidRootPart.Position).Magnitude > 3 and
-                    GetNearestPlayer(v.HumanoidRootPart.Position)
-             then
-                v.HumanoidRootPart.CFrame = BringMobChoosen.HumanoidRootPart.CFrame
-                SizePart(v)
-                for al, ax in pairs(v:GetDescendants()) do
-                    if ax:IsA("BasePart") or ax:IsA("Part") then
-                        ax.CanCollide = false
-                    end
-                end
-            end
-        end
-    end
-end
-
 Farm:AddToggle({
 	Name = "Bring Monster",
 	Default = true,
@@ -2230,12 +2187,49 @@ Farm:AddToggle({
 })
 
 task.spawn(function()
-    while wait() do
-        if StartBringMob then
+    while task.wait() do
+        if _G.BringMob then
             pcall(function()
-                BringMob()
+                for a, a in pairs(game.Workspace.Enemies:GetChildren()) do
+                    if not string.find(a.Name, "Boss") and a.Name == NameMon and (a.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 350 then
+                        if InMyNetWork(a.HumanoidRootPart) then
+                            if InMyNetWork(a.HumanoidRootPart) then
+                                a.HumanoidRootPart.CFrame = PosMon
+                                a.HumanoidRootPart.CanCollide = false
+                                a.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
+                                if a.Humanoid:FindFirstChild("Animator") then
+                                    a.Humanoid.Animator:Destroy()
+                                end
+                            end
+                        end
+                    end
+                end
             end)
         end
+    end
+end)
+
+task.spawn(function()
+    while task.wait() do
+        pcall(function()
+            if StartMagnet then
+                for a, a in pairs(game.Workspace.Enemies:GetChildren()) do
+                    if not string.find(a.Name, "Boss") and (a.HumanoidRootPart.Position - PosMon.Position).magnitude <= 2500 then
+                        if InMyNetWork(a.HumanoidRootPart) then
+                            a.HumanoidRootPart.CFrame = PosMon
+                            a.Humanoid.JumpPower = 0
+                            a.Humanoid.WalkSpeed = 0
+                            a.HumanoidRootPart.Size = Vector3.new(100, 100, 100)
+                            a.HumanoidRootPart.Transparency = 1
+                            a.HumanoidRootPart.CanCollide = false
+                            a.Head.CanCollide = false
+                            a.Humanoid:ChangeState(11)
+                            a.Humanoid:ChangeState(14)
+                        end
+                    end
+                end
+            end
+        end)
     end
 end)
 
@@ -2453,19 +2447,6 @@ spawn(function()
                                 end
                                 sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
                             end
-                        end
-                    end
-                    if _G.Auto_Bone and StartMagnetBoneMon then
-                        if (v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy") and (v.HumanoidRootPart.Position - PosMonBone.Position).Magnitude <= _G.BringMode and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                            v.Humanoid:ChangeState(14)
-                            v.HumanoidRootPart.CanCollide = false
-                            v.Head.CanCollide = false
-                            v.HumanoidRootPart.CFrame = PosMonBone
-                            if v.Humanoid:FindFirstChild("Animator") then
-                                v.Humanoid.Animator:Destroy()
-                            end
-                            sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
                         end
                     end
                     if StardFarm and FarmMag then
@@ -3174,7 +3155,7 @@ spawn(function()
                                     v.HumanoidRootPart.CanCollide = false
                                     v.Humanoid.WalkSpeed = 0
                                     v.Head.CanCollide = false 
-                                    StartMagnetBoneMon = true
+                                    StartMagnet = true
                                     PosMonBone = v.HumanoidRootPart.CFrame
                                     topos(v.HumanoidRootPart.CFrame * Pos)
                                     game:GetService("VirtualUser"):CaptureController()
@@ -3194,7 +3175,7 @@ spawn(function()
                 topos(BonePos)
             end
                     UnEquipWeapon(_G.SelectWeapon)
-                    StartMagnetBoneMon = false
+                    StartMagnet = false
                     topos(CFrame.new(-9506.234375, 172.130615234375, 6117.0771484375))
                     for i,v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do 
                         if v.Name == "Reborn Skeleton" then
@@ -3220,11 +3201,11 @@ spawn(function()
             pcall(function()
                 local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
                 if not string.find(QuestTitle, "Demonic Soul") then
-                    StartBringMob = false
+                    StartMagnet = false
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
                 end
                 if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
-                    StartBringMob = false
+                    StartMagnet = false
                     if BypassTP then
                     if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - BoneQuestPos.Position).Magnitude > 1500 then
                     BTP(BoneQuestPos)
@@ -3252,19 +3233,19 @@ spawn(function()
                                             v.Humanoid.WalkSpeed = 0
                                             v.Head.CanCollide = false
                                             v.HumanoidRootPart.Size = Vector3.new(70,70,70)
-                                            StartBringMob = true
+                                            StartMagnet = true
                                             game:GetService'VirtualUser':CaptureController()
                                             game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
                                         until not _G.Auto_Bone or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
                                     else
-                                        StartBringMob = false
+                                        StartMagnet = false
                                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
                                     end
                                 end
                             end
                         end
                     else
-                        StartBringMob = false
+                        StartMagnet = false
                         if game:GetService("ReplicatedStorage"):FindFirstChild("Demonic Soul [Lv. 2025]") then
                          topos(game:GetService("ReplicatedStorage"):FindFirstChild("Demonic Soul [Lv. 2025]").HumanoidRootPart.CFrame * CFrame.new(15,10,2))
                         end
