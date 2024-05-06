@@ -1390,31 +1390,6 @@ function topos(Pos)
     end
 end
 
-function topos(Pos)
-    Distance = (Pos.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-    if Distance < 10 then
-        Speed = 20000
-    elseif Distance < 25 then
-        Speed = 10000
-    elseif Distance < 50 then
-        Speed = 5000
-    elseif Distance < 150 then
-        Speed = 2500
-    elseif Distance < 250 then
-        Speed = 1250
-    elseif Distance < 500 then
-        Speed = 625
-    elseif Distance < 750 then
-        Speed = 450
-    elseif Distance >= 1000 then
-        Speed = 370
-    end
-    game:GetService("TweenService"):Create(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear),{CFrame = Pos}):Play()
-    _G.Clip = true
-    wait(Distance/Speed)
-    _G.Clip = false
-end
-
 function TelePlayer(P)
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = P
 end
@@ -2195,7 +2170,7 @@ Farm:AddToggle({
 })
 
 Farm:AddDropdown({
-	Name = "Select Bring Mob Mode",
+	Name = "Select Bring Monster Mode",
 	Default = "Normal",
 	Options = {"Super Bring","Normal","Low"},
 	Callback = function(Value)
@@ -2450,6 +2425,32 @@ task.spawn(function()
                             v.HumanoidRootPart.CanCollide = false
                             v.Head.CanCollide = false
                             v.HumanoidRootPart.CFrame = PosMonBone
+                            if v.Humanoid:FindFirstChild("Animator") then
+                                v.Humanoid.Animator:Destroy()
+                            end
+                            sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
+                        end
+                    end
+                    if StardFarm and FarmMag then
+                        if (v.Name == "Cocoa Warrior" or v.Name == "Chocolate Bar Battler" or v.Name == "Sweet Thief" or v.Name == "Candy Rebel") and (v.HumanoidRootPart.Position - PosGG.Position).Magnitude <= 250 and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                            v.Humanoid:ChangeState(14)
+                            v.HumanoidRootPart.CanCollide = false
+                            v.Head.CanCollide = false
+                            v.HumanoidRootPart.CFrame = PosGG
+                            if v.Humanoid:FindFirstChild("Animator") then
+                                v.Humanoid.Animator:Destroy()
+                            end
+                            sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
+                        end
+                    end
+                    if _G.Farmfast and StardMag then
+                        if (v.Name == "Shanda" or v.Name == "Shanda") and (v.HumanoidRootPart.Position - FastMon.Position).Magnitude <= _G.BringMode and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                            v.Humanoid:ChangeState(14)
+                            v.HumanoidRootPart.CanCollide = false
+                            v.Head.CanCollide = false
+                            v.HumanoidRootPart.CFrame = FastMon
                             if v.Humanoid:FindFirstChild("Animator") then
                                 v.Humanoid.Animator:Destroy()
                             end
