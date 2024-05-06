@@ -2754,6 +2754,16 @@ Farm:AddToggle({
 	end
 })
 
+local WS = game:GetService("Workspace")
+local Enemies = WS.Enemies
+local P = game:GetService("Players")
+local LP = P.LocalPlayer
+local PG = LP.PlayerGui
+local RS = game:GetService("ReplicatedStorage")
+local Remotes = RS:WaitForChild("Remotes")
+local Remote = Remotes:WaitForChild("CommF_")
+local Data = LP.Data
+
 spawn(function()
     while wait() do
         for i,v in pairs(Enemies:GetChildren()) do
@@ -2768,7 +2778,7 @@ spawn(function()
                     v.Humanoid.Animator:Destroy()
                 end
                 v.Humanoid:ChangeState(14)
-                sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius",  math.huge)
+                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius",  math.huge)
             end
         end
     end
@@ -2785,14 +2795,14 @@ end
 spawn(function()
     while wait() do
         if _G.FarmSkip then
-            LvCount = game:GetService("Players").LocalPlayer.Data.Level.Value
+            LvCount = Data.Level.Value
             if LvCount >= 1 and LvCount < 60 then
                 local cframefarm = CFrame.new(-7894.6176757813, 5547.1416015625, -380.29119873047)
                 if GetDistance(cframefarm.Position) > 1500 then
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-7894.6176757813, 5547.1416015625, -380.29119873047))
                 end
-                if game:GetService("Workspace").Enemies:FindFirstChild("Shanda") then     
-                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                if Enemies:FindFirstChild("Shanda") then     
+                    for i,v in pairs(Enemies:GetChildren()) do
                         if v.Name == "Shanda" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                             repeat task.wait()
                                 EquipWeapon(_G.SelectWeapon)                                                                                                                    
@@ -2802,7 +2812,7 @@ spawn(function()
                                 v.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
                                 v.HumanoidRootPart.CanCollide = false
                                 v.Humanoid.WalkSpeed = 0
-                                sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius",  math.huge)
+                                sethiddenproperty(LP, "SimulationRadius",  math.huge)
                                 Click()
                                 StartBring = true
                                 NoClip = true                                                            
@@ -2815,8 +2825,8 @@ spawn(function()
             elseif LvCount >= 60 and LvCount < 300 then
                 CheckPlayer = 0
                 local Players = game:GetService("Players"):GetPlayers()
-                local Quest = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
-                local mylevel = game:GetService("Players").LocalPlayer.Data.Level.Value
+                local Quest = PG.Main.Quest
+                local mylevel = Data.Level.Value
                 local QuestTitle = Quest.Container.QuestTitle.Title.Text
                 if Quest.Visible == true then
                     if string.find(QuestTitle, "Defeat") then
@@ -2824,11 +2834,11 @@ spawn(function()
                         for i,v in pairs(Players) do
                             if v.Name == getgenv().Ply and v.Character.Humanoid.Health > 0 then
                                 repeat task.wait()
-                                    if v.game:GetService("Players").LocalPlayer.Data.Level.Value < 20 or v.game:GetService("Players").LocalPlayer.Data.Level.Value > mylevel * 5 then
-                                        game:GetService("ReplicatedStorage").WaitForChild("Remotes").WaitForChild("CommF_"):InvokeServer("PlayerHunter")
+                                    if v.Data.Level.Value < 20 or v.Data.Level.Value > mylevel * 5 then
+                                        Remote:InvokeServer("PlayerHunter")
                                     end
-                                    if game:GetService("Players").LocalPlayer.PlayerGui.Main.PvpDisabled.Visible == true then
-                                        game:GetService("ReplicatedStorage").WaitForChild("Remotes").WaitForChild("CommF_"):InvokeServer("EnablePvp")                   
+                                    if PG.Main.PvpDisabled.Visible == true then
+                                        Remote:InvokeServer("EnablePvp")                   
                                     end
                                     EquipWeapon(_G.SelectWeapon)
                                     AutoHaki()	   
@@ -2840,10 +2850,10 @@ spawn(function()
                             end
                         end
                     else
-                        game:GetService("ReplicatedStorage").WaitForChild("Remotes").WaitForChild("CommF_"):InvokeServer("PlayerHunter")
+                        Remote:InvokeServer("PlayerHunter")
                     end
                 else                
-                    if game:GetService("ReplicatedStorage").WaitForChild("Remotes").WaitForChild("CommF_"):InvokeServer("PlayerHunter") == "I don't have anything for you right now. Come back later." then
+                    if Remote:InvokeServer("PlayerHunter") == "I don't have anything for you right now. Come back later." then
                         CheckPlayer = CheckPlayer + 1
                     end
                 end
@@ -2854,12 +2864,8 @@ spawn(function()
                 CayLevel:Set(true)
             end
             if game.Players.localPlayer.Data.Points.Value >= 1 then
-                local args = {
-					[1] = "AddPoint",
-					[2] = "Melee",
-					[3] = 3
-				}
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+                local args = {[1] = "AddPoint", [2] = "Melee", [3] = 1}
+                RS.Remotes.CommF_:InvokeServer(unpack(args))
             end
         end
     end
