@@ -2202,8 +2202,8 @@ Farm:AddToggle({
 	end
 })
 
-task.spawn(function()
-    while wait() do
+spawn(function()
+    while task.wait() do
         pcall(function()
             if _G.BringMonster then
                 CheckQuest()
@@ -2236,7 +2236,7 @@ task.spawn(function()
 end)
 
 task.spawn(function()
-    while wait() do
+    while task.wait() do
         pcall(function()
             if _G.BringMonster then
                 CheckQuest()
@@ -2431,35 +2431,9 @@ task.spawn(function()
                             sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
                         end
                     end
-                    if StardFarm and FarmMag then
-                        if (v.Name == "Cocoa Warrior" or v.Name == "Chocolate Bar Battler" or v.Name == "Sweet Thief" or v.Name == "Candy Rebel") and (v.HumanoidRootPart.Position - PosGG.Position).Magnitude <= 250 and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                            v.Humanoid:ChangeState(14)
-                            v.HumanoidRootPart.CanCollide = false
-                            v.Head.CanCollide = false
-                            v.HumanoidRootPart.CFrame = PosGG
-                            if v.Humanoid:FindFirstChild("Animator") then
-                                v.Humanoid.Animator:Destroy()
-                            end
-                            sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
-                        end
-                    end
-                    if _G.Farmfast and StardMag then
-                        if (v.Name == "Shanda" or v.Name == "Shanda") and (v.HumanoidRootPart.Position - FastMon.Position).Magnitude <= _G.BringMode and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                            v.Humanoid:ChangeState(14)
-                            v.HumanoidRootPart.CanCollide = false
-                            v.Head.CanCollide = false
-                            v.HumanoidRootPart.CFrame = FastMon
-                            if v.Humanoid:FindFirstChild("Animator") then
-                                v.Humanoid.Animator:Destroy()
-                            end
-                            sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
-                        end
-                    end
                     if _G.AutoDoughtBoss and MagnetDought then
                         if (v.Name == "Cookie Crafter" or v.Name == "Cake Guard" or v.Name == "Baking Staff" or v.Name == "Head Baker") and (v.HumanoidRootPart.Position - PosMonDoughtOpenDoor.Position).Magnitude <= _G.BringMode and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                            v.HumanoidRootPart.Size = Vector3.new(1,1,1)
                             v.Humanoid:ChangeState(14)
                             v.HumanoidRootPart.CanCollide = false
                             v.Head.CanCollide = false
@@ -2487,7 +2461,7 @@ task.spawn(function()
 	end
 end)
 
-task.spawn(function()
+spawn(function()
 	while task.wait() do
 		pcall(function()
 			if MakoriGayMag and _G.BringMonster then
@@ -2514,7 +2488,7 @@ task.spawn(function()
 	end
 end)
 
-task.spawn(function()
+spawn(function()
 	while task.wait() do
 		pcall(function()
 			if _G.AutoSwordMastery and AutoSwordMasteryMag and _G.BringMonster then
@@ -2541,7 +2515,7 @@ task.spawn(function()
 	end
 end)
 
-task.spawn(function()
+spawn(function()
 	while task.wait() do
 		pcall(function()
 			if SEvent and _G.BringMonster then
@@ -2568,7 +2542,7 @@ task.spawn(function()
 	end
 end)
 
-task.spawn(function()
+spawn(function()
 	while task.wait() do
 		pcall(function()
 			if _G.AutoFarmNearest and AutoFarmNearestMagnet or SelectMag and _G.BringMonster then
