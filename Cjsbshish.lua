@@ -2202,8 +2202,8 @@ Farm:AddToggle({
 	end
 })
 
-spawn(function()
-    while task.wait() do
+task.spawn(function()
+    while wait() do
         pcall(function()
             if _G.BringMonster then
                 CheckQuest()
@@ -2346,6 +2346,71 @@ spawn(function()
                             end
                         end
                     end
+                    if _G.AutoFarmGunMastery and StartMasteryGunMagnet then
+                        if v.Name == "Monkey" then
+                            if (v.HumanoidRootPart.Position - PosMonMasteryGun.Position).Magnitude <= _G.BringMode and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                                v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                                v.Humanoid:ChangeState(14)
+                                v.HumanoidRootPart.CanCollide = false
+                                v.Head.CanCollide = false
+                                v.HumanoidRootPart.CFrame = PosMonMasteryGun
+                                if v.Humanoid:FindFirstChild("Animator") then
+                                    v.Humanoid.Animator:Destroy()
+                                end
+                                sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
+                            end
+                        elseif v.Name == "Factory Staff" then
+                            if (v.HumanoidRootPart.Position - PosMonMasteryGun.Position).Magnitude <= _G.BringMode and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                                v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                                v.Humanoid:ChangeState(14)
+                                v.HumanoidRootPart.CanCollide = false
+                                v.Head.CanCollide = false
+                                v.HumanoidRootPart.CFrame = PosMonMasteryGun
+                                if v.Humanoid:FindFirstChild("Animator") then
+                                    v.Humanoid.Animator:Destroy()
+                                end
+                                sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
+                            end
+                        elseif v.Name == Mon then
+                            if (v.HumanoidRootPart.Position - PosMonMasteryGun.Position).Magnitude <= _G.BringMode and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                                v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                                v.Humanoid:ChangeState(14)
+                                v.HumanoidRootPart.CanCollide = false
+                                v.Head.CanCollide = false
+                                v.HumanoidRootPart.CFrame = PosMonMasteryGun
+                                if v.Humanoid:FindFirstChild("Animator") then
+                                    v.Humanoid.Animator:Destroy()
+                                end
+                                sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
+                            end
+                        end
+                    end
+                    if _G.Auto_Bone and StartMagnetBoneMon then
+                        if (v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy") and (v.HumanoidRootPart.Position - PosMonBone.Position).Magnitude <= _G.BringMode and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                            v.Humanoid:ChangeState(14)
+                            v.HumanoidRootPart.CanCollide = false
+                            v.Head.CanCollide = false
+                            v.HumanoidRootPart.CFrame = PosMonBone
+                            if v.Humanoid:FindFirstChild("Animator") then
+                                v.Humanoid.Animator:Destroy()
+                            end
+                            sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
+                        end
+                    end
+                    if _G.AutoDoughtBoss and MagnetDought then
+                        if (v.Name == "Cookie Crafter" or v.Name == "Cake Guard" or v.Name == "Baking Staff" or v.Name == "Head Baker") and (v.HumanoidRootPart.Position - PosMonDoughtOpenDoor.Position).Magnitude <= _G.BringMode and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                            v.Humanoid:ChangeState(14)
+                            v.HumanoidRootPart.CanCollide = false
+                            v.Head.CanCollide = false
+                            v.HumanoidRootPart.CFrame = PosMonDoughtOpenDoor
+                            if v.Humanoid:FindFirstChild("Animator") then
+                                v.Humanoid.Animator:Destroy()
+                            end
+                            sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
+                        end
+                    end
                 end
             end
         end)
@@ -2364,7 +2429,7 @@ task.spawn(function()
 end)
 
 task.spawn(function()
-	while task.wait() do
+	while wait() do
 		pcall(function()
 			if MakoriGayMag and _G.BringMonster then
 				for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
@@ -2391,7 +2456,7 @@ task.spawn(function()
 end)
 
 task.spawn(function()
-	while task.wait() do
+	while wait() do
 		pcall(function()
 			if _G.AutoSwordMastery and AutoSwordMasteryMag and _G.BringMonster then
 				for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
@@ -2418,7 +2483,7 @@ task.spawn(function()
 end)
 
 task.spawn(function()
-	while task.wait() do
+	while wait() do
 		pcall(function()
 			if SEvent and _G.BringMonster then
 				for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
@@ -2445,7 +2510,7 @@ task.spawn(function()
 end)
 
 task.spawn(function()
-	while task.wait() do
+	while wait() do
 		pcall(function()
 			if _G.AutoFarmNearest and AutoFarmNearestMagnet or SelectMag and _G.BringMonster then
 				for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
@@ -2471,28 +2536,10 @@ task.spawn(function()
 	end
 end)
 
-local bonemobs = {"Reborn Skeleton","Living Zombie","Demonic Soul","Posessed Mummy"}
-function CheckBoneMob()
-    for i,v in next, Enemies:GetChildren() do
-        if v:IsA("Model") and table.find(bonemobs, v.Name) and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-            return v
-        end
-    end
-end
-
-local cakemobs = {"Cookie Crafter","Cake Guard","Baking Staff","Head Baker"}
-function CheckCakeMob()
-    for i,v in next, Enemies:GetChildren() do
-        if v:IsA("Model") and table.find(cakemobs, v.Name) and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-            return v
-        end
-    end
-end
-
-spawn(function()
+task.spawn(function()
     while wait() do
         for i,v in pairs(Enemies:GetChildren()) do
-            if ((_G.FarmSkip and StartBring and v.Name == "Shanda") or (_G.Auto_Bone and StartMagnetBoneMon and CheckBoneMob()) or (_G.AutoDoughtBoss and MagnetDought and CheckCakeMob())) and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and GetDistance(v.HumanoidRootPart.Position) <= 300 then
+            if (_G.FarmSkip and StartBring and v.Name == "Shanda") and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and GetDistance(v.HumanoidRootPart.Position) <= 300 then
                 v.HumanoidRootPart.CFrame = PosMon
                 v.HumanoidRootPart.Size = Vector3.new(1,1,1)                                               
                 v.HumanoidRootPart.CanCollide = false
@@ -6495,12 +6542,12 @@ spawn(function()
             pcall(function()
                 if game:GetService("Workspace").Enemies:FindFirstChild("Soul Reaper") then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                        if string.find(v.Name , "Soul Reaper") then
+                        if string.find(v.Name ,"Soul Reaper") then
                             repeat task.wait()
                                 EquipWeapon(_G.SelectWeapon)
                                 AutoHaki()
                                 v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                topos(v.HumanoidRootPart.CFrame*Pos)
+                                topos(v.HumanoidRootPart.CFrame * Pos)
                                 game:GetService("VirtualUser"):CaptureController()
                                 game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 670))
                                 v.HumanoidRootPart.Transparency = 1
