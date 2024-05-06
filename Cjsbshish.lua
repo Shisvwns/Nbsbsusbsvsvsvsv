@@ -2541,7 +2541,7 @@ task.spawn(function()
         for i,v in pairs(Enemies:GetChildren()) do
             if (_G.FarmSkip and StartBring and v.Name == "Shanda") and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and GetDistance(v.HumanoidRootPart.Position) <= 300 then
                 v.HumanoidRootPart.CFrame = PosMon
-                v.HumanoidRootPart.Size = Vector3.new(1,1,1)                                               
+                v.HumanoidRootPart.Size = Vector3.new(10,10,10)                                               
                 v.HumanoidRootPart.CanCollide = false
                 v.Head.CanCollide = false
                 v.Humanoid.JumpPower = 0
