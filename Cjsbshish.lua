@@ -1987,7 +1987,7 @@ Setting:AddToggle({
 
 spawn(function()
     while wait() do
-        if _G.AutoKen then
+        if _G.AutoKen == true then
             pcall(function()
                 game:GetService("ReplicatedStorage").Remotes.CommE:FireServer("Ken",true)
             end)
@@ -2762,6 +2762,28 @@ local PG = LP.PlayerGui
 local Remotes = RS:WaitForChild("Remotes")
 local Remote = Remotes:WaitForChild("CommF_")
 local RS = game:GetService("ReplicatedStorage")
+local Data = LP.Data
+
+spawn(function()
+    while wait() do
+        for i,v in pairs(Enemies:GetChildren()) do
+            if ((StartFarms and SelectFarm == "Level" and StartBring and v.Name == CheckQuest()["MobName"]) or (FarmSkip and StartBring and v.Name == "Shanda") or (StartFarms and SelectFarm == "Bone" and StartBring and CheckBoneMob()) or (StartFarms and SelectFarm == "Cake Prince" and StartBring and CheckCakeMob())) and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and GetDistance(v.HumanoidRootPart.Position) <= 300 then
+                v.HumanoidRootPart.CFrame = PosMon
+                v.HumanoidRootPart.Size = Vector3.new(1,1,1)                                               
+                v.HumanoidRootPart.CanCollide = false
+                v.Head.CanCollide = false
+                v.Humanoid.JumpPower = 0
+                v.Humanoid.WalkSpeed = 0
+                if v.Humanoid:FindFirstChild("Animator") then
+                    v.Humanoid.Animator:Destroy()
+                end
+                v.Humanoid:ChangeState(14)
+                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius",  math.huge)
+            end
+        end
+    end
+end)
+
 spawn(function()
     while wait() do
         if _G.FarmSkip then
