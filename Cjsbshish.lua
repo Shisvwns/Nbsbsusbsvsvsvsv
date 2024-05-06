@@ -2791,7 +2791,7 @@ spawn(function()
             if LvCount >= 1 and LvCount < 60 then
                 local cframefarm = CFrame.new(-7894.6176757813, 5547.1416015625, -380.29119873047)
                 if GetDistance(cframefarm.Position) > 1500 then
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance", Vector3.new(-7894.6176757813, 5547.1416015625, -380.29119873047))
+                    topos(CFrame.new(-7894.6176757813, 5547.1416015625, -380.29119873047))
                 end
                 if Enemies:FindFirstChild("Shanda") then     
                     for i,v in pairs(Enemies:GetChildren()) do
