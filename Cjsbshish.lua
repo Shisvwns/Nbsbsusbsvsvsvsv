@@ -2768,7 +2768,7 @@ spawn(function()
                     v.Humanoid.Animator:Destroy()
                 end
                 v.Humanoid:ChangeState(14)
-                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius",  math.huge)
+                sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius",  math.huge)
             end
         end
     end
@@ -2859,7 +2859,7 @@ spawn(function()
 					[2] = "Melee",
 					[3] = 3
 				}
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))(unpack(args))
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
             end
         end
     end
