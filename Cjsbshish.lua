@@ -1517,6 +1517,16 @@ spawn(function()
     end
 end)
 
+local WS = game:GetService("Workspace")
+local Enemies = WS.Enemies
+local P = game:GetService("Players")
+local LP = P.LocalPlayer
+local PG = LP.PlayerGui
+local RS = game:GetService("ReplicatedStorage")
+local Remotes = RS:WaitForChild("Remotes")
+local Remote = Remotes:WaitForChild("CommF_")
+local Data = LP.Data
+
 function MoonTextureId()
     if World1 then
         return game:GetService("Lighting").FantasySky.MoonTextureId
@@ -2529,7 +2539,7 @@ end)
 spawn(function()
     while wait() do
         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-            if (_G.FarmSkip and StartBring and v.Name == "Shanda") and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and GetDistance(v.HumanoidRootPart.Position) <= 300 then
+            if ((_G.FarmSkip and StartBring and v.Name == "Shanda") or (StartFarms and SelectFarm == "Bone" and StartBring and CheckBoneMob()) or (StartFarms and SelectFarm == "Cake Prince" and StartBring and CheckCakeMob())) and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and GetDistance(v.HumanoidRootPart.Position) <= 300 then
                 v.HumanoidRootPart.CFrame = PosMon
                 v.HumanoidRootPart.Size = Vector3.new(1,1,1)                                               
                 v.HumanoidRootPart.CanCollide = false
@@ -2715,11 +2725,11 @@ Farm:AddToggle({
 	end
 })
 
-function GetDistance(Pos)
-    if typeof(Pos) == "CFrame" then
-        return game:GetService("Players").LocalPlayer:DistanceFromCharacter(Pos.Position)
-    elseif typeof(Pos) == "Vector3" then
-        return game:GetService("Players").LocalPlayer:DistanceFromCharacter(Pos)
+function GetDistance(q)
+    if typeof(q) == "CFrame" then
+        return game:GetService("Players").LocalPlayer:DistanceFromCharacter(q.Position)
+    elseif typeof(q) == "Vector3" then
+        return game:GetService("Players").LocalPlayer:DistanceFromCharacter(q)
     end
 end
 
@@ -5016,7 +5026,7 @@ spawn(function()
                     end
                 end
             end
-        end
+        end)
     end
 end)
 
