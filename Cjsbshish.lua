@@ -2736,7 +2736,6 @@ spawn(function()
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == "Shanda" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                             repeat task.wait()
-                                game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer("TantaiGaming")
                                 EquipWeapon(_G.SelectWeapon)                                                                                                                    
                                 AutoHaki()
                                 topos(v.HumanoidRootPart.CFrame * Pos)               
