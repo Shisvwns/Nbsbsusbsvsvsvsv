@@ -685,7 +685,7 @@ function WaitHRP(Player)
     return Player.Character:WaitForChild("HumanoidRootPart")
 end
 
-function topos(Pos)
+function Tween(Pos)
     local Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
     local LocalPlayer = game.Players.LocalPlayer
     local Character = LocalPlayer.Character.HumanoidRootPart
