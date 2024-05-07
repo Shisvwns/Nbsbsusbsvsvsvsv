@@ -1367,7 +1367,7 @@ end
 function topos(Pos)
     local Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
     local LocalPlayer = game.Players.LocalPlayer
-    local Character = LocalPlayer.Character
+    local Character = LocalPlayer.Character.HumanoidRootPart
     if not Character:FindFirstChild("PartTele") then
         local PartTele = Instance.new("Part", Character)
         PartTele.Size = Vector3.new(0, 0, 0)
@@ -2736,7 +2736,6 @@ spawn(function()
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == "Shanda" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                             repeat task.wait()
-                                game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer("STRAWHATMAIME")
                                 EquipWeapon(_G.SelectWeapon)                                                                                                                    
                                 AutoHaki()
                                 topos(v.HumanoidRootPart.CFrame * Pos)               
@@ -8825,28 +8824,27 @@ local Section = Shop:AddSection({
 })
 
 CodeA = {
-    "KITTGAMING",
-    "ENYU_IS_PRO",
-    "FUDD10",
-    "BIGNEWS",
-    "THEGREATACE",
-    "SUB2GAMERROBOT_EXP1",
-    "STRAWHATMAIME",
-    "KITT_RESET",
-    "SUB2OFFICIALNOOBIE",
-    "SUB2NOOBMASTER123",
+    "TantaiGaming",
+    "Axiore",
     "SUB2DAIGROCK",
-    "AXIORE",
-    "TANTAIGAMIMG",
-    "STRAWHATMAINE",
-    "JCWK",
-    "SUB2GAMERROBOT_RESET1",
-    "FUDD10_V2",
-    "SUB2FER999",
-    "MAGICBIS",
     "Sub2UncleKizaru",
-    "TY_FOR_WATCHING",
-    "STARCODEHEO"
+    "SUB2NOOBMASTER123",
+    "StrawHatMaine",
+    "Sub2OfficialNoobie",
+    "SUB2GAMERROBOT_EXP1",
+    "THEGREATACE",
+    "BIGNEWS",
+    "FUDD10",
+    "fudd10_v2",
+    "Bluxxy",
+    "StarcodeHEO",
+    "JCWK",
+    "Magicbus",
+    "Enyu_is_Pro",
+    "Sub2Fer999",
+    "KittGaming",
+    "SUB2GAMERROBOT_RESET1",
+    "Sub2CaptainMaui"
 }
 
 Shop:AddDropdown({
@@ -8865,29 +8863,28 @@ Shop:AddButton({
     end
 })
 
-local X2Code = {
-    "KITTGAMING",
-    "ENYU_IS_PRO",
-    "FUDD10",
-    "BIGNEWS",
-    "THEGREATACE",
-    "SUB2GAMERROBOT_EXP1",
-    "STRAWHATMAIME",
-    "SUB2OFFICIALNOOBIE",
-    "SUB2NOOBMASTER123",
+x2Code = {
+    "TantaiGaming",
+    "Axiore",
     "SUB2DAIGROCK",
-    "AXIORE",
-    "TANTAIGAMIMG",
-    "STRAWHATMAINE",
-    "JCWK",
-    "FUDD10_V2",
-    "SUB2FER999",
-    "KITT_RESET",
-    "SUB2GAMERROBOT_RESET1",
     "Sub2UncleKizaru",
-    "MAGICBIS",
-    "TY_FOR_WATCHING",
-    "STARCODEHEO"
+    "SUB2NOOBMASTER123",
+    "StrawHatMaine",
+    "Sub2OfficialNoobie",
+    "SUB2GAMERROBOT_EXP1",
+    "THEGREATACE",
+    "BIGNEWS",
+    "FUDD10",
+    "fudd10_v2",
+    "Bluxxy",
+    "StarcodeHEO",
+    "JCWK",
+    "Magicbus",
+    "Enyu_is_Pro",
+    "Sub2Fer999",
+    "KittGaming",
+    "SUB2GAMERROBOT_RESET1",
+    "Sub2CaptainMaui"
 }
 
 Shop:AddButton({
