@@ -1517,16 +1517,6 @@ spawn(function()
     end
 end)
 
-local WS = game:GetService("Workspace")
-local Enemies = WS.Enemies
-local P = game:GetService("Players")
-local LP = P.LocalPlayer
-local PG = LP.PlayerGui
-local RS = game:GetService("ReplicatedStorage")
-local Remotes = RS:WaitForChild("Remotes")
-local Remote = Remotes:WaitForChild("CommF_")
-local Data = LP.Data
-
 function MoonTextureId()
     if World1 then
         return game:GetService("Lighting").FantasySky.MoonTextureId
@@ -2538,8 +2528,8 @@ end)
 
 spawn(function()
     while wait() do
-        for i,v in pairs(Enemies:GetChildren()) do
-            if ((_G.FarmSkip and StartBring and v.Name == "Shanda") or (StartFarms and SelectFarm == "Bone" and StartBring and CheckBoneMob()) or (StartFarms and SelectFarm == "Cake Prince" and StartBring and CheckCakeMob())) and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and GetDistance(v.HumanoidRootPart.Position) <= 300 then
+        for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+            if (_G.FarmSkip and StartBring and v.Name == "Shanda") and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and GetDistance(v.HumanoidRootPart.Position) <= 300 then
                 v.HumanoidRootPart.CFrame = PosMon
                 v.HumanoidRootPart.Size = Vector3.new(1,1,1)                                               
                 v.HumanoidRootPart.CanCollide = false
@@ -2725,27 +2715,28 @@ Farm:AddToggle({
 	end
 })
 
-function GetDistance(q)
-    if typeof(q) == "CFrame" then
-        return game:GetService("Players").LocalPlayer:DistanceFromCharacter(q.Position)
-    elseif typeof(q) == "Vector3" then
-        return game:GetService("Players").LocalPlayer:DistanceFromCharacter(q)
+function GetDistance(Pos)
+    if typeof(Pos) == "CFrame" then
+        return game:GetService("Players").LocalPlayer:DistanceFromCharacter(Pos.Position)
+    elseif typeof(Pos) == "Vector3" then
+        return game:GetService("Players").LocalPlayer:DistanceFromCharacter(Pos)
     end
 end
 
 spawn(function()
     while wait() do
         if _G.FarmSkip then
-            LvCount = Data.Level.Value
+            LvCount = game:GetService("Players").LocalPlayer.Data.Level.Value
             if LvCount >= 1 and LvCount < 60 then
                 local cframefarm = CFrame.new(-7894.6176757813, 5547.1416015625, -380.29119873047)
                 if GetDistance(cframefarm.Position) > 1500 then
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-7894.6176757813, 5547.1416015625, -380.29119873047))
                 end
-                if Enemies:FindFirstChild("Shanda") then     
-                    for i,v in pairs(Enemies:GetChildren()) do
+                if game:GetService("Workspace").Enemies:FindFirstChild("Shanda") then     
+                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == "Shanda" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                             repeat task.wait()
+                                game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer("TantaiGaming")
                                 EquipWeapon(_G.SelectWeapon)                                                                                                                    
                                 AutoHaki()
                                 topos(v.HumanoidRootPart.CFrame * Pos)               
@@ -2753,7 +2744,7 @@ spawn(function()
                                 v.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
                                 v.HumanoidRootPart.CanCollide = false
                                 v.Humanoid.WalkSpeed = 0
-                                sethiddenproperty(LP, "SimulationRadius",  math.huge)
+                                sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
                                 Click()
                                 StartBring = true
                                 NoClip = true                                                            
@@ -2767,7 +2758,7 @@ spawn(function()
                 CheckPlayer = 0
                 local Players = game:GetService("Players"):GetPlayers()
                 local Quest = PG.Main.Quest
-                local mylevel = Data.Level.Value
+                local mylevel = game:GetService("Players").LocalPlayer.Data.Level.Value
                 local QuestTitle = Quest.Container.QuestTitle.Title.Text
                 if Quest.Visible == true then
                     if string.find(QuestTitle, "Defeat") then
@@ -2775,11 +2766,11 @@ spawn(function()
                         for i,v in pairs(Players) do
                             if v.Name == getgenv().Ply and v.Character.Humanoid.Health > 0 then
                                 repeat task.wait()
-                                    if v.Data.Level.Value < 20 or v.Data.Level.Value > mylevel * 5 then
-                                        Remote:InvokeServer("PlayerHunter")
+                                    if v.game:GetService("Players").LocalPlayer.Data.Level.Value < 20 or v.game:GetService("Players").LocalPlayer.Data.Level.Value > mylevel * 5 then
+                                        game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("PlayerHunter")
                                     end
-                                    if PG.Main.PvpDisabled.Visible == true then
-                                        Remote:InvokeServer("EnablePvp")                   
+                                    if game:GetService("Players").LocalPlayer.PlayerGui.Main.PvpDisabled.Visible == true then
+                                        game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("EnablePvp")                   
                                     end
                                     EquipWeapon(_G.SelectWeapon)
                                     AutoHaki()	   
@@ -2791,10 +2782,10 @@ spawn(function()
                             end
                         end
                     else
-                        Remote:InvokeServer("PlayerHunter")
+                        game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("PlayerHunter")
                     end
                 else                
-                    if Remote:InvokeServer("PlayerHunter") == "I don't have anything for you right now. Come back later." then
+                    if game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("PlayerHunter") == "I don't have anything for you right now. Come back later." then
                         CheckPlayer = CheckPlayer + 1
                     end
                 end
@@ -2804,9 +2795,9 @@ spawn(function()
             else
                 CayLevel:Set(true)
             end
-            if game.Players.localPlayer.Data.Points.Value >= 1 then
+            if game:GetService("Players").LocalPlayer.Data.Points.Value >= 1 then
                 local args = {[1] = "AddPoint", [2] = "Melee", [3] = 5}
-                RS.Remotes.CommF_:InvokeServer(unpack(args))
+                game:GetService("ReplicatedStorage"):WaitForChild("Remotes").CommF_:InvokeServer(unpack(args))
             end
         end
     end
@@ -5016,12 +5007,14 @@ Other:AddToggle({
 
 spawn(function()
     while task.wait() do
-        if _G.TeleSafe then
-            if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
-                if World3 then
-                    topos(CFrame.new(-12489.4893, 336.895721, -7446.056153))
-                elseif World2 then
-                    topos(CFrame.new(-380.47927856445, 77.220390319824, 255.82550048828))
+        pcall(function()
+            if _G.TeleSafe then
+                if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
+                    if World3 then
+                        topos(CFrame.new(-12489.4893, 336.895721, -7446.056153))
+                    elseif World2 then
+                        topos(CFrame.new(-380.47927856445, 77.220390319824, 255.82550048828))
+                    end
                 end
             end
         end
