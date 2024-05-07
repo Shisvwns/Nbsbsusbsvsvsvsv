@@ -1361,7 +1361,7 @@ end
 
 function WaitHRP(Player)
     if not Player then return end
-    return Player.Character:WaitForChild("HumanoidRootPart", 9)
+    return Player.Character:WaitForChild("HumanoidRootPart")
 end
 
 function topos(Pos)
@@ -2203,7 +2203,7 @@ Farm:AddToggle({
 })
 
 spawn(function()
-    while wait(0) do
+    while task.wait() do
         pcall(function()
             if _G.BringMonster then
                 CheckQuest()
@@ -7859,7 +7859,7 @@ Race:AddToggle({
 })
 
 spawn(function()
-    while wait() do 
+    while task.wait() do 
         pcall(function()
             if ModeTrials == "Spam Click" and _G.KillAfterTrials then
                 for i,v in pairs(game:GetService("Workspace").Characters:GetChildren()) do
@@ -7884,7 +7884,7 @@ spawn(function()
 end)
 
 spawn(function()
-    while wait() do
+    while task.wait() do
         if ModeTrials == "Spam Skill" and _G.KillAfterTrials then
             pcall(function()
                 for i, v in pairs(game.Workspace.Characters:GetChildren()) do
