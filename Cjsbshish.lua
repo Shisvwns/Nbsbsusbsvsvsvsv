@@ -2757,7 +2757,7 @@ spawn(function()
             elseif LvCount >= 60 and LvCount < 300 then
                 CheckPlayer = 0
                 local Players = game:GetService("Players"):GetPlayers()
-                local Quest = PG.Main.Quest
+                local Quest = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
                 local mylevel = game:GetService("Players").LocalPlayer.Data.Level.Value
                 local QuestTitle = Quest.Container.QuestTitle.Title.Text
                 if Quest.Visible == true then
