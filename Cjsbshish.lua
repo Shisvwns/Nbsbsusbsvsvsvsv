@@ -5626,15 +5626,12 @@ spawn(function()
                     end
                 end
                 if checkboat() and not game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Rough Sea") then
-                    if (checkboat().VehicleSeat.Position - Vector3.new(-16207.501953125, 9.0863618850708, 475.1490783691406)).Magnitude > 50 then
-                        if game:GetService("Players").LocalPlayer.Character.Humanoid.Sit == true then
-                            topos(ZoneCFrame,checkboat().VehicleSeat, 300)
-                            _G.Nocliprock = true
-                        end
+                    if (checkboat().VehicleSeat.Position - Vector3Boat).Magnitude > 50 then
+                        checkboat().VehicleSeat.CFrame = ZoneCFrame
                     end
                     if not game:GetService("Players").LocalPlayer.Character.Humanoid.Sit then
                         _G.Clip = true
-                        topos(checkboat().VehicleSeat.CFrame * CFrame.new(0,0,0))
+                        topos(checkboat().VehicleSeat.CFrame)
                     else
                         _G.Clip = false
                     end
