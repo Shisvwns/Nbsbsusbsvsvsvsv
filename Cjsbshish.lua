@@ -2686,7 +2686,7 @@ end)
 spawn(function()
     pcall(function()
         game:GetService("RunService").Stepped:Connect(function()
-            if _G.NoClip or _G.AutoAdvanceDungeon or _G.AutoDoughtBoss or _G.SailBoat or _G.Auto_DungeonMobAura or _G.Bboat or _G.AutoFarmChest or _G.AutoFactory or _G.AutoFarmBossHallow or _G.AutoFarmSwanGlasses or _G.AutoLongSword or _G.AutoBlackSpikeycoat or _G.AutoElectricClaw or _G.AutoFarmGunMastery or _G.AutoHolyTorch or _G.AutoLawRaid or _G.AutoFarmBoss or _G.NextIsland or _G.AutoTwinHooks or _G.AutoOpenSwanDoor or _G.AutoDragon_Trident or _G.AutoSaber or _G.AutoFarmFruitMastery or _G.AutoFarmGunMastery or _G.TeleportIsland or _G.Auto_EvoRace or _G.AutoFarmAllMsBypassType or _G.AutoObservationv2 or _G.AutoMusketeerHat or _G.AutoEctoplasm or _G.AutoRengoku or _G.Auto_Rainbow_Haki or _G.AutoObservation or _G.AutoKillRipIndra or _G.Safe_Mode or _G.MasteryFruit or _G.AutoBudySword or _G.AutoOderSword or _G.AutoBounty or _G.AutoAllBoss or _G.Auto_Bounty or _G.AutoSharkman or _G.Auto_Mastery_Fruit or _G.Auto_Mastery_Gun or _G.Auto_Dungeon or _G.Auto_Cavender or _G.Auto_Pole or _G.Auto_Kill_Ply or _G.Auto_Factory or _G.AutoSecondSea or _G.TeleportPly or _G.AutoBartilo or _G.Auto_DarkBoss or _G.GrabChest or _G.AutoFarmBounty or _G.Holy_Torch or _G.AutoFarm or _G.AutoMaterial or _G.Clip or _G.AutoElitehunter or _G.AutoThirdSea or _G.Auto_Bone or _G.Autoheart or _G.Autodoughking or _G.AutoFarmMaterial or _G.AutoNevaSoulGuitar or _G.Auto_Dragon_Trident or _G.Autotushita or _G.Autowaden or _G.Autogay or _G.Autopole or _G.Autosaw or _G.AutoObservationHakiV2 or _G.AutoFarmNearest or _G.AutoCarvender or _G.AutoTwinHook or AutoMobAura or _G.Tweenfruit or _G.TeleportNPC or _G.AutoKai or _G.Leather or _G.Auto_Wing or _G.Umm or _G.Makori_gay or Radioactive or Fish or Gunpowder or Dragon_Scale or Cocoafarm or Scrap or MiniHee or _G.AutoFarmSeabaest or Auto_Cursed_Dual_Katana or _G.AutoFarmMob or _G.AutoMysticIsland or _G.Miragenpc or _G.AutoFarmDungeon or _G.AutoRaidPirate or _G.AutoQuestRace or _G.TweenMGear or getgenv().AutoFarm or _G.AutoPlayerHunter or _G.AutoFactory or _G.Namfon or _G.AutoSwordMastery or _G.Auto_Seabest or _G.AutoSeaBest or _G.AutoKillTial or _G.Auto_Saber or _G.Position_Spawn or _G.TPB or _G.Farmfast or _G.AutoRace or _G.RaidPirate or Open_Color_Haki or _G.AutoTerrorshark or FarmShark or _G.farmpiranya or _G.Fish_Crew_Member or _G.AppleAutoDriveBoat or _G.AutoFrozenDimension or _G.AutoFKitsune == true then
+            if _G.NoClip or _G.AutoAdvanceDungeon or _G.AutoDoughtBoss or _G.Auto_DungeonMobAura or _G.Bboat or _G.AutoFarmChest or _G.AutoFactory or _G.AutoFarmBossHallow or _G.AutoFarmSwanGlasses or _G.AutoLongSword or _G.AutoBlackSpikeycoat or _G.AutoElectricClaw or _G.AutoFarmGunMastery or _G.AutoHolyTorch or _G.AutoLawRaid or _G.AutoFarmBoss or _G.NextIsland or _G.AutoTwinHooks or _G.AutoOpenSwanDoor or _G.AutoDragon_Trident or _G.AutoSaber or _G.AutoFarmFruitMastery or _G.AutoFarmGunMastery or _G.TeleportIsland or _G.Auto_EvoRace or _G.AutoFarmAllMsBypassType or _G.AutoObservationv2 or _G.AutoMusketeerHat or _G.AutoEctoplasm or _G.AutoRengoku or _G.Auto_Rainbow_Haki or _G.AutoObservation or _G.AutoKillRipIndra or _G.Safe_Mode or _G.MasteryFruit or _G.AutoBudySword or _G.AutoOderSword or _G.AutoBounty or _G.AutoAllBoss or _G.Auto_Bounty or _G.AutoSharkman or _G.Auto_Mastery_Fruit or _G.Auto_Mastery_Gun or _G.Auto_Dungeon or _G.Auto_Cavender or _G.Auto_Pole or _G.Auto_Kill_Ply or _G.Auto_Factory or _G.AutoSecondSea or _G.TeleportPly or _G.AutoBartilo or _G.Auto_DarkBoss or _G.GrabChest or _G.AutoFarmBounty or _G.Holy_Torch or _G.AutoFarm or _G.AutoMaterial or _G.Clip or _G.AutoElitehunter or _G.AutoThirdSea or _G.Auto_Bone or _G.Autoheart or _G.Autodoughking or _G.AutoFarmMaterial or _G.AutoNevaSoulGuitar or _G.Auto_Dragon_Trident or _G.Autotushita or _G.Autowaden or _G.Autogay or _G.Autopole or _G.Autosaw or _G.AutoObservationHakiV2 or _G.AutoFarmNearest or _G.AutoCarvender or _G.AutoTwinHook or AutoMobAura or _G.Tweenfruit or _G.TeleportNPC or _G.AutoKai or _G.Leather or _G.Auto_Wing or _G.Umm or _G.Makori_gay or Radioactive or Fish or Gunpowder or Dragon_Scale or Cocoafarm or Scrap or MiniHee or _G.AutoFarmSeabaest or Auto_Cursed_Dual_Katana or _G.AutoFarmMob or _G.AutoMysticIsland or _G.Miragenpc or _G.AutoFarmDungeon or _G.AutoRaidPirate or _G.AutoQuestRace or _G.TweenMGear or getgenv().AutoFarm or _G.AutoPlayerHunter or _G.AutoFactory or _G.Namfon or _G.AutoSwordMastery or _G.Auto_Seabest or _G.AutoSeaBest or _G.AutoKillTial or _G.Auto_Saber or _G.Position_Spawn or _G.TPB or _G.Farmfast or _G.AutoRace or _G.RaidPirate or Open_Color_Haki or _G.AutoTerrorshark or FarmShark or _G.farmpiranya or _G.Fish_Crew_Member or _G.AppleAutoDriveBoat or _G.AutoFrozenDimension or _G.AutoFKitsune == true then
                 for _, v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
                     if v:IsA("BasePart") then
                         v.CanCollide = false    
@@ -5545,6 +5545,416 @@ end)
 -- [ Tab Sea Event ]
 
 local Section = SeaEvent:AddSection({
+    Name = "Boats Settings"
+})
+
+SeaEvent:AddDropdown({
+	Name = "Select Boats",
+	Default = "PirateBrigade",
+	Options = {"PirateBrigade", "PirateGrandBrigade","PirateSloop","MarineBrigade","MarineGrandBrigade"},
+	Callback = function(Value)
+		_G.Boat = Value
+	end    
+})
+
+SeaEvent:AddDropdown({
+	Name = "Select Zone",
+	Default = "Zone 5 [ Crazy ]",
+	Options = {"Zone 0 [ None ]", "Zone 1 [ Low ]","Zone 2 [ Medium ]","Zone 3 [ High ]","Zone 4 [ Extreme ]","Zone 5 [ Crazy ]","Zone 6 [ ??? ]"},
+	Callback = function(Value)
+		_G.Zone = Value
+		if _G.Zone == "Zone 0 [ None ]" then
+  	      ZoneCFrame = CFrame.new(-19118.041015625, 24.44040298461914, 858.4185791015625)
+    	elseif _G.Zone == "Zone 1 [ Low ]" then
+ 	       ZoneCFrame = CFrame.new(-21313.607421875, 12.560698509216309, 1330.6165771484375)
+ 	   elseif _G.Zone == "Zone 2 [ Medium ]" then
+ 	       ZoneCFrame = CFrame.new(-24815.267578125, 12.560657501220703, 5262.62060546875)
+ 	   elseif _G.Zone == "Zone 3 [ High ]" then
+   	     ZoneCFrame = CFrame.new(-28464.876953125, 12.553319931030273, 6896.8076171875)
+ 	   elseif _G.Zone == "Zone 4 [ Extreme ]" then
+   	     ZoneCFrame = CFrame.new(-30294.8515625, 12.554117202758789, 10409.8564453125)
+   	 elseif _G.Zone == "Zone 5 [ Crazy ]" then
+  	      ZoneCFrame = CFrame.new(-37704.828125, 12.561018943786621, 6750.69873046875)
+  	  elseif _G.Zone == "Zone 6 [ ??? ]" then
+   	     ZoneCFrame = CFrame.new(-32704.103515625, 12.557344436645508, 24089.923828125)
+ 	   end
+	end    
+})
+
+SeaEvent:AddToggle({
+	Name = "Auto Sail Boats",
+	Default = false,
+	Callback = function(Value)
+		_G.SailBoat = Value
+		StopTween(_G.SailBoat)
+	end
+})
+
+function checkboat()
+    for r, v in next, game:GetService("Workspace").Boats:GetChildren() do
+        if v:IsA("Model") then
+            if v:FindFirstChild("Owner") and tostring(v.Owner.Value) == game:GetService("Players").LocalPlayer.Name and v.Humanoid.Value > 0 then
+                return v
+            end
+        end
+    end
+    return false
+end
+
+spawn(function()
+	pcall(function()
+		while wait() do
+			if _G.SailBoat then
+				if game:GetService("Workspace").Enemies:FindFirstChild("Shark") or game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") or game:GetService("Workspace").Enemies:FindFirstChild("Piranha") or game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") then
+				    game.Players.LocalPlayer.Character.Humanoid.Sit = false
+				end
+			end
+		end
+	end)
+end)
+
+spawn(function()
+    while wait() do
+        if _G.SailBoat then
+            repeat wait()
+                if not checkboat() then
+                    if (Vector3.new(-16207.501953125, 9.0863618850708, 475.1490783691406) - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 20 then
+                        NoClip = true
+                        topos(CFrame.new(-16207.501953125, 9.0863618850708, 475.1490783691406))
+                    else
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyBoat", _G.Boat)
+                    end
+                end
+                if checkboat() and not game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Rough Sea") then
+                    if (checkboat().VehicleSeat.Position - Vector3.new(-16207.501953125, 9.0863618850708, 475.1490783691406)).Magnitude > 50 then
+                        if game:GetService("Players").LocalPlayer.Character.Humanoid.Sit == true then
+                            topos(ZoneCFrame,checkboat().VehicleSeat, 300)
+                            _G.Nocliprock = true
+                        end
+                    end
+                    if not game:GetService("Players").LocalPlayer.Character.Humanoid.Sit then
+                        _G.Clip = true
+                        topos(checkboat().VehicleSeat.CFrame * CFrame.new(0,0,0))
+                    else
+                        _G.Clip = false
+                    end
+                end
+                if game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Rough Sea") and checkboat() then
+                    if game.Players.LocalPlayer.Character.Humanoid.Sit then
+                        game.Players.LocalPlayer.Character.Humanoid.Sit = false
+                    end
+                    if (checkboat().VehicleSeat.Position - Vector3.new(-16207.501953125, 9.0863618850708, 475.1490783691406)).Magnitude > 100 then
+                        checkboat().VehicleSeat.CFrame = CFrame.new(-28464.876953125, 12.553319931030273, 6896.8076171875)
+                    end
+                    if not game:GetService("Players").LocalPlayer.Character.Humanoid.Sit then
+                        _G.Clip = true
+                        topos(checkboat().VehicleSeat.CFrame)
+                    else
+                        _G.Clip = false
+                    end
+                end
+            until not _G.SailBoat
+        end
+    end
+end)
+
+SeaEvent:AddToggle({
+	Name = "No Clip Rock",
+	Default = true,
+	Callback = function(Value)
+		_G.Nocliprock = Value
+	end
+})
+
+spawn(function()
+	while wait() do
+		if _G.Nocliprock then
+			if game.Players.LocalPlayer.Character.Humanoid.Sit == true then
+				for _, v in pairs(game.Workspace.Boats:GetDescendants()) do
+					if v:IsA("BasePart") and v.CanCollide == true then
+						v.CanCollide = false
+					end
+				end
+				for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+					if v:IsA("BasePart") and v.CanCollide == true then
+						v.CanCollide = false
+					end
+				end
+			elseif game.Players.LocalPlayer.Character.Humanoid.Sit == false then
+				for _, v in pairs(game.Workspace.Boats:GetDescendants()) do
+					if v:IsA("BasePart") and v.CanCollide == false then
+						v.CanCollide = true
+					end
+				end
+				for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+					if v:IsA("BasePart") and v.CanCollide == false then
+						v.CanCollide = true
+					end
+				end
+			end
+		end
+	end
+end)
+
+SeaEvent:AddToggle({
+	Name = "Auto Reset Character Go Tiki If Boats Destroy",
+	Default = false,
+	Callback = function(Value)
+		_G.ResetChar = Value
+	end
+})
+
+spawn(function()
+    while wait() do
+        if _G.ResetChar then
+            for i,v in pairs(game.Workspace.Boats:GetChildren()) do
+                if game:GetService("Workspace").Boats[_G.Boat] then
+                    if not v:FindFirstChild("VehicleSeat") and v:FindFirstChild("Humanoid") then
+                        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - game:GetService("Workspace").Boats[_G.Boat].VehicleSeat.Position).Magnitude > 1500 then
+                            game.Players.LocalPlayer.Humanoid.Health = 0
+                        end
+                    end
+                end
+            end
+        end
+    end
+end)
+
+SeaEvent:AddToggle({
+	Name = "Auto Ignore Sea Beast",
+	Default = false,
+	Callback = function(Value)
+		_G.DodgeSeaBeast = Value
+	end
+})
+
+spawn(function()
+    while wait() do
+        if _G.DodgeSeaBeast then
+            if CheckSeaBeast() then
+                if checkboat() then
+                    topos(checkboat().VehicleSeat.CFrame * CFrame.new(0,300,0))
+                end
+            end
+        else
+            topos(checkboat().VehicleSeat.CFrame * CFrame.new(0,1,0))
+        end
+    end
+end)
+
+SeaEvent:AddSlider({
+	Name = "Speed Boats",
+	Min = 120,
+	Max = 600,
+	Default = 200,
+	Color = Color3.fromRGB(255, 255, 255),
+	Increment = 1,
+	ValueName = "",
+	Callback = function(Value)
+		_G.SpeedBoat = Value
+	end
+})
+
+SeaEvent:AddButton({
+    Name = "Set Boats Speed",
+    Callback = function(Value)
+        _G.increaseboatspeed = Value
+        game:GetService("RunService").RenderStepped:Connect(function()
+            if _G.increaseboatspeed then
+                for i, v in pairs(game:GetService("Workspace").Boats:GetChildren()) do
+                    if game:GetService("Players").LocalPlayer.Character.Humanoid.Sit then
+                        v:FindFirstChild("VehicleSeat").MaxSpeed = _G.SpeedBoat
+                    end
+                end
+            end
+        end)
+    end
+})
+
+local Section = SeaEvent:AddSection({
+    Name = "Weapon & Skill Kill Ships & Sea Beast"
+})
+
+SeaEvent:AddDropdown({
+	Name = "Select Weapon 1",
+	Default = "Melee",
+	Options = {"Melee", "Sword","Gun","Devil Fruit"},
+	Callback = function(Value)
+		_G.WeaponSea1 = Value
+	end    
+})
+
+spawn(function()
+	while task.wait() do
+		pcall(function()
+			if WeaponSea1 == "Melee" then
+				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+					if v.ToolTip == "Melee" then
+						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+							_G.WeaponSea1 = v.Name
+						end
+					end
+				end
+			elseif WeaponSea1 == "Sword" then
+				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+					if v.ToolTip == "Sword" then
+						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+							_G.WeaponSea1 = v.Name
+						end
+					end
+				end
+			elseif WeaponSea1 == "Gun" then
+				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+					if v.ToolTip == "Gun" then
+						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+							_G.WeaponSea1 = v.Name
+						end
+					end
+				end
+			elseif WeaponSea1 == "Devil Fruit" then
+				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+					if v.ToolTip == "Blox Fruit" then
+						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+							_G.WeaponSea1 = v.Name
+						end
+					end
+				end
+			end
+		end)
+	end
+end)
+
+SeaEvent:AddDropdown({
+	Name = "Select Weapon 2",
+	Default = "Devil Fruit",
+	Options = {"Melee", "Sword","Gun","Devil Fruit"},
+	Callback = function(Value)
+		_G.WeaponSea2 = Value
+	end    
+})
+
+spawn(function()
+	while task.wait() do
+		pcall(function()
+			if WeaponSea2 == "Melee" then
+				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+					if v.ToolTip == "Melee" then
+						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+							_G.WeaponSea2 = v.Name
+						end
+					end
+				end
+			elseif WeaponSea2 == "Sword" then
+				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+					if v.ToolTip == "Sword" then
+						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+							_G.WeaponSea2 = v.Name
+						end
+					end
+				end
+			elseif WeaponSea2 == "Gun" then
+				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+					if v.ToolTip == "Gun" then
+						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+							_G.WeaponSea2 = v.Name
+						end
+					end
+				end
+			elseif WeaponSea2 == "Devil Fruit" then
+				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+					if v.ToolTip == "Blox Fruit" then
+						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+							_G.WeaponSea2 = v.Name
+						end
+					end
+				end
+			end
+		end)
+	end
+end)
+
+SeaEvent:AddDropdown({
+	Name = "Select Weapon 3",
+	Default = "Devil Fruit",
+	Options = {"Melee", "Sword","Gun","Devil Fruit"},
+	Callback = function(Value)
+		_G.WeaponSea2 = Value
+	end    
+})
+
+spawn(function()
+	while task.wait() do
+		pcall(function()
+			if WeaponSea3 == "Melee" then
+				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+					if v.ToolTip == "Melee" then
+						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+							_G.WeaponSea2 = v.Name
+						end
+					end
+				end
+			elseif WeaponSea3 == "Sword" then
+				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+					if v.ToolTip == "Sword" then
+						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+							_G.WeaponSea2 = v.Name
+						end
+					end
+				end
+			elseif WeaponSea3 == "Gun" then
+				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+					if v.ToolTip == "Gun" then
+						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+							_G.WeaponSea2 = v.Name
+						end
+					end
+				end
+			elseif WeaponSea3 == "Devil Fruit" then
+				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+					if v.ToolTip == "Blox Fruit" then
+						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+							_G.WeaponSea2 = v.Name
+						end
+					end
+				end
+			end
+		end)
+	end
+end)
+
+SeaEvent:AddToggle({
+	Name = "Skill Z",
+	Default = false,
+	Callback = function(Value)
+		Skillz = Value
+	end
+})
+
+SeaEvent:AddToggle({
+	Name = "Skill X",
+	Default = false,
+	Callback = function(Value)
+		Skillx = Value
+	end
+})
+
+SeaEvent:AddToggle({
+	Name = "Skill C",
+	Default = false,
+	Callback = function(Value)
+		Skillc = Value
+	end
+})
+
+SeaEvent:AddToggle({
+	Name = "Skill V",
+	Default = false,
+	Callback = function(Value)
+		Skillv = Value
+	end
+})
+
+local Section = SeaEvent:AddSection({
     Name = "Monster Sea Event"
 })
 
@@ -5820,413 +6230,3 @@ spawn(function()
             end
     end
 end)
-
-local Section = SeaEvent:AddSection({
-    Name = "Weapon & Skill Kill Ships & Sea Beast"
-})
-
-SeaEvent:AddDropdown({
-	Name = "Select Weapon 1",
-	Default = "Melee",
-	Options = {"Melee", "Sword","Gun","Devil Fruit"},
-	Callback = function(Value)
-		_G.WeaponSea1 = Value
-	end    
-})
-
-spawn(function()
-	while task.wait() do
-		pcall(function()
-			if WeaponSea1 == "Melee" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Melee" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.WeaponSea1 = v.Name
-						end
-					end
-				end
-			elseif WeaponSea1 == "Sword" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Sword" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.WeaponSea1 = v.Name
-						end
-					end
-				end
-			elseif WeaponSea1 == "Gun" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Gun" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.WeaponSea1 = v.Name
-						end
-					end
-				end
-			elseif WeaponSea1 == "Devil Fruit" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Blox Fruit" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.WeaponSea1 = v.Name
-						end
-					end
-				end
-			end
-		end)
-	end
-end)
-
-SeaEvent:AddDropdown({
-	Name = "Select Weapon 2",
-	Default = "Devil Fruit",
-	Options = {"Melee", "Sword","Gun","Devil Fruit"},
-	Callback = function(Value)
-		_G.WeaponSea2 = Value
-	end    
-})
-
-spawn(function()
-	while task.wait() do
-		pcall(function()
-			if WeaponSea2 == "Melee" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Melee" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.WeaponSea2 = v.Name
-						end
-					end
-				end
-			elseif WeaponSea2 == "Sword" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Sword" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.WeaponSea2 = v.Name
-						end
-					end
-				end
-			elseif WeaponSea2 == "Gun" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Gun" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.WeaponSea2 = v.Name
-						end
-					end
-				end
-			elseif WeaponSea2 == "Devil Fruit" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Blox Fruit" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.WeaponSea2 = v.Name
-						end
-					end
-				end
-			end
-		end)
-	end
-end)
-
-SeaEvent:AddDropdown({
-	Name = "Select Weapon 3",
-	Default = "Devil Fruit",
-	Options = {"Melee", "Sword","Gun","Devil Fruit"},
-	Callback = function(Value)
-		_G.WeaponSea2 = Value
-	end    
-})
-
-spawn(function()
-	while task.wait() do
-		pcall(function()
-			if WeaponSea3 == "Melee" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Melee" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.WeaponSea2 = v.Name
-						end
-					end
-				end
-			elseif WeaponSea3 == "Sword" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Sword" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.WeaponSea2 = v.Name
-						end
-					end
-				end
-			elseif WeaponSea3 == "Gun" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Gun" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.WeaponSea2 = v.Name
-						end
-					end
-				end
-			elseif WeaponSea3 == "Devil Fruit" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Blox Fruit" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.WeaponSea2 = v.Name
-						end
-					end
-				end
-			end
-		end)
-	end
-end)
-
-SeaEvent:AddToggle({
-	Name = "Skill Z",
-	Default = false,
-	Callback = function(Value)
-		Skillz = Value
-	end
-})
-
-SeaEvent:AddToggle({
-	Name = "Skill X",
-	Default = false,
-	Callback = function(Value)
-		Skillx = Value
-	end
-})
-
-SeaEvent:AddToggle({
-	Name = "Skill C",
-	Default = false,
-	Callback = function(Value)
-		Skillc = Value
-	end
-})
-
-SeaEvent:AddToggle({
-	Name = "Skill V",
-	Default = false,
-	Callback = function(Value)
-		Skillv = Value
-	end
-})
-
-local Section = SeaEvent:AddSection({
-    Name = "Boats Settings"
-})
-
-SeaEvent:AddDropdown({
-	Name = "Select Boats",
-	Default = "PirateBrigade",
-	Options = {"PirateBrigade", "PirateGrandBrigade","PirateSloop","MarineBrigade","MarineGrandBrigade"},
-	Callback = function(Value)
-		_G.Boat = Value
-	end    
-})
-
-SeaEvent:AddDropdown({
-	Name = "Select Zone",
-	Default = "Zone 5 [ Crazy ]",
-	Options = {"Zone 0 [ None ]", "Zone 1 [ Low ]","Zone 2 [ Medium ]","Zone 3 [ High ]","Zone 4 [ Extreme ]","Zone 5 [ Crazy ]","Zone 6 [ ??? ]"},
-	Callback = function(Value)
-		_G.Zone = Value
-		if _G.Zone == "Zone 0 [ None ]" then
-  	      ZoneCFrame = CFrame.new(-19118.041015625, 24.44040298461914, 858.4185791015625)
-    	elseif _G.Zone == "Zone 1 [ Low ]" then
- 	       ZoneCFrame = CFrame.new(-21313.607421875, 12.560698509216309, 1330.6165771484375)
- 	   elseif _G.Zone == "Zone 2 [ Medium ]" then
- 	       ZoneCFrame = CFrame.new(-24815.267578125, 12.560657501220703, 5262.62060546875)
- 	   elseif _G.Zone == "Zone 3 [ High ]" then
-   	     ZoneCFrame = CFrame.new(-28464.876953125, 12.553319931030273, 6896.8076171875)
- 	   elseif _G.Zone == "Zone 4 [ Extreme ]" then
-   	     ZoneCFrame = CFrame.new(-30294.8515625, 12.554117202758789, 10409.8564453125)
-   	 elseif _G.Zone == "Zone 5 [ Crazy ]" then
-  	      ZoneCFrame = CFrame.new(-37704.828125, 12.561018943786621, 6750.69873046875)
-  	  elseif _G.Zone == "Zone 6 [ ??? ]" then
-   	     ZoneCFrame = CFrame.new(-32704.103515625, 12.557344436645508, 24089.923828125)
- 	   end
-	end    
-})
-
-SeaEvent:AddToggle({
-	Name = "Auto Sail Boats",
-	Default = false,
-	Callback = function(Value)
-		_G.SailBoat = Value
-		StopTween(_G.SailBoat)
-	end
-})
-
-function checkboat()
-    for r, v in next, game:GetService("Workspace").Boats:GetChildren() do
-        if v:IsA("Model") then
-            if v:FindFirstChild("Owner") and tostring(v.Owner.Value) == game:GetService("Players").LocalPlayer.Name and v.Humanoid.Value > 0 then
-                return v
-            end
-        end
-    end
-    return false
-end
-
-spawn(function()
-	pcall(function()
-		while wait() do
-			if _G.SailBoat then
-				if game:GetService("Workspace").Enemies:FindFirstChild("Shark") or game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") or game:GetService("Workspace").Enemies:FindFirstChild("Piranha") or game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") then
-				    game.Players.LocalPlayer.Character.Humanoid.Sit = false
-				end
-			end
-		end
-	end)
-end)
-
-spawn(function()
-    while wait() do
-        if _G.SailBoat then
-            repeat wait()
-                if not checkboat() then
-                    if (Vector3.new(-16207.501953125, 9.0863618850708, 475.1490783691406) - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 20 then
-                        NoClip = true
-                        topos(CFrame.new(-16207.501953125, 9.0863618850708, 475.1490783691406))
-                    else
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyBoat", _G.Boat)
-                    end
-                end
-                if checkboat() and not game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Rough Sea") then
-                    if (checkboat().VehicleSeat.Position - Vector3.new(-16207.501953125, 9.0863618850708, 475.1490783691406)).Magnitude > 50 then
-                        if game:GetService("Players").LocalPlayer.Character.Humanoid.Sit == true then
-                            TweenObject(ZoneCFrame,checkboat().VehicleSeat, 300)
-                            _G.Nocliprock = true
-                        end
-                    end
-                    if not game:GetService("Players").LocalPlayer.Character.Humanoid.Sit then
-                        _G.Clip = true
-                        topos(checkboat().VehicleSeat.CFrame)
-                    else
-                        _G.Clip = false
-                    end
-                end
-                if game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Rough Sea") and checkboat() then
-                    if game.Players.LocalPlayer.Character.Humanoid.Sit then
-                        game.Players.LocalPlayer.Character.Humanoid.Sit = false
-                    end
-                    if (checkboat().VehicleSeat.Position - Vector3.new(-16207.501953125, 9.0863618850708, 475.1490783691406)).Magnitude > 100 then
-                        checkboat().VehicleSeat.CFrame = CFrame.new(-28464.876953125, 12.553319931030273, 6896.8076171875)
-                    end
-                    if not game:GetService("Players").LocalPlayer.Character.Humanoid.Sit then
-                        _G.Clip = true
-                        topos(checkboat().VehicleSeat.CFrame)
-                    else
-                        _G.Clip = false
-                    end
-                end
-            until not _G.SailBoat
-        end
-    end
-end)
-
-SeaEvent:AddToggle({
-	Name = "No Clip Rock",
-	Default = true,
-	Callback = function(Value)
-		_G.Nocliprock = Value
-	end
-})
-
-spawn(function()
-	while wait() do
-		if _G.Nocliprock then
-			if game.Players.LocalPlayer.Character.Humanoid.Sit == true then
-				for _, v in pairs(game.Workspace.Boats:GetDescendants()) do
-					if v:IsA("BasePart") and v.CanCollide == true then
-						v.CanCollide = false
-					end
-				end
-				for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
-					if v:IsA("BasePart") and v.CanCollide == true then
-						v.CanCollide = false
-					end
-				end
-			elseif game.Players.LocalPlayer.Character.Humanoid.Sit == false then
-				for _, v in pairs(game.Workspace.Boats:GetDescendants()) do
-					if v:IsA("BasePart") and v.CanCollide == false then
-						v.CanCollide = true
-					end
-				end
-				for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
-					if v:IsA("BasePart") and v.CanCollide == false then
-						v.CanCollide = true
-					end
-				end
-			end
-		end
-	end
-end)
-
-SeaEvent:AddToggle({
-	Name = "Auto Reset Character Go Tiki If Boats Destroy",
-	Default = false,
-	Callback = function(Value)
-		_G.ResetChar = Value
-	end
-})
-
-spawn(function()
-    while wait() do
-        if _G.ResetChar then
-            for i,v in pairs(game.Workspace.Boats:GetChildren()) do
-                if game:GetService("Workspace").Boats[_G.Boat] then
-                    if not v:FindFirstChild("VehicleSeat") and v:FindFirstChild("Humanoid") then
-                        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - game:GetService("Workspace").Boats[_G.Boat].VehicleSeat.Position).Magnitude > 1500 then
-                            game.Players.LocalPlayer.Humanoid.Health = 0
-                        end
-                    end
-                end
-            end
-        end
-    end
-end)
-
-SeaEvent:AddToggle({
-	Name = "Auto Ignore Sea Beast",
-	Default = false,
-	Callback = function(Value)
-		_G.DodgeSeaBeast = Value
-	end
-})
-
-spawn(function()
-    while wait() do
-        if _G.DodgeSeaBeast then
-            if CheckSeaBeast() then
-                if checkboat() then
-                    topos(checkboat().VehicleSeat.CFrame * CFrame.new(0,300,0))
-                end
-            end
-        else
-            topos(checkboat().VehicleSeat.CFrame * CFrame.new(0,1,0))
-        end
-    end
-end)
-
-SeaEvent:AddSlider({
-	Name = "Speed Boats",
-	Min = 120,
-	Max = 600,
-	Default = 200,
-	Color = Color3.fromRGB(255, 255, 255),
-	Increment = 1,
-	ValueName = "",
-	Callback = function(Value)
-		_G.SpeedBoat = Value
-	end
-})
-
-SeaEvent:AddButton({
-    Name = "Set Boats Speed",
-    Callback = function(Value)
-        _G.increaseboatspeed = Value
-        game:GetService("RunService").RenderStepped:Connect(function()
-            if _G.increaseboatspeed then
-                for i, v in pairs(game:GetService("Workspace").Boats:GetChildren()) do
-                    if game:GetService("Players").LocalPlayer.Character.Humanoid.Sit then
-                        v:FindFirstChild("VehicleSeat").MaxSpeed = _G.SpeedBoat
-                    end
-                end
-            end
-        end)
-    end
-})
