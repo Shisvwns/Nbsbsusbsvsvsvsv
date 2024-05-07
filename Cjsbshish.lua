@@ -1517,16 +1517,6 @@ spawn(function()
     end
 end)
 
-local WS = game:GetService("Workspace")
-local Enemies = WS.Enemies
-local P = game:GetService("Players")
-local LP = P.LocalPlayer
-local PG = LP.PlayerGui
-local RS = game:GetService("ReplicatedStorage")
-local Remotes = RS:WaitForChild("Remotes")
-local Remote = Remotes:WaitForChild("CommF_")
-local Data = LP.Data
-
 function MoonTextureId()
     if World1 then
         return game:GetService("Lighting").FantasySky.MoonTextureId
