@@ -4989,7 +4989,7 @@ spawn(function()
                 if hasCrewTag then hasCrewTag:Destroy() end
                     local hasHumanoid = game.Players.LocalPlayer.Character:FindFirstChild("Humanoid")
                     if hasHumanoid then
-                        local Chest = game.Workspace:FindFirstChild("Chest4") or game.Workspace:FindFirstChild("Chest3") or game.Workspace:FindFirstChild("Chest2")
+                        local Chest = game.Workspace:FindFirstChild("Chest4") or game.Workspace:FindFirstChild("Chest3") or game.Workspace:FindFirstChild("Chest2") or game.Workspace:FindFirstChild("Chest1")
                         if Chest then
                             game.Players.LocalPlayer.Character:PivotTo(Chest:GetPivot())
                             firesignal(Chest.Touched,game.Players.LocalPlayer.Character.HumanoidRootPart)
@@ -4999,6 +4999,29 @@ spawn(function()
                             break
                         end
                     end 
+                end
+            end
+        end
+    end
+end)
+
+Other:AddToggle({
+	Name = "Teleport To Safe If Have Item",
+	Default = false,
+	Callback = function(Value)
+		_G.TeleSafe = Value
+		StopTween(_G.TeleSafe)
+	end
+})
+
+spawn(function()
+    while task.wait() do
+        if _G.TeleSafe then
+            if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
+                if World3 then
+                    topos(CFrame.new(-12489.4893, 336.895721, -7446.056153))
+                elseif World2 then
+                    topos(CFrame.new(-380.47927856445, 77.220390319824, 255.82550048828))
                 end
             end
         end
