@@ -108,7 +108,7 @@ end
 
 -- [ Quest Check ]
 
-function CheckQuest() 
+function CheckQuest()
     MyLevel = game:GetService("Players").LocalPlayer.Data.Level.Value
     if World1 then
         if MyLevel == 1 or MyLevel <= 9 then
@@ -1351,7 +1351,7 @@ end
 
 function WaitHRP(Player)
     if not Player then return end
-    return Player.Character:WaitForChild("HumanoidRootPart")
+    return Player.Character:WaitForChild("Head")
 end
 
 function topos(Pos)
@@ -1402,13 +1402,13 @@ end)
 spawn(function()
     while task.wait() do
         Type = 1
-        wait(0.2)
+        wait(0.1)
         Type = 2
-        wait(0.2)
+        wait(0.1)
         Type = 3
-        wait(0.2)
+        wait(0.1)
         Type = 4
-        wait(0.2)
+        wait(0.1)
     end
 end)
 
@@ -1728,64 +1728,6 @@ task.spawn(function()
         end)
     end
 end)
-
-local plr = game.Players.LocalPlayer
-local CbFw = getupvalues(require(plr.PlayerScripts.CombatFramework))
-local CbFw2 = CbFw[2]
-
-function GetCurrentBlade() 
-    local p13 = CbFw2.activeController
-    local ret = p13.blades[1]
-    if not ret then return end
-    while ret.Parent~=game.Players.LocalPlayer.Character do ret=ret.Parent end
-        return ret
-end
-
-function AttackNoCD()
-    local AC = CbFw2.activeController
-    for i = 1, 1 do 
-        local bladehit = require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(
-            plr.Character,
-            {plr.Character.HumanoidRootPart},
-            60
-        )
-        local cac = {}
-        local hash = {}
-        for k, v in pairs(bladehit) do
-            if v.Parent:FindFirstChild("HumanoidRootPart") and not hash[v.Parent] then
-                table.insert(cac, v.Parent.HumanoidRootPart)
-                hash[v.Parent] = true
-            end
-        end
-        bladehit = cac
-        if #bladehit > 0 then
-            local u8 = debug.getupvalue(AC.attack, 5)
-            local u9 = debug.getupvalue(AC.attack, 6)
-            local u7 = debug.getupvalue(AC.attack, 4)
-            local u10 = debug.getupvalue(AC.attack, 7)
-            local u12 = (u8 * 798405 + u7 * 727595) % u9
-            local u13 = u7 * 798405
-            (function()
-                u12 = (u12 * u9 + u13) % 1099511627776
-                u8 = math.floor(u12 / u9)
-                u7 = u12 - u8 * u9
-            end)()
-            u10 = u10 + 1
-            debug.setupvalue(AC.attack, 5, u8)
-            debug.setupvalue(AC.attack, 6, u9)
-            debug.setupvalue(AC.attack, 4, u7)
-            debug.setupvalue(AC.attack, 7, u10)
-            pcall(function()
-                if plr.Character:FindFirstChildOfClass("Tool") and AC.blades and AC.blades[1] then
-                    AC.animator.anims.basic[1]:Play(0.01, 0.01, 0.01)
-                    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange", tostring(GetCurrentBlade()))
-                    game.ReplicatedStorage.Remotes.Validator:FireServer(math.floor(u12 / 1099511627776 * 16777215), u10)
-                    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, i, "")
-                end
-            end)
-        end
-    end
-end
 
 -- [ Ui Orion ]
 
@@ -2194,7 +2136,6 @@ task.spawn(function()
         while task.wait(_G.FastAttackDelay) do
             if _G.FastAttack then
                 AttackFunction()
-                AttackNoCD()
             end
         end
     end)
