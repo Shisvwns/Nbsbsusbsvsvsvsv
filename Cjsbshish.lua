@@ -1351,7 +1351,7 @@ end
 
 function WaitHRP(Player)
     if not Player then return end
-    return Player.Character:WaitForChild("Head")
+    return Player.game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart")
 end
 
 function topos(Pos)
