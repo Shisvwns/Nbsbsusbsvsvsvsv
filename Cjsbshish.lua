@@ -1989,8 +1989,8 @@ local Section = Setting:AddSection({
 Setting:AddToggle({
 	Name = "Auto Turn On Race V3",
 	Default = false,
-	Callback = function(Value)
-		_G.OnV3 = Value
+	Callback = function()
+		game:GetService('VirtualUser'):SetKeyDown('0x74')
 	end
 })
 
