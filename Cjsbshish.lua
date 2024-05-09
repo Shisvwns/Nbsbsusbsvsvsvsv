@@ -8588,7 +8588,7 @@ spawn(function()
         while wait() do
             if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer", "1") then
                 ColorHaki1:Set("Haki Colors: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer", "1"))
-            else
+            elseif not game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer", "1") then
                 ColorHaki1:Set("Not Found Haki Dealer")
             end
         end
