@@ -1988,19 +1988,24 @@ local Section = Setting:AddSection({
 
 Setting:AddToggle({
 	Name = "Auto Turn On Race V3",
-	Default = true,
+	Default = false,
 	Callback = function(Value)
-		_G.V3 = Value
+		_G.OnV3 = Value
 	end
 })
 
 spawn(function()
     while task.wait() do
         pcall(function()
-            if _G.V3 then
-                game:GetService("VirtualInputManager"):SendKeyEvent(true,84,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
-                wait(0.1)
-                game:GetService("VirtualInputManager"):SendKeyEvent(false,84,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
+            if _G.OnV3 then
+                repeat wait()
+                    if not game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") then
+                        game:GetService('VirtualUser'):CaptureController()
+                        game:GetService('VirtualUser'):SetKeyDown('0x74')
+                        wait(2)
+                        game:GetService('VirtualUser'):SetKeyUp('0x74')
+                    end
+                until game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") or not _G.OnV3
             end
         end)
     end
@@ -2008,7 +2013,7 @@ end)
 
 Setting:AddToggle({
 	Name = "Auto Turn On Race V4",
-	Default = true,
+	Default = false,
 	Callback = function(Value)
 		_G.V4 = Value
 	end
@@ -2017,10 +2022,15 @@ Setting:AddToggle({
 spawn(function()
     while task.wait() do
         pcall(function()
-            if _G.V4 then
-                game:GetService("VirtualInputManager"):SendKeyEvent(true,"Y",false,game)
-                wait(0.1)
-                game:GetService("VirtualInputManager"):SendKeyEvent(false,"Y",false,game)
+            if _G.OnV4 then
+                repeat wait()
+                    if not game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") then
+                        game:GetService('VirtualUser'):CaptureController()
+                        game:GetService('VirtualUser'):SetKeyDown('0x59')
+                        wait(2)
+                        game:GetService('VirtualUser'):SetKeyUp('0x59')
+                    end
+                until game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") or not _G.OnV4
             end
         end)
     end
@@ -2028,7 +2038,7 @@ end)
 
 Setting:AddToggle({
 	Name = "Auto Turn On Observation",
-	Default = true,
+	Default = false,
 	Callback = function(Value)
 		_G.BatHakiQuanSat = Value
 	end
