@@ -1351,7 +1351,7 @@ end
 
 function WaitHRP(Player)
     if not Player then return end
-    return Player.game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+    return Player.Character:WaitForChild("HumanoidRootPart")
 end
 
 function topos(Pos)
@@ -1470,19 +1470,16 @@ function StopTween(target)
     end
 end
 
-spawn(function()
-    pcall(function()
-        while wait() do
-			for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-				if v.ToolTip == "Gun" then
-					if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-						_G.SelectWeaponGun = v.Name
-					end
-                end
-            end
-        end
-    end)
-end)
+function EquipWeaponGun()
+	pcall(function()
+		for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+			if v.ToolTip == "Gun" and v:IsA('Tool') then
+				local ToolHumanoid = game.Players.LocalPlayer.Backpack:FindFirstChild(v.Name) 
+				game.Players.LocalPlayer.Character.Humanoid:EquipTool(ToolHumanoid) 
+			end
+		end
+	end)
+end
 
 function EquipWeaponSword()
 	pcall(function()
@@ -3608,7 +3605,7 @@ spawn(function()
                                         if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
                                             HealthMin = v.Humanoid.MaxHealth * _G.Kill_At/100
                                             if v.Humanoid.Health <= HealthMin then                                                
-                                                EquipWeapon(_G.SelectWeaponGun)
+                                                EquipWeaponGun()
                                                 topos(v.HumanoidRootPart.CFrame * CFrame.new(0,10,0))
                                                 v.Humanoid.WalkSpeed = 0
                                                 v.HumanoidRootPart.CanCollide = false
@@ -3618,7 +3615,7 @@ spawn(function()
                                                     [1] = v.HumanoidRootPart.Position,
                                                     [2] = v.HumanoidRootPart
                                                 }
-                                                game:GetService("Players").LocalPlayer.Character[_G.SelectWeaponGun].RemoteFunctionShoot:InvokeServer(unpack(args))
+                                                game:GetService("Players").LocalPlayer.Character[EquipWeaponGun()].RemoteFunctionShoot:InvokeServer(unpack(args))
                                             else
                                                 AutoHaki()
                                                 EquipWeapon(_G.SelectWeapon)
