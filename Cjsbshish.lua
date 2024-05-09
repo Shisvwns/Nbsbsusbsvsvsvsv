@@ -1990,7 +1990,7 @@ Setting:AddToggle({
 	Name = "Auto Turn On Race V3",
 	Default = false,
 	Callback = function()
-		game:GetService('VirtualUser'):SetKeyDown('0x74')
+		game:GetService('VirtualUser'):SetKeyUp('0x74')
 	end
 })
 
