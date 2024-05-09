@@ -2043,11 +2043,13 @@ spawn(function()
     while task.wait() do
         pcall(function()
             if _G.BatHakiQuanSat then
-                if not game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") then
-                    game:GetService('VirtualUser'):SetKeyDown('0x65')
-                    wait(0.1)
-                    game:GetService('VirtualUser'):SetKeyUp('0x65')
-                end
+                repeat wait()
+                    if not game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") then
+                        game:GetService('VirtualUser'):SetKeyDown('0x65')
+                        wait(0.1)
+                        game:GetService('VirtualUser'):SetKeyUp('0x65')
+                    end
+                until game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") or not _G.BatHakiQuanSat
             end
         end)
     end
