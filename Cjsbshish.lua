@@ -1983,6 +1983,75 @@ spawn(function()
 end)
 
 local Section = Setting:AddSection({
+    Name = "Turn On"
+})
+
+Setting:AddToggle({
+	Name = "Auto Turn On Race V3",
+	Default = true,
+	Callback = function(Value)
+		_G.V3 = Value
+	end
+})
+
+spawn(function()
+    while task.wait() do
+        pcall(function()
+            if _G.V3 then
+                game:GetService("VirtualInputManager"):SendKeyEvent(true,84,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
+                wait(0.1)
+                game:GetService("VirtualInputManager"):SendKeyEvent(false,84,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
+            end
+        end)
+    end
+end)
+
+Setting:AddToggle({
+	Name = "Auto Turn On Race V4",
+	Default = true,
+	Callback = function(Value)
+		_G.V4 = Value
+	end
+})
+
+spawn(function()
+    while task.wait() do
+        pcall(function()
+            if _G.V4 then
+                game:GetService("VirtualInputManager"):SendKeyEvent(true,"Y",false,game)
+                wait(0.1)
+                game:GetService("VirtualInputManager"):SendKeyEvent(false,"Y",false,game)
+            end
+        end)
+    end
+end)
+
+Setting:AddToggle({
+	Name = "Auto Turn On Observation",
+	Default = true,
+	Callback = function(Value)
+		_G.BatHakiQuanSat = Value
+	end
+})
+
+spawn(function()
+    while task.wait() do
+        pcall(function()
+            if _G.BatHakiQuanSat then
+                repeat wait()
+                    if not game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") then
+                        game:GetService('VirtualUser'):CaptureController()
+                        game:GetService('VirtualUser'):SetKeyDown('0x65')
+                        wait(2)
+                        game:GetService('VirtualUser'):SetKeyUp('0x65')
+                    end
+                until game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") or not _G.BatHakiQuanSat
+            end
+        end)
+    end
+end)
+
+local Section = Setting:AddSection({
     Name = "Other"
 })
 
@@ -7364,7 +7433,7 @@ spawn(function()
 end)
 
 Player:AddToggle({
-	Name = "Geppo No CD",
+	Name = "Geppo No CD [ Wait Fix ]",
 	Default = false,
 	Callback = function(Value)
 		getgenv().InfGeppo = Value
@@ -8588,7 +8657,7 @@ spawn(function()
         while wait() do
             if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer", "1") then
                 ColorHaki1:Set("Haki Colors: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer", "1"))
-            elseif not game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer", "1") then
+            else
                 ColorHaki1:Set("Not Found Haki Dealer")
             end
         end
