@@ -2000,7 +2000,6 @@ spawn(function()
             if _G.OnV3 then
                 repeat wait()
                     if not game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") then
-                        game:GetService('VirtualUser'):CaptureController()
                         game:GetService('VirtualUser'):SetKeyDown('0x74')
                         wait(2)
                         game:GetService('VirtualUser'):SetKeyUp('0x74')
@@ -2050,7 +2049,6 @@ spawn(function()
             if _G.BatHakiQuanSat then
                 repeat wait()
                     if not game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") then
-                        game:GetService('VirtualUser'):CaptureController()
                         game:GetService('VirtualUser'):SetKeyDown('0x65')
                         wait(2)
                         game:GetService('VirtualUser'):SetKeyUp('0x65')
