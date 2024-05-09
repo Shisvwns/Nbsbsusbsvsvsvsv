@@ -2010,7 +2010,7 @@ Setting:AddToggle({
 	Name = "Auto Turn On Race V4",
 	Default = false,
 	Callback = function(Value)
-		_G.V4 = Value
+		_G.OnV4 = Value
 	end
 })
 
@@ -2018,14 +2018,9 @@ spawn(function()
     while task.wait() do
         pcall(function()
             if _G.OnV4 then
-                repeat wait()
-                    if not game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") then
-                        game:GetService('VirtualUser'):CaptureController()
-                        game:GetService('VirtualUser'):SetKeyDown('0x59')
-                        wait(2)
-                        game:GetService('VirtualUser'):SetKeyUp('0x59')
-                    end
-                until game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") or not _G.OnV4
+                game:GetService('VirtualUser'):SetKeyDown('0x59')
+                wait(0.1)
+                game:GetService('VirtualUser'):SetKeyUp('0x59')
             end
         end)
     end
@@ -2035,21 +2030,21 @@ Setting:AddToggle({
 	Name = "Auto Turn On Observation",
 	Default = false,
 	Callback = function(Value)
-		_G.BatHakiQuanSat = Value
+		_G.OnHaki = Value
 	end
 })
 
 spawn(function()
     while task.wait() do
         pcall(function()
-            if _G.BatHakiQuanSat then
+            if _G.OnHaki then
                 repeat wait()
                     if not game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") then
                         game:GetService('VirtualUser'):SetKeyDown('0x65')
                         wait(0.1)
                         game:GetService('VirtualUser'):SetKeyUp('0x65')
                     end
-                until game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") or not _G.BatHakiQuanSat
+                until game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") or not _G.OnHaki
             end
         end)
     end
@@ -2589,7 +2584,7 @@ end)
 spawn(function()
     while wait() do
         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-            if (_G.FarmSkip and StartBring and v.Name == "Shanda") and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and GetDistance(v.HumanoidRootPart.Position) <= 300 then
+            if (_G.FarmSkip and _G.BringMonster and StartBring and v.Name == "Shanda") and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and GetDistance(v.HumanoidRootPart.Position) <= 300 then
                 v.HumanoidRootPart.CFrame = PosMon
                 v.HumanoidRootPart.Size = Vector3.new(1,1,1)                                               
                 v.HumanoidRootPart.CanCollide = false
@@ -3657,7 +3652,6 @@ spawn(function()
             if _G.AutoFarmGunMastery then
                 local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
                 if not string.find(QuestTitle, NameMon) then
-                    Magnet = false                                      
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
                 end
                 if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
@@ -3747,7 +3741,6 @@ spawn(function()
             if _G.AutoSwordMastery then
                 local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
                 if not string.find(QuestTitle, NameMon) then
-                    Magnet = false                                      
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
                 end
                 if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
