@@ -1989,8 +1989,8 @@ local Section = Setting:AddSection({
 Setting:AddToggle({
 	Name = "Auto Turn On Race V3",
 	Default = false,
-	Callback = function()
-		game:GetService('VirtualUser'):SetKeyDown('0x74')
+	Callback = function(Value)
+		_G.OnV3 = Value
 	end
 })
 
@@ -1998,13 +1998,9 @@ spawn(function()
     while task.wait() do
         pcall(function()
             if _G.OnV3 then
-                repeat wait()
-                    if not game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") then
-                        game:GetService('VirtualUser'):SetKeyDown('0x74')
-                        wait(2)
-                        game:GetService('VirtualUser'):SetKeyUp('0x74')
-                    end
-                until game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") or not _G.OnV3
+                game:GetService('VirtualUser'):SetKeyDown('0x74')
+                wait(0.1)
+                game:GetService('VirtualUser'):SetKeyUp('0x74')
             end
         end)
     end
@@ -2038,8 +2034,8 @@ end)
 Setting:AddToggle({
 	Name = "Auto Turn On Observation",
 	Default = false,
-	Callback = function()
-		game:GetService('VirtualUser'):SetKeyDown('0x65')
+	Callback = function(Value)
+		_G.BatHakiQuanSat = Value
 	end
 })
 
@@ -2047,13 +2043,9 @@ spawn(function()
     while task.wait() do
         pcall(function()
             if _G.BatHakiQuanSat then
-                repeat wait()
-                    if not game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") then
-                        game:GetService('VirtualUser'):SetKeyDown('0x65')
-                        wait(2)
-                        game:GetService('VirtualUser'):SetKeyUp('0x65')
-                    end
-                until game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") or not _G.BatHakiQuanSat
+                game:GetService('VirtualUser'):SetKeyDown('0x65')
+                wait(0.1)
+                game:GetService('VirtualUser'):SetKeyUp('0x65')
             end
         end)
     end
