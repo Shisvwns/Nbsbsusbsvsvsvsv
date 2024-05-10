@@ -2812,7 +2812,7 @@ spawn(function()
                 CheckPlayer = 0
                 local Players = game:GetService("Players"):GetPlayers()
                 local Quest = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
-                local mylevel = game:GetService("Players").LocalPlayer.Data.Level.Value
+                local mylevel = Data.Level.Value
                 local QuestTitle = Quest.Container.QuestTitle.Title.Text
                 if Quest.Visible == true then
                     if string.find(QuestTitle, "Defeat") then
@@ -2821,10 +2821,10 @@ spawn(function()
                             if v.Name == getgenv().Ply and v.Character.Humanoid.Health > 0 then
                                 repeat task.wait()
                                     if v.Data.Level.Value < 20 or v.Data.Level.Value > mylevel * 5 then
-                                        game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("PlayerHunter")
+                                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("PlayerHunter")
                                     end
                                     if game:GetService("Players").LocalPlayer.PlayerGui.Main.PvpDisabled.Visible == true then
-                                        game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("EnablePvp")                   
+                                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EnablePvp")
                                     end
                                     EquipWeapon(_G.SelectWeapon)
                                     AutoHaki()	   
@@ -2836,10 +2836,10 @@ spawn(function()
                             end
                         end
                     else
-                        game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("PlayerHunter")
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("PlayerHunter")
                     end
                 else                
-                    if game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("PlayerHunter") == "I don't have anything for you right now. Come back later." then
+                    if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("PlayerHunter") == "I don't have anything for you right now. Come back later." then
                         CheckPlayer = CheckPlayer + 1
                     end
                 end
