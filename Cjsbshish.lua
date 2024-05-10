@@ -2829,10 +2829,7 @@ spawn(function()
                                     EquipWeapon(_G.SelectWeapon)
                                     AutoHaki()	   
                                     NoClip = true         
-                                    topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 0, 0))
-                                    v.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
-                                    v.HumanoidRootPart.CanCollide = false
-                                    v.Humanoid.WalkSpeed = 0
+                                    topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0, 5, 0))
                                     Click()
                                 until not _G.FarmSkip or not v:FindFirstChild("HumanoidRootPart") or v.Character.Humanoid.Health <= 0
                                 NoClip = false
