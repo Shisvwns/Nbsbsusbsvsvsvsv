@@ -2812,7 +2812,7 @@ spawn(function()
                 CheckPlayer = 0
                 local Players = game:GetService("Players"):GetPlayers()
                 local Quest = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
-                local mylevel = Data.Level.Value
+                local mylevel = game:GetService("Players").LocalPlayer.Data.Level.Value
                 local QuestTitle = Quest.Container.QuestTitle.Title.Text
                 if Quest.Visible == true then
                     if string.find(QuestTitle, "Defeat") then
