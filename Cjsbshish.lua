@@ -2820,7 +2820,7 @@ spawn(function()
                         for i,v in pairs(Players) do
                             if v.Name == getgenv().Ply and v.Character.Humanoid.Health > 0 then
                                 repeat task.wait()
-                                    if v.game:GetService("Players").LocalPlayer.Data.Level.Value < 20 or v.game:GetService("Players").LocalPlayer.Data.Level.Value > mylevel * 5 then
+                                    if v.Data.Level.Value < 20 or v.Data.Level.Value > mylevel * 5 then
                                         game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("PlayerHunter")
                                     end
                                     if game:GetService("Players").LocalPlayer.PlayerGui.Main.PvpDisabled.Visible == true then
