@@ -2195,7 +2195,7 @@ end)
 Farm:AddDropdown({
 	Name = "Select Fast Attack",
 	Default = "0.175",
-	Options = {"0","0.1","0.15","0.155","0.16","0.165","0.17","0.175","0.18","0.185"},
+	Options = {"0","0.1","0.15","0.155","0.16","0.165","0.17","0.175","0.18","0.185","10"},
 	Callback = function(Value)
 		_G.FastAttackDelay = Value
 	end
@@ -2225,6 +2225,8 @@ task.spawn(function()
                     _G.FastAttackDelay = 0.18
                 elseif _G.FastAttackDelay == "0.185" then
                     _G.FastAttackDelay = 0.185
+                elseif _G.FastAttackDelay == "10" then
+                    _G.FastAttackDelay = 10
                 end
             end)
         end
