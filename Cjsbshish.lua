@@ -2830,6 +2830,9 @@ spawn(function()
                                     AutoHaki()	   
                                     NoClip = true         
                                     topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 0, 0))
+                                    v.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
+                                    v.HumanoidRootPart.CanCollide = false
+                                    v.Humanoid.WalkSpeed = 0
                                     Click()
                                 until not _G.FarmSkip or not v:FindFirstChild("HumanoidRootPart") or v.Character.Humanoid.Health <= 0
                                 NoClip = false
@@ -6792,7 +6795,7 @@ spawn(function()
 end)
 
 ItemQuest:AddToggle({
-	Name = "Auto Serpent Bow",
+	Name = "Auto Get Serpent Bow",
 	Default = false,
 	Callback = function(Value)
 		_G.AutoSerpentBow = Value
