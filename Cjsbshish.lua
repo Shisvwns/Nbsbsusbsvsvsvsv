@@ -819,6 +819,9 @@ function MaterialMon()
         MMon = "Dragon Crew Archer"
         MPos = CFrame.new(6594,383,139)
         SP = "Default"
+        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(5756, 610, -282)).Magnitude >= 1500 then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(5756, 610, -282))
+        end
     elseif SelectMaterial == "Gunpowder" then
         MMon = "Pistol Billionaire"
         MPos = CFrame.new(-469,74,5904)
@@ -7361,6 +7364,7 @@ Race:AddButton({
 			Image = "rbxassetid://16730867128",
 			Time = 5
 		})
+		StopTween()
     end
 })
 
@@ -7388,9 +7392,11 @@ Race:AddButton({
             Templeteleport()
             wait(0.3)
             topos(CFrame.new(29551.9941, 15069.002, -85.5179291))
+            StopTween()
         elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - PosTemplete.Position).Magnitude < 1000 then
             wait(0.1)
       	  topos(CFrame.new(29551.9941, 15069.002, -85.5179291))
+            StopTween()
         end
     end
 })
@@ -7402,9 +7408,11 @@ Race:AddButton({
             Templeteleport()
             wait(0.3)
             topos(CFrame.new(28973.0879, 14889.9756, -120.298691))
+            StopTween()
         elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - PosTemplete.Position).Magnitude < 1000 then
             wait(0.1)
             topos(CFrame.new(28973.0879, 14889.9756, -120.298691))
+            StopTween()
         end
     end
 })
@@ -7433,9 +7441,11 @@ Race:AddButton({
             Templeteleport()
             wait(0.3)
             RaceDoors()
+            StopTween()
         elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - PosTemplete.Position).Magnitude < 1000 then
             wait(0.1)
             RaceDoors()
+            StopTween()
         end
     end
 })
