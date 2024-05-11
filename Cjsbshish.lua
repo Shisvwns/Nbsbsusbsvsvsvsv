@@ -1349,29 +1349,9 @@ function BTP(p)
     end)
 end
 
-function WaitHRP(Player)
-    if not Player then return end
-    return Player.Character:WaitForChild("HumanoidRootPart")
-end
-
 function topos(Pos)
-    local Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-    local LocalPlayer = game.Players.LocalPlayer
-    local Character = LocalPlayer.Character
-    if not Character:FindFirstChild("PartTele") then
-        local PartTele = Instance.new("Part", Character)
-        PartTele.Size = Vector3.new(0, 0, 0)
-        PartTele.Name = "PartTele"
-        PartTele.Anchored = true
-        PartTele.Transparency = 1
-        PartTele.CanCollide = false
-        PartTele.CFrame = WaitHRP(LocalPlayer).CFrame
-        PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
-            task.wait()
-            WaitHRP(LocalPlayer).CFrame = PartTele.CFrame
-        end)
-    end
-    local Tween = game:GetService("TweenService"):Create(Character.PartTele, TweenInfo.new(Distance / getgenv().TweenSpeed, Enum.EasingStyle.Linear), {CFrame = Pos})
+    Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    local Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance / getgenv().TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos}) end)
     Tween:Play()
     _G.Clip = true
     if _G.StopTween == true then
@@ -1380,8 +1360,8 @@ function topos(Pos)
     end
 end
 
-function TelePlayer(P)
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = P
+function TelePlayer(Pos)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
 end
 
 Type = 1
@@ -2339,6 +2319,19 @@ spawn(function()
                             sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
                         end
                     end
+                    if _G.AutoMaterial and BringMonMaterial then
+                        if v.Name == MMon and (v.HumanoidRootPart.Position - PosMonEvo.Position).Magnitude <= _G.BringMode and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                            v.Humanoid:ChangeState(14)
+                            v.HumanoidRootPart.CanCollide = false
+                            v.Head.CanCollide = false
+                            v.HumanoidRootPart.CFrame = MaterialPos
+                            if v.Humanoid:FindFirstChild("Animator") then
+                                v.Humanoid.Animator:Destroy()
+                            end
+                            sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
+                        end
+                    end
                     if _G.AutoBartilo and AutoBartiloBring then
                         if v.Name == "Swan Pirate" and (v.HumanoidRootPart.Position - PosMonBarto.Position).Magnitude <= _G.BringMode and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                             v.HumanoidRootPart.Size = Vector3.new(50,50,50)
@@ -2392,33 +2385,6 @@ task.spawn(function()
 		if sethiddenproperty then
 			sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
 		end
-	end
-end)
-
-spawn(function()
-	while task.wait() do
-		pcall(function()
-			if MakoriGayMag and _G.BringMonster then
-				for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
-					if not string.find(v.Name,"Boss") and (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= _G.BringMode then
-						if InMyNetWork(v.HumanoidRootPart) then
-							v.HumanoidRootPart.CFrame = PosGay
-							v.Humanoid.JumpPower = 0
-							v.Humanoid.WalkSpeed = 0
-							v.HumanoidRootPart.Size = Vector3.new(60,60,60)
-							v.HumanoidRootPart.Transparency = 1
-							v.HumanoidRootPart.CanCollide = false
-							v.Head.CanCollide = false
-							if v.Humanoid:FindFirstChild("Animator") then
-								v.Humanoid.Animator:Destroy()
-							end
-							v.Humanoid:ChangeState(11)
-							v.Humanoid:ChangeState(14)
-						end
-					end
-				end
-			end
-		end)
 	end
 end)
 
@@ -4133,7 +4099,7 @@ spawn(function()
                             if v.Name == MMon then
                                 repeat task.wait()
                                     AutoHaki()
-                                    MakoriGayMag = true
+                                    BringMonMaterial = true
                                     EquipWeapon(_G.SelectWeapon)
                                     topos(v.HumanoidRootPart.CFrame * Pos)
                                     v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
@@ -4141,11 +4107,11 @@ spawn(function()
                                     v.Humanoid.JumpPower = 0
                                     v.Humanoid.WalkSpeed = 0
                                     v.HumanoidRootPart.CanCollide = false
-                                    FarmPos = v.HumanoidRootPart.CFrame
+                                    MaterialPos = v.HumanoidRootPart.CFrame
                                     MonFarm = v.Name
                                     Click()
                                 until not _G.AutoMaterial or not v.Parent or v.Humanoid.Health <= 0
-                                MakoriGayMag = false
+                                BringMonMaterial = false
                             end
                         end
                     end
