@@ -7364,6 +7364,7 @@ Race:AddButton({
 			Image = "rbxassetid://16730867128",
 			Time = 5
 		})
+		wait(3)
 		StopTween()
     end
 })
@@ -7392,10 +7393,12 @@ Race:AddButton({
             Templeteleport()
             wait(0.3)
             topos(CFrame.new(29551.9941, 15069.002, -85.5179291))
+            wait(3)
             StopTween()
         elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - PosTemplete.Position).Magnitude < 1000 then
             wait(0.1)
       	  topos(CFrame.new(29551.9941, 15069.002, -85.5179291))
+            wait(3)
             StopTween()
         end
     end
@@ -7408,10 +7411,12 @@ Race:AddButton({
             Templeteleport()
             wait(0.3)
             topos(CFrame.new(28973.0879, 14889.9756, -120.298691))
+            wait(3)
             StopTween()
         elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - PosTemplete.Position).Magnitude < 1000 then
             wait(0.1)
             topos(CFrame.new(28973.0879, 14889.9756, -120.298691))
+            wait(3)
             StopTween()
         end
     end
@@ -7441,10 +7446,12 @@ Race:AddButton({
             Templeteleport()
             wait(0.3)
             RaceDoors()
+            wait(3)
             StopTween()
         elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - PosTemplete.Position).Magnitude < 1000 then
             wait(0.1)
             RaceDoors()
+            wait(3)
             StopTween()
         end
     end
