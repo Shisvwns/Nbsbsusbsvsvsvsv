@@ -759,8 +759,8 @@ function MaterialMon()
         MMon = "God's Guard"
         MPos = CFrame.new(-4698,845,-1912)
         SP = "Default"
-        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(-7859.09814, 5544.19043, -381.476196)).Magnitude >= 5000 then
-            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-7859.09814, 5544.19043, -381.476196))
+        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(-4607.82275, 872.54248, -1667.55688)).Magnitude >= 5000 then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-4607.82275, 872.54248, -1667.55688))
         end
     elseif SelectMaterial == "Leather" then
         if World1 then
@@ -2320,7 +2320,7 @@ spawn(function()
                         end
                     end
                     if _G.AutoMaterial and BringMonMaterial then
-                        if v.Name == MMon and (v.HumanoidRootPart.Position - PosMonEvo.Position).Magnitude <= _G.BringMode and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                        if v.Name == MMon and (v.HumanoidRootPart.Position - MaterialPos.Position).Magnitude <= _G.BringMode and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                             v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                             v.Humanoid:ChangeState(14)
                             v.HumanoidRootPart.CanCollide = false
@@ -3997,7 +3997,7 @@ spawn(function()
                                     v.HumanoidRootPart.CanCollide = false
                                     v.Humanoid.WalkSpeed = 0
                                     SelectMag = true
-                                    PosMon = v.HumanoidRootPart.CFrame
+                                    PosMonFarm = v.HumanoidRootPart.CFrame
                                     v.HumanoidRootPart.Size = Vector3.new(80,80,80)                             
                                     topos(v.HumanoidRootPart.CFrame * Pos)
                                     game:GetService("VirtualUser"):CaptureController()
