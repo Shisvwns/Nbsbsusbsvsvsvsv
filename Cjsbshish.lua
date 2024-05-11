@@ -746,63 +746,63 @@ function MaterialMon()
         MPos = CFrame.new(-3385,239,-10542)
         SP = "Default"
     elseif SelectMaterial == "Magma Ore" then
-    if World1 then
-        MMon = "Military Spy"
-        MPos = CFrame.new(-5815,84,8820)
-        SP = "Default"
-    elseif World2 then
-        MMon = "Magma Ninja"
-        MPos = CFrame.new(-5428,78,-5959)
-        SP = "Default"
-    end
+        if World1 then
+            MMon = "Military Spy"
+            MPos = CFrame.new(-5815,84,8820)
+            SP = "Default"
+        elseif World2 then
+            MMon = "Magma Ninja"
+            MPos = CFrame.new(-5428,78,-5959)
+            SP = "Default"
+        end
     elseif SelectMaterial == "Angel Wings" then
-        MMon = "God's Guard"
+        MMon = "God's Guard" or "Shanda"
         MPos = CFrame.new(-4698,845,-1912)
         SP = "Default"
-    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(-7859.09814, 5544.19043, -381.476196)).Magnitude >= 5000 then
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-7859.09814, 5544.19043, -381.476196))
-    end
+        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(-7859.09814, 5544.19043, -381.476196)).Magnitude >= 5000 then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-7859.09814, 5544.19043, -381.476196))
+        end
     elseif SelectMaterial == "Leather" then
-    if World1 then
-        MMon = "Brute"
-        MPos = CFrame.new(-1145,15,4350)
-        SP = "Default"
-    elseif World2 then
-        MMon = "Marine Captain"
-        MPos = CFrame.new(-2010.5059814453125, 73.00115966796875, -3326.620849609375)
-        SP = "Default"
-    elseif World3 then
-        MMon = "Jungle Pirate"
-        MPos = CFrame.new(-11975.78515625, 331.7734069824219, -10620.0302734375)
-        SP = "Default"
-    end
+        if World1 then
+            MMon = "Brute"
+            MPos = CFrame.new(-1145,15,4350)
+            SP = "Default"
+        elseif World2 then
+            MMon = "Marine Captain"
+            MPos = CFrame.new(-2010.5059814453125, 73.00115966796875, -3326.620849609375)
+            SP = "Default"
+        elseif World3 then
+            MMon = "Jungle Pirate"
+            MPos = CFrame.new(-11975.78515625, 331.7734069824219, -10620.0302734375)
+            SP = "Default"
+        end
     elseif SelectMaterial == "Scrap Metal" then
-    if World1 then
-        MMon = "Brute"
-        MPos = CFrame.new(-1145,15,4350)
-        SP = "Default"
-    elseif World1 then
-        MMon = "Swan Pirate"
-        MPos = CFrame.new(878,122,1235)
-        SP = "Default"
-    elseif World3 then
-        MMon = "Jungle Pirate"
-        MPos = CFrame.new(-12107,332,-10549)
-        SP = "Default"
-    end
+        if World1 then
+            MMon = "Brute"
+            MPos = CFrame.new(-1145,15,4350)
+            SP = "Default"
+        elseif World1 then
+            MMon = "Swan Pirate"
+            MPos = CFrame.new(878,122,1235)
+            SP = "Default"
+        elseif World3 then
+            MMon = "Jungle Pirate"
+            MPos = CFrame.new(-12107,332,-10549)
+            SP = "Default"
+        end
     elseif SelectMaterial == "Fish Tail" then
-    if World3 then
-        MMon = "Fishman Raider"
-        MPos = CFrame.new(-10993,332,-8940)
-        SP = "Default"
-    elseif World1 then
-        MMon = "Fishman Warrior"
-        MPos = CFrame.new(61123,19,1569)
-        SP = "Default"
-    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(61163.8515625, 5.342342376708984, 1819.7841796875)).Magnitude >= 17000 then
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(61163.8515625, 5.342342376708984, 1819.7841796875))
-    end
-    end
+        if World3 then
+            MMon = "Fishman Raider"
+            MPos = CFrame.new(-10993,332,-8940)
+            SP = "Default"
+        elseif World1 then
+            MMon = "Fishman Warrior"
+            MPos = CFrame.new(61123,19,1569)
+            SP = "Default"
+            if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(61163.8515625, 5.342342376708984, 1819.7841796875)).Magnitude >= 17000 then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(61163.8515625, 5.342342376708984, 1819.7841796875))
+            end
+        end
     elseif SelectMaterial == "Demonic Wisp" then
         MMon = "Demonic Soul"
         MPos = CFrame.new(-9507,172,6158)
@@ -1386,15 +1386,15 @@ end
 
 Type = 1
 spawn(function()
-    while wait(.1) do
+    while task.wait() do
 		if Type == 1 then
-			Pos = CFrame.new(0,30,-30)
+			Pos = CFrame.new(0,30,-20)
 		elseif Type == 2 then
-			Pos = CFrame.new(30,30,0)
+			Pos = CFrame.new(20,30,0)
 		elseif Type == 3 then
-			Pos = CFrame.new(0,30,30)	
+			Pos = CFrame.new(0,30,20)	
 		elseif Type == 4 then
-			Pos = CFrame.new(-30,30,0)
+			Pos = CFrame.new(-20,30,0)
         end
     end
 end)
@@ -2254,7 +2254,7 @@ spawn(function()
                 CheckQuest()
                 for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                     if StartMagnet and v.Name == Mon and (Mon == "Factory Staff" or Mon == "Monkey" or Mon == "Dragon Crew Warrior" or Mon == "Dragon Crew Archer") and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and (v.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 250 then
-                        v.HumanoidRootPart.Size = Vector3.new(150,150,150)
+                        v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                         v.HumanoidRootPart.CFrame = PosMon
                         v.Humanoid:ChangeState(14)
                         v.HumanoidRootPart.CanCollide = false
@@ -2264,7 +2264,7 @@ spawn(function()
                         end
                         sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
                     elseif StartMagnet and v.Name == Mon and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and (v.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= _G.BringMode then
-                        v.HumanoidRootPart.Size = Vector3.new(150,150,150)
+                        v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                         v.HumanoidRootPart.CFrame = PosMon
                         v.Humanoid:ChangeState(14)
                         v.HumanoidRootPart.CanCollide = false
@@ -2289,7 +2289,7 @@ spawn(function()
                     end
                     if _G.AutoRengoku and StartRengokuMagnet then
                         if (v.Name == "Snow Lurker" or v.Name == "Arctic Warrior") and (v.HumanoidRootPart.Position - RengokuMon.Position).Magnitude <= _G.BringMode and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                            v.HumanoidRootPart.Size = Vector3.new(1500,1500,1500)
+                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                             v.Humanoid:ChangeState(14)
                             v.HumanoidRootPart.CanCollide = false
                             v.Head.CanCollide = false
