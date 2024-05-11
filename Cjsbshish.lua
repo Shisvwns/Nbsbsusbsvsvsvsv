@@ -756,7 +756,7 @@ function MaterialMon()
             SP = "Default"
         end
     elseif SelectMaterial == "Angel Wings" then
-        MMon = "God's Guard" or "Shanda"
+        MMon = "God's Guard"
         MPos = CFrame.new(-4698,845,-1912)
         SP = "Default"
         if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(-7859.09814, 5544.19043, -381.476196)).Magnitude >= 5000 then
