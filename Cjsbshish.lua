@@ -819,10 +819,6 @@ function MaterialMon()
         MMon = "Dragon Crew Archer"
         MPos = CFrame.new(6594,383,139)
         SP = "Default"
-    elseif SelectMaterial == "Dragon Scale" then
-        MMon = "Dragon Crew Warrior"
-        MPos = CFrame.new(6141.140625, 51.35136413574219, -1340.738525390625)
-        SP = "Default"
     elseif SelectMaterial == "Gunpowder" then
         MMon = "Pistol Billionaire"
         MPos = CFrame.new(-469,74,5904)
@@ -8350,10 +8346,8 @@ Teleport:AddToggle({
         	    elseif _G.SelectIsland == "Port Town" then
           	      topos(CFrame.new(-290.7376708984375, 6.729952812194824, 5343.5537109375))
         	    elseif _G.SelectIsland == "Hydra Island" then
-           	     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(5228.8842773438, 604.23400878906, 345.0400390625))
+           	     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(5756, 610, -282))
         	    elseif _G.SelectIsland == "Beautiful Pirate" then
-           	     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(5319, 23, -93))
-               elseif _G.SelectIsland == "Beautiful Pirate" then
            	     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(5319, 23, -93))
        	     elseif _G.SelectIsland == "Floating Turtle" then
           	      game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-12001, 332, -8861))
