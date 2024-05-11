@@ -2253,7 +2253,7 @@ spawn(function()
             if _G.BringMonster then
                 CheckQuest()
                 for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                    if _G.AutoFarm and StartMagnet and v.Name == Mon and (Mon == "Factory Staff" or Mon == "Monkey" or Mon == "Dragon Crew Warrior" or Mon == "Dragon Crew Archer") and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and (v.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 250 then
+                    if StartMagnet and v.Name == Mon and (Mon == "Factory Staff" or Mon == "Monkey" or Mon == "Dragon Crew Warrior" or Mon == "Dragon Crew Archer") and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and (v.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 250 then
                         v.HumanoidRootPart.Size = Vector3.new(150,150,150)
                         v.HumanoidRootPart.CFrame = PosMon
                         v.Humanoid:ChangeState(14)
@@ -2263,7 +2263,7 @@ spawn(function()
                             v.Humanoid.Animator:Destroy()
                         end
                         sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
-                    elseif _G.AutoFarm and StartMagnet and v.Name == Mon and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and (v.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= _G.BringMode then
+                    elseif StartMagnet and v.Name == Mon and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and (v.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= _G.BringMode then
                         v.HumanoidRootPart.Size = Vector3.new(150,150,150)
                         v.HumanoidRootPart.CFrame = PosMon
                         v.Humanoid:ChangeState(14)
@@ -2352,84 +2352,6 @@ spawn(function()
                             sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
                         end
                     end
-                    if _G.AutoFarmFruitMastery and StartMasteryFruitMagnet then
-                        if v.Name == "Monkey" then
-                            if (v.HumanoidRootPart.Position - PosMonMasteryFruit.Position).Magnitude <= _G.BringMode and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                v.Humanoid:ChangeState(14)
-                                v.HumanoidRootPart.CanCollide = false
-                                v.Head.CanCollide = false
-                                v.HumanoidRootPart.CFrame = PosMonMasteryFruit
-                                if v.Humanoid:FindFirstChild("Animator") then
-                                    v.Humanoid.Animator:Destroy()
-                                end
-                                sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
-                            end
-                        elseif v.Name == "Factory Staff" then
-                            if (v.HumanoidRootPart.Position - PosMonMasteryFruit.Position).Magnitude <= _G.BringMode and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                v.Humanoid:ChangeState(14)
-                                v.HumanoidRootPart.CanCollide = false
-                                v.Head.CanCollide = false
-                                v.HumanoidRootPart.CFrame = PosMonMasteryFruit
-                                if v.Humanoid:FindFirstChild("Animator") then
-                                    v.Humanoid.Animator:Destroy()
-                                end
-                                sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
-                            end
-                        elseif v.Name == Mon then
-                            if (v.HumanoidRootPart.Position - PosMonMasteryFruit.Position).Magnitude <= _G.BringMode and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                v.Humanoid:ChangeState(14)
-                                v.HumanoidRootPart.CanCollide = false
-                                v.Head.CanCollide = false
-                                v.HumanoidRootPart.CFrame = PosMonMasteryFruit
-                                if v.Humanoid:FindFirstChild("Animator") then
-                                    v.Humanoid.Animator:Destroy()
-                                end
-                                sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
-                            end
-                        end
-                    end
-                    if _G.AutoFarmGunMastery and StartMasteryGunMagnet then
-                        if v.Name == "Monkey" then
-                            if (v.HumanoidRootPart.Position - PosMonMasteryGun.Position).Magnitude <= _G.BringMode and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                v.Humanoid:ChangeState(14)
-                                v.HumanoidRootPart.CanCollide = false
-                                v.Head.CanCollide = false
-                                v.HumanoidRootPart.CFrame = PosMonMasteryGun
-                                if v.Humanoid:FindFirstChild("Animator") then
-                                    v.Humanoid.Animator:Destroy()
-                                end
-                                sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
-                            end
-                        elseif v.Name == "Factory Staff" then
-                            if (v.HumanoidRootPart.Position - PosMonMasteryGun.Position).Magnitude <= _G.BringMode and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                v.Humanoid:ChangeState(14)
-                                v.HumanoidRootPart.CanCollide = false
-                                v.Head.CanCollide = false
-                                v.HumanoidRootPart.CFrame = PosMonMasteryGun
-                                if v.Humanoid:FindFirstChild("Animator") then
-                                    v.Humanoid.Animator:Destroy()
-                                end
-                                sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
-                            end
-                        elseif v.Name == Mon then
-                            if (v.HumanoidRootPart.Position - PosMonMasteryGun.Position).Magnitude <= _G.BringMode and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                v.Humanoid:ChangeState(14)
-                                v.HumanoidRootPart.CanCollide = false
-                                v.Head.CanCollide = false
-                                v.HumanoidRootPart.CFrame = PosMonMasteryGun
-                                if v.Humanoid:FindFirstChild("Animator") then
-                                    v.Humanoid.Animator:Destroy()
-                                end
-                                sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
-                            end
-                        end
-                    end
                     if _G.Auto_Bone and StartMagnetBoneMon then
                         if (v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy") and (v.HumanoidRootPart.Position - PosMonBone.Position).Magnitude <= _G.BringMode and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                             v.HumanoidRootPart.Size = Vector3.new(50,50,50)
@@ -2481,33 +2403,6 @@ spawn(function()
 					if not string.find(v.Name,"Boss") and (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= _G.BringMode then
 						if InMyNetWork(v.HumanoidRootPart) then
 							v.HumanoidRootPart.CFrame = PosGay
-							v.Humanoid.JumpPower = 0
-							v.Humanoid.WalkSpeed = 0
-							v.HumanoidRootPart.Size = Vector3.new(60,60,60)
-							v.HumanoidRootPart.Transparency = 1
-							v.HumanoidRootPart.CanCollide = false
-							v.Head.CanCollide = false
-							if v.Humanoid:FindFirstChild("Animator") then
-								v.Humanoid.Animator:Destroy()
-							end
-							v.Humanoid:ChangeState(11)
-							v.Humanoid:ChangeState(14)
-						end
-					end
-				end
-			end
-		end)
-	end
-end)
-
-spawn(function()
-	while task.wait() do
-		pcall(function()
-			if _G.AutoSwordMastery and AutoSwordMasteryMag and _G.BringMonster then
-				for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
-					if not string.find(v.Name,"Boss") and (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= _G.BringMode then
-						if InMyNetWork(v.HumanoidRootPart) then
-							v.HumanoidRootPart.CFrame = PosMon
 							v.Humanoid.JumpPower = 0
 							v.Humanoid.WalkSpeed = 0
 							v.HumanoidRootPart.Size = Vector3.new(60,60,60)
@@ -2791,8 +2686,9 @@ spawn(function()
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == "Shanda" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                             repeat task.wait()
-                                EquipWeapon(_G.SelectWeapon)                                                                                                                    
+                                EquipWeapon(_G.SelectWeapon)
                                 AutoHaki()
+                                game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer("TantaiGaming")
                                 topos(v.HumanoidRootPart.CFrame * Pos)               
                                 PosMon = v.HumanoidRootPart.CFrame                                                                       
                                 v.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
@@ -2829,7 +2725,7 @@ spawn(function()
                                     EquipWeapon(_G.SelectWeapon)
                                     AutoHaki()	   
                                     NoClip = true         
-                                    topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0, 5, 0))
+                                    topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 0))
                                     Click()
                                 until not _G.FarmSkip or not v:FindFirstChild("HumanoidRootPart") or v.Character.Humanoid.Health <= 0
                                 NoClip = false
@@ -3498,7 +3394,7 @@ spawn(function()
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
                 end
                 if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
-                    StartMasteryFruitMagnet = false
+                    StartMagnet = false
                     UseSkill = false
                     CheckQuest()
                     repeat wait()
@@ -3538,13 +3434,13 @@ spawn(function()
                                                 v.Humanoid.WalkSpeed = 0
                                                 v.Head.CanCollide = false
                                             end
-                                            StartMasteryFruitMagnet = true
+                                            StartMagnet = true
                                             game:GetService'VirtualUser':CaptureController()
                                             game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
                                         until not _G.AutoFarmFruitMastery or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
                                     else
                                         UseSkill = false
-                                        StartMasteryFruitMagnet = false
+                                        StartMagnet = false
                                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
                                     end
                                 end
@@ -3553,7 +3449,7 @@ spawn(function()
                     else
                         topos(CFrameMon)
                         UnEquipWeapon(_G.SelectWeapon)
-                        StartMasteryFruitMagnet = false   
+                        StartMagnet = false   
                         UseSkill = false 
                         local Mob = game:GetService("ReplicatedStorage"):FindFirstChild(Mon) 
                         if Mob then
@@ -3591,7 +3487,7 @@ spawn(function()
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
                 end
                 if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
-                    StartMasteryGunMagnet = false
+                    StartMagnet = false
                     CheckQuest()
                     topos(CFrameQuest)
                     if (CFrameQuest.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 10 then
@@ -3630,14 +3526,14 @@ spawn(function()
                                                 game:GetService'VirtualUser':CaptureController()
                                                 game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
                                             end
-                                            StartMasteryGunMagnet = true 
+                                            StartMagnet = true 
                                             PosMonMasteryGun = v.HumanoidRootPart.CFrame
                                         else
-                                            StartMasteryGunMagnet = false
+                                            StartMagnet = false
                                             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
                                         end
                                     until v.Humanoid.Health <= 0 or _G.AutoFarmGunMastery == false or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
-                                    StartMasteryGunMagnet = false
+                                    StartMagnet = false
                                 end
                             end
                         end)
@@ -3677,11 +3573,11 @@ spawn(function()
             if _G.AutoSwordMastery then
                 local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
                 if not string.find(QuestTitle, NameMon) then
-                    Magnet = false                                      
+                    StartMagnet = false                                      
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
                 end
                 if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
-                    AutoSwordMasteryMag = false
+                    StartMagnet = false
                     CheckQuest()
                     topos(CFrameQuest)
                     if (CFrameQuest.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 10 then
@@ -3717,21 +3613,21 @@ spawn(function()
                                                 game:GetService'VirtualUser':CaptureController()
                                                 game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
                                             end
-                                            AutoSwordMasteryMag = true 
+                                            StartMagnet = true 
                                             PosMon = v.HumanoidRootPart.CFrame
                                         else
-                                            AutoSwordMasteryMag = false
+                                            StartMagnet = false
                                             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
                                         end
                                     until v.Humanoid.Health <= 0 or _G.AutoSwordMastery == false or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
-                                    AutoSwordMasteryMag = false
+                                    StartMagnet = false
                                 end
                             end
                         end)
                     else
                        topos(CFrameMon)
                        UnEquipWeapon(_G.SelectWeapon)
-                        AutoSwordMasteryMag = false
+                        StartMagnet = false
                         local Mob = game:GetService("ReplicatedStorage"):FindFirstChild(Mon) 
                         if Mob then
                             topos(Mob.HumanoidRootPart.CFrame * CFrame.new(0,0,10))
