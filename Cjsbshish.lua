@@ -2301,7 +2301,7 @@ spawn(function()
                 CheckQuest()
                 for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                     if StartMagnet and v.Name == Mon and (Mon == "Factory Staff" or Mon == "Monkey" or Mon == "Dragon Crew Warrior" or Mon == "Dragon Crew Archer") and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and (v.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 250 then
-                        v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                        v.HumanoidRootPart.Size = Vector3.new(1,1,1)
                         v.HumanoidRootPart.CFrame = PosMon
                         v.Humanoid:ChangeState(14)
                         v.HumanoidRootPart.CanCollide = false
@@ -2310,8 +2310,8 @@ spawn(function()
                             v.Humanoid.Animator:Destroy()
                         end
                         sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
-                    elseif StartMagnet and v.Name == Mon and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and GetDistance(v.HumanoidRootPart.Position) <= 300 then
-                        v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                    elseif StartMagnet and v.Name == Mon and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and (v.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= _G.BringMode then
+                        v.HumanoidRootPart.Size = Vector3.new(1,1,1)
                         v.HumanoidRootPart.CFrame = PosMon
                         v.Humanoid:ChangeState(14)
                         v.HumanoidRootPart.CanCollide = false
@@ -2322,7 +2322,7 @@ spawn(function()
                         sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
                     end
                     if _G.AutoEctoplasm and StartEctoplasmMagnet then
-                        if string.find(v.Name, "Ship") and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and (v.HumanoidRootPart.Position - EctoplasmMon.Position).Magnitude <= _G.BringMode then
+                        if string.find(v.Name, "Ship") and v:FindFirstChild("Humanoid") and (v.HumanoidRootPart.Position - EctoplasmMon.Position).Magnitude <= _G.BringMode and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                             v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                             v.HumanoidRootPart.CFrame = EctoplasmMon
                             v.Humanoid:ChangeState(14)
@@ -2636,7 +2636,7 @@ spawn(function()
 end)
 
 Farm:AddToggle({
-	Name = "Skip Level [ Lv. 1 -> Lv. 350 ]",
+	Name = "Skip Level [ Lv. 1 -> Lv. 300 ]",
 	Default = false,
 	Callback = function(Value)
 		_G.FarmSkip = Value
