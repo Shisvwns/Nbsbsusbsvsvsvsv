@@ -2828,22 +2828,26 @@ spawn(function()
 	while wait() do
 		if _G.AutoFarmNearest then
 			for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                if v.Name and v:FindFirstChild("Humanoid") then
-			        if v.Humanoid.Health > 0 then
-			            repeat task.wait()
-			                EquipWeapon(_G.SelectWeapon)
-			                AutoHaki()
-			                topos(v.HumanoidRootPart.CFrame * Pos)
-			                v.HumanoidRootPart.CanCollide = false
-			                Fastattack = true
-			                v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-						    game:GetService("VirtualUser"):CaptureController()
-				       	 game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672), game.Workspace.CurrentCamera.CFrame)
-				       	 AutoFarmNearestMagnet = true
-				       	 PosMon = v.HumanoidRootPart.CFrame
-			            until not _G.AutoFarmNearest or not v.Parent or v.Humanoid.Health <= 0 
-			            AutoFarmNearestMagnet = false
-			            Fastattack = false
+                if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+			        if v.Name then
+			            if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - (v:FindFirstChild("HumanoidRootPart")).Position).Magnitude <= 1000 then
+			                repeat task.wait()
+			                    EquipWeapon(_G.SelectWeapon)
+			                    AutoHaki()
+			                    topos(v.HumanoidRootPart.CFrame * Pos)
+			                    v.HumanoidRootPart.Size = Vector3.new(50, 50, 50)
+			                    v.HumanoidRootPart.Transparency = 1
+			                    v.Humanoid.JumpPower = 0
+								v.Humanoid.WalkSpeed = 0
+								v.HumanoidRootPart.CanCollide = false
+								v.Humanoid:ChangeState(11)
+								v.Humanoid:ChangeState(14)
+								FarmPos = v.HumanoidRootPart.CFrame
+								MonFarm = v.Name
+				    		    game:GetService("VirtualUser"):CaptureController()
+				           	 game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672), game.Workspace.CurrentCamera.CFrame)
+			                until not _G.AutoFarmNearest or (not v.Parent) or v.Humanoid.Health <= 0 or (not game.Workspace.Enemies:FindFirstChild(v.Name))
+			            end
 			        end
 			    end
 			end
