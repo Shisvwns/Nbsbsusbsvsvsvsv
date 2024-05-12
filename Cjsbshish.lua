@@ -1585,181 +1585,131 @@ end
 
 local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
 CamShake:Stop()
-local aP = require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework"))
-local aQ = getupvalues(aP)[2]
-local aR = require(game:GetService("Players")["LocalPlayer"].PlayerScripts.CombatFramework.RigController)
-local aS = getupvalues(aR)[2]
-local aT = require(game.ReplicatedStorage.CombatFramework.RigLib)
-local aU = tick()
-function CameraShaker()
-	task.spawn(function()
-		local b9 = require(game.Players.LocalPlayer.PlayerScripts.CombatFramework.CameraShaker)
-		while wait() do
-			pcall(function()
-				b9.CameraShakeInstance.CameraShakeState.Inactive = 0
-			end)
-		end
-	end)
-end
+local r = require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework"))
+local r = getupvalues(r)[2]
+local s = require(game:GetService("Players")["LocalPlayer"].PlayerScripts.CombatFramework.RigController)
+local s = getupvalues(s)[2]
 function CurrentWeapon()
-	local ac = aQ.activeController
-	local aW = ac.blades[1]
-	if not aW then
-		return game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Name
-	end
-	pcall(function()
-		while aW.Parent ~= game.Players.LocalPlayer.Character do
-			aW = aW.Parent
-		end
-	end)
-	if not aW then
-		return game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Name
-	end
-	return aW
+    local a = r.activeController
+    local a = a.blades[1]
+    if not a then
+        return game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Name
+    end
+    pcall(function()
+        while a.Parent ~= game.Players.LocalPlayer.Character do
+            a = a.Parent
+        end
+    end)
+    if not a then
+        return game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Name
+    end
+    return a
 end
-function getAllBladeHitsPlayers(aX)
-	Hits = {}
-	local aY = game.Players.LocalPlayer
-	local aZ = game:GetService("Workspace").Characters:GetChildren()
-	for r = 1, #aZ do
-		local v = aZ[r]
-		Human = v:FindFirstChildOfClass("Humanoid")
-		if
-			v.Name ~= game.Players.LocalPlayer.Name and Human and Human.RootPart and Human.Health > 0 and
-				aY:DistanceFromCharacter(Human.RootPart.Position) < aX + 5
-		 then
-			table.insert(Hits, Human.RootPart)
-		end
-	end
-	return Hits
+function getAllBladeHits(a)
+    local b = {}
+    local c = game.Players.LocalPlayer
+    local d = game:GetService("Workspace").Enemies:GetChildren()
+    for e = 1, #d do
+        local d = d[e]
+        local d = d:FindFirstChildOfClass("Humanoid")
+        if d and d.RootPart and d.Health > 0 and c:DistanceFromCharacter(d.RootPart.Position) < a + 5 then
+            table.insert(b, d.RootPart)
+        end
+    end
+    return b
 end
-function getAllBladeHits(aX)
-	Hits = {}
-	local aY = game.Players.LocalPlayer
-	local a_ = game:GetService("Workspace").Enemies:GetChildren()
-	for r = 1, #a_ do
-		local v = a_[r]
-		Human = v:FindFirstChildOfClass("Humanoid")
-		if
-			Human and Human.RootPart and Human.Health > 0 and
-				aY:DistanceFromCharacter(Human.RootPart.Position) < aX + 5
-		 then
-			table.insert(Hits, Human.RootPart)
-		end
-	end
-	return Hits
+function AttackFunction()
+    local a = r.activeController
+    if a and a.equipped then
+        for b = 1, 1 do
+            local c = getAllBladeHits(80)
+            if #c > 0 then
+                local d = debug.getupvalue(a.attack, 5)
+                local e = debug.getupvalue(a.attack, 6)
+                local f = debug.getupvalue(a.attack, 4)
+                local g = debug.getupvalue(a.attack, 7)
+                local h = (d * 798405 + f * 727595) % e
+                local i = f * 798405
+                (function()
+                    h = (h * e + i) % 1099511627776
+                    d = math.floor(h / e)
+                    f = h - d * e
+                end)()
+                g = g + 1
+                debug.setupvalue(a.attack, 5, d)
+                debug.setupvalue(a.attack, 6, e)
+                debug.setupvalue(a.attack, 4, f)
+                debug.setupvalue(a.attack, 7, g)
+                for a, a in pairs(a.animator.anims.basic) do
+                    a:Play(0.01, 0.01, 0.01)
+                end
+                if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") and a.blades and a.blades[1] then
+                    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer(
+                        "weaponChange",
+                        tostring(CurrentWeapon())
+                    )
+                    game.ReplicatedStorage.Remotes.Validator:FireServer(math.floor(h / 1099511627776 * 16777215), g)
+                    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", c, b, "")
+                end
+            end
+        end
+    end
 end
-ReturnFunctions = {}
-function CurrentWeapon()
-	local ac = aQ.activeController
-	local aW = ac.blades[1]
-	if not aW then
-		return game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Name
-	end
-	pcall(function()
-		while aW.Parent ~= game.Players.LocalPlayer.Character do
-			aW = aW.Parent
-		end
-	end)
-	if not aW then
-		return game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Name
-	end
-	return aW
-end
-function getAllBladeHitsPlayers(aX)
-	Hits = {}
-	local aY = game.Players.LocalPlayer
-	local aZ = game:GetService("Workspace").Characters:GetChildren()
-	for r = 1, #aZ do
-		local v = aZ[r]
-		Human = v:FindFirstChildOfClass("Humanoid")
-		if
-			v.Name ~= game.Players.LocalPlayer.Name and Human and Human.RootPart and Human.Health > 0 and
-				aY:DistanceFromCharacter(Human.RootPart.Position) < aX + 5
-		 then
-			table.insert(Hits, Human.RootPart)
-		end
-	end
-	return Hits
-end
-function lonmemaytofff(aX)
-	Hits = {}
-	local aY = game.Players.LocalPlayer
-	local a_ = game:GetService("Workspace").Enemies:GetChildren()
-	for r = 1, #a_ do
-		local v = a_[r]
-		Human = v:FindFirstChildOfClass("Humanoid")
-		if
-			Human and Human.RootPart and Human.Health > 0 and Human.Health ~= Human.MaxHealth and
-				aY:DistanceFromCharacter(Human.RootPart.Position) < aX + 5
-		 then
-			table.insert(Hits, Human.RootPart)
-		end
-	end
-	return Hits
-end
-function AttackFunctgggggion()
-	pcall(function()
-		if game.Players.LocalPlayer.Character.Stun.Value ~= 0 then
-			return nil
-		end
-		local ac = aQ.activeController
-		ac.hitboxMagnitude = 55
-		if ac and ac.equipped then
-			for b0 = 1, 1 do
-				local b2 =
-					require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(
-					game.Players.LocalPlayer.Character,
-					{game.Players.LocalPlayer.Character.HumanoidRootPart},
-					60
-				)
-				if #b2 > 0 then
-					local b3 = debug.getupvalue(ac.attack, 5)
-					local b4 = debug.getupvalue(ac.attack, 6)
-					local b5 = debug.getupvalue(ac.attack, 4)
-					local b6 = debug.getupvalue(ac.attack, 7)
-					local b7 = (b3 * 798405 + b5 * 727595) % b4
-					local b8 = b5 * 798405
-					(function()
-						b7 = (b7 * b4 + b8) % 1099511627776
-						b3 = math.floor(b7 / b4)
-						b5 = b7 - b3 * b4
-					end)()
-					b6 = b6 + 1
-					debug.setupvalue(ac.attack, 5, b3)
-					debug.setupvalue(ac.attack, 6, b4)
-					debug.setupvalue(ac.attack, 4, b5)
-					debug.setupvalue(ac.attack, 7, b6)
-					for k, v in pairs(ac.animator.anims.basic) do
-						v:Play()
-					end
-					if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") and ac.blades and ac.blades[1] then
-						game:GetService("ReplicatedStorage").RigControllerEvent:FireServer(
-							"weaponChange",
-							tostring(CurrentWeapon())
-						)
-						game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", b2, 2, "")
-					end
-				end
+CombatFrameworkR = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
+y = debug.getupvalues(CombatFrameworkR)[2]
+task.spawn(function()
+	game:GetService("RunService").RenderStepped:Connect(function()
+		if _G.FastAttack then
+			if typeof(y) == "table" then
+				pcall(function()
+					CameraShaker:Stop()
+					y.activeController.timeToNextAttack = (math.huge^math.huge^math.huge)
+					y.activeController.timeToNextAttack = 0
+					y.activeController.hitboxMagnitude = 80
+					y.activeController.active = false
+					y.activeController.timeToNextBlock = 0
+					y.activeController.focusStart = 1655503339.0980349
+					y.activeController.increment = 1
+					y.activeController.blocking = false
+					y.activeController.attacking = false
+					y.activeController.humanoid.AutoRotate = true
+				end)
 			end
 		end
+        if _G.FastAttack == true then
+			game.Players.LocalPlayer.Character.Stun.Value = 0
+			game.Players.LocalPlayer.Character.Busy.Value = false        
+		end
 	end)
-end
+end)
+local Client = game.Players.LocalPlayer
+local STOP = require(Client.PlayerScripts.CombatFramework.Particle)
+local STOPRL = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib)
+task.spawn(function()
+    while wait() do
+        pcall(function()
+            if not shared.orl then shared.orl = STOPRL.wrapAttackAnimationAsync end
+            if not shared.cpc then shared.cpc = STOP.play end
+                STOPRL.wrapAttackAnimationAsync = function(a,b,c,d,func)
+                local Hits = STOPRL.getBladeHits(b,c,d)
+                if Hits then
+                    if _G.FastAttack then
+                        STOP.play = function() end
+                        a:Play(0.01,0.01,0.01)
+                        func(Hits)
+                        STOP.play = shared.cpc
+                        wait(a.length * 0)
+                        a:Stop()
+                    else
+                        a:Play()
+                    end
+                end
+            end
+        end)
+    end
+end)
 
 -- [ Ui Orion ]
-
-local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/HuyLocDz/Ui/main/OrionUi.lua"))()
-local Window =
-    OrionLib:MakeWindow({
-        Name = "Tinh Linh Hub",
-        IntroEnabled = true,
-        IntroText = "Tinh Linh Hub Library",
-        IntroIcon = "rbxassetid://16730867128",
-        HidePremium = false,
-        SaveConfig = true,
-        ConfigFolder = "TinhLinhHub"
-    }
-)
 
 ScreenGui = Instance.new("ScreenGui");
 Frame = Instance.new("Frame");
@@ -1846,6 +1796,19 @@ ImageLabel.BorderSizePixel = 0
 ImageLabel.Position = UDim2.new(0.448140889, 0, -0.3, 0)
 ImageLabel.Size = UDim2.new(0, 30, 0, 30)
 ImageLabel.Parent = Frame
+
+local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/HuyLocDz/Ui/main/OrionUi.lua"))()
+local Window =
+    OrionLib:MakeWindow({
+        Name = "Tinh Linh Hub",
+        IntroEnabled = true,
+        IntroText = "Tinh Linh Hub Library",
+        IntroIcon = "rbxassetid://16730867128",
+        HidePremium = false,
+        SaveConfig = true,
+        ConfigFolder = "TinhLinhHub"
+    }
+)
 
 -- [ Create Tab ]
 
@@ -2306,7 +2269,7 @@ task.spawn(function()
     pcall(function()
         while task.wait(_G.FastAttackDelay) do
             if _G.FastAttack then
-                AxcAttackFunction()
+                AttackFunction()
             end
         end
     end)
