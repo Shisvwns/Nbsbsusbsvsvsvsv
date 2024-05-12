@@ -1621,6 +1621,7 @@ end
 local plr = game.Players.LocalPlayer
 local CbFw = getupvalues(require(plr.PlayerScripts.CombatFramework))
 local CbFw2 = CbFw[2]
+
 function GetCurrentBlade() 
     local p13 = CbFw2.activeController
     local ret = p13.blades[1]
@@ -1632,6 +1633,7 @@ function AttackFunction()
     local AC = CbFw2.activeController
     for i = 1, 1 do 
         local bladehit = require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(plr.Character, {plr.Character.HumanoidRootPart}, 80)
+        local c = getAllBladeHits(80)
         local cac = {}
         local hash = {}
         for k, v in pairs(bladehit) do
@@ -1663,7 +1665,7 @@ function AttackFunction()
                     AC.animator.anims.basic[1]:Play(0.01,0.01,0.01)
                     game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange",tostring(GetCurrentBlade()))
                     game.ReplicatedStorage.Remotes.Validator:FireServer(math.floor(u12 / 1099511627776 * 16777215), u10)
-                    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, i, "")
+                    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", c, bladehit, i, "")
                 end
             end)
         end
