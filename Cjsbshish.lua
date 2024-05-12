@@ -1618,22 +1618,54 @@ function getAllBladeHits(a)
     end
     return b
 end
-local plr = game.Players.LocalPlayer
-local CbFw = getupvalues(require(plr.PlayerScripts.CombatFramework))
-local CbFw2 = CbFw[2]
-
+function AttackFunction()
+    local a = r.activeController
+    if a and a.equipped then
+        for b = 1, 1 do
+            local c = getAllBladeHits(80)
+            if #c > 0 then
+                local d = debug.getupvalue(a.attack, 5)
+                local e = debug.getupvalue(a.attack, 6)
+                local f = debug.getupvalue(a.attack, 4)
+                local g = debug.getupvalue(a.attack, 7)
+                local h = (d * 798405 + f * 727595) % e
+                local i = f * 798405
+                (function()
+                    h = (h * e + i) % 1099511627776
+                    d = math.floor(h / e)
+                    f = h - d * e
+                end)()
+                g = g + 1
+                debug.setupvalue(a.attack, 5, d)
+                debug.setupvalue(a.attack, 6, e)
+                debug.setupvalue(a.attack, 4, f)
+                debug.setupvalue(a.attack, 7, g)
+                for a, a in pairs(a.animator.anims.basic) do
+                    a:Play(0.01, 0.01, 0.01)
+                end
+                if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") and a.blades and a.blades[1] then
+                    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer(
+                        "weaponChange",
+                        tostring(CurrentWeapon())
+                    )
+                    game.ReplicatedStorage.Remotes.Validator:FireServer(math.floor(h / 1099511627776 * 16777215), g)
+                    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", c, b, "")
+                end
+            end
+        end
+    end
+end
 function GetCurrentBlade() 
-    local p13 = CbFw2.activeController
+    local p13 = getupvalues(require(game.Players.LocalPlayer.PlayerScripts.CombatFramework))[2].activeController
     local ret = p13.blades[1]
     if not ret then return end
     while ret.Parent~=game.Players.LocalPlayer.Character do ret=ret.Parent end
     return ret
 end
-function AttackFunction()
-    local AC = CbFw2.activeController
+function AttackPlayer()
+    local AC = getupvalues(require(game.Players.LocalPlayer.PlayerScripts.CombatFramework))[2].activeController
     for i = 1, 1 do 
-        local bladehit = require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(plr.Character, {plr.Character.HumanoidRootPart}, 80)
-        local c = getAllBladeHits(80)
+        local bladehit = require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(game.Players.LocalPlayer.Character, {game.Players.LocalPlayer.Character.HumanoidRootPart}, 80)
         local cac = {}
         local hash = {}
         for k, v in pairs(bladehit) do
@@ -1661,11 +1693,11 @@ function AttackFunction()
             debug.setupvalue(AC.attack, 4, u7)
             debug.setupvalue(AC.attack, 7, u10)
             pcall(function()
-                if plr.Character:FindFirstChildOfClass("Tool") and AC.blades and AC.blades[1] then
+                if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") and AC.blades and AC.blades[1] then
                     AC.animator.anims.basic[1]:Play(0.01,0.01,0.01)
                     game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange",tostring(GetCurrentBlade()))
                     game.ReplicatedStorage.Remotes.Validator:FireServer(math.floor(u12 / 1099511627776 * 16777215), u10)
-                    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", c, bladehit, i, "")
+                    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, i, "")
                 end
             end)
         end
@@ -2286,6 +2318,7 @@ task.spawn(function()
         while task.wait(_G.FastAttackDelay) do
             if _G.FastAttack then
                 AttackFunction()
+                AttackPlayer()
             end
         end
     end)
