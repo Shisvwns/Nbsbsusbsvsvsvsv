@@ -1585,45 +1585,17 @@ end
 
 local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
 CamShake:Stop()
-local r = require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework"))
-local r = getupvalues(r)[2]
-local s = require(game:GetService("Players")["LocalPlayer"].PlayerScripts.CombatFramework.RigController)
-local s = getupvalues(s)[2]
-function CurrentWeapon()
-    local a = r.activeController
-    local a = a.blades[1]
-    if not a then
-        return game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Name
-    end
-    pcall(function()
-        while a.Parent ~= game.Players.LocalPlayer.Character do
-            a = a.Parent
-        end
-    end)
-    if not a then
-        return game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Name
-    end
-    return a
-end
-function GetBladeHit()
-    local CombatFrameworkLib = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework))
-    local CmrFwLib = CombatFrameworkLib[2]
-    local p13 = CmrFwLib.activeController
-    local weapon = p13.blades[1]
-    if not weapon then 
-        return weapon
-    end
-    while weapon.Parent ~= game.Players.LocalPlayer.Character do
-        weapon = weapon.Parent 
-    end
-    return weapon
+function GetCurrentBlade() 
+    local p13 = getupvalues(require(game.Players.LocalPlayer.PlayerScripts.CombatFramework))[2].activeController
+    local ret = p13.blades[1]
+    if not ret then return end
+    while ret.Parent~=game.Players.LocalPlayer.Character do ret=ret.Parent end
+    return ret
 end
 function AttackFunction()
-    local CombatFrameworkLib = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework))
-    local CmrFwLib = CombatFrameworkLib[2]
-    local plr = game.Players.LocalPlayer
-    for i = 1, 1 do
-        local bladehit = require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(plr.Character,{plr.Character.HumanoidRootPart},60)
+    local AC = getupvalues(require(game.Players.LocalPlayer.PlayerScripts.CombatFramework))[2].activeController
+    for i = 1, 1 do 
+        local bladehit = require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(game.Players.LocalPlayer.Character, {game.Players.LocalPlayer.Character.HumanoidRootPart}, 70)
         local cac = {}
         local hash = {}
         for k, v in pairs(bladehit) do
@@ -1634,16 +1606,29 @@ function AttackFunction()
         end
         bladehit = cac
         if #bladehit > 0 then
+            local u8 = debug.getupvalue(AC.attack, 5)
+            local u9 = debug.getupvalue(AC.attack, 6)
+            local u7 = debug.getupvalue(AC.attack, 4)
+            local u10 = debug.getupvalue(AC.attack, 7)
+            local u12 = (u8 * 798405 + u7 * 727595) % u9
+            local u13 = u7 * 798405
+            (function()
+                u12 = (u12 * u9 + u13) % 1099511627776
+                u8 = math.floor(u12 / u9)
+                u7 = u12 - u8 * u9
+            end)()
+            u10 = u10 + 1
+            debug.setupvalue(AC.attack, 5, u8)
+            debug.setupvalue(AC.attack, 6, u9)
+            debug.setupvalue(AC.attack, 4, u7)
+            debug.setupvalue(AC.attack, 7, u10)
             pcall(function()
-                CmrFwLib.activeController.timeToNextAttack = -1
-                CmrFwLib.activeController.attacking = false
-                CmrFwLib.activeController.blocking = false
-                CmrFwLib.activeController.timeToNextBlock = 0
-                CmrFwLib.activeController.increment = 1 + 1 + math.huge
-                CmrFwLib.activeController.hitboxMagnitude = 200
-                CmrFwLib.activeController.focusStart = 0
-                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange",tostring(GetBladeHit()))
-                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, 2, "")
+                if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") and AC.blades and AC.blades[1] then
+                    AC.animator.anims.basic[1]:Play(0.01,0.01,0.01)
+                    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange",tostring(GetCurrentBlade()))
+                    game.ReplicatedStorage.Remotes.Validator:FireServer(math.floor(u12 / 1099511627776 * 16777215), u10)
+                    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, i, "")
+                end
             end)
         end
     end
@@ -1658,7 +1643,7 @@ task.spawn(function()
 					CameraShaker:Stop()
 					y.activeController.timeToNextAttack = (math.huge^math.huge^math.huge)
 					y.activeController.timeToNextAttack = 0
-					y.activeController.hitboxMagnitude = 80
+					y.activeController.hitboxMagnitude = 70
 					y.activeController.active = false
 					y.activeController.timeToNextBlock = 0
 					y.activeController.focusStart = 1655503339.0980349
@@ -2244,8 +2229,6 @@ task.spawn(function()
                     _G.FastAttackDelay = 0.18
                 elseif _G.FastAttackDelay == "0.185" then
                     _G.FastAttackDelay = 0.185
-                elseif _G.FastAttackDelay == "10" then
-                    _G.FastAttackDelay = 10
                 end
             end)
         end
@@ -2707,7 +2690,7 @@ spawn(function()
 end)
 
 Farm:AddToggle({
-	Name = "Skip Level [ Lv. 1 -> Lv. 300 ]",
+	Name = "Skip Level [ Lv. 1 -> Lv. 350 ]",
 	Default = false,
 	Callback = function(Value)
 		_G.FarmSkip = Value
@@ -2754,7 +2737,7 @@ spawn(function()
                         end 
                     end
                 end 
-            elseif LvCount >= 60 and LvCount < 300 then
+            elseif LvCount >= 60 and LvCount < 350 then
                 CheckPlayer = 0
                 local Players = game:GetService("Players"):GetPlayers()
                 local Quest = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
