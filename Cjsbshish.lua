@@ -1557,7 +1557,7 @@ function function8()
     return tostring(function6())
 end
 function FullMoobCheck()
- return function8()
+    return function8()
 end
     
 game:GetService("Players").LocalPlayer.Idled:connect(function()
@@ -1568,17 +1568,6 @@ end)
 
 if game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit') then
     game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit'):Destroy()
-end
-
-getgenv().NoDieEffect = true
-if getgenv().NoDieEffect then
-    local effectContainer = game:GetService("ReplicatedStorage").Effect.Container
-    if effectContainer:FindFirstChild("Death") then
-        effectContainer.Death:Destroy()
-    end
-    if effectContainer:FindFirstChild("Respawn") then
-        effectContainer.Respawn:Destroy()
-    end
 end
 
 -- [ Super Fast Attack ]
@@ -2198,22 +2187,26 @@ end)
 
 Farm:AddDropdown({
 	Name = "Select Speed ​​Attack",
-	Default = "Fast Attack",
-	Options = {"Super Fast Attack","Fast Attack","Slow Attack"},
+	Default = "0.15",
+	Options = {"0","0.1","0.15","0.175","1"},
 	Callback = function(Value)
 		_G.FastAttackDelay = Value
 	end
 })
 
 task.spawn(function()
-    while wait() do
+    while task.wait() do
         if _G.FastAttackDelay then
             pcall(function()
-                if _G.FastAttackDelay == "Super Fast Attack" then
+                if _G.FastAttackDelay == "0" then
                     _G.FastAttackDelay = 0
-                elseif _G.FastAttackDelay == "Fast Attack" then
+                elseif _G.FastAttackDelay == "0.1" then
+                    _G.FastAttackDelay = 0.1
+                elseif _G.FastAttackDelay == "0.15" then
+                    _G.FastAttackDelay = 0.15
+                elseif _G.FastAttackDelay == "0.175" then
                     _G.FastAttackDelay = 0.175
-                elseif _G.FastAttackDelay == "Slow Attack" then
+                elseif _G.FastAttackDelay == "1" then
                     _G.FastAttackDelay = 1
                 end
             end)
