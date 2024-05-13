@@ -1475,15 +1475,16 @@ function EquipWeaponSword()
 	end)
 end
 
-task.spawn(function()
-	while true do wait()
-		if setscriptable then
-			setscriptable(game.Players.LocalPlayer, "SimulationRadius", true)
-		end
-		if sethiddenproperty then
-			sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-		end
-	end
+spawn(function()
+    while wait() do
+        if sethiddenproperty then
+            sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",100)
+        end
+        if setscriptable then
+           setscriptable(game.Players.LocalPlayer, "SimulationRadius", true)
+           game.Players.LocalPlayer.SimulationRadius = math.huge * math.huge, math.huge * math.huge * 0 / 0 * 0 / 0 * 0 / 0 * 0 / 0 * 0 / 0
+        end
+    end
 end)
 
 function MoonTextureId()
@@ -1775,6 +1776,13 @@ local Window =
         ConfigFolder = "TinhLinhHub"
     }
 )
+
+OrionLib:MakeNotification({
+    Name = "Tinh Linh Hub",
+    Content = "Loading Script Tinh Linh Hub...",
+    Image = "rbxassetid://16730867128",
+    Time = 5
+})
 
 -- [ Create Tab ]
 
@@ -2273,7 +2281,7 @@ Farm:AddToggle({
 })
 
 spawn(function()
-    while wait() do
+    while task.wait() do
         pcall(function()
             if _G.BringMonster then
                 CheckQuest()
@@ -2403,30 +2411,34 @@ spawn(function()
                             sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
                         end
                     end
+                    if _G.FarmSkip and StartBring then
+                        if v.Name == "Shanda" and (v.HumanoidRootPart.Position - PosMon.Position).Magnitude <= _G.BringMode and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                            v.Humanoid:ChangeState(14)
+                            v.HumanoidRootPart.CanCollide = false
+                            v.Head.CanCollide = false
+                            v.HumanoidRootPart.CFrame = PosMon
+                            if v.Humanoid:FindFirstChild("Animator") then
+                                v.Humanoid.Animator:Destroy()
+                            end
+                            sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
+                        end
+                    end
                 end
             end
         end)
     end
 end)
 
-spawn(function()
-    while wait() do
-        for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-            if (_G.FarmSkip and _G.BringMonster and StartBring and v.Name == "Shanda") and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and GetDistance(v.HumanoidRootPart.Position) <= 300 then
-                v.HumanoidRootPart.CFrame = PosMon
-                v.HumanoidRootPart.Size = Vector3.new(1,1,1)                                               
-                v.HumanoidRootPart.CanCollide = false
-                v.Head.CanCollide = false
-                v.Humanoid.JumpPower = 0
-                v.Humanoid.WalkSpeed = 0
-                if v.Humanoid:FindFirstChild("Animator") then
-                    v.Humanoid.Animator:Destroy()
-                end
-                v.Humanoid:ChangeState(14)
-                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-            end
-        end
-    end
+task.spawn(function()
+	while true do wait()
+		if setscriptable then
+			setscriptable(game.Players.LocalPlayer, "SimulationRadius", true)
+		end
+		if sethiddenproperty then
+			sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+		end
+	end
 end)
 
 local Section = Farm:AddSection({
@@ -8902,4 +8914,11 @@ Shop:AddButton({
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(a))
         end
     end
+})
+
+OrionLib:MakeNotification({
+    Name = "Tinh Linh Hub",
+    Content = "Script Loaded Successfully!",
+    Image = "rbxassetid://16730867128",
+    Time = 5
 })
