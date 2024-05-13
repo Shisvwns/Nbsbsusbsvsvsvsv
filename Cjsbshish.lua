@@ -431,7 +431,7 @@ function CheckQuest()
             NameQuest = "ShipQuest2"
             NameMon = "Ship Steward"
             CFrameQuest = CFrame.new(968.80957, 125.092171, 33244.125)         
-            CFrameMon = CFrame.new(919.4385375976562, 129.55599975585938, 33436.03515625)      
+            CFrameMon = CFrame.new(919.4385375976562, 129.55599975585938, 33436.03515625)
             if _G.AutoFarm and (CFrameQuest.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
             end
@@ -764,7 +764,7 @@ function MaterialMon()
         end
     elseif SelectMaterial == "Ectoplasm" then
         MMon = "Ship Steward"
-        MPos = CFrame.new(923.40197753906, 125.05712890625, 32885.875)
+        MPos = CFrame.new(919.4385375976562, 129.55599975585938, 33436.03515625)
         SP = "Default"
         if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(923.40197753906, 125.05712890625, 32885.875)).Magnitude >= 5000 then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.40197753906, 125.05712890625, 32885.875))
@@ -1873,319 +1873,10 @@ local Shop = Window:MakeTab({
 -- [ Tab Settings]
 
 local Section = Setting:AddSection({
-    Name = "Graphic & Reduce Lag"
-})
-
-Setting:AddToggle({
-	Name = "White Screen",
-	Default = false,
-	Callback = function(Value)
-		_G.WhiteScreen = Value
-		if _G.WhiteScreen == true then
-   	     game:GetService("RunService"):Set3dRenderingEnabled(false)
-	    elseif _G.WhiteScreen == false then
- 	       game:GetService("RunService"):Set3dRenderingEnabled(true)
-	    end
-	end
-})
-
-spawn(function()
-    while wait() do
-        if _G.WhiteScreen then
-            for i, v in pairs(game.Workspace["_WorldOrigin"]:GetChildren()) do
-                if v.Name == "CurvedRing" or v.Name == "SlashHit" or v.Name == "DamageCounter" or v.Name == "SwordSlash" or v.Name == "SlashTail" or v.Name == "Sounds" then
-                    v:Destroy() 
-                end
-            end
-        end
-    end
-end)
-
-Setting:AddButton({
-    Name = "Remove Fog",
-    Callback = function()
-        game:GetService("Lighting").LightingLayers:Destroy()
-    	game:GetService("Lighting").Sky:Destroy()
-    end
-})
-
-Setting:AddButton({
-    Name = "Fps Booster",
-    Callback = function()
-        FPSBooster()
-    end
-})
-
-function FPSBooster()
-    local decalsyeeted = true
-    local g = game
-    local w = g.Workspace
-    local l = g.Lighting
-    local t = w.Terrain
-    sethiddenproperty(l,"Technology",2)
-    sethiddenproperty(t,"Decoration",false)
-    t.WaterWaveSize = 0
-    t.WaterWaveSpeed = 0
-    t.WaterReflectance = 0
-    t.WaterTransparency = 0
-    l.GlobalShadows = false
-    l.FogEnd = 9e9
-    l.Brightness = 0
-    settings().Rendering.QualityLevel = "Level01"
-    for i, v in pairs(g:GetDescendants()) do
-        if v:IsA("Part") or v:IsA("Union") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
-            v.Material = "Plastic"
-            v.Reflectance = 0
-        elseif v:IsA("Decal") or v:IsA("Texture") and decalsyeeted then
-            v.Transparency = 1
-        elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
-            v.Lifetime = NumberRange.new(0)
-        elseif v:IsA("Explosion") then
-            v.BlastPressure = 1
-            v.BlastRadius = 1
-        elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") or v:IsA("Sparkles") then
-            v.Enabled = false
-        elseif v:IsA("MeshPart") then
-            v.Material = "Plastic"
-            v.Reflectance = 0
-            v.TextureID = 10385902758728957
-        end
-    end
-    for i, e in pairs(l:GetChildren()) do
-        if e:IsA("BlurEffect") or e:IsA("SunRaysEffect") or e:IsA("ColorCorrectionEffect") or e:IsA("BloomEffect") or e:IsA("DepthOfFieldEffect") then
-            e.Enabled = false
-        end
-    end
-end
-
-Setting:AddButton({
-    Name = "Remove Lava",
-    Callback = function()
-        for i,v in pairs(game.Workspace:GetDescendants()) do
-			if v.Name == "Lava" then   
-				v:Destroy()
-			end
-		end
-		for i,v in pairs(game.ReplicatedStorage:GetDescendants()) do
-			if v.Name == "Lava" then   
-				v:Destroy()
-			end
-		end
-    end
-})
-
-local Section = Setting:AddSection({
-    Name = "Player"
-})
-
-Setting:AddSlider({
-	Name = "Tween Speed",
-	Min = 0,
-	Max = 350,
-	Default = 300,
-	Color = Color3.fromRGB(255,255,255),
-	Increment = 1,
-	ValueName = "",
-	Callback = function(Value)
-		getgenv().TweenSpeed = Value
-	end
-})
-
-Setting:AddButton({
-    Name = "Join Pirates Team",
-    Callback = function()
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetTeam","Pirates")
-    end
-})
-
-Setting:AddButton({
-    Name = "Join Marines Team",
-    Callback = function()
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetTeam","Marines")
-    end
-})
-
-Setting:AddToggle({
-	Name = "Auto Set Spawn Point",
-	Default = false,
-	Callback = function(Value)
-		_G.Pos_Spawn = Value
-	end
-})
-
-spawn(function()
-    pcall(function()
-        while wait() do
-            if _G.Pos_Spawn then
-                if game:GetService("Players").LocalPlayer.Character.Humanoid.Health > 0 then
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetSpawnPoint")
-                end
-            end
-        end
-    end)
-end)
-
-Setting:AddToggle({
-	Name = "Auto Ken",
-	Default = false,
-	Callback = function(Value)
-		_G.AutoKen = Value
-	end
-})
-
-spawn(function()
-    while wait() do
-        if _G.AutoKen == true then
-            pcall(function()
-                game:GetService("ReplicatedStorage").Remotes.CommE:FireServer("Ken",true)
-            end)
-        end
-    end
-end)
-
-local Section = Setting:AddSection({
-    Name = "Turn On"
-})
-
-Setting:AddToggle({
-	Name = "Auto Turn On Race V3",
-	Default = false,
-	Callback = function(Value)
-		_G.OnV3 = Value
-	end
-})
-
-spawn(function()
-    while task.wait() do
-        pcall(function()
-            if _G.OnV3 then
-                game:GetService('VirtualUser'):SetKeyDown('0x74')
-                wait(0.1)
-                game:GetService('VirtualUser'):SetKeyUp('0x74')
-            end
-        end)
-    end
-end)
-
-Setting:AddToggle({
-	Name = "Auto Turn On Race V4",
-	Default = false,
-	Callback = function(Value)
-		_G.OnV4 = Value
-	end
-})
-
-spawn(function()
-    while task.wait() do
-        pcall(function()
-            if _G.OnV4 then
-                game:GetService('VirtualUser'):SetKeyDown('0x59')
-                wait(0.1)
-                game:GetService('VirtualUser'):SetKeyUp('0x59')
-            end
-        end)
-    end
-end)
-
-Setting:AddToggle({
-	Name = "Auto Turn On Observation",
-	Default = false,
-	Callback = function(Value)
-		_G.OnHaki = Value
-	end
-})
-
-spawn(function()
-    while task.wait() do
-        pcall(function()
-            if _G.OnHaki then
-                repeat wait()
-                    if not game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") then
-                        game:GetService('VirtualUser'):SetKeyDown('0x65')
-                        wait(0.1)
-                        game:GetService('VirtualUser'):SetKeyUp('0x65')
-                    end
-                until game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") or not _G.OnHaki
-            end
-        end)
-    end
-end)
-
-local Section = Setting:AddSection({
-    Name = "Other"
-})
-
-Setting:AddToggle({
-	Name = "Auto Rejoin When Disconnect",
-	Default = true,
-	Callback = function(Value)
-		_G.AutoRejoin = Value
-	end
-})
-
-spawn(function()
-	while wait() do
-		if _G.AutoRejoin then
-			getgenv().rejoin = game:GetService("CoreGui").RobloxPromptGui.promptOverlay.ChildAdded:Connect(function(child)
-				if child.Name == 'ErrorPrompt' and child:FindFirstChild('MessageArea') and child.MessageArea:FindFirstChild("ErrorFrame") then
-					game:GetService("TeleportService"):Teleport(game.PlaceId)
-				end
-			 end)
-		end
-	end
-end)
-
-Setting:AddSlider({
-	Name = "Value Health",
-	Min = 0,
-	Max = 100,
-	Default = 30,
-	Color = Color3.fromRGB(255,255,255),
-	Increment = 1,
-	ValueName = "%",
-	Callback = function(Value)
-		_G.Health = Value
-	end
-})
-
-Setting:AddToggle({
-	Name = "Teleport To Y If Low Health",
-	Default = false,
-	Callback = function(Value)
-		_G.LowHealth = Value
-	end
-})
-
-spawn(function()
-    while task.wait() do
-        if _G.LowHealth then
-            if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
-                if game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 < _G.Health then
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, 100, 0)
-                end
-            end
-        end
-    end
-end)
-
-local Section = Setting:AddSection({
-    Name = "Other"
-})
-
-Setting:AddButton({
-    Name = "Show Item",
-    Callback = function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/HuyLocDz/ShowItem/main/ShowItem.lua"))()
-    end
-})
-
--- [ Tab Farm ]
-
-local Section = Farm:AddSection({
     Name = "Setting Farm"
 })
 
-local CheckWeapon1 = Farm:AddDropdown({
+local CheckWeapon1 = Setting:AddDropdown({
 	Name = "Select Weapon",
 	Default = "Melee",
 	Options = {"Melee","Sword","Gun","Blox Fruit"},
@@ -2210,7 +1901,7 @@ spawn(function()
 	end
 end)
 
-Farm:AddDropdown({
+Setting:AddDropdown({
 	Name = "Select Speed ​​Attack",
 	Default = "0.15",
 	Options = {"0","0.1","0.15","0.5","1"},
@@ -2239,7 +1930,7 @@ task.spawn(function()
     end
 end)
 
-Farm:AddToggle({
+Setting:AddToggle({
 	Name = "Fast Attack",
 	Default = true,
 	Callback = function(Value)
@@ -2257,7 +1948,7 @@ task.spawn(function()
     end)
 end)
 
-Farm:AddToggle({
+Setting:AddToggle({
 	Name = "Auto Click",
 	Default = false,
 	Callback = function(Value)
@@ -2265,7 +1956,7 @@ Farm:AddToggle({
 	end
 })
 
-Farm:AddToggle({
+Setting:AddToggle({
 	Name = "Bring Monster",
 	Default = true,
 	Callback = function(Value)
@@ -2455,16 +2146,314 @@ spawn(function()
     end
 end)
 
-task.spawn(function()
-	while true do wait()
-		if setscriptable then
-			setscriptable(game.Players.LocalPlayer, "SimulationRadius", true)
+local Section = Setting:AddSection({
+    Name = "Graphic & Reduce Lag"
+})
+
+Setting:AddToggle({
+	Name = "White Screen",
+	Default = false,
+	Callback = function(Value)
+		_G.WhiteScreen = Value
+		if _G.WhiteScreen == true then
+   	     game:GetService("RunService"):Set3dRenderingEnabled(false)
+	    elseif _G.WhiteScreen == false then
+ 	       game:GetService("RunService"):Set3dRenderingEnabled(true)
+	    end
+	end
+})
+
+spawn(function()
+    while wait() do
+        if _G.WhiteScreen then
+            for i, v in pairs(game.Workspace["_WorldOrigin"]:GetChildren()) do
+                if v.Name == "CurvedRing" or v.Name == "SlashHit" or v.Name == "DamageCounter" or v.Name == "SwordSlash" or v.Name == "SlashTail" or v.Name == "Sounds" then
+                    v:Destroy() 
+                end
+            end
+        end
+    end
+end)
+
+Setting:AddButton({
+    Name = "Remove Fog",
+    Callback = function()
+        game:GetService("Lighting").LightingLayers:Destroy()
+    	game:GetService("Lighting").Sky:Destroy()
+    end
+})
+
+Setting:AddButton({
+    Name = "Fps Booster",
+    Callback = function()
+        FPSBooster()
+    end
+})
+
+function FPSBooster()
+    local decalsyeeted = true
+    local g = game
+    local w = g.Workspace
+    local l = g.Lighting
+    local t = w.Terrain
+    sethiddenproperty(l,"Technology",2)
+    sethiddenproperty(t,"Decoration",false)
+    t.WaterWaveSize = 0
+    t.WaterWaveSpeed = 0
+    t.WaterReflectance = 0
+    t.WaterTransparency = 0
+    l.GlobalShadows = false
+    l.FogEnd = 9e9
+    l.Brightness = 0
+    settings().Rendering.QualityLevel = "Level01"
+    for i, v in pairs(g:GetDescendants()) do
+        if v:IsA("Part") or v:IsA("Union") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
+            v.Material = "Plastic"
+            v.Reflectance = 0
+        elseif v:IsA("Decal") or v:IsA("Texture") and decalsyeeted then
+            v.Transparency = 1
+        elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
+            v.Lifetime = NumberRange.new(0)
+        elseif v:IsA("Explosion") then
+            v.BlastPressure = 1
+            v.BlastRadius = 1
+        elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") or v:IsA("Sparkles") then
+            v.Enabled = false
+        elseif v:IsA("MeshPart") then
+            v.Material = "Plastic"
+            v.Reflectance = 0
+            v.TextureID = 10385902758728957
+        end
+    end
+    for i, e in pairs(l:GetChildren()) do
+        if e:IsA("BlurEffect") or e:IsA("SunRaysEffect") or e:IsA("ColorCorrectionEffect") or e:IsA("BloomEffect") or e:IsA("DepthOfFieldEffect") then
+            e.Enabled = false
+        end
+    end
+end
+
+Setting:AddButton({
+    Name = "Remove Lava",
+    Callback = function()
+        for i,v in pairs(game.Workspace:GetDescendants()) do
+			if v.Name == "Lava" then   
+				v:Destroy()
+			end
 		end
-		if sethiddenproperty then
-			sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+		for i,v in pairs(game.ReplicatedStorage:GetDescendants()) do
+			if v.Name == "Lava" then   
+				v:Destroy()
+			end
+		end
+    end
+})
+
+local Section = Setting:AddSection({
+    Name = "Player"
+})
+
+Setting:AddSlider({
+	Name = "Tween Speed",
+	Min = 0,
+	Max = 350,
+	Default = 300,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "",
+	Callback = function(Value)
+		getgenv().TweenSpeed = Value
+	end
+})
+
+Setting:AddButton({
+    Name = "Join Pirates Team",
+    Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetTeam","Pirates")
+    end
+})
+
+Setting:AddButton({
+    Name = "Join Marines Team",
+    Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetTeam","Marines")
+    end
+})
+
+Setting:AddToggle({
+	Name = "Auto Set Spawn Point",
+	Default = false,
+	Callback = function(Value)
+		_G.Pos_Spawn = Value
+	end
+})
+
+spawn(function()
+    pcall(function()
+        while wait() do
+            if _G.Pos_Spawn then
+                if game:GetService("Players").LocalPlayer.Character.Humanoid.Health > 0 then
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetSpawnPoint")
+                end
+            end
+        end
+    end)
+end)
+
+Setting:AddToggle({
+	Name = "Auto Ken",
+	Default = true,
+	Callback = function(Value)
+		_G.AutoKen = Value
+	end
+})
+
+spawn(function()
+    while wait() do
+        if _G.AutoKen == true then
+            pcall(function()
+                game:GetService("ReplicatedStorage").Remotes.CommE:FireServer("Ken",true)
+            end)
+        end
+    end
+end)
+
+local Section = Setting:AddSection({
+    Name = "Turn On"
+})
+
+Setting:AddToggle({
+	Name = "Auto Turn On Race V3",
+	Default = false,
+	Callback = function(Value)
+		_G.OnV3 = Value
+	end
+})
+
+spawn(function()
+    while task.wait() do
+        pcall(function()
+            if _G.OnV3 then
+                game:GetService('VirtualUser'):SetKeyDown('0x74')
+                wait(0.1)
+                game:GetService('VirtualUser'):SetKeyUp('0x74')
+            end
+        end)
+    end
+end)
+
+Setting:AddToggle({
+	Name = "Auto Turn On Race V4",
+	Default = false,
+	Callback = function(Value)
+		_G.OnV4 = Value
+	end
+})
+
+spawn(function()
+    while task.wait() do
+        pcall(function()
+            if _G.OnV4 then
+                game:GetService('VirtualUser'):SetKeyDown('0x59')
+                wait(0.1)
+                game:GetService('VirtualUser'):SetKeyUp('0x59')
+            end
+        end)
+    end
+end)
+
+Setting:AddToggle({
+	Name = "Auto Turn On Observation",
+	Default = false,
+	Callback = function(Value)
+		_G.OnHaki = Value
+	end
+})
+
+spawn(function()
+    while task.wait() do
+        pcall(function()
+            if _G.OnHaki then
+                repeat wait()
+                    if not game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") then
+                        game:GetService('VirtualUser'):SetKeyDown('0x65')
+                        wait(0.1)
+                        game:GetService('VirtualUser'):SetKeyUp('0x65')
+                    end
+                until game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") or not _G.OnHaki
+            end
+        end)
+    end
+end)
+
+local Section = Setting:AddSection({
+    Name = "Other"
+})
+
+Setting:AddToggle({
+	Name = "Auto Rejoin When Disconnect",
+	Default = true,
+	Callback = function(Value)
+		_G.AutoRejoin = Value
+	end
+})
+
+spawn(function()
+	while wait() do
+		if _G.AutoRejoin then
+			getgenv().rejoin = game:GetService("CoreGui").RobloxPromptGui.promptOverlay.ChildAdded:Connect(function(child)
+				if child.Name == 'ErrorPrompt' and child:FindFirstChild('MessageArea') and child.MessageArea:FindFirstChild("ErrorFrame") then
+					game:GetService("TeleportService"):Teleport(game.PlaceId)
+				end
+			 end)
 		end
 	end
 end)
+
+Setting:AddSlider({
+	Name = "Value Health",
+	Min = 0,
+	Max = 100,
+	Default = 30,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "%",
+	Callback = function(Value)
+		_G.Health = Value
+	end
+})
+
+Setting:AddToggle({
+	Name = "Teleport To Y If Low Health",
+	Default = false,
+	Callback = function(Value)
+		_G.LowHealth = Value
+	end
+})
+
+spawn(function()
+    while task.wait() do
+        if _G.LowHealth then
+            if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
+                if game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 < _G.Health then
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, 100, 0)
+                end
+            end
+        end
+    end
+end)
+
+local Section = Setting:AddSection({
+    Name = "Other"
+})
+
+Setting:AddButton({
+    Name = "Show Item",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/HuyLocDz/ShowItem/main/ShowItem.lua"))()
+    end
+})
+
+-- [ Tab Farm ]
 
 local Section = Farm:AddSection({
     Name = "Farm Level"
