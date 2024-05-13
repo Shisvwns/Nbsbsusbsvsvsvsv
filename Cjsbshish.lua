@@ -1,6 +1,4 @@
-0867128",
-    Time = 5
-})--[ Anti Ban & Anti Afk]
+--[ Anti Ban & Anti Afk]
 
 assert(getrawmetatable)
     grm = getrawmetatable(game)
@@ -2512,7 +2510,7 @@ spawn(function()
                                         repeat task.wait()
                                             EquipWeapon(_G.SelectWeapon)
                                             AutoHaki()                                            
-                                            PosFarm = v.HumanoidRootPart.CFrame
+                                            PosMon = v.HumanoidRootPart.CFrame
                                             topos(v.HumanoidRootPart.CFrame * Pos)
                                             v.HumanoidRootPart.CanCollide = false
                                             v.Humanoid.WalkSpeed = 0
@@ -2787,15 +2785,15 @@ spawn(function()
                                     end
                                 end
                             else
-                                if BypassTP then
-                                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CakePos.Position).Magnitude > 1500 then
-                                        BTP(CakePos)
-                                    elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CakePos.Position).Magnitude < 1500 then
-                                        topos(CakePos)
-                                    end
-                                else
-                                    topos(CakePos)
-                                end
+                            if BypassTP then
+                            if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CakePos.Position).Magnitude > 1500 then
+                            BTP(CakePos)
+                            elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CakePos.Position).Magnitude < 1500 then
+                            topos(CakePos)
+                            end
+                        else
+                            topos(CakePos)
+                        end
                                 MagnetDought = false
                                 UnEquipWeapon(_G.SelectWeapon)
                                 topos(CFrame.new(-2091.911865234375, 70.00884246826172, -12142.8359375))
@@ -2834,7 +2832,7 @@ end)
 local CakeQuestPos = CFrame.new(-2021.32007, 37.7982254, -12028.7295, 0.957576931, -8.80302053e-08, 0.288177818, 6.9301187e-08, 1, 7.51931211e-08, -0.288177818, -5.2032135e-08, 0.957576931)
 spawn(function()
     while wait() do
-        if CakeFMode == "Quest" and _G.AutoDoughtBoss and World3  then
+        if CakeFMode == "Get Quest" and _G.AutoDoughtBoss and World3 then
             pcall(function()
                 if game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince") or game:GetService("Workspace").Enemies:FindFirstChild("Dough King") then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
@@ -2862,7 +2860,7 @@ spawn(function()
             end)
         end
     end
-end)
+end) 
 spawn(function()
     while wait() do
         if CakeFMode == "Get Quest" and _G.AutoDoughtBoss and World3 and not game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince") then
@@ -2916,7 +2914,7 @@ spawn(function()
                     else
                         MagnetDought = false
                         if game:GetService("ReplicatedStorage"):FindFirstChild("Cookie Crafter") then
-                            topos(game:GetService("ReplicatedStorage"):FindFirstChild("Cookie Crafter").HumanoidRootPart.CFrame * CFrame.new(15,10,2))
+                         topos(game:GetService("ReplicatedStorage"):FindFirstChild("Cookie Crafter").HumanoidRootPart.CFrame * CFrame.new(15,10,2))
                         end
                     end
                 end
