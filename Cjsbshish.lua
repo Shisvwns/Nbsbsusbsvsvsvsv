@@ -2273,7 +2273,7 @@ Farm:AddToggle({
 })
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         pcall(function()
             if _G.BringMonster then
                 CheckQuest()
