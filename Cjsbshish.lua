@@ -1494,17 +1494,6 @@ spawn(function()
     end
 end)
 
-_G.DieNoEffect = true
-if _G.DieNoEffect then
-    local effectContainer = game:GetService("ReplicatedStorage").Effect.Container
-    if effectContainer:FindFirstChild("Death") then
-        effectContainer.Death:Destroy()
-    end
-    if effectContainer:FindFirstChild("Respawn") then
-        effectContainer.Respawn:Destroy()
-    end
-end
-
 function MoonTextureId()
     if World1 then
         return game:GetService("Lighting").FantasySky.MoonTextureId
@@ -1997,7 +1986,7 @@ spawn(function()
                         end
                     end
                     if _G.AutoRengoku and StartRengokuMagnet then
-                        if (v.Name == "Snow Lurker" or v.Name == "Arctic Warrior") and (v.HumanoidRootPart.Position - RengokuMon.Position).Magnitude <= 350 and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                        if (v.Name == "Snow Lurker" or v.Name == "Arctic Warrior") and (v.HumanoidRootPart.Position - RengokuMon.Position).Magnitude <= 350 then
                             v.HumanoidRootPart.CFrame = RengokuMon
                             v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                             v.Humanoid:ChangeState(14)
