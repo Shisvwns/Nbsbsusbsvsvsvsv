@@ -1487,6 +1487,17 @@ spawn(function()
     end
 end)
 
+_G.DieNoEffect = true
+if _G.DieNoEffect then
+    local effectContainer = game:GetService("ReplicatedStorage").Effect.Container
+    if effectContainer:FindFirstChild("Death") then
+        effectContainer.Death:Destroy()
+    end
+    if effectContainer:FindFirstChild("Respawn") then
+        effectContainer.Respawn:Destroy()
+    end
+end
+
 function MoonTextureId()
     if World1 then
         return game:GetService("Lighting").FantasySky.MoonTextureId
@@ -1767,9 +1778,9 @@ ImageLabel.Parent = Frame
 local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/HuyLocDz/Ui/main/OrionUi.lua"))()
 local Window =
     OrionLib:MakeWindow({
-        Name = "Tinh Linh Hub",
+        Name = "",
         IntroEnabled = true,
-        IntroText = "Tinh Linh Hub Library",
+        IntroText = "Tinh Linh Hub",
         IntroIcon = "rbxassetid://16730867128",
         HidePremium = false,
         SaveConfig = true,
