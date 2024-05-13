@@ -1988,7 +1988,7 @@ spawn(function()
                     if _G.AutoRengoku and StartRengokuMagnet then
                         if (v.Name == "Snow Lurker" or v.Name == "Arctic Warrior") and (v.HumanoidRootPart.Position - RengokuMon.Position).Magnitude <= 350 then
                             v.HumanoidRootPart.CFrame = RengokuMon
-                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                            v.HumanoidRootPart.Size = Vector3.new(1,1,1)
                             v.Humanoid:ChangeState(14)
                             v.HumanoidRootPart.CanCollide = false
                             v.Head.CanCollide = false
@@ -6174,7 +6174,7 @@ spawn(function()
                                 AutoHaki()
                                 EquipWeapon(_G.SelectWeapon)
                                 v.HumanoidRootPart.CanCollide = false
-                                v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                                v.HumanoidRootPart.Size = Vector3.new(1,1,1)
                                 RengokuMon = v.HumanoidRootPart.CFrame
                                 topos(v.HumanoidRootPart.CFrame * Pos)
                                 game:GetService'VirtualUser':CaptureController()
