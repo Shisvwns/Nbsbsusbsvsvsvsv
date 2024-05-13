@@ -2289,7 +2289,7 @@ spawn(function()
                         end
                     end
                     if _G.AutoEctoplasm and StartEctoplasmMagnet then
-                        if string.find(v.Name, "Ship") and v:FindFirstChild("Humanoid") and (v.HumanoidRootPart.Position - EctoplasmMon.Position).Magnitude <= 350 and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                        if (v.Name == "Ship Deckhand" or v.Name == "Ship Engineer" or v.Name == "Ship Steward" or v.Name == "Ship Officer") and v:FindFirstChild("Humanoid") and (v.HumanoidRootPart.Position - EctoplasmMon.Position).Magnitude <= 350 and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                             v.HumanoidRootPart.CFrame = EctoplasmMon
                             v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                             v.Humanoid:ChangeState(14)
@@ -4002,27 +4002,23 @@ spawn(function()
                             repeat task.wait()
                                 EquipWeapon(_G.SelectWeapon)
                                 AutoHaki()
-                                if string.find(v.Name,"Ship") then
-                                    v.HumanoidRootPart.CanCollide = false
-                                    v.Head.CanCollide = false
-                                    v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                    topos(v.HumanoidRootPart.CFrame * Pos)
-                                    game:GetService'VirtualUser':CaptureController()
-                                    game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
-                                    EctoplasmMon = v.HumanoidRootPart.CFrame
-                                    StartEctoplasmMagnet = true
-                                else
-                                    StartEctoplasmMagnet = false
-                                    topos(CFrame.new(923.40197753906, 125.05712890625, 32885.875))
-                                end
+                                v.HumanoidRootPart.CanCollide = false
+                                v.Head.CanCollide = false
+                                v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                                topos(v.HumanoidRootPart.CFrame * Pos)
+                                game:GetService'VirtualUser':CaptureController()
+                                game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
+                                EctoplasmMon = v.HumanoidRootPart.CFrame
+                                StartEctoplasmMagnet = true
                             until _G.AutoMaterial == false or not v.Parent or v.Humanoid.Health <= 0
+                            StartEctoplasmMagnet = false
                         end
                     end
                 else
                     topos(v.HumanoidRootPart.CFrame * CFrame.new(2,20,2))                         
                     StartEctoplasmMagnet = false
                     local Distance = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(923.40197753906, 125.05712890625, 32885.875)).Magnitude
-                    if Distance > 10000 then
+                    if Distance < 10000 then
                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.40197753906, 125.05712890625, 32885.875))
                     end
                     topos(CFrame.new(923.40197753906, 125.05712890625, 32885.875))
