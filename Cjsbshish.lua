@@ -4015,6 +4015,7 @@ spawn(function()
                         if string.find(v.Name, MMon) then
                             if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).Magnitude >= 10 then
                                 topos(v.HumanoidRootPart.CFrame * Pos)
+                                UnEquipWeapon(_G.SelectWeapon)
                             end
                         end
                     end
