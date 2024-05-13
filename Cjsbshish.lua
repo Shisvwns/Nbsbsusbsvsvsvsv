@@ -762,6 +762,13 @@ function MaterialMon()
         if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(-4607.82275, 872.54248, -1667.55688)).Magnitude >= 5000 then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-4607.82275, 872.54248, -1667.55688))
         end
+    elseif SelectMaterial == "Ectoplasm" then
+        MMon = "Ship Steward"
+        MPos = CFrame.new(923.40197753906, 125.05712890625, 32885.875)
+        SP = "Default"
+        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(923.40197753906, 125.05712890625, 32885.875)).Magnitude >= 5000 then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.40197753906, 125.05712890625, 32885.875))
+        end
     elseif SelectMaterial == "Leather" then
         if World1 then
             MMon = "Brute"
@@ -939,42 +946,42 @@ return math.floor(tonumber(n) + 0.5)
 end
 Number = math.random(1, 1000000)
 function UpdatePlayerChams()
-for i,v in pairs(game:GetService'Players':GetChildren()) do
-    pcall(function()
-        if not isnil(v.Character) then
-            if ESPPlayer then
-                if not isnil(v.Character.Head) and not v.Character.Head:FindFirstChild('NameEsp'..Number) then
-                    local bill = Instance.new('BillboardGui',v.Character.Head)
-                    bill.Name = 'NameEsp'..Number
-                    bill.ExtentsOffset = Vector3.new(0, 1, 0)
-                    bill.Size = UDim2.new(1,200,1,30)
-                    bill.Adornee = v.Character.Head
-                    bill.AlwaysOnTop = true
-                    local name = Instance.new('TextLabel',bill)
-                    name.Font = Enum.Font.GothamSemibold
-                    name.FontSize = "Size10"
-                    name.TextWrapped = true
-                    name.Text = (v.Name ..' \n'.. round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3) ..' Distance')
-                    name.Size = UDim2.new(1,0,1,0)
-                    name.TextYAlignment = 'Top'
-                    name.BackgroundTransparency = 1
-                    name.TextStrokeTransparency = 0.5
-                    if v.Team == game.Players.LocalPlayer.Team then
-                        name.TextColor3 = Color3.new(0,0,254)
+    for i,v in pairs(game:GetService'Players':GetChildren()) do
+        pcall(function()
+            if not isnil(v.Character) then
+                if ESPPlayer then
+                    if not isnil(v.Character.Head) and not v.Character.Head:FindFirstChild('NameEsp'..Number) then
+                        local bill = Instance.new('BillboardGui',v.Character.Head)
+                        bill.Name = 'NameEsp'..Number
+                        bill.ExtentsOffset = Vector3.new(0, 1, 0)
+                        bill.Size = UDim2.new(1,200,1,30)
+                        bill.Adornee = v.Character.Head
+                        bill.AlwaysOnTop = true
+                        local name = Instance.new('TextLabel',bill)
+                        name.Font = Enum.Font.GothamSemibold
+                        name.FontSize = "Size10"
+                        name.TextWrapped = true
+                        name.Text = (v.Name ..' \n'.. round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3) ..' Distance')
+                        name.Size = UDim2.new(1,0,1,0)
+                        name.TextYAlignment = 'Top'
+                        name.BackgroundTransparency = 1
+                        name.TextStrokeTransparency = 0.5
+                        if v.Team == game.Players.LocalPlayer.Team then
+                            name.TextColor3 = Color3.new(0,0,254)
+                        else
+                            name.TextColor3 = Color3.new(255,0,0)
+                        end
                     else
-                        name.TextColor3 = Color3.new(255,0,0)
+                        v.Character.Head['NameEsp'..Number].TextLabel.Text = (v.Name ..' | '.. round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3) ..' Distance\nHealth : ' .. round(v.Character.Humanoid.Health*100/v.Character.Humanoid.MaxHealth) .. '%')
                     end
                 else
-                    v.Character.Head['NameEsp'..Number].TextLabel.Text = (v.Name ..' | '.. round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3) ..' Distance\nHealth : ' .. round(v.Character.Humanoid.Health*100/v.Character.Humanoid.MaxHealth) .. '%')
-                end
-            else
-                if v.Character.Head:FindFirstChild('NameEsp'..Number) then
-                    v.Character.Head:FindFirstChild('NameEsp'..Number):Destroy()
+                    if v.Character.Head:FindFirstChild('NameEsp'..Number) then
+                        v.Character.Head:FindFirstChild('NameEsp'..Number):Destroy()
+                    end
                 end
             end
-        end
-    end)
-end
+        end)
+    end
 end
 
 function UpdateChestChams() 
@@ -2286,22 +2293,6 @@ spawn(function()
                             end
                             v.Humanoid:ChangeState(14)
                             sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
-                        end
-                    end
-                    if _G.AutoEctoplasm and StartEctoplasmMagnet then
-                        if (v.Name == "Ship Deckhand" or v.Name == "Ship Engineer" or v.Name == "Ship Steward" or v.Name == "Ship Officer") and v:FindFirstChild("Humanoid") and (v.HumanoidRootPart.Position - EctoplasmMon.Position).Magnitude <= 350 and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                            v.HumanoidRootPart.CFrame = EctoplasmMon
-                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                            v.Humanoid:ChangeState(14)
-                            v.HumanoidRootPart.CanCollide = false
-                            v.Head.CanCollide = false
-                            v.Humanoid.JumpPower = 0
-                            v.Humanoid.WalkSpeed = 0
-                            if v.Humanoid:FindFirstChild("Animator") then
-                                v.Humanoid.Animator:Destroy()
-                            end
-                            v.Humanoid:ChangeState(14)
-                            sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
                         end
                     end
                     if _G.AutoRengoku and StartRengokuMagnet then
@@ -3993,42 +3984,6 @@ Farm:AddToggle({
 })
 
 spawn(function()
-    pcall(function()
-        while wait() do
-            if SelectMaterial == "Ectoplasm" and _G.AutoMaterial then
-                if game:GetService("Workspace").Enemies:FindFirstChild("Ship Deckhand") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Engineer") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Steward") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Officer") then
-                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                            if v.Name == "Ship Deckhand" or v.Name == "Ship Engineer" or v.Name == "Ship Steward" or v.Name == "Ship Officer" then
-                                repeat task.wait()
-                                    EquipWeapon(_G.SelectWeapon)
-                                    AutoHaki()
-                                    v.HumanoidRootPart.CanCollide = false
-                                    v.Head.CanCollide = false
-                                    v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                    topos(v.HumanoidRootPart.CFrame * Pos)
-                                    game:GetService'VirtualUser':CaptureController()
-                                    game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
-                                    EctoplasmMon = v.HumanoidRootPart.CFrame
-                                    StartEctoplasmMagnet = true
-                                until _G.AutoMaterial or not v.Parent or v.Humanoid.Health <= 0
-                                StartEctoplasmMagnet = false
-                            end
-                        end
-                    end
-                else
-                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(923.40197753906, 125.05712890625, 32885.875)).Magnitude < 10000 then
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.40197753906, 125.05712890625, 32885.875))
-                    end
-                    StartEctoplasmMagnet = false
-                    topos(CFrame.new(923.40197753906, 125.05712890625, 32885.875))
-                end
-            end
-        end
-    end)
-end)
-
-spawn(function()
     while wait() do
         if _G.AutoMaterial then
             pcall(function()
@@ -4040,8 +3995,8 @@ spawn(function()
                             if v.Name == MMon then
                                 repeat task.wait()
                                     AutoHaki()
-                                    BringMonMaterial = true
                                     EquipWeapon(_G.SelectWeapon)
+                                    BringMonMaterial = true
                                     topos(v.HumanoidRootPart.CFrame * Pos)
                                     v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
                                     v.HumanoidRootPart.Transparency = 1
@@ -4049,7 +4004,6 @@ spawn(function()
                                     v.Humanoid.WalkSpeed = 0
                                     v.HumanoidRootPart.CanCollide = false
                                     MaterialPos = v.HumanoidRootPart.CFrame
-                                    MonFarm = v.Name
                                     Click()
                                 until not _G.AutoMaterial or not v.Parent or v.Humanoid.Health <= 0
                                 BringMonMaterial = false
@@ -4058,7 +4012,7 @@ spawn(function()
                     end
                 else
                     for i,v in pairs(game:GetService("Workspace")["_WorldOrigin"].EnemySpawns:GetChildren()) do
-                        if string.find(v.Name, Mon) then
+                        if string.find(v.Name, MMon) then
                             if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).Magnitude >= 10 then
                                 topos(v.HumanoidRootPart.CFrame * Pos)
                             end
@@ -4306,7 +4260,7 @@ spawn(function()
 		if _G.FruitCheck then
 			for i,v in pairs(game.Workspace:GetChildren()) do
 				if string.find(v.Name, "Fruit") then
-					require(game:GetService("ReplicatedStorage").Notification).new("Fruit Spawn"):Display();
+					require(game:GetService("ReplicatedStorage").Notification).new("Fruit Spawn"):Display()
 					wait()
 					setthreadcontext(5)
 				end
