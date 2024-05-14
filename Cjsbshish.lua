@@ -4201,10 +4201,10 @@ spawn(function()
             pcall(function()
                 CheckMonFarm(_G.SelectMob)
                 topos(PosMonster)
-                if game:GetService("Workspace").Enemies:FindFirstChild(MMon) then
+                if game:GetService("Workspace").Enemies:FindFirstChild(NameMonster) then
                     for i,v in pairs (game.Workspace.Enemies:GetChildren()) do
                         if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                            if v.Name == _G.SelectMob then
+                            if v.Name == NameMonster then
                                 repeat task.wait()
                                     AutoHaki()
                                     EquipWeapon(_G.SelectWeapon)
@@ -4224,7 +4224,7 @@ spawn(function()
                     end
                 else
                     for i,v in pairs(game:GetService("Workspace")["_WorldOrigin"].EnemySpawns:GetChildren()) do
-                        if string.find(v.Name, _G.SelectMob) then
+                        if string.find(v.Name, NameMonster) then
                             if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).Magnitude >= 10 then
                                 topos(v.HumanoidRootPart.CFrame * Pos)
                             end
