@@ -3327,10 +3327,44 @@ Farm:AddToggle({
 	Name = "Auto Spawn & Kill Soul Reaper",
 	Default = false,
 	Callback = function(Value)
-		_G.AutoFarmBossHallow = Value
-		StopTween(_G.AutoFarmBossHallow)
+		_G.Auto_Soul_Reaper = Value
+		StopTween(_G.Auto_Soul_Reaper)
 	end
 })
+
+spawn(function()
+    while wait() do
+        if _G.Auto_Soul_Reaper then
+            pcall(function()
+                if game.Players.LocalPlayer.Backpack:FindFirstChild("Hallow Essence") then
+                     EquipWeapon("Hallow Essence")
+                     topos(CFrame.new(-8932.83789, 144.098709, 6059.34229, -0.999290943, 7.95623478e-09, -0.0376505218, 4.4684243e-09, 1, 9.27205832e-08, 0.0376505218, 9.24866086e-08, -0.999290943))
+                elseif game:GetService("Workspace").Enemies:FindFirstChild("Soul Reaper") or game.ReplicatedStorage:FindFirstChild("Soul Reaper") then
+                    if game.Workspace.Enemies:FindFirstChild ("Soul Reaper") then
+                        for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                            if v.Name == "Soul Reaper"  then
+                                if _G.Auto_Soul_Reaper and v.Name == "Soul Reaper" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                                    repeat wait()
+                                        AutoHaki()
+                                        EquipWeapon(_G.Select_Weapon)
+                                        v.HumanoidRootPart.CanCollide = false
+                                        v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                                         topos(v.HumanoidRootPart.CFrame * Pos)
+                                        game:GetService'VirtualUser':CaptureController()
+                                        game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
+                                    until not _G.Auto_Soul_Reaper or not v.Parent or v.Humanoid.Health <= 0
+                                end
+                            end
+                        end
+                    end
+                else
+                    local args = { [1] = "Bones", [2] = "Buy", [3] = 1, [4] = 1 }
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+                end
+            end)
+        end
+    end
+end)
 
 local Section = Farm:AddSection({
     Name = "Boss"
@@ -6465,30 +6499,32 @@ ItemQuest:AddToggle({
 
 spawn(function()
     while wait() do
-        if _G.AutoFarmBossHallow and Wolrd3 then
+        if _G.AutoFarmBossHallow then
             pcall(function()
-                if game:GetService("Workspace").Enemies:FindFirstChild("Soul Reaper") then
-                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                        if string.find(v.Name , "Soul Reaper") then
-                            repeat task.wait()
-                                EquipWeapon(_G.SelectWeapon)
-                                AutoHaki()
-                                v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                topos(v.HumanoidRootPart.CFrame*Pos)
-                                game:GetService("VirtualUser"):CaptureController()
-                                game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 670))
-                                v.HumanoidRootPart.Transparency = 1
-                                sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",math.huge)
-                            until v.Humanoid.Health <= 0 or _G.AutoFarmBossHallow == false
+                if game.Players.LocalPlayer.Backpack:FindFirstChild("Hallow Essence") then
+                     EquipWeapon("Hallow Essence")
+                     topos(CFrame.new(-8932.83789, 144.098709, 6059.34229, -0.999290943, 7.95623478e-09, -0.0376505218, 4.4684243e-09, 1, 9.27205832e-08, 0.0376505218, 9.24866086e-08, -0.999290943))
+                elseif game:GetService("Workspace").Enemies:FindFirstChild("Soul Reaper") or game.ReplicatedStorage:FindFirstChild("Soul Reaper") then
+                    if game.Workspace.Enemies:FindFirstChild ("Soul Reaper") then
+                        for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                            if v.Name == "Soul Reaper"  then
+                                if _G.AutoFarmBossHallow and v.Name == "Soul Reaper" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                                    repeat wait()
+                                        AutoHaki()
+                                        EquipWeapon(_G.Select_Weapon)
+                                        v.HumanoidRootPart.CanCollide = false
+                                        v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                                         topos(v.HumanoidRootPart.CFrame * Pos)
+                                        game:GetService'VirtualUser':CaptureController()
+                                        game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
+                                    until not _G.AutoFarmBossHallow or not v.Parent or v.Humanoid.Health <= 0
+                                end
+                            end
                         end
                     end
-                elseif game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Hallow Essence") or game:GetService("Players").LocalPlayer.Character:FindFirstChild("Hallow Essence") then
-                    repeat topos(CFrame.new(-8932.322265625, 146.83154296875, 6062.55078125)) wait() until (CFrame.new(-8932.322265625, 146.83154296875, 6062.55078125).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 8                        
-                    EquipWeapon("Hallow Essence")
                 else
-                    if game:GetService("ReplicatedStorage"):FindFirstChild("Soul Reaper") then
-                        topos(game:GetService("ReplicatedStorage"):FindFirstChild("Soul Reaper").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
-                    end
+                    local args = { [1] = "Bones", [2] = "Buy", [3] = 1, [4] = 1 }
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
                 end
             end)
         end
@@ -7245,6 +7281,33 @@ Player:AddButton({
         elseif _G.SelectStateHaki == "State 5" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ChangeBusoStage",5)
         end
+    end
+})
+
+local Section = Player:AddSection({
+    Name = "Open"
+})
+
+Player:AddButton({
+    Name = "Open Devil Fruit Shop",
+    Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("GetFruits")
+        game:GetService("Players").LocalPlayer.PlayerGui.Main.FruitShop.Visible = true
+    end
+})
+
+Player:AddButton({
+    Name = "Open Title",
+    Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("GetFruits")
+        game:GetService("Players").LocalPlayer.PlayerGui.Main.FruitShop.Visible = true
+    end
+})
+
+Player:AddButton({
+    Name = "Open Haki Colors",
+    Callback = function()
+        game.Players.localPlayer.PlayerGui.Main.Colors.Visible = true
     end
 })
 
