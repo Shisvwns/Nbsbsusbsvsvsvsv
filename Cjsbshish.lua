@@ -2161,7 +2161,7 @@ Setting:AddToggle({
 })
 
 spawn(function()
-    while wait() do
+    while task.wait() do
         pcall(function()
             if _G.BringMonster then
                 CheckQuest()
@@ -2721,6 +2721,7 @@ spawn(function()
                 if GetDistance(cframefarm.Position) > 1500 then
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-7894.6176757813, 5547.1416015625, -380.29119873047))
                 end
+                topos(CFrame.new(-7678.48974609375, 5566.40380859375, -497.2156066894531))
                 if game:GetService("Workspace").Enemies:FindFirstChild("Shanda") then     
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == "Shanda" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
