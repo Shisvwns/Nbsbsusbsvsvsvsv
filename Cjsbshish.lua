@@ -2172,7 +2172,7 @@ Setting:AddToggle({
 })
 
 spawn(function()
-    while wait() do
+    while task.wait() do
         pcall(function()
             if _G.BringMonster then
                 CheckQuest()
@@ -2338,6 +2338,7 @@ spawn(function()
                         if v.Name == "Shanda" and (v.HumanoidRootPart.Position - PosMon.Position).Magnitude <= 350 and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                             v.HumanoidRootPart.CFrame = PosMon
                             v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                            v.Humanoid:ChangeState(14)
                             v.HumanoidRootPart.CanCollide = false
                             v.Head.CanCollide = false
                             v.Humanoid.JumpPower = 0
