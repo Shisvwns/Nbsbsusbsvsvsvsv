@@ -2347,7 +2347,7 @@ spawn(function()
                                 v.Humanoid.Animator:Destroy()
                             end
                             v.Humanoid:ChangeState(14)
-                            sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
+                            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                         end
                     end
                 end
