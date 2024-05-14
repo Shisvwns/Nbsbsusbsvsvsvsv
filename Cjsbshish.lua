@@ -4215,7 +4215,7 @@ spawn(function()
                                     v.Humanoid.JumpPower = 0
                                     v.Humanoid.WalkSpeed = 0
                                     v.HumanoidRootPart.CanCollide = false
-                                    MaterialPos = v.HumanoidRootPart.CFrame
+                                    PosMonFarm = v.HumanoidRootPart.CFrame
                                     Click()
                                 until not _G.AutoFarmMob or not v.Parent or v.Humanoid.Health <= 0
                                 SelectMag = false
