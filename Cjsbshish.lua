@@ -2292,19 +2292,10 @@ spawn(function()
                     end
                     if _G.FarmSkip and StartBring then
                         if v.Name == "Shanda" and (v.HumanoidRootPart.Position - PosMon.Position).Magnitude <= 350 and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                            if not v:FindFirstChild("HumanoidRootPart") then
-                                return nil
-                            end
                             v.HumanoidRootPart.CFrame = PosMon
-                            v.HumanoidRootPart.CanCollide = false
+                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                             v.Humanoid:ChangeState(11)
-                            if not v.HumanoidRootPart:FindFirstChild("vando") then
-                                local aF = Instance.new("BodyVelocity")
-                                aF.Parent = v
-                                aF.Name = "vando"
-                                aF.MaxForce = Vector3.new(100000, 100000, 100000)
-                                aF.Velocity = Vector3.new(0, 0, 0)
-                            end
+                            v.HumanoidRootPart.CanCollide = false
                             sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
                         end
                     end
