@@ -2738,11 +2738,7 @@ spawn(function()
                                 AutoHaki()
                                 game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer("TantaiGaming")
                                 topos(v.HumanoidRootPart.CFrame * Pos)               
-                                PosMon = v.HumanoidRootPart.CFrame                                                                       
-                                v.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
-                                v.HumanoidRootPart.CanCollide = false
-                                v.Humanoid.WalkSpeed = 0
-                                sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
+                                PosMon = v.HumanoidRootPart.CFrame
                                 Click()
                                 StartBring = true
                                 NoClip = true                                                            
