@@ -2295,6 +2295,7 @@ spawn(function()
                             if not v:FindFirstChild("HumanoidRootPart") then
                                 return nil
                             end
+                            v.HumanoidRootPart.CFrame = PosMon
                             v.HumanoidRootPart.CanCollide = false
                             v.Humanoid:ChangeState(11)
                             if not v.HumanoidRootPart:FindFirstChild("vando") then
