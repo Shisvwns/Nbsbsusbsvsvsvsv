@@ -2764,7 +2764,7 @@ spawn(function()
                 local Quest = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
                 local mylevel = game:GetService("Players").LocalPlayer.Data.Level.Value
                 local QuestTitle = Quest.Container.QuestTitle.Title.Text
-                if game:GetService("Players").LocalPlayer.Team.Marines then
+                if game:GetService("Players").LocalPlayer.Team.Name == "Marines" then
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetTeam","Pirates")
                 end
                 if Quest.Visible == true then
