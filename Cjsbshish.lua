@@ -2177,7 +2177,7 @@ Setting:AddToggle({
 })
 
 spawn(function()
-    while wait() do
+    while task.wait() do
         pcall(function()
             if _G.BringMonster then
                 CheckQuest()
@@ -2292,12 +2292,17 @@ spawn(function()
                     end
                     if _G.FarmSkip and StartBring then
                         if v.Name == "Shanda" and (v.HumanoidRootPart.Position - PosMon.Position).Magnitude <= 350 and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                            v.HumanoidRootPart.CFrame = PosMon
-                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                            v.Humanoid:ChangeState(14)
+                            if not v:FindFirstChild("HumanoidRootPart") then
+                                return nil
+                            end
                             v.HumanoidRootPart.CanCollide = false
-                            if v.Humanoid:FindFirstChild("Animator") then
-                                v.Humanoid.Animator:Destroy()
+                            v.Humanoid:ChangeState(11)
+                            if not v.HumanoidRootPart:FindFirstChild("vando") then
+                                local aF = Instance.new("BodyVelocity")
+                                aF.Parent = v
+                                aF.Name = "vando"
+                                aF.MaxForce = Vector3.new(100000, 100000, 100000)
+                                aF.Velocity = Vector3.new(0, 0, 0)
                             end
                             sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
                         end
@@ -2682,7 +2687,7 @@ spawn(function()
                                             v.HumanoidRootPart.Size = Vector3.new(70,70,70)
                                             StartMagnet = true
                                             game:GetService'VirtualUser':CaptureController()
-                                            game:GetService'VirtualUser':Button1Down(Vector2.new(851,158), game:GetService("Workspace").Camera.CFrame)
+                                            game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
                                         until not _G.AutoFarm or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
                                     else
                                         StartMagnet = false
@@ -2779,6 +2784,7 @@ spawn(function()
                                     AutoHaki()	   
                                     NoClip = true         
                                     topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0,10,0))
+                                    Click()
                                 until not _G.FarmSkip or not v:FindFirstChild("HumanoidRootPart") or v.Character.Humanoid.Health <= 0
                                 NoClip = false
                             end
