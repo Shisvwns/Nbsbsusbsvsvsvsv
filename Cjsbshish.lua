@@ -2176,21 +2176,6 @@ Setting:AddToggle({
 	end
 })
 
-function Huh(at)
-    local au = gethiddenproperty(game.Players.LocalPlayer, "SimulationRadius")
-    local av = game.Players.LocalPlayer.Character or Wait(game.Players.LocalPlayer.CharacterAdded)
-    local aw = game.WaitForChild(av, "HumanoidRootPart", 300)
-    if aw then
-        if at.Anchored then
-            return false
-        end
-        if game.IsDescendantOf(at, av) or (aw.Position - at.Position).Magnitude <= au then
-            return true
-        end
-    end
-    return false
-end
-
 spawn(function()
     while task.wait() do
         pcall(function()
@@ -2306,15 +2291,13 @@ spawn(function()
                         end
                     end
                     if _G.FarmSkip and StartBring then
-                        if v.Name == "Shanda" and (PosMon.Position - v.HumanoidRootPart.Position).Magnitude < 350 and (LockCFrame.Position - v.HumanoidRootPart.Position).Magnitude > 3 and Huh(v.HumanoidRootPart.Position) then
+                        if v.Name == "Shanda" and (v.HumanoidRootPart.Position - PosMon.Position).Magnitude <= 350 and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                             v.HumanoidRootPart.CFrame = PosMon
-                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                            v.Humanoid:ChangeState(14)
+                            v.Humanoid.JumpPower = 0
+                            v.Humanoid.WalkSpeed = 0
                             v.HumanoidRootPart.CanCollide = false
-                            if v.Humanoid:FindFirstChild("Animator") then
-                                v.Humanoid.Animator:Destroy()
-                            end
-                            sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
+                            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                            v.Humanoid:ChangeState(14)
                         end
                     end
                 end
