@@ -2172,7 +2172,7 @@ Setting:AddToggle({
 })
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         pcall(function()
             if _G.BringMonster then
                 CheckQuest()
@@ -2183,12 +2183,18 @@ spawn(function()
                             v.HumanoidRootPart.CFrame = PosMon
                             v.Humanoid:ChangeState(14)
                             v.HumanoidRootPart.CanCollide = false
+                            if v.Humanoid:FindFirstChild("Animator") then
+                                v.Humanoid.Animator:Destroy()
+                            end
                         sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
                         elseif StartMagnet and v.Name == Mon and (v.HumanoidRootPart.Position - PosFarm.Position).Magnitude <= 350 and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                             v.HumanoidRootPart.CFrame = PosFarm
                             v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                             v.Humanoid:ChangeState(14)
                             v.HumanoidRootPart.CanCollide = false
+                            if v.Humanoid:FindFirstChild("Animator") then
+                                v.Humanoid.Animator:Destroy()
+                            end
                             sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
                         end
                     end
@@ -2198,6 +2204,9 @@ spawn(function()
                             v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                             v.Humanoid:ChangeState(14)
                             v.HumanoidRootPart.CanCollide = false
+                            if v.Humanoid:FindFirstChild("Animator") then
+                                v.Humanoid.Animator:Destroy()
+                            end
                             sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
                         end
                     end
@@ -2207,6 +2216,9 @@ spawn(function()
                             v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                             v.Humanoid:ChangeState(14)
                             v.HumanoidRootPart.CanCollide = false
+                            if v.Humanoid:FindFirstChild("Animator") then
+                                v.Humanoid.Animator:Destroy()
+                            end
                             sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
                         end
                     end
@@ -2216,6 +2228,9 @@ spawn(function()
                             v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                             v.Humanoid:ChangeState(14)
                             v.HumanoidRootPart.CanCollide = false
+                            if v.Humanoid:FindFirstChild("Animator") then
+                                v.Humanoid.Animator:Destroy()
+                            end
                             sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
                         end
                     end
@@ -2225,6 +2240,9 @@ spawn(function()
                             v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                             v.Humanoid:ChangeState(14)
                             v.HumanoidRootPart.CanCollide = false
+                            if v.Humanoid:FindFirstChild("Animator") then
+                                v.Humanoid.Animator:Destroy()
+                            end
                             sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
                         end
                     end
@@ -2234,6 +2252,9 @@ spawn(function()
                             v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                             v.Humanoid:ChangeState(14)
                             v.HumanoidRootPart.CanCollide = false
+                            if v.Humanoid:FindFirstChild("Animator") then
+                                v.Humanoid.Animator:Destroy()
+                            end
                             sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
                         end
                     end
@@ -2243,6 +2264,9 @@ spawn(function()
                             v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                             v.Humanoid:ChangeState(14)
                             v.HumanoidRootPart.CanCollide = false
+                            if v.Humanoid:FindFirstChild("Animator") then
+                                v.Humanoid.Animator:Destroy()
+                            end
                             sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
                         end
                     end
@@ -2252,6 +2276,9 @@ spawn(function()
                             v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                             v.Humanoid:ChangeState(14)
                             v.HumanoidRootPart.CanCollide = false
+                            if v.Humanoid:FindFirstChild("Animator") then
+                                v.Humanoid.Animator:Destroy()
+                            end
                             sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
                         end
                     end
@@ -2261,6 +2288,9 @@ spawn(function()
                             v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                             v.Humanoid:ChangeState(14)
                             v.HumanoidRootPart.CanCollide = false
+                            if v.Humanoid:FindFirstChild("Animator") then
+                                v.Humanoid.Animator:Destroy()
+                            end
                             sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
                         end
                     end
@@ -2270,6 +2300,9 @@ spawn(function()
                             v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                             v.Humanoid:ChangeState(14)
                             v.HumanoidRootPart.CanCollide = false
+                            if v.Humanoid:FindFirstChild("Animator") then
+                                v.Humanoid.Animator:Destroy()
+                            end
                             sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
                         end
                     end
@@ -2731,6 +2764,9 @@ spawn(function()
                 local Quest = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
                 local mylevel = game:GetService("Players").LocalPlayer.Data.Level.Value
                 local QuestTitle = Quest.Container.QuestTitle.Title.Text
+                if game:GetService("Players").LocalPlayer.Team.Marines then
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetTeam","Pirates")
+                end
                 if Quest.Visible == true then
                     if string.find(QuestTitle, "Defeat") then
                         getgenv().Ply = string.split(QuestTitle," ")[2]
