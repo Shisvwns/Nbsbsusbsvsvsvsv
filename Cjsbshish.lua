@@ -1846,7 +1846,7 @@ function AttackFunction()
                     AC.animator.anims.basic[1]:Play(0.01,0.01,0.01)
                     game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange",tostring(GetCurrentBlade()))
                     game.ReplicatedStorage.Remotes.Validator:FireServer(math.floor(u12 / 1099511627776 * 16777215), u10)
-                    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, i, "")
+                    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, 2, "")
                 end
             end)
         end
@@ -1872,10 +1872,6 @@ task.spawn(function()
 					y.activeController.humanoid.AutoRotate = true
 				end)
 			end
-		end
-        if _G.FastAttack == true then
-			game.Players.LocalPlayer.Character.Stun.Value = 0
-			game.Players.LocalPlayer.Character.Busy.Value = false        
 		end
 	end)
 end)
@@ -2674,8 +2670,8 @@ spawn(function()
                                         repeat task.wait()
                                             EquipWeapon(_G.SelectWeapon)
                                             AutoHaki()                                            
-                                            PosFarm = v.HumanoidRootPart.CFrame
                                             topos(v.HumanoidRootPart.CFrame * Pos)
+                                            PosFarm = v.HumanoidRootPart.CFrame
                                             v.HumanoidRootPart.CanCollide = false
                                             v.Humanoid.WalkSpeed = 0
                                             v.Head.CanCollide = false
