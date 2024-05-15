@@ -2177,7 +2177,7 @@ Setting:AddToggle({
 })
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         pcall(function()
             if _G.BringMonster then
                 CheckQuest()
@@ -2639,7 +2639,7 @@ local CayLevel = Farm:AddToggle({
 })
 
 spawn(function()
-    while wait() do
+    while task.wait() do
         if _G.AutoFarm then
             pcall(function()
                 local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
@@ -2671,7 +2671,7 @@ spawn(function()
                                     if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
                                         repeat task.wait()
                                             EquipWeapon(_G.SelectWeapon)
-                                            AutoHaki()                                            
+                                            AutoHaki()
                                             topos(v.HumanoidRootPart.CFrame * Pos)
                                             PosFarm = v.HumanoidRootPart.CFrame
                                             v.HumanoidRootPart.CanCollide = false
@@ -2738,7 +2738,11 @@ spawn(function()
                                 AutoHaki()
                                 game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer("TantaiGaming")
                                 topos(v.HumanoidRootPart.CFrame * Pos)               
-                                PosMon = v.HumanoidRootPart.CFrame
+                                PosMon = v.HumanoidRootPart.CFrame                                                                       
+                                v.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
+                                v.HumanoidRootPart.CanCollide = false
+                                v.Humanoid.WalkSpeed = 0
+                                sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
                                 Click()
                                 StartBring = true
                                 NoClip = true                                                            
