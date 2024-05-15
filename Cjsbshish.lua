@@ -1803,31 +1803,18 @@ function GetCurrentBlade()
     local p13 = getupvalues(require(game.Players.LocalPlayer.PlayerScripts.CombatFramework))[2].activeController
     local ret = p13.blades[1]
     if not ret then return end
-    while ret.Parent~=game.Players.LocalPlayer.Character do ret=ret.Parent end
+        while ret.Parent~=game.Players.LocalPlayer.Character do
+            ret = ret.Parent
+        end
     return ret
 end
-
-CountAttack = 0  
-TickCountAttack = tick()
-spawn(function()
-    local MT = getrawmetatable(game)
-    local OldNameCall = MT.__namecall
-    setreadonly(MT, false)
-    MT.__namecall = newcclosure(function(self, ...)
-        local Method = getnamecallmethod()
-        local Args = {...}
-        if Method == 'FireServer' and self.Name == "RigControllerEvent" and  Args[1] == "hit"  then
-            CountAttack = CountAttack + 1 
-            TickCountAttack = tick()
-        end
-        return OldNameCall(self, unpack(Args))
-    end)
-end)
-
 function AttackFunction()
+    if game.Players.LocalPlayer.Character.Stun.Value ~= 0 then
+        return nil
+    end
     local AC = getupvalues(require(game.Players.LocalPlayer.PlayerScripts.CombatFramework))[2].activeController
     for i = 1, 1 do 
-        local bladehit = require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(game.Players.LocalPlayer.Character, {game.Players.LocalPlayer.Character.HumanoidRootPart}, 70)
+        local bladehit = require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(game.Players.LocalPlayer.Character, {game.Players.LocalPlayer.Character.HumanoidRootPart}, 60)
         local cac = {}
         local hash = {}
         for k, v in pairs(bladehit) do
@@ -1865,6 +1852,33 @@ function AttackFunction()
         end
     end
 end
+CombatFrameworkR = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
+y = debug.getupvalues(CombatFrameworkR)[2]
+task.spawn(function()
+	game:GetService("RunService").RenderStepped:Connect(function()
+		if _G.FastAttack then
+			if typeof(y) == "table" then
+				pcall(function()
+					CameraShaker:Stop()
+					y.activeController.timeToNextAttack = (math.huge^math.huge^math.huge)
+					y.activeController.timeToNextAttack = 0
+					y.activeController.hitboxMagnitude = 60
+					y.activeController.active = false
+					y.activeController.timeToNextBlock = 0
+					y.activeController.focusStart = 1655503339.0980349
+					y.activeController.increment = 1
+					y.activeController.blocking = false
+					y.activeController.attacking = false
+					y.activeController.humanoid.AutoRotate = true
+				end)
+			end
+		end
+        if _G.FastAttack == true then
+			game.Players.LocalPlayer.Character.Stun.Value = 0
+			game.Players.LocalPlayer.Character.Busy.Value = false        
+		end
+	end)
+end)
 local Client = game.Players.LocalPlayer
 local STOP = require(Client.PlayerScripts.CombatFramework.Particle)
 local STOPRL = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib)
