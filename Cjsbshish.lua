@@ -1846,7 +1846,7 @@ function AttackFunction()
                     AC.animator.anims.basic[1]:Play(0.01,0.01,0.01)
                     game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange",tostring(GetCurrentBlade()))
                     game.ReplicatedStorage.Remotes.Validator:FireServer(math.floor(u12 / 1099511627776 * 16777215), u10)
-                    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, 2, "")
+                    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, i, "")
                 end
             end)
         end
@@ -1872,6 +1872,10 @@ task.spawn(function()
 					y.activeController.humanoid.AutoRotate = true
 				end)
 			end
+		end
+        if _G.FastAttack == true then
+			game.Players.LocalPlayer.Character.Stun.Value = 0
+			game.Players.LocalPlayer.Character.Busy.Value = false        
 		end
 	end)
 end)
@@ -2678,7 +2682,7 @@ spawn(function()
                                             v.HumanoidRootPart.Size = Vector3.new(70,70,70)
                                             StartMagnet = true
                                             game:GetService'VirtualUser':CaptureController()
-                                            game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
+                                            game:GetService'VirtualUser':Button1Down(Vector2.new(851,158), game:GetService("Workspace").Camera.CFrame)
                                         until not _G.AutoFarm or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
                                     else
                                         StartMagnet = false
@@ -2775,7 +2779,6 @@ spawn(function()
                                     AutoHaki()	   
                                     NoClip = true         
                                     topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0,10,0))
-                                    Click()
                                 until not _G.FarmSkip or not v:FindFirstChild("HumanoidRootPart") or v.Character.Humanoid.Health <= 0
                                 NoClip = false
                             end
