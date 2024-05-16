@@ -2176,7 +2176,7 @@ Setting:AddToggle({
 })
 
 spawn(function()
-    while wait() do
+    while task.wait() do
         pcall(function()
             if _G.BringMonster then
                 CheckQuest()
