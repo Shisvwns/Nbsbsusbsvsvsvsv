@@ -1298,7 +1298,7 @@ function UpdateFlowerChams()
 							name.Text = ("[ Red Flower ]\n[ Distance: ".. round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Position).Magnitude/3) ..' ]')
 							name.TextColor3 = Color3.fromRGB(255, 0, 0)
 						end
-					else
+					end
 				else
 					if v:FindFirstChild('NameEsp'..Number) then
 					v:FindFirstChild('NameEsp'..Number):Destroy()
