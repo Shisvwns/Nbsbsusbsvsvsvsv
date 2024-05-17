@@ -1173,9 +1173,9 @@ function UpdatePlayerChams()
                         name.BackgroundTransparency = 1
                         name.TextStrokeTransparency = 0.5
                         if v.Team == game.Players.LocalPlayer.Team then
-                            name.TextColor3 = Color3.new(0,0,254)
+                            name.TextColor3 = Color3.fromRGB(0,0,254)
                         else
-                            name.TextColor3 = Color3.new(255,0,0)
+                            name.TextColor3 = Color3.fromRGB(255,0,0)
                         end
                     else
                         v.Character.Head['NameEsp'..Number].TextLabel.Text = ('[ Name: '..v.Name..' | Health: '..round(v.Character.Humanoid.Health*100/v.Character.Humanoid.MaxHealth)..'% ]\n[ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3)..' ]')
@@ -1371,15 +1371,14 @@ for i,v in pairs(game:GetService'Players':GetChildren()) do
                     name.Font = Enum.Font.GothamSemibold
                     name.FontSize = "Size14"
                     name.TextWrapped = true
-                    name.Text = (v.Name ..'\n'.. round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3) ..' Distance')
                     name.Size = UDim2.new(1,0,1,0)
                     name.TextYAlignment = 'Top'
                     name.BackgroundTransparency = 1
                     name.TextStrokeTransparency = 0.5
                     if v.Team == game.Players.LocalPlayer.Team then
-                        name.TextColor3 = Color3.new(0,255,0)
+                        name.TextColor3 = Color3.fromRGB(0,255,0)
                     else
-                        name.TextColor3 = Color3.new(255,0,0)
+                        name.TextColor3 = Color3.fromRGB(255,0,0)
                     end
                 else
                     v.Character.Head['NameEsp'..Number].TextLabel.Text = ('[ Name: '..v.Name..' | Health: '..round(v.Character.Humanoid.Health*100/v.Character.Humanoid.MaxHealth)..'% ]\n[ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3)..' ]')
