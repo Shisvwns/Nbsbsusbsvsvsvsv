@@ -1213,16 +1213,15 @@ function UpdateChestChams()
 							name.TextStrokeTransparency = 0.5
 							if v.Name == "Chest1" then
 								name.TextColor3 = Color3.fromRGB(109, 109, 109)
-								name.Text = ("[ Iron Chest ]\n[ Distance: "..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Position).Magnitude/3) ..' ]')
 							end
 							if v.Name == "Chest2" then
 								name.TextColor3 = Color3.fromRGB(173, 158, 21)
-								name.Text = ("[ Gold Chest ]\n[ Distance: "..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Position).Magnitude/3) ..' ]')
 							end
 							if v.Name == "Chest3" then
 								name.TextColor3 = Color3.fromRGB(85, 255, 255)
-								name.Text = ("[ Diamond Chest ]\n[ Distance: "..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Position).Magnitude/3) ..' ]')
 							end
+						else
+		    			    v['NameEsp'..Number].TextLabel.Text = ('[ '..v.Name..' ]\n[ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Position).Magnitude/3)..' ]')
 						end
 					end
 				else
@@ -1411,16 +1410,15 @@ function UpdateChestChams()
 							name.TextStrokeTransparency = 0.5
 							if v.Name == "Chest1" then
 								name.TextColor3 = Color3.fromRGB(109, 109, 109)
-								name.Text = ("[ Iron Chest ]\n[ Distance: "..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Position).Magnitude/3) ..' ]')
 							end
 							if v.Name == "Chest2" then
 								name.TextColor3 = Color3.fromRGB(173, 158, 21)
-								name.Text = ("[ Gold Chest ]\n[ Distance: "..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Position).Magnitude/3) ..' ]')
 							end
 							if v.Name == "Chest3" then
 								name.TextColor3 = Color3.fromRGB(85, 255, 255)
-								name.Text = ("[ Diamond Chest ]\n[ Distance: "..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Position).Magnitude/3) ..' ]')
 							end
+						else
+		    			    v['NameEsp'..Number].TextLabel.Text = ('[ '..v.Name..' ]\n[ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Position).Magnitude/3)..' ]')
 						end
 					end
 				else
