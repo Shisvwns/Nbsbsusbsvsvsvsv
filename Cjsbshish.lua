@@ -1133,7 +1133,7 @@ function UpdateIslandESP()
                         name.TextStrokeTransparency = 0.5
                         name.TextColor3 = Color3.fromRGB(7, 236, 240)
                     else
-                        v['NameEsp'].TextLabel.Text = (..'[ '.. v.Name ..' ]\n[ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Position).Magnitude/3)..' ]')
+                        v['NameEsp'].TextLabel.Text = ('[ '.. v.Name ..' ]\n[ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Position).Magnitude/3)..' ]')
                     end
                 end
             else
@@ -1336,7 +1336,7 @@ function UpdateIslandESP()
                         name.TextStrokeTransparency = 0.5
                         name.TextColor3 = Color3.fromRGB(7, 236, 240)
                     else
-                        v['NameEsp'].TextLabel.Text = (..'[ '.. v.Name ..' ]\n[ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Position).Magnitude/3)..' ]')
+                        v['NameEsp'].TextLabel.Text = ('[ '.. v.Name ..' ]\n[ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Position).Magnitude/3)..' ]')
                     end
                 end
             else
