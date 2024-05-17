@@ -274,32 +274,19 @@ local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.
             end
             return newmm
         end
-        function getRandomIcon()
-            idicon = math.random(1, 555)
-            idcount = 0
-            for i, v in pairs(Icons) do
-                if v then
-                    if idcount == idicon then
-                        return v
-                    else
-                        idcount = idcount + 1
-                    end
-                end
-            end
-            return ""
-        end
-        DefaultTab = Window:NewTab({Title = "Default", Icon = getRandomIcon()})
-        FarmTab = Window:NewTab({Title = "Farm", Icon = getRandomIcon()}) 
-        ServerTab = Window:NewTab({Title = "Server & Info", Icon = getRandomIcon()})
-        V4Tab = Window:NewTab({Title = "Race", Icon = getRandomIcon()})
-        PlRTAB = Window:NewTab({Title = "Local Player", Icon = getRandomIcon()}) 
-        WeaponTab = Window:NewTab({Title = "Weapon", Icon = getRandomIcon()}) 
-        ShopTab = Window:NewTab({Title = "Shop",Icon = getRandomIcon()})
-        RaidTab = Window:NewTab({Title = "Fruits & Raid", Icon = getRandomIcon()})
+
+        DefaultTab = Window:NewTab({Title = "Default", Icon = ""})
+        FarmTab = Window:NewTab({Title = "Farm", Icon = ""}) 
+        ServerTab = Window:NewTab({Title = "Server & Info", Icon = ""})
+        V4Tab = Window:NewTab({Title = "Race", Icon = ""})
+        PlRTAB = Window:NewTab({Title = "Local Player", Icon = ""}) 
+        WeaponTab = Window:NewTab({Title = "Weapon", Icon = ""}) 
+        ShopTab = Window:NewTab({Title = "Shop",Icon = ""})
+        RaidTab = Window:NewTab({Title = "Fruits & Raid", Icon = ""})
         if not Sea1 then 
-            SeaBeastTab = Window:NewTab({Title = "Sea Beast",Icon = getRandomIcon()})
+            SeaBeastTab = Window:NewTab({Title = "Sea Beast",Icon = ""})
         end 
-        SettingTab = Window:NewTab({Title = "Setting",Icon = getRandomIcon()})
+        SettingTab = Window:NewTab({Title = "Setting",Icon = ""})
         function CreateUiNotify(cf)
             newtitle = cf.Title or "Tsuo Hub"
             newcontent = cf.Content or "Nothing"
