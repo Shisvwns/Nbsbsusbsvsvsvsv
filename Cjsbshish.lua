@@ -1133,7 +1133,7 @@ function UpdateIslandESP()
                         name.TextStrokeTransparency = 0.5
                         name.TextColor3 = Color3.fromRGB(7, 236, 240)
                     else
-                        v['NameEsp'].TextLabel.Text = ('[ '.. v.Name ..' ]\n[ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Position).Magnitude/3)..' ]')
+                        v['NameEsp'].TextLabel.Text = ('[ Island: '.. v.Name ..' ]\n[ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Position).Magnitude/3)..' ]')
                     end
                 end
             else
@@ -1173,12 +1173,12 @@ function UpdatePlayerChams()
                         name.BackgroundTransparency = 1
                         name.TextStrokeTransparency = 0.5
                         if v.Team == game.Players.LocalPlayer.Team then
-                            name.TextColor3 = Color3.fromRGB(0,0,254)
+                            name.TextColor3 = Color3.fromRGB(254,254,254)
                         else
-                            name.TextColor3 = Color3.fromRGB(255,0,0)
+                            name.TextColor3 = Color3.fromRGB(255,255,255)
                         end
                     else
-                        v.Character.Head['NameEsp'..Number].TextLabel.Text = ('[ Name: '..v.Name..' | Health: '..round(v.Character.Humanoid.Health*100/v.Character.Humanoid.MaxHealth)..'% ]\n[ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3)..' ]')
+                        v.Character.Head['NameEsp'..Number].TextLabel.Text = ('[ Player: '..v.Name..' ]\n[ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3)..' ]')
                     end
                 else
                     if v.Character.Head:FindFirstChild('NameEsp'..Number) then
@@ -1336,7 +1336,7 @@ function UpdateIslandESP()
                         name.TextStrokeTransparency = 0.5
                         name.TextColor3 = Color3.fromRGB(7, 236, 240)
                     else
-                        v['NameEsp'].TextLabel.Text = ('[ '.. v.Name ..' ]\n[ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Position).Magnitude/3)..' ]')
+                        v['NameEsp'].TextLabel.Text = ('[ Island: '.. v.Name ..' ]\n[ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Position).Magnitude/3)..' ]')
                     end
                 end
             else
@@ -1376,12 +1376,12 @@ for i,v in pairs(game:GetService'Players':GetChildren()) do
                     name.BackgroundTransparency = 1
                     name.TextStrokeTransparency = 0.5
                     if v.Team == game.Players.LocalPlayer.Team then
-                        name.TextColor3 = Color3.fromRGB(0,255,0)
+                        name.TextColor3 = Color3.fromRGB(254,254,254)
                     else
-                        name.TextColor3 = Color3.fromRGB(255,0,0)
+                        name.TextColor3 = Color3.fromRGB(255,255,255)
                     end
                 else
-                    v.Character.Head['NameEsp'..Number].TextLabel.Text = ('[ Name: '..v.Name..' | Health: '..round(v.Character.Humanoid.Health*100/v.Character.Humanoid.MaxHealth)..'% ]\n[ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3)..' ]')
+                    v.Character.Head['NameEsp'..Number].TextLabel.Text = ('[ Player: '..v.Name..' ]\n[ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3)..' ]')
                 end
             else
                 if v.Character.Head:FindFirstChild('NameEsp'..Number) then
