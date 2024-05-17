@@ -1222,6 +1222,8 @@ function UpdateChestChams()
 							if v.Name == "Chest3" then
 								name.TextColor3 = Color3.fromRGB(85, 255, 255)
 								name.Text = ("[ Diamond Chest ]\n[ Distance: "..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Position).Magnitude/3) ..' ]')
+							end
+						end
 					end
 				else
 					if v:FindFirstChild('NameEsp'..Number) then
@@ -1418,6 +1420,8 @@ function UpdateChestChams()
 							if v.Name == "Chest3" then
 								name.TextColor3 = Color3.fromRGB(85, 255, 255)
 								name.Text = ("[ Diamond Chest ]\n[ Distance: "..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Position).Magnitude/3) ..' ]')
+							end
+						end
 					end
 				else
 					if v:FindFirstChild('NameEsp'..Number) then
