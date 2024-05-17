@@ -1133,7 +1133,7 @@ function UpdateIslandESP()
                         name.TextStrokeTransparency = 0.5
                         name.TextColor3 = Color3.fromRGB(7, 236, 240)
                     else
-                        v['NameEsp'].TextLabel.Text = (v.Name ..'   \n'.. round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Position).Magnitude/3) ..' Distance')
+                        v['NameEsp'].TextLabel.Text = (..'[ '.. v.Name ..' ]\n[ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Position).Magnitude/3)..' ]')
                     end
                 end
             else
@@ -1166,9 +1166,8 @@ function UpdatePlayerChams()
                         bill.AlwaysOnTop = true
                         local name = Instance.new('TextLabel',bill)
                         name.Font = Enum.Font.GothamSemibold
-                        name.FontSize = "Size10"
+                        name.FontSize = "Size14"
                         name.TextWrapped = true
-                        name.Text = (v.Name ..' \n'.. round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3) ..' Distance')
                         name.Size = UDim2.new(1,0,1,0)
                         name.TextYAlignment = 'Top'
                         name.BackgroundTransparency = 1
@@ -1179,7 +1178,7 @@ function UpdatePlayerChams()
                             name.TextColor3 = Color3.new(255,0,0)
                         end
                     else
-                        v.Character.Head['NameEsp'..Number].TextLabel.Text = (v.Name ..' | '.. round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3) ..' Distance\nHealth : ' .. round(v.Character.Humanoid.Health*100/v.Character.Humanoid.MaxHealth) .. '%')
+                        v.Character.Head['NameEsp'..Number].TextLabel.Text = ('[ Name: '..v.Name..' | Health: '..round(v.Character.Humanoid.Health*100/v.Character.Humanoid.MaxHealth)..'% ]\n[ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3)..' ]')
                     end
                 else
                     if v.Character.Head:FindFirstChild('NameEsp'..Number) then
@@ -1261,7 +1260,7 @@ function UpdateDevilChams()
 						name.TextColor3 = Color3.fromRGB(255, 255, 255)
 						name.Text = (v.Name ..'\n'.. round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Handle.Position).Magnitude/3) ..' Distance')
 					else
-						v.Handle['NameEsp'..Number].TextLabel.Text = (v.Name ..'\n'.. round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Handle.Position).Magnitude/3) ..' Distance')
+						v.Handle['NameEsp'..Number].TextLabel.Text = ('[ '..v.Name..' ]\n[ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Handle.Position).Magnitude/3)..' ]')
 					end
 				end
 			else
@@ -1337,7 +1336,7 @@ function UpdateIslandESP()
                         name.TextStrokeTransparency = 0.5
                         name.TextColor3 = Color3.fromRGB(7, 236, 240)
                     else
-                        v['NameEsp'].TextLabel.Text = (v.Name ..'   \n'.. round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Position).Magnitude/3) ..' Distance')
+                        v['NameEsp'].TextLabel.Text = (..'[ '.. v.Name ..' ]\n[ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Position).Magnitude/3)..' ]')
                     end
                 end
             else
@@ -1383,7 +1382,7 @@ for i,v in pairs(game:GetService'Players':GetChildren()) do
                         name.TextColor3 = Color3.new(255,0,0)
                     end
                 else
-                    v.Character.Head['NameEsp'..Number].TextLabel.Text = (v.Name ..' | '.. round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3) ..' Distance\nHealth : ' .. round(v.Character.Humanoid.Health*100/v.Character.Humanoid.MaxHealth) .. '%')
+                    v.Character.Head['NameEsp'..Number].TextLabel.Text = ('[ Name: '..v.Name..' | Health: '..round(v.Character.Humanoid.Health*100/v.Character.Humanoid.MaxHealth)..'% ]\n[ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3)..' ]')
                 end
             else
                 if v.Character.Head:FindFirstChild('NameEsp'..Number) then
@@ -1465,7 +1464,7 @@ function UpdateDevilChams()
 						name.TextColor3 = Color3.fromRGB(255, 255, 255)
 						name.Text = (v.Name ..'\n'.. round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Handle.Position).Magnitude/3) ..' Distance')
 					else
-						v.Handle['NameEsp'..Number].TextLabel.Text = (v.Name ..'\n'.. round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Handle.Position).Magnitude/3) ..' Distance')
+						v.Handle['NameEsp'..Number].TextLabel.Text = ('[ '..v.Name..' ]\n[ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Handle.Position).Magnitude/3)..' ]')
 					end
 				end
 			else
@@ -1798,25 +1797,22 @@ end
 
 local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
 CamShake:Stop()
-function GetBladeHit()
-    local CombatFrameworkLib = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework))
-    local CmrFwLib = CombatFrameworkLib[2]
-    local p13 = CmrFwLib.activeController
-    local weapon = p13.blades[1]
-    if not weapon then 
-        return weapon
-    end
-    while weapon.Parent ~= game.Players.LocalPlayer.Character do
-        weapon = weapon.Parent 
-    end
-    return weapon
+function GetCurrentBlade() 
+    local p13 = getupvalues(require(game.Players.LocalPlayer.PlayerScripts.CombatFramework))[2].activeController
+    local ret = p13.blades[1]
+    if not ret then return end
+        while ret.Parent~=game.Players.LocalPlayer.Character do
+            ret = ret.Parent
+        end
+    return ret
 end
-function AttackHit()
-    local CombatFrameworkLib = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework))
-    local CmrFwLib = CombatFrameworkLib[2]
-    local plr = game.Players.LocalPlayer
-    for i = 1, 1 do
-        local bladehit = require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(plr.Character,{plr.Character.HumanoidRootPart},70)
+function AttackFunction()
+    if game.Players.LocalPlayer.Character.Stun.Value ~= 0 then
+        return nil
+    end
+    local AC = getupvalues(require(game.Players.LocalPlayer.PlayerScripts.CombatFramework))[2].activeController
+    for i = 1, 1 do 
+        local bladehit = require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(game.Players.LocalPlayer.Character, {game.Players.LocalPlayer.Character.HumanoidRootPart}, 60)
         local cac = {}
         local hash = {}
         for k, v in pairs(bladehit) do
@@ -1827,16 +1823,29 @@ function AttackHit()
         end
         bladehit = cac
         if #bladehit > 0 then
+            local u8 = debug.getupvalue(AC.attack, 5)
+            local u9 = debug.getupvalue(AC.attack, 6)
+            local u7 = debug.getupvalue(AC.attack, 4)
+            local u10 = debug.getupvalue(AC.attack, 7)
+            local u12 = (u8 * 798405 + u7 * 727595) % u9
+            local u13 = u7 * 798405
+            (function()
+                u12 = (u12 * u9 + u13) % 1099511627776
+                u8 = math.floor(u12 / u9)
+                u7 = u12 - u8 * u9
+            end)()
+            u10 = u10 + 1
+            debug.setupvalue(AC.attack, 5, u8)
+            debug.setupvalue(AC.attack, 6, u9)
+            debug.setupvalue(AC.attack, 4, u7)
+            debug.setupvalue(AC.attack, 7, u10)
             pcall(function()
-                CmrFwLib.activeController.timeToNextAttack = 1
-                CmrFwLib.activeController.attacking = false
-                CmrFwLib.activeController.blocking = false
-                CmrFwLib.activeController.timeToNextBlock = 0
-                CmrFwLib.activeController.increment = 3
-                CmrFwLib.activeController.hitboxMagnitude = 60
-                CmrFwLib.activeController.focusStart = 0
-                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange",tostring(GetBladeHit()))
-                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, i, "")
+                if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") and AC.blades and AC.blades[1] then
+                    AC.animator.anims.basic[1]:Play(0.01,0.01,0.01)
+                    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange",tostring(GetCurrentBlade()))
+                    game.ReplicatedStorage.Remotes.Validator:FireServer(math.floor(u12 / 1099511627776 * 16777215), u10)
+                    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, i, "")
+                end
             end)
         end
     end
@@ -8652,29 +8661,7 @@ local Section = Shop:AddSection({
     Name = "Code"
 })
 
-CodeA = {
-    "TantaiGaming",
-    "Axiore",
-    "SUB2DAIGROCK",
-    "Sub2UncleKizaru",
-    "SUB2NOOBMASTER123",
-    "StrawHatMaine",
-    "Sub2OfficialNoobie",
-    "SUB2GAMERROBOT_EXP1",
-    "THEGREATACE",
-    "BIGNEWS",
-    "FUDD10",
-    "fudd10_v2",
-    "Bluxxy",
-    "StarcodeHEO",
-    "JCWK",
-    "Magicbus",
-    "Enyu_is_Pro",
-    "Sub2Fer999",
-    "KittGaming",
-    "SUB2GAMERROBOT_RESET1",
-    "Sub2CaptainMaui"
-}
+CodeA = {"TantaiGaming","Axiore","SUB2DAIGROCK","Sub2UncleKizaru","SUB2NOOBMASTER123","StrawHatMaine","Sub2OfficialNoobie","SUB2GAMERROBOT_EXP1","THEGREATACE","BIGNEWS","FUDD10","fudd10_v2","Bluxxy","StarcodeHEO","JCWK","Magicbus","Enyu_is_Pro","Sub2Fer999","KittGaming","SUB2GAMERROBOT_RESET1","Sub2CaptainMaui"}
 
 Shop:AddDropdown({
     Name = "Select Code",
@@ -8692,37 +8679,13 @@ Shop:AddButton({
     end
 })
 
-x2Code = {
-    "TantaiGaming",
-    "Axiore",
-    "SUB2DAIGROCK",
-    "Sub2UncleKizaru",
-    "SUB2NOOBMASTER123",
-    "StrawHatMaine",
-    "Sub2OfficialNoobie",
-    "SUB2GAMERROBOT_EXP1",
-    "THEGREATACE",
-    "BIGNEWS",
-    "FUDD10",
-    "fudd10_v2",
-    "Bluxxy",
-    "StarcodeHEO",
-    "JCWK",
-    "Magicbus",
-    "Enyu_is_Pro",
-    "Sub2Fer999",
-    "KittGaming",
-    "SUB2GAMERROBOT_RESET1",
-    "Sub2CaptainMaui"
-}
-
 Shop:AddButton({
     Name = "Redeem All Code",
     Callback = function()
         function RedeemCode(value)
             game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer(value)
         end
-        for i,v in pairs(x2Code) do
+        for i,v in pairs(CodeA) do
             RedeemCode(v)
         end
     end
@@ -8732,19 +8695,7 @@ local Section = Shop:AddSection({
     Name = "Fighting Style"
 })
 
-SelectMelee = {
-	"Black Leg",
-	"Electro",
-	"Fishman Karate",
-	"Dragon Claw",
-	"SuperHuman",
-	"Death Step",
-	"Sharkman Karate",
-	"Electric Claw",
-	"Dragon Talon",
-	"GodHuman",
-	"Sanguine Art"
-}
+SelectMelee = {"Black Leg","Electro","Fishman Karate","Dragon Claw","SuperHuman","Death Step","Sharkman Karate","Electric Claw","Dragon Talon","GodHuman","Sanguine Art"}
 
 Shop:AddDropdown({
     Name = "Select Fighting Style",
@@ -8791,12 +8742,7 @@ local Section = Shop:AddSection({
     Name = "Abilities"
 })
 
-SelectAbilities = {
-	"Sky Jump [ Geppo ]",
-	"Buso Haki",
-	"Soru",
-	"Observation Haki"
-}
+SelectAbilities = {"Sky Jump [ Geppo ]","Buso Haki","Soru","Observation Haki"}
 
 Shop:AddDropdown({
     Name = "Select Abilities",
@@ -8826,18 +8772,7 @@ local Section = Shop:AddSection({
     Name = "Sword"
 })
 
-SelectSword = {
-	"Cutlass",
-    "Katana",
-    "Iron Mace",
-    "Dual Katana",
-    "Triple Katana",
-    "Pipe",
-    "Dual-Headed Blade",
-    "Bisento",
-    "Soul Cane",
-    "Pole V2"
-}
+SelectSword = {"Cutlass","Katana","Iron Mace","Dual Katana","Triple Katana","Pipe","Dual-Headed Blade","Bisento","Soul Cane","Pole V2"}
 
 Shop:AddDropdown({
     Name = "Select Sword",
@@ -8879,16 +8814,7 @@ local Section = Shop:AddSection({
     Name = "Gun"
 })
 
-SelectGun = {
-	"Slingshot",
-	"Flintlock",
-	"Musket",
-	"Cannon",
-	"Refined Flintlock",
-	"Refined Slingshot",
-	"Bizarre Rifle",
-	"Kabucha"
-}
+SelectGun = {"Slingshot","Flintlock","Musket","Cannon","Refined Flintlock","Refined Slingshot","Bizarre Rifle","Kabucha"}
 
 Shop:AddDropdown({
     Name = "Select Gun",
@@ -8935,12 +8861,7 @@ local Section = Shop:AddSection({
     Name = "Other"
 })
 
-SelectOther = {
-	"Reroll Race",
-	"Reset Stats",
-	"Cyborg Race",
-	"Ghoul Race"
-}
+SelectOther = {"Reroll Race","Reset Stats","Cyborg Race","Ghoul Race"}
 
 Shop:AddDropdown({
     Name = "Select Other Things",
