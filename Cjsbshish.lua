@@ -75,9 +75,6 @@
             end
         )
         local MMBStatus = ""
-        if not Success then
-            game.Players.LocalPlayer:Kick("Can not get icons....")
-        end  
         local CheckMobile = function()
             if
                 game:GetService("UserInputService").TouchEnabled
