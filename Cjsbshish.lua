@@ -2334,7 +2334,7 @@ spawn(function()
                                             EquipWeapon(_G.SelectWeapon)
                                             AutoHaki()                                            
                                             topos(v.HumanoidRootPart.CFrame * Pos)
-                                            PosMon = v.HumanoidRootPart.CFrame
+                                            PosFarm = v.HumanoidRootPart.CFrame
                                             StartMagnet = true
                                             game:GetService'VirtualUser':CaptureController()
                                             game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
