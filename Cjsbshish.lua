@@ -7095,7 +7095,7 @@ spawn(function()
 end)
 
 local Section = PvP:AddSection({
-    Name = "PvP"
+    Name = "Aimbot"
 })
 
 PvP:AddSlider({
@@ -7208,6 +7208,23 @@ game:GetService("RunService").Stepped:Connect(function()
         Circle.Visible = false
     end
 end)
+
+local Section = PvP:AddSection({
+    Name = "Bounty / Honor"
+})
+
+local checkbotihoron = PvP:AddParagraph("Your Bounty / Honor")
+
+spawn(function()
+    while wait() do
+        pcall(function()
+            if game:GetService("Players").LocalPlayer.Team.Name == "Pirates" then
+                checkbotihoron:Set("Bounty: "..tostring(game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].Value))
+            elseif game:GetService("Players").LocalPlayer.Team.Name == "Marines" then
+                checkbotihoron:Set("Honor: "..tostring(game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].Value))
+            end
+        end)
+    end
 
 -- [ Tab Race ]
 
