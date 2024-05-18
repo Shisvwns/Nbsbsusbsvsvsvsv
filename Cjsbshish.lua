@@ -1585,8 +1585,6 @@ end
 
 local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
 CamShake:Stop()
-local CombatFramework = require(Client.PlayerScripts.CombatFramework.Particle)
-CombatFramework:Stop()
 function GetCurrentBlade() 
     local p13 = getupvalues(require(game.Players.LocalPlayer.PlayerScripts.CombatFramework))[2].activeController
     local ret = p13.blades[1]
