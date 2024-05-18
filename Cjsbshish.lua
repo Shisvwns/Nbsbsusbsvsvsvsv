@@ -5191,16 +5191,10 @@ spawn(function()
                                 if v.Name == "Diablo" or v.Name == "Deandre" or v.Name == "Urban" then
                                     if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                                         repeat task.wait()
-                                            AutoHaki()
                                             EquipWeapon(_G.SelectWeapon)
-                                            v.HumanoidRootPart.CanCollide = false
-                                            v.Humanoid.WalkSpeed = 0
-                                            v.Head.CanCollide = false
                                             topos(v.HumanoidRootPart.CFrame * Pos)
                                             game:GetService("VirtualUser"):CaptureController()
                                             game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
-                                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                            sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
                                         until not _G.AutoYama or v.Humanoid.Health <= 0 or not v.Parent
                                     end
                                 end
@@ -5301,15 +5295,10 @@ spawn(function()
                         if v.Name == "Longma" then
                             if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                                 repeat task.wait()
-                                    AutoHaki()
                                     EquipWeapon(_G.SelectWeapon)
-                                    v.HumanoidRootPart.CanCollide = false
-                                    v.Humanoid.WalkSpeed = 0
-                                    v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                                     topos(v.HumanoidRootPart.CFrame * Pos)
                                     game:GetService("VirtualUser"):CaptureController()
                                     game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
-                                    sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",math.huge)
                                 until not  _G.Autotushita or not v.Parent or v.Humanoid.Health <= 0
                             end
                         end
@@ -5915,15 +5904,12 @@ spawn(function()
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if (v.Name == "Snow Lurker" or v.Name == "Arctic Warrior" or v.Name == "Awakened Ice Admiral") and v.Humanoid.Health > 0 then
                             repeat task.wait()
-                                AutoHaki()
                                 EquipWeapon(_G.SelectWeapon)
-                                v.HumanoidRootPart.CanCollide = false
-                                v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                RengokuMon = v.HumanoidRootPart.CFrame
                                 topos(v.HumanoidRootPart.CFrame * Pos)
+                                RengokuMon = v.HumanoidRootPart.CFrame
+                                StartRengokuMagnet = true
                                 game:GetService'VirtualUser':CaptureController()
                                 game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
-                                StartRengokuMagnet = true
                             until game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Hidden Key") or _G.AutoRengoku == false or not v.Parent or v.Humanoid.Health <= 0
                             StartRengokuMagnet = false
                         end
