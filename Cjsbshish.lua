@@ -1997,7 +1997,8 @@ spawn(function()
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
                             v.HumanoidRootPart.CanCollide = false
-                            sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",math.huge)
+                            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                            v.Humanoid:ChangeState(14)
                         end
                     end
                     if _G.AutoRengoku and StartRengokuMagnet then
@@ -3065,16 +3066,10 @@ spawn(function()
                     if (v.Name == "rip_indra" or v.Name == "Ice Admiral") or (v.Name == "Saber Expert" or v.Name == "The Saw" or v.Name == "Greybeard" or v.Name == "Mob Leader" or v.Name == "The Gorilla King" or v.Name == "Bobby" or v.Name == "Yeti" or v.Name == "Vice Admiral" or v.Name == "Warden" or v.Name == "Chief Warden" or v.Name == "Swan" or v.Name == "Magma Admiral" or v.Name == "Fishman Lord" or v.Name == "Wysper" or v.Name == "Thunder God" or v.Name == "Cyborg") or (v.Name == "Don Swan" or v.Name == "Diamond" or v.Name == "Jeremy" or v.Name == "Fajita" or v.Name == "Smoke Admiral" or v.Name == "Awakened Ice Admiral" or v.Name == "Tide Keeper" or v.Name == "Order" or v.Name == "Darkbeard" or v.Name == "Cursed Captain") or (v.Name == "Stone" or v.Name == "Island Empress" or v.Name == "Kilo Admiral" or v.Name == "Captain Elephant" or v.Name == "Beautiful Pirate" or v.Name == "Cake Queen" or v.Name == "rip_indra True Form" or v.Name == "Longma" or v.Name == "Soul Reaper" or v.Name == "Cake Prince" or v.Name == "Dough King") then
                         if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 17000 then
                             repeat task.wait()
-                                AutoHaki()
                                 EquipWeapon(_G.SelectWeapon)
-                                v.Humanoid.WalkSpeed = 0
-                                v.HumanoidRootPart.CanCollide = false
-                                v.Head.CanCollide = false
-                                v.HumanoidRootPart.Size = Vector3.new(80,80,80)
-                                topos(v.HumanoidRootPart.CFrame*Pos)
+                                topos(v.HumanoidRootPart.CFrame * Pos)
                                 game:GetService'VirtualUser':CaptureController()
                                 game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
-                                sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",math.huge)
                             until v.Humanoid.Health <= 0 or _G.AutoAllBoss == false or not v.Parent
                         end
                     else
@@ -3144,24 +3139,15 @@ spawn(function()
                                         HealthMs = v.Humanoid.MaxHealth * _G.Kill_At/100
                                         repeat task.wait()
                                             if v.Humanoid.Health <= HealthMs then
-                                                AutoHaki()
                                                 EquipWeapon(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value)
                                                 topos(v.HumanoidRootPart.CFrame * CFrame.new(0,10,0))
-                                                v.HumanoidRootPart.CanCollide = false
                                                 PosFarm = v.HumanoidRootPart.CFrame
-                                                v.Humanoid.WalkSpeed = 0
-                                                v.Head.CanCollide = false
                                                 UseSkill = true
                                             else           
-                                                UseSkill = false 
-                                                AutoHaki()
+                                                UseSkill = false
                                                 EquipWeapon(_G.SelectWeapon)
                                                 topos(v.HumanoidRootPart.CFrame * Pos)
-                                                v.HumanoidRootPart.CanCollide = false
-                                                v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                                                 PosFarm = v.HumanoidRootPart.CFrame
-                                                v.Humanoid.WalkSpeed = 0
-                                                v.Head.CanCollide = false
                                             end
                                             StartMagnet = true
                                             game:GetService'VirtualUser':CaptureController()
@@ -3235,22 +3221,13 @@ spawn(function()
                                             if v.Humanoid.Health <= HealthMin then                                                
                                                 EquipWeaponGun()
                                                 topos(v.HumanoidRootPart.CFrame * CFrame.new(0,10,0))
-                                                v.Humanoid.WalkSpeed = 0
-                                                v.HumanoidRootPart.CanCollide = false
-                                                v.HumanoidRootPart.Size = Vector3.new(2,2,1)
-                                                v.Head.CanCollide = false                                                
                                                 local args = {
                                                     [1] = v.HumanoidRootPart.Position,
                                                     [2] = v.HumanoidRootPart
                                                 }
                                                 game:GetService("Players").LocalPlayer.Character[EquipWeaponGun()].RemoteFunctionShoot:InvokeServer(unpack(args))
                                             else
-                                                AutoHaki()
                                                 EquipWeapon(_G.SelectWeapon)
-                                                v.Humanoid.WalkSpeed = 0
-                                                v.HumanoidRootPart.CanCollide = false
-                                                v.Head.CanCollide = false               
-                                                v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                                                 topos(v.HumanoidRootPart.CFrame * Pos)
                                                 game:GetService'VirtualUser':CaptureController()
                                                 game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
@@ -3325,19 +3302,10 @@ spawn(function()
                                             if v.Humanoid.Health <= HealthMin then                                                
                                                 EquipWeaponSword()
                                                 topos(v.HumanoidRootPart.CFrame * Pos)
-                                                v.Humanoid.WalkSpeed = 0
-                                                v.HumanoidRootPart.CanCollide = false
-                                                v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                                                 game:GetService'VirtualUser':CaptureController()
                                                 game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
-                                                v.Head.CanCollide = false                                                
                                             else
-                                                AutoHaki()
                                                 EquipWeapon(_G.SelectWeapon)
-                                                v.Humanoid.WalkSpeed = 0
-                                                v.HumanoidRootPart.CanCollide = false
-                                                v.Head.CanCollide = false               
-                                                v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                                                 topos(v.HumanoidRootPart.CFrame * Pos)
                                                 game:GetService'VirtualUser':CaptureController()
                                                 game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
@@ -3757,16 +3725,10 @@ spawn(function()
                         if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                             if v.Name == _G.SelectMob then
                                 repeat task.wait()
-                                    AutoHaki()
                                     EquipWeapon(_G.SelectWeapon)
-                                    SelectMag = true
                                     topos(v.HumanoidRootPart.CFrame * Pos)
-                                    v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-                                    v.HumanoidRootPart.Transparency = 1
-                                    v.Humanoid.JumpPower = 0
-                                    v.Humanoid.WalkSpeed = 0
-                                    v.HumanoidRootPart.CanCollide = false
                                     PosMonFarm = v.HumanoidRootPart.CFrame
+                                    SelectMag = true
                                     Click()
                                 until not _G.AutoFarmMob or not v.Parent or v.Humanoid.Health <= 0
                                 SelectMag = false
@@ -3828,16 +3790,10 @@ spawn(function()
                         if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                             if v.Name == MMon then
                                 repeat task.wait()
-                                    AutoHaki()
                                     EquipWeapon(_G.SelectWeapon)
-                                    BringMonMaterial = true
                                     topos(v.HumanoidRootPart.CFrame * Pos)
-                                    v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-                                    v.HumanoidRootPart.Transparency = 1
-                                    v.Humanoid.JumpPower = 0
-                                    v.Humanoid.WalkSpeed = 0
-                                    v.HumanoidRootPart.CanCollide = false
                                     MaterialPos = v.HumanoidRootPart.CFrame
+                                    BringMonMaterial = true
                                     Click()
                                 until not _G.AutoMaterial or not v.Parent or v.Humanoid.Health <= 0
                                 BringMonMaterial = false
@@ -4313,11 +4269,8 @@ spawn(function()
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                             if v.Name == "Order" then
                                 repeat task.wait()
-                                    AutoHaki()
                                     EquipWeapon(_G.SelectWeapon)
                                     topos(v.HumanoidRootPart.CFrame*Pos)
-                                    v.HumanoidRootPart.CanCollide = false
-                                    v.HumanoidRootPart.Size = Vector3.new(120, 120, 120)
                                     game:GetService("VirtualUser"):CaptureController()
                                     game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
                                 until not v.Parent or v.Humanoid.Health <= 0 or _G.AutoOderSword == false
@@ -4357,8 +4310,6 @@ spawn(function()
                             repeat task.wait()
                                 PosMon = a.HumanoidRootPart.CFrame
                                 EquipWeapon(_G.SelectWeapon)
-                                a.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-                                StartMagnet = true
                                 topos(a.HumanoidRootPart.CFrame * Pos)
                                 if (a.HumanoidRootPart.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
                                     game:GetService("VirtualUser"):CaptureController()
@@ -4400,7 +4351,6 @@ spawn(function()
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == "Core" and v.Humanoid.Health > 0 then
                             repeat task.wait()
-                                AutoHaki()         
                                 EquipWeapon(_G.SelectWeapon)           
                                 topos(CFrame.new(448.46756, 199.356781, -441.389252))                                  
                                 game:GetService("VirtualUser"):CaptureController()
@@ -4452,16 +4402,10 @@ spawn(function()
                                 if v.Name == "Diablo" or v.Name == "Deandre" or v.Name == "Urban" then
                                     if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                                         repeat task.wait()
-                                            AutoHaki()
                                             EquipWeapon(_G.SelectWeapon)
-                                            v.HumanoidRootPart.CanCollide = false
-                                            v.Humanoid.WalkSpeed = 0
-                                            v.Head.CanCollide = false
                                             topos(v.HumanoidRootPart.CFrame * Pos)
                                             game:GetService("VirtualUser"):CaptureController()
                                             game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
-                                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                            sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
                                         until not _G.AutoElitehunter or v.Humanoid.Health <= 0 or not v.Parent
                                     end
                                 end
@@ -4628,8 +4572,6 @@ spawn(function()
                             repeat task.wait()
                                 AutoHaki()
                                 EquipWeapon(_G.SelectWeapon)
-                                v.HumanoidRootPart.CanCollide = false
-                                v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                                 topos(v.HumanoidRootPart.CFrame * Pos)
                                 game:GetService("VirtualUser"):CaptureController()
                                 game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
