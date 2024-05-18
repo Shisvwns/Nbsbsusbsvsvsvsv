@@ -1583,50 +1583,98 @@ end
 
 -- [ Super Fast Attack ]
 
-local YaY = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
-local CameraShakerR = require(game.ReplicatedStorage.Util.CameraShaker)
-spawn(function()
-    while task.wait() do
-        if _G.FastAttack then
-            pcall(function()
-                for i,CombatFrameworkR in pairs(debug.getupvalues(YaY)) do
-                    if i == 2 then
-                        CameraShakerR:Stop()
-                        CombatFrameworkR.activeController.attacking = false
-                        CombatFrameworkR.activeController.timeToNextAttack = 0
-                        CombatFrameworkR.activeController.increment = 4
-                        CombatFrameworkR.activeController.increment = 2
-                        CombatFrameworkR.activeController.hitboxMagnitude = 80
-                        CombatFrameworkR.activeController.blocking = false
-                        CombatFrameworkR.activeController.timeToNextBlock = 0
-                        CombatFrameworkR.activeController.focusStart = 0
-                        CombatFrameworkR.activeController.humanoid.AutoRotate = true
-                    end
-                end
-            end)
-        else
-            for i,CombatFrameworkR in pairs(debug.getupvalues(YaY)) do
-                if i == 2 then
-                    pcall(function()
-                        CameraShakerR:Stop()
-                        CombatFrameworkR.activeController.attacking = false
-                        CombatFrameworkR.activeController.hitboxMagnitude = 80
-                        CombatFrameworkR.activeController.blocking = false
-                        CombatFrameworkR.activeController.focusStart = 0
-                        CombatFrameworkR.activeController.humanoid.AutoRotate = true
-                    end)
-                end
+local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
+CamShake:Stop()
+local CombatFramework = require(Client.PlayerScripts.CombatFramework.Particle)
+CombatFramework:Stop()
+function GetCurrentBlade() 
+    local p13 = getupvalues(require(game.Players.LocalPlayer.PlayerScripts.CombatFramework))[2].activeController
+    local ret = p13.blades[1]
+    if not ret then return end
+        while ret.Parent~=game.Players.LocalPlayer.Character do
+            ret = ret.Parent
+        end
+    return ret
+end
+function AttackFunction()
+    if game.Players.LocalPlayer.Character.Stun.Value ~= 0 then
+        return nil
+    end
+    local AC = getupvalues(require(game.Players.LocalPlayer.PlayerScripts.CombatFramework))[2].activeController
+    for i = 1, 1 do 
+        local bladehit = require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(game.Players.LocalPlayer.Character, {game.Players.LocalPlayer.Character.HumanoidRootPart}, 60)
+        local cac = {}
+        local hash = {}
+        for k, v in pairs(bladehit) do
+            if v.Parent:FindFirstChild("HumanoidRootPart") and not hash[v.Parent] then
+                table.insert(cac, v.Parent.HumanoidRootPart)
+                hash[v.Parent] = true
             end
         end
-    end
-end)
-spawn(function()
-    game:GetService("RunService").RenderStepped:Connect(function()
-        if _G.FastAttack == true then
-            game.Players.LocalPlayer.Character.Stun.Value = 0
-            game.Players.LocalPlayer.Character.Busy.Value = false        
+        bladehit = cac
+        if #bladehit > 0 then
+            local u8 = debug.getupvalue(AC.attack, 5)
+            local u9 = debug.getupvalue(AC.attack, 6)
+            local u7 = debug.getupvalue(AC.attack, 4)
+            local u10 = debug.getupvalue(AC.attack, 7)
+            local u12 = (u8 * 798405 + u7 * 727595) % u9
+            local u13 = u7 * 798405
+            (function()
+                u12 = (u12 * u9 + u13) % 1099511627776
+                u8 = math.floor(u12 / u9)
+                u7 = u12 - u8 * u9
+            end)()
+            u10 = u10 + 1
+            debug.setupvalue(AC.attack, 5, u8)
+            debug.setupvalue(AC.attack, 6, u9)
+            debug.setupvalue(AC.attack, 4, u7)
+            debug.setupvalue(AC.attack, 7, u10)
+            pcall(function()
+                if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") and AC.blades and AC.blades[1] then
+                    AC.animator.anims.basic[1]:Play(0.01,0.01,0.01)
+                    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange",tostring(GetCurrentBlade()))
+                    game.ReplicatedStorage.Remotes.Validator:FireServer(math.floor(u12 / 1099511627776 * 16777215), u10)
+                    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, i, "")
+                end
+            end)
         end
-    end)
+    end
+end
+CombatFrameworkR = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
+y = debug.getupvalues(CombatFrameworkR)[2]
+task.spawn(function()
+	game:GetService("RunService").RenderStepped:Connect(function()
+		if _G.FastAttack then
+			if typeof(y) == "table" then
+				pcall(function()
+					CameraShaker:Stop()
+					y.activeController.timeToNextAttack = (math.huge^math.huge^math.huge)
+					y.activeController.timeToNextAttack = 0
+					y.activeController.hitboxMagnitude = 70
+					y.activeController.active = false
+					y.activeController.timeToNextBlock = 0
+					y.activeController.focusStart = 1655503339.0980349
+					y.activeController.increment = 1
+					y.activeController.blocking = false
+					y.activeController.attacking = false
+					y.activeController.humanoid.AutoRotate = true
+				end)
+			end
+		end
+        if _G.FastAttack == true then
+			game.Players.LocalPlayer.Character.Stun.Value = 0
+			game.Players.LocalPlayer.Character.Busy.Value = false        
+		end
+	end)
+end)
+local Client = game.Players.LocalPlayer
+local STOP = require(Client.PlayerScripts.CombatFramework.Particle)
+task.spawn(function()
+    while wait() do
+        pcall(function()
+            if not shared.cpc then shared.cpc = STOP.play end
+        end)
+    end
 end)
 
 -- [ Ui Orion ]
