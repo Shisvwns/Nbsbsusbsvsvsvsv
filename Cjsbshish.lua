@@ -1357,24 +1357,7 @@ end
 
 function topos(Pos)
     Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-    if Distance < 10 then
-        Speed = 20000
-    elseif Distance < 25 then
-        Speed = 10000
-    elseif Distance < 50 then
-        Speed = 5000
-    elseif Distance < 150 then
-        Speed = 2500
-    elseif Distance < 250 then
-        Speed = 1250
-    elseif Distance < 500 then
-        Speed = 625
-    elseif Distance < 750 then
-        Speed = 450
-    elseif Distance >= 1000 then
-        Speed = 370
-    end
-    local Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance / Speed, Enum.EasingStyle.Linear),{CFrame = Pos})
+    local Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear),{CFrame = Pos})
     Tween:Play()
     _G.Clip = true
     if _G.StopTween == true then
@@ -1405,13 +1388,13 @@ end)
 spawn(function()
     while task.wait() do
         Type = 1
-        wait(0.1)
+        wait(0.2)
         Type = 2
-        wait(0.1)
+        wait(0.2)
         Type = 3
-        wait(0.1)
+        wait(0.2)
         Type = 4
-        wait(0.1)
+        wait(0.2)
     end
 end)
 
@@ -2268,9 +2251,17 @@ Setting:AddToggle({
 	Name = "Auto Haki",
 	Default = true,
 	Callback = function(Value)
-		AutoHaki()
+		_G.AutoHaki = Value
 	end
 })
+
+spawn(function()
+    while task.wait() do
+        if _G.AutoHaki then
+            AutoHaki()
+        end
+    end
+end)
 
 local Section = Setting:AddSection({
     Name = "Misc"
@@ -2434,7 +2425,6 @@ spawn(function()
                                     EquipWeapon(_G.SelectWeapon)
                                     NoClip = true         
                                     topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0,10,0))
-                                    Click()
                                 until not _G.FarmSkip or not v:FindFirstChild("HumanoidRootPart") or v.Character.Humanoid.Health <= 0
                                 NoClip = false
                             end
