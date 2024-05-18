@@ -2284,9 +2284,7 @@ local YourLevel = Farm:AddParagraph("Your Level")
 
 spawn(function()
     while wait() do
-        pcall(function()
-            YourLevel:Set("Level: "..game:GetService("Players").LocalPlayer.Data.Level.Value.."/2550")
-        end)
+        YourLevel:Set("Level: "..game:GetService("Players").LocalPlayer.Data.Level.Value.."/2550")
     end
 end)
 
@@ -2312,16 +2310,16 @@ spawn(function()
                     StartMagnet = false
                     CheckQuest()
                     if BypassTP then
-                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQuest.Position).Magnitude > 1500 then
-					BTP(CFrameQuest)
-					elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQuest.Position).Magnitude < 1500 then
-					topos(CFrameQuest)
-					end
-				else
-					topos(CFrameQuest)
-				end
-				if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQuest.Position).Magnitude <= 5 then
-					game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest",NameQuest,LevelQuest)
+                        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQuest.Position).Magnitude > 1500 then
+		        			BTP(CFrameQuest)
+		    			elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQuest.Position).Magnitude < 1500 then
+		        			topos(CFrameQuest)
+		    			end
+	    			else
+	    				topos(CFrameQuest)
+	    			end
+		    		if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQuest.Position).Magnitude <= 5 then
+	    				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest",NameQuest,LevelQuest)
                     end
                 elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
                     CheckQuest()
@@ -2350,7 +2348,7 @@ spawn(function()
                         UnEquipWeapon(_G.SelectWeapon)
                         StartMagnet = false
                         if game:GetService("ReplicatedStorage"):FindFirstChild(Mon) then
-                         topos(game:GetService("ReplicatedStorage"):FindFirstChild(Mon).HumanoidRootPart.CFrame * CFrame.new(15,10,2))
+                            topos(game:GetService("ReplicatedStorage"):FindFirstChild(Mon).HumanoidRootPart.CFrame * CFrame.new(15,10,2))
                         end
                     end
                 end
@@ -2424,7 +2422,8 @@ spawn(function()
                                     end
                                     EquipWeapon(_G.SelectWeapon)
                                     NoClip = true         
-                                    topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0,10,0))
+                                    topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0,5,0))
+                                    Click()
                                 until not _G.FarmSkip or not v:FindFirstChild("HumanoidRootPart") or v.Character.Humanoid.Health <= 0
                                 NoClip = false
                             end
@@ -2498,17 +2497,15 @@ local StatusCakePrince = Farm:AddParagraph("Cake Prince")
 
 spawn(function()
     while task.wait() do
-        pcall(function()
-            if string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 88 then
-                StatusCakePrince:Set("Defeat: "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,41).."/500")
-            elseif string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 87 then
-                StatusCakePrince:Set("Defeat: "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,40).."/500")
-            elseif string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 86 then
-                StatusCakePrince:Set("Defeat: "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,39).."/500")
-            else
-                StatusCakePrince:Set("Boss Is Spawning")
-            end
-        end)
+        if string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 88 then
+            StatusCakePrince:Set("Defeat: "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,41).."/500")
+        elseif string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 87 then
+            StatusCakePrince:Set("Defeat: "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,40).."/500")
+        elseif string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 86 then
+            StatusCakePrince:Set("Defeat: "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,39).."/500")
+        else
+            StatusCakePrince:Set("Boss Is Spawning")
+        end
     end
 end)
 
@@ -2586,15 +2583,15 @@ spawn(function()
                                     end
                                 end
                             else
-                            if BypassTP then
-                            if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CakePos.Position).Magnitude > 1500 then
-                            BTP(CakePos)
-                            elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CakePos.Position).Magnitude < 1500 then
-                            topos(CakePos)
-                            end
-                        else
-                            topos(CakePos)
-                        end
+                                if BypassTP then
+                                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CakePos.Position).Magnitude > 1500 then
+                                        BTP(CakePos)
+                                    elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CakePos.Position).Magnitude < 1500 then
+                                        topos(CakePos)
+                                    end
+                                else
+                                    topos(CakePos)
+                                end
                                 MagnetDought = false
                                 UnEquipWeapon(_G.SelectWeapon)
                                 topos(CFrame.new(-2091.911865234375, 70.00884246826172, -12142.8359375))
@@ -2669,17 +2666,17 @@ spawn(function()
                 if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
                     MagnetDought = false
                     if BypassTP then
-                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CakeQuestPos.Position).Magnitude > 1500 then
-                    BTP(CakeQuestPos)
-                    elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CakeQuestPos.Position).Magnitude < 1500 then
-                    topos(CakeQuestPos)
+                        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CakeQuestPos.Position).Magnitude > 1500 then
+                            BTP(CakeQuestPos)
+                        elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CakeQuestPos.Position).Magnitude < 1500 then
+                            topos(CakeQuestPos)
+                        end
+                    else
+                        topos(CakeQuestPos)
                     end
-                else
-                    topos(CakeQuestPos)
-                end
-                if (CakeQuestPos.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3 then                            
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest","CakeQuest1",1)
-                end
+                    if (CakeQuestPos.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3 then                            
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest","CakeQuest1",1)
+                    end
                 elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
                     if game:GetService("Workspace").Enemies:FindFirstChild("Cookie Crafter") or game:GetService("Workspace").Enemies:FindFirstChild("Cake Guard") or game:GetService("Workspace").Enemies:FindFirstChild("Baking Staff") or game:GetService("Workspace").Enemies:FindFirstChild("Head Baker") then
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
@@ -2704,7 +2701,7 @@ spawn(function()
                     else
                         MagnetDought = false
                         if game:GetService("ReplicatedStorage"):FindFirstChild("Cookie Crafter") then
-                         topos(game:GetService("ReplicatedStorage"):FindFirstChild("Cookie Crafter").HumanoidRootPart.CFrame * CFrame.new(15,10,2))
+                            topos(game:GetService("ReplicatedStorage"):FindFirstChild("Cookie Crafter").HumanoidRootPart.CFrame * CFrame.new(15,10,2))
                         end
                     end
                 end
@@ -2766,15 +2763,13 @@ local Section = Farm:AddSection({
 local YourBone = Farm:AddParagraph("Your Bone")
 
 spawn(function()
-    pcall(function()
-        while task.wait() do
-            if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Bones","Check") then
-                YourBone:Set("Bone: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Bones","Check").."/5000")
-            else
-                YourBone:Set("Only Third Sea")
-            end
+    while task.wait() do
+        if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Bones","Check") then
+            YourBone:Set("Bone: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Bones","Check").."/5000")
+        else
+            YourBone:Set("Only Third Sea")
         end
-    end)
+    end
 end)
 
 Farm:AddDropdown({
@@ -2816,15 +2811,15 @@ spawn(function()
                         end
                     end
                 else
-                if BypassTP then
-                if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - BonePos.Position).Magnitude > 1500 then
-                BTP(BonePos)
-                elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - BonePos.Position).Magnitude < 1500 then
-                topos(BonePos)
-                end
-            else
-                topos(BonePos)
-            end
+                    if BypassTP then
+                        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - BonePos.Position).Magnitude > 1500 then
+                            BTP(BonePos)
+                        elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - BonePos.Position).Magnitude < 1500 then
+                            topos(BonePos)
+                        end
+                    else
+                        topos(BonePos)
+                    end
                     UnEquipWeapon(_G.SelectWeapon)
                     StartMagnetBoneMon = false
                     topos(CFrame.new(-9506.234375, 172.130615234375, 6117.0771484375))
@@ -2858,16 +2853,16 @@ spawn(function()
                 if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
                     StartMagnetBoneMon = false
                     if BypassTP then
-                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - BoneQuestPos.Position).Magnitude > 1500 then
-                    BTP(BoneQuestPos)
-                    elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - BoneQuestPos.Position).Magnitude < 1500 then
-                    topos(BoneQuestPos)
+                        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - BoneQuestPos.Position).Magnitude > 1500 then
+                            BTP(BoneQuestPos)
+                        elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - BoneQuestPos.Position).Magnitude < 1500 then
+                            topos(BoneQuestPos)
+                        end
+                    else
+                        topos(BoneQuestPos)
                     end
-                else
-                    topos(BoneQuestPos)
-                end
-                if (BoneQuestPos.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3 then    
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest","HauntedQuest2",1)
+                    if (BoneQuestPos.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3 then    
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest","HauntedQuest2",1)
                     end
                 elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
                     if game:GetService("Workspace").Enemies:FindFirstChild("Reborn Skeleton") or game:GetService("Workspace").Enemies:FindFirstChild("Living Zombie") or game:GetService("Workspace").Enemies:FindFirstChild("Demonic Soul") or game:GetService("Workspace").Enemies:FindFirstChild("Posessed Mummy") then
@@ -2893,7 +2888,7 @@ spawn(function()
                     else
                         StartMagnetBoneMon = false
                         if game:GetService("ReplicatedStorage"):FindFirstChild("Demonic Soul [Lv. 2025]") then
-                         topos(game:GetService("ReplicatedStorage"):FindFirstChild("Demonic Soul [Lv. 2025]").HumanoidRootPart.CFrame * CFrame.new(15,10,2))
+                            topos(game:GetService("ReplicatedStorage"):FindFirstChild("Demonic Soul [Lv. 2025]").HumanoidRootPart.CFrame * CFrame.new(15,10,2))
                         end
                     end
                 end
@@ -4363,7 +4358,7 @@ local Section = Other:AddSection({
 local EliteStatus = Other:AddParagraph("Elite")
 
 spawn(function()
-    while wait() do
+    while task.wait() do
         if game:GetService("ReplicatedStorage"):FindFirstChild("Diablo") or game:GetService("ReplicatedStorage"):FindFirstChild("Deandre") or game:GetService("ReplicatedStorage"):FindFirstChild("Urban") or game:GetService("Workspace").Enemies:FindFirstChild("Diablo") or game:GetService("Workspace").Enemies:FindFirstChild("Deandre") or game:GetService("Workspace").Enemies:FindFirstChild("Urban") then
             EliteStatus:Set("Elite: 🟢")	
         else
@@ -4606,10 +4601,8 @@ local Section = Other:AddSection({
 local ObservationStatus = Other:AddParagraph("Observation Level")
 
 spawn(function()
-    while wait() do
-        pcall(function()
-            ObservationStatus:Set("Level: "..math.floor(game:GetService("Players").LocalPlayer.VisionRadius.Value))
-        end)
+    while task.wait() do
+        ObservationStatus:Set("Level: "..math.floor(game:GetService("Players").LocalPlayer.VisionRadius.Value))
     end
 end)
 
@@ -4780,19 +4773,17 @@ local Section = ItemQuest:AddSection({
 local LegendSwords = ItemQuest:AddParagraph("Legendary Sword Dealer")
 
 spawn(function()
-    pcall(function()
-        while wait() do
-            if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer", "1") then
-                LegendSwords:Set("Sword Name: Shisui")
-            elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer","2") then
-                LegendSwords:Set("Sword Name: Wando")
-            elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer","3") then
-                LegendSwords:Set("Sword Name: Saddi")
-            else
-                LegendSwords:Set("Not Found Legendary Sword Dealer")
-            end
+    while task.wait() do
+        if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer", "1") then
+            LegendSwords:Set("Sword Name: Shisui")
+        elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer","2") then
+            LegendSwords:Set("Sword Name: Wando")
+        elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer","3") then
+            LegendSwords:Set("Sword Name: Saddi")
+        else
+            LegendSwords:Set("Not Found Legendary Sword Dealer")
         end
-    end)
+    end
 end)
 
 ItemQuest:AddToggle({
@@ -4834,15 +4825,13 @@ local Section = ItemQuest:AddSection({
 local ColorHaki = ItemQuest:AddParagraph("Haki Dealer")
 
 spawn(function()
-    pcall(function()
-        while wait() do
-            if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer", "1") then
-                ColorHaki:Set("Haki Colors: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer", "1"))
-            else
-                ColorHaki:Set("Not Found Haki Dealer")
-            end
+    while taks.wait() do
+        if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer", "1") then
+            ColorHaki:Set("Haki Colors: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer", "1"))
+        else
+            ColorHaki:Set("Not Found Haki Dealer")
         end
-    end)
+    end
 end)
 
 ItemQuest:AddToggle({
@@ -5154,10 +5143,8 @@ local Section = ItemQuest:AddSection({
 local Yama = ItemQuest:AddParagraph("Elite Progress")
 
 spawn(function()
-    while wait() do
-        pcall(function()
-            Yama:Set("Elite: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter","Progress"))
-        end)
+    while task.wait() do
+        Yama:Set("Elite: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter","Progress"))
     end
 end)
 
@@ -6627,13 +6614,11 @@ Player:AddToggle({
 
 spawn(function()
     while task.wait() do
-        pcall(function()
-            if _G.OnV3 then
-                game:GetService('VirtualUser'):SetKeyDown('0x74')
-                wait(0.1)
-                game:GetService('VirtualUser'):SetKeyUp('0x74')
-            end
-        end)
+        if _G.OnV3 then
+            game:GetService('VirtualUser'):SetKeyDown('0x74')
+            wait(0.1)
+            game:GetService('VirtualUser'):SetKeyUp('0x74')
+        end
     end
 end)
 
@@ -6647,13 +6632,11 @@ Player:AddToggle({
 
 spawn(function()
     while task.wait() do
-        pcall(function()
-            if _G.OnV4 then
-                game:GetService('VirtualUser'):SetKeyDown('0x59')
-                wait(0.1)
-                game:GetService('VirtualUser'):SetKeyUp('0x59')
-            end
-        end)
+        if _G.OnV4 then
+            game:GetService('VirtualUser'):SetKeyDown('0x59')
+            wait(0.1)
+           game:GetService('VirtualUser'):SetKeyUp('0x59')
+        end
     end
 end)
 
@@ -6667,17 +6650,15 @@ Player:AddToggle({
 
 spawn(function()
     while task.wait() do
-        pcall(function()
-            if _G.OnHaki then
-                repeat wait()
-                    if not game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") then
-                        game:GetService('VirtualUser'):SetKeyDown('0x65')
-                        wait(0.1)
-                        game:GetService('VirtualUser'):SetKeyUp('0x65')
-                    end
-                until game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") or not _G.OnHaki
-            end
-        end)
+        if _G.OnHaki then
+            repeat wait()
+                if not game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") then
+                    game:GetService('VirtualUser'):SetKeyDown('0x65')
+                    wait(0.1)
+                    game:GetService('VirtualUser'):SetKeyUp('0x65')
+                end
+            until game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") or not _G.OnHaki
+        end
     end
 end)
 
@@ -6858,18 +6839,16 @@ local Section = PvP:AddSection({
 local plyserv = PvP:AddParagraph("Player In Server")
 
 spawn(function()
-    while wait() do
-        pcall(function()
-            for i,v in pairs(game:GetService("Players"):GetPlayers()) do
-                if i == 12 then
-                    plyserv:Set("Player: "..i.."/".."12")
-                elseif i == 1 then
-                    plyserv:Set("Player: "..i.."/".."12")
-                else
-                    plyserv:Set("Player: "..i.."/".."12")
-                end
+    while task.wait() do
+        for i,v in pairs(game:GetService("Players"):GetPlayers()) do
+            if i == 12 then
+                plyserv:Set("Player: "..i.."/".."12")
+            elseif i == 1 then
+                plyserv:Set("Player: "..i.."/".."12")
+            else
+                plyserv:Set("Player: "..i.."/".."12")
             end
-        end)
+        end
     end
 end)
 
@@ -7065,14 +7044,12 @@ local Section = PvP:AddSection({
 local checkbotihoron = PvP:AddParagraph("Your Bounty / Honor")
 
 spawn(function()
-    while wait() do
-        pcall(function()
-            if game:GetService("Players").LocalPlayer.Team.Name == "Pirates" then
-                checkbotihoron:Set("Bounty: "..tostring(game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].Value))
-            elseif game:GetService("Players").LocalPlayer.Team.Name == "Marines" then
-                checkbotihoron:Set("Honor: "..tostring(game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].Value))
-            end
-        end)
+    while task.wait() do
+        if game:GetService("Players").LocalPlayer.Team.Name == "Pirates" then
+            checkbotihoron:Set("Bounty: "..tostring(game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].Value))
+        elseif game:GetService("Players").LocalPlayer.Team.Name == "Marines" then
+            checkbotihoron:Set("Honor: "..tostring(game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].Value))
+        end
     end
 end)
 
@@ -7114,9 +7091,7 @@ local CRace = Race:AddParagraph("Your Race")
 
 spawn(function()
     while wait() do
-        pcall(function()
-            CRace:Set("Race: "..CheckRace())
-        end)
+        CRace:Set("Race: "..CheckRace())
     end
 end)
 
@@ -7333,9 +7308,7 @@ local Moon1 = Race:AddParagraph("Moon")
 
 spawn(function()
     while task.wait() do
-        pcall(function()
-            Moon1:Set(CheckMoon().." | "..function8())
-        end)
+        Moon1:Set(CheckMoon().." | "..function8())
     end
 end)
 
@@ -7489,15 +7462,6 @@ spawn(function()
 	end
 end)
 
-Race:AddDropdown({
-	Name = "Select Mode Kill Players Trials",
-	Default = "Spam Click",
-	Options = {"Spam Click","Spam Skill"},
-	Callback = function(Value)
-		ModeTrials = Value
-	end
-})
-
 Race:AddToggle({
 	Name = "Auto Kill Players After Trials",
 	Default = false,
@@ -7508,33 +7472,8 @@ Race:AddToggle({
 })
 
 spawn(function()
-    while task.wait() do 
-        pcall(function()
-            if ModeTrials == "Spam Click" and _G.KillAfterTrials then
-                for i,v in pairs(game:GetService("Workspace").Characters:GetChildren()) do
-                    if v.Name ~= game.Players.LocalPlayer.Name and (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
-                        if v.Humanoid.Health > 0 then
-                            repeat task.wait()
-                                AutoHaki()
-                                EquipWeapon(_G.SelectWeaponTrials)
-                                NameTarget = v.Name
-                                topos(v.HumanoidRootPart.CFrame * CFrame.new(0,0,0))
-                                v.HumanoidRootPart.CanCollide = false
-                                v.Head.CanCollide = false
-                                v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-                                Click()
-                            until not _G.KillAfterTrials or not v.Parent or v.Humanoid.Health <= 0 
-                        end
-                    end
-                end
-            end
-        end)
-    end
-end)
-
-spawn(function()
     while task.wait() do
-        if ModeTrials == "Spam Skill" and _G.KillAfterTrials then
+        if _G.KillAfterTrials then
             pcall(function()
                 for i, v in pairs(game.Workspace.Characters:GetChildren()) do
                     if v.Name ~= game.Players.LocalPlayer.Name then
@@ -7672,9 +7611,7 @@ local AnOn = Race:AddParagraph("Ancient One")
 
 spawn(function()
     while wait() do
-        pcall(function()
-            AnOn:Set(CheckAncientOneStatus())
-        end)
+        AnOn:Set(CheckAncientOneStatus())
     end
 end)
 
@@ -7727,40 +7664,53 @@ spawn(function()
 end)
 
 spawn(function()
-    while wait() do 
-        if StardFarm and World3 then
+    while wait() do
+        if StardFarm and World3  then
             pcall(function()
-                if game:GetService("Workspace").Enemies:FindFirstChild("Cocoa Warrior") or game:GetService("Workspace").Enemies:FindFirstChild("Chocolate Bar Battler") or game:GetService("Workspace").Enemies:FindFirstChild("Sweet Thief") or game:GetService("Workspace").Enemies:FindFirstChild("Candy Rebel") then
-                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                        if v.Name == "Cocoa Warrior" or v.Name == "Chocolate Bar Battler" or v.Name == "Sweet Thief" or v.Name == "Candy Rebel" then
-                           if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                               repeat task.wait()
-                                    AutoHaki()
-                                    EquipWeapon(_G.SelectWeapon)
-                                    v.HumanoidRootPart.CanCollide = false
-                                    v.Humanoid.WalkSpeed = 0
-                                    v.Head.CanCollide = false 
-                                    FarmMag = true
-                                    PosGG = v.HumanoidRootPart.CFrame
-                                    topos(v.HumanoidRootPart.CFrame * Pos)
-                                    game:GetService("VirtualUser"):CaptureController()
-                                    game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
-                                until not StardFarm or not v.Parent or v.Humanoid.Health <= 0
-                            end
-                        end
+                local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
+                if not string.find(QuestTitle, "Demonic Soul") then
+                    StartMagnetBoneMon = false
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+                end
+                if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
+                    StartMagnetBoneMon = false
+                    if BypassTP then
+                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - BoneQuestPos.Position).Magnitude > 1500 then
+                    BTP(BoneQuestPos)
+                    elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - BoneQuestPos.Position).Magnitude < 1500 then
+                    topos(BoneQuestPos)
                     end
                 else
-                    FarmMag = false
-                    topos(CFrame.new(216.211181640625, 126.9352035522461, -12599.0732421875))
-                    for i,v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do 
-                        if v.Name == "Cocoa Warrior" then
-                            topos(v.HumanoidRootPart.CFrame * CFrame.new(2,20,2))
-                        elseif v.Name == "Chocolate Bar Battler" then
-                            topos(v.HumanoidRootPart.CFrame * CFrame.new(2,20,2))
-                        elseif v.Name == "Sweet Thief" then
-                            topos(v.HumanoidRootPart.CFrame * CFrame.new(2,20,2))
-                        elseif v.Name == "Candy Rebel" then
-                            topos(v.HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                    topos(BoneQuestPos)
+                end
+                if (BoneQuestPos.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3 then    
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest","HauntedQuest2",1)
+                    end
+                elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
+                    if game:GetService("Workspace").Enemies:FindFirstChild("Reborn Skeleton") or game:GetService("Workspace").Enemies:FindFirstChild("Living Zombie") or game:GetService("Workspace").Enemies:FindFirstChild("Demonic Soul") or game:GetService("Workspace").Enemies:FindFirstChild("Posessed Mummy") then
+                        for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                            if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                                if v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy" then
+                                    if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, "Demonic Soul") then
+                                        repeat task.wait()
+                                            EquipWeapon(_G.SelectWeapon)
+                                            topos(v.HumanoidRootPart.CFrame * Pos)
+                                            PosMonBone = v.HumanoidRootPart.CFrame
+                                            StartMagnetBoneMon = true
+                                            game:GetService'VirtualUser':CaptureController()
+                                            game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
+                                        until not StardFarm or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
+                                    else
+                                        StartMagnetBoneMon = false
+                                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+                                    end
+                                end
+                            end
+                        end
+                    else
+                        StartMagnetBoneMon = false
+                        if game:GetService("ReplicatedStorage"):FindFirstChild("Demonic Soul [Lv. 2025]") then
+                         topos(game:GetService("ReplicatedStorage"):FindFirstChild("Demonic Soul [Lv. 2025]").HumanoidRootPart.CFrame * CFrame.new(15,10,2))
                         end
                     end
                 end
@@ -8168,9 +8118,7 @@ end
 
 spawn(function()
     while task.wait() do
-        pcall(function()
-            UpdateTime()
-        end)
+        UpdateTime()
     end
 end)
 
@@ -8178,9 +8126,7 @@ local Moon = StatusServer:AddParagraph("Moon")
 
 spawn(function()
     while task.wait() do
-        pcall(function()
-            Moon:Set(CheckMoon().." | "..function8())
-        end)
+        Moon:Set(CheckMoon().." | "..function8())
     end
 end)
 
@@ -8188,50 +8134,44 @@ local KillCake = StatusServer:AddParagraph("Cake Prince")
 
 spawn(function()
     while task.wait() do
-        pcall(function()
-            if string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 88 then
-                KillCake:Set("Defeat: "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,41).."/500")
-            elseif string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 87 then
-                KillCake:Set("Defeat: "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,40).."/500")
-            elseif string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 86 then
-                KillCak:Set("Defeat: "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,39).."/500")
-            else
-                KillCake:Set("Boss Is Spawning")
-            end
-        end)
+        if string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 88 then
+            KillCake:Set("Defeat: "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,41).."/500")
+        elseif string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 87 then
+            KillCake:Set("Defeat: "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,40).."/500")
+        elseif string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 86 then
+            KillCak:Set("Defeat: "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,39).."/500")
+        else
+            KillCake:Set("Boss Is Spawning")
+        end
     end
 end)
 
 local LegendSwords1 = StatusServer:AddParagraph("Legendary Sword Dealer")
 
 spawn(function()
-    pcall(function()
-        while wait() do
-            if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer", "1") then
-                LegendSwords1:Set("Sword Name: Shisui")
-            elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer","2") then
-                LegendSwords1:Set("Sword Name: Wando")
-            elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer","3") then
-                LegendSwords1:Set("Sword Name: Saddi")
-            else
-                LegendSwords1:Set("Not Found Legendary Sword Dealer")
-            end
+    while wait() do
+        if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer", "1") then
+            LegendSwords1:Set("Sword Name: Shisui")
+        elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer","2") then
+            LegendSwords1:Set("Sword Name: Wando")
+        elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer","3") then
+            LegendSwords1:Set("Sword Name: Saddi")
+        else
+            LegendSwords1:Set("Not Found Legendary Sword Dealer")
         end
-    end)
+    end
 end)
 
 local ColorHaki1 = StatusServer:AddParagraph("Haki Dealer")
 
 spawn(function()
-    pcall(function()
-        while wait() do
-            if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer", "1") then
-                ColorHaki1:Set("Haki Colors: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer", "1"))
-            else
-                ColorHaki1:Set("Not Found Haki Dealer")
-            end
+    while wait() do
+        if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer", "1") then
+            ColorHaki1:Set("Haki Colors: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer", "1"))
+        else
+            ColorHaki1:Set("Not Found Haki Dealer")
         end
-    end)
+    end
 end)
 
 local Elite = StatusServer:AddParagraph("Elite")
@@ -8304,7 +8244,7 @@ StatusServer:AddToggle({
 })
 
 spawn(function()
-    while wait(0) do
+    while task.wait() do
         if _G.Join then
             game:GetService("TeleportService"):TeleportToPlaceInstance(game.placeId,_G.Job, game.Players.LocalPlayer)
         end
