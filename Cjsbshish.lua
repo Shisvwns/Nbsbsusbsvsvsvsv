@@ -5942,7 +5942,6 @@ spawn(function()
                         if v.Name == "Beautiful Pirate" then
                             if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                                 repeat task.wait()
-                                    AutoHaki()
                                     EquipWeapon(_G.SelectWeapon)
                                     v.HumanoidRootPart.CanCollide = false
                                     v.Humanoid.WalkSpeed = 0
@@ -5950,7 +5949,6 @@ spawn(function()
                                     topos(v.HumanoidRootPart.CFrame * Pos)
                                     game:GetService("VirtualUser"):CaptureController()
                                     game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
-                                    sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",math.huge)
                                 until not  _G.AutoCarvender or not v.Parent or v.Humanoid.Health <= 0
                             end
                         end
@@ -5995,15 +5993,10 @@ spawn(function()
                         if v.Name == "Captain Elephant" then
                             if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                                 repeat task.wait()
-                                    AutoHaki()
                                     EquipWeapon(_G.SelectWeapon)
-                                    v.HumanoidRootPart.CanCollide = false
-                                    v.Humanoid.WalkSpeed = 0
-                                    v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                                     topos(v.HumanoidRootPart.CFrame * Pos)
                                     game:GetService("VirtualUser"):CaptureController()
                                     game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
-                                    sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",math.huge)
                                 until not  _G.AutoTwinHook or not v.Parent or v.Humanoid.Health <= 0
                             end
                         end
@@ -6051,10 +6044,7 @@ spawn(function()
                             if v.Name == "Soul Reaper"  then
                                 if _G.AutoFarmBossHallow and v.Name == "Soul Reaper" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                                     repeat wait()
-                                        AutoHaki()
                                         EquipWeapon(_G.Select_Weapon)
-                                        v.HumanoidRootPart.CanCollide = false
-                                        v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                                          topos(v.HumanoidRootPart.CFrame * Pos)
                                         game:GetService'VirtualUser':CaptureController()
                                         game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
@@ -6091,15 +6081,10 @@ spawn(function()
                         if v.Name == "Tide Keeper" then
                             if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                                 repeat task.wait()
-                                    AutoHaki()
                                     EquipWeapon(_G.SelectWeapon)
-                                    v.HumanoidRootPart.CanCollide = false
-                                    v.Humanoid.WalkSpeed = 0
-                                    v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                                     topos(v.HumanoidRootPart.CFrame * Pos)
                                     game:GetService("VirtualUser"):CaptureController()
                                     game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
-                                    sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",math.huge)
                                 until not  _G.Auto_Dragon_Trident or not v.Parent or v.Humanoid.Health <= 0
                             end
                         end
@@ -6144,15 +6129,10 @@ spawn(function()
                         if v.Name == "Chief Warden" then
                             if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                                 repeat task.wait()
-                                    AutoHaki()
                                     EquipWeapon(_G.SelectWeapon)
-                                    v.HumanoidRootPart.CanCollide = false
-                                    v.Humanoid.WalkSpeed = 0
-                                    v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                                     topos(v.HumanoidRootPart.CFrame * Pos)
                                     game:GetService("VirtualUser"):CaptureController()
                                     game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
-                                    sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",math.huge)
                                 until not  _G.Autowaden or not v.Parent or v.Humanoid.Health <= 0
                             end
                         end
@@ -6197,15 +6177,10 @@ spawn(function()
                         if v.Name == "Thunder God" then
                             if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                                 repeat task.wait()
-                                    AutoHaki()
                                     EquipWeapon(_G.SelectWeapon)
-                                    v.HumanoidRootPart.CanCollide = false
-                                    v.Humanoid.WalkSpeed = 0
-                                    v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                                     topos(v.HumanoidRootPart.CFrame * Pos)
                                     game:GetService("VirtualUser"):CaptureController()
                                     game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
-                                    sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",math.huge)
                                 until not  _G.Autopole or not v.Parent or v.Humanoid.Health <= 0
                             end
                         end
@@ -6250,15 +6225,10 @@ spawn(function()
                         if v.Name == "The Saw" then
                             if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                                 repeat task.wait()
-                                    AutoHaki()
                                     EquipWeapon(_G.SelectWeapon)
-                                    v.HumanoidRootPart.CanCollide = false
-                                    v.Humanoid.WalkSpeed = 0
-                                    v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                                     topos(v.HumanoidRootPart.CFrame * Pos)
                                     game:GetService("VirtualUser"):CaptureController()
                                     game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
-                                    sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",math.huge)
                                 until not  _G.Autosaw or not v.Parent or v.Humanoid.Health <= 0
                             end
                         end
@@ -6293,32 +6263,43 @@ ItemQuest:AddToggle({
 	end
 })
 
+local EmpressPos = CFrame.new(5543.86328125, 668.97399902344, 199.0341796875)
 spawn(function()
-    pcall(function()
-        while wait() do
-            if _G.AutoSerpentBow and World3 then
+    while wait() do
+        if  _G.AutoSerpentBow and World3 then
+            pcall(function()
                 if game:GetService("Workspace").Enemies:FindFirstChild("Island Empress") then
-                    for a, a in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                        if a.Name == ("Island Empress" or a.Name == "Island Empress") and a.Humanoid.Health > 0 and a:IsA("Model") and a:FindFirstChild("Humanoid") and a:FindFirstChild("HumanoidRootPart") then
-                            repeat task.wait()
-                                StartMagnet = true
-                                EquipWeapon(_G.SelectWeapon)
-                                topos(v.HumanoidRootPart.CFrame * Pos)
-                                PosMon = a.HumanoidRootPart.CFrame
-                                a.HumanoidRootPart.Size = Vector3.new(80, 80, 80)
-                                a.HumanoidRootPart.CanCollide = false
-                                game:GetService "VirtualUser":CaptureController()
-                                game:GetService "VirtualUser":Button1Down(Vector2.new(1280, 672))
-                            until not _G.AutoSerpentBow or not a.Parent or a.Humanoid.Health <= 0
-                            StartMagnet = false
+                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        if v.Name == "Island Empress" then
+                            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                                repeat task.wait()
+                                    EquipWeapon(_G.SelectWeapon)
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
+                                    game:GetService("VirtualUser"):CaptureController()
+                                    game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
+                                until not  _G.AutoSerpentBow or not v.Parent or v.Humanoid.Health <= 0
+                            end
                         end
                     end
                 else
-                    topos(CFrame.new(5543.86328125, 668.97399902344, 199.0341796875))
+                if BypassTP then
+                if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - SharkPos.Position).Magnitude > 1500 then
+                BTP(EmpressPos)
+                elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - SharkPos.Position).Magnitude < 1500 then
+                topos(EmpressPos)
                 end
+            else
+                topos(EmpressPos)
             end
+                UnEquipWeapon(_G.SelectWeapon)
+                topos(CFrame.new(5543.86328125, 668.97399902344, 199.0341796875))
+                    if game:GetService("ReplicatedStorage"):FindFirstChild("Island Empress") then
+                        topos(game:GetService("ReplicatedStorage"):FindFirstChild("Island Empress").HumanoidRootPart.CFrame * CFrame.new(2,40,2))
+                    end
+                end
+            end)
         end
-    end)
+    end
 end)
 
 local Section = ItemQuest:AddSection({
