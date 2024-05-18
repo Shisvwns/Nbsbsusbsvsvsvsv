@@ -1614,72 +1614,61 @@ end
 local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
 CamShake:Stop()
 function GetBladeHit()
-  local CombatFrameworkLib = debug.getupvalues(require(Player.PlayerScripts.CombatFramework))
-  local CmrFwLib = CombatFrameworkLib[2]
-  local p13 = CmrFwLib.activeController
-  local weapon = p13.blades[1]
-  
-  if not weapon then 
+    local CombatFrameworkLib = debug.getupvalues(require(Player.PlayerScripts.CombatFramework))
+    local CmrFwLib = CombatFrameworkLib[2]
+    local p13 = CmrFwLib.activeController
+    local weapon = p13.blades[1]
+    if not weapon then 
+        return weapon
+    end
+    while weapon.Parent ~= Player.Character do task.wait()
+        weapon = weapon.Parent
+    end
     return weapon
-  end
-  while weapon.Parent ~= Player.Character do task.wait()
-    weapon = weapon.Parent
-  end
-  return weapon
 end
 
 function AttackHit()
-  local CombatFrameworkLib = debug.getupvalues(require(Player.PlayerScripts.CombatFramework))
-  local CmrFwLib = CombatFrameworkLib[2]
-  for i = 1, 1 do
-    local bladehit = require(ReplicatedStorage.CombatFramework.RigLib).getBladeHits(Player.Character, {
-      Player.Character.HumanoidRootPart
-    }, 60)
-    local cac = {}
-    local hash = {}
-    for _,v in pairs(bladehit) do
-      if v.Parent:FindFirstChild("HumanoidRootPart") and not hash[v.Parent] then
-        table.insert(cac, v.Parent.HumanoidRootPart)
-        hash[v.Parent] = true
-      end
+    local CombatFrameworkLib = debug.getupvalues(require(Player.PlayerScripts.CombatFramework))
+    local CmrFwLib = CombatFrameworkLib[2]
+    for i = 1, 1 do
+        local bladehit = require(ReplicatedStorage.CombatFramework.RigLib).getBladeHits(Player.Character, {Player.Character.HumanoidRootPart}, 60)
+        local cac = {}
+        local hash = {}
+        for _,v in pairs(bladehit) do
+            if v.Parent:FindFirstChild("HumanoidRootPart") and not hash[v.Parent] then
+                table.insert(cac, v.Parent.HumanoidRootPart)
+                hash[v.Parent] = true
+            end
+        end
+        bladehit = cac
+        if #bladehit > 0 then
+            pcall(function()
+                ReplicatedStorage.RigControllerEvent:FireServer("weaponChange", tostring(GetBladeHit()))
+                ReplicatedStorage.RigControllerEvent:FireServer("hit", bladehit, i, "")
+            end)
+        end
     end
-    bladehit = cac
-    if #bladehit > 0 then
-      pcall(function()
-        ReplicatedStorage.RigControllerEvent:FireServer("weaponChange", tostring(GetBladeHit()))
-        ReplicatedStorage.RigControllerEvent:FireServer("hit", bladehit, i, "")
-      end)
-    end
-  end
-end
-
-local function AttackDistance()
-  while getgenv().AttackDistance do task.wait()
-    pcall(function()
-      local CF = debug.getupvalues(require(Player.PlayerScripts.CombatFramework))[2]
-      local AC = CF.activeController
-      if AC.hitboxMagnitude ~= 60 then AC.hitboxMagnitude = 60 end
-    end)
-  end
 end
 
 local function FastAttack()
-  while getgenv().FastAttack do task.wait()
-    pcall(function()
-      local CF = debug.getupvalues(require(Player.PlayerScripts.CombatFramework))[2]
-      local AC = CF.activeController
-      if AC.increment ~= 3 then AC.increment = 3 end
-      if AC.timeToNextAttack ~= 0 then AC.timeToNextAttack = 0 end
-      if AC.timeToNextBlock ~= 0 then AC.timeToNextBlock = 0 end
-      if AC.focusStart ~= 0 then AC.focusStart = 0 end
-      if AC.attacking ~= false then AC.attacking = false end
-      if AC.blocking ~= false then AC.blocking = false end
-      if AC.humanoid.AutoRotate ~= true then AC.humanoid.AutoRotate = true end
-      if AC.currentAttackTrack ~= 0 then AC.currentAttackTrack = 0 end
-      sethiddenproperty(Player, "SimulationRaxNerous", math.huge)
-    end)task.spawn(AttackHit)
-  end
+    while getgenv().FastAttack do task.wait()
+        pcall(function()
+            local CF = debug.getupvalues(require(Player.PlayerScripts.CombatFramework))[2]
+            local AC = CF.activeController
+            if AC.increment ~= 3 then AC.increment = 3 end
+            if AC.timeToNextAttack ~= 0 then AC.timeToNextAttack = 0 end
+            if AC.timeToNextBlock ~= 0 then AC.timeToNextBlock = 0 end
+            if AC.focusStart ~= 0 then AC.focusStart = 0 end
+            if AC.attacking ~= false then AC.attacking = false end
+            if AC.blocking ~= false then AC.blocking = false end
+            if AC.humanoid.AutoRotate ~= true then AC.humanoid.AutoRotate = true end
+            if AC.currentAttackTrack ~= 0 then AC.currentAttackTrack = 0 end
+                sethiddenproperty(Player, "SimulationRaxNerous", math.huge)
+        end)
+        task.spawn(AttackHit)
+    end
 end
+
 local Client = game.Players.LocalPlayer
 local STOP = require(Client.PlayerScripts.CombatFramework.Particle)
 local STOPRL = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib)
@@ -1962,7 +1951,6 @@ task.spawn(function()
         while task.wait(_G.FastAttackDelay) do
             if _G.FastAttack then
                 FastAttack()
-                AttackDistance()
             end
         end
     end)
@@ -2333,7 +2321,7 @@ spawn(function()
                                             EquipWeapon(_G.SelectWeapon)
                                             AutoHaki()                                            
                                             topos(v.HumanoidRootPart.CFrame * Pos)
-                                            PosMon = v.HumanoidRootPart.CFrame
+                                            PosFarm = v.HumanoidRootPart.CFrame
                                             v.HumanoidRootPart.CanCollide = false
                                             v.Humanoid.WalkSpeed = 0
                                             v.Head.CanCollide = false
