@@ -2320,6 +2320,7 @@ spawn(function()
                                             StartMagnet = true
                                             game:GetService'VirtualUser':CaptureController()
                                             game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
+                                            sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
                                         until not _G.AutoFarm or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
                                     else
                                         StartMagnet = false
@@ -2409,6 +2410,8 @@ spawn(function()
                                     NoClip = true         
                                     topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,0))
                                     Click()
+                        			game:service('VirtualInputManager'):SendKeyEvent(true, "X", false, game)
+			           			 game:service('VirtualInputManager'):SendKeyEvent(false, "X", false, game)
                                 until not _G.FarmSkip or not v:FindFirstChild("HumanoidRootPart") or v.Character.Humanoid.Health <= 0
                                 NoClip = false
                             end
@@ -5773,15 +5776,10 @@ spawn(function()
                                                 if v.Name == "Mob Leader" then
                                                    if game:GetService("Workspace").Enemies:FindFirstChild("Mob Leader") then
                                                        repeat task.wait()
-                                                            AutoHaki()
                                                             EquipWeapon(_G.SelectWeapon)
-                                                            v.HumanoidRootPart.CanCollide = false
-                                                            v.Humanoid.WalkSpeed = 0
-                                                            v.HumanoidRootPart.Size = Vector3.new(80,80,80)
                                                             topos(v.HumanoidRootPart.CFrame * Pos)
                                                             game:GetService("VirtualUser"):CaptureController()
                                                             game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
-                                                            sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
                                                     until v.Humanoid.Health <= 0 or not _G.Auto_Saber
                                                  end
                                             end
@@ -5809,15 +5807,6 @@ spawn(function()
                                     repeat task.wait()
                                         EquipWeapon(_G.SelectWeapon)
                                         topos(v.HumanoidRootPart.CFrame * Pos)
-                                        v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-                                        v.HumanoidRootPart.Transparency = 1
-                                        v.Humanoid.JumpPower = 0
-                                        v.Humanoid.WalkSpeed = 0
-                                        v.HumanoidRootPart.CanCollide = false
-                                        --v.Humanoid:ChangeState(11)
-                                        --v.Humanoid:ChangeState(14)
-                                        FarmPos = v.HumanoidRootPart.CFrame
-                                        MonFarm = v.Name
                                         game:GetService'VirtualUser':CaptureController()
                                         game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672),workspace.CurrentCamera.CFrame)
                                     until v.Humanoid.Health <= 0 or not _G.Auto_Saber
@@ -5893,9 +5882,6 @@ spawn(function()
                             if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                                 repeat task.wait()
                                     EquipWeapon(_G.SelectWeapon)
-                                    v.HumanoidRootPart.CanCollide = false
-                                    v.Humanoid.WalkSpeed = 0
-                                    v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                                     topos(v.HumanoidRootPart.CFrame * Pos)
                                     game:GetService("VirtualUser"):CaptureController()
                                     game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
