@@ -2317,6 +2317,7 @@ spawn(function()
                                             EquipWeapon(_G.SelectWeapon)
                                             topos(v.HumanoidRootPart.CFrame * Pos)
                                             PosFarm = v.HumanoidRootPart.CFrame
+                                            v.HumanoidRootPart.CanCollide = false
                                             StartMagnet = true
                                             game:GetService'VirtualUser':CaptureController()
                                             game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
@@ -4122,7 +4123,6 @@ spawn(function()
                     if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                         repeat task.wait()
                             sethiddenproperty(game:GetService('Players').LocalPlayer,"SimulationRadius",math.huge)
-                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                             v.Humanoid.Health = 0
                             v.HumanoidRootPart.CanCollide = false
                         until not _G.Kill_Aura or not v.Parent or v.Humanoid.Health <= 0
