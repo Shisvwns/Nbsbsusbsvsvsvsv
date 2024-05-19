@@ -1478,10 +1478,11 @@ function EquipWeaponSword()
 	end)
 end
 
-spawn(function()
-    while wait() do
-        for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-            v.HumanoidRootPart.Size = Vector3.new(0,60,60)
+function CheckTool(toolnam)
+    lol = {game.Players.LocalPlayer.Character, game.Players.LocalPlayer.Backpack}
+    for i, v in pairs(lol) do
+        if v:FindFirstChild(toolnam) then
+            return v:FindFirstChild(toolnam)
         end
     end
 end
@@ -2809,7 +2810,7 @@ Farm:AddToggle({
 
 spawn(function()
     while wait() do
-        if _G.Autodoughking and World3 then
+        if  _G.Autodoughking and World3 then
             pcall(function()
                 if game:GetService("Workspace").Enemies:FindFirstChild("Dough King") then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
