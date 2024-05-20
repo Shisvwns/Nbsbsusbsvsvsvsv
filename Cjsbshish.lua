@@ -2372,10 +2372,10 @@ spawn(function()
                                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EnablePvp")
                                     end
                                     EquipWeapon(_G.SelectWeapon)
-                                    NoClip = true         
+                                    NoClip = true
+                                    choiskill = true
                                     topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,0))
 			                        Click()
-			                        choiskill = true
                                 until not _G.FarmSkip or not v:FindFirstChild("HumanoidRootPart") or v.Character.Humanoid.Health <= 0
                                 NoClip = false
                                 choiskill = false
@@ -2420,7 +2420,7 @@ spawn(function()
             game:service('VirtualInputManager'):SendKeyEvent(false, "X", false, game)
         end
     end
-end
+end)
     
 
 Farm:AddToggle({
@@ -7417,10 +7417,6 @@ spawn(function()
                                 AutoHaki()
                                 EquipWeapon(_G.SelectWeaponTrials)
                                 topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 0, 0))
-                                v.HumanoidRootPart.CanCollide = false
-                                v.Head.CanCollide = false
-                                v.Humanoid.WalkSpeed = 0
-                                v.HumanoidRootPart.Size = Vector3.new(100, 100, 100)
                                 useskilltrial = true
                                 Click()
                             until _G.KillAfterTrials == false or v.Humanoid.Health <= 0 or not v.Parent or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid")
