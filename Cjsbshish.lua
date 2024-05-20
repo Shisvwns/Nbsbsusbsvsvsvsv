@@ -2242,7 +2242,7 @@ spawn(function()
             pcall(function()
                 CheckQuest()
                 if game:GetService("Workspace").Enemies:FindFirstChild(Mon) then
-                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                    for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                             if v.Name == Mon then
                                 if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
@@ -2260,22 +2260,20 @@ spawn(function()
                         end
                     end
                 else
-                    topos(CFrameMon)
+                    if BypassTP then
+                        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameMon.Position).Magnitude > 1500 then
+                            BTP(CFrameMon)
+                        else
+                            topos(CFrameMon)
+                        end
+                    else
+                        topos(CFrameMon)
+                    end
                     UnEquipWeapon(_G.SelectWeapon)
                     StartMagnet = false
                     if game:GetService("ReplicatedStorage"):FindFirstChild(Mon) then
-                        topos(game:GetService("ReplicatedStorage"):FindFirstChild(Mon).HumanoidRootPart.CFrame * CFrame.new(15,10,2))
+                        topos(game:GetService("ReplicatedStorage"):FindFirstChild(Mon).HumanoidRootPart.CFrame * CFrame.new(15, 10, 2))
                     end
-                end
-            else
-                if BypassTP then
-                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameMon.Position).Magnitude > 1500 then
-                        BTP(CFrameMon)
-                    elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameMon.Position).Magnitude < 1500 then
-                        topos(CFrameMon)
-                    end
-                else
-                    topos(CFrameMon)
                 end
             end)
         end
