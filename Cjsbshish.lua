@@ -1572,6 +1572,9 @@ end
 
 -- [ Super Fast Attack ]
 
+local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
+CamShake:Stop()
+
 function Click()
     game:GetService'VirtualUser':CaptureController()
     game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
@@ -1598,19 +1601,6 @@ function CurrentWeapon()
     end)
     if not ret then return game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Name end
     return ret
-end
-
-function getAllBladeHitsPlayers(Sizes)
-    local Hits = {}
-    local Client = game.Players.LocalPlayer
-    local Characters = game:GetService("Workspace").Characters:GetChildren()
-    for i=1,#Characters do local v = Characters[i]
-        local Human = v:FindFirstChildOfClass("Humanoid")
-        if v.Name ~= game.Players.LocalPlayer.Name and Human and Human.RootPart and Human.Health > 0 and Client:DistanceFromCharacter(Human.RootPart.Position) < Sizes+5 then
-            table.insert(Hits,Human.RootPart)
-        end
-    end
-    return Hits
 end
 
 function getAllBladeHits(Sizes)
@@ -1660,9 +1650,6 @@ function AttackFunction()
         end
     end
 end
-
-local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
-CamShake:Stop()
 --[[
 function GetCurrentBlade() 
     local p13 = getupvalues(require(game.Players.LocalPlayer.PlayerScripts.CombatFramework))[2].activeController
@@ -1713,6 +1700,37 @@ function AttackFunction()
     end
 end
 ]]--
+CombatFrameworkR = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
+y = debug.getupvalues(CombatFrameworkR)[2]
+spawn(function()
+    game:GetService("RunService").RenderStepped:Connect(function()
+        if _G.FastAttack then
+            if typeof(y) == "table" then
+                pcall(function()
+                    CameraShaker:Stop()
+                    y.activeController.timeToNextAttack = (math.huge^math.huge^math.huge)
+                    y.activeController.timeToNextAttack = 0
+                    y.activeController.hitboxMagnitude = 9999
+                    y.activeController.active = false
+                    y.activeController.timeToNextBlock = 0
+                    y.activeController.focusStart = 0
+                    y.activeController.increment = 4
+                    y.activeController.blocking = false
+                    y.activeController.attacking = false
+                    y.activeController.humanoid.AutoRotate = true
+                end)
+            end
+        end
+    end)
+end)
+spawn(function()
+    game:GetService("RunService").RenderStepped:Connect(function()
+        if _G.FastAttack == true then
+            game.Players.LocalPlayer.Character.Stun.Value = 0
+            game.Players.LocalPlayer.Character.Busy.Value = false        
+        end
+    end)
+end)
 local Client = game.Players.LocalPlayer
 local STOP = require(Client.PlayerScripts.CombatFramework.Particle)
 task.spawn(function()
@@ -2490,7 +2508,7 @@ spawn(function()
                                     EquipWeapon(_G.SelectWeapon)
                                     NoClip = true
                                     SpamClick = true
-                                    topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0,10,0))
+                                    topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,0))
                                     game:service('VirtualInputManager'):SendKeyEvent(true, "Z", false, game)
                                     game:service('VirtualInputManager'):SendKeyEvent(false, "Z", false, game)
                                     wait()
