@@ -2317,7 +2317,6 @@ spawn(function()
                                             EquipWeapon(_G.SelectWeapon)
                                             topos(v.HumanoidRootPart.CFrame * Pos)
                                             PosFarm = v.HumanoidRootPart.CFrame
-                                            v.HumanoidRootPart.CanCollide = false
                                             StartMagnet = true
                                             game:GetService'VirtualUser':CaptureController()
                                             game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
@@ -2446,7 +2445,7 @@ spawn(function()
 end)
 
 Farm:AddToggle({
-	Name = "Auto Farm Nearest",
+	Name = "Auto Farm Nearest [ Wait Fix ]",
 	Default = false,
 	Callback = function(Value)
 		_G.AutoFarmNearest = Value
@@ -2926,9 +2925,7 @@ spawn(function()
                                 if _G.Auto_Soul_Reaper and v.Name == "Soul Reaper" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                                     repeat wait()
                                         AutoHaki()
-                                        EquipWeapon(_G.Select_Weapon)
-                                        v.HumanoidRootPart.CanCollide = false
-                                        v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                                        EquipWeapon(_G.SelectWeapon)
                                          topos(v.HumanoidRootPart.CFrame * Pos)
                                         game:GetService'VirtualUser':CaptureController()
                                         game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
@@ -5980,7 +5977,7 @@ spawn(function()
                             if v.Name == "Soul Reaper"  then
                                 if _G.AutoFarmBossHallow and v.Name == "Soul Reaper" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                                     repeat wait()
-                                        EquipWeapon(_G.Select_Weapon)
+                                        EquipWeapon(_G.SelectWeapon)
                                          topos(v.HumanoidRootPart.CFrame * Pos)
                                         game:GetService'VirtualUser':CaptureController()
                                         game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
