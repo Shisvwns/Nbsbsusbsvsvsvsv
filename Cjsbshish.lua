@@ -2284,8 +2284,6 @@ spawn(function()
                                             topos(v.HumanoidRootPart.CFrame * Pos)
                                             PosFarm = v.HumanoidRootPart.CFrame
                                             StartMagnet = true
-                                            game:GetService'VirtualUser':CaptureController()
-                                            game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
                                         until not _G.AutoFarm or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
                                     else
                                         StartMagnet = false
@@ -2344,7 +2342,6 @@ spawn(function()
                                 topos(v.HumanoidRootPart.CFrame * Pos)               
                                 PosMon = v.HumanoidRootPart.CFrame
                                 StartBring = true
-                                Click()
                             until not _G.FarmSkip or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0
                             StartBring = false
                         end 
@@ -2373,12 +2370,14 @@ spawn(function()
                                     end
                                     EquipWeapon(_G.SelectWeapon)
                                     NoClip = true
-                                    choiskill = true
                                     topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,0))
-			                        Click()
+                                    game:service('VirtualInputManager'):SendKeyEvent(true, "Z", false, game)
+                                    game:service('VirtualInputManager'):SendKeyEvent(false, "Z", false, game)
+                                    wait()
+                                    game:service('VirtualInputManager'):SendKeyEvent(true, "X", false, game)
+                                    game:service('VirtualInputManager'):SendKeyEvent(false, "X", false, game)
                                 until not _G.FarmSkip or not v:FindFirstChild("HumanoidRootPart") or v.Character.Humanoid.Health <= 0
                                 NoClip = false
-                                choiskill = false
                             end
                         end
                     else
@@ -2409,19 +2408,6 @@ spawn(function()
         end
     end
 end)
-
-spawn(function()
-    while task.wait() do
-        if choiskill then
-            game:service('VirtualInputManager'):SendKeyEvent(true, "Z", false, game)
-            game:service('VirtualInputManager'):SendKeyEvent(false, "Z", false, game)
-            wait()
-            game:service('VirtualInputManager'):SendKeyEvent(true, "X", false, game)
-            game:service('VirtualInputManager'):SendKeyEvent(false, "X", false, game)
-        end
-    end
-end)
-    
 
 Farm:AddToggle({
 	Name = "Auto Farm Nearest [ Wait Fix ]",
@@ -4793,6 +4779,9 @@ spawn(function()
         if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer", "1") then
             ColorHaki:Set("Haki Colors: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer", "1"))
         else
+            ColorHaki:Set("Not Found Haki Dealer")
+        end
+        if World1 then
             ColorHaki:Set("Not Found Haki Dealer")
         end
     end
