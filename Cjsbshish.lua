@@ -2374,15 +2374,11 @@ spawn(function()
                                     EquipWeapon(_G.SelectWeapon)
                                     NoClip = true         
                                     topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,0))
-                                    Click()
-                        			game:service('VirtualInputManager'):SendKeyEvent(true, "Z", false, game)
-			           			 game:service('VirtualInputManager'):SendKeyEvent(false, "Z", false, game)
-			                        wait()
-                        			game:service('VirtualInputManager'):SendKeyEvent(true, "X", false, game)
-			           			 game:service('VirtualInputManager'):SendKeyEvent(false, "X", false, game)
 			                        Click()
+			                        choiskill = true
                                 until not _G.FarmSkip or not v:FindFirstChild("HumanoidRootPart") or v.Character.Humanoid.Health <= 0
                                 NoClip = false
+                                choiskill = false
                             end
                         end
                     else
@@ -2413,6 +2409,19 @@ spawn(function()
         end
     end
 end)
+
+spawn(function()
+    while task.wait() do
+        if choiskill then
+            game:service('VirtualInputManager'):SendKeyEvent(true, "Z", false, game)
+            game:service('VirtualInputManager'):SendKeyEvent(false, "Z", false, game)
+            wait()
+            game:service('VirtualInputManager'):SendKeyEvent(true, "X", false, game)
+            game:service('VirtualInputManager'):SendKeyEvent(false, "X", false, game)
+        end
+    end
+end
+    
 
 Farm:AddToggle({
 	Name = "Auto Farm Nearest [ Wait Fix ]",
