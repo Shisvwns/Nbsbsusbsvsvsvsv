@@ -1570,12 +1570,6 @@ end
 function FullMoobCheck()
     return function8()
 end
-    
-game:GetService("Players").LocalPlayer.Idled:connect(function()
-    game:GetService("VirtualUser"):Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-    wait(0.1)
-    game:GetService("VirtualUser"):Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-end)
 
 if game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit') then
     game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit'):Destroy()
@@ -1595,9 +1589,13 @@ function CurrentWeapon()
     local ret = ac.blades[1]
     if not ret then return game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Name end
     pcall(function()
-        while ret.Parent~=game.Players.LocalPlayer.Character do ret=ret.Parent end
+        while ret.Parent~=game.Players.LocalPlayer.Character do
+            ret=ret.Parent
+        end
     end)
-    if not ret then return game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Name end
+    if not ret then
+        return game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Name
+    end
     return ret
 end
 
@@ -2409,8 +2407,12 @@ spawn(function()
                                     NoClip = true         
                                     topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,0))
                                     Click()
+                        			game:service('VirtualInputManager'):SendKeyEvent(true, "Z", false, game)
+			           			 game:service('VirtualInputManager'):SendKeyEvent(false, "Z", false, game)
+			                        wait()
                         			game:service('VirtualInputManager'):SendKeyEvent(true, "X", false, game)
 			           			 game:service('VirtualInputManager'):SendKeyEvent(false, "X", false, game)
+			                        Click()
                                 until not _G.FarmSkip or not v:FindFirstChild("HumanoidRootPart") or v.Character.Humanoid.Health <= 0
                                 NoClip = false
                             end
