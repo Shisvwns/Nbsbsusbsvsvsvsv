@@ -2240,44 +2240,42 @@ spawn(function()
     while wait() do
         if LevelFMode == "No Quest" and _G.AutoFarm then
             pcall(function()
-                if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
-                    CheckQuest()
-                    if game:GetService("Workspace").Enemies:FindFirstChild(Mon) then
-                        for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                            if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
-                                if v.Name == Mon then
-                                    if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
-                                        repeat task.wait()
-                                            EquipWeapon(_G.SelectWeapon)
-                                            topos(v.HumanoidRootPart.CFrame * Pos)
-                                            PosFarm = v.HumanoidRootPart.CFrame
-                                            StartMagnet = true
-                                        until not _G.AutoFarm or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
-                                    else
-                                        StartMagnet = false
-                                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
-                                    end
+                CheckQuest()
+                if game:GetService("Workspace").Enemies:FindFirstChild(Mon) then
+                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                            if v.Name == Mon then
+                                if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
+                                    repeat task.wait()
+                                        EquipWeapon(_G.SelectWeapon)
+                                        topos(v.HumanoidRootPart.CFrame * Pos)
+                                        PosFarm = v.HumanoidRootPart.CFrame
+                                        StartMagnet = true
+                                    until not _G.AutoFarm or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
+                                else
+                                    StartMagnet = false
+                                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
                                 end
                             end
                         end
-                    else
-                        topos(CFrameMon)
-                        UnEquipWeapon(_G.SelectWeapon)
-                        StartMagnet = false
-                        if game:GetService("ReplicatedStorage"):FindFirstChild(Mon) then
-                            topos(game:GetService("ReplicatedStorage"):FindFirstChild(Mon).HumanoidRootPart.CFrame * CFrame.new(15,10,2))
-                        end
                     end
                 else
-                    if BypassTP then
-                        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQuest.Position).Magnitude > 1500 then
-                            BTP(CFrameQuest)
-                        elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQuest.Position).Magnitude < 1500 then
-                            topos(CFrameQuest)
-                        end
-                    else
-                        topos(CFrameQuest)
+                    topos(CFrameMon)
+                    UnEquipWeapon(_G.SelectWeapon)
+                    StartMagnet = false
+                    if game:GetService("ReplicatedStorage"):FindFirstChild(Mon) then
+                        topos(game:GetService("ReplicatedStorage"):FindFirstChild(Mon).HumanoidRootPart.CFrame * CFrame.new(15,10,2))
                     end
+                end
+            else
+                if BypassTP then
+                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameMon.Position).Magnitude > 1500 then
+                        BTP(CFrameMon)
+                    elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameMon.Position).Magnitude < 1500 then
+                        topos(CFrameMon)
+                    end
+                else
+                    topos(CFrameMon)
                 end
             end)
         end
