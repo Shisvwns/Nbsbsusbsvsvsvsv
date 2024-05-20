@@ -2250,7 +2250,7 @@ spawn(function()
                                     topos(v.HumanoidRootPart.CFrame * Pos)
                                     PosFarm = v.HumanoidRootPart.CFrame
                                     StartMagnet = true
-                                until not _G.AutoFarm or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
+                                until not _G.AutoFarm or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0
                                 StartMagnet = false
                             end
                         end
