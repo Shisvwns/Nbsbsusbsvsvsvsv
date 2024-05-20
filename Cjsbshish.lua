@@ -2193,22 +2193,6 @@ Setting:AddToggle({
 	end
 })
 
-Setting:AddToggle({
-	Name = "Auto Haki",
-	Default = true,
-	Callback = function(Value)
-		_G.AutoHaki = Value
-	end
-})
-
-spawn(function()
-    while task.wait() do
-        if _G.AutoHaki then
-            AutoHaki()
-        end
-    end
-end)
-
 local Section = Setting:AddSection({
     Name = "Misc"
 })
@@ -2234,6 +2218,15 @@ spawn(function()
     end
 end)
 
+Farm:AddDropdown({
+	Name = "Select Farm Mode",
+	Default = "Get Quest",
+	Options = {"No Quest","Get Quest"},
+	Callback = function(Value)
+		LevelFMode = Value
+	end
+})
+
 local CayLevel = Farm:AddToggle({
 	Name = "Auto Farm Level",
 	Default = false,
@@ -2245,7 +2238,55 @@ local CayLevel = Farm:AddToggle({
 
 spawn(function()
     while wait() do
-        if _G.AutoFarm then
+        if LevelFMode == "No Quest" and _G.AutoFarm then
+            pcall(function()
+                if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
+                    CheckQuest()
+                    if game:GetService("Workspace").Enemies:FindFirstChild(Mon) then
+                        for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                            if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                                if v.Name == Mon then
+                                    if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
+                                        repeat task.wait()
+                                            EquipWeapon(_G.SelectWeapon)
+                                            topos(v.HumanoidRootPart.CFrame * Pos)
+                                            PosFarm = v.HumanoidRootPart.CFrame
+                                            StartMagnet = true
+                                        until not _G.AutoFarm or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
+                                    else
+                                        StartMagnet = false
+                                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+                                    end
+                                end
+                            end
+                        end
+                    else
+                        topos(CFrameMon)
+                        UnEquipWeapon(_G.SelectWeapon)
+                        StartMagnet = false
+                        if game:GetService("ReplicatedStorage"):FindFirstChild(Mon) then
+                            topos(game:GetService("ReplicatedStorage"):FindFirstChild(Mon).HumanoidRootPart.CFrame * CFrame.new(15,10,2))
+                        end
+                    end
+                else
+                    if BypassTP then
+                        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQuest.Position).Magnitude > 1500 then
+                            BTP(CFrameQuest)
+                        elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQuest.Position).Magnitude < 1500 then
+                            topos(CFrameQuest)
+                        end
+                    else
+                        topos(CFrameQuest)
+                    end
+                end
+            end)
+        end
+    end
+end)
+
+spawn(function()
+    while wait() do
+        if LevelFMode == "Get Quest" and _G.AutoFarm then
             pcall(function()
                 local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
                 if not string.find(QuestTitle, NameMon) then
@@ -5832,6 +5873,9 @@ spawn(function()
                 topos(PolePos)
                 end
             else
+                if GetDistance(cframefarm.Position) > 1500 then
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-7894.6176757813, 5547.1416015625, -380.29119873047))
+                end
                 topos(TridentPos)
             end
                 UnEquipWeapon(_G.SelectWeapon)
@@ -6243,6 +6287,22 @@ end)
 local Section = Player:AddSection({
     Name = "Turn On"
 })
+
+Player:AddToggle({
+	Name = "Auto Turn On Buso Haki",
+	Default = true,
+	Callback = function(Value)
+		_G.AutoHaki = Value
+	end
+})
+
+spawn(function()
+    while task.wait() do
+        if _G.AutoHaki then
+            AutoHaki()
+        end
+    end
+end)
 
 Player:AddToggle({
 	Name = "Auto Turn On Race V3",
