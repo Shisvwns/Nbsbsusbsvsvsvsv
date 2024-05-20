@@ -1582,7 +1582,7 @@ spawn(function()
             Click()
         end
     end
-end
+end)
 
 local CombatFramework = require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework"))
 local CombatFrameworkR = getupvalues(CombatFramework)[2]
