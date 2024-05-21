@@ -1572,8 +1572,6 @@ end
 
 -- [ Super Fast Attack ]
 
-local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
-CamShake:Stop()
 local CurveFrame = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework")))[2]
 local VirtualUser = game:GetService("VirtualUser")
 local RigControllerR = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework.RigController))[2]
@@ -1617,10 +1615,6 @@ end
 function Unboost()
     game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("unequipWeapon", tostring(CurveFuckWeapon()))
 end
-function EClick()
-    game:GetService("VirtualUser"):CaptureController()
-    game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
-end
 local cdnormal = 0
 local Animation = Instance.new("Animation")
 local CooldownFastAttack = 0
@@ -1655,7 +1649,6 @@ task.spawn(function()
                             FastAttack()
                             task.wait()
                             Boost()
-                            EClick()
                         end
                     end
                 end
@@ -1725,6 +1718,7 @@ task.spawn(function()
         end)
     end
 end)
+local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
 CombatFrameworkR = require(game.Players.LocalPlayer.PlayerScripts.CombatFramework)
 y = debug.getupvalues(CombatFrameworkR)[2]
 task.spawn(function()
@@ -1739,7 +1733,7 @@ task.spawn(function()
                     y.activeController.active = false
                     y.activeController.timeToNextBlock = 0
                     y.activeController.focusStart = 1655503339.0980349
-                    y.activeController.increment = 3
+                    y.activeController.increment = 1
                     y.activeController.blocking = false
                     y.activeController.attacking = false
                     y.activeController.humanoid.AutoRotate = true
