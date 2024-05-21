@@ -1572,6 +1572,8 @@ end
 
 -- [ Super Fast Attack ]
 
+local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
+CamShake:Stop()
 local CurveFrame = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework")))[2]
 local VirtualUser = game:GetService("VirtualUser")
 local RigControllerR = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework.RigController))[2]
@@ -1582,32 +1584,26 @@ function CurveFuckWeapon()
     if not p13 then
         return nil
     end
-    
     local wea = p13.blades[1]
     if not wea then
         return nil
     end
-    
     while wea.Parent ~= game.Players.LocalPlayer.Character do
         wea = wea.Parent
     end
-    
     return wea
 end
 
 function getHits(Size)
     local Hits = {}
-    
     local function processHumanoid(Human)
         if Human and Human.RootPart and Human.Health > 0 and game.Players.LocalPlayer:DistanceFromCharacter(Human.RootPart.Position) < Size + 5 then
             table.insert(Hits, Human.RootPart)
         end
     end
-
     for _, v in pairs(workspace.Enemies:GetChildren()) do
         processHumanoid(v:FindFirstChildOfClass("Humanoid"))
     end
-
     for _, v in pairs(workspace.Characters:GetChildren()) do
         if v ~= game.Players.LocalPlayer.Character then
             processHumanoid(v:FindFirstChildOfClass("Humanoid"))
@@ -1719,10 +1715,10 @@ task.spawn(function()
                 if i then
                     b.play = function()
                     end
-                    d:Play(0.25, 0.25, 0.25)
+                    d:Play(0.1, 0.1, 0.1)
                     h(i)
                     b.play = shared.cpc
-                    wait(.5)
+                    wait(0)
                     d:Stop()
                 end
             end
@@ -1731,8 +1727,8 @@ task.spawn(function()
 end)
 CombatFrameworkR = require(game.Players.LocalPlayer.PlayerScripts.CombatFramework)
 y = debug.getupvalues(CombatFrameworkR)[2]
-spawn(function()
-    while wait() do
+task.spawn(function()
+    while task.wait() do
         if _G.FastAttack then
             if typeof(y) == "table" then
                 pcall(function()
