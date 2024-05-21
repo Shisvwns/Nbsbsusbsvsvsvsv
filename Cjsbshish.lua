@@ -1666,7 +1666,7 @@ end)
 k = tick()
 task.spawn(function()
     if FastI then
-        while task.wait(.2) do
+        while task.wait() do
             if k - tick() > 0.75 then
                 task.wait()
                 k = tick()
@@ -1675,7 +1675,7 @@ task.spawn(function()
                 for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
                     if v.Humanoid.Health > 0 then
                         if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
-                            task.wait(.000025)
+                            task.wait()
                             Unboost()
                         end
                     end
@@ -1982,26 +1982,6 @@ Setting:AddDropdown({
 		_G.FastAttackDelay = Value
 	end
 })
-
-task.spawn(function()
-    while task.wait() do
-        if _G.FastAttackDelay then
-            pcall(function()
-                if _G.FastAttackDelay == "0" then
-                    _G.FastAttackDelay = 0
-                elseif _G.FastAttackDelay == "0.1" then
-                    _G.FastAttackDelay = 0.1
-                elseif _G.FastAttackDelay == "0.15" then
-                    _G.FastAttackDelay = 0.15
-                elseif _G.FastAttackDelay == "0.5" then
-                    _G.FastAttackDelay = 0.5
-                elseif _G.FastAttackDelay == "1" then
-                    _G.FastAttackDelay = 1
-                end
-            end)
-        end
-    end
-end)
 
 Setting:AddToggle({
 	Name = "Fast Attack",
