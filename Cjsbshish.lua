@@ -1719,6 +1719,7 @@ task.spawn(function()
     end
 end)
 local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
+CameraShaker:Stop()
 CombatFrameworkR = require(game.Players.LocalPlayer.PlayerScripts.CombatFramework)
 y = debug.getupvalues(CombatFrameworkR)[2]
 task.spawn(function()
@@ -1733,7 +1734,7 @@ task.spawn(function()
                     y.activeController.active = false
                     y.activeController.timeToNextBlock = 0
                     y.activeController.focusStart = 1655503339.0980349
-                    y.activeController.increment = 1
+                    y.activeController.increment = 0
                     y.activeController.blocking = false
                     y.activeController.attacking = false
                     y.activeController.humanoid.AutoRotate = true
