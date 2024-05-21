@@ -1719,7 +1719,7 @@ task.spawn(function()
     end
 end)
 local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
-CameraShaker:Stop()
+CamShake:Stop()
 CombatFrameworkR = require(game.Players.LocalPlayer.PlayerScripts.CombatFramework)
 y = debug.getupvalues(CombatFrameworkR)[2]
 task.spawn(function()
