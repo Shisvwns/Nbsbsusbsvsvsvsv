@@ -1574,20 +1574,18 @@ end
 
 local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
 CamShake:Stop()
+
 local CurveFrame = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework")))[2]
 local VirtualUser = game:GetService("VirtualUser")
 local RigControllerR = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework.RigController))[2]
 local Client = game:GetService("Players").LocalPlayer
 local DMG = require(Client.PlayerScripts.CombatFramework.Particle.Damage)
+
 function CurveFuckWeapon()
     local p13 = CurveFrame.activeController
-    if not p13 then
-        return nil
-    end
+    if not p13 then return nil end
     local wea = p13.blades[1]
-    if not wea then
-        return nil
-    end
+    if not wea then return nil end
     while wea.Parent ~= game.Players.LocalPlayer.Character do
         wea = wea.Parent
     end
@@ -1601,120 +1599,105 @@ function getHits(Size)
             table.insert(Hits, Human.RootPart)
         end
     end
-    for _, v in pairs(workspace.Enemies:GetChildren()) do
+    for _, v in ipairs(workspace.Enemies:GetChildren()) do
         processHumanoid(v:FindFirstChildOfClass("Humanoid"))
     end
-    for _, v in pairs(workspace.Characters:GetChildren()) do
+    for _, v in ipairs(workspace.Characters:GetChildren()) do
         if v ~= game.Players.LocalPlayer.Character then
             processHumanoid(v:FindFirstChildOfClass("Humanoid"))
         end
     end
     return Hits
 end
+
 function Boost()
-    task.spawn(function()
-        game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange", tostring(CurveFuckWeapon()))
-    end)
+    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange", tostring(CurveFuckWeapon()))
 end
+
 function Unboost()
-    task.spawn(function()
-        game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("unequipWeapon", tostring(CurveFuckWeapon()))
-    end)
+    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("unequipWeapon", tostring(CurveFuckWeapon()))
 end
+
+function EClick()
+    game:GetService("VirtualUser"):CaptureController()
+    game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
+end
+
 local cdnormal = 0
 local Animation = Instance.new("Animation")
-local CooldownFastAttack = 0
-FastAttack = function()
+function FastAttack()
     local ac = CurveFrame.activeController
     if ac and ac.equipped then
-        task.spawn(function()
-            if tick() - cdnormal > 0.5 then
-                ac:attack()
-                cdnormal = tick()
-            else
-                Animation.AnimationId = ac.anims.basic[2]
-                ac.humanoid:LoadAnimation(Animation):Play(1, 1)
-                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getHits(120), 2, "")
-            end
-        end)
+        if tick() - cdnormal > 0.5 then
+            ac:attack()
+            cdnormal = tick()
+        else
+            Animation.AnimationId = ac.anims.basic[2]
+            ac.humanoid:LoadAnimation(Animation):Play(1, 1)
+            game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getHits(120), 2, "")
+        end
     end
 end
-bs = tick()
+
 task.spawn(function()
     while task.wait(_G.FastAttackDelay) do
         if _G.FastAttack then
-            FastI = true
-            if bs - tick() > 0.75 then
-                task.wait()
-                bs = tick()
-            end
-            pcall(function()
-                for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
-                    if v.Humanoid.Health > 0 then
-                        if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
-                            FastAttack()
-                            task.wait()
-                            Boost()
-                            EClick()
-                        end
+            local enemies = workspace.Enemies:GetChildren()
+            for _, v in ipairs(enemies) do
+                if v.Humanoid.Health > 0 then
+                    if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
+                        FastAttack()
+                        Boost()
+                        EClick()
+                        break
                     end
                 end
-            end)
+            end
         end
     end
 end)
-k = tick()
-task.spawn(function()
-    if FastI then
-        while task.wait() do
-            if k - tick() > 0.75 then
-                task.wait()
-                k = tick()
-            end
-            pcall(function()
-                for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
-                    if v.Humanoid.Health > 0 then
-                        if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
-                            task.wait()
-                            Unboost()
-                        end
-                    end
-                end
-            end)
-        end
-    end
-end)
+
 task.spawn(function()
     while task.wait() do
         if FastI then
-            pcall(function()
-                CurveFrame.activeController.timeToNextAttack = -1
-                CurveFrame.activeController.focusStart = 0
-                CurveFrame.activeController.hitboxMagnitude = 40
-                CurveFrame.activeController.humanoid.AutoRotate = true
-                CurveFrame.activeController.increment = 1 + 1 / 1
-            end)
+            local enemies = workspace.Enemies:GetChildren()
+            for _, v in ipairs(enemies) do
+                if v.Humanoid.Health > 0 then
+                    if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
+                        Unboost()
+                        break
+                    end
+                end
+            end
         end
     end
 end)
+
+task.spawn(function()
+    while task.wait() do
+        if FastI then
+            CurveFrame.activeController.timeToNextAttack = -1
+            CurveFrame.activeController.focusStart = 0
+            CurveFrame.activeController.hitboxMagnitude = 40
+            CurveFrame.activeController.humanoid.AutoRotate = true
+            CurveFrame.activeController.increment = 2
+        end
+    end
+end)
+
 EnableCurv = true
 task.spawn(function()
     local a = game.Players.LocalPlayer
     local b = require(a.PlayerScripts.CombatFramework.Particle)
     local c = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib)
-    if not shared.orl then
-        shared.orl = c.wrapAttackAnimationAsync
-    end
-    if not shared.cpc then
-        shared.cpc = b.play
-    end
+    if not shared.orl then shared.orl = c.wrapAttackAnimationAsync end
+    if not shared.cpc then shared.cpc = b.play end
     if EnableCurv then
         pcall(function()
             c.wrapAttackAnimationAsync = function(d, e, f, g, h)
                 local i = c.getBladeHits(e, f, g)
                 if i then
-                    b.play = function()
-                    end
+                    b.play = function() end
                     d:Play(0.1, 0.1, 0.1)
                     h(i)
                     b.play = shared.cpc
@@ -1725,15 +1708,15 @@ task.spawn(function()
         end)
     end
 end)
+
 CombatFrameworkR = require(game.Players.LocalPlayer.PlayerScripts.CombatFramework)
-y = debug.getupvalues(CombatFrameworkR)[2]
+local y = debug.getupvalues(CombatFrameworkR)[2]
 task.spawn(function()
     while task.wait() do
         if _G.FastAttack then
             if typeof(y) == "table" then
                 pcall(function()
-                    CameraShaker:Stop()
-                    y.activeController.timeToNextAttack = (math.huge^math.huge^math.huge)
+                    CamShake:Stop()
                     y.activeController.timeToNextAttack = -1
                     y.activeController.hitboxMagnitude = 60
                     y.activeController.active = false
@@ -1745,8 +1728,6 @@ task.spawn(function()
                     y.activeController.humanoid.AutoRotate = true
                 end)
             end
-        end
-        if _G.FastAttack then
             if game.Players.LocalPlayer.Character:FindFirstChild("Stun") then
                 game.Players.LocalPlayer.Character.Stun.Value = 0
                 game.Players.LocalPlayer.Character.Busy.Value = false        
