@@ -1587,70 +1587,6 @@ spawn(function()
     end
 end)
 
-local CombatFramework = require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework"))
-local CombatFrameworkR = getupvalues(CombatFramework)[2]
-local RigController = require(game:GetService("Players")["LocalPlayer"].PlayerScripts.CombatFramework.RigController)
-local RigControllerR = getupvalues(RigController)[2]
-
-function CurrentWeapon()
-    local ac = CombatFrameworkR.activeController
-    local ret = ac.blades[1]
-    if not ret then return game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Name end
-    pcall(function()
-        while ret.Parent~=game.Players.LocalPlayer.Character do ret=ret.Parent end
-    end)
-    if not ret then return game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Name end
-    return ret
-end
-
-function getAllBladeHits(Sizes)
-    local Hits = {}
-    local Client = game.Players.LocalPlayer
-    local Enemies = game:GetService("Workspace").Enemies:GetChildren()
-    for i=1,#Enemies do local v = Enemies[i]
-        local Human = v:FindFirstChildOfClass("Humanoid")
-        if Human and Human.RootPart and Human.Health > 0 and Client:DistanceFromCharacter(Human.RootPart.Position) < Sizes+5 then
-            table.insert(Hits,Human.RootPart)
-        end
-    end
-    return Hits
-end
-
-function AttackFunction()
-    local ac = CombatFrameworkR.activeController
-    if ac and ac.equipped then
-        for indexincrement = 1, 1 do
-            local bladehit = getAllBladeHits(60)
-            if #bladehit > 0 then
-                local AcAttack8 = debug.getupvalue(ac.attack, 5)
-                local AcAttack9 = debug.getupvalue(ac.attack, 6)
-                local AcAttack7 = debug.getupvalue(ac.attack, 4)
-                local AcAttack10 = debug.getupvalue(ac.attack, 7)
-                local NumberAc12 = (AcAttack8 * 798405 + AcAttack7 * 727595) % AcAttack9
-                local NumberAc13 = AcAttack7 * 798405
-                (function()
-                    NumberAc12 = (NumberAc12 * AcAttack9 + NumberAc13) % 1099511627776
-                    AcAttack8 = math.floor(NumberAc12 / AcAttack9)
-                    AcAttack7 = NumberAc12 - AcAttack8 * AcAttack9
-                end)()
-                AcAttack10 = AcAttack10 + 1 
-                debug.setupvalue(ac.attack, 5, AcAttack8)
-                debug.setupvalue(ac.attack, 6, AcAttack9)
-                debug.setupvalue(ac.attack, 4, AcAttack7)
-                debug.setupvalue(ac.attack, 7, AcAttack10)
-                for k, v in pairs(ac.animator.anims.basic) do
-                    v:Play(0.01,0.01,0.01)
-                end                 
-                if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") and ac.blades and ac.blades[1] then 
-                    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange",tostring(CurrentWeapon()))
-                    game.ReplicatedStorage.Remotes.Validator:FireServer(math.floor(NumberAc12 / 1099511627776 * 16777215), AcAttack10)
-                    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, indexincrement, "")
-                end
-            end
-        end
-    end
-end
---[[
 function GetCurrentBlade() 
     local p13 = getupvalues(require(game.Players.LocalPlayer.PlayerScripts.CombatFramework))[2].activeController
     local ret = p13.blades[1]
@@ -1699,7 +1635,7 @@ function AttackFunction()
         end
     end
 end
-]]--
+
 CombatFrameworkR = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
 y = debug.getupvalues(CombatFrameworkR)[2]
 spawn(function()
@@ -3967,6 +3903,108 @@ spawn(function()
 				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
 			end)
         end
+    end
+end)
+
+FruitRaid:AddToggle({
+	Name = "Auto Get Devil Fruit [ Under 1M Beli ]",
+	Default = false,
+	Callback = function(Value)
+		_G.AutoFruit = Value
+	end
+})
+
+spawn(function()
+    while taks.wait() do
+        pcall(function()
+            if _G.AutoFruit and game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Timer.Visible == false then
+                local args = {
+                    [1] = "LoadFruit",
+                    [2] = "Rocket-Rocket"
+                }
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+                local args = {
+                    [1] = "LoadFruit",
+                    [2] = "Spin-Spin"
+                }
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+                local args = {
+                    [1] = "LoadFruit",
+                    [2] = "Chop-Chop"
+                }
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+                local args = {
+                    [1] = "LoadFruit",
+                    [2] = "Spring-Spring"
+                }
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+                local args = {
+                    [1] = "LoadFruit",
+                    [2] = "Bomb-Bomb"
+                }
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+                local args = {
+                    [1] = "LoadFruit",
+                    [2] = "Smoke-Smoke"
+                }
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+                local args = {
+                    [1] = "LoadFruit",
+                    [2] = "Spike-Spike"
+                }
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+                local args = {
+                    [1] = "LoadFruit",
+                    [2] = "Flame-Flame"
+                }
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+                local args = {
+                    [1] = "LoadFruit",
+                    [2] = "Falcon-Falcon"
+                }
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+                local args = {
+                    [1] = "LoadFruit",
+                    [2] = "Ice-Ice"
+                }
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+                local args = {
+                    [1] = "LoadFruit",
+                    [2] = "Sand-Sand"
+                }
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+                local args = {
+                    [1] = "LoadFruit",
+                    [2] = "Dark-Dark"
+                }
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+                local args = {
+                    [1] = "LoadFruit",
+                    [2] = "Ghost-Ghost"
+                }
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+                local args = {
+                    [1] = "LoadFruit",
+                    [2] = "Diamond-Diamond"
+                }
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+                local args = {
+                    [1] = "LoadFruit",
+                    [2] = "Light-Light"
+                }
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+                local args = {
+                    [1] = "LoadFruit",
+                    [2] = "Rubber-Rubber"
+                }
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+                local args = {
+                    [1] = "LoadFruit",
+                    [2] = "Barrier-Barrier"
+                }
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+            end
+        end)
     end
 end)
 
