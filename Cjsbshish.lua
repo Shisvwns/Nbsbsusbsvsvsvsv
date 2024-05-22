@@ -1689,6 +1689,18 @@ task.spawn(function()
         end
     end
 end)
+function getBladeHits(Sizes)
+    local Hits = {}
+    local Client = game.Players.LocalPlayer
+    local Enemies = game:GetService("Workspace").Enemies:GetChildren()
+    for i=1,#Enemies do local v = Enemies[i]
+        local Human = v:FindFirstChildOfClass("Humanoid")
+        if Human and Human.RootPart and Human.Health > 0 and Client:DistanceFromCharacter(Human.RootPart.Position) < Sizes+5 then
+            table.insert(Hits,Human.RootPart)
+        end
+    end
+    return Hits
+end
 EnableCurv = true
 task.spawn(function()
     local a = game.Players.LocalPlayer
