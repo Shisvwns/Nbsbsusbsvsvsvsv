@@ -1337,17 +1337,14 @@ function GetDistance(target)
     return math.floor((target.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude)
 end
 
-function BTP(p)
-    pcall(function()
-        if (p.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 1500 and not Auto_Raid and game.Players.LocalPlayer.Character.Humanoid.Health > 0 then
-            repeat wait()
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = p
-                wait(.05)
-                game.Players.LocalPlayer.Character.Head:Destroy()
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = p
-            until (p.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 1500 and game.Players.LocalPlayer.Character.Humanoid.Health > 0
+function BTP(a)
+    local CheckDistanceToResetTween = GetDistance(a.Position)
+    if CheckDistanceToResetTween > 2100 and game.Players.LocalPlayer.Character.Humanoid.Health > 0 then
+        for i = 1,3 do
+            game.Players.LocalPlayer.HumanoidRootPart.CFrame = a
         end
-    end)
+        game.Players.LocalPlayer.Character.Humanoid:ChangeState(15)
+    end
 end
 
 function topos(Pos)
@@ -1612,9 +1609,6 @@ end
 function Boost()
     game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange", tostring(CurveFuckWeapon()))
 end
-function Unboost()
-    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("unequipWeapon", tostring(CurveFuckWeapon()))
-end
 local cdnormal = 0
 local Animation = Instance.new("Animation")
 local CooldownFastAttack = 0
@@ -1656,27 +1650,6 @@ task.spawn(function()
         end
     end
 end)
-k = tick()
-task.spawn(function()
-    if FastI then
-        while task.wait() do
-            if k - tick() > 0.75 then
-                task.wait()
-                k = tick()
-            end
-            pcall(function()
-                for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
-                    if v.Humanoid.Health > 0 then
-                        if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
-                            task.wait()
-                            Unboost()
-                        end
-                    end
-                end
-            end)
-        end
-    end
-end)
 task.spawn(function()
     while task.wait() do
         if FastI then
@@ -1689,6 +1662,25 @@ task.spawn(function()
         end
     end
 end)
+function getBladeHits(Sizes)
+    local Hits = {}
+    local Client = game.Players.LocalPlayer
+    local Enemies = game:GetService("Workspace").Enemies:GetChildren()
+    local Characters = game:GetService("Workspace").Characters:GetChildren()
+    for i=1,#Enemies do local v = Enemies[i]
+        local Human = v:FindFirstChildOfClass("Humanoid")
+        if Human and Human.RootPart and Human.Health > 0 and Client:DistanceFromCharacter(Human.RootPart.Position) < Sizes+5 then
+            table.insert(Hits,Human.RootPart)
+        end
+    end
+    for i=1,#Characters do local v = Characters[i]
+        local Human = v:FindFirstChildOfClass("Humanoid")
+        if v.Name ~= game.Players.LocalPlayer.Name and Human and Human.RootPart and Human.Health > 0 and Client:DistanceFromCharacter(Human.RootPart.Position) < Sizes+5 then
+            table.insert(Hits,Human.RootPart)
+        end
+    end
+    return Hits
+end
 EnableCurv = true
 task.spawn(function()
     local a = game.Players.LocalPlayer
