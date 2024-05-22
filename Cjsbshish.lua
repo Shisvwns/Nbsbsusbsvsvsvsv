@@ -1648,7 +1648,6 @@ task.spawn(function()
                         if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
                             FastAttack()
                             task.wait()
-                            Boost()
                         end
                     end
                 end
@@ -1669,7 +1668,6 @@ task.spawn(function()
                     if v.Humanoid.Health > 0 then
                         if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
                             task.wait()
-                            Unboost()
                         end
                     end
                 end
@@ -1719,7 +1717,6 @@ task.spawn(function()
     end
 end)
 local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
-CamShake:Stop()
 CombatFrameworkR = require(game.Players.LocalPlayer.PlayerScripts.CombatFramework)
 y = debug.getupvalues(CombatFrameworkR)[2]
 task.spawn(function()
@@ -1734,7 +1731,7 @@ task.spawn(function()
                     y.activeController.active = false
                     y.activeController.timeToNextBlock = 0
                     y.activeController.focusStart = 1655503339.0980349
-                    y.activeController.increment = 0
+                    y.activeController.increment = 1
                     y.activeController.blocking = false
                     y.activeController.attacking = false
                     y.activeController.humanoid.AutoRotate = true
