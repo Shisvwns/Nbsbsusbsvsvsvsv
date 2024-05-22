@@ -1632,10 +1632,6 @@ task.spawn(function()
     while task.wait(_G.FastAttackDelay) do
         if _G.FastAttack then
             FastI = true
-            if bs - tick() > 0.75 then
-                task.wait()
-                bs = tick()
-            end
             pcall(function()
                 for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
                     if v.Humanoid.Health > 0 then
