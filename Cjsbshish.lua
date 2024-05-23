@@ -1588,21 +1588,19 @@ function CurveFuckWeapon()
     end
     return wea
 end
-function getBladeHits(Sizes)
+function getBladeHits(Size)
     local Hits = {}
-    local Client = game.Players.LocalPlayer
-    local Enemies = game:GetService("Workspace").Enemies:GetChildren()
-    local Characters = game:GetService("Workspace").Characters:GetChildren()
-    for i=1,#Enemies do local v = Enemies[i]
-        local Human = v:FindFirstChildOfClass("Humanoid")
-        if Human and Human.RootPart and Human.Health > 0 and Client:DistanceFromCharacter(Human.RootPart.Position) < Sizes+5 then
-            table.insert(Hits,Human.RootPart)
+    local function processHumanoid(Human)
+        if Human and Human.RootPart and Human.Health > 0 and game.Players.LocalPlayer:DistanceFromCharacter(Human.RootPart.Position) < Size + 5 then
+            table.insert(Hits, Human.RootPart)
         end
     end
-    for i=1,#Characters do local v = Characters[i]
-        local Human = v:FindFirstChildOfClass("Humanoid")
-        if v.Name ~= game.Players.LocalPlayer.Name and Human and Human.RootPart and Human.Health > 0 and Client:DistanceFromCharacter(Human.RootPart.Position) < Sizes+5 then
-            table.insert(Hits,Human.RootPart)
+    for _, v in pairs(workspace.Enemies:GetChildren()) do
+        processHumanoid(v:FindFirstChildOfClass("Humanoid"))
+    end
+    for _, v in pairs(workspace.Characters:GetChildren()) do
+        if v ~= game.Players.LocalPlayer.Character then
+            processHumanoid(v:FindFirstChildOfClass("Humanoid"))
         end
     end
     return Hits
@@ -1623,7 +1621,7 @@ FastAttack = function()
             else
                 Animation.AnimationId = ac.anims.basic[2]
                 ac.humanoid:LoadAnimation(Animation):Play(1, 1)
-                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getBladeHits(60), 2, "")
+                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getBladeHits(120), 2, "")
             end
         end)
     end
@@ -1636,7 +1634,7 @@ task.spawn(function()
             pcall(function()
                 for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
                     if v.Humanoid.Health > 0 then
-                        if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 60 then
+                        if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
                             FastAttack()
                             task.wait()
                             Boost()
@@ -1645,7 +1643,7 @@ task.spawn(function()
                 end
                 for i, v in pairs(game.Workspace.Characters:GetChildren()) do
                     if v.Humanoid.Health > 0 then
-                        if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 60 then
+                        if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
                             FastAttack()
                             task.wait()
                             Boost()
@@ -1661,7 +1659,7 @@ task.spawn(function()
         if FastI then
             pcall(function()
                 CurveFrame.activeController.focusStart = 0
-                CurveFrame.activeController.hitboxMagnitude = 60
+                CurveFrame.activeController.hitboxMagnitude = 40
                 CurveFrame.activeController.humanoid.AutoRotate = true
                 CurveFrame.activeController.increment = 1 + 1 / 1
             end)
