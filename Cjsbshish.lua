@@ -1623,7 +1623,7 @@ FastAttack = function()
             else
                 Animation.AnimationId = ac.anims.basic[2]
                 ac.humanoid:LoadAnimation(Animation):Play(1, 1)
-                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getBladeHits(120), 2, "")
+                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getBladeHits(60), 2, "")
             end
         end)
     end
@@ -1636,7 +1636,16 @@ task.spawn(function()
             pcall(function()
                 for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
                     if v.Humanoid.Health > 0 then
-                        if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
+                        if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 60 then
+                            FastAttack()
+                            task.wait()
+                            Boost()
+                        end
+                    end
+                end
+                for i, v in pairs(game.Workspace.Characters:GetChildren()) do
+                    if v.Humanoid.Health > 0 then
+                        if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 60 then
                             FastAttack()
                             task.wait()
                             Boost()
@@ -1652,7 +1661,7 @@ task.spawn(function()
         if FastI then
             pcall(function()
                 CurveFrame.activeController.focusStart = 0
-                CurveFrame.activeController.hitboxMagnitude = 40
+                CurveFrame.activeController.hitboxMagnitude = 60
                 CurveFrame.activeController.humanoid.AutoRotate = true
                 CurveFrame.activeController.increment = 1 + 1 / 1
             end)
