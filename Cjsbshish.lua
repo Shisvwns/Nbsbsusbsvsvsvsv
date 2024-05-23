@@ -1646,6 +1646,7 @@ task.spawn(function()
         end
     end
 end)
+k = tick()
 task.spawn(function()
     while task.wait() do
         if FastI then
@@ -1679,7 +1680,7 @@ task.spawn(function()
                     d:Play(0.1, 0.1, 0.1)
                     h(i)
                     b.play = shared.cpc
-                    wait()
+                    task.wait()
                     d:Stop()
                 end
             end
@@ -1699,7 +1700,7 @@ spawn(function()
                     y.activeController.active = false
                     y.activeController.timeToNextBlock = 0
                     y.activeController.focusStart = 1655503339.0980349
-                    y.activeController.increment = 3
+                    y.activeController.increment = 1
                     y.activeController.blocking = false
                     y.activeController.attacking = false
                     y.activeController.humanoid.AutoRotate = true
