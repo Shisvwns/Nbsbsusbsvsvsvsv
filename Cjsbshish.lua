@@ -1642,6 +1642,15 @@ task.spawn(function()
                         end
                     end
                 end
+                for i, v in pairs(game.Workspace.Characters:GetChildren()) do
+                    if v.Humanoid.Health > 0 then
+                        if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
+                            FastAttack()
+                            task.wait()
+                            Boost()
+                        end
+                    end
+                end
             end)
         end
     end
@@ -1694,7 +1703,6 @@ spawn(function()
         if _G.FastAttack then
             if typeof(y) == "table" then
                 pcall(function()
-                    CameraShaker:Stop()
                     y.activeController.timeToNextAttack = (math.huge^math.huge^math.huge)
                     y.activeController.hitboxMagnitude = 60
                     y.activeController.active = false
