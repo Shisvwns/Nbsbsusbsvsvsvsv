@@ -1588,20 +1588,21 @@ function CurveFuckWeapon()
     end
     return wea
 end
-
-function getHits(Size)
+function getBladeHits(Sizes)
     local Hits = {}
-    local function processHumanoid(Human)
-        if Human and Human.RootPart and Human.Health > 0 and game.Players.LocalPlayer:DistanceFromCharacter(Human.RootPart.Position) < Size + 5 then
-            table.insert(Hits, Human.RootPart)
+    local Client = game.Players.LocalPlayer
+    local Enemies = game:GetService("Workspace").Enemies:GetChildren()
+    local Characters = game:GetService("Workspace").Characters:GetChildren()
+    for i=1,#Enemies do local v = Enemies[i]
+        local Human = v:FindFirstChildOfClass("Humanoid")
+        if Human and Human.RootPart and Human.Health > 0 and Client:DistanceFromCharacter(Human.RootPart.Position) < Sizes+5 then
+            table.insert(Hits,Human.RootPart)
         end
     end
-    for _, v in pairs(workspace.Enemies:GetChildren()) do
-        processHumanoid(v:FindFirstChildOfClass("Humanoid"))
-    end
-    for _, v in pairs(workspace.Characters:GetChildren()) do
-        if v ~= game.Players.LocalPlayer.Character then
-            processHumanoid(v:FindFirstChildOfClass("Humanoid"))
+    for i=1,#Characters do local v = Characters[i]
+        local Human = v:FindFirstChildOfClass("Humanoid")
+        if v.Name ~= game.Players.LocalPlayer.Name and Human and Human.RootPart and Human.Health > 0 and Client:DistanceFromCharacter(Human.RootPart.Position) < Sizes+5 then
+            table.insert(Hits,Human.RootPart)
         end
     end
     return Hits
@@ -1622,7 +1623,7 @@ FastAttack = function()
             else
                 Animation.AnimationId = ac.anims.basic[2]
                 ac.humanoid:LoadAnimation(Animation):Play(1, 1)
-                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getHits(120), 2, "")
+                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getBladeHits(120), 2, "")
             end
         end)
     end
@@ -1667,25 +1668,6 @@ task.spawn(function()
         end
     end
 end)
-function getBladeHits(Sizes)
-    local Hits = {}
-    local Client = game.Players.LocalPlayer
-    local Enemies = game:GetService("Workspace").Enemies:GetChildren()
-    local Characters = game:GetService("Workspace").Characters:GetChildren()
-    for i=1,#Enemies do local v = Enemies[i]
-        local Human = v:FindFirstChildOfClass("Humanoid")
-        if Human and Human.RootPart and Human.Health > 0 and Client:DistanceFromCharacter(Human.RootPart.Position) < Sizes+5 then
-            table.insert(Hits,Human.RootPart)
-        end
-    end
-    for i=1,#Characters do local v = Characters[i]
-        local Human = v:FindFirstChildOfClass("Humanoid")
-        if v.Name ~= game.Players.LocalPlayer.Name and Human and Human.RootPart and Human.Health > 0 and Client:DistanceFromCharacter(Human.RootPart.Position) < Sizes+5 then
-            table.insert(Hits,Human.RootPart)
-        end
-    end
-    return Hits
-end
 EnableCurv = true
 task.spawn(function()
     local a = game.Players.LocalPlayer
@@ -1707,7 +1689,7 @@ task.spawn(function()
                     d:Play(0.1, 0.1, 0.1)
                     h(i)
                     b.play = shared.cpc
-                    wait(0)
+                    task.wait()
                     d:Stop()
                 end
             end
