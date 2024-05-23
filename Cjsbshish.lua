@@ -1568,7 +1568,8 @@ if game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit') then
 end
 
 -- [ Super Fast Attack ]
-
+local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
+CamShake:Stop()
 local CurveFrame = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework")))[2]
 local VirtualUser = game:GetService("VirtualUser")
 local RigControllerR = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework.RigController))[2]
@@ -1713,9 +1714,6 @@ spawn(function()
         end
     end
 end)
-
-local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
-CamShake:Stop()
 
 -- [ Ui Orion ]
 
