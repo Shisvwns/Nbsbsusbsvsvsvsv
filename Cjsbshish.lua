@@ -1641,15 +1641,6 @@ task.spawn(function()
                         end
                     end
                 end
-                for i, v in pairs(game.Workspace.Characters:GetChildren()) do
-                    if v.Humanoid.Health > 0 then
-                        if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
-                            FastAttack()
-                            task.wait()
-                            Boost()
-                        end
-                    end
-                end
             end)
         end
     end
@@ -1722,6 +1713,9 @@ spawn(function()
         end
     end
 end)
+
+local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
+CamShake:Stop()
 
 -- [ Ui Orion ]
 
@@ -8052,7 +8046,7 @@ spawn(function()
         if game:GetService("Workspace").Map:FindFirstChild('KitsuneIsland') then
             Kitsune:Set("Kitsune Island: 🟢")
         else
-            Kitsune:Set("Kitsune Island: 🔴")
+            Kitsune:Set("Kitsune Island: ??")
         end
     end
 end)
