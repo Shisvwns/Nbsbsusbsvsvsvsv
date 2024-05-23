@@ -1588,7 +1588,7 @@ function CurveFuckWeapon()
     end
     return wea
 end
-function GetHits(Size)
+function getHits(Size)
     local Hits = {}
     local function processHumanoid(Human)
         if Human and Human.RootPart and Human.Health > 0 and game.Players.LocalPlayer:DistanceFromCharacter(Human.RootPart.Position) < Size + 5 then
@@ -1621,7 +1621,7 @@ FastAttack = function()
             else
                 Animation.AnimationId = ac.anims.basic[2]
                 ac.humanoid:LoadAnimation(Animation):Play(1, 1)
-                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", GetHits(120), 2, "")
+                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getHits(120), 2, "")
             end
         end)
     end
@@ -1687,19 +1687,17 @@ task.spawn(function()
                     d:Play(0.1, 0.1, 0.1)
                     h(i)
                     b.play = shared.cpc
-                    task.wait()
+                    wait()
                     d:Stop()
                 end
             end
         end)
     end
 end)
-local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
-CamShake:Stop()
 CombatFrameworkR = require(game.Players.LocalPlayer.PlayerScripts.CombatFramework)
 y = debug.getupvalues(CombatFrameworkR)[2]
-task.spawn(function()
-    while task.wait() do
+spawn(function()
+    while wait() do
         if _G.FastAttack then
             if typeof(y) == "table" then
                 pcall(function()
@@ -1709,7 +1707,7 @@ task.spawn(function()
                     y.activeController.active = false
                     y.activeController.timeToNextBlock = 0
                     y.activeController.focusStart = 1655503339.0980349
-                    y.activeController.increment = 1
+                    y.activeController.increment = 3
                     y.activeController.blocking = false
                     y.activeController.attacking = false
                     y.activeController.humanoid.AutoRotate = true
