@@ -1588,7 +1588,7 @@ function CurveFuckWeapon()
     end
     return wea
 end
-function getBladeHits(Size)
+function GetHits(Size)
     local Hits = {}
     local function processHumanoid(Human)
         if Human and Human.RootPart and Human.Health > 0 and game.Players.LocalPlayer:DistanceFromCharacter(Human.RootPart.Position) < Size + 5 then
@@ -1608,9 +1608,6 @@ end
 function Boost()
     game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange", tostring(CurveFuckWeapon()))
 end
-function Unboost()
-    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("unequipWeapon", tostring(CurveFuckWeapon()))
-end
 local cdnormal = 0
 local Animation = Instance.new("Animation")
 local CooldownFastAttack = 0
@@ -1624,7 +1621,7 @@ FastAttack = function()
             else
                 Animation.AnimationId = ac.anims.basic[2]
                 ac.humanoid:LoadAnimation(Animation):Play(1, 1)
-                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getBladeHits(120), 2, "")
+                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", GetHits(120), 2, "")
             end
         end)
     end
@@ -1644,24 +1641,12 @@ task.spawn(function()
                         end
                     end
                 end
-            end)
-        end
-    end
-end)
-k = tick()
-task.spawn(function()
-    if FastI then
-        while task.wait() do
-            if k - tick() > 0.75 then
-                task.wait()
-                k = tick()
-            end
-            pcall(function()
-                for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
+                for i, v in pairs(game.Workspace.Characters:GetChildren()) do
                     if v.Humanoid.Health > 0 then
                         if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
+                            FastAttack()
                             task.wait()
-                            Unboost()
+                            Boost()
                         end
                     end
                 end
