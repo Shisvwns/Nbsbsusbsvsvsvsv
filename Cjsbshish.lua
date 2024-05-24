@@ -1568,6 +1568,7 @@ if game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit') then
 end
 
 -- [ Super Fast Attack ]
+
 local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
 CamShake:Stop()
 local CurveFrame = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework")))[2]
