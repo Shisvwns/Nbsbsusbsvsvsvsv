@@ -1606,9 +1606,6 @@ function getHits(Size)
     end
     return Hits
 end
-function Boost()
-    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange", tostring(CurveFuckWeapon()))
-end
 local cdnormal = 0
 local Animation = Instance.new("Animation")
 local CooldownFastAttack = 0
@@ -1637,8 +1634,6 @@ task.spawn(function()
                     if v.Humanoid.Health > 0 then
                         if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
                             FastAttack()
-                            task.wait()
-                            Boost()
                         end
                     end
                 end
@@ -1707,77 +1702,6 @@ spawn(function()
             end
         end
         if _G.FastAttack then
-            if game.Players.LocalPlayer.Character:FindFirstChild("Stun") then
-                game.Players.LocalPlayer.Character.Stun.Value = 0
-                game.Players.LocalPlayer.Character.Busy.Value = false        
-            end
-        end
-    end
-end)
-
--- [ Fast Attack Player ]
-
-bs = tick()
-task.spawn(function()
-    while task.wait(_G.FastAttackDelay) do
-        if _G.FastAttackPlayer then
-            FastIP = true
-            pcall(function()
-                for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
-                    if v.Humanoid.Health > 0 then
-                        if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
-                            FastAttack()
-                            task.wait()
-                            Boost()
-                        end
-                    end
-                end
-                for i, v in pairs(game.Workspace.Characters:GetChildren()) do
-                    if v.Humanoid.Health > 0 then
-                        if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
-                            FastAttack()
-                            task.wait()
-                            Boost()
-                        end
-                    end
-                end
-            end)
-        end
-    end
-end)
-k = tick()
-task.spawn(function()
-    while task.wait() do
-        if FastIP then
-            pcall(function()
-                CurveFrame.activeController.focusStart = 0
-                CurveFrame.activeController.hitboxMagnitude = 40
-                CurveFrame.activeController.humanoid.AutoRotate = true
-                CurveFrame.activeController.increment = 1 + 1 / 1
-            end)
-        end
-    end
-end)
-CombatFrameworkR = require(game.Players.LocalPlayer.PlayerScripts.CombatFramework)
-y = debug.getupvalues(CombatFrameworkR)[2]
-spawn(function()
-    while wait() do
-        if _G.FastAttackPlayer then
-            if typeof(y) == "table" then
-                pcall(function()
-                    y.activeController.timeToNextAttack = (math.huge^math.huge^math.huge)
-                    y.activeController.hitboxMagnitude = 60
-                    y.activeController.active = false
-                    y.activeController.timeToNextBlock = 0
-                    y.activeController.focusStart = 1655503339.0980349
-                    y.activeController.increment = 1
-                    y.activeController.blocking = false
-                    y.activeController.attacking = false
-                    y.activeController.humanoid.AutoRotate = true
-                end)
-            end
-        end
-        if _G.FastAttackPlayer then
             if game.Players.LocalPlayer.Character:FindFirstChild("Stun") then
                 game.Players.LocalPlayer.Character.Stun.Value = 0
                 game.Players.LocalPlayer.Character.Busy.Value = false        
