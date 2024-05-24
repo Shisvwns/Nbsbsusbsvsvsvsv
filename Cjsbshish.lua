@@ -1362,20 +1362,7 @@ function TelePlayer(Pos)
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
 end
 
-Type = 1
-spawn(function()
-    while task.wait() do
-		if Type == 1 then
-			Pos = CFrame.new(0,30,-20)
-		elseif Type == 2 then
-			Pos = CFrame.new(20,30,0)
-		elseif Type == 3 then
-			Pos = CFrame.new(0,30,20)	
-		elseif Type == 4 then
-			Pos = CFrame.new(-20,30,0)
-        end
-    end
-end)
+Pos = CFrame.new(0,30,0)
 
 spawn(function()
     while task.wait() do
