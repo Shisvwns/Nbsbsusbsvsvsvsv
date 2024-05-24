@@ -1569,8 +1569,6 @@ end
 
 -- [ Super Fast Attack ]
 
-local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
-CamShake:Stop()
 local CurveFrame = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework")))[2]
 local VirtualUser = game:GetService("VirtualUser")
 local RigControllerR = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework.RigController))[2]
@@ -1625,6 +1623,9 @@ FastAttack = function()
         end)
     end
 end
+function Boost()
+    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange", tostring(CurveFuckWeapon()))
+end
 bs = tick()
 task.spawn(function()
     while task.wait(_G.FastAttackDelay) do
@@ -1635,6 +1636,8 @@ task.spawn(function()
                     if v.Humanoid.Health > 0 then
                         if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
                             FastAttack()
+                            task.wait()
+                            Boost()
                         end
                     end
                 end
