@@ -1363,19 +1363,7 @@ function TelePlayer(Pos)
 end
 
 Pos = CFrame.new(0,30,0)
-
-spawn(function()
-    while task.wait() do
-        Type = 1
-        wait(0.2)
-        Type = 2
-        wait(0.2)
-        Type = 3
-        wait(0.2)
-        Type = 4
-        wait(0.2)
-    end
-end)
+RaidPos = CFrame.new(0,70,0)
 
 spawn(function()
     pcall(function()
@@ -1455,15 +1443,6 @@ function EquipWeaponSword()
 			end
 		end
 	end)
-end
-
-function CheckTool(toolnam)
-    lol = {game.Players.LocalPlayer.Character, game.Players.LocalPlayer.Backpack}
-    for i, v in pairs(lol) do
-        if v:FindFirstChild(toolnam) then
-            return v:FindFirstChild(toolnam)
-        end
-    end
 end
 
 spawn(function()
@@ -1812,6 +1791,17 @@ OrionLib:MakeNotification({
 })
 
 -- [ Create Tab ]
+
+local A = Window:MakeTab({Name = "Main", Icon = "rbxassetid://4483345998", PremiumOnly = false})
+local B = Window:MakeTab({Name = "Setting", Icon = "rbxassetid://11446835336", PremiumOnly = false})
+local C = Window:MakeTab({Name = "Raid", Icon = "rbxassetid://11155986081", PremiumOnly = false})
+local D = Window:MakeTab({Name = "Item Quest", Icon = "rbxassetid://9606626859", PremiumOnly = false})
+local E = Window:MakeTab({Name = "Status", Icon = "rbxassetid://11156061121", PremiumOnly = false})
+local F = Window:MakeTab({Name = "Race Upgrade", Icon = "rbxassetid://11162889532", PremiumOnly = false})
+local G = Window:MakeTab({Name = "Sea Event", Icon = "rbxassetid://7040410130", PremiumOnly = false})
+local H = Window:MakeTab({Name = "Shop", Icon = "rbxassetid://6031265976", PremiumOnly = false})
+local I = Window:MakeTab({Name = "Devil Fruit", Icon = "rbxassetid://11156061121", PremiumOnly = false})
+local K = Window:MakeTab({Name = "Miscellaneous", Icon = "rbxassetid://7044233235", PremiumOnly = false})
 
 local Setting = Window:MakeTab({
 	Name = "Settings",
@@ -4078,15 +4068,6 @@ spawn(function()
             end
         end
     end)
-end)
-
-Type = 1
-spawn(function()
-    while wait() do
-        if Type == 1 then
-            RaidPos = CFrame.new(0,70,0)
-        end
-    end
 end)
 
 FruitRaid:AddToggle({
