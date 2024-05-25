@@ -4363,7 +4363,7 @@ spawn(function()
             end
         end
     end
-end
+end)
 
 local Section = Other:AddSection({
     Name = "Observation Haki"
