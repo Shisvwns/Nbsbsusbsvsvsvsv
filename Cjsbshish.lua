@@ -727,7 +727,7 @@ function CheckQuest()
             NameQuest = "TikiQuest2"
             NameMon = "Isle Champion"
             CFrameQuest = CFrame.new(-16539.078125, 55.68632888793945, 1051.5738525390625)
-            CFrameMon = CFrame.new(-16347.4150390625, 92.09503936767578, 1122.335205078125)
+            CFrame.new(-16347.4150390625, 92.09503936767578, 1122.335205078125)
         end
     end
 end
@@ -1844,7 +1844,6 @@ spawn(function()
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
                             v.HumanoidRootPart.CanCollide = false
-                            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                             v.Humanoid:ChangeState(14)
                         end
                     end
@@ -1854,7 +1853,6 @@ spawn(function()
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
                             v.HumanoidRootPart.CanCollide = false
-                            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                             v.Humanoid:ChangeState(14)
                         end
                     end
@@ -1864,7 +1862,6 @@ spawn(function()
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
                             v.HumanoidRootPart.CanCollide = false
-                            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                             v.Humanoid:ChangeState(14)
                         end
                     end
@@ -1874,7 +1871,6 @@ spawn(function()
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
                             v.HumanoidRootPart.CanCollide = false
-                            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                             v.Humanoid:ChangeState(14)
                         end
                     end
@@ -1884,7 +1880,6 @@ spawn(function()
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
                             v.HumanoidRootPart.CanCollide = false
-                            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                             v.Humanoid:ChangeState(14)
                         end
                     end
@@ -1894,7 +1889,6 @@ spawn(function()
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
                             v.HumanoidRootPart.CanCollide = false
-                            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                             v.Humanoid:ChangeState(14)
                         end
                     end
@@ -1904,7 +1898,6 @@ spawn(function()
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
                             v.HumanoidRootPart.CanCollide = false
-                            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                             v.Humanoid:ChangeState(14)
                         end
                     end
@@ -1914,7 +1907,6 @@ spawn(function()
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
                             v.HumanoidRootPart.CanCollide = false
-                            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                             v.Humanoid:ChangeState(14)
                         end
                     end
@@ -1924,7 +1916,6 @@ spawn(function()
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
                             v.HumanoidRootPart.CanCollide = false
-                            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                             v.Humanoid:ChangeState(14)
                         end
                     end
@@ -1934,7 +1925,6 @@ spawn(function()
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
                             v.HumanoidRootPart.CanCollide = false
-                            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                             v.Humanoid:ChangeState(14)
                         end
                     end
