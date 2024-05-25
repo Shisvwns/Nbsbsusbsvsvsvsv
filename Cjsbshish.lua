@@ -2075,6 +2075,24 @@ Setting:AddButton({
 })
 
 Setting:AddToggle({
+	Name = "Disabled Notifications Text",
+	Default = true,
+	Callback = function(Value)
+		_G.Remove_trct = Value
+	end
+})
+
+spawn(function()
+	while wait() do
+		if _G.Remove_trct then
+			game.Players.LocalPlayer.PlayerGui.Notifications.Enabled = false
+		else
+			game.Players.LocalPlayer.PlayerGui.Notifications.Enabled = true
+		end
+	end
+end)
+
+Setting:AddToggle({
 	Name = "Disabled Damage",
 	Default = true,
 	Callback = function(Value)
@@ -2090,15 +2108,6 @@ spawn(function()
 			game:GetService("ReplicatedStorage").Assets.GUI.DamageCounter.Enabled = true
 		end
 	end
-end)
-
-_G.RemoveXamlon = true
-spawn(function()
-    game:GetService("RunService").RenderStepped:Connect(function()
-        if _G.RemoveXamlon == true then
-            game:GetService("ReplicatedStorage").Util.Sound:Destroy()
-        end
-    end)
 end)
 
 local Section = Setting:AddSection({
