@@ -1251,8 +1251,8 @@ function UpdateDevilChams()
 				end
 			end
 		else
-			if v.Handle:FindFirstChild('NameEsp'..Number) then
-				v.Handle:FindFirstChild('NameEsp'..Number):Destroy()
+			if v:FindFirstChild('NameEsp'..Number) then
+				v:FindFirstChild('NameEsp'..Number):Destroy()
 			end
 		end
     end
@@ -1289,7 +1289,7 @@ function UpdateFlowerChams()
 				end
 			else
 				if v:FindFirstChild('NameEsp'..Number) then
-				v:FindFirstChild('NameEsp'..Number):Destroy()
+		    		v:FindFirstChild('NameEsp'..Number):Destroy()
 				end
 			end
 		end
