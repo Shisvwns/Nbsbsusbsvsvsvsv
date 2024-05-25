@@ -1837,6 +1837,7 @@ Setting:AddToggle({
 spawn(function()
     while task.wait() do
         if _G.BringMonster then
+            pcall(function()
             CheckQuest()
             for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                 if _G.AutoFarm or _G.AutoFarmFruitMastery or _G.AutoFarmGunMastery or _G.AutoSwordMastery then
@@ -1940,6 +1941,7 @@ spawn(function()
                     end
                 end
             end
+            end)
         end
     end
 end)
