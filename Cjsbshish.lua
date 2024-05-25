@@ -1511,13 +1511,11 @@ end
 
 local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
 CamShake:Stop()
-
 local CurveFrame = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework")))[2]
 local VirtualUser = game:GetService("VirtualUser")
 local RigControllerR = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework.RigController))[2]
 local Client = game:GetService("Players").LocalPlayer
 local DMG = require(Client.PlayerScripts.CombatFramework.Particle.Damage)
-
 function CurveFuckWeapon()
     local p13 = CurveFrame.activeController
     if not p13 then
@@ -1532,11 +1530,10 @@ function CurveFuckWeapon()
     end
     return wea
 end
-
 function getHits(Size)
     local Hits = {}
     local function processHumanoid(Human)
-        if Human and Human.RootPart and Human.Health > 0 và game.Players.LocalPlayer:DistanceFromCharacter(Human.RootPart.Position) < Size + 5 then
+        if Human and Human.RootPart and Human.Health > 0 and game.Players.LocalPlayer:DistanceFromCharacter(Human.RootPart.Position) < Size + 5 then
             table.insert(Hits, Human.RootPart)
         end
     end
@@ -1550,33 +1547,22 @@ function getHits(Size)
     end
     return Hits
 end
-
 local cdnormal = 0
 local Animation = Instance.new("Animation")
 local CooldownFastAttack = 0
-
 FastAttack = function()
     local ac = CurveFrame.activeController
     if ac and ac.equipped then
         task.spawn(function()
-            if tick() - cdnormal > 0.5 then
-                ac:attack()
-                cdnormal = tick()
-            else
                 Animation.AnimationId = ac.anims.basic[2]
-                local animTrack = ac.humanoid:LoadAnimation(Animation)
-                animTrack.Looped = true  -- ĐÃ THAY ĐỔI Ở ĐÂY
-                animTrack:Play(1, 1)
+                ac.humanoid:LoadAnimation(Animation):Play(1, 1)
                 game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getHits(120), 2, "")
-            end
         end)
     end
 end
-
 function Boost()
     game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange", tostring(CurveFuckWeapon()))
 end
-
 bs = tick()
 task.spawn(function()
     while task.wait(_G.FastAttackDelay) do
@@ -1596,7 +1582,6 @@ task.spawn(function()
         end
     end
 end)
-
 k = tick()
 task.spawn(function()
     while task.wait() do
@@ -1610,7 +1595,6 @@ task.spawn(function()
         end
     end
 end)
-
 EnableCurv = true
 task.spawn(function()
     local a = game.Players.LocalPlayer
@@ -1635,11 +1619,10 @@ task.spawn(function()
                     task.wait()
                     d:Stop()
                 end
-            end)
-        end
+            end
+        end)
     end
 end)
-
 CombatFrameworkR = require(game.Players.LocalPlayer.PlayerScripts.CombatFramework)
 y = debug.getupvalues(CombatFrameworkR)[2]
 spawn(function()
