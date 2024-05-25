@@ -3751,7 +3751,7 @@ FruitRaid:AddToggle({
 })
 
 spawn(function()
-    while taks.wait() do
+    while wait() do
         if _G.AutoFruit then
             local args = {
                 [1] = "LoadFruit",
@@ -4520,14 +4520,10 @@ local Section = ItemQuest:AddSection({
 local ColorHaki = ItemQuest:AddParagraph("Haki Dealer")
 
 spawn(function()
-    while taks.wait() do
-        if World3 or World2 then
-            if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer", "1") then
-                ColorHaki:Set("Haki Colors: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer", "1"))
-            else
-                ColorHaki:Set("Not Found Haki Dealer")
-            end
-        elseif World1 then
+    while wait() do
+        if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer", "1") then
+            ColorHaki:Set("Haki Colors: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer", "1"))
+        else
             ColorHaki:Set("Not Found Haki Dealer")
         end
     end
@@ -6292,6 +6288,13 @@ Player:AddButton({
     end
 })
 
+Player:AddButton({
+    Name = "Open Awakening",
+    Callback = function()
+        game:GetService("Players").LocalPlayer.PlayerGui.Main.AwakeningToggler.Visible = true
+    end
+})
+
 local Section = Player:AddSection({
     Name = "Abilities"
 })
@@ -7678,14 +7681,10 @@ end)
 local ColorHaki1 = StatusServer:AddParagraph("Haki Dealer")
 
 spawn(function()
-    while taks.wait() do
-        if World3 or World2 then
-            if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer", "1") then
-                ColorHaki1:Set("Haki Colors: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer", "1"))
-            else
-                ColorHaki1:Set("Not Found Haki Dealer")
-            end
-        elseif World1 then
+    while wait() do
+        if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer", "1") then
+            ColorHaki1:Set("Haki Colors: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer", "1"))
+        else
             ColorHaki1:Set("Not Found Haki Dealer")
         end
     end
@@ -7722,7 +7721,7 @@ spawn(function()
         if game:GetService("Workspace").Map:FindFirstChild('KitsuneIsland') then
             Kitsune:Set("Kitsune Island: 🟢")
         else
-            Kitsune:Set("Kitsune Island: ??")
+            Kitsune:Set("Kitsune Island: 🔴")
         end
     end
 end)
