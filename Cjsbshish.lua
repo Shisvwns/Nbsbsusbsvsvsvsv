@@ -1365,9 +1365,29 @@ function BTP(a)
     end
 end
 
+function WaitHRP(Player)
+    if not Player then return end
+    return Player.Character:WaitForChild("HumanoidRootPart")
+end
+
 function topos(Pos)
-    Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-    local Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear),{CFrame = Pos})
+    local Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    local LocalPlayer = game.Players.LocalPlayer
+    local Character = LocalPlayer.Character
+    if not Character:FindFirstChild("PartTele") then
+        local PartTele = Instance.new("Part", Character)
+        PartTele.Size = Vector3.new(0, 0, 0)
+        PartTele.Name = "PartTele"
+        PartTele.Anchored = true
+        PartTele.Transparency = 1
+        PartTele.CanCollide = false
+        PartTele.CFrame = WaitHRP(LocalPlayer).CFrame
+        PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
+            task.wait()
+            WaitHRP(LocalPlayer).CFrame = PartTele.CFrame
+        end)
+    end
+    local Tween = game:GetService("TweenService"):Create(Character.PartTele, TweenInfo.new(Distance / getgenv().TweenSpeed, Enum.EasingStyle.Linear), {CFrame = Pos})
     Tween:Play()
     _G.Clip = true
     if _G.StopTween == true then
@@ -2889,22 +2909,24 @@ Farm:AddToggle({
 spawn(function()
     while wait() do
         if _G.AutoFarmBoss then
-            if game:GetService("Workspace").Enemies:FindFirstChild(_G.SelectBoss) then
-                for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                    if v.Name == _G.SelectBoss then
-                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                            repeat task.wait()
-                                EquipWeapon(_G.SelectWeapon)
-                                topos(v.HumanoidRootPart.CFrame * Pos)
-                            until not _G.AutoFarmBoss or not v.Parent or v.Humanoid.Health <= 0
+            pcall(function()
+                if game:GetService("Workspace").Enemies:FindFirstChild(_G.SelectBoss) then
+                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        if v.Name == _G.SelectBoss then
+                            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                                repeat task.wait()
+                                    EquipWeapon(_G.SelectWeapon)
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
+                                until not _G.AutoFarmBoss or not v.Parent or v.Humanoid.Health <= 0
+                            end
                         end
                     end
+                else
+                    if game:GetService("ReplicatedStorage"):FindFirstChild(_G.SelectBoss) then
+                        topos(game:GetService("ReplicatedStorage"):FindFirstChild(_G.SelectBoss).HumanoidRootPart.CFrame * CFrame.new(5,10,7))
+                    end
                 end
-            else
-                if game:GetService("ReplicatedStorage"):FindFirstChild(_G.SelectBoss) then
-                    topos(game:GetService("ReplicatedStorage"):FindFirstChild(_G.SelectBoss).HumanoidRootPart.CFrame * CFrame.new(5,10,7))
-                end
-            end
+            end)
         end
     end
 end)
