@@ -1771,17 +1771,7 @@ ImageLabel.Size = UDim2.new(0, 30, 0, 30)
 ImageLabel.Parent = Frame
 
 local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/HuyLocDz/Ui/main/OrionUi.lua"))()
-local Window =
-    OrionLib:MakeWindow({
-        Name = ":)",
-        IntroEnabled = true,
-        IntroText = "Tinh Linh Hub",
-        IntroIcon = "rbxassetid://16730867128",
-        HidePremium = false,
-        SaveConfig = true,
-        ConfigFolder = "TinhLinhHub"
-    }
-)
+local Window =OrionLib:MakeWindow({Name = ":)", IntroEnabled = true, IntroText = "Tinh Linh Hub", IntroIcon = "rbxassetid://16730867128", HidePremium = false, SaveConfig = true, ConfigFolder = "TinhLinhHub"})
 
 OrionLib:MakeNotification({
     Name = "Tinh Linh Hub",
@@ -1792,94 +1782,19 @@ OrionLib:MakeNotification({
 
 -- [ Create Tab ]
 
-local A = Window:MakeTab({Name = "Main", Icon = "rbxassetid://4483345998", PremiumOnly = false})
-local B = Window:MakeTab({Name = "Setting", Icon = "rbxassetid://11446835336", PremiumOnly = false})
-local C = Window:MakeTab({Name = "Raid", Icon = "rbxassetid://11155986081", PremiumOnly = false})
-local D = Window:MakeTab({Name = "Item Quest", Icon = "rbxassetid://9606626859", PremiumOnly = false})
-local E = Window:MakeTab({Name = "Status", Icon = "rbxassetid://11156061121", PremiumOnly = false})
-local F = Window:MakeTab({Name = "Race Upgrade", Icon = "rbxassetid://11162889532", PremiumOnly = false})
-local G = Window:MakeTab({Name = "Sea Event", Icon = "rbxassetid://7040410130", PremiumOnly = false})
-local H = Window:MakeTab({Name = "Shop", Icon = "rbxassetid://6031265976", PremiumOnly = false})
-local I = Window:MakeTab({Name = "Devil Fruit", Icon = "rbxassetid://11156061121", PremiumOnly = false})
-local K = Window:MakeTab({Name = "Miscellaneous", Icon = "rbxassetid://7044233235", PremiumOnly = false})
-
-local Setting = Window:MakeTab({
-	Name = "Settings",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
-})
-
-local Farm = Window:MakeTab({
-	Name = "Farm",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
-})
-
-local FruitRaid = Window:MakeTab({
-	Name = "Fruit & Raid",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
-})
-
-local Other = Window:MakeTab({
-	Name = "Other",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
-})
-
-local ItemQuest = Window:MakeTab({
-	Name = "Item & Quest",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
-})
-
-local Player = Window:MakeTab({
-	Name = "Player",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
-})
-
-local PvP = Window:MakeTab({
-	Name = "PvP",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
-})
-
-local Sea = Window:MakeTab({
-	Name = "Sea Event",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
-})
-
-local Race = Window:MakeTab({
-	Name = "Race",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
-})
-
-local StatsEsp = Window:MakeTab({
-	Name = "Stats & Esp",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
-})
-
-local Teleport = Window:MakeTab({
-	Name = "Teleport",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
-})
-
-local StatusServer = Window:MakeTab({
-	Name = "Status & Server",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
-})
-
-local Shop = Window:MakeTab({
-	Name = "Shop",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
-})
+local Setting = Window:MakeTab({Name = "Settings", Icon = "rbxassetid://4483345998", PremiumOnly = false})
+local Farm = Window:MakeTab({Name = "Farm", Icon = "rbxassetid://4483345998", PremiumOnly = false})
+local FruitRaid = Window:MakeTab({Name = "Fruit & Raid", Icon = "rbxassetid://4483345998", PremiumOnly = false})
+local Other = Window:MakeTab({Name = "Other", Icon = "rbxassetid://4483345998", PremiumOnly = false})
+local ItemQuest = Window:MakeTab({Name = "Item & Quest", Icon = "rbxassetid://4483345998",PremiumOnly = false})
+local Player = Window:MakeTab({Name = "Player", Icon = "rbxassetid://4483345998", PremiumOnly = false})
+local PvP = Window:MakeTab({Name = "PvP", Icon = "rbxassetid://4483345998", PremiumOnly = false})
+local Sea = Window:MakeTab({Name = "Sea Event", Icon = "rbxassetid://4483345998",PremiumOnly = false})
+local Race = Window:MakeTab({Name = "Race", Icon = "rbxassetid://4483345998", PremiumOnly = false})
+local StatsEsp = Window:MakeTab({Name = "Stats & Esp", Icon = "rbxassetid://4483345998",PremiumOnly = false})
+local Teleport = Window:MakeTab({Name = "Teleport", Icon = "rbxassetid://4483345998", PremiumOnly = false})
+local StatusServer = Window:MakeTab({Name = "Status & Server", Icon = "rbxassetid://4483345998", PremiumOnly = false})
+local Shop = Window:MakeTab({Name = "Shop", Icon = "rbxassetid://4483345998", PremiumOnly = false})
 
 -- [ Tab Settings]
 
@@ -1952,7 +1867,7 @@ spawn(function()
                 CheckQuest()
                 for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                     if _G.AutoFarm or _G.AutoFarmFruitMastery or _G.AutoFarmGunMastery or _G.AutoSwordMastery then
-                        if StartMagnet and v.Name == Mon and (v.HumanoidRootPart.Position - PosFarm.Position).Magnitude <= 350 then
+                        if StartMagnet and v.Name == Mon and (v.HumanoidRootPart.Position - PosFarm.Position).Magnitude <= 500 then
                             v.HumanoidRootPart.CFrame = PosFarm
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
@@ -1962,7 +1877,7 @@ spawn(function()
                         end
                     end
                     if _G.AutoRengoku and StartRengokuMagnet then
-                        if (v.Name == "Snow Lurker" or v.Name == "Arctic Warrior") and (v.HumanoidRootPart.Position - RengokuMon.Position).Magnitude <= 350 then
+                        if (v.Name == "Snow Lurker" or v.Name == "Arctic Warrior") and (v.HumanoidRootPart.Position - RengokuMon.Position).Magnitude <= 500 then
                             v.HumanoidRootPart.CFrame = RengokuMon
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
@@ -1972,7 +1887,7 @@ spawn(function()
                         end
                     end
                     if _G.AutoMusketeerHat and StartMagnetMusketeerhat then
-                        if v.Name == "Forest Pirate" and (v.HumanoidRootPart.Position - MusketeerHatMon.Position).Magnitude <= 350 then
+                        if v.Name == "Forest Pirate" and (v.HumanoidRootPart.Position - MusketeerHatMon.Position).Magnitude <= 500 then
                             v.HumanoidRootPart.CFrame = MusketeerHatMon
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
@@ -1982,7 +1897,7 @@ spawn(function()
                         end
                     end
                     if _G.Auto_EvoRace and StartEvoMagnet then
-                        if v.Name == "Zombie" and (v.HumanoidRootPart.Position - PosMonEvo.Position).Magnitude <= 350 then
+                        if v.Name == "Zombie" and (v.HumanoidRootPart.Position - PosMonEvo.Position).Magnitude <= 500 then
                             v.HumanoidRootPart.CFrame = PosMonEvo
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
@@ -1992,7 +1907,7 @@ spawn(function()
                         end
                     end
                     if _G.AutoMaterial and BringMonMaterial then
-                        if v.Name == MMon and (v.HumanoidRootPart.Position - MaterialPos.Position).Magnitude <= 350 then
+                        if v.Name == MMon and (v.HumanoidRootPart.Position - MaterialPos.Position).Magnitude <= 500 then
                             v.HumanoidRootPart.CFrame = MaterialPos
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
@@ -2002,7 +1917,7 @@ spawn(function()
                         end
                     end
                     if _G.AutoFarmMob and SelectMag then
-                        if v.Name == _G.SelectMob and (v.HumanoidRootPart.Position - PosMonFarm.Position).Magnitude <= 350 then
+                        if v.Name == _G.SelectMob and (v.HumanoidRootPart.Position - PosMonFarm.Position).Magnitude <= 500 then
                             v.HumanoidRootPart.CFrame = PosMonFarm
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
@@ -2012,7 +1927,7 @@ spawn(function()
                         end
                     end
                     if _G.AutoBartilo and AutoBartiloBring then
-                        if v.Name == "Swan Pirate" and (v.HumanoidRootPart.Position - PosMonBarto.Position).Magnitude <= 350 then
+                        if v.Name == "Swan Pirate" and (v.HumanoidRootPart.Position - PosMonBarto.Position).Magnitude <= 500 then
                             v.HumanoidRootPart.CFrame = PosMonBarto
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
@@ -2022,7 +1937,7 @@ spawn(function()
                         end
                     end
                     if _G.Auto_Bone and StartMagnetBoneMon then
-                        if (v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy") and (v.HumanoidRootPart.Position - PosMonBone.Position).Magnitude <= 350 then
+                        if (v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy") and (v.HumanoidRootPart.Position - PosMonBone.Position).Magnitude <= 500 then
                             v.HumanoidRootPart.CFrame = PosMonBone
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
@@ -2032,7 +1947,7 @@ spawn(function()
                         end
                     end
                     if _G.AutoDoughtBoss and MagnetDought then
-                        if (v.Name == "Cookie Crafter" or v.Name == "Cake Guard" or v.Name == "Baking Staff" or v.Name == "Head Baker") and (v.HumanoidRootPart.Position - PosMonDoughtOpenDoor.Position).Magnitude <= 350 then
+                        if (v.Name == "Cookie Crafter" or v.Name == "Cake Guard" or v.Name == "Baking Staff" or v.Name == "Head Baker") and (v.HumanoidRootPart.Position - PosMonDoughtOpenDoor.Position).Magnitude <= 500 then
                             v.HumanoidRootPart.CFrame = PosMonDoughtOpenDoor
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
@@ -2042,7 +1957,7 @@ spawn(function()
                         end
                     end
                     if _G.FarmSkip and StartBring then
-                        if v.Name == "Shanda" and (v.HumanoidRootPart.Position - PosMon.Position).Magnitude <= 350 then
+                        if v.Name == "Shanda" and (v.HumanoidRootPart.Position - PosMon.Position).Magnitude <= 500 then
                             v.HumanoidRootPart.CFrame = PosMon
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
