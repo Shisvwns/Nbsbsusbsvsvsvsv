@@ -865,204 +865,204 @@ end
 
 function CheckMonFarm()
     if World1 then
-        if _G.SelectMob == "Bandit" then
+        if SelectMob == "Bandit" then
             PosMonster = CFrame.new(1045.962646484375, 27.00250816345215, 1560.8203125)
-        elseif _G.SelectMob == "Monkey" then
+        elseif SelectMob == "Monkey" then
             PosMonster = CFrame.new(-1448.51806640625, 67.85301208496094, 11.46579647064209)
-        elseif _G.SelectMob == "Gorilla" then
+        elseif SelectMob == "Gorilla" then
             PosMonster = CFrame.new(-1129.8836669921875, 40.46354675292969, -525.4237060546875)
-        elseif _G.SelectMob == "Pirate" then
+        elseif SelectMob == "Pirate" then
             PosMonster = CFrame.new(-1103.513427734375, 13.752052307128906, 3896.091064453125)
-        elseif _G.SelectMob == "Brute" then
+        elseif SelectMob == "Brute" then
             PosMonster = CFrame.new(-1140.083740234375, 14.809885025024414, 4322.92138671875)
-        elseif _G.SelectMob == "Desert Bandit" then
+        elseif SelectMob == "Desert Bandit" then
             PosMonster = CFrame.new(924.7998046875, 6.44867467880249, 4481.5859375)
-        elseif _G.SelectMob == "Desert Officer" then
+        elseif SelectMob == "Desert Officer" then
             PosMonster = CFrame.new(1608.2822265625, 8.614224433898926, 4371.00732421875)
-        elseif _G.SelectMob == "Snow Bandit" then
+        elseif SelectMob == "Snow Bandit" then
             PosMonster = CFrame.new(1354.347900390625, 87.27277374267578, -1393.946533203125)
-        elseif _G.SelectMob == "Snowman" then
+        elseif SelectMob == "Snowman" then
             PosMonster = CFrame.new(1201.6412353515625, 144.57958984375, -1550.0670166015625)
-        elseif _G.SelectMob == "Chief Petty Officer" then
+        elseif SelectMob == "Chief Petty Officer" then
             PosMonster = CFrame.new(-4881.23095703125, 22.65204429626465, 4273.75244140625)
-        elseif _G.SelectMob == "Sky Bandit" then
+        elseif SelectMob == "Sky Bandit" then
             PosMonster = CFrame.new(-4953.20703125, 295.74420166015625, -2899.22900390625)
-        elseif _G.SelectMob == "Dark Master" then
+        elseif SelectMob == "Dark Master" then
             PosMonster = CFrame.new(-5259.8447265625, 391.3976745605469, -2229.035400390625)
-        elseif _G.SelectMob == "Prisoner" then
+        elseif SelectMob == "Prisoner" then
             PosMonster = CFrame.new(5098.9736328125, -0.3204058110713959, 474.2373352050781)
-        elseif _G.SelectMob == "Dangerous Prisoner" then
+        elseif SelectMob == "Dangerous Prisoner" then
             PosMonster = CFrame.new(5654.5634765625, 15.633401870727539, 866.2991943359375)
-        elseif _G.SelectMob == "Toga Warrior" then
+        elseif SelectMob == "Toga Warrior" then
             PosMonster = CFrame.new(-1820.21484375, 51.68385696411133, -2740.6650390625)
-        elseif _G.SelectMob == "Gladiator" then
+        elseif SelectMob == "Gladiator" then
             PosMonster = CFrame.new(-1292.838134765625, 56.380882263183594, -3339.031494140625)
-        elseif _G.SelectMob == "Military Soldier" then
+        elseif SelectMob == "Military Soldier" then
             PosMonster = CFrame.new(-5411.16455078125, 11.081554412841797, 8454.29296875)
-        elseif _G.SelectMob == "Military Spy" then
+        elseif SelectMob == "Military Spy" then
             PosMonster = CFrame.new(-5802.8681640625, 86.26241302490234, 8828.859375)
-        elseif _G.SelectMob == "Fishman Warrior" then
+        elseif SelectMob == "Fishman Warrior" then
             PosMonster = CFrame.new(60878.30078125, 18.482830047607422, 1543.7574462890625)
             if _G.AutoFarmMob and (PosMonster.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(61163.8515625, 11.6796875, 1819.7841796875))
             end
-        elseif _G.SelectMob == "Fishman Commando" then
+        elseif SelectMob == "Fishman Commando" then
             PosMonster = CFrame.new(61922.6328125, 18.482830047607422, 1493.934326171875)
             if _G.AutoFarmMob and (PosMonster.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(61163.8515625, 11.6796875, 1819.7841796875))
             end
-        elseif _G.SelectMob == "God's Guard" then
+        elseif SelectMob == "God's Guard" then
             PosMonster = CFrame.new(-4710.04296875, 845.2769775390625, -1927.3079833984375)
             if _G.AutoFarmMob and (PosMonster.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-4607.82275, 872.54248, -1667.55688))
             end
-        elseif _G.SelectMob == "Shanda" then
+        elseif SelectMob == "Shanda" then
             PosMonster = CFrame.new(-7678.48974609375, 5566.40380859375, -497.2156066894531)
             if _G.AutoFarmMob and (PosMonster.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-7894.6176757813, 5547.1416015625, -380.29119873047))
             end
-        elseif _G.SelectMob == "Royal Squad" then
+        elseif SelectMob == "Royal Squad" then
             PosMonster = CFrame.new(-7624.25244140625, 5658.13330078125, -1467.354248046875)
-        elseif _G.SelectMob == "Royal Soldier" then
+        elseif SelectMob == "Royal Soldier" then
             PosMonster = CFrame.new(-7836.75341796875, 5645.6640625, -1790.6236572265625)
-        elseif _G.SelectMob == "Galley Pirate" then
+        elseif SelectMob == "Galley Pirate" then
             PosMonster = CFrame.new(5551.02197265625, 78.90135192871094, 3930.412841796875)
-        elseif _G.SelectMob == "Galley Captain" then
+        elseif SelectMob == "Galley Captain" then
             PosMonster = CFrame.new(5441.95166015625, 42.50205993652344, 4950.09375)
         end
     elseif World2 then
-        if _G.SelectMob == "Raider" then
+        if SelectMob == "Raider" then
             PosMonster = CFrame.new(-728.3267211914062, 52.779319763183594, 2345.7705078125)
-        elseif _G.SelectMob == "Mercenary" then
+        elseif SelectMob == "Mercenary" then
             PosMonster = CFrame.new(-1004.3244018554688, 80.15886688232422, 1424.619384765625)
-        elseif _G.SelectMob == "Swan Pirate" then
+        elseif SelectMob == "Swan Pirate" then
             PosMonster = CFrame.new(1068.664306640625, 137.61428833007812, 1322.1060791015625)
-        elseif _G.SelectMob == "Factory Staff" then
+        elseif SelectMob == "Factory Staff" then
             PosMonster = CFrame.new(73.07867431640625, 81.86344146728516, -27.470672607421875)
-        elseif _G.SelectMob == "Marine Lieutenant" then
+        elseif SelectMob == "Marine Lieutenant" then
             PosMonster = CFrame.new(-2821.372314453125, 75.89727783203125, -3070.089111328125)
-        elseif _G.SelectMob == "Marine Captain" then
+        elseif SelectMob == "Marine Captain" then
             PosMonster = CFrame.new(-1861.2310791015625, 80.17658233642578, -3254.697509765625)
-        elseif _G.SelectMob == "Zombie" then
+        elseif SelectMob == "Zombie" then
             PosMonster = CFrame.new(-5657.77685546875, 78.96973419189453, -928.68701171875)
-        elseif _G.SelectMob == "Vampire" then
+        elseif SelectMob == "Vampire" then
             PosMonster = CFrame.new(-6037.66796875, 32.18463897705078, -1340.6597900390625)
-        elseif _G.SelectMob == "Snow Trooper" then
+        elseif SelectMob == "Snow Trooper" then
             PosMonster = CFrame.new(549.1473388671875, 427.3870544433594, -5563.69873046875)
-        elseif _G.SelectMob == "Winter Warrior" then
+        elseif SelectMob == "Winter Warrior" then
             PosMonster = CFrame.new(1142.7451171875, 475.6398010253906, -5199.41650390625)
-        elseif _G.SelectMob == "Lab Subordinate" then
+        elseif SelectMob == "Lab Subordinate" then
             PosMonster = CFrame.new(-5707.4716796875, 15.951709747314453, -4513.39208984375)
-        elseif _G.SelectMob == "Horned Warrior" then
+        elseif SelectMob == "Horned Warrior" then
             PosMonster = CFrame.new(-6341.36669921875, 15.951770782470703, -5723.162109375)
-        elseif _G.SelectMob == "Magma Ninja" then
+        elseif SelectMob == "Magma Ninja" then
             PosMonster = CFrame.new(-5449.6728515625, 76.65874481201172, -5808.20068359375)
-        elseif _G.SelectMob == "Lava Pirate" then
+        elseif SelectMob == "Lava Pirate" then
             PosMonster = CFrame.new(-5213.33154296875, 49.73788070678711, -4701.451171875)
-        elseif _G.SelectMob == "Ship Deckhand" then
+        elseif SelectMob == "Ship Deckhand" then
             PosMonster = CFrame.new(1212.0111083984375, 150.79205322265625, 33059.24609375)    
             if _G.AutoFarmMob and (PosMonster.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
             end
-        elseif _G.SelectMob == "Ship Engineer" then
+        elseif SelectMob == "Ship Engineer" then
             PosMonster = CFrame.new(919.4786376953125, 43.54401397705078, 32779.96875)   
             if _G.AutoFarmMob and (PosMonster.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
             end             
-        elseif _G.SelectMob == "Ship Steward" then
+        elseif SelectMob == "Ship Steward" then
             PosMonster = CFrame.new(919.4385375976562, 129.55599975585938, 33436.03515625)
             if _G.AutoFarmMob and (PosMonster.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
             end
-        elseif _G.SelectMob == "Ship Officer" then
+        elseif SelectMob == "Ship Officer" then
             PosMonster = CFrame.new(1036.0179443359375, 181.4390411376953, 33315.7265625)
             if _G.AutoFarmMob and (PosMonster.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
             end
-        elseif _G.SelectMob == "Arctic Warrior" then
+        elseif SelectMob == "Arctic Warrior" then
             PosMonster = CFrame.new(5966.24609375, 62.97002029418945, -6179.3828125)
             if _G.AutoFarmMob and (PosMonster.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-6508.5581054688, 5000.034996032715, -132.83953857422))
             end
-        elseif _G.SelectMob == "Snow Lurker" then
+        elseif SelectMob == "Snow Lurker" then
             PosMonster = CFrame.new(5407.07373046875, 69.19437408447266, -6880.88037109375)
-        elseif _G.SelectMob == "Sea Soldier" then
+        elseif SelectMob == "Sea Soldier" then
             PosMonster = CFrame.new(-3028.2236328125, 64.67451477050781, -9775.4267578125)
-        elseif _G.SelectMob == "Water Fighter" then
+        elseif SelectMob == "Water Fighter" then
             PosMonster = CFrame.new(-3352.9013671875, 285.01556396484375, -10534.841796875)
         end
     elseif World3 then
-        if _G.SelectMob == "Pirate Millionaire" then
+        if SelectMob == "Pirate Millionaire" then
             PosMonster = CFrame.new(-245.9963836669922, 47.30615234375, 5584.1005859375)
-        elseif _G.SelectMob == "Pistol Billionaire" then
+        elseif SelectMob == "Pistol Billionaire" then
             PosMonster = CFrame.new(-187.3301544189453, 86.23987579345703, 6013.513671875)
-        elseif _G.SelectMob == "Dragon Crew Warrior" then
+        elseif SelectMob == "Dragon Crew Warrior" then
             PosMonster = CFrame.new(6141.140625, 51.35136413574219, -1340.738525390625)
-        elseif _G.SelectMob == "Dragon Crew Archer" then 
+        elseif SelectMob == "Dragon Crew Archer" then 
             PosMonster = CFrame.new(6616.41748046875, 441.7670593261719, 446.0469970703125)
-        elseif _G.SelectMob == "Female Islander" then
+        elseif SelectMob == "Female Islander" then
             PosMonster = CFrame.new(4685.25830078125, 735.8078002929688, 815.3425903320312)
-        elseif _G.SelectMob == "Giant Islander" then 
+        elseif SelectMob == "Giant Islander" then 
             PosMonster = CFrame.new(4729.09423828125, 590.436767578125, -36.97627639770508)
-        elseif _G.SelectMob == "Marine Commodore" then
+        elseif SelectMob == "Marine Commodore" then
             PosMonster = CFrame.new(2286.0078125, 73.13391876220703, -7159.80908203125)
-        elseif _G.SelectMob == "Marine Rear Admiral" then
+        elseif SelectMob == "Marine Rear Admiral" then
             PosMonster = CFrame.new(3656.773681640625, 160.52406311035156, -7001.5986328125)
-        elseif _G.SelectMob == "Fishman Raider" then
+        elseif SelectMob == "Fishman Raider" then
             PosMonster = CFrame.new(-10407.5263671875, 331.76263427734375, -8368.5166015625)
-        elseif _G.SelectMob == "Fishman Captain" then
+        elseif SelectMob == "Fishman Captain" then
             PosMonster = CFrame.new(-10994.701171875, 352.38140869140625, -9002.1103515625) 
-        elseif _G.SelectMob == "Forest Pirate" then
+        elseif SelectMob == "Forest Pirate" then
             PosMonster = CFrame.new(-13274.478515625, 332.3781433105469, -7769.58056640625)
-        elseif _G.SelectMob == "Mythological Pirate" then
+        elseif SelectMob == "Mythological Pirate" then
             PosMonster = CFrame.new(-13680.607421875, 501.08154296875, -6991.189453125)
-        elseif _G.SelectMob == "Jungle Pirate" then
+        elseif SelectMob == "Jungle Pirate" then
             PosMonster = CFrame.new(-12256.16015625, 331.73828125, -10485.8369140625)
-        elseif _G.SelectMob == "Musketeer Pirate" then
+        elseif SelectMob == "Musketeer Pirate" then
             PosMonster = CFrame.new(-13457.904296875, 391.545654296875, -9859.177734375)
-        elseif _G.SelectMob == "Reborn Skeleton" then
+        elseif SelectMob == "Reborn Skeleton" then
             PosMonster = CFrame.new(-8763.7236328125, 165.72299194335938, 6159.86181640625)
-        elseif _G.SelectMob == "Living Zombie" then
+        elseif SelectMob == "Living Zombie" then
             PosMonster = CFrame.new(-10144.1318359375, 138.62667846679688, 5838.0888671875)
-        elseif _G.SelectMob == "Demonic Soul" then
+        elseif SelectMob == "Demonic Soul" then
             PosMonster = CFrame.new(-9505.8720703125, 172.10482788085938, 6158.9931640625)
-        elseif _G.SelectMob == "Posessed Mummy" then
+        elseif SelectMob == "Posessed Mummy" then
             PosMonster = CFrame.new(-9582.0224609375, 6.251527309417725, 6205.478515625)
-        elseif _G.SelectMob == "Peanut Scout" then
+        elseif SelectMob == "Peanut Scout" then
             PosMonster = CFrame.new(-2143.241943359375, 47.72198486328125, -10029.9951171875)
-        elseif _G.SelectMob == "Peanut President" then
+        elseif SelectMob == "Peanut President" then
             PosMonster = CFrame.new(-1859.35400390625, 38.10316848754883, -10422.4296875)
-        elseif _G.SelectMob == "Ice Cream Chef" then
+        elseif SelectMob == "Ice Cream Chef" then
             PosMonster = CFrame.new(-872.24658203125, 65.81957244873047, -10919.95703125)
-        elseif _G.SelectMob == "Ice Cream Commander" then
+        elseif SelectMob == "Ice Cream Commander" then
             PosMonster = CFrame.new(-558.06103515625, 112.04895782470703, -11290.7744140625)
-        elseif _G.SelectMob == "Cookie Crafter" then
+        elseif SelectMob == "Cookie Crafter" then
             PosMonster = CFrame.new(-2374.13671875, 37.79826354980469, -12125.30859375)
-        elseif _G.SelectMob == "Cake Guard" then
+        elseif SelectMob == "Cake Guard" then
             PosMonster = CFrame.new(-1598.3070068359375, 43.773197174072266, -12244.5810546875)
-        elseif _G.SelectMob == "Baking Staff" then
+        elseif SelectMob == "Baking Staff" then
             PosMonster = CFrame.new(-1887.8099365234375, 77.6185073852539, -12998.3505859375)
-        elseif _G.SelectMob == "Head Baker" then
+        elseif SelectMob == "Head Baker" then
             PosMonster = CFrame.new(-2216.188232421875, 82.884521484375, -12869.2939453125)
-        elseif _G.SelectMob == "Cocoa Warrior" then
+        elseif SelectMob == "Cocoa Warrior" then
             PosMonster = CFrame.new(-21.55328369140625, 80.57499694824219, -12352.3876953125)
-        elseif _G.SelectMob == "Chocolate Bar Battler" then
+        elseif SelectMob == "Chocolate Bar Battler" then
             PosMonster = CFrame.new(582.590576171875, 77.18809509277344, -12463.162109375)
-        elseif _G.SelectMob == "Sweet Thief" then
+        elseif SelectMob == "Sweet Thief" then
             PosMonster = CFrame.new(165.1884765625, 76.05885314941406, -12600.8369140625)
-        elseif _G.SelectMob == "Candy Rebel" then
+        elseif SelectMob == "Candy Rebel" then
             PosMonster = CFrame.new(134.86563110351562, 77.2476806640625, -12876.5478515625)
-        elseif _G.SelectMob == "Candy Pirate" then
+        elseif SelectMob == "Candy Pirate" then
             PosMonster = CFrame.new(-1310.5003662109375, 26.016523361206055, -14562.404296875)
-        elseif _G.SelectMob == "Snow Demon" then
+        elseif SelectMob == "Snow Demon" then
             PosMonster = CFrame.new(-880.2006225585938, 71.24776458740234, -14538.609375)
-        elseif _G.SelectMob == "Isle Outlaw" then
+        elseif SelectMob == "Isle Outlaw" then
             PosMonster = CFrame.new(-16442.814453125, 116.13899993896484, -264.4637756347656)
-        elseif _G.SelectMob == "Island Boy" then
+        elseif SelectMob == "Island Boy" then
             PosMonster = CFrame.new(-16901.26171875, 84.06756591796875, -192.88906860351562)
-        elseif _G.SelectMob == "Sun-kissed Warrior" then
+        elseif SelectMob == "Sun-kissed Warrior" then
             PosMonster = CFrame.new(-16349.8779296875, 92.0808334350586, 1123.4169921875)
-        elseif _G.SelectMob == "Isle Champion" then
+        elseif SelectMob == "Isle Champion" then
             PosMonster = CFrame.new(-16347.4150390625, 92.09503936767578, 1122.335205078125)
         end
     end
@@ -1648,7 +1648,7 @@ task.spawn(function()
     if EnableCurv then
         pcall(function()
             c.wrapAttackAnimationAsync = function(d, e, f, g, h)
-                local i = c.getBladeHits(e, f, g)
+                local i = c.getHits(e, f, g)
                 if i then
                     b.play = function()
                     end
@@ -1918,7 +1918,7 @@ spawn(function()
                         end
                     end
                     if _G.AutoFarmMob and SelectMag then
-                        if v.Name == _G.SelectMob and (v.HumanoidRootPart.Position - PosMonFarm.Position).Magnitude <= 350 then
+                        if v.Name == SelectMob and (v.HumanoidRootPart.Position - PosMonFarm.Position).Magnitude <= 350 then
                             v.HumanoidRootPart.CFrame = PosMonFarm
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
@@ -3391,7 +3391,7 @@ Farm:AddDropdown({
 	Default = "",
 	Options = TableMon,
 	Callback = function(Value)
-		_G.SelectMob = Value
+		SelectMob = Value
 	end
 })
 
@@ -3407,12 +3407,11 @@ Farm:AddToggle({
 spawn(function()
     while wait() do
         if _G.AutoFarmMob then
-            CheckMonFarm(_G.SelectMob)
-            topos(PosMonster)
-            if game:GetService("Workspace").Enemies:FindFirstChild(_G.SelectMob) then
+            CheckMonFarm(SelectMob)
+            if game:GetService("Workspace").Enemies:FindFirstChild(SelectMob) then
                 for i,v in pairs (game.Workspace.Enemies:GetChildren()) do
                     if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                        if v.Name == _G.SelectMob then
+                        if v.Name == SelectMob then
                             repeat task.wait()
                                 EquipWeapon(_G.SelectWeapon)
                                 topos(v.HumanoidRootPart.CFrame * Pos)
@@ -3465,7 +3464,6 @@ spawn(function()
     while wait() do
         if _G.AutoMaterial then
             MaterialMon(SelectMaterial)
-            topos(MPos)
             if game:GetService("Workspace").Enemies:FindFirstChild(MMon) then
                 for i,v in pairs (game.Workspace.Enemies:GetChildren()) do
                     if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
