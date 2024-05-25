@@ -727,7 +727,7 @@ function CheckQuest()
             NameQuest = "TikiQuest2"
             NameMon = "Isle Champion"
             CFrameQuest = CFrame.new(-16539.078125, 55.68632888793945, 1051.5738525390625)
-            CFrame.new(-16347.4150390625, 92.09503936767578, 1122.335205078125)
+            CFrameMon = CFrame.new(-16347.4150390625, 92.09503936767578, 1122.335205078125)
         end
     end
 end
@@ -3043,6 +3043,7 @@ spawn(function()
                                                 [2] = v.HumanoidRootPart
                                             }
                                             game:GetService("Players").LocalPlayer.Character[EquipWeaponGun()].RemoteFunctionShoot:InvokeServer(unpack(args))
+                                            game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
                                         else
                                             EquipWeapon(_G.SelectWeapon)
                                             topos(v.HumanoidRootPart.CFrame * Pos)
