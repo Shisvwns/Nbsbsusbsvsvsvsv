@@ -3423,6 +3423,9 @@ spawn(function()
                         end
                     end
                 end
+            else
+                topos(PosMonster)
+                UnEquipWeapon(_G.SelectWeapon)
             end
         end
     end
@@ -3477,6 +3480,9 @@ spawn(function()
                         end
                     end
                 end
+            else
+                topos(MPos)
+                UnEquipWeapon(_G.SelectWeapon)
             end
         end
     end
