@@ -1340,8 +1340,19 @@ function EquipWeapon(a)
     end
 end
 
-function GetDistance(target)
-    return math.floor((target.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude)
+function GetDistance(target1, taget2)
+    if not taget2 then
+        taget2 = game.Players.LocalPlayer.Character.HumanoidRootPart
+    end
+    bbos, bbos2 = pcall(function()
+        a = target1.Position
+        a2 = taget2.Position
+    end)
+    if bbos then
+        a = target1.Position
+        a2 = taget2.Position
+        return (a - a2).Magnitude
+    end
 end
 
 function BTP(a)
@@ -1529,19 +1540,6 @@ end
 if game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit') then
     game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit'):Destroy()
 end
-
-spawn(function()
-    while wait() do
-        local rs = game:GetService("ReplicatedStorage")
-        local guiAssets = rs.Assets.GUI
-        local soundStorage = rs.Util.Sound.Storage.Other
-        guiAssets.DamageCounter.Enabled = false
-        soundStorage:FindFirstChild("LevelUp_Proxy"):Destroy()
-        soundStorage:FindFirstChild("LevelUp"):Destroy()
-        effectContainer.Respawn:Destroy()  
-        effectContainer.LevelUp:Destroy()
-    end
-end)
 
 -- [ Super Fast Attack ]
 
@@ -4315,6 +4313,32 @@ local Section = Other:AddSection({
 })
 
 Other:AddToggle({
+	Name = "Auto Kill Darkbeard",
+	Default = false,
+	Callback = function(Value)
+		_G.AutoKillDark = Value
+		StopTween(_G.AutoKillDark)
+	end
+})
+
+spawn(function()
+    while wait() do
+        if _G.AutoKillDark then
+            if game:GetService("Workspace").Enemies:FindFirstChild("Darkbeard") then
+                for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                    if v.Name == "Darkbeard" and v.Humanoid.Health > 0 and v:IsA("Model") and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") then
+                        repeat task.wait()
+                            EquipWeapon(_G.SelectWeapon)
+                            topos(v.HumanoidRootPart.CFrame * Pos)
+                        until _G.AutoKillDark == false or v.Humanoid.Health <= 0
+                    end
+                end
+            end
+        end
+    end
+end)
+
+Other:AddToggle({
 	Name = "Auto Spawn Darkbeard",
 	Default = false,
 	Callback = function(Value)
@@ -4322,6 +4346,24 @@ Other:AddToggle({
 		StopTween(_G.AutoSpawnDark)
 	end
 })
+
+spawn(function()
+    while task.wait() do
+        if _G.AutoSpawnDark then
+            if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") then
+                if GetDistance(game:GetService("Workspace").Map.DarkbeardArena.Summoner.Detection) <= 5 then
+                    EquipWeapon("Fist of Darkness")
+                    firetouchinterest(game.Players.LocalPlayer.Character["Fist of Darkness"].Handle, game:GetService("Workspace").Map.DarkbeardArena.Summoner.Detection, 0)
+                    firetouchinterest(game.Players.LocalPlayer.Character["Fist of Darkness"].Handle, game:GetService("Workspace").Map.DarkbeardArena.Summoner.Detection, 1)
+                    firetouchinterest(game.Players.LocalPlayer.Character["Fist of Darkness"].Handle, game:GetService("Workspace").Map.DarkbeardArena.Summoner.Detection, 0)
+                    firetouchinterest(game.Players.LocalPlayer.Character["Fist of Darkness"].Handle, game:GetService("Workspace").Map.DarkbeardArena.Summoner.Detection, 1)
+                else
+                    topos(game:GetService("Workspace").Map.DarkbeardArena.Summoner.Detection.CFrame)
+                end
+            end
+        end
+    end
+end
 
 local Section = Other:AddSection({
     Name = "Observation Haki"
