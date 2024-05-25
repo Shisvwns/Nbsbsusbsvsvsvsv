@@ -1648,7 +1648,7 @@ task.spawn(function()
     if EnableCurv then
         pcall(function()
             c.wrapAttackAnimationAsync = function(d, e, f, g, h)
-                local i = c.getHits(e, f, g)
+                local i = c.getBladeHits(e, f, g)
                 if i then
                     b.play = function()
                     end
@@ -3407,25 +3407,27 @@ Farm:AddToggle({
 spawn(function()
     while wait() do
         if _G.AutoFarmMob then
-            CheckMonFarm(SelectMob)
-            if game:GetService("Workspace").Enemies:FindFirstChild(SelectMob) then
-                for i,v in pairs (game.Workspace.Enemies:GetChildren()) do
-                    if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                        if v.Name == SelectMob then
-                            repeat task.wait()
-                                EquipWeapon(_G.SelectWeapon)
-                                topos(v.HumanoidRootPart.CFrame * Pos)
-                                PosMonFarm = v.HumanoidRootPart.CFrame
-                                SelectMag = true
-                            until not _G.AutoFarmMob or not v.Parent or v.Humanoid.Health <= 0
-                            SelectMag = false
+            pcall(function()
+                CheckMonFarm(SelectMob)
+                if game:GetService("Workspace").Enemies:FindFirstChild(SelectMob) then
+                    for i,v in pairs (game.Workspace.Enemies:GetChildren()) do
+                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                            if v.Name == SelectMob then
+                                repeat task.wait()
+                                    EquipWeapon(_G.SelectWeapon)
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
+                                    PosMonFarm = v.HumanoidRootPart.CFrame
+                                    SelectMag = true
+                                until not _G.AutoFarmMob or not v.Parent or v.Humanoid.Health <= 0
+                                SelectMag = false
+                            end
                         end
                     end
+                else
+                    topos(PosMonster)
+                    UnEquipWeapon(_G.SelectWeapon)
                 end
-            else
-                topos(PosMonster)
-                UnEquipWeapon(_G.SelectWeapon)
-            end
+            end)
         end
     end
 end)
@@ -3463,25 +3465,27 @@ Farm:AddToggle({
 spawn(function()
     while wait() do
         if _G.AutoMaterial then
-            MaterialMon(SelectMaterial)
-            if game:GetService("Workspace").Enemies:FindFirstChild(MMon) then
-                for i,v in pairs (game.Workspace.Enemies:GetChildren()) do
-                    if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                        if v.Name == MMon then
-                            repeat task.wait()
-                                EquipWeapon(_G.SelectWeapon)
-                                topos(v.HumanoidRootPart.CFrame * Pos)
-                                MaterialPos = v.HumanoidRootPart.CFrame
-                                BringMonMaterial = true
-                            until not _G.AutoMaterial or not v.Parent or v.Humanoid.Health <= 0
-                            BringMonMaterial = false
+            pcall(function()
+                MaterialMon(SelectMaterial)
+                if game:GetService("Workspace").Enemies:FindFirstChild(MMon) then
+                    for i,v in pairs (game.Workspace.Enemies:GetChildren()) do
+                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                            if v.Name == MMon then
+                                repeat task.wait()
+                                    EquipWeapon(_G.SelectWeapon)
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
+                                    MaterialPos = v.HumanoidRootPart.CFrame
+                                    BringMonMaterial = true
+                                until not _G.AutoMaterial or not v.Parent or v.Humanoid.Health <= 0
+                                BringMonMaterial = false
+                            end
                         end
                     end
+                else
+                    topos(MPos)
+                    UnEquipWeapon(_G.SelectWeapon)
                 end
-            else
-                topos(MPos)
-                UnEquipWeapon(_G.SelectWeapon)
-            end
+            end)
         end
     end
 end)
