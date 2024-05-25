@@ -1867,7 +1867,7 @@ spawn(function()
                 CheckQuest()
                 for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                     if _G.AutoFarm or _G.AutoFarmFruitMastery or _G.AutoFarmGunMastery or _G.AutoSwordMastery then
-                        if StartMagnet and v.Name == Mon and (v.HumanoidRootPart.Position - PosFarm.Position).Magnitude <= 500 then
+                        if StartMagnet and v.Name == Mon and (v.HumanoidRootPart.Position - PosFarm.Position).Magnitude <= 350 then
                             v.HumanoidRootPart.CFrame = PosFarm
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
@@ -1877,7 +1877,7 @@ spawn(function()
                         end
                     end
                     if _G.AutoRengoku and StartRengokuMagnet then
-                        if (v.Name == "Snow Lurker" or v.Name == "Arctic Warrior") and (v.HumanoidRootPart.Position - RengokuMon.Position).Magnitude <= 500 then
+                        if (v.Name == "Snow Lurker" or v.Name == "Arctic Warrior") and (v.HumanoidRootPart.Position - RengokuMon.Position).Magnitude <= 350 then
                             v.HumanoidRootPart.CFrame = RengokuMon
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
@@ -1887,7 +1887,7 @@ spawn(function()
                         end
                     end
                     if _G.AutoMusketeerHat and StartMagnetMusketeerhat then
-                        if v.Name == "Forest Pirate" and (v.HumanoidRootPart.Position - MusketeerHatMon.Position).Magnitude <= 500 then
+                        if v.Name == "Forest Pirate" and (v.HumanoidRootPart.Position - MusketeerHatMon.Position).Magnitude <= 350 then
                             v.HumanoidRootPart.CFrame = MusketeerHatMon
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
@@ -1897,7 +1897,7 @@ spawn(function()
                         end
                     end
                     if _G.Auto_EvoRace and StartEvoMagnet then
-                        if v.Name == "Zombie" and (v.HumanoidRootPart.Position - PosMonEvo.Position).Magnitude <= 500 then
+                        if v.Name == "Zombie" and (v.HumanoidRootPart.Position - PosMonEvo.Position).Magnitude <= 350 then
                             v.HumanoidRootPart.CFrame = PosMonEvo
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
@@ -1907,7 +1907,7 @@ spawn(function()
                         end
                     end
                     if _G.AutoMaterial and BringMonMaterial then
-                        if v.Name == MMon and (v.HumanoidRootPart.Position - MaterialPos.Position).Magnitude <= 500 then
+                        if v.Name == MMon and (v.HumanoidRootPart.Position - MaterialPos.Position).Magnitude <= 350 then
                             v.HumanoidRootPart.CFrame = MaterialPos
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
@@ -1917,7 +1917,7 @@ spawn(function()
                         end
                     end
                     if _G.AutoFarmMob and SelectMag then
-                        if v.Name == _G.SelectMob and (v.HumanoidRootPart.Position - PosMonFarm.Position).Magnitude <= 500 then
+                        if v.Name == _G.SelectMob and (v.HumanoidRootPart.Position - PosMonFarm.Position).Magnitude <= 350 then
                             v.HumanoidRootPart.CFrame = PosMonFarm
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
@@ -1927,7 +1927,7 @@ spawn(function()
                         end
                     end
                     if _G.AutoBartilo and AutoBartiloBring then
-                        if v.Name == "Swan Pirate" and (v.HumanoidRootPart.Position - PosMonBarto.Position).Magnitude <= 500 then
+                        if v.Name == "Swan Pirate" and (v.HumanoidRootPart.Position - PosMonBarto.Position).Magnitude <= 350 then
                             v.HumanoidRootPart.CFrame = PosMonBarto
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
@@ -1937,7 +1937,7 @@ spawn(function()
                         end
                     end
                     if _G.Auto_Bone and StartMagnetBoneMon then
-                        if (v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy") and (v.HumanoidRootPart.Position - PosMonBone.Position).Magnitude <= 500 then
+                        if (v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy") and (v.HumanoidRootPart.Position - PosMonBone.Position).Magnitude <= 350 then
                             v.HumanoidRootPart.CFrame = PosMonBone
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
@@ -1947,7 +1947,7 @@ spawn(function()
                         end
                     end
                     if _G.AutoDoughtBoss and MagnetDought then
-                        if (v.Name == "Cookie Crafter" or v.Name == "Cake Guard" or v.Name == "Baking Staff" or v.Name == "Head Baker") and (v.HumanoidRootPart.Position - PosMonDoughtOpenDoor.Position).Magnitude <= 500 then
+                        if (v.Name == "Cookie Crafter" or v.Name == "Cake Guard" or v.Name == "Baking Staff" or v.Name == "Head Baker") and (v.HumanoidRootPart.Position - PosMonDoughtOpenDoor.Position).Magnitude <= 350 then
                             v.HumanoidRootPart.CFrame = PosMonDoughtOpenDoor
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
@@ -1957,7 +1957,7 @@ spawn(function()
                         end
                     end
                     if _G.FarmSkip and StartBring then
-                        if v.Name == "Shanda" and (v.HumanoidRootPart.Position - PosMon.Position).Magnitude <= 500 then
+                        if v.Name == "Shanda" and (v.HumanoidRootPart.Position - PosMon.Position).Magnitude <= 350 then
                             v.HumanoidRootPart.CFrame = PosMon
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
@@ -2073,6 +2073,33 @@ Setting:AddButton({
 		end
     end
 })
+
+Setting:AddToggle({
+	Name = "Disabled Damage",
+	Default = true,
+	Callback = function(Value)
+		_G.DisabledDamage = Value
+	end
+})
+
+spawn(function()
+	while wait() do
+		if _G.DisabledDamage then
+			game:GetService("ReplicatedStorage").Assets.GUI.DamageCounter.Enabled = false
+		else
+			game:GetService("ReplicatedStorage").Assets.GUI.DamageCounter.Enabled = true
+		end
+	end
+end)
+
+_G.RemoveXamlon = true
+spawn(function()
+    game:GetService("RunService").RenderStepped:Connect(function()
+        if _G.RemoveXamlon == true then
+            game:GetService("ReplicatedStorage").Util.Sound:Destroy()
+        end
+    end)
+end)
 
 local Section = Setting:AddSection({
     Name = "Other"
