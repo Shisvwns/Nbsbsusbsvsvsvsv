@@ -6339,8 +6339,8 @@ spawn(function()
     while wait() do
         if getgenv().InfGeppo then
             for i,v in next, getgc() do
-                if game:GetService("Players").LocalPlayer.Character.Geppo then
-                    if typeof(v) == "function" and getfenv(v).script == game:GetService("Players").LocalPlayer.Character.Geppo then
+                if game.Players.LocalPlayer.Character:WaitForChild("Geppo") then
+                    if typeof(v) == "function" and getfenv(v).script == game.Players.LocalPlayer.Character:WaitForChild("Geppo") then
                         for i2,v2 in next, getupvalues(v) do
                             if tostring(i2) == "9" then
                                 repeat wait(.1)
