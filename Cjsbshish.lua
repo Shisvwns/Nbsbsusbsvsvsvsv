@@ -1554,9 +1554,13 @@ FastAttack = function()
     local ac = CurveFrame.activeController
     if ac and ac.equipped then
         task.spawn(function()
+            if tick() - cdnormal > 0.5 then
+                ac:attack()
+                cdnormal = tick()
+            else
                 Animation.AnimationId = ac.anims.basic[2]
-                ac.humanoid:LoadAnimation(Animation):Play(1, 1)
                 game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getHits(120), 2, "")
+            end
         end)
     end
 end
