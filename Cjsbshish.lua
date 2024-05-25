@@ -1601,10 +1601,12 @@ k = tick()
 task.spawn(function()
     while task.wait() do
         if FastI then
-            CurveFrame.activeController.focusStart = 0
-            CurveFrame.activeController.hitboxMagnitude = 40
-            CurveFrame.activeController.humanoid.AutoRotate = true
-            CurveFrame.activeController.increment = 1 + 1 / 1
+            pcall(function()
+                CurveFrame.activeController.focusStart = 0
+                CurveFrame.activeController.hitboxMagnitude = 40
+                CurveFrame.activeController.humanoid.AutoRotate = true
+                CurveFrame.activeController.increment = 1 + 1 / 1
+            end)
         end
     end
 end)
@@ -1620,18 +1622,20 @@ task.spawn(function()
         shared.cpc = b.play
     end
     if EnableCurv then
-        c.wrapAttackAnimationAsync = function(d, e, f, g, h)
-            local i = c.getBladeHits(e, f, g)
-            if i then
-                b.play = function()
+        pcall(function()
+            c.wrapAttackAnimationAsync = function(d, e, f, g, h)
+                local i = c.getBladeHits(e, f, g)
+                if i then
+                    b.play = function()
+                    end
+                    d:Play(0.1, 0.1, 0.1)
+                    h(i)
+                    b.play = shared.cpc
+                    task.wait()
+                    d:Stop()
                 end
-                d:Play(0.1, 0.1, 0.1)
-                h(i)
-                b.play = shared.cpc
-                task.wait()
-                d:Stop()
             end
-        end
+        end)
     end
 end)
 CombatFrameworkR = require(game.Players.LocalPlayer.PlayerScripts.CombatFramework)
@@ -1640,15 +1644,17 @@ spawn(function()
     while wait() do
         if _G.FastAttack then
             if typeof(y) == "table" then
-                y.activeController.timeToNextAttack = (math.huge^math.huge^math.huge)
-                y.activeController.hitboxMagnitude = 60
-                y.activeController.active = false
-                y.activeController.timeToNextBlock = 0
-                y.activeController.focusStart = 1655503339.0980349
-                y.activeController.increment = 1
-                y.activeController.blocking = false
-                y.activeController.attacking = false
-                y.activeController.humanoid.AutoRotate = true
+                pcall(function()
+                    y.activeController.timeToNextAttack = (math.huge^math.huge^math.huge)
+                    y.activeController.hitboxMagnitude = 60
+                    y.activeController.active = false
+                    y.activeController.timeToNextBlock = 0
+                    y.activeController.focusStart = 1655503339.0980349
+                    y.activeController.increment = 1
+                    y.activeController.blocking = false
+                    y.activeController.attacking = false
+                    y.activeController.humanoid.AutoRotate = true
+                end)
             end
         end
         if _G.FastAttack then
