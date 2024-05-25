@@ -848,11 +848,11 @@ function CheckMonFarm()
             PosMonster = CFrame.new(-1448.51806640625, 67.85301208496094, 11.46579647064209)
         elseif _G.SelectMob == "Gorilla" then
             PosMonster = CFrame.new(-1129.8836669921875, 40.46354675292969, -525.4237060546875)
-        elseif _G.SelectMob == "" then
+        elseif _G.SelectMob == "Pirate" then
             PosMonster = CFrame.new(-1103.513427734375, 13.752052307128906, 3896.091064453125)
-        elseif _G.SelectMob == "" then
+        elseif _G.SelectMob == "Brute" then
             PosMonster = CFrame.new(-1140.083740234375, 14.809885025024414, 4322.92138671875)
-        elseif _G.SelectMob == "" then
+        elseif _G.SelectMob == "Desert Bandit" then
             PosMonster = CFrame.new(924.7998046875, 6.44867467880249, 4481.5859375)
         elseif _G.SelectMob == "Desert Officer" then
             PosMonster = CFrame.new(1608.2822265625, 8.614224433898926, 4371.00732421875)
@@ -3409,14 +3409,6 @@ spawn(function()
                         end
                     end
                 end
-            else
-                for i,v in pairs(game:GetService("Workspace")["_WorldOrigin"].EnemySpawns:GetChildren()) do
-                    if string.find(v.Name, _G.SelectMob) then
-                        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).Magnitude >= 10 then
-                            topos(v.HumanoidRootPart.CFrame * Pos)
-                        end
-                    end
-                end
             end
         end
     end
@@ -5784,10 +5776,10 @@ spawn(function()
             topos(PolePos)
             end
         else
-            if GetDistance(cframefarm.Position) > 1500 then
+            if GetDistance(PolePos.Position) > 1500 then
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-7894.6176757813, 5547.1416015625, -380.29119873047))
             end
-            topos(TridentPos)
+            topos(PolePos)
         end
             UnEquipWeapon(_G.SelectWeapon)
             topos(CFrame.new(-7748.0185546875, 5606.80615234375, -2305.898681640625))
