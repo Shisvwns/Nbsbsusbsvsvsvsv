@@ -1384,27 +1384,27 @@ Pos = CFrame.new(0,30,0)
 RaidPos = CFrame.new(0,70,0)
 
 spawn(function()
-    while wait() do
-        if _G.Clip then
-            if not game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
-                local Noclip = Instance.new("BodyVelocity")
-                Noclip.Name = "BodyClip"
-                Noclip.Parent = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart
-                Noclip.MaxForce = Vector3.new(100000,100000,100000)
-                Noclip.Velocity = Vector3.new(0,0,0)
-            end
-        end
-    end
-end)
-    
-spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
         if _G.Clip then
+            if not game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
+                local ag = Instance.new("BodyVelocity")
+                ag.Velocity = Vector3.new(0, 0, 0)
+                ag.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+                ag.P = 9000
+                ag.Parent = game.Players.LocalPlayer.Character.Head
+                for r, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                    if v:IsA("BasePart") then
+                        v.CanCollide = false
+                    end
+                end
+            end
             for _, v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
                 if v:IsA("BasePart") then
                     v.CanCollide = false    
                 end
             end
+        elseif not NoClip and game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
+            game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity"):Destroy()
         end
     end)
 end)
@@ -4235,7 +4235,7 @@ local Section = Other:AddSection({
 })
 
 Other:AddToggle({
-	Name = "Auto Spawn Rip_Indra",
+	Name = "Auto Summon Rip_Indra",
 	Default = false,
 	Callback = function(Value)
 		_G.AutoSpawnRip = Value
@@ -4291,18 +4291,6 @@ spawn(function()
                         until _G.AutoKillRipIndra == false or v.Humanoid.Health <= 0
                     end
                 end
-            else
-                if BypassTP then
-                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - AdminPos.Position).Magnitude > 1500 then
-                        BTP(AdminPos)
-                    elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - AdminPos.Position).Magnitude < 1500 then
-                        topos(AdminPos)
-                    end
-                else
-                    topos(AdminPos)
-                end
-                UnEquipWeapon(_G.SelectWeapon)
-                topos(CFrame.new(-5344.822265625, 423.98541259766, -2725.0930175781))
             end
         end
     end
@@ -4311,6 +4299,33 @@ end)
 local Section = Other:AddSection({
     Name = "Darkbeard"
 })
+
+Other:AddToggle({
+	Name = "Auto Summon Darkbeard",
+	Default = false,
+	Callback = function(Value)
+		_G.AutoSpawnDark = Value
+		StopTween(_G.AutoSpawnDark)
+	end
+})
+
+spawn(function()
+    while task.wait() do
+        if _G.AutoSpawnDark then
+            if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") then
+                if GetDistance(game:GetService("Workspace").Map.DarkbeardArena.Summoner.Detection) <= 5 then
+                    EquipWeapon("Fist of Darkness")
+                    firetouchinterest(game.Players.LocalPlayer.Character["Fist of Darkness"].Handle, game:GetService("Workspace").Map.DarkbeardArena.Summoner.Detection, 0)
+                    firetouchinterest(game.Players.LocalPlayer.Character["Fist of Darkness"].Handle, game:GetService("Workspace").Map.DarkbeardArena.Summoner.Detection, 1)
+                    firetouchinterest(game.Players.LocalPlayer.Character["Fist of Darkness"].Handle, game:GetService("Workspace").Map.DarkbeardArena.Summoner.Detection, 0)
+                    firetouchinterest(game.Players.LocalPlayer.Character["Fist of Darkness"].Handle, game:GetService("Workspace").Map.DarkbeardArena.Summoner.Detection, 1)
+                else
+                    topos(game:GetService("Workspace").Map.DarkbeardArena.Summoner.Detection.CFrame)
+                end
+            end
+        end
+    end
+end)
 
 Other:AddToggle({
 	Name = "Auto Kill Darkbeard",
@@ -4332,33 +4347,6 @@ spawn(function()
                             topos(v.HumanoidRootPart.CFrame * Pos)
                         until _G.AutoKillDark == false or v.Humanoid.Health <= 0
                     end
-                end
-            end
-        end
-    end
-end)
-
-Other:AddToggle({
-	Name = "Auto Spawn Darkbeard",
-	Default = false,
-	Callback = function(Value)
-		_G.AutoSpawnDark = Value
-		StopTween(_G.AutoSpawnDark)
-	end
-})
-
-spawn(function()
-    while task.wait() do
-        if _G.AutoSpawnDark then
-            if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") then
-                if GetDistance(game:GetService("Workspace").Map.DarkbeardArena.Summoner.Detection) <= 5 then
-                    EquipWeapon("Fist of Darkness")
-                    firetouchinterest(game.Players.LocalPlayer.Character["Fist of Darkness"].Handle, game:GetService("Workspace").Map.DarkbeardArena.Summoner.Detection, 0)
-                    firetouchinterest(game.Players.LocalPlayer.Character["Fist of Darkness"].Handle, game:GetService("Workspace").Map.DarkbeardArena.Summoner.Detection, 1)
-                    firetouchinterest(game.Players.LocalPlayer.Character["Fist of Darkness"].Handle, game:GetService("Workspace").Map.DarkbeardArena.Summoner.Detection, 0)
-                    firetouchinterest(game.Players.LocalPlayer.Character["Fist of Darkness"].Handle, game:GetService("Workspace").Map.DarkbeardArena.Summoner.Detection, 1)
-                else
-                    topos(game:GetService("Workspace").Map.DarkbeardArena.Summoner.Detection.CFrame)
                 end
             end
         end
