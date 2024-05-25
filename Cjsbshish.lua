@@ -1,5 +1,7 @@
 --[ Anti Ban & Anti Afk]
 
+pcall(function()
+
 assert(getrawmetatable)
     grm = getrawmetatable(game)
     setreadonly(grm, false)
@@ -8081,3 +8083,5 @@ OrionLib:MakeNotification({
     Image = "rbxassetid://16730867128",
     Time = 5
 })
+
+end)
