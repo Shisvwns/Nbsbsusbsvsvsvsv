@@ -1530,6 +1530,17 @@ if game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit') then
     game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit'):Destroy()
 end
 
+function StartDialog(DialogName)
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+    local DialogueController = require(ReplicatedStorage.DialogueController)
+    local DialoguesList = require(ReplicatedStorage.DialoguesList)
+    for Index,Dialog in pairs(DialoguesList) do
+        if tostring(Index) == DialogName then
+            DialogueController.Start(DialogueController, Dialog)
+        end
+    end
+end
+
 -- [ Super Fast Attack ]
 
 local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
@@ -6337,17 +6348,6 @@ Player:AddButton({
         StartDialog("FruitShop2")
     end
 })
-
-local function StartDialog(DialogName)
-    local ReplicatedStorage = game:GetService("ReplicatedStorage")
-    local DialogueController = require(ReplicatedStorage.DialogueController)
-    local DialoguesList = require(ReplicatedStorage.DialoguesList)
-    for Index,Dialog in pairs(DialoguesList) do
-        if tostring(Index) == DialogName then
-            DialogueController.Start(DialogueController, Dialog)
-        end
-    end
-end
 
 Player:AddButton({
     Name = "Open Title",
