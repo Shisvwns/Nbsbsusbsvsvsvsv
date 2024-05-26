@@ -1156,11 +1156,7 @@ function UpdatePlayerChams()
                     name.TextYAlignment = 'Top'
                     name.BackgroundTransparency = 1
                     name.TextStrokeTransparency = 0.5
-                    if v.Team == game.Players.LocalPlayer.Team then
-                        name.TextColor3 = Color3.new(0,255,0)
-                    else
-                        name.TextColor3 = Color3.new(173, 216, 230)
-                    end
+                    name.TextColor3 = Color3.new(0,255,0)
                 else
                     v.Character.Head['NameEsp'..Number].TextLabel.Text = ('[ Player: '..v.Name..' ]\n[ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3)..'m ]')
                 end
@@ -1340,18 +1336,11 @@ function EquipWeapon(a)
     end
 end
 
-function GetDistance(target1, taget2)
-    if not taget2 then
-        taget2 = game.Players.LocalPlayer.Character.HumanoidRootPart
-    end
-    bbos, bbos2 = pcall(function()
-        a = target1.Position
-        a2 = taget2.Position
-    end)
-    if bbos then
-        a = target1.Position
-        a2 = taget2.Position
-        return (a - a2).Magnitude
+function GetDistance(Pos)
+    if typeof(Pos) == "CFrame" then
+        return game:GetService("Players").LocalPlayer:DistanceFromCharacter(Pos.Position)
+    elseif typeof(Pos) == "Vector3" then
+        return game:GetService("Players").LocalPlayer:DistanceFromCharacter(Pos)
     end
 end
 
