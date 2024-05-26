@@ -1344,14 +1344,17 @@ function GetDistance(Pos)
     end
 end
 
-function BTP(a)
-    local CheckDistanceToResetTween = GetDistance(a.Position)
-    if CheckDistanceToResetTween > 2100 and game.Players.LocalPlayer.Character.Humanoid.Health > 0 then
-        for i = 1,3 do
-            game.Players.LocalPlayer.HumanoidRootPart.CFrame = a
+function BTP(p)
+    pcall(function()
+        if (p.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 1500 and not Auto_Raid and game.Players.LocalPlayer.Character.Humanoid.Health > 0 then
+            repeat wait()
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = p
+                wait(.05)
+                game.Players.LocalPlayer.Character.Head:Destroy()
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = p
+            until (p.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 1500 and game.Players.LocalPlayer.Character.Humanoid.Health > 0
         end
-        game.Players.LocalPlayer.Character.Humanoid:ChangeState(15)
-    end
+    end)
 end
 
 function topos(Pos)
