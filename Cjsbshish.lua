@@ -1824,7 +1824,7 @@ end)
 
 Setting:AddDropdown({
 	Name = "Select Speed ​​Attack",
-	Default = "0",
+	Default = "0.15",
 	Options = {"0","0.1","0.15","0.5","1"},
 	Callback = function(Value)
 		_G.FastAttackDelay = Value
@@ -1840,7 +1840,7 @@ Setting:AddToggle({
 })
 
 Setting:AddToggle({
-	Name = "Auto Click",
+	Name = "Auto Click [ 75% Kick System ]",
 	Default = false,
 	Callback = function(Value)
 		_G.AutoClick = Value
@@ -2157,6 +2157,21 @@ Setting:AddToggle({
 	Default = false,
 	Callback = function(Value)
 		BypassTP = Value
+	end
+})
+
+Setting:AddToggle({
+	Name = "Anti Afk",
+	Default = true,
+	Callback = function()
+		local Anti = game:GetService("VirtualUser")
+		repeat wait() until game:IsLoaded() 
+		game:GetService("Players").LocalPlayer.Idled:connect(function()
+			game:GetService("VirtualUser"):ClickButton2(Vector2.new())
+			Anti:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+			wait(1)
+			Anti:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+		end)
 	end
 })
 
@@ -5796,13 +5811,15 @@ spawn(function()
                     end
                 end
             else
+            if BypassTP then
             if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - PolePos.Position).Magnitude > 1500 then
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-7894.6176757813, 5547.1416015625, -380.29119873047))
+            BTP(PolePos)
             elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - PolePos.Position).Magnitude < 1500 then
-                topos(PolePos)
-            else
-                topos(PolePos)
+            topos(PolePos)
             end
+        else
+            topos(TridentPos)
+        end
             UnEquipWeapon(_G.SelectWeapon)
             topos(CFrame.new(-7748.0185546875, 5606.80615234375, -2305.898681640625))
                 if game:GetService("ReplicatedStorage"):FindFirstChild("Thunder God") then
@@ -5867,7 +5884,7 @@ ItemQuest:AddToggle({
 })
 
 local EmpressPos = CFrame.new(5543.86328125, 668.97399902344, 199.0341796875)
-    spawn(function()
+spawn(function()
     while wait() do
         if  _G.AutoSerpentBow and World3 then
             if game:GetService("Workspace").Enemies:FindFirstChild("Island Empress") then
