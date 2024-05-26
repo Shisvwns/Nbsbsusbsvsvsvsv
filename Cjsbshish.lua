@@ -1530,6 +1530,9 @@ if game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit') then
     game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit'):Destroy()
 end
 
+local Water = game.Workspace._WorldOrigin.Locations:FindFirstChild('WaterBase-Plane')
+Water:Destroy() 
+
 -- [ Super Fast Attack ]
 
 local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
@@ -1979,7 +1982,7 @@ spawn(function()
         if _G.WhiteScreen then
             for i, v in pairs(game.Workspace["_WorldOrigin"]:GetChildren()) do
                 if v.Name == "CurvedRing" or v.Name == "SlashHit" or v.Name == "DamageCounter" or v.Name == "SwordSlash" or v.Name == "SlashTail" or v.Name == "Sounds" then
-                    v:Destroy() 
+                    v:Destroy()
                 end
             end
         end
