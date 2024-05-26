@@ -1365,29 +1365,9 @@ function BTP(a)
     end
 end
 
-function WaitHRP(Player)
-    if not Player then return end
-    return Player.Character:WaitForChild("HumanoidRootPart")
-end
-
 function topos(Pos)
-    local Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-    local LocalPlayer = game.Players.LocalPlayer
-    local Character = LocalPlayer.Character
-    if not Character:FindFirstChild("PartTele") then
-        local PartTele = Instance.new("Part", Character)
-        PartTele.Size = Vector3.new(0, 0, 0)
-        PartTele.Name = "PartTele"
-        PartTele.Anchored = true
-        PartTele.Transparency = 1
-        PartTele.CanCollide = false
-        PartTele.CFrame = WaitHRP(LocalPlayer).CFrame
-        PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
-            task.wait()
-            WaitHRP(LocalPlayer).CFrame = PartTele.CFrame
-        end)
-    end
-    local Tween = game:GetService("TweenService"):Create(Character.PartTele, TweenInfo.new(Distance / getgenv().TweenSpeed, Enum.EasingStyle.Linear), {CFrame = Pos})
+    Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    local Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear),{CFrame = Pos})
     Tween:Play()
     _G.Clip = true
     if _G.StopTween == true then
@@ -2329,7 +2309,7 @@ spawn(function()
 end)
 
 Farm:AddToggle({
-	Name = "Skip Level [ Lv. 1 -> Lv. 310 ]",
+	Name = "Farm Fast [ Lv. 1 -> Lv. 310 ]",
 	Default = false,
 	Callback = function(Value)
 		_G.FarmSkip = Value
@@ -2337,91 +2317,85 @@ Farm:AddToggle({
 	end
 })
 
-function GetDistance(Pos)
-    if typeof(Pos) == "CFrame" then
-        return game:GetService("Players").LocalPlayer:DistanceFromCharacter(Pos.Position)
-    elseif typeof(Pos) == "Vector3" then
-        return game:GetService("Players").LocalPlayer:DistanceFromCharacter(Pos)
-    end
-end
-
 spawn(function()
     while task.wait() do
         if _G.FarmSkip then
-            LvCount = game:GetService("Players").LocalPlayer.Data.Level.Value
-            if LvCount >= 1 and LvCount < 60 then
-                local cframefarm = CFrame.new(-7894.6176757813, 5547.1416015625, -380.29119873047)
-                if GetDistance(cframefarm.Position) > 1500 then
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-7894.6176757813, 5547.1416015625, -380.29119873047))
-                end
-                topos(CFrame.new(-7678.48974609375, 5566.40380859375, -497.2156066894531))
-                if game:GetService("Workspace").Enemies:FindFirstChild("Shanda") then     
-                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                        if v.Name == "Shanda" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
-                            repeat task.wait()
-                                EquipWeapon(_G.SelectWeapon)
-                                game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer("TantaiGaming")
-                                topos(v.HumanoidRootPart.CFrame * Pos)               
-                                PosMon = v.HumanoidRootPart.CFrame
-                                StartBring = true
-                            until not _G.FarmSkip or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0
-                            StartBring = false
-                        end 
+            pcall(function()
+                LvCount = game:GetService("Players").LocalPlayer.Data.Level.Value
+                if LvCount >= 1 and LvCount < 60 then
+                    local cframefarm = CFrame.new(-7894.6176757813, 5547.1416015625, -380.29119873047)
+                    if GetDistance(cframefarm.Position) > 1500 then
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-7894.6176757813, 5547.1416015625, -380.29119873047))
                     end
-                end 
-            elseif LvCount >= 60 and LvCount < 300 then
-                CheckPlayer = 0
-                local Players = game:GetService("Players"):GetPlayers()
-                local Quest = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
-                local mylevel = game:GetService("Players").LocalPlayer.Data.Level.Value
-                local QuestTitle = Quest.Container.QuestTitle.Title.Text
-                if game:GetService("Players").LocalPlayer.Team.Name == "Marines" then
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetTeam","Pirates")
-                end
-                if Quest.Visible == true then
-                    if string.find(QuestTitle, "Defeat") then
-                        getgenv().Ply = string.split(QuestTitle," ")[2]
-                        for i,v in pairs(Players) do
-                            if v.Name == getgenv().Ply and v.Character.Humanoid.Health > 0 then
+                    topos(CFrame.new(-7678.48974609375, 5566.40380859375, -497.2156066894531))
+                    if game:GetService("Workspace").Enemies:FindFirstChild("Shanda") then     
+                        for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                            if v.Name == "Shanda" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                                 repeat task.wait()
-                                    if v.Data.Level.Value < 20 or v.Data.Level.Value > mylevel * 5 then
-                                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("PlayerHunter")
-                                    end
-                                    if game:GetService("Players").LocalPlayer.PlayerGui.Main.PvpDisabled.Visible == true then
-                                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EnablePvp")
-                                    end
                                     EquipWeapon(_G.SelectWeapon)
-                                    _G.FastAttackPlayer = true
-                                    topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,0))
-                                until not _G.FarmSkip or not v:FindFirstChild("HumanoidRootPart") or v.Character.Humanoid.Health <= 0
-                                _G.FastAttackPlayer = false
-                            end
+                                    game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer("TantaiGaming")
+                                    topos(v.HumanoidRootPart.CFrame * Pos)               
+                                    PosMon = v.HumanoidRootPart.CFrame
+                                    StartBring = true
+                                until not _G.FarmSkip or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0
+                                StartBring = false
+                            end 
                         end
-                    else
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("PlayerHunter")
+                    end 
+                elseif LvCount >= 60 and LvCount < 300 then
+                    CheckPlayer = 0
+                    local Players = game:GetService("Players"):GetPlayers()
+                    local Quest = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
+                    local mylevel = game:GetService("Players").LocalPlayer.Data.Level.Value
+                    local QuestTitle = Quest.Container.QuestTitle.Title.Text
+                    if game:GetService("Players").LocalPlayer.Team.Name == "Marines" then
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetTeam","Pirates")
                     end
-                else                
-                    if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("PlayerHunter") == "I don't have anything for you right now. Come back later." then
-                        CheckPlayer = CheckPlayer + 1
+                    if Quest.Visible == true then
+                        if string.find(QuestTitle, "Defeat") then
+                            getgenv().Ply = string.split(QuestTitle," ")[2]
+                            for i,v in pairs(Players) do
+                                if v.Name == getgenv().Ply and v.Character.Humanoid.Health > 0 then
+                                    repeat task.wait()
+                                        if v.Data.Level.Value < 20 or v.Data.Level.Value > mylevel * 5 then
+                                            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("PlayerHunter")
+                                        end
+                                        if game:GetService("Players").LocalPlayer.PlayerGui.Main.PvpDisabled.Visible == true then
+                                            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EnablePvp")
+                                        end
+                                        EquipWeapon(_G.SelectWeapon)
+                                        _G.FastAttackPlayer = true
+                                        topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,0))
+                                    until not _G.FarmSkip or not v:FindFirstChild("HumanoidRootPart") or v.Character.Humanoid.Health <= 0
+                                    _G.FastAttackPlayer = false
+                                end
+                            end
+                        else
+                            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("PlayerHunter")
+                        end
+                    else                
+                        if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("PlayerHunter") == "I don't have anything for you right now. Come back later." then
+                            CheckPlayer = CheckPlayer + 1
+                        end
                     end
+                    if CheckPlayer >= 12 and Quest.Visible == false and not string.find(QuestTitle, "Defeat") then
+                        Hop()
+                        wait(0.1)
+                        OrionLib:MakeNotification({
+                            Name = "Tinh Linh Hub",
+                            Content = "Hop Servers Because Not Players",
+                            Image = "rbxassetid://16730867128",
+                            Time = 5
+                        })
+                    end 
+                else
+                    CayLevel:Set(true)
                 end
-                if CheckPlayer >= 12 and Quest.Visible == false and not string.find(QuestTitle, "Defeat") then
-                    Hop()
-                    wait(0.1)
-                    OrionLib:MakeNotification({
-                        Name = "Tinh Linh Hub",
-                        Content = "Hop Servers Because Not Players",
-                        Image = "rbxassetid://16730867128",
-                        Time = 5
-                    })
-                end 
-            else
-                CayLevel:Set(true)
-            end
-            if game:GetService("Players").LocalPlayer.Data.Points.Value >= 1 then
-                local args = { [1] = "AddPoint", [2] = "Melee", [3] = 5 }
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
-            end
+                if game:GetService("Players").LocalPlayer.Data.Points.Value >= 1 then
+                    local args = { [1] = "AddPoint", [2] = "Melee", [3] = 5 }
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+                end
+            end)
         end
     end
 end)
