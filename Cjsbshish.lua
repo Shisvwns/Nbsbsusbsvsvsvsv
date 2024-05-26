@@ -5796,18 +5796,13 @@ spawn(function()
                     end
                 end
             else
-            if BypassTP then
             if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - PolePos.Position).Magnitude > 1500 then
-            BTP(PolePos)
-            elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - PolePos.Position).Magnitude < 1500 then
-            topos(PolePos)
-            end
-        else
-            if GetDistance(PolePos.Position) > 1500 then
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-7894.6176757813, 5547.1416015625, -380.29119873047))
+            elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - PolePos.Position).Magnitude < 1500 then
+                topos(PolePos)
+            else
+                topos(PolePos)
             end
-            topos(PolePos)
-        end
             UnEquipWeapon(_G.SelectWeapon)
             topos(CFrame.new(-7748.0185546875, 5606.80615234375, -2305.898681640625))
                 if game:GetService("ReplicatedStorage"):FindFirstChild("Thunder God") then
