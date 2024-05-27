@@ -2969,18 +2969,19 @@ spawn(function()
 	while wait() do
 		local MyLevel = game.Players.LocalPlayer.Data.Level.Value
 		local QuestC = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
+		CheckQuest()
 		pcall(function()
 			if _G.Auto_Farm_Mastery_Fruit then
-				if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, QuestCheck()[6]) then
+				if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
 					game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
 				end
 				if QuestC.Visible == true then
 					if game:GetService("Workspace").Enemies:FindFirstChild(Mon) then
 						for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-							if v.Name == Mon then
-								if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+							if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+								if v.Name == Mon then
 									repeat task.wait()
-										if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, QuestCheck()[6]) then
+										if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
 											game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
 										else
 											if v.Humanoid.Health <= v.Humanoid.MaxHealth * _G.Kill_At/100 then 
@@ -3007,27 +3008,27 @@ spawn(function()
 					else
 						_G.UseSkill = false
 						if _G.Auto_CFrame then
-							topos(QuestCheck()[7][SetCFarme] * Pos)
-							if (QuestCheck()[7][SetCFarme].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
+							topos(CFrameMon[SetCFarme] * Pos)
+							if (CFrameMon[SetCFarme].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
 								if SetCFarme == nil or SetCFarme == '' then
 									SetCFarme = 1
-								elseif SetCFarme >= #QuestCheck()[7] then
+								elseif SetCFarme >= #CFrameMon then
 									SetCFarme = 1
 								end
 								SetCFarme =  SetCFarme + 1
 								wait(0.5)
 							end
 						else
-							topos(QuestCheck()[7][1] * Pos)
+							topos(CFrameMon)
 						end
 					end
 				else
-					topos(CFrameMon)
-					if (CFrameMon.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1 then
+					topos(CFrameQuest)
+					if (CFrameQuest.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1 then
 						StartMagnet = false
 						wait(0.2)
-						game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1]) wait(0.5) 
-						topos(QuestCheck()[7][1] * Pos)
+						game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", NameQuest, LevelQuest) wait(0.5) 
+						topos(CFrameMon)
 					end
 				end
 			end
@@ -3105,16 +3106,17 @@ spawn(function()
 	while wait() do
 		local MyLevel = game.Players.LocalPlayer.Data.Level.Value
 		local QuestC = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
+		CheckQuest()
 		pcall(function()
 			if _G.Auto_Farm_Mastery_Gun then
-				if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, QuestCheck()[6]) then
+				if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
 					game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
 				end
 				if QuestC.Visible == true then
 					if game:GetService("Workspace").Enemies:FindFirstChild(Mon) then
 						for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-							if v.Name == Mon then
-								if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+							if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+								if v.Name == Mon then
 									PosFarm = v.HumanoidRootPart.CFrame
 									MonHumanoidRootPart = v.HumanoidRootPart
 									PositionSkillMasteryGun = v.HumanoidRootPart.Position
@@ -3146,27 +3148,27 @@ spawn(function()
 					else
 						_G.UseSkill = false
 						if _G.Auto_CFrame then
-							topos(QuestCheck()[7][SetCFarme] * Pos)
-							if (QuestCheck()[7][SetCFarme].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
+							topos(CFrameMon[SetCFarme] * Pos)
+							if (CFrameMon[SetCFarme].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
 								if SetCFarme == nil or SetCFarme == '' then
 									SetCFarme = 1
-								elseif SetCFarme >= #QuestCheck()[7] then
+								elseif SetCFarme >= #CFrameMon then
 									SetCFarme = 1
 								end
 								SetCFarme =  SetCFarme + 1
 								wait(0.5)
 							end
 						else
-							topos(QuestCheck()[7][1] * Pos)
+							topos(CFrameMon)
 						end
 					end
 				else
-					topos(CFrameMon)
-					if (CFrameMon.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1 then
+					topos(CFrameQuest)
+					if (CFrameQuest.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1 then
 						StartMagnet = false
 						wait(0.2)
-						game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1]) wait(0.5)
-						topos(QuestCheck()[7][1] * Pos)
+						game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", NameQuest, LevelQuest) wait(0.5)
+						topos(CFrameMon)
 					end
 				end
 			end
@@ -3208,7 +3210,7 @@ spawn(function()
 			}
 			
 			game:GetService("Players").LocalPlayer.Character[_G.SelectWeaponGun].RemoteEvent:FireServer(unpack(args))
-			if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, QuestCheck()[6]) then
+			if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
 				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
 			end
 		end
@@ -3264,9 +3266,11 @@ spawn(function()
                                             if v.Humanoid.Health <= HealthMin then                                                
                                                 EquipWeaponSword()
                                                 topos(v.HumanoidRootPart.CFrame * Pos)
+                                                PosMon = v.HumanoidRootPart.CFrame
                                             else
                                                 EquipWeapon(_G.SelectWeapon)
                                                 topos(v.HumanoidRootPart.CFrame * Pos)
+                                                PosMon = v.HumanoidRootPart.CFrame
                                             end
                                             StartMagnet = true 
                                             PosMon = v.HumanoidRootPart.CFrame
