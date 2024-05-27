@@ -2975,9 +2975,9 @@ spawn(function()
 					game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
 				end
 				if QuestC.Visible == true then
-					if game:GetService("Workspace").Enemies:FindFirstChild(QuestCheck()[3]) then
+					if game:GetService("Workspace").Enemies:FindFirstChild(Mon) then
 						for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-							if v.Name == QuestCheck()[3] then
+							if v.Name == Mon then
 								if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
 									repeat task.wait()
 										if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, QuestCheck()[6]) then
@@ -3022,8 +3022,8 @@ spawn(function()
 						end
 					end
 				else
-					topos(QuestCheck()[2])
-					if (QuestCheck()[2].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1 then
+					topos(CFrameMon)
+					if (CFrameMon.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1 then
 						StartMagnet = false
 						wait(0.2)
 						game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1]) wait(0.5) 
@@ -3111,9 +3111,9 @@ spawn(function()
 					game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
 				end
 				if QuestC.Visible == true then
-					if game:GetService("Workspace").Enemies:FindFirstChild(QuestCheck()[3]) then
+					if game:GetService("Workspace").Enemies:FindFirstChild(Mon) then
 						for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-							if v.Name == QuestCheck()[3] then
+							if v.Name == Mon then
 								if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
 									PosFarm = v.HumanoidRootPart.CFrame
 									MonHumanoidRootPart = v.HumanoidRootPart
@@ -3161,8 +3161,8 @@ spawn(function()
 						end
 					end
 				else
-					topos(QuestCheck()[2])
-					if (QuestCheck()[2].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1 then
+					topos(CFrameMon)
+					if (CFrameMon.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1 then
 						StartMagnet = false
 						wait(0.2)
 						game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1]) wait(0.5)
@@ -3184,7 +3184,7 @@ function CheckMonFF(trg_part)
 	local nearest = nil
 	local last = math.huge
 	for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-		if v.Name == QuestCheck()[3] then
+		if v.Name == Mon then
 			local ePos, vissss = workspace.CurrentCamera:WorldToViewportPoint(v[trg_part].Position)
 			local AccPos = Vector2.new(ePos.x, ePos.y)
 			local mousePos = Vector2.new(workspace.CurrentCamera.ViewportSize.x / 2, workspace.CurrentCamera.ViewportSize.y / 2)
