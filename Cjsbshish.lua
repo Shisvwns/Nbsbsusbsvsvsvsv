@@ -1810,7 +1810,7 @@ local Shop = Window:MakeTab({Name = "Shop", Icon = "rbxassetid://4483345998", Pr
 -- [ Tab Settings]
 
 local Section = Setting:AddSection({
-    Name = "Setting Farm"
+    Name = "~ Setting Farm ~ ~"
 })
 
 local CheckWeapon1 = Setting:AddDropdown({
@@ -1942,7 +1942,7 @@ spawn(function()
 end)
 
 local Section = Setting:AddSection({
-    Name = "Graphic & Reduce Lag"
+    Name = "~ Graphic & Reduce Lag ~ ~"
 })
 
 Setting:AddToggle({
@@ -2080,7 +2080,7 @@ spawn(function()
 end)
 
 local Section = Setting:AddSection({
-    Name = "Other"
+    Name = "~ Other ~ ~"
 })
 
 Setting:AddToggle({
@@ -2160,7 +2160,7 @@ Setting:AddToggle({
 })
 
 local Section = Setting:AddSection({
-    Name = "Misc"
+    Name = "~ Misc ~ ~"
 })
 
 Setting:AddButton({
@@ -2173,7 +2173,7 @@ Setting:AddButton({
 -- [ Tab Farm ]
 
 local Section = Farm:AddSection({
-    Name = "Farm Level"
+    Name = "~ Farm Level ~ ~"
 })
 
 local YourLevel = Farm:AddParagraph("Your Level")
@@ -2391,7 +2391,7 @@ spawn(function()
 end)
 
 local Section = Farm:AddSection({
-    Name = "Katakuri"
+    Name = "~ Katakuri ~ ~"
 })
 
 local StatusCakePrince = Farm:AddParagraph("Cake Prince")
@@ -2643,7 +2643,7 @@ spawn(function()
 end)
 
 local Section = Farm:AddSection({
-    Name = "Bone"
+    Name = "~ Bone ~ ~"
 })
 
 local YourBone = Farm:AddParagraph("Your Bone")
@@ -2832,7 +2832,7 @@ spawn(function()
 end)
 
 local Section = Farm:AddSection({
-    Name = "Boss"
+    Name = "~ Boss ~ ~"
 })
 
 local BossCheck = {}
@@ -2944,33 +2944,8 @@ Farm:AddToggle({
 })
 
 local Section = Farm:AddSection({
-    Name = "Mastery"
+    Name = "~ Mastery ~ ~"
 })
-
-spawn(function()
-	local gg = getrawmetatable(game)
-	local old = gg.__namecall
-	setreadonly(gg,false)
-	gg.__namecall = newcclosure(function(...)
-	local method = getnamecallmethod()
-	local args = {...}
-		if tostring(method) == "FireServer" then
-			if tostring(args[1]) == "RemoteEvent" then
-				if tostring(args[2]) ~= "true" and tostring(args[2]) ~= "false" then
-					if _G.UseSkill then
-						if type(args[2]) == "vector" then
-							args[2] = PositionSkillMastery
-						else
-							args[2] = CFrame.new(PositionSkillMastery)
-						end
-					  return old(unpack(args))
-					end
-				end
-			end
-		end
-	return old(...)
-	end)
-end)
 
 Farm:AddToggle({
 	Name = "Auto Farm Devil Fruit Mastery",
@@ -3018,7 +2993,6 @@ spawn(function()
                                             topos(v.HumanoidRootPart.CFrame * CFrame.new(0,10,0))
                                             UseSkill = true
                                             PosFarm = v.HumanoidRootPart.CFrame
-                                            PositionSkillMastery = v.HumanoidRootPart.Position
                                         else           
                                             UseSkill = false
                                             EquipWeapon(_G.SelectWeapon)
@@ -3099,7 +3073,6 @@ spawn(function()
                                             topos(v.HumanoidRootPart.CFrame * CFrame.new(0,10,0))
                                             UseSkill = true
                                             PosFarm = v.HumanoidRootPart.CFrame
-                                            PositionSkillMastery = v.HumanoidRootPart.Position
                                         else           
                                             UseSkill = false
                                             EquipWeapon(_G.SelectWeapon)
@@ -3406,7 +3379,7 @@ spawn(function()
 end)
 
 local Section = Farm:AddSection({
-    Name = "Monster"
+    Name = "~ Monster ~ ~"
 })
 
 if World1 then
@@ -3464,7 +3437,7 @@ spawn(function()
 end)
 
 local Section = Farm:AddSection({
-    Name = "Material"
+    Name = "~ Material ~ ~"
 })
 
 if World1 then
@@ -3522,7 +3495,7 @@ spawn(function()
 end)
 
 local Section = FruitRaid:AddSection({
-    Name = "Devil Fruit"
+    Name = "~ Devil Fruit ~ ~"
 })
 
 FruitList = {"Rocket-Rocket","Spin-Spin","Chop-Chop","Spring-Spring","Bomb-Bomb","Smoke-Smoke","Spike-Spike","Flame-Flame","Falcon-Falcon","Ice-Ice","Sand-Sand","Dark-Dark","Diamond-Diamond","Light-Light","Rubber-Rubber","Barrier-Barrier","Ghost-Ghost","Magma-Magma","Quake-Quake","Buddha-Buddha","Love-Love","Spider-Spider","Sound-Sound","Phoenix-Phoenix","Portal-Portal","Rumble-Rumble","Pain-Pain","Blizzard-Blizzard","Gravity-Gravity","Mammoth-Mammoth","T-Rex-T-Rex","Dough-Dough","Shadow-Shadow","Venom-Venom","Control-Control","Spirit-Spirit","Dragon-Dragon","Leopard-Leopard","Kitsune-Kitsune"}
@@ -3762,7 +3735,7 @@ spawn(function()
 end)
 
 local Section = FruitRaid:AddSection({
-    Name = "Raid"
+    Name = "~ Raid ~ ~"
 })
 
 _G.SelectChip = selectraids or ""
@@ -3998,7 +3971,7 @@ spawn(function()
 end)
 
 local Section = FruitRaid:AddSection({
-    Name = "Law Raid"
+    Name = "~ Law Raid ~ ~"
 })
 
 FruitRaid:AddButton({
@@ -4062,7 +4035,7 @@ end)
 -- [ Tab Other ]
 
 local Section = Other:AddSection({
-    Name = "Game Event"
+    Name = "~ Game Event ~ ~"
 })
 
 Other:AddToggle({
@@ -4131,7 +4104,7 @@ spawn(function()
 end)
 
 local Section = Other:AddSection({
-    Name = "Elite Hunter"
+    Name = "~ Elite Hunter ~"
 })
 
 local EliteStatus = Other:AddParagraph("Elite")
@@ -4189,7 +4162,7 @@ spawn(function()
 end)
 
 local Section = Other:AddSection({
-    Name = "Chest"
+    Name = "~ Chest ~"
 })
 
 Other:AddDropdown({
@@ -4270,7 +4243,7 @@ spawn(function()
 end)
 
 local Section = Other:AddSection({
-    Name = "Rip_Indra"
+    Name = "~ Rip_Indra ~"
 })
 
 Other:AddToggle({
@@ -4336,7 +4309,7 @@ spawn(function()
 end)
 
 local Section = Other:AddSection({
-    Name = "Darkbeard"
+    Name = "~ Darkbeard ~"
 })
 
 Other:AddToggle({
@@ -4393,7 +4366,7 @@ spawn(function()
 end)
 
 local Section = Other:AddSection({
-    Name = "Observation Haki"
+    Name = "~ Observation Haki ~"
 })
 
 local ObservationStatus = Other:AddParagraph("Observation Level")
@@ -4559,7 +4532,7 @@ end)
 -- [ Tab Item & Quest ]
 
 local Section = ItemQuest:AddSection({
-    Name = "Legendary Sword"
+    Name = "~ Legendary Sword ~"
 })
 
 local LegendSwords = ItemQuest:AddParagraph("Legendary Sword Dealer")
@@ -4609,7 +4582,7 @@ spawn(function()
 end)
 
 local Section = ItemQuest:AddSection({
-    Name = "Haki Colors"
+    Name = "~ Haki Colors ~"
 })
 
 local ColorHaki = ItemQuest:AddParagraph("Haki Dealer")
@@ -4764,7 +4737,7 @@ spawn(function()
 end)
 
 local Section = ItemQuest:AddSection({
-    Name = "Soul Guitar"
+    Name = "~ Soul Guitar ~"
 })
 
 ItemQuest:AddToggle({
@@ -4901,7 +4874,7 @@ spawn(function()
 end)
 
 local Section = ItemQuest:AddSection({
-    Name = "Cursed Dual Katana"
+    Name = "~ Cursed Dual Katana ~"
 })
 
 local Yama = ItemQuest:AddParagraph("Elite Progress")
@@ -5457,7 +5430,7 @@ spawn(function()
 end)
 
 local Section = ItemQuest:AddSection({
-    Name = "Weapon"
+    Name = "~ Weapon ~"
 })
 
 ItemQuest:AddToggle({
@@ -5940,7 +5913,7 @@ spawn(function()
 end)
 
 local Section = ItemQuest:AddSection({
-    Name = "Other"
+    Name = "~ Other ~"
 })
 
 ItemQuest:AddToggle({
@@ -6179,7 +6152,7 @@ end)
 -- [ Tab Player ]
 
 local Section = Player:AddSection({
-    Name = "Player"
+    Name = "~ Player ~"
 })
 
 Player:AddButton({
@@ -6231,7 +6204,7 @@ spawn(function()
 end)
 
 local Section = Player:AddSection({
-    Name = "Turn On"
+    Name = "~ Turn On ~"
 })
 
 Player:AddToggle({
@@ -6309,7 +6282,7 @@ spawn(function()
 end)
 
 local Section = Player:AddSection({
-    Name = "Haki State"
+    Name = "~ Haki State ~"
 })
 
 Player:AddDropdown({
@@ -6341,7 +6314,7 @@ Player:AddButton({
 })
 
 local Section = Player:AddSection({
-    Name = "Open"
+    Name = "~ Open ~"
 })
 
 Player:AddButton({
@@ -6385,7 +6358,7 @@ Player:AddButton({
 })
 
 local Section = Player:AddSection({
-    Name = "Abilities"
+    Name = "~ Abilities ~"
 })
 
 Player:AddToggle({
@@ -6485,7 +6458,7 @@ end)
 -- [ Tab PvP ]
 
 local Section = PvP:AddSection({
-    Name = "Player"
+    Name = "~ Player ~"
 })
 
 local plyserv = PvP:AddParagraph("Player In Server")
@@ -6571,7 +6544,7 @@ spawn(function()
 end)
 
 local Section = PvP:AddSection({
-    Name = "Aimbot"
+    Name = "~ Aimbot ~"
 })
 
 PvP:AddSlider({
@@ -6681,7 +6654,7 @@ spawn(function()
 end)
 
 local Section = PvP:AddSection({
-    Name = "Bounty / Honor"
+    Name = "~ Bounty / Honor ~"
 })
 
 local checkbotihoron = PvP:AddParagraph("Your Bounty / Honor")
@@ -6699,7 +6672,7 @@ end)
 -- [ Tab Race ]
 
 local Section = Race:AddSection({
-    Name = "Templete Of Time"
+    Name = "~ Templete Of Time ~"
 })
 
 function CheckRace()
@@ -6835,7 +6808,7 @@ Race:AddButton({
 })
 
 local Section = Race:AddSection({
-    Name = "Mirage Island"
+    Name = "~ Mirage Island ~"
 })
 
 local StatusMirage = Race:AddParagraph("Mirage Island")
@@ -6932,7 +6905,7 @@ spawn(function()
 end)
 
 local Section = Race:AddSection({
-    Name = "Trials"
+    Name = "~ Trials ~"
 })
 
 local Moon1 = Race:AddParagraph("Moon")
@@ -7192,7 +7165,7 @@ spawn(function()
 end)
 
 local Section = Race:AddSection({
-    Name = "Train"
+    Name = "~ Train ~"
 })
 
 function CheckAncientOneStatus()
@@ -7351,7 +7324,7 @@ end)
 -- [ Tab Stats & Esp ]
 
 local Section = StatsEsp:AddSection({
-    Name = "Stats"
+    Name = "~ Stats ~"
 })
 
 StatsEsp:AddSlider({
@@ -7455,7 +7428,7 @@ spawn(function()
 end)
 
 local Section = StatsEsp:AddSection({
-    Name = "Esp"
+    Name = "~ Esp ~"
 })
 
 StatsEsp:AddToggle({
@@ -7525,7 +7498,7 @@ end)
 -- [ Tab Teleport ]
 
 local Section = Teleport:AddSection({
-    Name = "Sea"
+    Name = "~ Sea ~"
 })
 
 Teleport:AddDropdown({
@@ -7551,7 +7524,7 @@ Teleport:AddButton({
 })
 
 local Section = Teleport:AddSection({
-    Name = "Island"
+    Name = "~ Island ~"
 })
 
 if World1 then
@@ -7708,7 +7681,7 @@ Teleport:AddToggle({
 -- [ Tab Status & Server ]
 
 local Section = StatusServer:AddSection({
-    Name = "Status Server"
+    Name = "~ Status Server ~"
 })
 
 local Time = StatusServer:AddParagraph("Time Played")
@@ -7828,7 +7801,7 @@ spawn(function()
 end)
 
 local Section = StatusServer:AddSection({
-    Name = "Server"
+    Name = "~ Server ~"
 })
 
 StatusServer:AddTextbox({
@@ -7893,7 +7866,7 @@ StatusServer:AddButton({
 -- [ Tab Shop ]
 
 local Section = Shop:AddSection({
-    Name = "Code"
+    Name = "~ Code ~"
 })
 
 CodeA = {"TantaiGaming","Axiore","SUB2DAIGROCK","Sub2UncleKizaru","SUB2NOOBMASTER123","StrawHatMaine","Sub2OfficialNoobie","SUB2GAMERROBOT_EXP1","THEGREATACE","BIGNEWS","FUDD10","fudd10_v2","Bluxxy","StarcodeHEO","JCWK","Magicbus","Enyu_is_Pro","Sub2Fer999","KittGaming","SUB2GAMERROBOT_RESET1","Sub2CaptainMaui"}
@@ -7927,7 +7900,7 @@ Shop:AddButton({
 })
 
 local Section = Shop:AddSection({
-    Name = "Fighting Style"
+    Name = "~ Fighting Style ~"
 })
 
 SelectMelee = {"Black Leg","Electro","Fishman Karate","Dragon Claw","SuperHuman","Death Step","Sharkman Karate","Electric Claw","Dragon Talon","GodHuman","Sanguine Art"}
@@ -7974,7 +7947,7 @@ Shop:AddButton({
 })
 
 local Section = Shop:AddSection({
-    Name = "Abilities"
+    Name = "~ Abilities ~"
 })
 
 SelectAbilities = {"Sky Jump [ Geppo ]","Buso Haki","Soru","Observation Haki"}
@@ -8004,7 +7977,7 @@ Shop:AddButton({
 })
 
 local Section = Shop:AddSection({
-    Name = "Sword"
+    Name = "~ Sword ~"
 })
 
 SelectSword = {"Cutlass","Katana","Iron Mace","Dual Katana","Triple Katana","Pipe","Dual-Headed Blade","Bisento","Soul Cane","Pole V2"}
@@ -8046,7 +8019,7 @@ Shop:AddButton({
 })
 
 local Section = Shop:AddSection({
-    Name = "Gun"
+    Name = "~ Gun ~"
 })
 
 SelectGun = {"Slingshot","Flintlock","Musket","Cannon","Refined Flintlock","Refined Slingshot","Bizarre Rifle","Kabucha"}
@@ -8093,7 +8066,7 @@ Shop:AddButton({
 })
 
 local Section = Shop:AddSection({
-    Name = "Other"
+    Name = "~ Other ~"
 })
 
 SelectOther = {"Reroll Race","Reset Stats","Cyborg Race","Ghoul Race"}
