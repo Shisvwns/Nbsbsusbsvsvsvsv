@@ -2393,7 +2393,7 @@ Setting:AddButton({
 -- [ Tab Farm ]
 
 local Section = Farm:AddSection({
-    Name = "~ Farm Level ~"
+    Name = "~ Level ~"
 })
 
 local YourLevel = Farm:AddParagraph("Your Level")
@@ -3066,6 +3066,15 @@ for i, v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
 end
 
 local BossName = Farm:AddDropdown({
+	Name = "Select Farm Mode",
+	Default = "No Quest",
+	Options = {"No Quest","Get Quest"},
+	Callback = function(Value)
+		ModeBoss = Value
+	end
+})
+
+local BossName = Farm:AddDropdown({
 	Name = "Select Boss",
 	Default = "",
 	Options = BossCheck,
@@ -3092,26 +3101,41 @@ Farm:AddButton({
 })
 
 Farm:AddToggle({
-	Name = "Auto Farm Boss [ No Quest ]",
+	Name = "Auto Farm Boss",
 	Default = false,
 	Callback = function(Value)
-		_G.Auto_Farm_Boss = Value
-		StopTween(_G.Auto_Farm_Boss)
-	end
-})
-
-Farm:AddToggle({
-	Name = "Auto Farm Boss [ Get Quest ]",
-	Default = false,
-	Callback = function(Value)
-		_G.Auto_Quest_Boss = Value
-		StopTween(_G.Auto_Quest_Boss)
+		_G.AutoFarmBoss = Value
+		StopTween(_G.AutoFarmBoss)
 	end
 })
 
 spawn(function()
+    while wait() do
+        if ModeBoss == "No Quest" and _G.AutoFarmBoss then
+            pcall(function()
+                if game:GetService("Workspace").Enemies:FindFirstChild(_G.SelectBoss) then
+                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        if v.Name == _G.SelectBoss then
+                            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                                repeat task.wait()
+                                    EquipWeapon(_G.SelectWeapon)
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
+                                until not _G.AutoFarmBoss or not v.Parent or v.Humanoid.Health <= 0
+                            end
+                        end
+                    end
+                else
+                    topos(CFrameBoss)
+                    UnEquipWeapon(_G.SelectWeapon)
+                end
+            end)
+        end
+    end
+end)
+
+spawn(function()
 	while wait() do
-		if _G.Auto_Farm_Boss then
+		if ModeBoss == "Get Quest" and _G.AutoFarmBoss then
 			pcall(function()
 				CheckBossQuest()
 				if MsBoss == "Soul Reaper" or MsBoss == "Longma" or MsBoss == "Don Swan" or MsBoss == "Cursed Captain" or MsBoss == "Order" or MsBoss == "rip_indra True Form" then
@@ -3121,20 +3145,20 @@ spawn(function()
 								repeat task.wait()
 									EquipWeapon(_G.SelectWeapon)
 									topos(v.HumanoidRootPart.CFrame * Pos)
-								until _G.Auto_Farm_Boss == false or not v.Parent or v.Humanoid.Health <= 0
+								until _G.Auto_Quest_Boss == false or not v.Parent or v.Humanoid.Health <= 0
 							end
 						end
 					else
 						topos(CFrameBoss)
 					end
 				else
-					if _G.Auto_Quest_Boss then
+					if ModeBoss == "Get Quest" and _G.AutoFarmBoss then
 						CheckBossQuest()
 						if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameBoss) then
 							game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
 						end
 						if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
-							repeat wait() topos(CFrameQuestBoss) until (CFrameQuestBoss.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3 or not _G.Auto_Farm_Boss
+							repeat wait() topos(CFrameQuestBoss) until (CFrameQuestBoss.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3 or not _G.Auto_Quest_Boss
 							if (CFrameQuestBoss.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 4 then
 								wait(1.1)
 								game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NameQuestBoss, LevelQuestBoss)
@@ -3146,7 +3170,7 @@ spawn(function()
 										repeat task.wait()
 											EquipWeapon(_G.SelectWeapon)
 											topos(v.HumanoidRootPart.CFrame * Pos)
-										until _G.Auto_Farm_Boss == false or not v.Parent or v.Humanoid.Health <= 0
+										until _G.Auto_Quest_Boss == false or not v.Parent or v.Humanoid.Health <= 0
 									end
 								end
 							else
@@ -3160,7 +3184,7 @@ spawn(function()
 									repeat task.wait()
 										EquipWeapon(_G.SelectWeapon)
 										topos(v.HumanoidRootPart.CFrame * Pos)										
-									until _G.Auto_Farm_Boss == false or not v.Parent or v.Humanoid.Health <= 0
+									until _G.Auto_Quest_Boss == false or not v.Parent or v.Humanoid.Health <= 0
 								end
 							end
 						else
@@ -3192,10 +3216,6 @@ spawn(function()
                             EquipWeapon(_G.SelectWeapon)
                             topos(v.HumanoidRootPart.CFrame * Pos)
                         until v.Humanoid.Health <= 0 or _G.AutoAllBoss == false or not v.Parent
-                    end
-                else
-                    if _G.AutoAllBossHop then
-                        Hop()
                     end
                 end
             end
