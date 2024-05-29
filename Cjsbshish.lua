@@ -3113,6 +3113,7 @@ spawn(function()
     while wait() do
         if ModeBoss == "No Quest" and _G.AutoFarmBoss then
             pcall(function()
+                CheckBossQuest()
                 if game:GetService("Workspace").Enemies:FindFirstChild(_G.SelectBoss) then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == _G.SelectBoss then
