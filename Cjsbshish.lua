@@ -4006,11 +4006,14 @@ FruitRaid:AddToggle({
 spawn(function()
     while wait() do
         if _G.BringFruitBF then
-            for i,v in pairs(game.Workspace:GetChildren()) do
-                if v:IsA("Tool") then
-                    v.Handle.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+            pcall(function()
+                for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
+                    if v:IsA("Tool") and string.find(v.Name,"Fruit") then 
+                        wait(1.5)
+                        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart,v.Handle,0)    
+                    end
                 end
-            end
+            end)
         end
     end
 end)
@@ -6674,21 +6677,21 @@ Player:AddToggle({
 	Name = "Geppo No CD [ Wait Fix ]",
 	Default = false,
 	Callback = function(Value)
-		getgenv().InfGeppo = Value
+		_G.Infinit_SkyJump = Value
 	end
 })
 
 spawn(function()
     while wait() do
-        if getgenv().InfGeppo then
+        if _G.Infinit_SkyJump then
             for i,v in next, getgc() do
-                if game.Players.LocalPlayer.Character:WaitForChild("Geppo") then
-                    if typeof(v) == "function" and getfenv(v).script == game.Players.LocalPlayer.Character:WaitForChild("Geppo") then
+                if game.Players.LocalPlayer.Character.Geppo then
+                    if typeof(v) == "function" and getfenv(v).script == game.Players.LocalPlayer.Character.Geppo then
                         for i2,v2 in next, getupvalues(v) do
-                            if tostring(i2) == "9" then
+                            if tostring(v2) == "0" then
                                 repeat wait(.1)
                                     setupvalue(v,i2,0)
-                                until not getgenv().InfGeppo or game:GetService("Players").LocalPlayer.Character.Humanoid.Health <= 0
+                                until not _G.Infinit_SkyJump
                             end
                         end
                     end
