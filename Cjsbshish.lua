@@ -755,112 +755,6 @@ function CheckQuest()
     end
 end
 
--- [ Material ]
-
-function MaterialMon()
-    if SelectMaterial == "Radioactive Material" then
-        MMon = "Factory Staff"
-        MPos = CFrame.new(295,73,-56)
-        SP = "Default"
-    elseif SelectMaterial == "Mystic Droplet" then
-        MMon = "Water Fighter"
-        MPos = CFrame.new(-3385,239,-10542)
-        SP = "Default"
-    elseif SelectMaterial == "Magma Ore" then
-        if World1 then
-            MMon = "Military Spy"
-            MPos = CFrame.new(-5815,84,8820)
-            SP = "Default"
-        elseif World2 then
-            MMon = "Magma Ninja"
-            MPos = CFrame.new(-5428,78,-5959)
-            SP = "Default"
-        end
-    elseif SelectMaterial == "Angel Wings" then
-        MMon = "God's Guard"
-        MPos = CFrame.new(-4698,845,-1912)
-        SP = "Default"
-        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(-4607.82275, 872.54248, -1667.55688)).Magnitude >= 5000 then
-            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-4607.82275, 872.54248, -1667.55688))
-        end
-    elseif SelectMaterial == "Ectoplasm" then
-        MMon = "Ship Steward"
-        MPos = CFrame.new(919.4385375976562, 129.55599975585938, 33436.03515625)
-        SP = "Default"
-        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(923.40197753906, 125.05712890625, 32885.875)).Magnitude >= 10000 then
-            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.40197753906, 125.05712890625, 32885.875))
-        end
-    elseif SelectMaterial == "Leather" then
-        if World1 then
-            MMon = "Brute"
-            MPos = CFrame.new(-1145,15,4350)
-            SP = "Default"
-        elseif World2 then
-            MMon = "Marine Captain"
-            MPos = CFrame.new(-2010.5059814453125, 73.00115966796875, -3326.620849609375)
-            SP = "Default"
-        elseif World3 then
-            MMon = "Jungle Pirate"
-            MPos = CFrame.new(-11975.78515625, 331.7734069824219, -10620.0302734375)
-            SP = "Default"
-        end
-    elseif SelectMaterial == "Scrap Metal" then
-        if World1 then
-            MMon = "Brute"
-            MPos = CFrame.new(-1145,15,4350)
-            SP = "Default"
-        elseif World1 then
-            MMon = "Swan Pirate"
-            MPos = CFrame.new(878,122,1235)
-            SP = "Default"
-        elseif World3 then
-            MMon = "Jungle Pirate"
-            MPos = CFrame.new(-12107,332,-10549)
-            SP = "Default"
-        end
-    elseif SelectMaterial == "Fish Tail" then
-        if World3 then
-            MMon = "Fishman Raider"
-            MPos = CFrame.new(-10993,332,-8940)
-            SP = "Default"
-        elseif World1 then
-            MMon = "Fishman Warrior"
-            MPos = CFrame.new(60878.30078125, 18.482830047607422, 1543.7574462890625)
-            SP = "Default"
-            if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(61163.8515625, 5.342342376708984, 1819.7841796875)).Magnitude >= 17000 then
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(61163.8515625, 5.342342376708984, 1819.7841796875))
-            end
-        end
-    elseif SelectMaterial == "Demonic Wisp" then
-        MMon = "Demonic Soul"
-        MPos = CFrame.new(-9507,172,6158)
-        SP = "Default"
-    elseif SelectMaterial == "Vampire Fang" then
-        MMon = "Vampire"
-        MPos = CFrame.new(-6033,7,-1317)
-        SP = "Default"
-    elseif SelectMaterial == "Conjured Cocoa" then
-        MMon = "Chocolate Bar Battler"
-        MPos = CFrame.new(620.6344604492188,78.93644714355469, -12581.369140625)
-        SP = "Default"
-    elseif SelectMaterial == "Dragon Scale" then
-        MMon = "Dragon Crew Archer"
-        MPos = CFrame.new(6594,383,139)
-        SP = "Default"
-        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(5756, 610, -282)).Magnitude >= 1500 then
-            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(5756, 610, -282))
-        end
-    elseif SelectMaterial == "Gunpowder" then
-        MMon = "Pistol Billionaire"
-        MPos = CFrame.new(-469,74,5904)
-        SP = "Default"
-    elseif SelectMaterial == "Mini Tusk" then
-        MMon = "Mythological Pirate"
-        MPos = CFrame.new(-13545,470,-6917)
-        SP = "Default"
-    end
-end
-
 -- [ Check Monster ]
 
 function CheckMonFarm()
@@ -2526,6 +2420,7 @@ Farm:AddToggle({
 	Default = false,
 	Callback = function(Value)
 		_G.FarmSkip = Value
+		game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer("TantaiGaming")
         StopTween(_G.FarmSkip)
 	end
 })
@@ -2546,7 +2441,6 @@ spawn(function()
                             if v.Name == "Shanda" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                                 repeat task.wait()
                                     EquipWeapon(_G.SelectWeapon)
-                                    game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer("TantaiGaming")
                                     topos(v.HumanoidRootPart.CFrame * Pos)               
                                     PosMon = v.HumanoidRootPart.CFrame
                                     StartBring = true
@@ -3721,6 +3615,84 @@ end)
 local Section = Farm:AddSection({
     Name = "~ Material ~"
 })
+
+function MaterialMon()
+    if World1 then
+        if SelectMaterial == "Magma Ore" then
+            MMon = {"Military Soldier", "Military Spy"}
+            MPos = CFrame.new(-5815, 84, 8820)
+        elseif ((a == "Leather") or (a == "Scrap Metal") then
+            MMon = {"Brute"}
+            MPos = CFrame.new(-1145, 15, 4350)
+        elseif SelectMaterial == "Angel Wings" then
+            MMon = {"God's Guard"}
+            MPos = CFrame.new(-4698, 845, -1912)
+            if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(-4607.82275, 872.54248, -1667.55688)).Magnitude >= 5000 then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-4607.82275, 872.54248, -1667.55688))
+            end
+        elseif SelectMaterial == "Fish Tail" then
+            MMon = {"Fishman Warrior", "Fishman Commando"}
+            MPos = CFrame.new(61123, 19, 1569)
+            if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(61163.8515625, 5.342342376708984, 1819.7841796875)).Magnitude >= 17000 then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(61163.8515625, 5.342342376708984, 1819.7841796875))
+            end
+        end
+    end
+    if World2 then
+        if SelectMaterial == "Magma Ore" then
+            MMon = {"Magma Ninja"}
+            MPos = CFrame.new(-5428, 78, -5959)
+        elseif SelectMaterial == "Leather" then
+            MMon = {"Marine Captain"}
+            MPos = CFrame.new(-2010, 73, -3326)
+        elseif SelectMaterial == "Scrap Metal" then
+            MMon = {"Swan Pirate"}
+            MPos = CFrame.new(878, 122, 1235)
+        elseif SelectMaterial == "Radioactive Material" then
+            MMon = {"Factory Staff"}
+            MPos = CFrame.new(295, 73, -56)
+        elseif SelectMaterial == "Vampire Fang" then
+            MMon = {"Vampire"}
+            MPos = CFrame.new(-6033, 7, -1317)
+        elseif SelectMaterial == "Ectoplasm" then
+            MMon = {"Ship Deckhand", "Ship Engineer", "Ship Steward", "Ship Officer"}
+            MPos = CFrame.new(937.953003, 181.083359, 33277.9297)
+            if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(923.40197753906, 125.05712890625, 32885.875)).Magnitude >= 17000 then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.40197753906, 125.05712890625, 32885.875))
+            end
+        elseif SelectMaterial == "Mystic Droplet" then
+            MMon = {"Water Fighter", "Sea Soldier"}
+            MPos = CFrame.new(-3385, 239, -10542)
+        end
+    end
+    if World3 then
+        if SelectMaterial == "Mini Tusk" then
+            MMon = {"Mythological Pirate"}
+            MPos = CFrame.new(-13545, 470, -6917)
+        elseif SelectMaterial == "Fish Tail" then
+            MMon = {"Fishman Raider", "Fishman Captain"}
+            MPos = CFrame.new(-10993, 332, -8940)
+        elseif SelectMaterial == "Leather" then
+            MMon = {"Jungle Pirate"}
+            MPos = CFrame.new(-12107, 332, -10549)
+        elseif SelectMaterial == "Scrap Metal" then
+            MMon = {"Jungle Pirate"}
+            MPos = CFrame.new(-12107, 332, -10549)
+        elseif SelectMaterial == "Dragon Scale" then
+            MMon = {"Dragon Crew Archer", "Dragon Crew Warrior"}
+            MPos = CFrame.new(6594, 383, 139)
+        elseif SelectMaterial == "Conjured Cocoa" then
+            MMon = {"Cocoa Warrior", "Chocolate Bar Battler", "Sweet Thief", "Candy Rebel"}
+            MPos = CFrame.new(620.6344604492188, 78.93644714355469, -12581.369140625)
+        elseif SelectMaterial == "Demonic Wisp" then
+            MMon = {"Demonic Soul"}
+            MPos = CFrame.new(-9507, 172, 6158)
+        elseif SelectMaterial == "Gunpowder" then
+            MMon = {"Pistol Billionaire"}
+            MPos = CFrame.new(-469, 74, 5904)
+        end
+    end
+end
 
 if World1 then
     MaterialList = {"Scrap Metal","Leather","Angel Wings","Magma Ore","Fish Tail"}
