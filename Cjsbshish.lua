@@ -3621,7 +3621,7 @@ function MaterialMon()
         if SelectMaterial == "Magma Ore" then
             MMon = {"Military Soldier", "Military Spy"}
             MPos = CFrame.new(-5815, 84, 8820)
-        elseif ((a == "Leather") or (a == "Scrap Metal") then
+        elseif SelectMaterial == "Leather" or SelectMaterial == "Scrap Metal" then
             MMon = {"Brute"}
             MPos = CFrame.new(-1145, 15, 4350)
         elseif SelectMaterial == "Angel Wings" then
