@@ -3656,7 +3656,7 @@ function MaterialMon()
             MPos = CFrame.new(-6033, 7, -1317)
         elseif SelectMaterial == "Ectoplasm" then
             MMon = "Ship Deckhand", "Ship Engineer", "Ship Steward", "Ship Officer"
-            MPos = CFrame.new(937.953003, 181.083359, 33277.9297)
+            MPos = CFrame.new(916.928589, 181.092773, 33422)
             if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(923.40197753906, 125.05712890625, 32885.875)).Magnitude >= 17000 then
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.40197753906, 125.05712890625, 32885.875))
             end
