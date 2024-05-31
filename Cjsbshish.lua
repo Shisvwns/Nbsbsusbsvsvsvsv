@@ -3755,7 +3755,6 @@ spawn(function()
                 if game:GetService("Workspace").Enemies:FindFirstChild("Ship Deckhand") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Engineer") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Steward") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Officer") then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == "Ship Deckhand" or v.Name == "Ship Engineer" or v.Name == "Ship Steward" or v.Name == "Ship Officer" then
-                            if string.find(v.Name,"Ship") then
                                 repeat task.wait()
                                     EquipWeapon(_G.SelectWeapon)
                                     topos(v.HumanoidRootPart.CFrame * Pos)
@@ -3763,7 +3762,6 @@ spawn(function()
                                     StartEctoplasmMagnet = true
                                 until not _G.AutoMaterial or not v.Parent or v.Humanoid.Health <= 0
                                 StartEctoplasmMagnet = false
-                            end
                         end
                     end
                 else
