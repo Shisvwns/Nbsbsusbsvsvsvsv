@@ -3619,13 +3619,13 @@ local Section = Farm:AddSection({
 function MaterialMon()
     if World1 then
         if SelectMaterial == "Magma Ore" then
-            MMon = {"Military Soldier", "Military Spy"}
+            MMon = "Military Soldier", "Military Spy"
             MPos = CFrame.new(-5815, 84, 8820)
         elseif SelectMaterial == "Leather" or SelectMaterial == "Scrap Metal" then
-            MMon = {"Brute"}
+            MMon = "Brute"
             MPos = CFrame.new(-1145, 15, 4350)
         elseif SelectMaterial == "Angel Wings" then
-            MMon = {"God's Guard"}
+            MMon = "God's Guard"
             MPos = CFrame.new(-4698, 845, -1912)
             if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(-4607.82275, 872.54248, -1667.55688)).Magnitude >= 5000 then
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-4607.82275, 872.54248, -1667.55688))
@@ -3640,55 +3640,55 @@ function MaterialMon()
     end
     if World2 then
         if SelectMaterial == "Magma Ore" then
-            MMon = {"Magma Ninja"}
+            MMon = "Magma Ninja"
             MPos = CFrame.new(-5428, 78, -5959)
         elseif SelectMaterial == "Leather" then
-            MMon = {"Marine Captain"}
+            MMon = "Marine Captain"
             MPos = CFrame.new(-2010, 73, -3326)
         elseif SelectMaterial == "Scrap Metal" then
-            MMon = {"Swan Pirate"}
+            MMon = "Swan Pirate"
             MPos = CFrame.new(878, 122, 1235)
         elseif SelectMaterial == "Radioactive Material" then
-            MMon = {"Factory Staff"}
+            MMon = "Factory Staff"
             MPos = CFrame.new(295, 73, -56)
         elseif SelectMaterial == "Vampire Fang" then
-            MMon = {"Vampire"}
+            MMon = "Vampire"
             MPos = CFrame.new(-6033, 7, -1317)
         elseif SelectMaterial == "Ectoplasm" then
-            MMon = {"Ship Deckhand", "Ship Engineer", "Ship Steward", "Ship Officer"}
+            MMon = "Ship Deckhand", "Ship Engineer", "Ship Steward", "Ship Officer"
             MPos = CFrame.new(937.953003, 181.083359, 33277.9297)
             if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(923.40197753906, 125.05712890625, 32885.875)).Magnitude >= 17000 then
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.40197753906, 125.05712890625, 32885.875))
             end
         elseif SelectMaterial == "Mystic Droplet" then
-            MMon = {"Water Fighter", "Sea Soldier"}
+            MMon = "Water Fighter", "Sea Soldier"
             MPos = CFrame.new(-3385, 239, -10542)
         end
     end
     if World3 then
         if SelectMaterial == "Mini Tusk" then
-            MMon = {"Mythological Pirate"}
+            MMon = "Mythological Pirate"
             MPos = CFrame.new(-13545, 470, -6917)
         elseif SelectMaterial == "Fish Tail" then
-            MMon = {"Fishman Raider", "Fishman Captain"}
+            MMon = "Fishman Raider", "Fishman Captain"
             MPos = CFrame.new(-10993, 332, -8940)
         elseif SelectMaterial == "Leather" then
-            MMon = {"Jungle Pirate"}
+            MMon = "Jungle Pirate"
             MPos = CFrame.new(-12107, 332, -10549)
         elseif SelectMaterial == "Scrap Metal" then
-            MMon = {"Jungle Pirate"}
+            MMon = "Jungle Pirate"
             MPos = CFrame.new(-12107, 332, -10549)
         elseif SelectMaterial == "Dragon Scale" then
-            MMon = {"Dragon Crew Archer", "Dragon Crew Warrior"}
+            MMon = "Dragon Crew Archer", "Dragon Crew Warrior"
             MPos = CFrame.new(6594, 383, 139)
         elseif SelectMaterial == "Conjured Cocoa" then
-            MMon = {"Cocoa Warrior", "Chocolate Bar Battler", "Sweet Thief", "Candy Rebel"}
+            MMon = "Cocoa Warrior", "Chocolate Bar Battler", "Sweet Thief", "Candy Rebel"
             MPos = CFrame.new(620.6344604492188, 78.93644714355469, -12581.369140625)
         elseif SelectMaterial == "Demonic Wisp" then
-            MMon = {"Demonic Soul"}
+            MMon = "Demonic Soul"
             MPos = CFrame.new(-9507, 172, 6158)
         elseif SelectMaterial == "Gunpowder" then
-            MMon = {"Pistol Billionaire"}
+            MMon = "Pistol Billionaire"
             MPos = CFrame.new(-469, 74, 5904)
         end
     end
