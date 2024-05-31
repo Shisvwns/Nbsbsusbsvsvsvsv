@@ -2008,6 +2008,12 @@ spawn(function()
                             v.Humanoid:ChangeState(14)
                         end
                     end
+                    if StartEctoplasmMagnet and StartMagnetMusketeerhat then
+                        if (v.Name == "Ship Deckhand" or v.Name == "Ship Engineer" or v.Name == "Ship Steward" or v.Name == "Ship Officer") and (v.HumanoidRootPart.Position - MusketeerHatMon.Position).Magnitude <= 350 then
+                            v.HumanoidRootPart.CFrame = EctoplasmMon
+                            v.Humanoid:ChangeState(14)
+                        end
+                    end
                     if _G.Auto_EvoRace and StartEvoMagnet then
                         if v.Name == "Zombie" and (v.HumanoidRootPart.Position - PosMonEvo.Position).Magnitude <= 350 then
                             v.HumanoidRootPart.CFrame = PosMonEvo
@@ -3654,12 +3660,6 @@ function MaterialMon()
         elseif SelectMaterial == "Vampire Fang" then
             MMon = "Vampire"
             MPos = CFrame.new(-6033, 7, -1317)
-        elseif SelectMaterial == "Ectoplasm" then
-            MMon = "Ship Deckhand", "Ship Engineer", "Ship Steward", "Ship Officer"
-            MPos = CFrame.new(916.928589, 181.092773, 33422)
-            if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(923.40197753906, 125.05712890625, 32885.875)).Magnitude >= 17000 then
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.40197753906, 125.05712890625, 32885.875))
-            end
         elseif SelectMaterial == "Mystic Droplet" then
             MMon = "Water Fighter", "Sea Soldier"
             MPos = CFrame.new(-3385, 239, -10542)
@@ -3741,6 +3741,36 @@ spawn(function()
                     end
                 else
                     topos(MPos)
+                    UnEquipWeapon(_G.SelectWeapon)
+                end
+            end)
+        end
+    end
+end)
+
+spawn(function()
+    while wait() do
+        if SelectMaterial == "Ectoplasm" and _G.AutoMaterial then
+            pcall(function()
+                if game:GetService("Workspace").Enemies:FindFirstChild("Ship Deckhand") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Engineer") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Steward") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Officer") then
+                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        if v.Name == "Ship Deckhand" or v.Name == "Ship Engineer" or v.Name == "Ship Steward" or v.Name == "Ship Officer" then
+                            if string.find(v.Name,"Ship") then
+                                repeat task.wait()
+                                    EquipWeapon(_G.SelectWeapon)
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
+                                    EctoplasmMon = v.HumanoidRootPart.CFrame
+                                    StartEctoplasmMagnet = true
+                                until not _G.AutoMaterial or not v.Parent or v.Humanoid.Health <= 0
+                                StartEctoplasmMagnet = false
+                            end
+                        end
+                    end
+                else
+                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(923.40197753906, 125.05712890625, 32885.875)).Magnitude >= 17000 then
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
+                    end
+                    topos(CFrame.new(916.928589, 181.092773, 33422))
                     UnEquipWeapon(_G.SelectWeapon)
                 end
             end)
