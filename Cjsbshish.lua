@@ -3625,7 +3625,7 @@ function MaterialMon()
             MMon = {"Brute"}
             MPos = CFrame.new(-1145, 15, 4350)
         elseif SelectMaterial == "Angel Wings" then
-            MMon = {"God's Guard"}
+            MMon = "God's Guard"
             MPos = CFrame.new(-4698, 845, -1912)
             if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(-4607.82275, 872.54248, -1667.55688)).Magnitude >= 5000 then
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-4607.82275, 872.54248, -1667.55688))
