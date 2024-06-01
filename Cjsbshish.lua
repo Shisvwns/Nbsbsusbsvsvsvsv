@@ -1,4 +1,4 @@
---[ Anti Ban & Anti Afk]
+--[ Anti Ban ]
 
 assert(getrawmetatable)
     grm = getrawmetatable(game)
@@ -2054,7 +2054,7 @@ Setting:AddToggle({
 		_G.BringMonster = Value
 	end
 })
---[[
+
 spawn(function()
     while task.wait() do
         if _G.BringMonster then
@@ -2132,7 +2132,7 @@ spawn(function()
         end
     end
 end)
-]]--
+
 local Section = Setting:AddSection({
     Name = "~ Graphic & Reduce Lag ~"
 })
@@ -2393,24 +2393,6 @@ local CayLevel = Farm:AddToggle({
         StopTween(_G.AutoFarm)
 	end
 })
-
-task.spawn(function()
-    while task.wait() do
-        pcall(function()
-            if StartMagnet then
-                for a, a in pairs(game.Workspace.Enemies:GetChildren()) do
-                    if not string.find(a.Name, "Boss") and (a.HumanoidRootPart.Position - PosFarm.Position).magnitude <= 2500 then
-                        if InMyNetWork(a.HumanoidRootPart) then
-                            a.HumanoidRootPart.CFrame = PosFarm
-                            a.HumanoidRootPart.Size = Vector3.new(100, 100, 100)
-                            a.Humanoid:ChangeState(14)
-                        end
-                    end
-                end
-            end
-        end)
-    end
-end)
 
 spawn(function()
     while wait() do
