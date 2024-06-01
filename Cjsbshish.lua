@@ -2009,7 +2009,7 @@ spawn(function()
                         end
                     end
                     if _G.AutoMaterial and StartEctoplasmMagnet then
-                        if (v.Name == "Ship Deckhand" or v.Name == "Ship Engineer" or v.Name == "Ship Steward" or v.Name == "Ship Officer") and (v.HumanoidRootPart.Position - MusketeerHatMon.Position).Magnitude <= 350 then
+                        if (v.Name == "Ship Deckhand" or v.Name == "Ship Engineer" or v.Name == "Ship Steward" or v.Name == "Ship Officer") and (v.HumanoidRootPart.Position - EctoplasmMon.Position).Magnitude <= 350 then
                             v.HumanoidRootPart.CFrame = EctoplasmMon
                             v.Humanoid:ChangeState(14)
                         end
@@ -3755,13 +3755,13 @@ spawn(function()
                 if game:GetService("Workspace").Enemies:FindFirstChild("Ship Deckhand") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Engineer") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Steward") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Officer") then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == "Ship Deckhand" or v.Name == "Ship Engineer" or v.Name == "Ship Steward" or v.Name == "Ship Officer" then
-                                repeat task.wait()
-                                    EquipWeapon(_G.SelectWeapon)
-                                    topos(v.HumanoidRootPart.CFrame * Pos)
-                                    EctoplasmMon = v.HumanoidRootPart.CFrame
-                                    StartEctoplasmMagnet = true
-                                until not _G.AutoMaterial or not v.Parent or v.Humanoid.Health <= 0
-                                StartEctoplasmMagnet = false
+                            repeat task.wait
+                                EquipWeapon(_G.SelectWeapon)
+                                topos(v.HumanoidRootPart.CFrame * Pos)
+                                EctoplasmMon = v.HumanoidRootPart.CFrame
+                                StartEctoplasmMagnet = true
+                            until not _G.AutoMaterial or not v.Parent or v.Humanoid.Health <= 0
+                            StartEctoplasmMagnet = false
                         end
                     end
                 else
