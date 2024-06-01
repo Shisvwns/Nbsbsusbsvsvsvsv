@@ -1546,7 +1546,7 @@ function topos(Pos)
     Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
     pcall(function()
         local Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear),{CFrame = Pos})
-    end
+    end)
     Tween:Play()
     _G.Clip = true
     if _G.StopTween == true then
