@@ -1624,7 +1624,7 @@ function RequestEntrance(check1)
 end
 function WaitHRP(q0) 
     if not q0 then return end
-    return q0.Character:WaitForChild("HumanoidRootPart", 9) 
+    return q0.Character:WaitForChild("HumanoidRootPart", 0) 
 end 
 function CalcDistance(I, II) 
     if not II then 
@@ -1632,13 +1632,10 @@ function CalcDistance(I, II)
     end 
     return (Vector3.new(I.X, 0, I.Z)-Vector3.new(II.X, 0, II.Z)).Magnitude 
 end 
-function CheckInComBat()
-    return lp.PlayerGui.Main.InCombat.Visible and lp.PlayerGui.Main.InCombat.Text and (string.find(string.lower(lp.PlayerGui.Main.InCombat.Text),"risk"))
-end 
 function topos(Pos)
     if not Pos then return end 
-    lp.Character:WaitForChild("HumanoidRootPart", 9)
-    lp.Character:WaitForChild("Head", 9)
+    lp.Character:WaitForChild("HumanoidRootPart", 0)
+    lp.Character:WaitForChild("Head", 0)
     if not lp.Character:FindFirstChild("PartTele") then
         local PartTele = Instance.new("Part", lp.Character) -- Create part
         PartTele.Name = "PartTele"
@@ -1659,7 +1656,7 @@ function topos(Pos)
         return RequestEntrance(Portal)
     end
     if BypassTele == true then
-        if not CheckInComBat() and CalcDistance(Pos) - CalcDistance(Spawn, Pos) > 1000 and CalcDistance(Spawn) > 1000 then
+        if CalcDistance(Pos) - CalcDistance(Spawn, Pos) > 1000 and CalcDistance(Spawn) > 1000 then
             return BypassTeleport(Spawn)
         end
     end
@@ -1671,7 +1668,8 @@ function topos(Pos)
         _G.Clip = true
     end
         if _G.StopTween == true then
-        _G.Clip = false
+            _G.Clip = false
+        end
     end
 end
 
