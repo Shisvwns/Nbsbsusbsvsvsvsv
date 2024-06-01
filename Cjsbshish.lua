@@ -1582,6 +1582,40 @@ function GetPortal(check2)
     end
     return aM
 end 
+function BypassTeleport(is)
+    if lp.Character:FindFirstChild("PartTele") then
+        lp.Character.PartTele.CFrame = CFrame.new(lp.Character.PartTele.CFrame.X, 1000, lp.Character.PartTele.CFrame.Z)
+        task.wait(0.5)
+        if CheckInComBat() then
+            return
+        end
+        lp.Character.PartTele.CFrame = is
+        task.wait(0.1)
+        lp.Character.PrimaryPart.CFrame = is   
+        lp.Character:WaitForChild("Humanoid"):ChangeState(15)
+        task.wait(0.5)
+        repeat task.wait() until lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid.Health <= 0
+        repeat task.wait()
+            if lp.Character:FindFirstChild("PartTele") then
+                lp.Character.PartTele.CFrame = is  
+            end
+            if lp.Character:FindFirstChild("PrimaryPart") then
+                lp.Character.PrimaryPart.CFrame = is  
+            end
+        until lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid.Health > 0
+    end
+end
+function GetBypassPos(pos)
+    pos = Vector3.new(pos.X, pos.Y, pos.Z)
+    local lll, mmm = nil, math.huge
+    for i, v in pairs(NpcList) do
+        if (v.p - pos).Magnitude < mmm then
+            lll = v
+            mmm = (v.p - pos).Magnitude
+        end
+    end
+    return lll
+end
 function RequestEntrance(check1)
     game.ReplicatedStorage.Remotes.CommF_:InvokeServer(unpack({"requestEntrance", check1}))
     if lp.Character:FindFirstChild("PartTele") then
@@ -1598,7 +1632,10 @@ function CalcDistance(I, II)
         II = lp.Character.PrimaryPart.CFrame 
     end 
     return (Vector3.new(I.X, 0, I.Z)-Vector3.new(II.X, 0, II.Z)).Magnitude 
-end
+end 
+function CheckInComBat()
+    return lp.PlayerGui.Main.InCombat.Visible and lp.PlayerGui.Main.InCombat.Text and (string.find(string.lower(lp.PlayerGui.Main.InCombat.Text),"risk"))
+end 
 function topos(Pos)
     if not Pos then return end 
     lp.Character:WaitForChild("HumanoidRootPart", 9)
@@ -1617,12 +1654,21 @@ function topos(Pos)
         end)
     end
     Portal = GetPortal(Pos) 
+    Spawn = GetBypassPos(Pos) 
     MyCFrame = WaitHRP(lp).CFrame
     Distance = CalcDistance(MyCFrame, Pos)
     if CalcDistance(Portal, Pos) < CalcDistance(Pos) and CalcDistance(Portal) > 500 then
         return RequestEntrance(Portal)
     end
-    if Distance <= 150 then
+    if BypassTele == true then
+        if not CheckInComBat() and CalcDistance(Pos) - CalcDistance(Spawn, Pos) > 1000 and CalcDistance(Spawn) > 1000 then
+            return BypassTeleport(Spawn)
+        end
+    end
+    if lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid:FindFirstChild("Sit") and lp.Character.Humanoid.Sit == true then
+        lp.Character.Humanoid.Sit = false
+    end 
+    if Distance <= 10 then
         lp.Character.PartTele.CFrame = Pos
     else
         Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear),{CFrame = Pos})
@@ -2409,7 +2455,7 @@ Setting:AddToggle({
 	Name = "Bypass Teleport",
 	Default = false,
 	Callback = function(Value)
-		BypassTP = Value
+		BypassTele = Value
 	end
 })
 
