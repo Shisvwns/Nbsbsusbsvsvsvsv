@@ -1542,18 +1542,35 @@ function BTP(p)
     end)
 end
 
-function topos(Pos)
-    Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-    pcall(function()
-        local Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear),{CFrame = Pos})
-    end)
-    Tween:Play()
-    _G.Clip = true
-    if _G.StopTween == true then
-        _G.Clip = false
-        Tween:Cancel()
+pcall(function()
+    function topos(Pos)
+        function WaitHRP(Player)
+            if not Player then return end
+            return Player.Character:WaitForChild("HumanoidRootPart")
+        end
+        local Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+        local LocalPlayer = game.Players.LocalPlayer
+        local Character = LocalPlayer.Character
+        if not Character:FindFirstChild("PartTele") then
+            local PartTele = Instance.new("Part", Character)
+            PartTele.Name = "PartTele"
+            PartTele.Anchored = true
+            PartTele.Transparency = 1
+            PartTele.CFrame = WaitHRP(LocalPlayer).CFrame
+            PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
+                task.wait()
+                WaitHRP(LocalPlayer).CFrame = PartTele.CFrame
+            end)
+        end
+        local Tween = game:GetService("TweenService"):Create(Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear), {CFrame = Pos})
+        Tween:Play()
+        _G.Clip = true
+        if _G.StopTween == true then
+            _G.Clip = false
+            Tween:Cancel()
+        end
     end
-end
+end)
 
 function TelePlayer(Pos)
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
@@ -2439,6 +2456,7 @@ end)
 spawn(function()
     while wait() do
         if LevelFMode == "Get Quest" and _G.AutoFarm then
+            pcall(function()
                 local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
                 if not string.find(QuestTitle, NameMon) then
                     StartMagnet = false
@@ -2488,6 +2506,7 @@ spawn(function()
                         end
                     end
                 end
+            end)
         end
     end
 end)
