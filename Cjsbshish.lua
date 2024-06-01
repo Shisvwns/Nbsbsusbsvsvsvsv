@@ -811,7 +811,7 @@ function MaterialMon()
             MMon = "Jungle Pirate"
             MPos = CFrame.new(-12107, 332, -10549)
         elseif SelectMaterial == "Dragon Scale" then
-            MMon = "Dragon Crew Archer", "Dragon Crew Warrior"
+            MMon = "Dragon Crew Archer"
             MPos = CFrame.new(6594, 383, 139)
         elseif SelectMaterial == "Conjured Cocoa" then
             MMon = "Cocoa Warrior", "Chocolate Bar Battler", "Sweet Thief", "Candy Rebel"
@@ -1544,7 +1544,9 @@ end
 
 function topos(Pos)
     Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-    local Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear),{CFrame = Pos})
+    pcall(function()
+        local Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear),{CFrame = Pos})
+    end
     Tween:Play()
     _G.Clip = true
     if _G.StopTween == true then
@@ -2437,7 +2439,6 @@ end)
 spawn(function()
     while wait() do
         if LevelFMode == "Get Quest" and _G.AutoFarm then
-            pcall(function()
                 local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
                 if not string.find(QuestTitle, NameMon) then
                     StartMagnet = false
@@ -2487,7 +2488,6 @@ spawn(function()
                         end
                     end
                 end
-            end)
         end
     end
 end)
