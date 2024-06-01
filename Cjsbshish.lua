@@ -1667,9 +1667,8 @@ function topos(Pos)
         Tween:Play()
         _G.Clip = true
     end
-        if _G.StopTween == true then
-            _G.Clip = false
-        end
+    if _G.StopTween == true then
+        _G.Clip = false
     end
 end
 
