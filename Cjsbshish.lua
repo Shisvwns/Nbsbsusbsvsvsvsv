@@ -1529,19 +1529,6 @@ function GetDistance(Pos)
     end
 end
 
-function BTP(p)
-    pcall(function()
-        if (p.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 1500 and not Auto_Raid and game.Players.LocalPlayer.Character.Humanoid.Health > 0 then
-            repeat wait()
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = p
-                wait(.05)
-                game.Players.LocalPlayer.Character.Head:Destroy()
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = p
-            until (p.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 1500 and game.Players.LocalPlayer.Character.Humanoid.Health > 0
-        end
-    end)
-end
-
 local plrs = game.Players
 local lp = plrs.LocalPlayer
 local Workspace = game:GetService("Workspace")
@@ -1654,14 +1641,13 @@ function topos(Pos)
     lp.Character:WaitForChild("Head", 9)
     if not lp.Character:FindFirstChild("PartTele") then
         local PartTele = Instance.new("Part", lp.Character) -- Create part
-        PartTele.Size = Vector3.new(10,1,10)
         PartTele.Name = "PartTele"
         PartTele.Anchored = true
         PartTele.Transparency = 1
         PartTele.CanCollide = false
         PartTele.CFrame = WaitHRP(lp).CFrame 
         PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
-            task.wait(0.01)
+            task.wait()
             WaitHRP(lp).CFrame = PartTele.CFrame
         end)
     end
@@ -1677,14 +1663,15 @@ function topos(Pos)
             return BypassTeleport(Spawn)
         end
     end
-    if lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid:FindFirstChild("Sit") and lp.Character.Humanoid.Sit == true then
-        lp.Character.Humanoid.Sit = false
-    end 
     if Distance <= 10 then
         lp.Character.PartTele.CFrame = Pos
     else
         Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear),{CFrame = Pos})
-        Tween:Play() 
+        Tween:Play()
+        _G.Clip = true
+    end
+        if _G.StopTween == true then
+        _G.Clip = false
     end
 end
 
