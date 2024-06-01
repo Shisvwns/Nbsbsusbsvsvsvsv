@@ -1544,6 +1544,18 @@ end
 
 local plrs = game.Players
 local lp = plrs.LocalPlayer
+local Workspace = game:GetService("Workspace")
+NpcList = {}
+for i, v in pairs(Workspace.NPCs:GetChildren()) do 
+    if string.find(string.lower(v.Name), "home point") then
+        table.insert(NpcList, v:GetModelCFrame())
+    end
+end
+for i, v in pairs(getnilinstances()) do 
+    if string.find(string.lower(v.Name), "home point") then
+        table.insert(NpcList, v:GetModelCFrame())
+    end
+end
 local w = game.PlaceId
 if w == 2753915549 then
     World1 = true
