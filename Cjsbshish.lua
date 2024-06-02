@@ -2529,15 +2529,7 @@ spawn(function()
                         end
                     end
                 else
-                    if BypassTP then
-                        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameMon.Position).Magnitude > 1500 then
-                            BTP(CFrameMon)
-                        else
-                            topos(CFrameMon)
-                        end
-                    else
-                        topos(CFrameMon)
-                    end
+                    topos(CFrameMon)
                     UnEquipWeapon(_G.SelectWeapon)
                     StartMagnet = false
                     if game:GetService("ReplicatedStorage"):FindFirstChild(Mon) then
@@ -2561,15 +2553,7 @@ spawn(function()
                 if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
                     StartMagnet = false
                     CheckQuest()
-                    if BypassTP then
-                        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQuest.Position).Magnitude > 1500 then
-		        			BTP(CFrameQuest)
-		    			elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQuest.Position).Magnitude < 1500 then
-		        			topos(CFrameQuest)
-		    			end
-	    			else
-	    				topos(CFrameQuest)
-	    			end
+	    			topos(CFrameQuest)
 		    		if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQuest.Position).Magnitude <= 5 then
 	    				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest",NameQuest,LevelQuest)
                     end
@@ -2765,7 +2749,7 @@ spawn(function()
                     end
                 else
                     if game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince [Lv. 2300] [Raid Boss]") then
-                        topos(game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince [Lv. 2300] [Raid Boss]").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                        topos(game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince [Lv. 2300] [Raid Boss]").HumanoidRootPart.CFrame * Pos)
                     else
                         if KillMob == 0 then
                         end
@@ -2784,29 +2768,21 @@ spawn(function()
                                     end
                                 end
                             else
-                                if BypassTP then
-                                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CakePos.Position).Magnitude > 1500 then
-                                        BTP(CakePos)
-                                    elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CakePos.Position).Magnitude < 1500 then
-                                        topos(CakePos)
-                                    end
-                                else
-                                    topos(CakePos)
-                                end
+                                topos(CakePos)
                                 MagnetDought = false
                                 UnEquipWeapon(_G.SelectWeapon)
                                 topos(CFrame.new(-2091.911865234375, 70.00884246826172, -12142.8359375))
                                 if game:GetService("ReplicatedStorage"):FindFirstChild("Cookie Crafter") then
-                                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Cookie Crafter").HumanoidRootPart.CFrame * CFrame.new(2,20,2)) 
+                                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Cookie Crafter").HumanoidRootPart.CFrame * Pos) 
                                 else
                                     if game:GetService("ReplicatedStorage"):FindFirstChild("Cake Guard") then
-                                        topos(game:GetService("ReplicatedStorage"):FindFirstChild("Cake Guard").HumanoidRootPart.CFrame * CFrame.new(2,20,2)) 
+                                        topos(game:GetService("ReplicatedStorage"):FindFirstChild("Cake Guard").HumanoidRootPart.CFrame * Pos) 
                                     else
                                         if game:GetService("ReplicatedStorage"):FindFirstChild("Baking Staff") then
-                                            topos(game:GetService("ReplicatedStorage"):FindFirstChild("Baking Staff").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                                            topos(game:GetService("ReplicatedStorage"):FindFirstChild("Baking Staff").HumanoidRootPart.CFrame * Pos)
                                         else
                                             if game:GetService("ReplicatedStorage"):FindFirstChild("Head Baker") then
-                                                topos(game:GetService("ReplicatedStorage"):FindFirstChild("Head Baker").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                                                topos(game:GetService("ReplicatedStorage"):FindFirstChild("Head Baker").HumanoidRootPart.CFrame * Pos)
                                             end
                                         end
                                     end
@@ -2814,10 +2790,10 @@ spawn(function()
                             end
                         else
                             if game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince") then
-                                topos(game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                                topos(game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince").HumanoidRootPart.CFrame * Pos)
                             else
                                 if game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince") then
-                                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince").HumanoidRootPart.CFrame * Pos)
                                 end
                             end
                         end
@@ -2864,15 +2840,7 @@ spawn(function()
                 end
                 if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
                     MagnetDought = false
-                    if BypassTP then
-                        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CakeQuestPos.Position).Magnitude > 1500 then
-                            BTP(CakeQuestPos)
-                        elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CakeQuestPos.Position).Magnitude < 1500 then
-                            topos(CakeQuestPos)
-                        end
-                    else
-                        topos(CakeQuestPos)
-                    end
+                    topos(CakeQuestPos)
                     if (CakeQuestPos.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3 then                            
                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest","CakeQuest1",1)
                     end
@@ -2942,7 +2910,7 @@ spawn(function()
             UnEquipWeapon(_G.SelectWeapon)
             topos(CFrame.new(-2662.818603515625, 1062.3480224609375, -11853.6953125))
                 if game:GetService("ReplicatedStorage"):FindFirstChild("Dough King") then
-                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Dough King").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Dough King").HumanoidRootPart.CFrame * Pos)
                 end
             end
         end
@@ -3002,27 +2970,19 @@ spawn(function()
                         end
                     end
                 else
-                    if BypassTP then
-                        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - BonePos.Position).Magnitude > 1500 then
-                            BTP(BonePos)
-                        elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - BonePos.Position).Magnitude < 1500 then
-                            topos(BonePos)
-                        end
-                    else
-                        topos(BonePos)
-                    end
+                    topos(BonePos)
                     UnEquipWeapon(_G.SelectWeapon)
                     StartMagnetBoneMon = false
                     topos(CFrame.new(-9506.234375, 172.130615234375, 6117.0771484375))
                     for i,v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do 
                         if v.Name == "Reborn Skeleton" then
-                            topos(v.HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                            topos(v.HumanoidRootPart.CFrame * Pos)
                         elseif v.Name == "Living Zombie" then
-                            topos(v.HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                            topos(v.HumanoidRootPart.CFrame * Pos)
                         elseif v.Name == "Demonic Soul" then
-                            topos(v.HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                            topos(v.HumanoidRootPart.CFrame * Pos)
                         elseif v.Name == "Posessed Mummy" then
-                            topos(v.HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                            topos(v.HumanoidRootPart.CFrame * Pos)
                         end
                     end
                 end
@@ -3043,15 +3003,7 @@ spawn(function()
                 end
                 if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
                     StartMagnetBoneMon = false
-                    if BypassTP then
-                        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - BoneQuestPos.Position).Magnitude > 1500 then
-                            BTP(BoneQuestPos)
-                        elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - BoneQuestPos.Position).Magnitude < 1500 then
-                            topos(BoneQuestPos)
-                        end
-                    else
-                        topos(BoneQuestPos)
-                    end
+                    topos(BoneQuestPos)
                     if (BoneQuestPos.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3 then    
                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest","HauntedQuest2",1)
                     end
@@ -4545,11 +4497,11 @@ spawn(function()
                         end
                     else
                         if game:GetService("ReplicatedStorage"):FindFirstChild("Diablo") then
-                            topos(game:GetService("ReplicatedStorage"):FindFirstChild("Diablo").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                            topos(game:GetService("ReplicatedStorage"):FindFirstChild("Diablo").HumanoidRootPart.CFrame * Pos)
                         elseif game:GetService("ReplicatedStorage"):FindFirstChild("Deandre") then
-                            topos(game:GetService("ReplicatedStorage"):FindFirstChild("Deandre").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                            topos(game:GetService("ReplicatedStorage"):FindFirstChild("Deandre").HumanoidRootPart.CFrame * Pos)
                         elseif game:GetService("ReplicatedStorage"):FindFirstChild("Urban") then
-                            topos(game:GetService("ReplicatedStorage"):FindFirstChild("Urban").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                            topos(game:GetService("ReplicatedStorage"):FindFirstChild("Urban").HumanoidRootPart.CFrame * Pos)
                         end
                     end
                 end
@@ -5311,11 +5263,11 @@ spawn(function()
                         end
                     else
                         if game:GetService("ReplicatedStorage"):FindFirstChild("Diablo") then
-                            topos(game:GetService("ReplicatedStorage"):FindFirstChild("Diablo").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                            topos(game:GetService("ReplicatedStorage"):FindFirstChild("Diablo").HumanoidRootPart.CFrame * Pos)
                         elseif game:GetService("ReplicatedStorage"):FindFirstChild("Deandre") then
-                            topos(game:GetService("ReplicatedStorage"):FindFirstChild("Deandre").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                            topos(game:GetService("ReplicatedStorage"):FindFirstChild("Deandre").HumanoidRootPart.CFrame * Pos)
                         elseif game:GetService("ReplicatedStorage"):FindFirstChild("Urban") then
-                            topos(game:GetService("ReplicatedStorage"):FindFirstChild("Urban").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                            topos(game:GetService("ReplicatedStorage"):FindFirstChild("Urban").HumanoidRootPart.CFrame * Pos)
                         end
                     end
                 end
@@ -5409,19 +5361,10 @@ spawn(function()
                     end
                 end
             else
-            if BypassTP then
-            if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - TushitaPos.Position).Magnitude > 1500 then
-            BTP(TushitaPos)
-            elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - TushitaPos.Position).Magnitude < 1500 then
             topos(TushitaPos)
-            end
-        else
-            topos(TushitaPos)
-        end
             UnEquipWeapon(_G.SelectWeapon)
-            topos(CFrame.new(-10238.875976563, 389.7912902832, -9549.7939453125))
                 if game:GetService("ReplicatedStorage"):FindFirstChild("Longma") then
-                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Longma").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Longma").HumanoidRootPart.CFrame * Pos)
                 end
             end
         end
@@ -5992,19 +5935,10 @@ spawn(function()
                     end
                 end
             else
-            if BypassTP then
-            if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CavandisPos.Position).Magnitude > 1500 then
-            BTP(CavandisPos)
-            elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CavandisPos.Position).Magnitude < 1500 then
-            topos(CavandisPos)
-            end
-        else
-            topos(CavandisPos)
-        end
-            UnEquipWeapon(_G.SelectWeapon)
-            topos(CFrame.new(5311.07421875, 426.0243835449219, 165.12762451171875))
+                topos(CavandisPos)
+                UnEquipWeapon(_G.SelectWeapon)
                 if game:GetService("ReplicatedStorage"):FindFirstChild("Beautiful Pirate") then
-                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Beautiful Pirate").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Beautiful Pirate").HumanoidRootPart.CFrame * Pos)
                 end
             end
         end
@@ -6036,19 +5970,10 @@ spawn(function()
                     end
                 end
             else
-            if BypassTP then
-            if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - ElephantPos.Position).Magnitude > 1500 then
-            BTP(ElephantPos)
-            elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - ElephantPos.Position).Magnitude < 1500 then
-            topos(ElephantPos)
-            end
-        else
-            topos(ElephantPos)
-        end
-            UnEquipWeapon(_G.SelectWeapon)
-            topos(CFrame.new(-13348.0654296875, 405.8904113769531, -8570.62890625))
+                topos(ElephantPos)
+                UnEquipWeapon(_G.SelectWeapon)
                 if game:GetService("ReplicatedStorage"):FindFirstChild("Captain Elephant") then
-                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Captain Elephant").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Captain Elephant").HumanoidRootPart.CFrame * Pos)
                 end
             end
         end
@@ -6116,19 +6041,10 @@ spawn(function()
                     end
                 end
             else
-            if BypassTP then
-            if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - TridentPos.Position).Magnitude > 1500 then
-            BTP(TridentPos)
-            elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - TridentPos.Position).Magnitude < 1500 then
-            topos(TridentPos)
-            end
-        else
-            topos(TridentPos)
-        end
-            UnEquipWeapon(_G.SelectWeapon)
-            topos(CFrame.new(-3914.830322265625, 123.29389190673828, -11516.8642578125))
+                topos(TridentPos)
+                UnEquipWeapon(_G.SelectWeapon)
                 if game:GetService("ReplicatedStorage"):FindFirstChild("Tide Keeper") then
-                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Tide Keeper").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Tide Keeper").HumanoidRootPart.CFrame * Pos)
                 end
             end
         end
@@ -6160,19 +6076,10 @@ spawn(function()
                     end
                 end
             else
-            if BypassTP then
-            if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - TridentPos.Position).Magnitude > 1500 then
-            BTP(TridentPos)
-            elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - TridentPos.Position).Magnitude < 1500 then
-            topos(TridentPos)
-            end
-        else
-            topos(TridentPos)
-        end
-            UnEquipWeapon(_G.SelectWeapon)
-            topos(CFrame.new(5186.14697265625, 24.86684226989746, 832.1885375976562))
+                topos(TridentPos)
+                UnEquipWeapon(_G.SelectWeapon)
                 if game:GetService("ReplicatedStorage"):FindFirstChild("Chief Warden") then
-                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Chief Warden").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Chief Warden").HumanoidRootPart.CFrame * Pos)
                 end
             end
         end
@@ -6204,19 +6111,10 @@ spawn(function()
                     end
                 end
             else
-            if BypassTP then
-            if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - PolePos.Position).Magnitude > 1500 then
-            BTP(PolePos)
-            elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - PolePos.Position).Magnitude < 1500 then
-            topos(PolePos)
-            end
-        else
-            topos(TridentPos)
-        end
-            UnEquipWeapon(_G.SelectWeapon)
-            topos(CFrame.new(-7748.0185546875, 5606.80615234375, -2305.898681640625))
+                topos(TridentPos)
+                UnEquipWeapon(_G.SelectWeapon)
                 if game:GetService("ReplicatedStorage"):FindFirstChild("Thunder God") then
-                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Thunder God").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Thunder God").HumanoidRootPart.CFrame * Pos)
                 end
             end
         end
@@ -6248,19 +6146,10 @@ spawn(function()
                     end
                 end
             else
-            if BypassTP then
-            if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - SharkPos.Position).Magnitude > 1500 then
-            BTP(SharkPos)
-            elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - SharkPos.Position).Magnitude < 1500 then
-            topos(SharkPos)
-            end
-        else
-            topos(SharkPos)
-        end
-            UnEquipWeapon(_G.SelectWeapon)
-            topos(CFrame.new(-690.33081054688, 15.09425163269, 1582.2380371094))
+                topos(SharkPos)
+                UnEquipWeapon(_G.SelectWeapon)
                 if game:GetService("ReplicatedStorage"):FindFirstChild("The Saw") then
-                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("The Saw").HumanoidRootPart.CFrame * CFrame.new(2,40,2))
+                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("The Saw").HumanoidRootPart.CFrame * Pos)
                 end
             end
         end
@@ -6292,19 +6181,10 @@ spawn(function()
                     end
                 end
             else
-            if BypassTP then
-            if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - SharkPos.Position).Magnitude > 1500 then
-            BTP(EmpressPos)
-            elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - SharkPos.Position).Magnitude < 1500 then
-            topos(EmpressPos)
-            end
-        else
-            topos(EmpressPos)
-        end
-            UnEquipWeapon(_G.SelectWeapon)
-            topos(CFrame.new(5543.86328125, 668.97399902344, 199.0341796875))
+                topos(EmpressPos)
+                UnEquipWeapon(_G.SelectWeapon)
                 if game:GetService("ReplicatedStorage"):FindFirstChild("Island Empress") then
-                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Island Empress").HumanoidRootPart.CFrame * CFrame.new(2,40,2))
+                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Island Empress").HumanoidRootPart.CFrame * Pos)
                 end
             end
         end
@@ -7658,15 +7538,7 @@ spawn(function()
             end
             if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
                 StartMagnetBoneMon = false
-                if BypassTP then
-                if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - BoneQuestPos.Position).Magnitude > 1500 then
-                BTP(BoneQuestPos)
-                elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - BoneQuestPos.Position).Magnitude < 1500 then
                 topos(BoneQuestPos)
-                end
-            else
-                topos(BoneQuestPos)
-            end
             if (BoneQuestPos.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3 then    
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest","HauntedQuest2",1)
                 end
@@ -7995,7 +7867,7 @@ Teleport:AddToggle({
       	      elseif _G.SelectIsland == "Magma Village" then
        	         topos(CFrame.new(-5247.7163085938, 12.883934020996, 8504.96875))
      	       elseif _G.SelectIsland == "Under Water Island" then
-       	         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(61163.8515625, 11.6796875, 1819.7841796875))
+       	         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(61163.8515625, 5.6796875, 1819.7841796875))
     	        elseif _G.SelectIsland == "Fountain City" then
      	           topos(CFrame.new(5127.1284179688, 59.501365661621, 4105.4458007813))
    	         elseif _G.SelectIsland == "Shank Room" then
