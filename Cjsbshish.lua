@@ -1633,19 +1633,6 @@ function CalcDistance(I, II)
     return (Vector3.new(I.X, 0, I.Z)-Vector3.new(II.X, 0, II.Z)).Magnitude 
 end 
 function topos(Pos)
-    if not Pos then return end 
-    if not lp.Character:FindFirstChild("PartTele") then
-        local PartTele = Instance.new("Part", lp.Character) -- Create part
-        PartTele.Name = "PartTele"
-        PartTele.Anchored = true
-        PartTele.Transparency = 1
-        PartTele.CanCollide = false
-        PartTele.CFrame = WaitHRP(lp).CFrame 
-        PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
-            task.wait()
-            WaitHRP(lp).CFrame = PartTele.CFrame
-        end)
-    end
     Portal = GetPortal(Pos) 
     Spawn = GetBypassPos(Pos) 
     MyCFrame = WaitHRP(lp).CFrame
@@ -1658,11 +1645,11 @@ function topos(Pos)
             return BypassTeleport(Spawn)
         end
     end
-    Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear),{CFrame = Pos})
+    Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear),{CFrame = Pos})
     Tween:Play()
     _G.Clip = true
     if _G.StopTween == true then
-        Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear),{CFrame = Pos})
+        Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear),{CFrame = Pos})
         Tween:Cancel()
         _G.Clip = false
     end
