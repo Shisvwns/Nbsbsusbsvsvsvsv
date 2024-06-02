@@ -1715,17 +1715,9 @@ end)
 function StopTween(target)
     if not target then
         _G.StopTween = true
-        wait()
-        topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
-        wait()
-        if game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
-            game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip"):Destroy()
-        end
+        lp.Character.PartTele.CFrame
         _G.StopTween = false
         _G.Clip = false
-    end
-    if game.Players.LocalPlayer.Character:FindFirstChild('Highlight') then
-        game.Players.LocalPlayer.Character:FindFirstChild('Highlight'):Destroy()
     end
 end
 
