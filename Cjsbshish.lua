@@ -1666,6 +1666,9 @@ function topos(Pos)
         _G.Clip = true
     end
     if _G.StopTween == true then
+        Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear),{CFrame = Pos})
+        Tween:Cancel()
+        lp.Character.PartTele.CFrame = Pos
         _G.Clip = false
     end
 end
@@ -1715,9 +1718,17 @@ end)
 function StopTween(target)
     if not target then
         _G.StopTween = true
-        lp.Character.PartTele.CFrame
+        wait()
+        topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
+        wait()
+        if game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
+            game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip"):Destroy()
+        end
         _G.StopTween = false
         _G.Clip = false
+    end
+    if game.Players.LocalPlayer.Character:FindFirstChild('Highlight') then
+        game.Players.LocalPlayer.Character:FindFirstChild('Highlight'):Destroy()
     end
 end
 
