@@ -1658,13 +1658,9 @@ function topos(Pos)
             return BypassTeleport(Spawn)
         end
     end
-    if Distance <= 10 then
-        lp.Character.PartTele.CFrame = Pos
-    else
-        Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear),{CFrame = Pos})
-        Tween:Play()
-        _G.Clip = true
-    end
+    Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear),{CFrame = Pos})
+    Tween:Play()
+    _G.Clip = true
     if _G.StopTween == true then
         Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear),{CFrame = Pos})
         Tween:Cancel()
