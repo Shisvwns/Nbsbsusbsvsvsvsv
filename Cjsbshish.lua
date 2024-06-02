@@ -1660,7 +1660,6 @@ function topos(Pos)
     end
     Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear),{CFrame = Pos})
     Tween:Play()
-    lp.Character.PartTele.CFrame = Pos
     _G.Clip = true
     if _G.StopTween == true then
         Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear),{CFrame = Pos})
