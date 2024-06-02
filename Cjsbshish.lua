@@ -2627,9 +2627,9 @@ spawn(function()
                     end
                     if Quest.Visible == true then
                         if string.find(QuestTitle, "Defeat") then
-                            getgenv().Ply = string.split(QuestTitle," ")[2]
+                            PlayerKill = string.split(QuestTitle," ")[2]
                             for i,v in pairs(Players) do
-                                if v.Name == getgenv().Ply and v.Character.Humanoid.Health > 0 then
+                                if v.Name == PlayerKill and v.Character.Humanoid.Health > 0 then
                                     repeat task.wait()
                                         if v.Data.Level.Value < 20 or v.Data.Level.Value > mylevel * 5 then
                                             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("PlayerHunter")
@@ -2639,7 +2639,7 @@ spawn(function()
                                         end
                                         EquipWeapon(_G.SelectWeapon)
                                         topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,0))
-                                        if enemy:DistanceFromCharacter(WaitHRP(lp).Position) <= 30 then
+                                        if PlayerKill.Position <= 30 then
                                             game:GetService("VirtualInputManager"):SendKeyEvent(true, "Z", false, game)
                                             game:GetService("VirtualInputManager"):SendKeyEvent(false, "Z", false, game)
                                             wait()
