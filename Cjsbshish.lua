@@ -1624,7 +1624,7 @@ function RequestEntrance(check1)
 end
 function WaitHRP(q0) 
     if not q0 then return end
-    return q0.Character:WaitForChild("HumanoidRootPart", 0) 
+    return q0.Character:WaitForChild("HumanoidRootPart", 1) 
 end 
 function CalcDistance(I, II) 
     if not II then 
@@ -1634,8 +1634,6 @@ function CalcDistance(I, II)
 end 
 function topos(Pos)
     if not Pos then return end 
-    lp.Character:WaitForChild("HumanoidRootPart", 0)
-    lp.Character:WaitForChild("Head", 0)
     if not lp.Character:FindFirstChild("PartTele") then
         local PartTele = Instance.new("Part", lp.Character) -- Create part
         PartTele.Name = "PartTele"
