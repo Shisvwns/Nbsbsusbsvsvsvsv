@@ -1322,6 +1322,9 @@ local function round(n)
     return math.floor(tonumber(n) + 0.5)
 end
 Number = math.random(1, 1000000)
+spawn(function()
+while task.wait() do
+pcall(function()
 function UpdatePlayerChams()
     for i,v in pairs(game:GetService'Players':GetChildren()) do
         if not isnil(v.Character) then
@@ -1497,6 +1500,9 @@ function UpdateFlowerChams()
 		end
     end
 end
+end)
+end
+end)
 
 function AutoHaki()
     if not game:GetService("Players").LocalPlayer.Character:FindFirstChild("HasBuso") then
