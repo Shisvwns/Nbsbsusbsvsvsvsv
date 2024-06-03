@@ -1695,13 +1695,14 @@ function topos(Pos)
             return BypassTeleport(Spawn)
         end
     end
-    if Distance <= 100 then
+    if Distance <= 150 then
         lp.Character.PartTele.CFrame = Pos
     end
     Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
     Tween:Play()
     _G.Clip = true
     if _G.StopTween == true then
+        Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
         Tween:Cancel()
         _G.Clip = false
     end
@@ -3872,7 +3873,6 @@ spawn(function()
                 MaterialMon(SelectMaterial)
                 if game:GetService("Workspace").Enemies:FindFirstChild(MMon) or game:GetService("Workspace").Enemies:FindFirstChild(MMon1) then
                     for i,v in pairs (game.Workspace.Enemies:GetChildren()) do
-                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                             if (v.Name == MMon or v.Name == MMon1) then
                                 repeat task.wait()
                                     EquipWeapon(SelectWeapon)
@@ -3882,7 +3882,6 @@ spawn(function()
                                 until not AutoMaterial or not v.Parent or v.Humanoid.Health <= 0
                                 BringMonMaterial = false
                             end
-                        end
                     end
                 else
                     UnEquipWeapon(SelectWeapon)
