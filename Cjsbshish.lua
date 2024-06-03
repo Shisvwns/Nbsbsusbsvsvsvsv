@@ -3868,12 +3868,12 @@ Farm:AddToggle({
 
 spawn(function()
     while wait() do
-        if AutoMaterial then
+        if _G.AutoMaterial then
             pcall(function()
                 MaterialMon(SelectMaterial)
-                if game:GetService("Workspace").Enemies:FindFirstChild(MMon) or game:GetService("Workspace").Enemies:FindFirstChild(MMon1) then
+                if game:GetService("Workspace").Enemies:FindFirstChild(MMon) then
                     for i,v in pairs (game.Workspace.Enemies:GetChildren()) do
-                            if (v.Name == MMon or v.Name == MMon1) then
+                            if v.Name == MMon then
                                 repeat task.wait()
                                     EquipWeapon(SelectWeapon)
                                     topos(v.HumanoidRootPart.CFrame * Pos)
@@ -3884,10 +3884,8 @@ spawn(function()
                             end
                     end
                 else
-                    UnEquipWeapon(SelectWeapon)
                     topos(MPos)
-                    wait()
-                    topos(MPos1)
+                    UnEquipWeapon(SelectWeapon)
                 end
             end)
         end
@@ -5010,6 +5008,24 @@ spawn(function()
             }
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
         end 
+    end
+end)
+
+ItemQuest:AddToggle({
+	Name = "Auto Buy True Triple Katana",
+	Default = false,
+	Callback = function(Value)
+		_G.AutoTrueTriplKatana = Value
+	end
+})
+
+spawn(function()
+    while task.wait() do
+        pcall(function()
+            if _G.AutoTrueTriplKatana then
+                game:GetService("ReplicatedStorage").Remotes["CommF_"]:InvokeServer("MysteriousMan", "2")
+            end
+        end)
     end
 end)
 
