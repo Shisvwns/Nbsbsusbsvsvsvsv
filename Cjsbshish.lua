@@ -1695,7 +1695,7 @@ spawn(function()
                     v.CanCollide = false    
                 end
             end
-        elseif not NoClip and game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
+        elseif not _G.Clip and game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
             game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity"):Destroy()
         end
     end)
@@ -2628,7 +2628,7 @@ spawn(function()
                     if Quest.Visible == true then
                         if string.find(QuestTitle, "Defeat") then
                             PlayerKill = string.split(QuestTitle," ")[2]
-                            for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                            for i,v in pairs(Players) do
                                 if v.Name == PlayerKill and v.Character.Humanoid.Health > 0 then
                                     repeat task.wait()
                                         if v.Data.Level.Value < 20 or v.Data.Level.Value > mylevel * 5 then
@@ -2639,7 +2639,7 @@ spawn(function()
                                         end
                                         EquipWeapon(_G.SelectWeapon)
                                         topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,0))
-                                        if (v.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 50 then
+                                        if (v.Character.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 50 then
                                             game:GetService("VirtualInputManager"):SendKeyEvent(true, "Z", false, game)
                                             game:GetService("VirtualInputManager"):SendKeyEvent(false, "Z", false, game)
                                             wait()
@@ -2686,7 +2686,7 @@ local Section = Farm:AddSection({
 local StatusCakePrince = Farm:AddParagraph("Cake Prince")
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 88 then
             StatusCakePrince:Set("Defeat: "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,41).."/500")
         elseif string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 87 then
@@ -5229,7 +5229,7 @@ local Section = ItemQuest:AddSection({
 local Yama = ItemQuest:AddParagraph("Elite Progress")
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         Yama:Set("Elite: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter","Progress"))
     end
 end)
@@ -7981,7 +7981,7 @@ end)
 local KillCake = StatusServer:AddParagraph("Cake Prince")
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 88 then
             KillCake:Set("Defeat: "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,41).."/500")
         elseif string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 87 then
