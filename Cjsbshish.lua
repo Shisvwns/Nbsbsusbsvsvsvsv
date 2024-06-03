@@ -5865,6 +5865,9 @@ spawn(function()
                                 end
                             end
                         end
+                    else
+                        topos(CFrame.new(-1404.91504, 29.9773273, 3.80598116, 0.876514494, 5.66906877e-09, 0.481375456, 2.53851997e-08, 1, -5.79995607e-08, -0.481375456, 6.30572643e-08, 0.876514494))
+                        UnEquipWeapon(_G.SelectWeapon)
                     end
                 end
             end)
