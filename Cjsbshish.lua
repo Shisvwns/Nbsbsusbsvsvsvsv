@@ -2265,7 +2265,7 @@ spawn(function()
                         end
                     end
                     if _G.AutoMaterial and BringMonMaterial then
-                        if v.Name == MMon and (v.HumanoidRootPart.Position - MaterialPos.Position).Magnitude <= 300 then
+                        if (v.Name == MMon or v.Name == MMon1) and (v.HumanoidRootPart.Position - MaterialPos.Position).Magnitude <= 300 then
                             v.HumanoidRootPart.CFrame = MaterialPos
                             v.Humanoid:ChangeState(14)
                         end
@@ -3870,10 +3870,10 @@ spawn(function()
         if AutoMaterial then
             pcall(function()
                 MaterialMon(SelectMaterial)
-                if game:GetService("Workspace").Enemies:FindFirstChild(MMon) or game:GetService("Workspace").Enemies:FindFirstChild(MMon1)  then
+                if game:GetService("Workspace").Enemies:FindFirstChild(MMon) or game:GetService("Workspace").Enemies:FindFirstChild(MMon1) then
                     for i,v in pairs (game.Workspace.Enemies:GetChildren()) do
                         if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                            if v.Name == MMon or v.Name == MMon1 then
+                            if (v.Name == MMon or v.Name == MMon1) then
                                 repeat task.wait()
                                     EquipWeapon(SelectWeapon)
                                     topos(v.HumanoidRootPart.CFrame * Pos)
