@@ -2628,7 +2628,7 @@ spawn(function()
                     if Quest.Visible == true then
                         if string.find(QuestTitle, "Defeat") then
                             PlayerKill = string.split(QuestTitle," ")[2]
-                            for i,v in next, game:GetService("Workspace").Characters:GetChildren() do
+                            for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                                 if v.Name == PlayerKill and v.Character.Humanoid.Health > 0 then
                                     repeat task.wait()
                                         if v.Data.Level.Value < 20 or v.Data.Level.Value > mylevel * 5 then
