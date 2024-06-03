@@ -1672,23 +1672,11 @@ function topos(Pos)
             return BypassTeleport(Spawn)
         end
     end
-    -- [ Tween Smooth]
-    if SelectModeTween == "Tween Smooth" then
-        TweenSm = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
-        TweenSm:Play()
-        _G.Clip = true
-    end
-    -- [ Tween Normal ]
-    if SelectModeTween == "Tween Normal" then
-        TweenNm = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
-        TweenNm:Play()
-        _G.Clip = true
-    end
+    Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
+    Tween:Play()
+    _G.Clip = true
     if _G.StopTween == true then
-        TNormal = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
-        TNormal:Cancel()
-        TSmooth = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
-        TSmooth:Cancel()
+        Tween:Cancel()
         _G.Clip = false
     end
 end
@@ -2294,17 +2282,6 @@ end)
 
 local Section = Setting:AddSection({
     Name = "~ Tween ~"
-})
-
-local TweenWarning = Setting:AddParagraph("⚠️ Warning", "Tween Smooth Has Errors, Use Is Not Recommended")
-
-Setting:AddDropdown({
-	Name = "Select Tween Style",
-	Default = "Tween Normal",
-	Options = {"Tween Normal","Tween Smooth"},
-	Callback = function(Value)
-		SelectModeTween = Value
-	end
 })
 
 Setting:AddSlider({
