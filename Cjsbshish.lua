@@ -1699,6 +1699,7 @@ if SelectModeTween == "Tween Smooth" then
 end
 
 if SelectModeTween == "Tween Normal" then
+    function topos(Pos)
         Portal = GetPortal(Pos) 
         Spawn = GetBypassPos(Pos) 
         MyCFrame = WaitHRP(lp).CFrame
@@ -2350,6 +2351,14 @@ Setting:AddSlider({
 	end
 })
 
+Setting:AddToggle({
+	Name = "Bypass Teleport",
+	Default = false,
+	Callback = function(Value)
+		BypassTele = Value
+	end
+})
+
 local Section = Setting:AddSection({
     Name = "~ Graphic & Reduce Lag ~"
 })
@@ -2544,14 +2553,6 @@ spawn(function()
         end
     end
 end)
-
-Setting:AddToggle({
-	Name = "Bypass Teleport",
-	Default = false,
-	Callback = function(Value)
-		BypassTele = Value
-	end
-})
 
 Setting:AddToggle({
 	Name = "Anti Afk",
