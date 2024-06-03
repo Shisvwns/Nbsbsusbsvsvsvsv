@@ -2601,7 +2601,7 @@ spawn(function()
                         UnEquipWeapon(_G.SelectWeapon)
                         StartMagnet = false
                         if game:GetService("ReplicatedStorage"):FindFirstChild(Mon) then
-                            topos(game:GetService("ReplicatedStorage"):FindFirstChild(Mon).HumanoidRootPart.CFrame * CFrame.new(15,10,2))
+                            topos(game:GetService("ReplicatedStorage"):FindFirstChild(Mon).HumanoidRootPart.CFrame * Pos)
                         end
                     end
                 end
@@ -2818,10 +2818,6 @@ spawn(function()
                         else
                             if game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince") then
                                 topos(game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince").HumanoidRootPart.CFrame * Pos)
-                            else
-                                if game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince") then
-                                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince").HumanoidRootPart.CFrame * Pos)
-                                end
                             end
                         end
                     end
@@ -2893,7 +2889,7 @@ spawn(function()
                     else
                         MagnetDought = false
                         if game:GetService("ReplicatedStorage"):FindFirstChild("Cookie Crafter") then
-                            topos(game:GetService("ReplicatedStorage"):FindFirstChild("Cookie Crafter").HumanoidRootPart.CFrame * CFrame.new(15,10,2))
+                            topos(game:GetService("ReplicatedStorage"):FindFirstChild("Cookie Crafter").HumanoidRootPart.CFrame * Pos)
                         end
                     end
                 end
@@ -3056,7 +3052,7 @@ spawn(function()
                     else
                         StartMagnetBoneMon = false
                         if game:GetService("ReplicatedStorage"):FindFirstChild("Demonic Soul [Lv. 2025]") then
-                            topos(game:GetService("ReplicatedStorage"):FindFirstChild("Demonic Soul [Lv. 2025]").HumanoidRootPart.CFrame * CFrame.new(15,10,2))
+                            topos(game:GetService("ReplicatedStorage"):FindFirstChild("Demonic Soul [Lv. 2025]").HumanoidRootPart.CFrame * Pos)
                         end
                     end
                 end
@@ -4469,13 +4465,14 @@ spawn(function()
                 for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                     if v.Name == "Core" and v.Humanoid.Health > 0 then
                         repeat task.wait()
-                            EquipWeapon(_G.SelectWeapon)           
+                            EquipWeapon(_G.SelectWeapon)
                             topos(CFrame.new(448.46756, 199.356781, -441.389252))                                  
                         until v.Humanoid.Health <= 0 or _G.AutoFactory == false
                     end
                 end
             else
                 topos(CFrame.new(448.46756, 199.356781, -441.389252))
+                UnEquipWeapon(_G.SelectWeapon)           
             end
         end
     end
@@ -5814,90 +5811,90 @@ ItemQuest:AddToggle({
 spawn(function()
     while task.wait() do
         if _G.Auto_Saber and World1 and game.Players.LocalPlayer.Data.Level.Value >= 200 then
-                if game:GetService("Workspace").Map.Jungle.Final.Part.Transparency == 0 then
-                    if game:GetService("Workspace").Map.Jungle.QuestPlates.Door.Transparency == 0 then
-                        if (CFrame.new(-1612.55884, 36.9774132, 148.719543, 0.37091279, 3.0717151e-09, -0.928667724, 3.97099491e-08, 1, 1.91679348e-08, 0.928667724, -4.39869794e-08, 0.37091279).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
-                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Map.Jungle.QuestPlates.Plate1.Button.CFrame
-                            wait(1)
-                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Map.Jungle.QuestPlates.Plate2.Button.CFrame
-                            wait(1)
-                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Map.Jungle.QuestPlates.Plate3.Button.CFrame
-                            wait(1)
-                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Map.Jungle.QuestPlates.Plate4.Button.CFrame
-                            wait(1)
-                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Map.Jungle.QuestPlates.Plate5.Button.CFrame
-                        else
-                            topos(CFrame.new(-1612.55884, 36.9774132, 148.719543, 0.37091279, 3.0717151e-09, -0.928667724, 3.97099491e-08, 1, 1.91679348e-08, 0.928667724, -4.39869794e-08, 0.37091279))
+            if game:GetService("Workspace").Map.Jungle.Final.Part.Transparency == 0 then
+                if game:GetService("Workspace").Map.Jungle.QuestPlates.Door.Transparency == 0 then
+                    if (CFrame.new(-1612.55884, 36.9774132, 148.719543, 0.37091279, 3.0717151e-09, -0.928667724, 3.97099491e-08, 1, 1.91679348e-08, 0.928667724, -4.39869794e-08, 0.37091279).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Map.Jungle.QuestPlates.Plate1.Button.CFrame
+                        wait(1)
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Map.Jungle.QuestPlates.Plate2.Button.CFrame
+                        wait(1)
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Map.Jungle.QuestPlates.Plate3.Button.CFrame
+                        wait(1)
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Map.Jungle.QuestPlates.Plate4.Button.CFrame
+                        wait(1)
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Map.Jungle.QuestPlates.Plate5.Button.CFrame
+                    else
+                        topos(CFrame.new(-1612.55884, 36.9774132, 148.719543, 0.37091279, 3.0717151e-09, -0.928667724, 3.97099491e-08, 1, 1.91679348e-08, 0.928667724, -4.39869794e-08, 0.37091279))
+                    end
+                else
+                    if game:GetService("Workspace").Map.Desert.Burn.Part.Transparency == 0 then
+                        if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Torch") or game.Players.LocalPlayer.Character:FindFirstChild("Torch") then
+                            EquipWeapon("Torch")
+                            topos(CFrame.new(1114.61475, 5.04679728, 4350.22803, -0.648466587, -1.28799094e-09, 0.761243105, -5.70652914e-10, 1, 1.20584542e-09, -0.761243105, 3.47544882e-10, -0.648466587))
+                          else
+                          topos(CFrame.new(-1610.00757, 11.5049858, 164.001587, 0.984807551, -0.167722285, -0.0449818149, 0.17364943, 0.951244235, 0.254912198, 3.42372805e-05, -0.258850515, 0.965917408))
                         end
                     else
-                        if game:GetService("Workspace").Map.Desert.Burn.Part.Transparency == 0 then
-                            if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Torch") or game.Players.LocalPlayer.Character:FindFirstChild("Torch") then
-                                EquipWeapon("Torch")
-                                topos(CFrame.new(1114.61475, 5.04679728, 4350.22803, -0.648466587, -1.28799094e-09, 0.761243105, -5.70652914e-10, 1, 1.20584542e-09, -0.761243105, 3.47544882e-10, -0.648466587))
-                              else
-                              topos(CFrame.new(-1610.00757, 11.5049858, 164.001587, 0.984807551, -0.167722285, -0.0449818149, 0.17364943, 0.951244235, 0.254912198, 3.42372805e-05, -0.258850515, 0.965917408))
-                            end
+                        if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ProQuestProgress","SickMan") ~= 0 then
+                            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ProQuestProgress","GetCup")
+                            wait(0.5)
+                            EquipWeapon("Cup")
+                            wait(0.5)
+                            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ProQuestProgress","FillCup",game:GetService("Players").LocalPlayer.Character.Cup)
+                            wait(0)
+                            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ProQuestProgress","SickMan")
                         else
-                            if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ProQuestProgress","SickMan") ~= 0 then
-                                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ProQuestProgress","GetCup")
-                                wait(0.5)
-                                EquipWeapon("Cup")
-                                wait(0.5)
-                                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ProQuestProgress","FillCup",game:GetService("Players").LocalPlayer.Character.Cup)
-                                wait(0)
-                                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ProQuestProgress","SickMan")
-                            else
-                                if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ProQuestProgress","RichSon") == nil then
-                                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ProQuestProgress","RichSon")
-                                elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ProQuestProgress","RichSon") == 0 then
-                                if game:GetService("Workspace").Enemies:FindFirstChild("Mob Leader") or game:GetService("ReplicatedStorage"):FindFirstChild("Mob Leader") then
-                                    topos(CFrame.new(-2967.59521, -4.91089821, 5328.70703, 0.342208564, -0.0227849055, 0.939347804, 0.0251603816, 0.999569714, 0.0150796166, -0.939287126, 0.0184739735, 0.342634559)) 
-                                        for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                                            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                                if v.Name == "Mob Leader" then
-                                                   if game:GetService("Workspace").Enemies:FindFirstChild("Mob Leader") then
-                                                       repeat task.wait()
-                                                            EquipWeapon(_G.SelectWeapon)
-                                                            topos(v.HumanoidRootPart.CFrame * Pos)
-                                                    until v.Humanoid.Health <= 0 or not _G.Auto_Saber
-                                                 end
-                                            end
-                                            if game:GetService("ReplicatedStorage"):FindFirstChild("Mob Leader") then
-                                                topos(game:GetService("ReplicatedStorage"):FindFirstChild("Mob Leader").HumanoidRootPart.CFrame * Pos)
-                                            end
+                            if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ProQuestProgress","RichSon") == nil then
+                                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ProQuestProgress","RichSon")
+                            elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ProQuestProgress","RichSon") == 0 then
+                            if game:GetService("Workspace").Enemies:FindFirstChild("Mob Leader") or game:GetService("ReplicatedStorage"):FindFirstChild("Mob Leader") then
+                                topos(CFrame.new(-2967.59521, -4.91089821, 5328.70703, 0.342208564, -0.0227849055, 0.939347804, 0.0251603816, 0.999569714, 0.0150796166, -0.939287126, 0.0184739735, 0.342634559)) 
+                                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                                            if v.Name == "Mob Leader" then
+                                               if game:GetService("Workspace").Enemies:FindFirstChild("Mob Leader") then
+                                                   repeat task.wait()
+                                                        EquipWeapon(_G.SelectWeapon)
+                                                        topos(v.HumanoidRootPart.CFrame * Pos)
+                                                until v.Humanoid.Health <= 0 or not _G.Auto_Saber
+                                             end
+                                        end
+                                        if game:GetService("ReplicatedStorage"):FindFirstChild("Mob Leader") then
+                                            topos(game:GetService("ReplicatedStorage"):FindFirstChild("Mob Leader").HumanoidRootPart.CFrame * Pos)
                                         end
                                     end
-                                 end
-                                elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ProQuestProgress","RichSon") == 1 then
-                                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ProQuestProgress","RichSon")
-                                    wait(0.5)
-                                    EquipWeapon("Relic")
-                                    wait(0.5)
-                                    topos(CFrame.new(-1404.91504, 29.9773273, 3.80598116, 0.876514494, 5.66906877e-09, 0.481375456, 2.53851997e-08, 1, -5.79995607e-08, -0.481375456, 6.30572643e-08, 0.876514494))
+                                end
+                             end
+                            elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ProQuestProgress","RichSon") == 1 then
+                                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ProQuestProgress","RichSon")
+                                wait(0.5)
+                                EquipWeapon("Relic")
+                                wait(0.5)
+                                topos(CFrame.new(-1404.91504, 29.9773273, 3.80598116, 0.876514494, 5.66906877e-09, 0.481375456, 2.53851997e-08, 1, -5.79995607e-08, -0.481375456, 6.30572643e-08, 0.876514494))
+                            end
+                        end
+                    end
+                end
+            else
+                if game:GetService("Workspace").Enemies:FindFirstChild("Saber Expert") or game:GetService("ReplicatedStorage"):FindFirstChild("Saber Expert") then
+                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                            if v.Name == "Saber Expert" then
+                                repeat task.wait()
+                                    EquipWeapon(_G.SelectWeapon)
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
+                                until v.Humanoid.Health <= 0 or not _G.Auto_Saber
+                                if v.Humanoid.Health <= 0 then
+                                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ProQuestProgress","PlaceRelic")
                                 end
                             end
                         end
                     end
                 else
-                    if game:GetService("Workspace").Enemies:FindFirstChild("Saber Expert") or game:GetService("ReplicatedStorage"):FindFirstChild("Saber Expert") then
-                        for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                if v.Name == "Saber Expert" then
-                                    repeat task.wait()
-                                        EquipWeapon(_G.SelectWeapon)
-                                        topos(v.HumanoidRootPart.CFrame * Pos)
-                                    until v.Humanoid.Health <= 0 or not _G.Auto_Saber
-                                    if v.Humanoid.Health <= 0 then
-                                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ProQuestProgress","PlaceRelic")
-                                    end
-                                end
-                            end
-                        end
-                    else
-                        topos(CFrame.new(-1404.91504, 29.9773273, 3.80598116, 0.876514494, 5.66906877e-09, 0.481375456, 2.53851997e-08, 1, -5.79995607e-08, -0.481375456, 6.30572643e-08, 0.876514494))
-                        UnEquipWeapon(_G.SelectWeapon)
-                    end
+                    topos(CFrame.new(-1404.91504, 29.9773273, 3.80598116, 0.876514494, 5.66906877e-09, 0.481375456, 2.53851997e-08, 1, -5.79995607e-08, -0.481375456, 6.30572643e-08, 0.876514494))
+                    UnEquipWeapon(_G.SelectWeapon)
                 end
+            end
         end
     end
 end)
@@ -7219,7 +7216,7 @@ local Moon1 = Race:AddParagraph("Moon")
 
 spawn(function()
     while task.wait() do
-        Moon1:Set(CheckMoon().." | "..function8())
+        Moon1:Set(CheckMoon().." | "..function7().." | "..function8())
     end
 end)
 
@@ -7592,7 +7589,7 @@ spawn(function()
                 else
                     StartMagnetBoneMon = false
                     if game:GetService("ReplicatedStorage"):FindFirstChild("Demonic Soul [Lv. 2025]") then
-                     topos(game:GetService("ReplicatedStorage"):FindFirstChild("Demonic Soul [Lv. 2025]").HumanoidRootPart.CFrame * CFrame.new(15,10,2))
+                     topos(game:GetService("ReplicatedStorage"):FindFirstChild("Demonic Soul [Lv. 2025]").HumanoidRootPart.CFrame * Pos)
                     end
                 end
             end
@@ -8003,7 +8000,7 @@ local Moon = StatusServer:AddParagraph("Moon")
 
 spawn(function()
     while task.wait() do
-        Moon:Set(CheckMoon().." | "..function8())
+        Moon:Set(CheckMoon().." | "..function7().." | "..function8())
     end
 end)
 
