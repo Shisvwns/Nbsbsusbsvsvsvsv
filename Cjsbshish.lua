@@ -1685,8 +1685,10 @@ function topos(Pos)
         _G.Clip = true
     end
     if _G.StopTween == true then
-        TweenNm:Cancel()
-        TweenSm:Cancel()
+        TNormal = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
+        TNormal:Cancel()
+        TSmooth = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
+        TSmooth:Cancel()
         _G.Clip = false
     end
 end
