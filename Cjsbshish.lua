@@ -2160,7 +2160,7 @@ ImageLabel.Size = UDim2.new(0, 30, 0, 30)
 ImageLabel.Parent = Frame
 
 local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/HuyLocDz/Ui/main/OrionUi.lua"))()
-local Window =OrionLib:MakeWindow({Name = "c٥ʷₚͦ៰ᷜ⍳٥", IntroEnabled = true, IntroText = "Tinh Linh Hub", IntroIcon = "rbxassetid://16730867128", HidePremium = false, SaveConfig = true, ConfigFolder = "TinhLinhHub"})
+local Window =OrionLib:MakeWindow({Name = ":)", IntroEnabled = true, IntroText = "Tinh Linh Hub", IntroIcon = "rbxassetid://16730867128", HidePremium = false, SaveConfig = true, ConfigFolder = "TinhLinhHub"})
 
 OrionLib:MakeNotification({
     Name = "Tinh Linh Hub",
@@ -2328,6 +2328,8 @@ end)
 local Section = Setting:AddSection({
     Name = "~ Tween ~"
 })
+
+local TweenWarning = Setting:AddParagraph("⚠️ Warning", "Tween Smooth Has Errors, Use Is Not Recommended")
 
 Setting:AddDropdown({
 	Name = "Select Tween Style",
