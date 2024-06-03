@@ -1543,8 +1543,6 @@ function GetDistance(Pos)
     end
 end
 
--- [ Tween ]
-
 local plrs = game.Players
 local lp = plrs.LocalPlayer
 local Workspace = game:GetService("Workspace")
@@ -1554,13 +1552,11 @@ for i, v in pairs(Workspace.NPCs:GetChildren()) do
         table.insert(NpcList, v:GetModelCFrame())
     end
 end
-
 for i, v in pairs(getnilinstances()) do 
     if string.find(string.lower(v.Name), "home point") then
         table.insert(NpcList, v:GetModelCFrame())
     end
 end
-
 local w = game.PlaceId
 if w == 2753915549 then
     World1 = true
@@ -1589,7 +1585,6 @@ elseif w == 7449423635 then
         Vector3.new(5314.58203125, 25.419387817382812, -125.94227600097656)
     }
 end
-
 function GetPortal(check2)
     local check3 = check2.Position
     local aM, aN = Vector3.new(0,0,0), math.huge
@@ -1599,8 +1594,7 @@ function GetPortal(check2)
         end
     end
     return aM
-end
-
+end 
 function BypassTeleport(is)
     if lp.Character:FindFirstChild("PartTele") then
         lp.Character.PartTele.CFrame = CFrame.new(lp.Character.PartTele.CFrame.X, 1000, lp.Character.PartTele.CFrame.Z)
@@ -1624,7 +1618,6 @@ function BypassTeleport(is)
         until lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid.Health > 0
     end
 end
-
 function GetBypassPos(pos)
     pos = Vector3.new(pos.X, pos.Y, pos.Z)
     local lll, mmm = nil, math.huge
@@ -1636,7 +1629,6 @@ function GetBypassPos(pos)
     end
     return lll
 end
-
 function RequestEntrance(check1)
     game.ReplicatedStorage.Remotes.CommF_:InvokeServer(unpack({"requestEntrance", check1}))
     if lp.Character:FindFirstChild("PartTele") then
@@ -1644,85 +1636,49 @@ function RequestEntrance(check1)
     end
     task.wait(0.01)
 end
-
 function WaitHRP(q0) 
     if not q0 then return end
     return q0.Character:WaitForChild("HumanoidRootPart", 1) 
 end 
-
 function CalcDistance(I, II) 
     if not II then 
         II = lp.Character.PrimaryPart.CFrame 
     end 
     return (Vector3.new(I.X, 0, I.Z)-Vector3.new(II.X, 0, II.Z)).Magnitude 
-end
-
-if SelectModeTween == "Tween Smooth" then
-    function topos(Pos)
-        if not Pos then return end 
-        if not lp.Character:FindFirstChild("PartTele") then
-            local PartTele = Instance.new("Part", lp.Character) -- Create part
-            PartTele.Name = "PartTele"
-            PartTele.Anchored = true
-            PartTele.Transparency = 1
-            PartTele.CanCollide = false
-            PartTele.CFrame = WaitHRP(lp).CFrame 
-            PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
-                task.wait()
-                WaitHRP(lp).CFrame = PartTele.CFrame
-            end)
-        end
-        Portal = GetPortal(Pos) 
-        Spawn = GetBypassPos(Pos) 
-        MyCFrame = WaitHRP(lp).CFrame
-        Distance = CalcDistance(MyCFrame, Pos)
-        if CalcDistance(Portal, Pos) < CalcDistance(Pos) and CalcDistance(Portal) > 500 then
-            return RequestEntrance(Portal)
-        end
-        if BypassTele == true then
-            if CalcDistance(Pos) - CalcDistance(Spawn, Pos) > 1000 and CalcDistance(Spawn) > 1000 then
-                return BypassTeleport(Spawn)
-            end
-        end
-        if Distance <= 150 then
-            lp.Character.PartTele.CFrame = Pos
-        end
-        Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
-        Tween:Play()
-        _G.Clip = true
-        if _G.StopTween == true then
-            Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
-            Tween:Cancel()
-            _G.Clip = false
+end 
+function topos(Pos)
+    if not Pos then return end 
+    if not lp.Character:FindFirstChild("PartTele") then
+        local PartTele = Instance.new("Part", lp.Character) -- Create part
+        PartTele.Name = "PartTele"
+        PartTele.Anchored = true
+        PartTele.Transparency = 1
+        PartTele.CanCollide = false
+        PartTele.CFrame = WaitHRP(lp).CFrame 
+        PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
+            task.wait()
+            WaitHRP(lp).CFrame = PartTele.CFrame
+        end)
+    end
+    Portal = GetPortal(Pos) 
+    Spawn = GetBypassPos(Pos) 
+    MyCFrame = WaitHRP(lp).CFrame
+    Distance = CalcDistance(MyCFrame, Pos)
+    if CalcDistance(Portal, Pos) < CalcDistance(Pos) and CalcDistance(Portal) > 500 then
+        return RequestEntrance(Portal)
+    end
+    if BypassTele == true then
+        if CalcDistance(Pos) - CalcDistance(Spawn, Pos) > 1000 and CalcDistance(Spawn) > 1000 then
+            return BypassTeleport(Spawn)
         end
     end
-end
-
-if SelectModeTween == "Tween Normal" then
-    function topos(Pos)
-        Portal = GetPortal(Pos) 
-        Spawn = GetBypassPos(Pos) 
-        MyCFrame = WaitHRP(lp).CFrame
-        Distance = CalcDistance(MyCFrame, Pos)
-        if CalcDistance(Portal, Pos) < CalcDistance(Pos) and CalcDistance(Portal) > 500 then
-            return RequestEntrance(Portal)
-        end
-        if BypassTele == true then
-            if CalcDistance(Pos) - CalcDistance(Spawn, Pos) > 1000 and CalcDistance(Spawn) > 1000 then
-                return BypassTeleport(Spawn)
-            end
-        end
-        if Distance <= 150 then
-            lp.Character.PartTele.CFrame = Pos
-        end
-        Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
-        Tween:Play()
-        _G.Clip = true
-        if _G.StopTween == true then
-            Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
-            Tween:Cancel()
-            _G.Clip = false
-        end
+    Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear),{CFrame = Pos})
+    Tween:Play()
+    _G.Clip = true
+    if _G.StopTween == true then
+        Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear),{CFrame = Pos})
+        Tween:Cancel()
+        _G.Clip = false
     end
 end
 
@@ -2160,7 +2116,7 @@ ImageLabel.Size = UDim2.new(0, 30, 0, 30)
 ImageLabel.Parent = Frame
 
 local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/HuyLocDz/Ui/main/OrionUi.lua"))()
-local Window =OrionLib:MakeWindow({Name = ":)", IntroEnabled = true, IntroText = "Tinh Linh Hub", IntroIcon = "rbxassetid://16730867128", HidePremium = false, SaveConfig = true, ConfigFolder = "TinhLinhHub"})
+local Window =OrionLib:MakeWindow({Name = "c٥ʷₚͦ៰ᷜ⍳٥", IntroEnabled = true, IntroText = "Tinh Linh Hub", IntroIcon = "rbxassetid://16730867128", HidePremium = false, SaveConfig = true, ConfigFolder = "TinhLinhHub"})
 
 OrionLib:MakeNotification({
     Name = "Tinh Linh Hub",
@@ -2324,42 +2280,6 @@ spawn(function()
         end
     end
 end)
-
-local Section = Setting:AddSection({
-    Name = "~ Tween ~"
-})
-
-local TweenWarning = Setting:AddParagraph("⚠️ Warning", "Tween Smooth Has Errors, Use Is Not Recommended")
-
-Setting:AddDropdown({
-	Name = "Select Tween Style",
-	Default = "Tween Normal",
-	Options = {"Tween Normal","Tween Smooth"},
-	Callback = function(Value)
-		SelectModeTween = Value
-	end
-})
-
-Setting:AddSlider({
-	Name = "Tween Speed",
-	Min = 0,
-	Max = 350,
-	Default = 325,
-	Color = Color3.fromRGB(255,255,255),
-	Increment = 1,
-	ValueName = "",
-	Callback = function(Value)
-		TweenSpeed = Value
-	end
-})
-
-Setting:AddToggle({
-	Name = "Bypass Teleport",
-	Default = false,
-	Callback = function(Value)
-		BypassTele = Value
-	end
-})
 
 local Section = Setting:AddSection({
     Name = "~ Graphic & Reduce Lag ~"
@@ -2555,6 +2475,14 @@ spawn(function()
         end
     end
 end)
+
+Setting:AddToggle({
+	Name = "Bypass Teleport",
+	Default = false,
+	Callback = function(Value)
+		BypassTele = Value
+	end
+})
 
 Setting:AddToggle({
 	Name = "Anti Afk",
