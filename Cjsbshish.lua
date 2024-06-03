@@ -1917,6 +1917,33 @@ task.spawn(function()
         end
     end
 end)
+task.spawn(function()
+    while task.wait() do
+        if _G.FastAttackPlayer then
+            FastI = true
+            pcall(function()
+                for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
+                    if v.Humanoid.Health > 0 then
+                        if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 60 then
+                            FastAttack()
+                            task.wait()
+                            Boost()
+                        end
+                    end
+                end
+                for i, v in pairs(game.Workspace.Characters:GetChildren()) do
+                    if v.Humanoid.Health > 0 then
+                        if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 60 then
+                            FastAttack()
+                            task.wait()
+                            Boost()
+                        end
+                    end
+                end
+            end)
+        end
+    end
+end)
 k = tick()
 task.spawn(function()
     while task.wait() do
@@ -2640,6 +2667,7 @@ spawn(function()
                                         EquipWeapon(_G.SelectWeapon)
                                         topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,0))
                                         if (v.Character.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 50 then
+                                            _G.FastAttackPlayer = true
                                             game:GetService("VirtualInputManager"):SendKeyEvent(true, "Z", false, game)
                                             game:GetService("VirtualInputManager"):SendKeyEvent(false, "Z", false, game)
                                             wait()
@@ -2647,6 +2675,7 @@ spawn(function()
                                             game:GetService("VirtualInputManager"):SendKeyEvent(false, "X", false, game)
                                         end
                                     until not _G.FarmSkip or not v:FindFirstChild("HumanoidRootPart") or v.Character.Humanoid.Health <= 0
+                                        _G.FastAttackPlayer = false
                                 end
                             end
                         else
