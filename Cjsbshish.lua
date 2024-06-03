@@ -1674,15 +1674,25 @@ function topos(Pos)
     end
     -- [ Tween Smooth]
     if SelectModeTween == "Tween Smooth" then
-        Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
-        Tween:Play()
+        TweenSm = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
+        TweenSm:Play()
         _G.Clip = true
+        if _G.StopTween == true then
+            TweenSm = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
+            TweenSm:Cancel()
+            _G.Clip = false
+        end
     end
     -- [ Tween Normal ]
     if SelectModeTween == "Tween Normal" then
-        Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
-        Tween:Play()
+        TweenNm = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
+        TweenNm:Play()
         _G.Clip = true
+        if _G.StopTween == true then
+            TweenNm = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
+            TweenNm:Cancel()
+            _G.Clip = false
+        end
     end
 end
 
