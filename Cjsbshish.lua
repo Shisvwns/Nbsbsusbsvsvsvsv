@@ -2639,7 +2639,7 @@ spawn(function()
                                         end
                                         EquipWeapon(_G.SelectWeapon)
                                         topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,0))
-                                        if PlayerKill.Position <= 30 then
+                                        if (v.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 50 then
                                             game:GetService("VirtualInputManager"):SendKeyEvent(true, "Z", false, game)
                                             game:GetService("VirtualInputManager"):SendKeyEvent(false, "Z", false, game)
                                             wait()
@@ -5785,6 +5785,7 @@ ItemQuest:AddToggle({
 spawn(function()
     while task.wait() do
         if _G.Auto_Saber and World1 and game.Players.LocalPlayer.Data.Level.Value >= 200 then
+            pcall(function()
                 if game:GetService("Workspace").Map.Jungle.Final.Part.Transparency == 0 then
                     if game:GetService("Workspace").Map.Jungle.QuestPlates.Door.Transparency == 0 then
                         if (CFrame.new(-1612.55884, 36.9774132, 148.719543, 0.37091279, 3.0717151e-09, -0.928667724, 3.97099491e-08, 1, 1.91679348e-08, 0.928667724, -4.39869794e-08, 0.37091279).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
@@ -5866,6 +5867,7 @@ spawn(function()
                         end
                     end
                 end
+            end)
         end
     end
 end)
