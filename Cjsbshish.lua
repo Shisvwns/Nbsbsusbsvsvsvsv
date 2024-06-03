@@ -1677,22 +1677,12 @@ function topos(Pos)
         Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
         Tween:Play()
         _G.Clip = true
-        if _G.StopTween == true then
-            Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
-            Tween:Cancel()
-            _G.Clip = false
-        end
     end
     -- [ Tween Normal ]
     if SelectModeTween == "Tween Normal" then
         Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
         Tween:Play()
         _G.Clip = true
-        if _G.StopTween == true then
-            Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
-            Tween:Cancel()
-            _G.Clip = false
-        end
     end
 end
 
