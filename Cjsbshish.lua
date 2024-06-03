@@ -1672,13 +1672,27 @@ function topos(Pos)
             return BypassTeleport(Spawn)
         end
     end
-    Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear),{CFrame = Pos})
-    Tween:Play()
-    _G.Clip = true
-    if _G.StopTween == true then
-        Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear),{CFrame = Pos})
-        Tween:Cancel()
-        _G.Clip = false
+    -- [ Tween Smooth]
+    if SelectModeTween == "Tween Smooth" then
+        Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
+        Tween:Play()
+        _G.Clip = true
+        if _G.StopTween == true then
+            Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
+            Tween:Cancel()
+            _G.Clip = false
+        end
+    end
+    -- [ Tween Normal ]
+    if SelectModeTween == "Tween Normal" then
+        Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
+        Tween:Play()
+        _G.Clip = true
+        if _G.StopTween == true then
+            Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
+            Tween:Cancel()
+            _G.Clip = false
+        end
     end
 end
 
@@ -2116,7 +2130,7 @@ ImageLabel.Size = UDim2.new(0, 30, 0, 30)
 ImageLabel.Parent = Frame
 
 local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/HuyLocDz/Ui/main/OrionUi.lua"))()
-local Window =OrionLib:MakeWindow({Name = "c٥ʷₚͦ៰ᷜ⍳٥", IntroEnabled = true, IntroText = "Tinh Linh Hub", IntroIcon = "rbxassetid://16730867128", HidePremium = false, SaveConfig = true, ConfigFolder = "TinhLinhHub"})
+local Window =OrionLib:MakeWindow({Name = ":)", IntroEnabled = true, IntroText = "Tinh Linh Hub", IntroIcon = "rbxassetid://16730867128", HidePremium = false, SaveConfig = true, ConfigFolder = "TinhLinhHub"})
 
 OrionLib:MakeNotification({
     Name = "Tinh Linh Hub",
@@ -2280,6 +2294,42 @@ spawn(function()
         end
     end
 end)
+
+local Section = Setting:AddSection({
+    Name = "~ Tween ~"
+})
+
+local TweenWarning = Setting:AddParagraph("⚠️ Warning", "Tween Smooth Has Errors, Use Is Not Recommended")
+
+Setting:AddDropdown({
+	Name = "Select Tween Style",
+	Default = "Tween Normal",
+	Options = {"Tween Normal","Tween Smooth"},
+	Callback = function(Value)
+		SelectModeTween = Value
+	end
+})
+
+Setting:AddSlider({
+	Name = "Tween Speed",
+	Min = 0,
+	Max = 350,
+	Default = 325,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "",
+	Callback = function(Value)
+		TweenSpeed = Value
+	end
+})
+
+Setting:AddToggle({
+	Name = "Bypass Teleport",
+	Default = false,
+	Callback = function(Value)
+		BypassTele = Value
+	end
+})
 
 local Section = Setting:AddSection({
     Name = "~ Graphic & Reduce Lag ~"
@@ -2475,14 +2525,6 @@ spawn(function()
         end
     end
 end)
-
-Setting:AddToggle({
-	Name = "Bypass Teleport",
-	Default = false,
-	Callback = function(Value)
-		BypassTele = Value
-	end
-})
 
 Setting:AddToggle({
 	Name = "Anti Afk",
