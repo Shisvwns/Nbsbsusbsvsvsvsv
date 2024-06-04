@@ -3873,13 +3873,13 @@ spawn(function()
                 MaterialMon(SelectMaterial)
                 if game:GetService("Workspace").Enemies:FindFirstChild(MMon) or game:GetService("Workspace").Enemies:FindFirstChild(MMon1) then
                     for i,v in pairs (game.Workspace.Enemies:GetChildren()) do
-                            if (v.Name == MMon or v.Name == MMon1) then
+                            if v.Name == MMon or v.Name == MMon1 then
                                 repeat task.wait()
                                     EquipWeapon(SelectWeapon)
                                     topos(v.HumanoidRootPart.CFrame * Pos)
                                     MaterialPos = v.HumanoidRootPart.CFrame
                                     BringMonMaterial = true
-                                until not AutoMaterial or not v.Parent or v.Humanoid.Health <= 0
+                                until not _G.AutoMaterial or not v.Parent or v.Humanoid.Health <= 0
                                 BringMonMaterial = false
                             end
                     end
