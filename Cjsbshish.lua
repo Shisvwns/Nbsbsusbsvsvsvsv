@@ -3871,9 +3871,9 @@ spawn(function()
         if _G.AutoMaterial then
             pcall(function()
                 MaterialMon(SelectMaterial)
-                if game:GetService("Workspace").Enemies:FindFirstChild(MMon) then
+                if game:GetService("Workspace").Enemies:FindFirstChild(MMon) or game:GetService("Workspace").Enemies:FindFirstChild(MMon1) then
                     for i,v in pairs (game.Workspace.Enemies:GetChildren()) do
-                            if v.Name == MMon then
+                            if (v.Name == MMon or v.Name == MMon1) then
                                 repeat task.wait()
                                     EquipWeapon(SelectWeapon)
                                     topos(v.HumanoidRootPart.CFrame * Pos)
@@ -3884,8 +3884,10 @@ spawn(function()
                             end
                     end
                 else
-                    topos(MPos)
                     UnEquipWeapon(SelectWeapon)
+                    topos(MPos)
+                    wait()
+                    topos(MPos1)
                 end
             end)
         end
