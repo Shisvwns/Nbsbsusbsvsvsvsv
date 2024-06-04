@@ -3875,7 +3875,7 @@ spawn(function()
                     for i,v in pairs (game.Workspace.Enemies:GetChildren()) do
                             if v.Name == MMon or v.Name == MMon1 then
                                 repeat task.wait()
-                                    EquipWeapon(SelectWeapon)
+                                    EquipWeapon(_G.SelectWeapon)
                                     topos(v.HumanoidRootPart.CFrame * Pos)
                                     MaterialPos = v.HumanoidRootPart.CFrame
                                     BringMonMaterial = true
@@ -3886,7 +3886,7 @@ spawn(function()
                 else
                     UnEquipWeapon(SelectWeapon)
                     topos(MPos)
-                    wait()
+                    wait(2)
                     topos(MPos1)
                 end
             end)
