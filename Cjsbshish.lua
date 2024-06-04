@@ -66,7 +66,7 @@ spawn(function()
     end
 end)
 
-_G.AntiFlagReset = true
+AntiFlagReset = true
 spawn(function()
     while wait(2000) do
          if AntiFlagReset then
@@ -3875,7 +3875,7 @@ for i,v in next,Remote_GetFruits do
 	end
 end
 	
-_G.SelectFruit = ""
+SelectFruit = ""
 FruitRaid:AddDropdown({
 	Name = "Select Devil Fruit",
 	Default = "",
@@ -3897,7 +3897,7 @@ spawn(function()
     while task.wait() do
         if AutoBuyFruitSniper then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("GetFruits")
-            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("PurchaseRawFruit",_G.SelectFruit)
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("PurchaseRawFruit",SelectFruit)
         end 
     end
 end)
@@ -4106,7 +4106,7 @@ local Section = FruitRaid:AddSection({
     Name = "~ Raid ~"
 })
 
-_G.SelectChip = selectraids or ""
+SelectChip = selectraids or ""
 Raidslist = {}
 RaidsModule = require(game.ReplicatedStorage.Raids)
 for i,v in pairs(RaidsModule.raids) do
@@ -6832,7 +6832,7 @@ spawn(function()
 	while wait() do
 		if Teleport then
 			if game.Players:FindFirstChild(SelectPly) then
-				topos(game.Players[_G.SelectPly].Character.HumanoidRootPart.CFrame)
+				topos(game.Players[SelectPly].Character.HumanoidRootPart.CFrame)
 			end
 		end
 	end
@@ -8132,7 +8132,7 @@ StatusServer:AddToggle({
 spawn(function()
     while task.wait() do
         if Join then
-            game:GetService("TeleportService"):TeleportToPlaceInstance(game.placeId,_G.Job, game.Players.LocalPlayer)
+            game:GetService("TeleportService"):TeleportToPlaceInstance(game.placeId,Job, game.Players.LocalPlayer)
         end
     end
 end)
@@ -8140,7 +8140,7 @@ end)
 StatusServer:AddButton({
     Name = "Join Server",
     Callback = function()
-        game:GetService("TeleportService"):TeleportToPlaceInstance(game.placeId,_G.Job, game.Players.LocalPlayer)
+        game:GetService("TeleportService"):TeleportToPlaceInstance(game.placeId,Job, game.Players.LocalPlayer)
     end
 })
 
