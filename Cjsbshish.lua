@@ -265,9 +265,6 @@ function CheckQuest()
             NameMon = "Fishman Warrior"
             CFrameQuest = CFrame.new(61122.65234375, 18.497442245483, 1569.3997802734)
             CFrameMon = CFrame.new(60878.30078125, 18.482830047607422, 1543.7574462890625)
-            if _G.AutoFarm and (CFrameQuest.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(61163.8515625, 11.6796875, 1819.7841796875))
-            end
         elseif MyLevel == 400 or MyLevel <= 449 then
             Mon = "Fishman Commando"
             LevelQuest = 2
@@ -275,9 +272,6 @@ function CheckQuest()
             NameMon = "Fishman Commando"
             CFrameQuest = CFrame.new(61122.65234375, 18.497442245483, 1569.3997802734)
             CFrameMon = CFrame.new(61922.6328125, 18.482830047607422, 1493.934326171875)
-            if _G.AutoFarm and (CFrameQuest.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(61163.8515625, 11.6796875, 1819.7841796875))
-            end
         elseif MyLevel == 450 or MyLevel <= 474 then
             Mon = "God's Guard"
             LevelQuest = 1
@@ -285,9 +279,6 @@ function CheckQuest()
             NameMon = "God's Guard"
             CFrameQuest = CFrame.new(-4721.88867, 843.874695, -1949.96643, 0.996191859, -0, -0.0871884301, 0, 1, -0, 0.0871884301, 0, 0.996191859)
             CFrameMon = CFrame.new(-4710.04296875, 845.2769775390625, -1927.3079833984375)
-            if _G.AutoFarm and (CFrameQuest.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-4607.82275, 872.54248, -1667.55688))
-            end
         elseif MyLevel == 475 or MyLevel <= 524 then
             Mon = "Shanda"
             LevelQuest = 2
@@ -295,9 +286,6 @@ function CheckQuest()
             NameMon = "Shanda"
             CFrameQuest = CFrame.new(-7859.09814, 5544.19043, -381.476196, -0.422592998, 0, 0.906319618, 0, 1, 0, -0.906319618, 0, -0.422592998)
             CFrameMon = CFrame.new(-7678.48974609375, 5566.40380859375, -497.2156066894531)
-            if _G.AutoFarm and (CFrameQuest.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-7894.6176757813, 5547.1416015625, -380.29119873047))
-            end
         elseif MyLevel == 525 or MyLevel <= 549 then
             Mon = "Royal Squad"
             LevelQuest = 1
@@ -432,10 +420,7 @@ function CheckQuest()
             NameQuest = "ShipQuest1"
             NameMon = "Ship Deckhand"
             CFrameQuest = CFrame.new(1037.80127, 125.092171, 32911.6016)         
-            CFrameMon = CFrame.new(1212.0111083984375, 150.79205322265625, 33059.24609375)    
-            if _G.AutoFarm and (CFrameQuest.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
-            end
+            CFrameMon = CFrame.new(1212.0111083984375, 150.79205322265625, 33059.24609375)
         elseif MyLevel == 1275 or MyLevel <= 1299 then
             Mon = "Ship Engineer"
             LevelQuest = 2
@@ -443,9 +428,6 @@ function CheckQuest()
             NameMon = "Ship Engineer"
             CFrameQuest = CFrame.new(1037.80127, 125.092171, 32911.6016)   
             CFrameMon = CFrame.new(919.4786376953125, 43.54401397705078, 32779.96875)   
-            if _G.AutoFarm and (CFrameQuest.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
-            end             
         elseif MyLevel == 1300 or MyLevel <= 1324 then
             Mon = "Ship Steward"
             LevelQuest = 1
@@ -453,9 +435,6 @@ function CheckQuest()
             NameMon = "Ship Steward"
             CFrameQuest = CFrame.new(968.80957, 125.092171, 33244.125)         
             CFrameMon = CFrame.new(919.4385375976562, 129.55599975585938, 33436.03515625)
-            if _G.AutoFarm and (CFrameQuest.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
-            end
         elseif MyLevel == 1325 or MyLevel <= 1349 then
             Mon = "Ship Officer"
             LevelQuest = 2
@@ -463,9 +442,6 @@ function CheckQuest()
             NameMon = "Ship Officer"
             CFrameQuest = CFrame.new(968.80957, 125.092171, 33244.125)
             CFrameMon = CFrame.new(1036.0179443359375, 181.4390411376953, 33315.7265625)
-            if _G.AutoFarm and (CFrameQuest.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
-            end
         elseif MyLevel == 1350 or MyLevel <= 1374 then
             Mon = "Arctic Warrior"
             LevelQuest = 1
@@ -473,9 +449,6 @@ function CheckQuest()
             NameMon = "Arctic Warrior"
             CFrameQuest = CFrame.new(5667.6582, 26.7997818, -6486.08984, -0.933587909, 0, -0.358349502, 0, 1, 0, 0.358349502, 0, -0.933587909)
             CFrameMon = CFrame.new(5966.24609375, 62.97002029418945, -6179.3828125)
-            if _G.AutoFarm and (CFrameQuest.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-6508.5581054688, 5000.034996032715, -132.83953857422))
-            end
         elseif MyLevel == 1375 or MyLevel <= 1424 then
             Mon = "Snow Lurker"
             LevelQuest = 2
@@ -891,24 +864,12 @@ function CheckMonFarm()
             PosMonster = CFrame.new(-5802.8681640625, 86.26241302490234, 8828.859375)
         elseif SelectMob == "Fishman Warrior" then
             PosMonster = CFrame.new(60878.30078125, 18.482830047607422, 1543.7574462890625)
-            if _G.AutoFarmMob and (PosMonster.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(61163.8515625, 11.6796875, 1819.7841796875))
-            end
         elseif SelectMob == "Fishman Commando" then
             PosMonster = CFrame.new(61922.6328125, 18.482830047607422, 1493.934326171875)
-            if _G.AutoFarmMob and (PosMonster.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(61163.8515625, 11.6796875, 1819.7841796875))
-            end
         elseif SelectMob == "God's Guard" then
             PosMonster = CFrame.new(-4710.04296875, 845.2769775390625, -1927.3079833984375)
-            if _G.AutoFarmMob and (PosMonster.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-4607.82275, 872.54248, -1667.55688))
-            end
         elseif SelectMob == "Shanda" then
             PosMonster = CFrame.new(-7678.48974609375, 5566.40380859375, -497.2156066894531)
-            if _G.AutoFarmMob and (PosMonster.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-7894.6176757813, 5547.1416015625, -380.29119873047))
-            end
         elseif SelectMob == "Royal Squad" then
             PosMonster = CFrame.new(-7624.25244140625, 5658.13330078125, -1467.354248046875)
         elseif SelectMob == "Royal Soldier" then
@@ -948,30 +909,15 @@ function CheckMonFarm()
         elseif SelectMob == "Lava Pirate" then
             PosMonster = CFrame.new(-5213.33154296875, 49.73788070678711, -4701.451171875)
         elseif SelectMob == "Ship Deckhand" then
-            PosMonster = CFrame.new(1212.0111083984375, 150.79205322265625, 33059.24609375)    
-            if _G.AutoFarmMob and (PosMonster.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
-            end
+            PosMonster = CFrame.new(1212.0111083984375, 150.79205322265625, 33059.24609375)
         elseif SelectMob == "Ship Engineer" then
             PosMonster = CFrame.new(919.4786376953125, 43.54401397705078, 32779.96875)   
-            if _G.AutoFarmMob and (PosMonster.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
-            end             
         elseif SelectMob == "Ship Steward" then
             PosMonster = CFrame.new(919.4385375976562, 129.55599975585938, 33436.03515625)
-            if _G.AutoFarmMob and (PosMonster.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
-            end
         elseif SelectMob == "Ship Officer" then
             PosMonster = CFrame.new(1036.0179443359375, 181.4390411376953, 33315.7265625)
-            if _G.AutoFarmMob and (PosMonster.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
-            end
         elseif SelectMob == "Arctic Warrior" then
             PosMonster = CFrame.new(5966.24609375, 62.97002029418945, -6179.3828125)
-            if _G.AutoFarmMob and (PosMonster.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-6508.5581054688, 5000.034996032715, -132.83953857422))
-            end
         elseif SelectMob == "Snow Lurker" then
             PosMonster = CFrame.new(5407.07373046875, 69.19437408447266, -6880.88037109375)
         elseif SelectMob == "Sea Soldier" then
@@ -1365,11 +1311,7 @@ function UpdatePlayerChams()
                         name.TextYAlignment = 'Top'
                         name.BackgroundTransparency = 1
                         name.TextStrokeTransparency = 0.5
-                        if v.Team == game.Players.LocalPlayer.Team then
-                            name.TextColor3 = Color3.new(0,255,0)
-                        else
-                            name.TextColor3 = Color3.new(173, 216, 230)
-                        end
+                        name.TextColor3 = Color3.new(0,255,0)
                     else
                         v.Character.Head['NameEsp'..Number].TextLabel.Text = ('[ Player: '..v.Name..' ]\n[ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3)..'m ]')
                     end
@@ -3258,7 +3200,7 @@ spawn(function()
 								repeat task.wait()
 									EquipWeapon(_G.SelectWeapon)
 									topos(v.HumanoidRootPart.CFrame * Pos)
-								until _G.Auto_Quest_Boss == false or not v.Parent or v.Humanoid.Health <= 0
+								until _G.AutoFarmBoss == false or not v.Parent or v.Humanoid.Health <= 0
 							end
 						end
 					else
@@ -3271,7 +3213,7 @@ spawn(function()
 							game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
 						end
 						if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
-							repeat wait() topos(CFrameQuestBoss) until (CFrameQuestBoss.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3 or not _G.Auto_Quest_Boss
+							repeat wait() topos(CFrameQuestBoss) until (CFrameQuestBoss.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3 or not _G.AutoFarmBoss
 							if (CFrameQuestBoss.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 4 then
 								wait(1.1)
 								game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NameQuestBoss, LevelQuestBoss)
@@ -3283,7 +3225,7 @@ spawn(function()
 										repeat task.wait()
 											EquipWeapon(_G.SelectWeapon)
 											topos(v.HumanoidRootPart.CFrame * Pos)
-										until _G.Auto_Quest_Boss == false or not v.Parent or v.Humanoid.Health <= 0
+										until _G.AutoFarmBoss == false or not v.Parent or v.Humanoid.Health <= 0
 									end
 								end
 							else
@@ -3297,7 +3239,7 @@ spawn(function()
 									repeat task.wait()
 										EquipWeapon(_G.SelectWeapon)
 										topos(v.HumanoidRootPart.CFrame * Pos)										
-									until _G.Auto_Quest_Boss == false or not v.Parent or v.Humanoid.Health <= 0
+									until _G.AutoFarmBoss == false or not v.Parent or v.Humanoid.Health <= 0
 								end
 							end
 						else
@@ -3866,6 +3808,7 @@ spawn(function()
                 MaterialMon(SelectMaterial)
                 if game:GetService("Workspace").Enemies:FindFirstChild(MMon) or game:GetService("Workspace").Enemies:FindFirstChild(MMon1) then
                     for i,v in pairs (game:GetService("Workspace").Enemies:GetChildren()) do
+                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                             if v.Name == MMon or v.Name == MMon1 then
                                 repeat task.wait()
                                     EquipWeapon(_G.SelectWeapon)
@@ -3875,6 +3818,7 @@ spawn(function()
                                 until not _G.AutoMaterial or not v.Parent or v.Humanoid.Health <= 0
                                 BringMonMaterial = false
                             end
+                        end
                     end
                 else
                     UnEquipWeapon(_G.SelectWeapon)
@@ -3905,9 +3849,6 @@ spawn(function()
                         end
                     end
                 else
-                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(923.40197753906, 125.05712890625, 32885.875)).Magnitude >= 17000 then
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
-                    end
                     topos(CFrame.new(916.928589, 181.092773, 33422))
                     UnEquipWeapon(_G.SelectWeapon)
                 end
@@ -4477,7 +4418,7 @@ spawn(function()
         if _G.RaidPirate and World3 then
             if (CFrame.new(-5118.48682, 314.54129, -2958.64404, -0.387232125, 1.81507858e-08, 0.921982229, -7.54388907e-08, 1, -5.13709999e-08, -0.921982229, -8.94458196e-08, -0.387232125).Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 2000 then
                 for a, a in pairs(game.Workspace.Enemies:GetChildren()) do
-                    if a:FindFirstChild("Humanoid") and a:FindFirstChild("HumanoidRootPart") and a.Humanoid.Health > 0 and (a.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 1000 then
+                    if a:FindFirstChild("Humanoid") and a:FindFirstChild("HumanoidRootPart") and a.Humanoid.Health > 0 and (a.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1000 then
                         repeat task.wait()
                             EquipWeapon(_G.SelectWeapon)
                             topos(a.HumanoidRootPart.CFrame * Pos)
@@ -4489,7 +4430,7 @@ spawn(function()
             else
                 if (CFrame.new(-5118.48682, 314.54129, -2958.64404, -0.387232125, 1.81507858e-08, 0.921982229, -7.54388907e-08, 1, -5.13709999e-08, -0.921982229, -8.94458196e-08, -0.387232125).Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 2000 then
                     for a, a in pairs(game.ReplicatedStorage:GetChildren()) do
-                        if a:FindFirstChild("Humanoid") and a:FindFirstChild("HumanoidRootPart") and a.Humanoid.Health > 0 and (a.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 1000 then
+                        if a:FindFirstChild("Humanoid") and a:FindFirstChild("HumanoidRootPart") and a.Humanoid.Health > 0 and (a.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1000 then
                             topos(a.HumanoidRootPart.CFrame * Pos)
                         end
                     end
