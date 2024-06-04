@@ -1648,17 +1648,6 @@ function topos(Pos)
     end
 end
 
-function topos1(Pos)
-    Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-    local Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance / 350, Enum.EasingStyle.Linear),{CFrame = Pos})
-    Tween:Play()
-    _G.Clip = true
-    if _G.StopTween == true then
-        _G.Clip = false
-        Tween:Cancel()
-    end
-end
-
 function StopTween(target)
     if not target then
         _G.StopTween = true
@@ -3264,31 +3253,33 @@ spawn(function()
 end)
 
 Farm:AddToggle({
-	Name = "Auto Farm All Boss",
+	Name = "Auto Farm Boss",
 	Default = false,
 	Callback = function(Value)
-		_G.AutoAllBoss = Value
-		StopTween(_G.AutoAllBoss)
+		_G.Auto_Farm_All_Boss = Value
+		StopTween(_G.Auto_Farm_All_Boss)
 	end
 })
 
 spawn(function()
-    while wait() do
-        if _G.AutoAllBoss then
-            pcall(function()
-                for i,v in pairs(game.ReplicatedStorage:GetChildren()) do
-                    if (v.Name == "rip_indra" or v.Name == "Ice Admiral") or (v.Name == "Saber Expert" or v.Name == "The Saw" or v.Name == "Greybeard" or v.Name == "Mob Leader" or v.Name == "The Gorilla King" or v.Name == "Bobby" or v.Name == "Yeti" or v.Name == "Vice Admiral" or v.Name == "Warden" or v.Name == "Chief Warden" or v.Name == "Swan" or v.Name == "Magma Admiral" or v.Name == "Fishman Lord" or v.Name == "Wysper" or v.Name == "Thunder God" or v.Name == "Cyborg") or (v.Name == "Don Swan" or v.Name == "Diamond" or v.Name == "Jeremy" or v.Name == "Fajita" or v.Name == "Smoke Admiral" or v.Name == "Awakened Ice Admiral" or v.Name == "Tide Keeper" or v.Name == "Order" or v.Name == "Darkbeard" or v.Name == "Cursed Captain") or (v.Name == "Stone" or v.Name == "Island Empress" or v.Name == "Kilo Admiral" or v.Name == "Captain Elephant" or v.Name == "Beautiful Pirate" or v.Name == "Cake Queen" or v.Name == "rip_indra True Form" or v.Name == "Longma" or v.Name == "Soul Reaper" or v.Name == "Cake Prince" or v.Name == "Dough King") then
-                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                            repeat task.wait()
-                                EquipWeapon(_G.SelectWeapon)
-                                topos1(v.HumanoidRootPart.CFrame * Pos)
-                            until not _G.AutoAllBoss or not v.Parent or v.Humanoid.Health <= 0
-                        end
-                    end
-                end
-            end)
-        end
-    end
+	while wait() do
+		if _G.Auto_Farm_All_Boss then
+			pcall(function()
+				for i,v in pairs(game.ReplicatedStorage:GetChildren()) do
+					if string.find(v.Name,"Boss") then
+						repeat task.wait()
+							if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude > 350 then
+								topos(v.HumanoidRootPart.CFrame)
+							elseif v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 350 then
+								EquipWeapon(_G.SelectWeapon)
+								topos(v.HumanoidRootPart.CFrame * Pos)
+							end
+						until v.Humanoid.Health <= 0 or _G.Auto_Farm_All_Boss == false or not v.Parent
+					end
+				end
+			end)
+		end
+	end
 end)
 
 local Section = Farm:AddSection({
