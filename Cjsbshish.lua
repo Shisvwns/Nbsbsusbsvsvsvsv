@@ -2158,6 +2158,14 @@ spawn(function()
                             v.Humanoid:ChangeState(14)
                         end
                     end
+                    if _G.AutoFarmNearest and MagnetNear then
+                        if not string.find(v.Name, "Boss") and (v.HumanoidRootPart.Position - PosNear.Position).Magnitude <= 300 then
+                            if InMyNetWork(z.HumanoidRootPart) then
+                                v.HumanoidRootPart.CFrame = PosNear
+                                v.Humanoid:ChangeState(14)
+                            end
+                        end
+                    end
                     if _G.AutoRengoku and StartRengokuMagnet then
                         if (v.Name == "Snow Lurker" or v.Name == "Arctic Warrior") and (v.HumanoidRootPart.Position - RengokuMon.Position).Magnitude <= 300 then
                             v.HumanoidRootPart.CFrame = RengokuMon
@@ -2222,23 +2230,6 @@ spawn(function()
             end)
         end
     end
-end)
-
-spawn(function()
-	while task.wait() do
-		pcall(function()
-			if _G.BringMonster and _G.AutoFarmNearest and MagnetNear then
-				for y, z in pairs(game.Workspace.Enemies:GetChildren()) do
-					if not string.find(z.Name, "Boss") and (z.HumanoidRootPart.Position - PosNear.Position).magnitude <= 300 then
-						if InMyNetWork(z.HumanoidRootPart) then
-							z.HumanoidRootPart.CFrame = PosNear
-							z.Humanoid:ChangeState(14)
-						end
-					end
-				end
-			end
-		end)
-	end
 end)
 
 local Section = Setting:AddSection({
