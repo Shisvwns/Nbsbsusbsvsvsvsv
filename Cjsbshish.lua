@@ -1694,7 +1694,7 @@ function topos(Pos)
     end
     if Distance <= 200 then
         lp.Character.PartTele.CFrame = Pos
-    else
+    end
     if lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid:FindFirstChild("Sit") and lp.Character.Humanoid.Sit == true then
         lp.Character.Humanoid.Sit = false
     end 
