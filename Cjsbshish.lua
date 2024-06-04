@@ -2160,10 +2160,8 @@ spawn(function()
                     end
                     if _G.AutoFarmNearest and MagnetNear then
                         if not string.find(v.Name, "Boss") and (v.HumanoidRootPart.Position - PosNear.Position).Magnitude <= 300 then
-                            if InMyNetWork(v.HumanoidRootPart) then
-                                v.HumanoidRootPart.CFrame = PosNear
-                                v.Humanoid:ChangeState(14)
-                            end
+                            v.HumanoidRootPart.CFrame = PosNear
+                            v.Humanoid:ChangeState(14)
                         end
                     end
                     if _G.AutoRengoku and StartRengokuMagnet then
