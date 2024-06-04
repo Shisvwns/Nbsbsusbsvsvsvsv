@@ -3872,7 +3872,7 @@ spawn(function()
             pcall(function()
                 MaterialMon(SelectMaterial)
                 if game:GetService("Workspace").Enemies:FindFirstChild(MMon) or game:GetService("Workspace").Enemies:FindFirstChild(MMon1) then
-                    for i,v in pairs (game.Workspace.Enemies:GetChildren()) do
+                    for i,v in pairs (game:GetService("Workspace").Enemies:GetChildren()) do
                             if v.Name == MMon or v.Name == MMon1 then
                                 repeat task.wait()
                                     EquipWeapon(_G.SelectWeapon)
@@ -3884,10 +3884,11 @@ spawn(function()
                             end
                     end
                 else
-                    UnEquipWeapon(SelectWeapon)
+                    UnEquipWeapon(_G.SelectWeapon)
                     topos(MPos)
                     wait(2)
                     topos(MPos1)
+                    wait(2)
                 end
             end)
         end
