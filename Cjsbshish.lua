@@ -1622,9 +1622,6 @@ function BypassTeleport(is)
     if lp.Character:FindFirstChild("PartTele") then
         lp.Character.PartTele.CFrame = CFrame.new(lp.Character.PartTele.CFrame.X, 1000, lp.Character.PartTele.CFrame.Z)
         task.wait(0.5)
-        if CheckInComBat() then
-            return
-        end
         lp.Character.PartTele.CFrame = is
         task.wait(0.1)
         lp.Character.PrimaryPart.CFrame = is   
@@ -1695,6 +1692,9 @@ function topos(Pos)
             return BypassTeleport(Spawn)
         end
     end
+    if Distance <= 200 then
+        lp.Character.PartTele.CFrame = Pos
+    else
     if lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid:FindFirstChild("Sit") and lp.Character.Humanoid.Sit == true then
         lp.Character.Humanoid.Sit = false
     end 
@@ -1702,8 +1702,6 @@ function topos(Pos)
     Tween:Play()
     _G.Clip = true
     if _G.StopTween == true then
-        Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
-        Tween:Cancel()
         _G.Clip = false
     end
 end
@@ -1737,11 +1735,6 @@ spawn(function()
                     if v:IsA("BasePart") then
                         v.CanCollide = false
                     end
-                end
-            end
-            for _, v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
-                if v:IsA("BasePart") then
-                    v.CanCollide = false    
                 end
             end
         elseif not _G.Clip and game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
