@@ -4130,32 +4130,6 @@ Other:AddToggle({
 	end
 })
 
-_G.MagnitudeAdd = 0;
-spawn(function()
-	while wait() do
-		if _G.AutoFarmChest then
-			for y, z in pairs(game:GetService("Workspace"):GetChildren()) do
-				if z.Name:find("Chest") then
-					if game:GetService("Workspace"):FindFirstChild(z.Name) then
-						if (z.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5000 + _G.MagnitudeAdd then
-							repeat task.wait()
-								if game:GetService("Workspace"):FindFirstChild(z.Name) then
-									EquipWeapon(_G.SelectWeapon)
-									topos(z.CFrame)
-									UnEquipWeapon(_G.SelectWeapon)
-								end
-							until _G.AutoFarmChest == false or not z.Parent;
-							topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
-							_G.MagnitudeAdd = _G.MagnitudeAdd + 1500;
-							break
-						end
-					end
-				end
-			end
-		end
-	end
-end)
-
 Other:AddToggle({
 	Name = "Stop Auto Farm Chest If Have Item",
 	Default = false,
