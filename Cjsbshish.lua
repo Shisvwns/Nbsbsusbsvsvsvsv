@@ -4144,11 +4144,9 @@ spawn(function()
 						if (z.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5000 + _G.MagnitudeAdd then
 							repeat task.wait()
 								if game:GetService("Workspace"):FindFirstChild(z.Name) then
+									EquipWeapon(_G.SelectWeapon)
 									topos(z.CFrame)
-									if game:GetService("Workspace"):FindFirstChild(z.Name).Magnitude <= 30 then
-						    			EquipWeapon(_G.SelectWeapon)
-						                UnEquipWeapon(_G.SelectWeapon)
-									end
+									UnEquipWeapon(_G.SelectWeapon)
 								end
 							until _G.AutoFarmChest == false or not z.Parent;
 							topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
@@ -4160,6 +4158,25 @@ spawn(function()
 			end
 		end
 	end
+end)
+
+Other:AddToggle({
+	Name = "Stop Farm Chest If Have Item",
+	Default = false,
+	Callback = function(Value)
+		_G.StopChest = Value
+	end
+})
+
+spawn(function()
+    while task.wait() do
+        if _G.StopChest then
+            if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
+                _G.ChestBypass = false
+                _G.AutoFarmChest = false
+            end
+        end
+    end
 end)
 
 Other:AddToggle({
