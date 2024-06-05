@@ -1635,7 +1635,7 @@ function topos(Pos)
             return BypassTeleport(Spawn)
         end
     end
-    if Distance <= 200 then
+    if Distance <= 300 then
         lp.Character.PartTele.CFrame = Pos
     end
     if lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid:FindFirstChild("Sit") and lp.Character.Humanoid.Sit == true then
@@ -1908,7 +1908,7 @@ task.spawn(function()
         if FastI then
             pcall(function()
                 CurveFrame.activeController.focusStart = 0
-                CurveFrame.activeController.hitboxMagnitude = 40
+                CurveFrame.activeController.hitboxMagnitude = 60
                 CurveFrame.activeController.humanoid.AutoRotate = true
                 CurveFrame.activeController.increment = 1 + 1 / 1
             end)
@@ -2649,11 +2649,11 @@ spawn(function()
                                         topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,0))
                                         if (v.Character.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 50 then
                                             _G.FastAttackPlayer = true
-                                            game:GetService("VirtualInputManager"):SendKeyEvent(true, "Z", false, game)
-                                            game:GetService("VirtualInputManager"):SendKeyEvent(false, "Z", false, game)
-                                            wait()
                                             game:GetService("VirtualInputManager"):SendKeyEvent(true, "X", false, game)
                                             game:GetService("VirtualInputManager"):SendKeyEvent(false, "X", false, game)
+                                            wait()
+                                            game:GetService("VirtualInputManager"):SendKeyEvent(true, "Z", false, game)
+                                            game:GetService("VirtualInputManager"):SendKeyEvent(false, "Z", false, game)
                                         end
                                     until not _G.FarmSkip or not v:FindFirstChild("HumanoidRootPart") or v.Character.Humanoid.Health <= 0
                                         _G.FastAttackPlayer = false
@@ -3104,11 +3104,11 @@ spawn(function()
             if game.Players.LocalPlayer.Backpack:FindFirstChild("Hallow Essence") then
                  EquipWeapon("Hallow Essence")
                  topos(CFrame.new(-8932.83789, 144.098709, 6059.34229, -0.999290943, 7.95623478e-09, -0.0376505218, 4.4684243e-09, 1, 9.27205832e-08, 0.0376505218, 9.24866086e-08, -0.999290943))
-            elseif game:GetService("Workspace").Enemies:FindFirstChild("Soul Reaper") or game.ReplicatedStorage:FindFirstChild("Soul Reaper") then
+            elseif game:GetService("Workspace").Enemies:FindFirstChild("Soul Reaper") then
                 if game.Workspace.Enemies:FindFirstChild ("Soul Reaper") then
                     for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == "Soul Reaper"  then
-                            if _G.Auto_Soul_Reaper and v.Name == "Soul Reaper" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                            if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                                 repeat wait()
                                     EquipWeapon(_G.SelectWeapon)
                                      topos(v.HumanoidRootPart.CFrame * Pos)
@@ -3382,9 +3382,9 @@ spawn(function()
                 else
                     UnEquipWeapon(_G.SelectWeapon)
                     topos(MPos)
-                    wait(2)
+                    wait(3)
                     topos(MPos1)
-                    wait(2)
+                    wait(3)
                 end
             end)
         end
@@ -3590,28 +3590,6 @@ spawn(function()
                 end
             end
         end
-    end
-end)
-
-FruitRaid:AddToggle({
-	Name = "Devil Fruit Notification",
-	Default = false,
-	Callback = function(Value)
-		_G.FruitCheck = Value
-	end
-})
-
-spawn(function()
-	while wait(.1) do
-		if _G.FruitCheck then
-			for i,v in pairs(game.Workspace:GetChildren()) do
-				if string.find(v.Name, "Fruit") then
-					require(game:GetService("ReplicatedStorage").Notification).new("Fruit Spawn"):Display()
-					wait()
-					setthreadcontext(5)
-				end
-			end
-		end
     end
 end)
 
@@ -3981,9 +3959,10 @@ spawn(function()
                         repeat task.wait()
                             EquipWeapon(_G.SelectWeapon)
                             topos(a.HumanoidRootPart.CFrame * Pos)
-                            PosFarm = a.HumanoidRootPart.CFrame
+                            PosNear = a.HumanoidRootPart.CFrame
+                            MagnetNear = true
                         until not _G.RaidPirate or not a.Parent or a.Humanoid.Health <= 0
-                        StartMagnet = false
+                        MagnetNear = false
                     end
                 end
             else
@@ -4050,6 +4029,7 @@ Other:AddToggle({
 	Default = false,
 	Callback = function(Value)
 		_G.AutoElitehunter = Value
+		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
 		StopTween(_G.AutoElitehunter)
 	end
 })
@@ -4832,6 +4812,9 @@ ItemQuest:AddToggle({
 	Default = false,
 	Callback = function(Value)
 		_G.AutoYama = Value
+		if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter","Progress") < 30 then
+		    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+		end
 		StopTween(_G.AutoYama)
 	end
 })
@@ -5222,11 +5205,11 @@ spawn(function()
             if game.Players.LocalPlayer.Backpack:FindFirstChild("Hallow Essence") then
                  EquipWeapon("Hallow Essence")
                  topos(CFrame.new(-8932.83789, 144.098709, 6059.34229, -0.999290943, 7.95623478e-09, -0.0376505218, 4.4684243e-09, 1, 9.27205832e-08, 0.0376505218, 9.24866086e-08, -0.999290943))
-            elseif game:GetService("Workspace").Enemies:FindFirstChild("Soul Reaper") or game.ReplicatedStorage:FindFirstChild("Soul Reaper") then
+            elseif game:GetService("Workspace").Enemies:FindFirstChild("Soul Reaper") then
                 if game.Workspace.Enemies:FindFirstChild ("Soul Reaper") then
                     for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == "Soul Reaper"  then
-                            if _G.AutoFarmBossHallow and v.Name == "Soul Reaper" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                            if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                                 repeat wait()
                                     EquipWeapon(_G.SelectWeapon)
                                     topos(v.HumanoidRootPart.CFrame * Pos)
