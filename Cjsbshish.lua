@@ -4144,9 +4144,11 @@ spawn(function()
 						if (z.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5000 + _G.MagnitudeAdd then
 							repeat task.wait()
 								if game:GetService("Workspace"):FindFirstChild(z.Name) then
-									EquipWeapon(_G.SelectWeapon)
 									topos(z.CFrame)
-									UnEquipWeapon(_G.SelectWeapon)
+									if game:GetService("Workspace"):FindFirstChild(z.Name).Magnitude <= 30 then
+						    			EquipWeapon(_G.SelectWeapon)
+						                UnEquipWeapon(_G.SelectWeapon)
+									end
 								end
 							until _G.AutoFarmChest == false or not z.Parent;
 							topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
