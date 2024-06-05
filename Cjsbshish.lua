@@ -4072,7 +4072,7 @@ local Section = Other:AddSection({
 })
 
 Other:AddDropdown({
-	Name = "Select Team",
+	Name = "Select Team When Farm Chest [ Bypass ]",
 	Default = "Pirates",
 	Options = {"Pirates","Marines"},
 	Callback = function(Value)
@@ -4113,14 +4113,63 @@ spawn(function()
                         if Chest then
                             game.Players.LocalPlayer.Character:PivotTo(Chest:GetPivot())
                             firesignal(Chest.Touched,game.Players.LocalPlayer.Character.HumanoidRootPart)
-                        else
-                            if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
-                                _G.ChestBypass = false
-                            break
                         end
                     end 
                 end
             end
+        end
+    end
+end)
+
+Other:AddToggle({
+	Name = "Auto Farm Chest [ Tween ]",
+	Default = false,
+	Callback = function(Value)
+		_G.AutoFarmChest = Value
+		StopTween(_G.AutoFarmChest)
+	end
+})
+
+_G.MagnitudeAdd = 0;
+spawn(function()
+	while wait() do
+		if _G.AutoFarmChest then
+			for y, z in pairs(game:GetService("Workspace"):GetChildren()) do
+				if z.Name:find("Chest") then
+					if game:GetService("Workspace"):FindFirstChild(z.Name) then
+						if (z.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5000 + _G.MagnitudeAdd then
+							repeat task.wait()
+								if game:GetService("Workspace"):FindFirstChild(z.Name) then
+									EquipWeapon(_G.SelectWeapon)
+									topos(z.CFrame)
+									UnEquipWeapon(_G.SelectWeapon)
+								end
+							until _G.AutoFarmChest == false or not z.Parent;
+							topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
+							_G.MagnitudeAdd = _G.MagnitudeAdd + 1500;
+							break
+						end
+					end
+				end
+			end
+		end
+	end
+end)
+
+Other:AddToggle({
+	Name = "Stop Auto Farm Chest If Have Item",
+	Default = false,
+	Callback = function(Value)
+		_G.StopFarmChest = Value
+	end
+})
+
+spawn(function()
+    while task.wait() do
+        if _G.StopFarmChest then
+            if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
+                _G.ChestBypass = false
+            break
         end
     end
 end)
