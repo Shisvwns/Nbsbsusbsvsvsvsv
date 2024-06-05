@@ -2645,7 +2645,7 @@ spawn(function()
                                             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EnablePvp")
                                         end
                                         EquipWeapon(_G.SelectWeapon)
-                                        topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,0))
+                                        topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,10))
                                         if (v.Character.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 50 then
                                             _G.FastAttackPlayer = true
                                             game:GetService("VirtualInputManager"):SendKeyEvent(true, "Z", false, game)
