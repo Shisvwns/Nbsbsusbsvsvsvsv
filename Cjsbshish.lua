@@ -4126,34 +4126,6 @@ spawn(function()
 end)
 
 Other:AddToggle({
-	Name = "Auto Farm Chest [ Tween ]",
-	Default = false,
-	Callback = function(Value)
-		_G.AutoFarmChest = Value
-		StopTween(_G.AutoFarmChest)
-	end
-})
-
-Other:AddToggle({
-	Name = "Stop Auto Farm Chest If Have Item",
-	Default = false,
-	Callback = function(Value)
-		_G.StopFarmChest = Value
-	end
-})
-
-spawn(function()
-    while task.wait() do
-        if _G.StopFarmChest then
-            if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
-                _G.ChestBypass = false
-                _G.AutoFarmChest = false
-            end
-        end
-    end
-end)
-
-Other:AddToggle({
 	Name = "Teleport To Safe If Have Item",
 	Default = false,
 	Callback = function(Value)
