@@ -1,6 +1,5 @@
 --[ Anti Ban ]
 
-setfpscap(999)
 assert(getrawmetatable)
     grm = getrawmetatable(game)
     setreadonly(grm, false)
@@ -800,8 +799,8 @@ function MaterialMon()
             MMon1 = "Jungle Pirate"
             MPos1 = CFrame.new(-12107, 332, -10549)
         elseif SelectMaterial == "Dragon Scale" then
-            MMon = "Dragon Crew Archer"
-            MPos = CFrame.new(6594, 383, 139)
+            MMon = "Dragon Crew Warrior"
+            MPos = CFrame.new(6141.140625, 51.35136413574219, -1340.738525390625)
             MMon1 = "Dragon Crew Warrior"
             MPos1 = CFrame.new(6141.140625, 51.35136413574219, -1340.738525390625)
         elseif SelectMaterial == "Conjured Cocoa" then
@@ -1645,6 +1644,7 @@ function topos(Pos)
     Tween:Play()
     _G.Clip = true
     if _G.StopTween == true then
+        Tween:Play()
         _G.Clip = false
     end
 end
@@ -4113,9 +4113,6 @@ spawn(function()
                         if Chest then
                             game.Players.LocalPlayer.Character:PivotTo(Chest:GetPivot())
                             firesignal(Chest.Touched,game.Players.LocalPlayer.Character.HumanoidRootPart)
-                        else
-                            if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
-                                _G.ChestBypass = false
                             break
                         end
                     end 
