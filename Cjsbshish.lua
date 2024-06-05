@@ -1,5 +1,6 @@
 --[ Anti Ban ]
 
+setfpscap(999)
 assert(getrawmetatable)
     grm = getrawmetatable(game)
     setreadonly(grm, false)
