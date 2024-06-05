@@ -6092,7 +6092,7 @@ spawn(function()
 				local Pos, Vis = game.Workspace.CurrentCamera.WorldToScreenPoint(game.Workspace.CurrentCamera, Head.Position)
 				local MousePos, TheirPos = Vector2.new(mouse.X, mouse.Y), Vector2.new(Pos.X, Pos.Y)
 				local Dist = (TheirPos - MousePos).Magnitude
-				if Dist < MaxDist and Dist <= _G.Select_Size_Fov and v.Name ~= game.Players.LocalPlayer.Name then
+				if Dist < MaxDist and Dist <= _G.Select_Size_Fov and v.Name == _G.SelectPly then
 					MaxDist = Dist
 					_G.Aim_Players = v
 				end
