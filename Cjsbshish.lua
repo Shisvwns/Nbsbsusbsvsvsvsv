@@ -1,6 +1,5 @@
 --[ Anti Ban ]
 
-spawn(function()
 while task.wait() do
 pcall(function()
 
@@ -7668,4 +7667,3 @@ OrionLib:MakeNotification({
 
 end)
 end
-end)
