@@ -1829,6 +1829,19 @@ gg.__namecall = newcclosure(function(...)
 	return old(...)
 end)
 
+setreadonly(gt,false)
+gt.__namecall = newcclosure(function(...)
+	local args = {...}
+	if getnamecallmethod() == "InvokeServer" then 
+        if tostring(args[2]) == "TAP" then
+            if Skillaimbot then
+                args[3] = AimBotSkillPosition
+            end
+        end
+	end
+	return old(unpack(args))
+end)
+
 -- [ Super Fast Attack ]
 
 game:GetService("ReplicatedStorage").Util.Sound.Storage.Swing:Destroy()
@@ -3410,7 +3423,7 @@ spawn(function()
                                                 EquipWeapon(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value)
                                                 UseSkill = true
                                                 Skillaimbot = true
-                                                topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 15, 0))
+                                                topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 20, 0))
                                             else           
                                                 UseSkill = false 
                                                 Skillaimbot = false
@@ -3421,7 +3434,6 @@ spawn(function()
                                             MonFarm = v.Name
                                             PosFarm = v.HumanoidRootPart.CFrame
                                             StartMagnet = true
-                                            NormalAttack()
                                         until not _G.AutoFarmFruitMastery or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
                                         StartMagnet = false
                                         UseSkill = false
@@ -3483,7 +3495,7 @@ spawn(function()
                                             ShootPosition = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, -15, 0)
                                             if v.Humanoid.Health <= HealthMin then
                                                 EquipWeaponGun()
-                                                topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 15, 0))
+                                                topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 20, 0))
                                                 game:GetService("Players").LocalPlayer.Character.Humanoid:FindFirstChild(""):InvokeServer("TAP", Vector3.new(ShootPosition.Position))
                                                 UseGunSkill = true
                                                 Skillaimbot = true
@@ -6709,32 +6721,16 @@ local Section = Sea:AddSection({
     Name = "~ Boats Settings ~"
 })
 
-local ListSeaBoat = {"Guardian","Grand Brigade","Brigade","Lantern","Beast Hunter",}
+local ListSeaBoat = {"Guardian","GrandBrigade","Brigade","Lantern","BeastHunter",}
 
 Sea:AddDropdown({
 	Name = "Select Boats",
-	Default = "Grand Brigade",
+	Default = "GrandBrigade",
 	Options = ListSeaBoat,
 	Callback = function(Value)
-		_G.Boat = Value
+		_G.SelectedBoat = Value
 	end    
 })
-
-spawn(function()
-    while wait() do
-        if _G.Boat == "Guardian" then
-            _G.SelectedBoat = "Guardian"
-        elseif _G.Boat == "Grand Brigade" then
-            _G.SelectedBoat = "GrandBrigade"
-        elseif _G.Boat == "Brigade" then
-            _G.SelectedBoat = "Brigade"
-        elseif _G.Boat == "Lantern" then
-            _G.SelectedBoat = "Lantern"
-        elseif _G.Boat == "Beast Hunter" then
-            _G.SelectedBoat = "BeastHunter"
-        end
-    end
-end)
 
 Sea:AddDropdown({
 	Name = "Select Zone",
@@ -6840,7 +6836,7 @@ function AddEsp(Name, Parent)
     TextLabel.Size = UDim2.new(1, 0, 1, 0)
     TextLabel.Font = Enum.Font.GothamBold
     TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-    TextLabel.TextSize = 15
+    TextLabel.TextSize = 13
     TextLabel.Text = "[ My Boats ]"
 end
 
