@@ -7244,7 +7244,7 @@ Sea:AddToggle({
 	end
 })
 
-Sea:AddLabel("Select Use Skill Sword & Gun")
+Sea:AddLabel("Select Use Skill Sword")
 
 Sea:AddToggle({
 	Name = "Use Skill Z",
@@ -7312,7 +7312,7 @@ Sea:AddToggle({
 })
 
 Sea:AddToggle({
-	Name = "Auto Kill Ghost Ship",
+	Name = "Auto Kill Ship",
 	Default = false,
 	Callback = function(Value)
 		_G.RelzFishBoat = Value
