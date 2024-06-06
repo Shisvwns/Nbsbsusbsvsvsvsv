@@ -3539,7 +3539,7 @@ local SelectRarityFruits = {"Common -> Mythical","Uncommon -> Mythical","Rare ->
 local ResultUnstoreFruits = {}
 FruitRaid:AddDropdown({
 	Name = "Select Rare Devil Fruit To Store",
-	Default = "Common - Mythical",
+	Default = "Common -> Mythical",
 	Options = SelectRarityFruits,
 	Callback = function(Value)
 		SetRarityFruits = Value
@@ -3659,7 +3659,7 @@ local Section = FruitRaid:AddSection({
     Name = "~ Raid ~"
 })
 
-_G.SelectChip = selectraids or ""
+SelectChip = selectraids or ""
 Raidslist = {}
 RaidsModule = require(game.ReplicatedStorage.Raids)
 for i,v in pairs(RaidsModule.raids) do
@@ -3674,7 +3674,7 @@ FruitRaid:AddDropdown({
 	Default = "",
 	Options = Raidslist,
 	Callback = function(Value)
-		_G.SelectChip = Value
+		SelectChip = Value
 	end
 })
 
@@ -3692,7 +3692,7 @@ spawn(function()
 			local args = {
 				[1] = "RaidsNpc",
 				[2] = "Select",
-				[3] = _G.SelectChip
+				[3] = SelectChip
 			}
 			game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
         end
@@ -3710,6 +3710,7 @@ FruitRaid:AddToggle({
 spawn(function()
     while wait() do
         if _G.AutoFruit then
+            if not game.Players.LocalPlayer.Backpack:FindFirstChild("Fruit") then
             local args = {
                 [1] = "LoadFruit",
                 [2] = "Rocket-Rocket"
@@ -3795,6 +3796,7 @@ spawn(function()
                 [2] = "Barrier-Barrier"
             }
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+        end
         end
     end
 end)
@@ -7619,54 +7621,6 @@ Shop:AddButton({
             local Event = game:GetService("ReplicatedStorage").Remotes["CommF_"]
             Event:InvokeServer(A_1, A_2, A_3)
         end
-    end
-})
-
-local Section = Shop:AddSection({
-    Name = "~ Boats ~"
-})
-
-BoatList = {"Pirate Sloop","Enforcer","Rocket Boost","Dinghy","Pirate Basic","Pirate Brigade"}
-
-spawn(function()
-    while wait() do
-        pcall(function()
-            if SelectBoat == "Pirate Sloop" then
-                _G.SelectBoat = "PirateSloop"
-            else
-                if SelectBoat == "Enforcer" then
-                    _G.SelectBoat = "Enforcer"
-                else
-                    if SelectBoat == "Rocket Boost" then
-                        _G.SelectBoat = "RocketBoost"
-                    else
-                        if SelectBoat == "Pirate Basic" then
-                            _G.SelectBoat = "PirateBasic"
-                        else
-                            if SelectBoat == "Pirate Brigade" then
-                                _G.SelectBoat = "PirateBrigade"
-                            end
-                        end
-                    end
-                end
-            end
-        end)
-    end
-end)
-
-Shop:AddDropdown({
-    Name = "Select Boats",
-    Default = "",
-    Options = BoatList,
-    Callback = function(Value)
-		SelectBoat = Value
-	end
-})
-
-Shop:AddButton({
-    Name = "Buy Boats",
-    Callback = function()
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyBoat",_G.SelectBoat)
     end
 })
 
