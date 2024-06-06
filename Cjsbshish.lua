@@ -1662,7 +1662,7 @@ function TelePlayer(Pos)
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
 end
 
-Pos = CFrame.new(0,30,0)
+Pos = CFrame.new(0,40,0)
 RaidPos = CFrame.new(0,70,0)
 
 spawn(function()
@@ -2006,6 +2006,71 @@ spawn(function()
     end
 end)
 
+local PBlade = game.Players.LocalPlayer
+local QBlade = getupvalues(require(PBlade.PlayerScripts.CombatFramework))
+local RBlade = QBlade[2]
+function GetCurrentBlade()
+    local S = RBlade.activeController
+    local T = S.blades[1]
+    if not T then
+        return
+    end
+    while T.Parent ~= game.Players.LocalPlayer.Character do
+        T = T.Parent
+    end
+    return T
+end
+function AttackNoCD()
+    if not _G.AutoFarmFruitMastery or not _G.AutoFarmGunMastery then
+        if _G.FastAttackTest then
+            local U = RBlade.activeController
+            for h = 1, 1 do
+                local V =
+                    require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(
+                    PBlade.Character,
+                    {PBlade.Character.HumanoidRootPart},
+                    60
+                )
+                local W = {}
+                local X = {}
+                for k, i in pairs(V) do
+                    if i.Parent:FindFirstChild("HumanoidRootPart") and not X[i.Parent] then
+                        table.insert(W, i.Parent.HumanoidRootPart)
+                        X[i.Parent] = true
+                    end
+                end
+                V = W
+                if #V > 0 then
+                    local Y = debug.getupvalue(U.attack, 5)
+                    local Z = debug.getupvalue(U.attack, 6)
+                    local _ = debug.getupvalue(U.attack, 4)
+                    local a0 = debug.getupvalue(U.attack, 7)
+                    local a1 = (Y * 798405 + _ * 727595) % Z
+                    local a2 = _ * 798405
+                    (function()
+                        a1 = (a1 * Z + a2) % 1099511627776
+                        Y = math.floor(a1 / Z)
+                        _ = a1 - Y * Z
+                    end)()
+                    a0 = a0 + 1
+                    debug.setupvalue(U.attack, 5, Y)
+                    debug.setupvalue(U.attack, 6, Z)
+                    debug.setupvalue(U.attack, 4, _)
+                    debug.setupvalue(U.attack, 7, a0)
+                    pcall(function()
+                        if PBlade.Character:FindFirstChildOfClass("Tool") and U.blades and U.blades[1] then
+                            U.animator.anims.basic[1]:Play(0.01, 0.01, 0.01)
+                            game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange", tostring(GetCurrentBlade()))
+                            game.ReplicatedStorage.Remotes.Validator:FireServer(math.floor(a1 / 1099511627776 * 16777215), a0)
+                            game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", V, h, "")
+                        end
+                    end
+                end
+            end
+        end
+    end
+end
+
 -- [ Ui Orion ]
 
 ScreenGui = Instance.new("ScreenGui");
@@ -2165,6 +2230,22 @@ Setting:AddToggle({
 		_G.FastAttack = Value
 	end
 })
+
+Setting:AddToggle({
+	Name = "Fast Attack [ Test ]",
+	Default = false,
+	Callback = function(Value)
+		_G.FastAttackTest = Value
+	end
+})
+
+spawn(function()
+    while task.wait(_G.FastAttackDelay)
+        if _G.FastAttackTest then
+            AttackNoCD()
+        end
+    end
+end)
 
 Setting:AddToggle({
 	Name = "Auto Click [ 75% Kick System ]",
