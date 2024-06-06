@@ -1796,6 +1796,16 @@ end
 
 -- [ Super Fast Attack ]
 
+spawn(function()
+	for i,v in pairs(game:GetService("Workspace")["_WorldOrigin"]:GetChildren()) do
+		pcall(function()
+			if v.Name == ("CurvedRing") or v.Name == ("SlashHit") or v.Name == ("SwordSlash") or v.Name == ("SlashTail") then
+				v:Destroy()
+			end
+		end)
+	end
+end)
+
 game:GetService("ReplicatedStorage").Util.Sound.Storage.Swing:Destroy()
 local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
 CamShake:Stop()
