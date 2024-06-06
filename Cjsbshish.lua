@@ -1877,7 +1877,7 @@ task.spawn(function()
 end)
 task.spawn(function()
     while task.wait() do
-        if _G.FastAttackPlayer then
+        if FastAttackPlayer then
             FastI = true
             pcall(function()
                 for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
@@ -2697,7 +2697,7 @@ spawn(function()
                                         EquipWeapon(_G.SelectWeapon)
                                         topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,0))
                                         if (v.Character.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 50 then
-                                            _G.FastAttackPlayer = true
+                                            FastAttackPlayer = true
                                             game:GetService("VirtualInputManager"):SendKeyEvent(true, "X", false, game)
                                             game:GetService("VirtualInputManager"):SendKeyEvent(false, "X", false, game)
                                             wait()
@@ -2705,7 +2705,7 @@ spawn(function()
                                             game:GetService("VirtualInputManager"):SendKeyEvent(false, "Z", false, game)
                                         end
                                     until not _G.FarmSkip or not v:FindFirstChild("HumanoidRootPart") or v.Character.Humanoid.Health <= 0
-                                        _G.FastAttackPlayer = false
+                                        FastAttackPlayer = false
                                 end
                             end
                         else
@@ -4147,7 +4147,7 @@ Other:AddDropdown({
 	end
 })
 
-Other:AddToggle({
+local ChestBypass = Other:AddToggle({
 	Name = "Auto Farm Chest [ Bypass ]",
 	Default = false,
 	Callback = function(Value)
@@ -4182,7 +4182,7 @@ spawn(function()
                         else
                             if _G.StopChest == true then
                                 if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
-                                    _G.ChestBypass = false
+                                    ChestBypass:Set(false)
                                 break
                             end
                         end
@@ -4193,7 +4193,7 @@ spawn(function()
     end
 end)
 
-Other:AddToggle({
+local ChestTween = Other:AddToggle({
 	Name = "Auto Farm Chest [ Tween ]",
 	Default = false,
 	Callback = function(Value)
@@ -4242,8 +4242,8 @@ spawn(function()
     while task.wait() do
         if _G.StopChest then
             if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
-                _G.ChestBypass = false
-                _G.AutoFarmChest = false
+                ChestBypass:Set(false)
+                ChestTween:Set(false)
             end
         end
     end
@@ -6693,12 +6693,44 @@ spawn(function()
                         repeat task.wait()
                             EquipWeapon(_G.SelectWeaponTrials)
                             topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 0, 0))
-                            useskilltrial = true
+                            if (v.Character.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 30 then
+                                UseSkillTrial = true
+                                SpamOnRace = true
+                                FastAttackPlayer = true
+                            end
                         until _G.KillAfterTrials == false or v.Humanoid.Health <= 0 or not v.Parent or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid")
-                        useskilltrial = false
+                        UseSkillTrial = false
+                        SpamOnRace = false
+                        FastAttackPlayer = false
                     end
                 end
             end
+        end
+    end
+end)
+
+spawn(function()
+    while task.wait do
+        if SpamOnRace then
+            game:GetService("VirtualInputManager"):SendKeyEvent(true,"T",false,game)
+            game:GetService("VirtualInputManager"):SendKeyEvent(false,"T",false,game)
+            wait()
+            game:GetService("VirtualInputManager"):SendKeyEvent(true,"Y",false,game)
+            game:GetService("VirtualInputManager"):SendKeyEvent(false,"Y",false,game)
+        end
+    end
+end)
+
+spawn(function()
+    while task.wait() do
+        if SpamOnRace then
+            repeat wait()
+                if not game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") then
+                    game:GetService('VirtualUser'):SetKeyDown('0x65')
+                    wait(0.1)
+                    game:GetService('VirtualUser'):SetKeyUp('0x65')
+                end
+            until game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") or not spamonrace
         end
     end
 end)
@@ -6737,42 +6769,23 @@ Race:AddToggle({
 
 spawn(function()
     while task.wait() do
-        if useskilltrial then
+        if UseSkillTrial then
             if _G.Z then
                 game:GetService("VirtualInputManager"):SendKeyEvent(true, "Z", false, game)
-                wait(0)
                 game:GetService("VirtualInputManager"):SendKeyEvent(false, "Z", false, game)
                 if _G.X then
                     game:GetService("VirtualInputManager"):SendKeyEvent(true, "X", false, game)
-                    wait(0)
                     game:GetService("VirtualInputManager"):SendKeyEvent(false, "X", false, game)
                     if _G.C then
                         game:GetService("VirtualInputManager"):SendKeyEvent(true, "C", false, game)
-                        wait(0)
                         game:GetService("VirtualInputManager"):SendKeyEvent(false, "C", false, game)
                         if _G.V then
                             game:GetService("VirtualInputManager"):SendKeyEvent(true, "V", false, game)
-                            wait(0)
                             game:GetService("VirtualInputManager"):SendKeyEvent(false, "V", false, game)
                         end
                     end
                 end
             end
-        end
-    end
-end)
-
-spawn(function()
-    while task.wait() do
-        if _G.KillAfterTrials then
-            repeat task.wait()
-                if not game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") then
-                    game:GetService("VirtualUser"):CaptureController()
-                    game:GetService("VirtualUser"):SetKeyDown("0x65")
-                    wait(2)
-                    game:GetService("VirtualUser"):SetKeyUp("0x65")
-                end
-            until game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") or not _G.KillV4
         end
     end
 end)
