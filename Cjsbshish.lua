@@ -2071,6 +2071,12 @@ Setting:AddToggle({
 })
 
 spawn(function()
+    while task.wait() do
+        GetCurrentBlade()
+    end
+end)
+
+spawn(function()
     while task.wait(_G.FastAttackDelay) do
         if _G.FastAttack then
             AttackNoCD()
