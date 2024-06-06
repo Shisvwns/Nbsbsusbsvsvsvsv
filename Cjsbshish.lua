@@ -1562,7 +1562,7 @@ function GetPortal(check2)
 end 
 function BypassTeleport(is)
     if lp.Character:FindFirstChild("PartTele") then
-        lp.Character.PartTele.CFrame = CFrame.new(lp.Character.PartTele.CFrame.X, 0, lp.Character.PartTele.CFrame.Z)
+        lp.Character.PartTele.CFrame = CFrame.new(lp.Character.PartTele.CFrame.X, lp.Character.PartTele.CFrame.Y, lp.Character.PartTele.CFrame.Z)
         task.wait(0.5)
         lp.Character.PartTele.CFrame = is
         task.wait(0.1)
