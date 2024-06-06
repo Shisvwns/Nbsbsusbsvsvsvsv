@@ -6844,11 +6844,28 @@ function AddEsp(Name, Parent)
     TextLabel.Text = "[ My Boats ]"
 end
 
+local stopboat = {}
+function TPB(pos, boat)
+	local tween_s = game:service"TweenService"
+	local info = TweenInfo.new((boat.CFrame.Position - pos.Position).Magnitude/_G.SpeedBoat, Enum.EasingStyle.Linear)
+	tween = tween_s:Create(boat, info, {CFrame = pos})
+    if (boat.CFrame.Position - pos.Position).Magnitude <= 25 then
+        tween:Cancel()
+    else
+        tween:Play()
+    end
+	function stopboat:Stop()
+		tween:Cancel()
+	end
+	return stopboat
+end
+
 spawn(function()
     while wait() do
         if _G.SailBoat then
             if not CheckBoat() then
                 local BuyBoatCFrame = CFrame.new(-16927.451171875, 9.0863618850708, 433.8642883300781)
+                buyb = topos(BuyBoatCFrame)
                 if (CFrame.new(-16927.451171875, 9.0863618850708, 433.8642883300781).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 10 then
                     if buyb then buyb:Stop() end
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyBoat", _G.SelectedBoat)
