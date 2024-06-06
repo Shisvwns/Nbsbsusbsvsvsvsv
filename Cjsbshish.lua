@@ -4085,7 +4085,6 @@ Other:AddToggle({
 	Default = false,
 	Callback = function(Value)
 		_G.ChestBypass = Value
-		StopTween(_G.ChestBypass)
 	end
 })
 
@@ -4101,6 +4100,7 @@ end)
 
 spawn(function()
     while task.wait() do
+        if _G.ChestBypass then
             local hasChar = game.Players.LocalPlayer:FindFirstChild("Character")
             if not game.Players.LocalPlayer.Character then
             else
@@ -4112,10 +4112,17 @@ spawn(function()
                         if Chest then
                             game.Players.LocalPlayer.Character:PivotTo(Chest:GetPivot())
                             firesignal(Chest.Touched,game.Players.LocalPlayer.Character.HumanoidRootPart)
-                        break
+                        else
+                            if _G.StopChest == true then
+                                if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
+                                    _G.ChestBypass = false
+                                break
+                            end
+                        end
                     end 
                 end
             end
+        end
     end
 end)
 
