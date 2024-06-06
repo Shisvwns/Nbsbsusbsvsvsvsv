@@ -6695,13 +6695,9 @@ spawn(function()
                             topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 0, 0))
                             if (v.Character.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 30 then
                                 UseSkillTrial = true
-                                SpamOnRace = true
-                                FastAttackPlayer = true
                             end
                         until _G.KillAfterTrials == false or v.Humanoid.Health <= 0 or not v.Parent or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid")
                         UseSkillTrial = false
-                        SpamOnRace = false
-                        FastAttackPlayer = false
                     end
                 end
             end
