@@ -1829,19 +1829,6 @@ gg.__namecall = newcclosure(function(...)
 	return old(...)
 end)
 
-setreadonly(gt,false)
-gt.__namecall = newcclosure(function(...)
-	local args = {...}
-	if getnamecallmethod() == "InvokeServer" then 
-        if tostring(args[2]) == "TAP" then
-            if Skillaimbot then
-                args[3] = AimBotSkillPosition
-            end
-        end
-	end
-	return old(unpack(args))
-end)
-
 -- [ Super Fast Attack ]
 
 game:GetService("ReplicatedStorage").Util.Sound.Storage.Swing:Destroy()
