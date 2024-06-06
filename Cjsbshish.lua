@@ -1832,7 +1832,8 @@ end)
 -- [ Super Fast Attack ]
 
 game:GetService("ReplicatedStorage").Util.Sound.Storage.Swing:Destroy()
-require(game.ReplicatedStorage.Util.CameraShaker):Stop()
+local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
+CamShake:Stop()
 local PBlade = game.Players.LocalPlayer
 local QBlade = getupvalues(require(PBlade.PlayerScripts.CombatFramework))
 local RBlade = QBlade[2]
@@ -1847,7 +1848,6 @@ function GetCurrentBlade()
     end
     return T
 end
-
 function AttackNoCD()
     if not _G.AutoFarmFruitMastery or not _G.AutoFarmGunMastery then
         if _G.FastAttack then
@@ -1856,14 +1856,14 @@ function AttackNoCD()
                 local V =
                     require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(
                     PBlade.Character,
-                    {PBlade.Character.HumanoidRootPart},
+                    {PBlade.Character:FindFirstChild("HumanoidRootPart")},
                     60
                 )
                 local W = {}
                 local X = {}
                 for k, i in pairs(V) do
                     if i.Parent:FindFirstChild("HumanoidRootPart") and not X[i.Parent] then
-                        table.insert(W, i.Parent.HumanoidRootPart)
+                        table.insert(W, i.Parent:FindFirstChild("HumanoidRootPart"))
                         X[i.Parent] = true
                     end
                 end
@@ -2069,12 +2069,6 @@ Setting:AddToggle({
 		_G.FastAttack = Value
 	end
 })
-
-spawn(function()
-    while task.wait() do
-        GetCurrentBlade()
-    end
-end)
 
 spawn(function()
     while task.wait(_G.FastAttackDelay) do
