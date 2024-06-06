@@ -1796,16 +1796,6 @@ end
 
 -- [ Super Fast Attack ]
 
-spawn(function()
-	for i,v in pairs(game:GetService("Workspace")["_WorldOrigin"]:GetChildren()) do
-		pcall(function()
-			if v.Name == ("CurvedRing") or v.Name == ("SlashHit") or v.Name == ("SwordSlash") or v.Name == ("SlashTail") then
-				v:Destroy()
-			end
-		end)
-	end
-end)
-
 game:GetService("ReplicatedStorage").Util.Sound.Storage.Swing:Destroy()
 local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
 CamShake:Stop()
@@ -2266,6 +2256,20 @@ Setting:AddToggle({
 	end
 })
 
+Setting:AddButton({
+    Name = "Set Clip = false",
+    Callback = function()
+        _G.Clip = false
+    end
+})
+
+Setting:AddButton({
+	Name = "Reset Character",
+	Callback = function()
+      	game:GetService("Players").LocalPlayer.Character.Humanoid.Health = 0
+	end    
+})
+
 local Section = Setting:AddSection({
     Name = "~ Graphic & Reduce Lag ~"
 })
@@ -2402,6 +2406,41 @@ spawn(function()
 			game:GetService("ReplicatedStorage").Assets.GUI.DamageCounter.Enabled = true
 		end
 	end
+end)
+
+Setting:AddToggle({
+	Name = "Hide Monster",
+	Default = false,
+	Callback = function(Value)
+		_G.invmob = Value
+	end
+})
+
+spawn(function()
+    while wait() do
+        if _G.invmob then
+            for i,v in pairs(game:GetService("Workspace").Enemies:GetDescendants()) do
+                if v.ClassName == "MeshPart" then
+                    v.Transparency = 1
+                end
+            end
+            for i,v in pairs(game:GetService("Workspace").Enemies:GetDescendants()) do
+                if v.Name == "Head" then
+                    v.Transparency = 1
+                end
+            end
+            for i,v in pairs(game:GetService("Workspace").Enemies:GetDescendants()) do
+                if v.ClassName == "Accessory" then
+                    v.Handle.Transparency = 1
+                end
+            end
+            for i,v in pairs(game:GetService("Workspace").Enemies:GetDescendants()) do
+                if v.ClassName == "Decal" then
+                    v.Transparency = 1
+                end
+            end
+        end
+    end
 end)
 
 local Section = Setting:AddSection({
@@ -3720,7 +3759,6 @@ FruitRaid:AddToggle({
 spawn(function()
     while wait() do
         if _G.AutoFruit then
-            if not game.Players.LocalPlayer.Backpack:FindFirstChild("Fruit") then
             local args = {
                 [1] = "LoadFruit",
                 [2] = "Rocket-Rocket"
@@ -3806,7 +3844,6 @@ spawn(function()
                 [2] = "Barrier-Barrier"
             }
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
-        end
         end
     end
 end)
