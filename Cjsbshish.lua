@@ -4147,7 +4147,7 @@ Other:AddDropdown({
 	end
 })
 
-local ChestBypass = Other:AddToggle({
+Other:AddToggle({
 	Name = "Auto Farm Chest [ Bypass ]",
 	Default = false,
 	Callback = function(Value)
@@ -4182,7 +4182,7 @@ spawn(function()
                         else
                             if _G.StopChest == true then
                                 if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
-                                    ChestBypass:Set(false)
+                                    _G.ChestBypass = false
                                 break
                             end
                         end
@@ -4193,7 +4193,7 @@ spawn(function()
     end
 end)
 
-local ChestTween = Other:AddToggle({
+Other:AddToggle({
 	Name = "Auto Farm Chest [ Tween ]",
 	Default = false,
 	Callback = function(Value)
@@ -4242,8 +4242,8 @@ spawn(function()
     while task.wait() do
         if _G.StopChest then
             if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
-                ChestBypass:Set(false)
-                ChestTween:Set(false)
+                _G.ChestBypass = false
+                _G.AutoFarmChest = false
             end
         end
     end
@@ -6737,7 +6737,7 @@ end)
 
 Race:AddToggle({
 	Name = "Use Skill Z",
-	Default = false,
+	Default = true,
 	Callback = function(Value)
 		_G.Z = Value
 	end
@@ -6745,7 +6745,7 @@ Race:AddToggle({
 
 Race:AddToggle({
 	Name = "Use Skill X",
-	Default = false,
+	Default = true,
 	Callback = function(Value)
 		_G.X = Value
 	end
@@ -6753,7 +6753,7 @@ Race:AddToggle({
 
 Race:AddToggle({
 	Name = "Use Skill C",
-	Default = false,
+	Default = true,
 	Callback = function(Value)
 		_G.C = Value
 	end
