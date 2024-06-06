@@ -4101,7 +4101,6 @@ end)
 
 spawn(function()
     while task.wait() do
-        if _G.ChestBypass then
             local hasChar = game.Players.LocalPlayer:FindFirstChild("Character")
             if not game.Players.LocalPlayer.Character then
             else
@@ -4113,11 +4112,10 @@ spawn(function()
                         if Chest then
                             game.Players.LocalPlayer.Character:PivotTo(Chest:GetPivot())
                             firesignal(Chest.Touched,game.Players.LocalPlayer.Character.HumanoidRootPart)
-                        end
+                        break
                     end 
                 end
             end
-        end
     end
 end)
 
