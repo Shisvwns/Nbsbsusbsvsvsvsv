@@ -3482,6 +3482,106 @@ spawn(function()
     end
 end)
 
+local RarityFruits = {
+    ["Common"] = {
+        "Rocket Fruit",
+        "Spin Fruit",
+        "Chop Fruit",
+        "Spring Fruit",
+        "Bomb Fruit",
+        "Smoke Fruit",
+        "Spike Fruit"
+    },
+    ["Uncommon"] = {
+        "Flame Fruit",
+        "Falcon Fruit",
+        "Ice Fruit",
+        "Sand Fruit",
+        "Diamond Fruit",
+        "Dark Fruit"
+    },
+    ["Rare"] = {
+        "Light Fruit",
+        "Rubber Fruit",
+        "Barrier Fruit",
+        "Ghost Fruit",
+        "Magma Fruit"
+    },
+    ["Legendary"] = {
+        "Quake Fruit",
+        "Budha Fruit",
+        "Love Fruit",
+        "Spider Fruit",
+        "Sound Fruit",
+        "Phoenix Fruit",
+        "Portal Fruit",
+        "Rumble Fruit",
+        "Pain Fruit",
+        "Blizzard Fruit",
+    },
+    ["Mythical"] = {
+        "Gravity Fruit",
+        "Mammoth Fruit",
+        "T-Rex Fruit",
+        "Dough Fruit",
+        "Shadow Fruit",
+        "Venom Fruit",
+        "Control Fruit",
+        "Spirit Fruit",
+        "Dragon Fruit",
+        "Leopard Fruit",
+        "Kitsune Fruit",
+    }
+}
+
+local SelectRarityFruits = {"Common -> Mythical","Uncommon -> Mythical","Rare -> Mythical","Legendary -> Mythical","Mythical"}
+
+local ResultUnstoreFruits = {}
+FruitRaid:AddDropdown({
+	Name = "Select Rare Devil Fruit To Store",
+	Default = "Common - Mythical",
+	Options = SelectRarityFruits,
+	Callback = function(Value)
+		SetRarityFruits = Value
+	end
+})
+
+function CheckFruits()
+    for i, v in pairs(RarityFruits) do
+        if SetRarityFruits == "Common -> Mythical" then
+            if i == "Common" or i == "Uncommon" or i == "Rare" or i == "Legendary" or i == "Mythical" then
+                for _, fruit in ipairs(v) do
+                    table.insert(ResultStoreFruits, fruit)
+                end
+            end
+        elseif SetRarityFruits == "Uncommon -> Mythical" then
+            if i == "Uncommon" or i == "Rare" or i == "Legendary" or i == "Mythical" then
+                for _, fruit in ipairs(v) do
+                    table.insert(ResultStoreFruits, fruit)
+                end
+            end
+        elseif SetRarityFruits == "Rare -> Mythical" then
+            if i == "Rare" or i == "Legendary" or i == "Mythical" then
+                for _, fruit in ipairs(v) do
+                    table.insert(ResultStoreFruits, fruit)
+                end
+            end
+        elseif SetRarityFruits == "Legendary -> Mythical" then
+            if i == "Legendary" or i == "Mythical" then
+                for _, fruit in ipairs(v) do
+                    table.insert(ResultStoreFruits, fruit)
+                end
+            end
+        elseif SetRarityFruits == "Mythical" then
+            if i == "Mythical" then
+                for _, fruit in ipairs(v) do
+                    table.insert(ResultStoreFruits, fruit)
+                end
+            end
+        end
+    end  
+end
+
 FruitRaid:AddToggle({
 	Name = "Auto Store Devil Fruit",
 	Default = false,
@@ -3490,106 +3590,27 @@ FruitRaid:AddToggle({
 	end
 })
 
-function Get_Fruit(Fruit)
-    if Fruit == "Rocket Fruit" then
-        return "Rocket-Rocket"
-    elseif Fruit == "Spin Fruit" then
-        return "Spin-Spin"
-    elseif Fruit == "Chop Fruit" then
-        return "Chop-Chop"
-    elseif Fruit == "Spring Fruit" then
-        return "Spring-Spring"
-    elseif Fruit == "Bomb Fruit" then
-        return "Bomb-Bomb"
-    elseif Fruit == "Smoke Fruit" then
-        return "Smoke-Smoke"
-    elseif Fruit == "Spike Fruit" then
-        return "Spike-Spike"
-    elseif Fruit == "Flame Fruit" then
-        return "Flame-Flame"
-    elseif Fruit == "Falcon Fruit" then
-        return "Falcon-Falcon"
-    elseif Fruit == "Ice Fruit" then
-        return "Ice-Ice"
-    elseif Fruit == "Sand Fruit" then
-        return "Sand-Sand"
-    elseif Fruit == "Dark Fruit" then
-        return "Dark-Dark"
-    elseif Fruit == "Ghost Fruit" then
-        return "Ghost-Ghost"
-    elseif Fruit == "Diamond Fruit" then
-        return "Diamond-Diamond"
-    elseif Fruit == "Light Fruit" then
-        return "Light-Light"
-    elseif Fruit == "Rubber Fruit" then
-        return "Rubber-Rubber"
-    elseif Fruit == "Barrier Fruit" then
-        return "Barrier-Barrier"
-    elseif Fruit == "Magma Fruit" then
-        return "Magma-Magma"
-    elseif Fruit == "Quake Fruit" then
-        return "Quake-Quake"
-    elseif Fruit == "Buddha Fruit" then
-        return "Buddha-Buddha"
-    elseif Fruit == "Love Fruit" then
-        return "Love-Love"
-    elseif Fruit == "Spider Fruit" then
-        return "Spider-Spider"
-    elseif Fruit == "Sound Fruit" then
-        return "Sound-Sound"
-    elseif Fruit == "Phoenix Fruit" then
-        return "Phoenix-Phoenix"
-    elseif Fruit == "Portal Fruit" then
-        return "Portal-Portal"
-    elseif Fruit == "Rumble Fruit" then
-        return "Rumble-Rumble"
-    elseif Fruit == "Pain Fruit" then
-        return "Pain-Pain"
-    elseif Fruit == "Blizzard Fruit" then
-        return "Blizzard-Blizzard"
-    elseif Fruit == "Gravity Fruit" then
-        return "Gravity-Gravity"
-    elseif Fruit == "Mammoth Fruit" then
-        return "Mammoth-Mammoth"
-    elseif Fruit == "Dough Fruit" then
-        return "Dough-Dough"
-    elseif Fruit == "Shadow Fruit" then
-        return "Shadow-Shadow"
-    elseif Fruit == "Venom Fruit" then
-        return "Venom-Venom"
-    elseif Fruit == "Control Fruit" then
-        return "Control-Control"
-    elseif Fruit == "Spirit Fruit" then
-        return "Spirit-Spirit"
-    elseif Fruit == "Dragon Fruit" then
-        return "Dragon-Dragon"
-    elseif Fruit == "T-Rex Fruit" then
-        return "T-Rex-T-Rex"
-    elseif Fruit == "Leopard Fruit" then
-        return "Leopard-Leopard"
-    elseif Fruit == "Kitsune Fruit" then
-        return "Kitsune-Kitsune"
-    end
-end
-
 spawn(function()
     while task.wait() do
-        if _G.AutoStoreFruit then
-            local plrBag = game:GetService("Players").LocalPlayer.Backpack
-            local plrChar = game:GetService("Players").LocalPlayer.Character
-            game.Players.LocalPlayer.PlayerGui.Main.FruitInventory.Position = UDim2.new(10.100, 0, 0.100, 0) -- HideUi
-	    	game.Players.LocalPlayer.PlayerGui.Main.FruitInventory.Visible = true
-            for _,Fruit in pairs(plrChar:GetChildren()) do
-                if Fruit:IsA("Tool") and Fruit:FindFirstChild("Fruit") then
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StoreFruit", Get_Fruit(Fruit.Name), Fruit)
+        pcall(function()
+            if _G.AutoStoreFruit then
+                for i, v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
+                    if string.find(v.Name, "Fruit") then
+                        ResultStoreFruits = {}
+                        CheckFruits()
+                        for z, Res in pairs(ResultStoreFruits) do
+                        if v.Name == Res then
+                            local NameFruit = v.Name
+                            local FirstNameFruit = string.gsub(v.Name, " Fruit", "")
+                            if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(NameFruit) then
+                                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StoreFruit",FirstNameFruit.."-"..FirstNameFruit,game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(NameFruit))
+                            end
+                        end
+                        end
+                    end
                 end
             end
-            for _,Fruit in pairs(plrBag:GetChildren()) do
-                if Fruit:IsA("Tool") and Fruit:FindFirstChild("Fruit") then
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StoreFruit", Get_Fruit(Fruit.Name), Fruit)
-                end
-            end
-        end
+        end)
     end
 end)
 
@@ -3618,21 +3639,18 @@ FruitRaid:AddToggle({
 	Name = "Bring To Devil Fruit [ 75% Kick System ]",
 	Default = false,
 	Callback = function(Value)
-		_G.BringFruitBF = Value
+		_G.Grabfruit = Value
 	end
 })
 
 spawn(function()
-    while wait() do
-        if _G.BringFruitBF then
-            pcall(function()
-                for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
-                    if v:IsA("Tool") and string.find(v.Name,"Fruit") then 
-                        wait(1.5)
-                        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart,v.Handle,0)    
-                    end
+    while wait(1) do
+        if _G.Grabfruit then
+            for i,v in pairs(game.Workspace:GetChildren()) do
+                if string.find(v.Name, "Fruit") then
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Handle.CFrame
                 end
-            end)
+            end
         end
     end
 end)
@@ -7045,18 +7063,18 @@ Teleport:AddDropdown({
 	Default = "",
 	Options = {"First Sea","Second Sea","Third Sea"},
 	Callback = function(Value)
-		_G.SelectSea = Value
+		SelectSea = Value
 	end
 })
 
 Teleport:AddButton({
     Name = "Teleport To Sea",
     Callback = function()
-        if _G.SelectSea == "First Sea" then
+        if SelectSea == "First Sea" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("TravelMain")
-        elseif _G.SelectSea == "Second Sea" then
+        elseif SelectSea == "Second Sea" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("TravelDressrosa")
-        elseif _G.SelectSea == "Third Sea" then
+        elseif SelectSea == "Third Sea" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("TravelZou")
         end
     end
@@ -7072,7 +7090,7 @@ Teleport:AddDropdown({
     Default = "",
     Options = {"WindMill","Marine","Middle Town","Jungle","Pirate Village","Desert","Snow Island","MarineFord","Colosseum","Sky Island 1","Sky Island 2","Sky Island 3","Prison","Magma Village","Under Water Island","Fountain City","Shank Room","Mob Island"},
     Callback = function(Value)
-		_G.SelectIsland = Value
+		SelectIsland = Value
 	end
 })
 end
@@ -7083,7 +7101,7 @@ Teleport:AddDropdown({
     Default = "",
     Options = {"The Cafe","Frist Spot","Dark Area","Flamingo Mansion","Flamingo Room","Green Zone","Factory","Colossuim","Zombie Island","Raid Lab","Two Snow Mountains","Punk Hazard","Cursed Ship","Ice Castle","Forgotten Island","Ussop Island","Mini Sky Island"},
     Callback = function(Value)
-		_G.SelectIsland = Value
+		SelectIsland = Value
 	end
 })
 end
@@ -7094,7 +7112,7 @@ Teleport:AddDropdown({
     Default = "",
     Options = {"Mansion","Port Town","Great Tree","Castle On The Sea","Raid Lab","MiniSky", "Hydra Island","Beautiful Pirate","Floating Turtle","Haunted Castle","Ice Cream Island","Peanut Island","Cake Island","Cocoa Island","Candy Island","Tiki Outpost"},
     Callback = function(Value)
-		_G.SelectIsland = Value
+		SelectIsland = Value
 	end
 })
 end
@@ -7106,109 +7124,109 @@ Teleport:AddToggle({
 		_G.TeleportIsland = Value
 	    if _G.TeleportIsland == true then
   	      repeat wait()
-      	      if _G.SelectIsland == "WindMill" then
+      	      if SelectIsland == "WindMill" then
     	            topos(CFrame.new(979.79895019531, 16.516613006592, 1429.0466308594))
-    	        elseif _G.SelectIsland == "Marine" then
+    	        elseif SelectIsland == "Marine" then
      	           topos(CFrame.new(-2566.4296875, 6.8556680679321, 2045.2561035156))
-    	        elseif _G.SelectIsland == "Middle Town" then
+    	        elseif SelectIsland == "Middle Town" then
     	            topos(CFrame.new(-690.33081054688, 15.09425163269, 1582.2380371094))
-       	     elseif _G.SelectIsland == "Jungle" then
+       	     elseif SelectIsland == "Jungle" then
        	         topos(CFrame.new(-1612.7957763672, 36.852081298828, 149.12843322754))
-     	       elseif _G.SelectIsland == "Pirate Village" then
+     	       elseif SelectIsland == "Pirate Village" then
      	           topos(CFrame.new(-1181.3093261719, 4.7514905929565, 3803.5456542969))
-      	      elseif _G.SelectIsland == "Desert" then
+      	      elseif SelectIsland == "Desert" then
       	          topos(CFrame.new(944.15789794922, 20.919729232788, 4373.3002929688))
-      	      elseif _G.SelectIsland == "Snow Island" then
+      	      elseif SelectIsland == "Snow Island" then
      	           topos(CFrame.new(1347.8067626953, 104.66806030273, -1319.7370605469))
-   	         elseif _G.SelectIsland == "MarineFord" then
+   	         elseif SelectIsland == "MarineFord" then
       	          topos(CFrame.new(-4914.8212890625, 50.963626861572, 4281.0278320313))
-     	       elseif _G.SelectIsland == "Colosseum" then
+     	       elseif SelectIsland == "Colosseum" then
       	          topos(CFrame.new(-1427.6203613281, 7.2881078720093, -2792.7722167969))
-     	       elseif _G.SelectIsland == "Sky Island 1" then
+     	       elseif SelectIsland == "Sky Island 1" then
     	            topos(CFrame.new(-4869.1025390625, 733.46051025391, -2667.0180664063))
-     	       elseif _G.SelectIsland == "Sky Island 2" then
+     	       elseif SelectIsland == "Sky Island 2" then
      	           game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-4607.82275, 872.54248, -1667.55688))
-       	     elseif _G.SelectIsland == "Sky Island 3" then
+       	     elseif SelectIsland == "Sky Island 3" then
       	          game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-7894.6176757813, 5547.1416015625, -380.29119873047))
-     	       elseif _G.SelectIsland == "Prison" then
+     	       elseif SelectIsland == "Prison" then
        	         topos(CFrame.new(4875.330078125, 5.6519818305969, 734.85021972656))
-      	      elseif _G.SelectIsland == "Magma Village" then
+      	      elseif SelectIsland == "Magma Village" then
        	         topos(CFrame.new(-5247.7163085938, 12.883934020996, 8504.96875))
-     	       elseif _G.SelectIsland == "Under Water Island" then
+     	       elseif SelectIsland == "Under Water Island" then
        	         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(61163.8515625, 5.6796875, 1819.7841796875))
-    	        elseif _G.SelectIsland == "Fountain City" then
+    	        elseif SelectIsland == "Fountain City" then
      	           topos(CFrame.new(5127.1284179688, 59.501365661621, 4105.4458007813))
-   	         elseif _G.SelectIsland == "Shank Room" then
+   	         elseif SelectIsland == "Shank Room" then
   	              topos(CFrame.new(-1442.16553, 29.8788261, -28.3547478))
- 	           elseif _G.SelectIsland == "Mob Island" then
+ 	           elseif SelectIsland == "Mob Island" then
     	            topos(CFrame.new(-2850.20068, 7.39224768, 5354.99268))
-      	      elseif _G.SelectIsland == "Raid Lab" then
+      	      elseif SelectIsland == "Raid Lab" then
       	 	 	if World3 then
      	         	  topos(CFrame.new(-5017.40869, 314.844055, -2823.0127, -0.925743818, 4.48217499e-08, -0.378151238, 4.55503146e-09, 1, 1.07377559e-07, 0.378151238, 9.7681621e-08, -0.925743818))
    				elseif World2 then
 						topos(CFrame.new(-6438.73535, 250.645355, -4501.50684))
    				end
-        	    elseif _G.SelectIsland == "The Cafe" then
+        	    elseif SelectIsland == "The Cafe" then
                     topos(CFrame.new(-380.47927856445, 77.220390319824, 255.82550048828))
-        	    elseif _G.SelectIsland == "Frist Spot" then
+        	    elseif SelectIsland == "Frist Spot" then
      	           topos(CFrame.new(-11.311455726624, 29.276733398438, 2771.5224609375))
-     	       elseif _G.SelectIsland == "Dark Area" then
+     	       elseif SelectIsland == "Dark Area" then
     	            topos(CFrame.new(3780.0302734375, 22.652164459229, -3498.5859375))
-     	       elseif _G.SelectIsland == "Flamingo Mansion" then
+     	       elseif SelectIsland == "Flamingo Mansion" then
        	         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-281.93707275390625, 306.130615234375, 609.280029296875))
-      	      elseif _G.SelectIsland == "Flamingo Room" then
+      	      elseif SelectIsland == "Flamingo Room" then
            	     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(2283, 15, 867))
-      	      elseif _G.SelectIsland == "Green Zone" then
+      	      elseif SelectIsland == "Green Zone" then
             	    topos(CFrame.new(-2448.5300292969, 73.016105651855, -3210.6306152344))
-	            elseif _G.SelectIsland == "Factory" then
+	            elseif SelectIsland == "Factory" then
         	        topos(CFrame.new(424.12698364258, 211.16171264648, -427.54049682617))
-    	        elseif _G.SelectIsland == "Colossuim" then
+    	        elseif SelectIsland == "Colossuim" then
         	        topos(CFrame.new(-1503.6224365234, 219.7956237793, 1369.3101806641))
-       	     elseif _G.SelectIsland == "Zombie Island" then
+       	     elseif SelectIsland == "Zombie Island" then
        	         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-6509, 83, -133))
-       	     elseif _G.SelectIsland == "Two Snow Mountain" then
+       	     elseif SelectIsland == "Two Snow Mountain" then
           	      topos(CFrame.new(753.14288330078, 408.23559570313, -5274.6147460938))
-      	      elseif _G.SelectIsland == "Punk Hazard" then
+      	      elseif SelectIsland == "Punk Hazard" then
         	        topos(CFrame.new(-6127.654296875, 15.951762199402, -5040.2861328125))
-      	      elseif _G.SelectIsland == "Cursed Ship" then
+      	      elseif SelectIsland == "Cursed Ship" then
           	      game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.40197753906, 125.05712890625, 32885.875))
-      	      elseif _G.SelectIsland == "Ice Castle" then
+      	      elseif SelectIsland == "Ice Castle" then
            	     topos(CFrame.new(6148.4116210938, 294.38687133789, -6741.1166992188))
-        	    elseif _G.SelectIsland == "Forgotten Island" then
+        	    elseif SelectIsland == "Forgotten Island" then
              	   topos(CFrame.new(-3032.7641601563, 317.89672851563, -10075.373046875))
-           	 elseif _G.SelectIsland == "Ussop Island" then
+           	 elseif SelectIsland == "Ussop Island" then
     	            topos(CFrame.new(4816.8618164063, 8.4599885940552, 2863.8195800781))
-    	        elseif _G.SelectIsland == "Mini Sky Island" then
+    	        elseif SelectIsland == "Mini Sky Island" then
            	     topos(CFrame.new(-288.74060058594, 49326.31640625, -35248.59375))
-     	       elseif _G.SelectIsland == "Great Tree" then
+     	       elseif SelectIsland == "Great Tree" then
              	   topos(CFrame.new(2681.2736816406, 1682.8092041016, -7190.9853515625))
-       	     elseif _G.SelectIsland == "Castle On The Sea" then
+       	     elseif SelectIsland == "Castle On The Sea" then
            	     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-5071.82324,314.858734,-3150.69922))
-           	 elseif _G.SelectIsland == "MiniSky" then
+           	 elseif SelectIsland == "MiniSky" then
         	        topos(CFrame.new(-260.65557861328, 49325.8046875, -35253.5703125))
-        	    elseif _G.SelectIsland == "Port Town" then
+        	    elseif SelectIsland == "Port Town" then
           	      topos(CFrame.new(-290.7376708984375, 6.729952812194824, 5343.5537109375))
-        	    elseif _G.SelectIsland == "Hydra Island" then
+        	    elseif SelectIsland == "Hydra Island" then
            	     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(5756, 610, -282))
-        	    elseif _G.SelectIsland == "Beautiful Pirate" then
+        	    elseif SelectIsland == "Beautiful Pirate" then
            	     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(5319, 23, -93))
-       	     elseif _G.SelectIsland == "Floating Turtle" then
+       	     elseif SelectIsland == "Floating Turtle" then
           	      game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-12001, 332, -8861))
-        	    elseif _G.SelectIsland == "Mansion" then
+        	    elseif SelectIsland == "Mansion" then
      	     	  game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-12471.169921875, 374.94024658203, -7551.677734375))
-         	   elseif _G.SelectIsland == "Haunted Castle" then
+         	   elseif SelectIsland == "Haunted Castle" then
           	      topos(CFrame.new(-9515.3720703125, 164.00624084473, 5786.0610351562))
-        	    elseif _G.SelectIsland == "Ice Cream Island" then
+        	    elseif SelectIsland == "Ice Cream Island" then
            	     topos(CFrame.new(-902.56817626953, 79.93204498291, -10988.84765625))
-         	   elseif _G.SelectIsland == "Peanut Island" then
+         	   elseif SelectIsland == "Peanut Island" then
         	        topos(CFrame.new(-2062.7475585938, 50.473892211914, -10232.568359375))
-          	  elseif _G.SelectIsland == "Cake Island" then
+          	  elseif SelectIsland == "Cake Island" then
            	     topos(CFrame.new(-1884.7747802734375, 19.327526092529297, -11666.8974609375))
-          	  elseif _G.SelectIsland == "Cocoa Island" then
+          	  elseif SelectIsland == "Cocoa Island" then
          	       topos(CFrame.new(87.94276428222656, 73.55451202392578, -12319.46484375))
-       	     elseif _G.SelectIsland == "Candy Island" then
+       	     elseif SelectIsland == "Candy Island" then
            	     topos(CFrame.new(-1014.4241943359375, 149.11068725585938, -14555.962890625))
-       	     elseif _G.SelectIsland == "Tiki Outpost" then
+       	     elseif SelectIsland == "Tiki Outpost" then
             	    topos(CFrame.new(-16101.1885,12.8422165,380.942291))
           	  end
   	  	until not _G.TeleportIsland
@@ -7415,14 +7433,14 @@ Shop:AddDropdown({
     Default = "",
     Options = CodeA,
     Callback = function(Value)
-		_G.CodeA = Value
+		CodeRd = Value
 	end
 })
 
 Shop:AddButton({
     Name = "Redeem Code",
     Callback = function()
-        game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer(_G.CodeA)
+        game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer(CodeRd)
     end
 })
 
@@ -7449,36 +7467,36 @@ Shop:AddDropdown({
     Default = "",
     Options = SelectMelee,
     Callback = function(Value)
-		_G.SelectMelee = Value
+		SelectMelee = Value
 	end
 })
 
 Shop:AddButton({
     Name = "Buy Fighting Style",
     Callback = function()
-        if _G.SelectMelee == "Black Leg" then
+        if SelectMelee == "Black Leg" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyBlackLeg")
-        elseif _G.SelectMelee == "Electro" then
+        elseif SelectMelee == "Electro" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyElectro")
-        elseif _G.SelectMelee == "Fishman Karate" then
+        elseif SelectMelee == "Fishman Karate" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyFishmanKarate")
-        elseif _G.SelectMelee == "Dragon Claw" then
+        elseif SelectMelee == "Dragon Claw" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","DragonClaw","1")
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","DragonClaw","2")
-        elseif _G.SelectMelee == "SuperHuman" then
+        elseif SelectMelee == "SuperHuman" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySuperhuman")
-        elseif _G.SelectMelee == "Death Step" then
+        elseif SelectMelee == "Death Step" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyDeathStep")
-        elseif _G.SelectMelee == "Sharkman Karate" then
+        elseif SelectMelee == "Sharkman Karate" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySharkmanKarate",true)
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySharkmanKarate")
-        elseif _G.SelectMelee == "Electric Claw" then
+        elseif SelectMelee == "Electric Claw" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyElectricClaw")
-        elseif _G.SelectMelee == "Dragon Talon" then
+        elseif SelectMelee == "Dragon Talon" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyDragonTalon")
-        elseif _G.SelectMelee == "GodHuman" then
+        elseif SelectMelee == "GodHuman" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyGodhuman")
-        elseif _G.SelectMelee == "Sanguine Art" then
+        elseif SelectMelee == "Sanguine Art" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySanguineArt", true)
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySanguineArt")
         end
@@ -7496,20 +7514,20 @@ Shop:AddDropdown({
     Default = "",
     Options = SelectAbilities,
     Callback = function(Value)
-		_G.SelectAbilities = Value
+		SelectAbilities = Value
 	end
 })
 
 Shop:AddButton({
     Name = "Buy Abilities",
     Callback = function()
-        if _G.SelectAbilities == "Sky Jump [ Geppo ]" then
+        if SelectAbilities == "Sky Jump [ Geppo ]" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyHaki","Geppo")
-        elseif _G.SelectAbilities == "Buso Haki" then
+        elseif SelectAbilities == "Buso Haki" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyHaki","Buso")
-        elseif _G.SelectAbilities == "Soru" then
+        elseif SelectAbilities == "Soru" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyHaki","Soru")
-        elseif _G.SelectAbilities == "Observation Haki" then
+        elseif SelectAbilities == "Observation Haki" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("KenTalk","Buy")
         end
     end
@@ -7526,32 +7544,32 @@ Shop:AddDropdown({
     Default = "",
     Options = SelectSword,
     Callback = function(Value)
-		_G.SelectSword = Value
+		SelectSword = Value
 	end
 })
 
 Shop:AddButton({
     Name = "Buy Sword",
     Callback = function()
-        if _G.SelectSword == "Cutlass" then
+        if SelectSword == "Cutlass" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Cutlass")
-        elseif _G.SelectSword == "Katana" then
+        elseif SelectSword == "Katana" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Katana")
-        elseif _G.SelectSword == "Iron Mace" then
+        elseif SelectSword == "Iron Mace" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Iron Mace")
-        elseif _G.SelectSword == "Dual Katana" then
+        elseif SelectSword == "Dual Katana" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Duel Katana")
-        elseif _G.SelectSword == "Triple Katana" then
+        elseif SelectSword == "Triple Katana" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Triple Katana")
-        elseif _G.SelectSword == "Pipe" then
+        elseif SelectSword == "Pipe" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Pipe")
-        elseif _G.SelectSword == "Dual-Headed Blade" then
+        elseif SelectSword == "Dual-Headed Blade" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Dual-Headed Blade")
-        elseif _G.SelectSword == "Bisento" then
+        elseif SelectSword == "Bisento" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Bisento")
-        elseif _G.SelectSword == "Soul Cane" then
+        elseif SelectSword == "Soul Cane" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Soul Cane")
-        elseif _G.SelectSword == "Pole V2" then
+        elseif SelectSword == "Pole V2" then
             game.ReplicatedStorage.Remotes.CommF_:InvokeServer("ThunderGodTalk")
         end
     end
@@ -7568,28 +7586,28 @@ Shop:AddDropdown({
     Default = "",
     Options = SelectGun,
     Callback = function(Value)
-		_G.SelectGun = Value
+		SelectGun = Value
 	end
 })
 
 Shop:AddButton({
     Name = "Buy Gun",
     Callback = function()
-        if _G.SelectGun == "Slingshot" then
+        if SelectGun == "Slingshot" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Slingshot")
-        elseif _G.SelectGun == "Flintlock" then
+        elseif SelectGun == "Flintlock" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Flintlock")
-        elseif _G.SelectGun == "Musket" then
+        elseif SelectGun == "Musket" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Musket")
-        elseif _G.SelectGun == "Cannon" then
+        elseif SelectGun == "Cannon" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Cannon")
-        elseif _G.SelectGun == "Refined Flintlock" then
+        elseif SelectGun == "Refined Flintlock" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Refined Flintlock")
-        elseif _G.SelectGun == "Refined Slingshot" then
+        elseif SelectGun == "Refined Slingshot" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Refined Slingshot")
-        elseif _G.SelectGun == "Kabucha" then
+        elseif SelectGun == "Kabucha" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Kabucha")
-        elseif _G.SelectGun == "Bizarre Rifle" then
+        elseif SelectGun == "Bizarre Rifle" then
             local A_1 = "Ectoplasm"
             local A_2 = "Buy"
             local A_3 = 1
@@ -7663,26 +7681,26 @@ Shop:AddDropdown({
     Default = "",
     Options = SelectOther,
     Callback = function(Value)
-		_G.SelectOther = Value
+		SelectOther = Value
 	end
 })
 
 Shop:AddButton({
     Name = "Buy Other Things Selected",
     Callback = function()
-        if _G.SelectOther == "Reroll Race" then
+        if SelectOther == "Reroll Race" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Reroll","1")
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Reroll","2")
-        elseif _G.SelectOther == "Reset Stats" then
+        elseif SelectOther == "Reset Stats" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Refund","1")
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Refund","2")
-        elseif _G.SelectOther == "Cyborg Race" then
+        elseif SelectOther == "Cyborg Race" then
             local a = {
                 [1] = "CyborgTrainer",
                 [2] = "Buy"
             }
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(a))
-        elseif _G.SelectOther == "Ghoul Race" then
+        elseif SelectOther == "Ghoul Race" then
             local a = {
                 [1] = "Ectoplasm",
                 [2] = "BuyCheck",
