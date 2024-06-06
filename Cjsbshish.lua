@@ -1797,7 +1797,7 @@ end
 spawn(function()
     game:GetService("RunService").RenderStepped:Connect(function()
         pcall(function()
-            if UseSkill or UseGunSkill or _G.SeaSkill then
+            if UseSkill or UseGunSkill or SeaSkill then
                 for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.Notifications:GetChildren()) do
                     for _, Notif in pairs(v:GetChildren()) do
                         if string.find(Notif.Text,"Skill locked!") then
@@ -1832,179 +1832,83 @@ end)
 -- [ Super Fast Attack ]
 
 game:GetService("ReplicatedStorage").Util.Sound.Storage.Swing:Destroy()
-local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
-CamShake:Stop()
-local CurveFrame = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework")))[2]
-local VirtualUser = game:GetService("VirtualUser")
-local RigControllerR = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework.RigController))[2]
-local Client = game:GetService("Players").LocalPlayer
-local DMG = require(Client.PlayerScripts.CombatFramework.Particle.Damage)
-function CurveFuckWeapon()
-    local p13 = CurveFrame.activeController
-    if not p13 then
-        return nil
+require(game.ReplicatedStorage.Util.CameraShaker):Stop()
+local PBlade = game.Players.LocalPlayer
+local QBlade = getupvalues(require(PBlade.PlayerScripts.CombatFramework))
+local RBlade = QBlade[2]
+function GetCurrentBlade()
+    local S = RBlade.activeController
+    local T = S.blades[1]
+    if not T then
+        return
     end
-    local wea = p13.blades[1]
-    if not wea then
-        return nil
+    while T.Parent ~= game.Players.LocalPlayer.Character do
+        T = T.Parent
     end
-    while wea.Parent ~= game.Players.LocalPlayer.Character do
-        wea = wea.Parent
-    end
-    return wea
+    return T
 end
-function getHits(Size)
-    local Hits = {}
-    local function processHumanoid(Human)
-        if Human and Human.RootPart and Human.Health > 0 and game.Players.LocalPlayer:DistanceFromCharacter(Human.RootPart.Position) < Size + 5 then
-            table.insert(Hits, Human.RootPart)
-        end
-    end
-    for _, v in pairs(workspace.Enemies:GetChildren()) do
-        processHumanoid(v:FindFirstChildOfClass("Humanoid"))
-    end
-    for _, v in pairs(workspace.Characters:GetChildren()) do
-        if v ~= game.Players.LocalPlayer.Character then
-            processHumanoid(v:FindFirstChildOfClass("Humanoid"))
-        end
-    end
-    return Hits
-end
-local cdnormal = 0
-local Animation = Instance.new("Animation")
-local CooldownFastAttack = 0
-FastAttack = function()
-    local ac = CurveFrame.activeController
-    if ac and ac.equipped then
-        task.spawn(function()
-            if tick() - cdnormal > 0.5 then
-                ac:attack()
-                cdnormal = tick()
-            else
-                Animation.AnimationId = ac.anims.basic[2]
-                ac.humanoid:LoadAnimation(Animation):Play(1, 1)
-                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getHits(120), 2, "")
-            end
-        end)
-    end
-end
-function Boost()
-    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange", tostring(CurveFuckWeapon()))
-end
-bs = tick()
-task.spawn(function()
-    while task.wait(_G.FastAttackDelay) do
+
+function AttackNoCD()
+    if not _G.AutoFarmFruitMastery or not _G.AutoFarmGunMastery then
         if _G.FastAttack then
-            FastI = true
-            pcall(function()
-                for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
-                    if v.Humanoid.Health > 0 then
-                        if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 60 then
-                            FastAttack()
-                            task.wait()
-                            Boost()
-                        end
+            local U = RBlade.activeController
+            for h = 1, 1 do
+                local V =
+                    require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(
+                    PBlade.Character,
+                    {PBlade.Character.HumanoidRootPart},
+                    60
+                )
+                local W = {}
+                local X = {}
+                for k, i in pairs(V) do
+                    if i.Parent:FindFirstChild("HumanoidRootPart") and not X[i.Parent] then
+                        table.insert(W, i.Parent.HumanoidRootPart)
+                        X[i.Parent] = true
                     end
                 end
-            end)
-        end
-    end
-end)
-task.spawn(function()
-    while task.wait() do
-        if FastAttackPlayer then
-            FastI = true
-            pcall(function()
-                for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
-                    if v.Humanoid.Health > 0 then
-                        if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 60 then
-                            FastAttack()
-                            task.wait()
-                            Boost()
+                V = W
+                if #V > 0 then
+                    local Y = debug.getupvalue(U.attack, 5)
+                    local Z = debug.getupvalue(U.attack, 6)
+                    local _ = debug.getupvalue(U.attack, 4)
+                    local a0 = debug.getupvalue(U.attack, 7)
+                    local a1 = (Y * 798405 + _ * 727595) % Z
+                    local a2 = _ * 798405
+                    (function()
+                        a1 = (a1 * Z + a2) % 1099511627776
+                        Y = math.floor(a1 / Z)
+                        _ = a1 - Y * Z
+                    end)()
+                    a0 = a0 + 1
+                    debug.setupvalue(U.attack, 5, Y)
+                    debug.setupvalue(U.attack, 6, Z)
+                    debug.setupvalue(U.attack, 4, _)
+                    debug.setupvalue(U.attack, 7, a0)
+                    pcall(
+                        function()
+                            if PBlade.Character:FindFirstChildOfClass("Tool") and U.blades and U.blades[1] then
+                                U.animator.anims.basic[1]:Play(0.01, 0.01, 0.01)
+                                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer(
+                                    "weaponChange",
+                                    tostring(GetCurrentBlade())
+                                )
+                                game.ReplicatedStorage.Remotes.Validator:FireServer(
+                                    math.floor(a1 / 1099511627776 * 16777215),
+                                    a0
+                                )
+                                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", V, h, "")
+                            end
                         end
-                    end
-                end
-                for i, v in pairs(game.Workspace.Characters:GetChildren()) do
-                    if v.Humanoid.Health > 0 then
-                        if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 60 then
-                            FastAttack()
-                            task.wait()
-                            Boost()
-                        end
-                    end
-                end
-            end)
-        end
-    end
-end)
-k = tick()
-task.spawn(function()
-    while task.wait() do
-        if FastI then
-            pcall(function()
-                CurveFrame.activeController.focusStart = 0
-                CurveFrame.activeController.hitboxMagnitude = 60
-                CurveFrame.activeController.humanoid.AutoRotate = true
-                CurveFrame.activeController.increment = 1 + 1 / 1
-            end)
-        end
-    end
-end)
-EnableCurv = true
-task.spawn(function()
-    local a = game.Players.LocalPlayer
-    local b = require(a.PlayerScripts.CombatFramework.Particle)
-    local c = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib)
-    if not shared.orl then
-        shared.orl = c.wrapAttackAnimationAsync
-    end
-    if not shared.cpc then
-        shared.cpc = b.play
-    end
-    if EnableCurv then
-        pcall(function()
-            c.wrapAttackAnimationAsync = function(d, e, f, g, h)
-                local i = c.getBladeHits(e, f, g)
-                if i then
-                    b.play = function()
-                    end
-                    d:Play(0.1, 0.1, 0.1)
-                    h(i)
-                    b.play = shared.cpc
-                    task.wait()
-                    d:Stop()
+                    )
                 end
             end
-        end)
-    end
-end)
-CombatFrameworkR = require(game.Players.LocalPlayer.PlayerScripts.CombatFramework)
-y = debug.getupvalues(CombatFrameworkR)[2]
-spawn(function()
-    while wait() do
-        if _G.FastAttack then
-            if typeof(y) == "table" then
-                pcall(function()
-                    y.activeController.timeToNextAttack = (math.huge^math.huge^math.huge)
-                    y.activeController.hitboxMagnitude = 60
-                    y.activeController.active = false
-                    y.activeController.timeToNextBlock = 0
-                    y.activeController.focusStart = 1655503339.0980349
-                    y.activeController.increment = 1
-                    y.activeController.blocking = false
-                    y.activeController.attacking = false
-                    y.activeController.humanoid.AutoRotate = true
-                end)
-            end
-        end
-        if _G.FastAttack then
-            if game.Players.LocalPlayer.Character:FindFirstChild("Stun") then
-                game.Players.LocalPlayer.Character.Stun.Value = 0
-                game.Players.LocalPlayer.Character.Busy.Value = false        
-            end
+        else
+            game:GetService'VirtualUser':CaptureController()
+            game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
         end
     end
-end)
+end
 
 -- [ Ui Orion ]
 
@@ -2165,6 +2069,14 @@ Setting:AddToggle({
 		_G.FastAttack = Value
 	end
 })
+
+spawn(function()
+    while task.wait(_G.FastAttackDelay) do
+        if _G.FastAttack then
+            AttackNoCD()
+        end
+    end
+end)
 
 Setting:AddToggle({
 	Name = "Auto Click [ 75% Kick System ]",
@@ -6913,7 +6825,7 @@ spawn(function()
                                 repeat task.wait()
                                     EquipWeapon(_G.SelectWeapon)
                                     topos(v.HumanoidRootPart.CFrame * Pos)
-                                    _G.SeaSkill = false
+                                    SeaSkill = false
                                 until not _G.AutoKillFishCrew or not v.Parent or v.Humanoid.Health <= 0
                                 MagnetNear = false
                                 end
@@ -6926,9 +6838,9 @@ spawn(function()
                             repeat task.wait()
                                 local BoatCFrame = v.Engine.CFrame
                                 if (BoatCFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
-                                    _G.SeaSkill = true
+                                    SeaSkill = true
                                 else
-                                    _G.SeaSkill = false
+                                    SeaSkill = false
                                 end
                                 topos(BoatCFrame)
                                 Skillaimbot = true
@@ -6936,7 +6848,7 @@ spawn(function()
                                 AimBotSkillPosition = AimSkill.Position
                             until not v.Parent or v.Health < 0 or not game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") or not v:FindFirstChild("Engine") or not _G.RelzFishBoat
                             Skillaimbot = false
-                            _G.SeaSkill = false
+                            SeaSkill = false
                         end
                     end
                 elseif game:GetService("Workspace").Enemies:FindFirstChild("PirateGrandBrigade") and _G.RelzPirateGrandBrigade then
@@ -6945,9 +6857,9 @@ spawn(function()
                             repeat task.wait()
                                 local BoatCFrame = v.Engine.CFrame
                                 if (BoatCFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
-                                    _G.SeaSkill = true
+                                    SeaSkill = true
                                 else
-                                    _G.SeaSkill = false
+                                    SeaSkill = false
                                 end
                                 topos(BoatCFrame)
                                 Skillaimbot = true
@@ -6955,7 +6867,7 @@ spawn(function()
                                 AimBotSkillPosition = AimSkill.Position
                             until not v.Parent or v.Health.Value < 0 or not game:GetService("Workspace").Enemies:FindFirstChild("PirateGrandBrigade") or not v:FindFirstChild("Engine") or not _G.RelzPirateGrandBrigade
                             Skillaimbot = false
-                            _G.SeaSkill = false
+                            SeaSkill = false
                         end
                     end
                 elseif game:GetService("Workspace").Enemies:FindFirstChild("PirateBrigade") and _G.RelzPirateBrigade then
@@ -6964,9 +6876,9 @@ spawn(function()
                             repeat task.wait()
                                 local BoatCFrame = v.Engine.CFrame
                                 if (BoatCFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
-                                    _G.SeaSkill = true
+                                    SeaSkill = true
                                 else
-                                    _G.SeaSkill = false
+                                    SeaSkill = false
                                 end
                                 topos(BoatCFrame)
                                 Skillaimbot = true
@@ -6974,7 +6886,7 @@ spawn(function()
                                 AimBotSkillPosition = AimSkill.Position
                             until not v.Parent or v.Health.Value < 0 or not game:GetService("Workspace").Enemies:FindFirstChild("PirateBrigade") or not v:FindFirstChild("Engine") or not _G.RelzPirateBrigade
                             Skillaimbot = false
-                            _G.SeaSkill = false
+                            SeaSkill = false
                         end
                     end
                 elseif CheckSeaBeast() and _G.AutoSeaBest then
@@ -6984,19 +6896,19 @@ spawn(function()
                             repeat wait()
                                 CFrameSeaBeast = v.HumanoidRootPart.CFrame * CFrame.new(0,200,0)
                                 if (CFrameSeaBeast.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Position).Magnitude <= 200 then
-                                    _G.SeaSkill = true
+                                    SeaSkill = true
                                 else
-                                    _G.SeaSkill = false
+                                    SeaSkill = false
                                 end
                                 Skillaimbot = true
                                 AimBotSkillPosition = v.HumanoidRootPart.CFrame.Position
                                 topos(CFrameSeaBeast * Pos)
                             until not _G.AutoSeaBest or CheckSeaBeast() == false or not v:FindFirstChild("Humanoid") or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health < 0 or not v.Parent
                             Skillaimbot = false
-                            _G.SeaSkill = false
+                            SeaSkill = false
                             else
                             Skillaimbot = false
-                            _G.SeaSkill = false
+                            SeaSkill = false
                             end
                         end
                     end
@@ -7007,7 +6919,7 @@ spawn(function()
                                 if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                                     repeat task.wait()
                                         EquipWeapon(_G.SelectWeapon)
-                                        _G.SeaSkill = false
+                                        SeaSkill = false
                                         topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 60, 0))
                                     until not  _G.AutoTerrorshark or not v.Parent or v.Humanoid.Health <= 0
                                 end
@@ -7035,7 +6947,7 @@ spawn(function()
                                 repeat task.wait()
                                     EquipWeapon(_G.SelectWeapon)
                                     topos(v.HumanoidRootPart.CFrame * Pos)
-                                    _G.SeaSkill = false
+                                    SeaSkill = false
                                 until not _G.AutoKillShark or not v.Parent or v.Humanoid.Health <= 0
                                 end
                             end
@@ -7043,7 +6955,7 @@ spawn(function()
                     end
                 else
                     Skillaimbot = false
-                    _G.SeaSkill = false
+                    SeaSkill = false
                     UnEquipWeapon(_G.SelectWeapon)
                 end
             end)
@@ -7320,7 +7232,7 @@ Sea:AddToggle({
 		_G.RelzPirateGrandBrigade = Value
 		StopTween(Value)
 		if not _G.RelzFishBoat then
-            _G.SeaSkill = false
+            SeaSkill = false
             Skillaimbot = false
         end
 	end
@@ -7342,18 +7254,11 @@ Sea:AddToggle({
 		_G.AutoSeaBest = Value
 		StopTween(_G.AutoSeaBest)
 	    if not _G.AutoSeaBest then
-            _G.SeaSkill = false
+            SeaSkill = false
             Skillaimbot = false
         end
 	end
 })
-
-function UpDownPos(pos)
-    topos(pos * CFrame.new(0, 40, 0))
-    wait(2)
-    topos(pos * CFrame.new(0, 300, 0))
-    wait(3)
-end
 
 function CheckSeaBeast()
     if game:GetService("Workspace"):FindFirstChild("SeaBeasts") then
@@ -7372,7 +7277,7 @@ DoneSkillFruit = false
 DoneSkillMelee = false
 spawn(function()
     while wait() do
-        if _G.SeaSkill then
+        if SeaSkill then
             if _G.UseSeaFruitSkill and DoneSkillFruit == false then
                 for _, v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
                     if v:IsA("Tool") then
