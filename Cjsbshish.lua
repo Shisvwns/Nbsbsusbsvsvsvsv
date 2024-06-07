@@ -6685,36 +6685,27 @@ local Section = Sea:AddSection({
     Name = "~ Settings Farm Sea Event~"
 })
 
-local ListSeaBoat = {"Guardian","Grand Brigade","Brigade","Lantern","Beast Hunter",}
+local ListSeaBoat = {
+    "Guardian",
+    "PirateGrandBrigade",
+    "MarineGrandBrigade",
+    "PirateBrigade",
+    "MarineBrigade",
+    "PirateSloop",
+    "MarineSloop",
+    "Lantern",
+    "Brigade",
+    "BeastHunter",
+}
 
 Sea:AddDropdown({
-	Name = "Select Boats",
+	Name = "Guardian",
 	Default = "Grand Brigade",
 	Options = ListSeaBoat,
 	Callback = function(Value)
 		_G.Boat = Value
 	end    
 })
-
-spawn(function()
-    while task.wait() do
-        if _G.Boat == "Guardian" then
-            _G.SelectedBoat = "Guardian"
-        elseif _G.Boat == "GrandBrigade" then
-            if game:GetService("Players").LocalPlayer.Team.Name == "Marines" then
-                _G.SelectedBoat = "MarineGrandBrigade"
-            elseif game:GetService("Players").LocalPlayer.Team.Name == "Pirates" then
-                _G.SelectedBoat = "PirateGrandBrigade"
-            end
-        elseif _G.Boat == "Brigade" then
-            _G.SelectedBoat = "Brigade"
-        elseif _G.Boat == "Lantern" then
-            _G.SelectedBoat = "Lantern"
-        elseif _G.Boat == "Beast Hunter" then
-            _G.SelectedBoat = "BeastHunter"
-        end
-    end
-end)
 
 if World3 then
 	Sea:AddDropdown({
