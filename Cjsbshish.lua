@@ -3364,17 +3364,14 @@ Farm:AddToggle({
 	end
 })
 
-spawn(function()
-    while wait() do
-        for i,v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do  
-            if v:IsA("Tool") then
-                if v:FindFirstChild("RemoteFunctionShoot") then 
-                    SelectWeaponGun = v.Name
-                end
-            end
-        end
-    end
-end)
+function EquipWeaponGun()
+	for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+		if v.ToolTip == "Gun" and v:IsA('Tool') then
+			local ToolHumanoid = game.Players.LocalPlayer.Backpack:FindFirstChild(v.Name) 
+			game.Players.LocalPlayer.Character.Humanoid:EquipTool(ToolHumanoid) 
+		end
+	end
+end
 
 spawn(function()
     while wait() do
@@ -3400,7 +3397,7 @@ spawn(function()
                                             HealthMin = v.Humanoid.MaxHealth * _G.Kill_At/100
                                             ShootPosition = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, -15, 0)
                                             if v.Humanoid.Health <= HealthMin then
-                                                SelectWeaponGun
+                                                EquipWeaponGun()
                                                 topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 20, 0))
                                                 game:GetService("Players").LocalPlayer.Character.Humanoid:FindFirstChild(""):InvokeServer("TAP", Vector3.new(ShootPosition.Position))
                                                 UseGunSkill = true
