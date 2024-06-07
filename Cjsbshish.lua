@@ -6647,16 +6647,37 @@ local Section = Sea:AddSection({
     Name = "~ Boats Settings ~"
 })
 
-local ListSeaBoat = {"Guardian","GrandBrigade","Brigade","Lantern","BeastHunter",}
+local ListSeaBoat = {"Guardian","Grand Brigade","Brigade","Lantern","Beast Hunter",}
 
 Sea:AddDropdown({
 	Name = "Select Boats",
-	Default = "Guardian",
+	Default = "Grand Brigade",
 	Options = ListSeaBoat,
 	Callback = function(Value)
-		_G.SelectedBoat = Value
+		_G.Boat = Value
 	end    
 })
+
+spawn(function()
+    while task.wait() do
+        if _G.Boat == "Guardian" then
+            _G.SelectedBoat = "Guardian"
+        elseif _G.Boat == "GrandBrigade" then
+            if game:GetService("Players").LocalPlayer.Team.Name == "Marines" then
+                _G.SelectedBoat = "MarineGrandBrigade"
+            elseif game:GetService("Players").LocalPlayer.Team.Name == "Pirates" then
+                _G.SelectedBoat = "PirateGrandBrigade"
+            end
+        elseif _G.Boat == "Brigade" then
+            _G.SelectedBoat = "Brigade"
+        elseif _G.Boat == "Lantern" then
+            _G.SelectedBoat = "Lantern"
+        elseif _G.Boat == "Beast Hunter" then
+            _G.SelectedBoat = "BeastHunter"
+        end
+    end
+end)
+
 if World3 then
 	Sea:AddDropdown({
 		Name = "Select Zone",
@@ -7234,7 +7255,7 @@ Sea:AddToggle({
 	Name = "Use Skill Z",
 	Default = false,
 	Callback = function(Value)
-	    _G.SkillSwordZ = value
+	    _G.SkillSwordZ = Value
 	end
 })
 
@@ -7242,7 +7263,7 @@ Sea:AddToggle({
 	Name = "Use Skill X",
 	Default = false,
 	Callback = function(Value)
-	    _G.SkillSwordX = value
+	    _G.SkillSwordX = Value
 	end
 })
 
