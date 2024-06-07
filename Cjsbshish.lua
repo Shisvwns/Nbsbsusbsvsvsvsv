@@ -1514,16 +1514,12 @@ local Workspace = game:GetService("Workspace")
 NpcList = {}
 for i, v in pairs(Workspace.NPCs:GetChildren()) do 
     if string.find(string.lower(v.Name), "home point") then
-        if v:IsA("Model") and v.PrimaryPart then
-            table.insert(NpcList, v:GetPrimaryPartCFrame())
-        end
+        table.insert(NpcList, v:GetModelCFrame())
     end
 end
 for i, v in pairs(getnilinstances()) do 
     if string.find(string.lower(v.Name), "home point") then
-        if v:IsA("Model") and v.PrimaryPart then
-            table.insert(NpcList, v:GetPrimaryPartCFrame())
-        end
+        table.insert(NpcList, v:GetModelCFrame())
     end
 end
 local w = game.PlaceId
@@ -1558,14 +1554,14 @@ function GetPortal(check2)
     local check3 = check2.Position
     local aM, aN = Vector3.new(0,0,0), math.huge
     for _, aL in pairs(gQ) do
-        if (aL - check3).Magnitude < aN and aM ~= aL then
-            aM, aN = aL, (aL - check3).Magnitude
+        if (aL-check3).Magnitude < aN and aM ~= aL then
+            aM, aN = aL, (aL-check3).Magnitude
         end
     end
     return aM
-end
+end 
 function BypassTeleport(is)
-    if lp.Character and lp.Character:FindFirstChild("PartTele") then
+    if lp.Character:FindFirstChild("PartTele") then
         lp.Character.PartTele.CFrame = CFrame.new(lp.Character.PartTele.CFrame.X, lp.Character.PartTele.CFrame.Y, lp.Character.PartTele.CFrame.Z)
         task.wait(0.5)
         lp.Character.PartTele.CFrame = is
@@ -1597,7 +1593,7 @@ function GetBypassPos(pos)
 end
 function RequestEntrance(check1)
     game.ReplicatedStorage.Remotes.CommF_:InvokeServer(unpack({"requestEntrance", check1}))
-    if lp.Character and lp.Character:FindFirstChild("PartTele") then
+    if lp.Character:FindFirstChild("PartTele") then
         lp.Character.PartTele.CFrame = WaitHRP(lp).CFrame 
     end
     task.wait(0.01)
@@ -1610,7 +1606,7 @@ function CalcDistance(I, II)
     if not II then 
         II = lp.Character.PrimaryPart.CFrame 
     end 
-    return (Vector3.new(I.X, 0, I.Z) - Vector3.new(II.X, 0, II.Z)).Magnitude 
+    return (Vector3.new(I.X, 0, I.Z)-Vector3.new(II.X, 0, II.Z)).Magnitude 
 end 
 function topos(Pos)
     if not Pos then return end 
@@ -1623,15 +1619,13 @@ function topos(Pos)
         PartTele.CFrame = WaitHRP(lp).CFrame 
         PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
             task.wait()
-            if lp.Character:FindFirstChild("HumanoidRootPart") then
-                lp.Character.HumanoidRootPart.CFrame = PartTele.CFrame
-            end
+            WaitHRP(lp).CFrame = PartTele.CFrame
         end)
     end
-    local Portal = GetPortal(Pos) 
-    local Spawn = GetBypassPos(Pos) 
-    local MyCFrame = WaitHRP(lp).CFrame
-    local Distance = CalcDistance(MyCFrame, Pos)
+    Portal = GetPortal(Pos) 
+    Spawn = GetBypassPos(Pos) 
+    MyCFrame = WaitHRP(lp).CFrame
+    Distance = CalcDistance(MyCFrame, Pos)
     if CalcDistance(Portal, Pos) < CalcDistance(Pos) and CalcDistance(Portal) > 500 then
         return RequestEntrance(Portal)
     end
@@ -1640,13 +1634,13 @@ function topos(Pos)
             return BypassTeleport(Spawn)
         end
     end
-    if Distance <= 300 and lp.Character:FindFirstChild("PartTele") then
+    if Distance <= 300 then
         lp.Character.PartTele.CFrame = Pos
     end
     if lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid:FindFirstChild("Sit") and lp.Character.Humanoid.Sit == true then
         lp.Character.Humanoid.Sit = false
     end 
-    local Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / TweenSpeed, Enum.EasingStyle.Linear), {CFrame = Pos})
+    Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
     Tween:Play()
     _G.Clip = true
     if _G.StopTween == true then
@@ -1658,7 +1652,6 @@ end
 function StopTween(target)
     if not target then
         _G.StopTween = true
-        wait(0.5)
         topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
         _G.StopTween = false
         _G.Clip = false
