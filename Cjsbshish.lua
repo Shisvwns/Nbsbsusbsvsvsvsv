@@ -7614,7 +7614,7 @@ Race:AddButton({
         PullLever()
         OrionLib:MakeNotification({
 			Name = "Tinh Linh Hub",
-			Content = "Pull Lever Complete !",
+			Content = "Pull Lever Complete!",
 			Image = "rbxassetid://16730867128",
 			Time = 5
 		})
@@ -8113,7 +8113,7 @@ Race:AddToggle({
 })
 
 spawn(function()
-    while wait(0.1) do
+    while wait() do
         if _G.AutoBuyGear then
             local args = {
                 [1] = true
@@ -8142,7 +8142,7 @@ spawn(function()
         if _G.AutoRace then
             if game.Players.LocalPlayer.Character.RaceTransformed.Value == true then
                 StardFarm = false
-                topos(CFrame.new(216.211181640625, 126.9352035522461, -12599.0732421875))
+                topos(CFrame.new(-9515.3720703125, 164.00624084473, 5786.0610351562))
             end
         end
     end
@@ -8150,7 +8150,7 @@ end)
 
 spawn(function()
     while wait() do
-        if StardFarm and World3  then
+        if StardFarm and World3 then
             local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
             if not string.find(QuestTitle, "Demonic Soul") then
                 StartMagnetBoneMon = false
