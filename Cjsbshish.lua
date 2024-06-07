@@ -1608,7 +1608,7 @@ function CalcDistance(I, II)
     end 
     return (Vector3.new(I.X, 0, I.Z)-Vector3.new(II.X, 0, II.Z)).Magnitude 
 end 
-function topos(Pos)
+pcall(function topos(Pos)
     if not Pos then return end 
     if not lp.Character:FindFirstChild("PartTele") then
         local PartTele = Instance.new("Part", lp.Character) -- Create part
@@ -1644,10 +1644,9 @@ function topos(Pos)
     Tween:Play()
     _G.Clip = true
     if _G.StopTween == true then
-        Tween:Play()
         _G.Clip = false
     end
-end
+end)
 
 function StopTween(target)
     if not target then
