@@ -6682,7 +6682,7 @@ end)
 -- [ Tab Sea Event ]
 
 local Section = Sea:AddSection({
-    Name = "~ Boats Settings ~"
+    Name = "~ Settings Farm Sea Event~"
 })
 
 local ListSeaBoat = {"Guardian","Grand Brigade","Brigade","Lantern","Beast Hunter",}
@@ -6947,7 +6947,7 @@ end)
 function TeleportSeabeast(c5)
     local a = Vector3.new(0, c5:FindFirstChild("HumanoidRootPart").Position.Y, 0)
     local ab = Vector3.new(0, game:GetService("Workspace").Map["WaterBase-Plane"].Position.Y, 0)
-    if (a - ab).Magnitude <= 200 then
+    if (a - ab).Magnitude <= 300 then
         topos(c5.HumanoidRootPart.CFrame * PosSea)
     else
         topos(CFrame.new(c5.HumanoidRootPart.Position.X, game:GetService("Workspace").Map["WaterBase-Plane"].Position.Y + 200, c5.HumanoidRootPart.Position.Z))
@@ -7035,7 +7035,7 @@ spawn(function()
                             if CheckSeaBeast() then
                                 repeat task.wait()
                                     CFrameSeaBeast = v.HumanoidRootPart.CFrame * CFrame.new(0,200,0)
-                                    if (CFrameSeaBeast.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Position).Magnitude <= 200 then
+                                    if (CFrameSeaBeast.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Position).Magnitude <= 300 then
                                         SeaSkill = true
                                     else
                                         SeaSkill = false
@@ -7157,6 +7157,27 @@ Sea:AddToggle({
 	Callback = function(Value)
 		_G.ResetChar = Value
 	end
+})
+
+Sea:AddSlider({
+	Name = "Brightnes",
+	Min = 1,
+	Max = 100,
+	Default = 20,
+	Color = Color3.fromRGB(255, 255, 255),
+	Increment = 1,
+	ValueName = "%",
+	Callback = function(Value)
+		_G.BrightValue = Value
+	end
+})
+
+Sea:AddButton({
+    Name = "Set Brightnes",
+    Callback = function()
+        game:GetService("Lighting").Brightness = _G.BrightValue
+        end)
+    end
 })
 
 Sea:AddSlider({
