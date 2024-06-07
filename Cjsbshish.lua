@@ -6810,7 +6810,7 @@ spawn(function()
             if not CheckBoat() then
                 local BuyBoatCFrame = CFrame.new(90.488054275512695, 10.311711311340332, 2950.69287109375)
                 buyb = topos(BuyBoatCFrame)
-                if (CFrame.new(90.488054275512695, 10.311711311340332, 2950.69287109375).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
+                if (CFrame.new(90.488054275512695, 10.311711311340332, 2950.69287109375).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 300 then
                     if buyb then buyb:Stop() end
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyBoat", _G.SelectedBoat)
                     for i, v in pairs(game:GetService("Workspace").Boats:GetChildren()) do
@@ -6854,7 +6854,7 @@ spawn(function()
             if not CheckBoat() then
                 local BuyBoatCFrame = CFrame.new(-16927.451171875, 9.0863618850708, 433.8642883300781)
                 buyb = topos(BuyBoatCFrame)
-                if (CFrame.new(-16927.451171875, 9.0863618850708, 433.8642883300781).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
+                if (CFrame.new(-16927.451171875, 9.0863618850708, 433.8642883300781).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 300 then
                     if buyb then buyb:Stop() end
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyBoat", _G.SelectedBoat)
                     for i, v in pairs(game:GetService("Workspace").Boats:GetChildren()) do
