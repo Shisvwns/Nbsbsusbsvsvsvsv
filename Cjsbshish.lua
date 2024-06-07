@@ -3398,7 +3398,7 @@ spawn(function()
                                     if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
                                         repeat task.wait()
                                             HealthMin = v.Humanoid.MaxHealth * _G.Kill_At/100
-                                            ShootPosition = v.HumanoidRootPart.CFrame.Position
+                                            ShootPosition = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, -15, 0)
                                             if v.Humanoid.Health <= HealthMin then
                                                 SelectWeaponGun
                                                 topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 20, 0))
