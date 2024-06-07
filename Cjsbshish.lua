@@ -1849,63 +1849,56 @@ function GetCurrentBlade()
     return T
 end
 function AttackNoCD()
-    if not _G.AutoFarmFruitMastery or not _G.AutoFarmGunMastery then
-        if _G.FastAttack then
-            local U = RBlade.activeController
-            for h = 1, 1 do
-                local V =
-                    require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(
-                    PBlade.Character,
-                    {PBlade.Character:FindFirstChild("HumanoidRootPart")},
-                    60
-                )
-                local W = {}
-                local X = {}
-                for k, i in pairs(V) do
-                    if i.Parent:FindFirstChild("HumanoidRootPart") and not X[i.Parent] then
-                        table.insert(W, i.Parent:FindFirstChild("HumanoidRootPart"))
-                        X[i.Parent] = true
+    local U = RBlade.activeController
+    for h = 1, 1 do
+        local V =
+            require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(
+            PBlade.Character,
+            {PBlade.Character:FindFirstChild("HumanoidRootPart")},
+            60
+        )
+        local W = {}
+        local X = {}
+        for k, i in pairs(V) do
+            if i.Parent:FindFirstChild("HumanoidRootPart") and not X[i.Parent] then
+                table.insert(W, i.Parent:FindFirstChild("HumanoidRootPart"))
+                X[i.Parent] = true
+            end
+        end
+        V = W
+        if #V > 0 then
+            local Y = debug.getupvalue(U.attack, 5)
+            local Z = debug.getupvalue(U.attack, 6)
+            local _ = debug.getupvalue(U.attack, 4)
+            local a0 = debug.getupvalue(U.attack, 7)
+            local a1 = (Y * 798405 + _ * 727595) % Z
+            local a2 = _ * 798405
+            (function()
+                a1 = (a1 * Z + a2) % 1099511627776
+                Y = math.floor(a1 / Z)
+                _ = a1 - Y * Z
+            end)()
+            a0 = a0 + 1
+            debug.setupvalue(U.attack, 5, Y)
+            debug.setupvalue(U.attack, 6, Z)
+            debug.setupvalue(U.attack, 4, _)
+            debug.setupvalue(U.attack, 7, a0)
+            pcall(
+                function()
+                    if PBlade.Character:FindFirstChildOfClass("Tool") and U.blades and U.blades[1] then
+                        U.animator.anims.basic[1]:Play(0.01, 0.01, 0.01)
+                        game:GetService("ReplicatedStorage").RigControllerEvent:FireServer(
+                            "weaponChange",
+                            tostring(GetCurrentBlade())
+                        )
+                        game.ReplicatedStorage.Remotes.Validator:FireServer(
+                            math.floor(a1 / 1099511627776 * 16777215),
+                            a0
+                        )
+                        game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", V, h, "")
                     end
                 end
-                V = W
-                if #V > 0 then
-                    local Y = debug.getupvalue(U.attack, 5)
-                    local Z = debug.getupvalue(U.attack, 6)
-                    local _ = debug.getupvalue(U.attack, 4)
-                    local a0 = debug.getupvalue(U.attack, 7)
-                    local a1 = (Y * 798405 + _ * 727595) % Z
-                    local a2 = _ * 798405
-                    (function()
-                        a1 = (a1 * Z + a2) % 1099511627776
-                        Y = math.floor(a1 / Z)
-                        _ = a1 - Y * Z
-                    end)()
-                    a0 = a0 + 1
-                    debug.setupvalue(U.attack, 5, Y)
-                    debug.setupvalue(U.attack, 6, Z)
-                    debug.setupvalue(U.attack, 4, _)
-                    debug.setupvalue(U.attack, 7, a0)
-                    pcall(
-                        function()
-                            if PBlade.Character:FindFirstChildOfClass("Tool") and U.blades and U.blades[1] then
-                                U.animator.anims.basic[1]:Play(0.01, 0.01, 0.01)
-                                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer(
-                                    "weaponChange",
-                                    tostring(GetCurrentBlade())
-                                )
-                                game.ReplicatedStorage.Remotes.Validator:FireServer(
-                                    math.floor(a1 / 1099511627776 * 16777215),
-                                    a0
-                                )
-                                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", V, h, "")
-                            end
-                        end
-                    )
-                end
-            end
-        else
-            game:GetService'VirtualUser':CaptureController()
-            game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
+            )
         end
     end
 end
