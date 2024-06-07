@@ -7176,7 +7176,6 @@ Sea:AddButton({
     Name = "Set Brightnes",
     Callback = function()
         game:GetService("Lighting").Brightness = _G.BrightValue
-        end)
     end
 })
 
