@@ -6889,6 +6889,7 @@ end)
 spawn(function()
     while wait() do
         if _G.SailBoat and World3 then
+            pcall(function()
             if not CheckBoat() then
                 local BuyBoatCFrame = CFrame.new(-16927.451171875, 9.0863618850708, 433.8642883300781)
                 buyb = topos(BuyBoatCFrame)
@@ -6926,6 +6927,7 @@ spawn(function()
                     end
                 end
             end
+            end)
         end
     end
 end)
@@ -6968,7 +6970,7 @@ spawn(function()
                                             EquipWeapon(_G.SelectWeapon)
                                             topos(v.HumanoidRootPart.CFrame * Pos)
                                             SeaSkill = false
-                                        elseif _G.TeleLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 <= _G.LowHeal then
+                                        elseif _G.TeleYLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 <= _G.LowHeal then
                                             topos(v.HumanoidRootPart.CFrame * CFrame.new(0,_G.PosHeal,0))
                                         else
                                             EquipWeapon(_G.SelectWeapon)
@@ -6995,7 +6997,7 @@ spawn(function()
                                     Skillaimbot = true
                                     AimSkill = v.Engine.CFrame * CFrame.new(0, -20, 0)
                                     AimBotSkillPosition = AimSkill.Position
-                                elseif _G.TeleLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 <= _G.LowHeal then
+                                elseif _G.TeleYLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 <= _G.LowHeal then
                                     topos(v.HumanoidRootPart.CFrame * CFrame.new(0,_G.PosHeal,0))
                                 else
                                     local BoatCFrame = v.Engine.CFrame
@@ -7029,7 +7031,7 @@ spawn(function()
                                     Skillaimbot = true
                                     AimSkill = v.Engine.CFrame * CFrame.new(0, -20, 0)
                                     AimBotSkillPosition = AimSkill.Position
-                                elseif _G.TeleLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 <= _G.LowHeal then
+                                elseif _G.TeleYLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 <= _G.LowHeal then
                                     topos(v.HumanoidRootPart.CFrame * CFrame.new(0,_G.PosHeal,0))
                                 else
                                     local BoatCFrame = v.Engine.CFrame
@@ -7063,7 +7065,7 @@ spawn(function()
                                     Skillaimbot = true
                                     AimSkill = v.Engine.CFrame * CFrame.new(0, -20, 0)
                                     AimBotSkillPosition = AimSkill.Position
-                                elseif _G.TeleLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 <= _G.LowHeal then
+                                elseif _G.TeleYLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 <= _G.LowHeal then
                                     topos(v.HumanoidRootPart.CFrame * CFrame.new(0,_G.PosHeal,0))
                                 else
                                     local BoatCFrame = v.Engine.CFrame
@@ -7097,7 +7099,7 @@ spawn(function()
                                         Skillaimbot = true
                                         AimBotSkillPosition = v.HumanoidRootPart.CFrame.Position
                                         spawn(TeleportSeabeast(v), 1)
-                                    elseif _G.TeleLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 <= _G.LowHeal then
+                                    elseif _G.TeleYLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 <= _G.LowHeal then
                                         topos(v.HumanoidRootPart.CFrame * CFrame.new(0,_G.PosHeal,0))
                                     else
                                         CFrameSeaBeast = v.HumanoidRootPart.CFrame * CFrame.new(0,200,0)
@@ -7129,7 +7131,7 @@ spawn(function()
                                             EquipWeapon(_G.SelectWeapon)
                                             topos(v.HumanoidRootPart.CFrame * Pos)
                                             SeaSkill = false
-                                        elseif _G.TeleLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 <= _G.LowHeal then
+                                        elseif _G.TeleYLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 <= _G.LowHeal then
                                             topos(v.HumanoidRootPart.CFrame * CFrame.new(0,_G.PosHeal,0))
                                         else
                                             EquipWeapon(_G.SelectWeapon)
@@ -7151,7 +7153,7 @@ spawn(function()
                                             EquipWeapon(_G.SelectWeapon)
                                             topos(v.HumanoidRootPart.CFrame * Pos)
                                             SeaSkill = false
-                                        elseif _G.TeleLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 <= _G.LowHeal then
+                                        elseif _G.TeleYLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 <= _G.LowHeal then
                                             topos(v.HumanoidRootPart.CFrame * CFrame.new(0,_G.PosHeal,0))
                                         else
                                             EquipWeapon(_G.SelectWeapon)
@@ -7173,7 +7175,7 @@ spawn(function()
                                             EquipWeapon(_G.SelectWeapon)
                                             topos(v.HumanoidRootPart.CFrame * Pos)
                                             SeaSkill = false
-                                        elseif _G.TeleLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 <= _G.LowHeal then
+                                        elseif _G.TeleYLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 <= _G.LowHeal then
                                             topos(v.HumanoidRootPart.CFrame * CFrame.new(0,_G.PosHeal,0))
                                         else
                                             EquipWeapon(_G.SelectWeapon)
@@ -7188,17 +7190,6 @@ spawn(function()
                 else
                     Skillaimbot = false
                     SeaSkill = false
-                    if _G.ResetChar then
-                        for i,v in pairs(game.Workspace.Boats:GetChildren()) do
-                            if game:GetService("Workspace").Boats[_G.SelectedBoat] then
-                                if not v:FindFirstChild("VehicleSeat") and v:FindFirstChild("Humanoid") then
-                                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - game:GetService("Workspace").Boats[_G.Boat].VehicleSeat.Position).Magnitude > 1500 then
-                                        game.Players.LocalPlayer.Humanoid.Health = 0
-                                    end
-                                end
-                            end
-                        end
-                    end
                 end
             end)
         end
