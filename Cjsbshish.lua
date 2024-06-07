@@ -1515,13 +1515,17 @@ NpcList = {}
 
 for i, v in pairs(Workspace.NPCs:GetChildren()) do 
     if string.find(string.lower(v.Name), "home point") then
-        table.insert(NpcList, v:GetModelCFrame())
+        if v:IsA("Model") and v.PrimaryPart then
+            table.insert(NpcList, v:GetPrimaryPartCFrame())
+        end
     end
 end
 
 for i, v in pairs(getnilinstances()) do 
     if string.find(string.lower(v.Name), "home point") then
-        table.insert(NpcList, v:GetModelCFrame())
+        if v:IsA("Model") and v.PrimaryPart then
+            table.insert(NpcList, v:GetPrimaryPartCFrame())
+        end
     end
 end
 
@@ -1558,8 +1562,8 @@ function GetPortal(check2)
     local check3 = check2.Position
     local aM, aN = Vector3.new(0,0,0), math.huge
     for _, aL in pairs(gQ) do
-        if (aL-check3).Magnitude < aN and aM ~= aL then
-            aM, aN = aL, (aL-check3).Magnitude
+        if (aL - check3).Magnitude < aN and aM ~= aL then
+            aM, aN = aL, (aL - check3).Magnitude
         end
     end
     return aM
@@ -1615,7 +1619,7 @@ function CalcDistance(I, II)
     if not II then 
         II = lp.Character.PrimaryPart.CFrame 
     end 
-    return (Vector3.new(I.X, 0, I.Z)-Vector3.new(II.X, 0, II.Z)).Magnitude 
+    return (Vector3.new(I.X, 0, I.Z) - Vector3.new(II.X, 0, II.Z)).Magnitude 
 end 
 
 function topos(Pos)
@@ -1652,12 +1656,11 @@ function topos(Pos)
     if lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid:FindFirstChild("Sit") and lp.Character.Humanoid.Sit == true then
         lp.Character.Humanoid.Sit = false
     end 
-    local Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
+    local Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / TweenSpeed, Enum.EasingStyle.Linear), {CFrame = Pos})
     Tween:Play()
     _G.Clip = true
     if _G.StopTween == true then
         _G.Clip = false
-        Tween:Cancel()
     end
 end
 
