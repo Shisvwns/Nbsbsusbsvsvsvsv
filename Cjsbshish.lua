@@ -1608,45 +1608,47 @@ function CalcDistance(I, II)
     end 
     return (Vector3.new(I.X, 0, I.Z)-Vector3.new(II.X, 0, II.Z)).Magnitude 
 end 
-pcall(function topos(Pos)
-    if not Pos then return end 
-    if not lp.Character:FindFirstChild("PartTele") then
-        local PartTele = Instance.new("Part", lp.Character) -- Create part
-        PartTele.Name = "PartTele"
-        PartTele.Anchored = true
-        PartTele.Transparency = 1
-        PartTele.CanCollide = false
-        PartTele.CFrame = WaitHRP(lp).CFrame 
-        PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
-            task.wait()
-            WaitHRP(lp).CFrame = PartTele.CFrame
-        end)
-    end
-    Portal = GetPortal(Pos) 
-    Spawn = GetBypassPos(Pos) 
-    MyCFrame = WaitHRP(lp).CFrame
-    Distance = CalcDistance(MyCFrame, Pos)
-    if CalcDistance(Portal, Pos) < CalcDistance(Pos) and CalcDistance(Portal) > 500 then
-        return RequestEntrance(Portal)
-    end
-    if BypassTele == true then
-        if CalcDistance(Pos) - CalcDistance(Spawn, Pos) > 1000 and CalcDistance(Spawn) > 1000 then
-            return BypassTeleport(Spawn)
+function topos(Pos)
+    pcall(function()
+        if not Pos then return end 
+        if not lp.Character:FindFirstChild("PartTele") then
+            local PartTele = Instance.new("Part", lp.Character) -- Create part
+            PartTele.Name = "PartTele"
+            PartTele.Anchored = true
+            PartTele.Transparency = 1
+            PartTele.CanCollide = false
+            PartTele.CFrame = WaitHRP(lp).CFrame 
+            PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
+                task.wait()
+                WaitHRP(lp).CFrame = PartTele.CFrame
+            end)
         end
-    end
-    if Distance <= 300 then
-        lp.Character.PartTele.CFrame = Pos
-    end
-    if lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid:FindFirstChild("Sit") and lp.Character.Humanoid.Sit == true then
-        lp.Character.Humanoid.Sit = false
-    end 
-    Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
-    Tween:Play()
-    _G.Clip = true
-    if _G.StopTween == true then
-        _G.Clip = false
-    end
-end)
+        Portal = GetPortal(Pos) 
+        Spawn = GetBypassPos(Pos) 
+        MyCFrame = WaitHRP(lp).CFrame
+        Distance = CalcDistance(MyCFrame, Pos)
+        if CalcDistance(Portal, Pos) < CalcDistance(Pos) and CalcDistance(Portal) > 500 then
+            return RequestEntrance(Portal)
+        end
+        if _G.BypassTele == true then
+            if CalcDistance(Pos) - CalcDistance(Spawn, Pos) > 1000 and CalcDistance(Spawn) > 1000 then
+                return BypassTeleport(Spawn)
+            end
+        end
+        if Distance <= 300 then
+            lp.Character.PartTele.CFrame = Pos
+        end
+        if lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid:FindFirstChild("Sit") and lp.Character.Humanoid.Sit == true then
+            lp.Character.Humanoid.Sit = false
+        end 
+        Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
+        Tween:Play()
+        _G.Clip = true
+        if _G.StopTween == true then
+            _G.Clip = false
+        end
+    end)
+end
 
 function StopTween(target)
     if not target then
@@ -2201,7 +2203,7 @@ Setting:AddToggle({
 	Name = "Bypass Teleport",
 	Default = false,
 	Callback = function(Value)
-		BypassTele = Value
+		_G.BypassTele = Value
 	end
 })
 
