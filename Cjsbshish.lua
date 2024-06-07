@@ -1609,45 +1609,30 @@ function CalcDistance(I, II)
     return (Vector3.new(I.X, 0, I.Z)-Vector3.new(II.X, 0, II.Z)).Magnitude 
 end 
 function topos(Pos)
-    pcall(function()
-        if not Pos then return end 
-        if not lp.Character:FindFirstChild("PartTele") then
-            local PartTele = Instance.new("Part", lp.Character) -- Create part
-            PartTele.Name = "PartTele"
-            PartTele.Anchored = true
-            PartTele.Transparency = 1
-            PartTele.CanCollide = false
-            PartTele.CFrame = WaitHRP(lp).CFrame 
-            PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
-                task.wait()
-                WaitHRP(lp).CFrame = PartTele.CFrame
-            end)
+    Portal = GetPortal(Pos) 
+    Spawn = GetBypassPos(Pos) 
+    MyCFrame = WaitHRP(lp).CFrame
+    Distance = CalcDistance(MyCFrame, Pos)
+    if CalcDistance(Portal, Pos) < CalcDistance(Pos) and CalcDistance(Portal) > 500 then
+        return RequestEntrance(Portal)
+    end
+    if _G.BypassTele == true then
+        if CalcDistance(Pos) - CalcDistance(Spawn, Pos) > 1000 and CalcDistance(Spawn) > 1000 then
+            return BypassTeleport(Spawn)
         end
-        Portal = GetPortal(Pos) 
-        Spawn = GetBypassPos(Pos) 
-        MyCFrame = WaitHRP(lp).CFrame
-        Distance = CalcDistance(MyCFrame, Pos)
-        if CalcDistance(Portal, Pos) < CalcDistance(Pos) and CalcDistance(Portal) > 500 then
-            return RequestEntrance(Portal)
-        end
-        if _G.BypassTele == true then
-            if CalcDistance(Pos) - CalcDistance(Spawn, Pos) > 1000 and CalcDistance(Spawn) > 1000 then
-                return BypassTeleport(Spawn)
-            end
-        end
-        if Distance <= 300 then
-            lp.Character.PartTele.CFrame = Pos
-        end
-        if lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid:FindFirstChild("Sit") and lp.Character.Humanoid.Sit == true then
-            lp.Character.Humanoid.Sit = false
-        end 
-        Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
-        Tween:Play()
-        _G.Clip = true
-        if _G.StopTween == true then
-            _G.Clip = false
-        end
-    end)
+    end
+    if Distance <= 300 then
+        lp.Character.PartTele.CFrame = Pos
+    end
+    if lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid:FindFirstChild("Sit") and lp.Character.Humanoid.Sit == true then
+        lp.Character.Humanoid.Sit = false
+    end 
+    Tween = game:GetService("TweenService"):Create(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
+    Tween:Play()
+    _G.Clip = true
+    if _G.StopTween == true then
+        _G.Clip = false
+    end
 end
 
 function StopTween(target)
@@ -1663,8 +1648,33 @@ function TelePlayer(Pos)
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
 end
 
-Pos = CFrame.new(0,30,0)
-RaidPos = CFrame.new(0,70,0)
+Type = 1
+spawn(function()
+    while task.wait() do
+        if Type == 1 then
+            Pos = CFrame.new(0,30,-20)
+        elseif Type == 2 then
+            Pos = CFrame.new(20,30,0)
+        elseif Type == 3 then
+            Pos = CFrame.new(0,30,20)	
+        elseif Type == 4 then
+            Pos = CFrame.new(-20,30,0)
+        end
+    end
+end)
+
+spawn(function()
+    while task.wait() do
+        Type = 1
+        wait(0.5)
+        Type = 2
+        wait(0.5)
+        Type = 3
+        wait(0.5)
+        Type = 4
+        wait(0.5)
+    end
+end)
 
 spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
@@ -4268,6 +4278,7 @@ FruitRaid:AddToggle({
 	end
 })
 
+RaidPos = CFrame.new(0,70,0)
 spawn(function()
     while task.wait() do
         if _G.NextIsland and game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Timer.Visible == true then
@@ -6632,15 +6643,16 @@ Sea:AddDropdown({
 		_G.SelectedBoat = Value
 	end    
 })
-
-Sea:AddDropdown({
-	Name = "Select Zone",
-	Default = "Zone 5 [ Crazy ]",
-	Options = {"Zone 0 [ None ]", "Zone 1 [ Low ]","Zone 2 [ Medium ]","Zone 3 [ High ]","Zone 4 [ Extreme ]","Zone 5 [ Crazy ]","Zone 6 [ ??? ]","Zone ∞ [ ??? ]"},
-	Callback = function(Value)
-		_G.SelectedZone = Value
-	end
-})
+if World3 then
+	Sea:AddDropdown({
+		Name = "Select Zone",
+		Default = "Zone 5 [ Crazy ]",
+		Options = {"Zone 0 [ None ]", "Zone 1 [ Low ]","Zone 2 [ Medium ]","Zone 3 [ High ]","Zone 4 [ Extreme ]","Zone 5 [ Crazy ]","Zone 6 [ ??? ]","Zone ∞ [ ??? ]"},
+		Callback = function(Value)
+			_G.SelectedZone = Value
+		end
+	})
+end
 
 spawn(function()
     while wait() do
@@ -6761,7 +6773,11 @@ spawn(function()
     while wait() do
         if _G.SailBoat then
             if not CheckBoat() then
-                local BuyBoatCFrame = CFrame.new(-16927.451171875, 9.0863618850708, 433.8642883300781)
+                if World3 then
+                    local BuyBoatCFrame = CFrame.new(-16927.451171875, 9.0863618850708, 433.8642883300781)
+                elseif World2 then
+                    local BuyBoatCFrame = CFrame.new(-13.488054275512695, 10.311711311340332, 2927.69287109375)
+                end
                 buyb = topos(BuyBoatCFrame)
                 if (CFrame.new(-16927.451171875, 9.0863618850708, 433.8642883300781).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 10 then
                     if buyb then buyb:Stop() end
@@ -6785,12 +6801,16 @@ spawn(function()
                                 local stoppos = topos(v.VehicleSeat.CFrame * CFrame.new(0,1,0))
                             end
                         else
-                            repeat wait()
-                                local stopboat = TPB(CFrameSelectedZone, v.VehicleSeat)
+                            repeat task.wait()
+                                if World3 then
+                                    local stopboat = TPB(CFrameSelectedZone, v.VehicleSeat)
+                                elseif World2 then
+                                    local stopboat = TPB(CFrame.new(210.99585, 12.9606171, 4158.57959, -0.917689145, 7.58163254e-11, -0.39729917, 1.20923558e-11, 1, 1.62898153e-10, 0.39729917, 1.44685583e-10, -0.917689145), v.VehicleSeat)
+                                end
                             until ((CheckShark() and _G.AutoKillShark) or (game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") and _G.AutoTerrorshark) or (CheckPiranha() and _G.AutoKillPiranha) or (game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") and _G.AutoKillFishCrew) or (game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and _G.RelzFishBoat) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateBrigade") and _G.RelzPirateBrigade) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateGrandBrigade") and _G.RelzPirateGrandBrigade) or (CheckSeaBeast() and _G.AutoSeaBest)) or game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Sit == false or _G.SailBoat == false
                             if stopboat then stopboat:Stop() end
                                 game:GetService("VirtualInputManager"):SendKeyEvent(true, 32, false, game)
-                                wait(0.1)
+                                wait()
                                 game:GetService("VirtualInputManager"):SendKeyEvent(false, 32, false, game)
                             end
                         end
@@ -6895,7 +6915,7 @@ spawn(function()
                     if game:GetService("Workspace"):FindFirstChild("SeaBeasts") then
                         for i,v in pairs(game:GetService("Workspace").SeaBeasts:GetChildren()) do
                             if CheckSeaBeast() then
-                            repeat wait()
+                            repeat task.wait()
                                 CFrameSeaBeast = v.HumanoidRootPart.CFrame * CFrame.new(0,200,0)
                                 if (CFrameSeaBeast.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Position).Magnitude <= 200 then
                                     SeaSkill = true
