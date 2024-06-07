@@ -1681,6 +1681,8 @@ spawn(function()
                     end
                 end
             end
+        elseif not _G.Clip and game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
+            game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity"):Destroy()
         end
     end)
 end)
@@ -6620,7 +6622,7 @@ local Section = Sea:AddSection({
     Name = "~ Boats Settings ~"
 })
 
-local ListSeaBoat = {"Guardian","Grand Brigade","Brigade","Lantern","BeastHunter",}
+local ListSeaBoat = {"Guardian","GrandBrigade","Brigade","Lantern","BeastHunter",}
 
 Sea:AddDropdown({
 	Name = "Select Boats",
@@ -6717,6 +6719,28 @@ function CheckPiranha()
     return false
 end
 
+
+function AddEsp(Name, Parent)
+    local BillboardGui = Instance.new("BillboardGui")
+    local TextLabel = Instance.new("TextLabel")
+    BillboardGui.Parent = Parent
+    BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    BillboardGui.Active = true
+    BillboardGui.Name = Name
+    BillboardGui.AlwaysOnTop = true
+    BillboardGui.LightInfluence = 1.000
+    BillboardGui.Size = UDim2.new(0, 200, 0, 50)
+    BillboardGui.StudsOffset = Vector3.new(0, 2.5, 0)
+    TextLabel.Parent = BillboardGui
+    TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    TextLabel.BackgroundTransparency = 1.000
+    TextLabel.Size = UDim2.new(1, 0, 1, 0)
+    TextLabel.Font = Enum.Font.GothamBold
+    TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TextLabel.TextSize = 13
+    TextLabel.Text = ""
+end
+
 local stopboat = {}
 function TPB(pos, boat)
 	local tween_s = game:service"TweenService"
@@ -6783,7 +6807,7 @@ spawn(function()
             if ((CheckShark() and _G.AutoKillShark) or (game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") and _G.AutoTerrorshark) or (CheckPiranha() and _G.AutoKillPiranha) or (game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") and _G.AutoKillFishCrew) or (game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and _G.RelzFishBoat) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateBrigade") and _G.RelzPirateBrigade) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateGrandBrigade") and _G.RelzPirateGrandBrigade) or (CheckSeaBeast() and _G.AutoSeaBest)) then
                 if game.Players.LocalPlayer.Character.Humanoid.Sit == true then
                     game:GetService("VirtualInputManager"):SendKeyEvent(true, 32, false, game)
-                    wait(0.1)
+                    wait()
                     game:GetService("VirtualInputManager"):SendKeyEvent(false, 32, false, game)
                 end
             end
@@ -6993,7 +7017,7 @@ Sea:AddSlider({
 	Name = "Speed Boats",
 	Min = 120,
 	Max = 600,
-	Default = 200,
+	Default = 300,
 	Color = Color3.fromRGB(255, 255, 255),
 	Increment = 1,
 	ValueName = "",
@@ -7254,7 +7278,7 @@ DoneSkillSword = false
 DoneSkillFruit = false
 DoneSkillMelee = false
 spawn(function()
-    while wait() do
+    while task.wait() do
         if SeaSkill then
             if _G.UseSeaFruitSkill and DoneSkillFruit == false then
                 for _, v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
