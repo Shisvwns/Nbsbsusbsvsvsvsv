@@ -1512,7 +1512,6 @@ local plrs = game.Players
 local lp = plrs.LocalPlayer
 local Workspace = game:GetService("Workspace")
 NpcList = {}
-
 for i, v in pairs(Workspace.NPCs:GetChildren()) do 
     if string.find(string.lower(v.Name), "home point") then
         if v:IsA("Model") and v.PrimaryPart then
@@ -1520,7 +1519,6 @@ for i, v in pairs(Workspace.NPCs:GetChildren()) do
         end
     end
 end
-
 for i, v in pairs(getnilinstances()) do 
     if string.find(string.lower(v.Name), "home point") then
         if v:IsA("Model") and v.PrimaryPart then
@@ -1528,7 +1526,6 @@ for i, v in pairs(getnilinstances()) do
         end
     end
 end
-
 local w = game.PlaceId
 if w == 2753915549 then
     World1 = true
@@ -1557,7 +1554,6 @@ elseif w == 7449423635 then
         Vector3.new(5314.58203125, 25.419387817382812, -125.94227600097656)
     }
 end
-
 function GetPortal(check2)
     local check3 = check2.Position
     local aM, aN = Vector3.new(0,0,0), math.huge
@@ -1567,8 +1563,7 @@ function GetPortal(check2)
         end
     end
     return aM
-end 
-
+end
 function BypassTeleport(is)
     if lp.Character and lp.Character:FindFirstChild("PartTele") then
         lp.Character.PartTele.CFrame = CFrame.new(lp.Character.PartTele.CFrame.X, lp.Character.PartTele.CFrame.Y, lp.Character.PartTele.CFrame.Z)
@@ -1589,7 +1584,6 @@ function BypassTeleport(is)
         until lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid.Health > 0
     end
 end
-
 function GetBypassPos(pos)
     pos = Vector3.new(pos.X, pos.Y, pos.Z)
     local lll, mmm = nil, math.huge
@@ -1601,7 +1595,6 @@ function GetBypassPos(pos)
     end
     return lll
 end
-
 function RequestEntrance(check1)
     game.ReplicatedStorage.Remotes.CommF_:InvokeServer(unpack({"requestEntrance", check1}))
     if lp.Character and lp.Character:FindFirstChild("PartTele") then
@@ -1609,19 +1602,16 @@ function RequestEntrance(check1)
     end
     task.wait(0.01)
 end
-
 function WaitHRP(q0) 
     if not q0 then return end
     return q0.Character:WaitForChild("HumanoidRootPart", 1) 
 end 
-
 function CalcDistance(I, II) 
     if not II then 
         II = lp.Character.PrimaryPart.CFrame 
     end 
     return (Vector3.new(I.X, 0, I.Z) - Vector3.new(II.X, 0, II.Z)).Magnitude 
 end 
-
 function topos(Pos)
     if not Pos then return end 
     if not lp.Character:FindFirstChild("PartTele") then
@@ -1660,6 +1650,7 @@ function topos(Pos)
     Tween:Play()
     _G.Clip = true
     if _G.StopTween == true then
+        Tween:Play()
         _G.Clip = false
     end
 end
@@ -1683,31 +1674,21 @@ RaidPos = CFrame.new(0,70,0)
 
 spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
-        local player = game.Players.LocalPlayer
-        local character = player.Character or player.CharacterAdded:Wait()
-        local head = character:FindFirstChild("Head") or character:WaitForChild("Head", 1)        
-        if head then
-            if _G.Clip then
-                if not head:FindFirstChild("BodyVelocity") then
-                    local ag = Instance.new("BodyVelocity")
-                    ag.Velocity = Vector3.new(0, 0, 0)
-                    ag.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
-                    ag.P = 9000
-                    ag.Parent = head
-                    for _, v in pairs(character:GetDescendants()) do
-                        if v:IsA("BasePart") then
-                            v.CanCollide = false
-                        end
-                    end
-                end
-            elseif not _G.Clip and head:FindFirstChild("BodyVelocity") then
-                head:FindFirstChild("BodyVelocity"):Destroy()
-                for _, v in pairs(character:GetDescendants()) do
+        if _G.Clip then
+            if not game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
+                local ag = Instance.new("BodyVelocity")
+                ag.Velocity = Vector3.new(0, 0, 0)
+                ag.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+                ag.P = 9000
+                ag.Parent = game.Players.LocalPlayer.Character.Head
+                for r, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
                     if v:IsA("BasePart") then
-                        v.CanCollide = true
+                        v.CanCollide = false
                     end
                 end
             end
+        elseif not _G.Clip and game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
+            game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity"):Destroy()
         end
     end)
 end)
