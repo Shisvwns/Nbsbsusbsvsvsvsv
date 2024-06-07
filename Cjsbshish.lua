@@ -2066,7 +2066,9 @@ Setting:AddToggle({
 spawn(function()
     while task.wait(_G.FastAttackDelay) do
         if _G.FastAttack then
-            AttackNoCD()
+            pcall(function()
+                AttackNoCD()
+            end)
         end
     end
 end)
