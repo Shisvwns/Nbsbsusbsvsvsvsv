@@ -1681,8 +1681,6 @@ spawn(function()
                     end
                 end
             end
-        elseif not _G.Clip and game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
-            game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity"):Destroy()
         end
     end)
 end)
@@ -6622,11 +6620,11 @@ local Section = Sea:AddSection({
     Name = "~ Boats Settings ~"
 })
 
-local ListSeaBoat = {"Guardian","GrandBrigade","Brigade","Lantern","BeastHunter",}
+local ListSeaBoat = {"Guardian","Grand Brigade","Brigade","Lantern","BeastHunter",}
 
 Sea:AddDropdown({
 	Name = "Select Boats",
-	Default = "GrandBrigade",
+	Default = "Guardian",
 	Options = ListSeaBoat,
 	Callback = function(Value)
 		_G.SelectedBoat = Value
@@ -6717,28 +6715,6 @@ function CheckPiranha()
         end
     end
     return false
-end
-
-
-function AddEsp(Name, Parent)
-    local BillboardGui = Instance.new("BillboardGui")
-    local TextLabel = Instance.new("TextLabel")
-    BillboardGui.Parent = Parent
-    BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-    BillboardGui.Active = true
-    BillboardGui.Name = Name
-    BillboardGui.AlwaysOnTop = true
-    BillboardGui.LightInfluence = 1.000
-    BillboardGui.Size = UDim2.new(0, 200, 0, 50)
-    BillboardGui.StudsOffset = Vector3.new(0, 2.5, 0)
-    TextLabel.Parent = BillboardGui
-    TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    TextLabel.BackgroundTransparency = 1.000
-    TextLabel.Size = UDim2.new(1, 0, 1, 0)
-    TextLabel.Font = Enum.Font.GothamBold
-    TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-    TextLabel.TextSize = 13
-    TextLabel.Text = "[ My Boats ]"
 end
 
 local stopboat = {}
@@ -6969,7 +6945,7 @@ Sea:AddToggle({
 	Name = "No Clip Rock",
 	Default = true,
 	Callback = function(Value)
-		_G.Nocliprock = Value
+		_G.NoClipRock = Value
 	end
 })
 
