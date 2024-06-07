@@ -7049,7 +7049,17 @@ spawn(function()
                 else
                     Skillaimbot = false
                     SeaSkill = false
-                    UnEquipWeapon(_G.SelectWeapon)
+                    if _G.ResetChar then
+                        for i,v in pairs(game.Workspace.Boats:GetChildren()) do
+                            if game:GetService("Workspace").Boats[_G.SelectedBoat] then
+                                if not v:FindFirstChild("VehicleSeat") and v:FindFirstChild("Humanoid") then
+                                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - game:GetService("Workspace").Boats[_G.Boat].VehicleSeat.Position).Magnitude > 1500 then
+                                        game.Players.LocalPlayer.Humanoid.Health = 0
+                                    end
+                                end
+                            end
+                        end
+                    end
                 end
             end)
         end
@@ -7081,28 +7091,12 @@ spawn(function()
 end)
 
 Sea:AddToggle({
-	Name = "Auto Reset Character Go Tiki If Boats Destroy",
+	Name = "Auto Reset Character Back To Place Buy Boats When Boats Destroy",
 	Default = false,
 	Callback = function(Value)
 		_G.ResetChar = Value
 	end
 })
-
-spawn(function()
-    while wait() do
-        if _G.ResetChar then
-            for i,v in pairs(game.Workspace.Boats:GetChildren()) do
-                if game:GetService("Workspace").Boats[_G.Boat] then
-                    if not v:FindFirstChild("VehicleSeat") and v:FindFirstChild("Humanoid") then
-                        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - game:GetService("Workspace").Boats[_G.Boat].VehicleSeat.Position).Magnitude > 1500 then
-                            game.Players.LocalPlayer.Humanoid.Health = 0
-                        end
-                    end
-                end
-            end
-        end
-    end
-end)
 
 Sea:AddSlider({
 	Name = "Speed Boats",
