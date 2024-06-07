@@ -1684,13 +1684,13 @@ end)
 spawn(function()
     while task.wait() do
         if Type == 1 then
-            Pos = CFrame.new(0,30,-20)
+            Pos = CFrame.new(0,45,-20)
         elseif Type == 2 then
-            Pos = CFrame.new(20,30,0)
+            Pos = CFrame.new(20,45,0)
         elseif Type == 3 then
-            Pos = CFrame.new(0,30,20)	
+            Pos = CFrame.new(0,45,20)	
         elseif Type == 4 then
-            Pos = CFrame.new(-20,30,0)
+            Pos = CFrame.new(-20,45,0)
         end
     end
 end)
@@ -2669,17 +2669,6 @@ Setting:AddTextbox({
 	Callback = function(Value)
 		_G.HoldSKillSwordX = Value
 	end
-})
-
-local Section = Setting:AddSection({
-    Name = "~ Misc ~"
-})
-
-Setting:AddButton({
-    Name = "Show Item",
-    Callback = function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/HuyLocDz/ShowItem/main/ShowItem.lua"))()
-    end
 })
 
 -- [ Tab Farm ]
@@ -6465,6 +6454,17 @@ spawn(function()
     end)
 end)
 
+local Section = Player:AddSection({
+    Name = "~ Misc ~"
+})
+
+Player:AddButton({
+    Name = "Show Item",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/HuyLocDz/ShowItem/main/ShowItem.lua"))()
+    end
+})
+
 -- [ Tab PvP ]
 
 local Section = PvP:AddSection({
@@ -6964,9 +6964,17 @@ spawn(function()
                             if v.Name == "Fish Crew Member" then
                                 if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                                     repeat task.wait()
-                                        EquipWeapon(_G.SelectWeapon)
-                                        topos(v.HumanoidRootPart.CFrame * Pos)
-                                        SeaSkill = false
+                                        if _G.TeleYLowHeal == false then
+                                            EquipWeapon(_G.SelectWeapon)
+                                            topos(v.HumanoidRootPart.CFrame * Pos)
+                                            SeaSkill = false
+                                        elseif _G.TeleLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 <= _G.LowHeal then
+                                            topos(v.HumanoidRootPart.CFrame * CFrame.new(0,_G.PosHeal,0))
+                                        else
+                                            EquipWeapon(_G.SelectWeapon)
+                                            topos(v.HumanoidRootPart.CFrame * Pos)
+                                            SeaSkill = false
+                                        end
                                     until not _G.AutoKillFishCrew or not v.Parent or v.Humanoid.Health <= 0
                                 end
                             end
@@ -6976,16 +6984,31 @@ spawn(function()
                     for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") then
                             repeat task.wait()
-                                local BoatCFrame = v.Engine.CFrame
-                                if (BoatCFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
-                                    SeaSkill = true
+                                if _G.TeleYLowHeal == false then
+                                    local BoatCFrame = v.Engine.CFrame
+                                    if (BoatCFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
+                                        SeaSkill = true
+                                    else
+                                        SeaSkill = false
+                                    end
+                                    topos(BoatCFrame)
+                                    Skillaimbot = true
+                                    AimSkill = v.Engine.CFrame * CFrame.new(0, -20, 0)
+                                    AimBotSkillPosition = AimSkill.Position
+                                elseif _G.TeleLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 <= _G.LowHeal then
+                                    topos(v.HumanoidRootPart.CFrame * CFrame.new(0,_G.PosHeal,0))
                                 else
-                                    SeaSkill = false
+                                    local BoatCFrame = v.Engine.CFrame
+                                    if (BoatCFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
+                                        SeaSkill = true
+                                    else
+                                        SeaSkill = false
+                                    end
+                                    topos(BoatCFrame)
+                                    Skillaimbot = true
+                                    AimSkill = v.Engine.CFrame * CFrame.new(0, -20, 0)
+                                    AimBotSkillPosition = AimSkill.Position
                                 end
-                                topos(BoatCFrame)
-                                Skillaimbot = true
-                                AimSkill = v.Engine.CFrame * CFrame.new(0, -15, 0)
-                                AimBotSkillPosition = AimSkill.Position
                             until not v.Parent or v.Health < 0 or not game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") or not v:FindFirstChild("Engine") or not _G.RelzFishBoat
                             Skillaimbot = false
                             SeaSkill = false
@@ -6995,16 +7018,31 @@ spawn(function()
                     for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if game:GetService("Workspace").Enemies:FindFirstChild("PirateGrandBrigade") then
                             repeat task.wait()
-                                local BoatCFrame = v.Engine.CFrame
-                                if (BoatCFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
-                                    SeaSkill = true
+                                if _G.TeleYLowHeal == false then
+                                    local BoatCFrame = v.Engine.CFrame
+                                    if (BoatCFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
+                                        SeaSkill = true
+                                    else
+                                        SeaSkill = false
+                                    end
+                                    topos(BoatCFrame)
+                                    Skillaimbot = true
+                                    AimSkill = v.Engine.CFrame * CFrame.new(0, -20, 0)
+                                    AimBotSkillPosition = AimSkill.Position
+                                elseif _G.TeleLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 <= _G.LowHeal then
+                                    topos(v.HumanoidRootPart.CFrame * CFrame.new(0,_G.PosHeal,0))
                                 else
-                                    SeaSkill = false
+                                    local BoatCFrame = v.Engine.CFrame
+                                    if (BoatCFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
+                                        SeaSkill = true
+                                    else
+                                        SeaSkill = false
+                                    end
+                                    topos(BoatCFrame)
+                                    Skillaimbot = true
+                                    AimSkill = v.Engine.CFrame * CFrame.new(0, -20, 0)
+                                    AimBotSkillPosition = AimSkill.Position
                                 end
-                                topos(BoatCFrame)
-                                Skillaimbot = true
-                                AimSkill = v.Engine.CFrame * CFrame.new(0, -15, 0)
-                                AimBotSkillPosition = AimSkill.Position
                             until not v.Parent or v.Health.Value < 0 or not game:GetService("Workspace").Enemies:FindFirstChild("PirateGrandBrigade") or not v:FindFirstChild("Engine") or not _G.RelzPirateGrandBrigade
                             Skillaimbot = false
                             SeaSkill = false
@@ -7014,16 +7052,31 @@ spawn(function()
                     for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if game:GetService("Workspace").Enemies:FindFirstChild("PirateBrigade") then
                             repeat task.wait()
-                                local BoatCFrame = v.Engine.CFrame
-                                if (BoatCFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
-                                    SeaSkill = true
+                                if _G.TeleYLowHeal == false then
+                                    local BoatCFrame = v.Engine.CFrame
+                                    if (BoatCFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
+                                        SeaSkill = true
+                                    else
+                                        SeaSkill = false
+                                    end
+                                    topos(BoatCFrame)
+                                    Skillaimbot = true
+                                    AimSkill = v.Engine.CFrame * CFrame.new(0, -20, 0)
+                                    AimBotSkillPosition = AimSkill.Position
+                                elseif _G.TeleLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 <= _G.LowHeal then
+                                    topos(v.HumanoidRootPart.CFrame * CFrame.new(0,_G.PosHeal,0))
                                 else
-                                    SeaSkill = false
+                                    local BoatCFrame = v.Engine.CFrame
+                                    if (BoatCFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
+                                        SeaSkill = true
+                                    else
+                                        SeaSkill = false
+                                    end
+                                    topos(BoatCFrame)
+                                    Skillaimbot = true
+                                    AimSkill = v.Engine.CFrame * CFrame.new(0, -20, 0)
+                                    AimBotSkillPosition = AimSkill.Position
                                 end
-                                topos(BoatCFrame)
-                                Skillaimbot = true
-                                AimSkill = v.Engine.CFrame * CFrame.new(0, -15, 0)
-                                AimBotSkillPosition = AimSkill.Position
                             until not v.Parent or v.Health.Value < 0 or not game:GetService("Workspace").Enemies:FindFirstChild("PirateBrigade") or not v:FindFirstChild("Engine") or not _G.RelzPirateBrigade
                             Skillaimbot = false
                             SeaSkill = false
@@ -7034,15 +7087,29 @@ spawn(function()
                         for i,v in pairs(game:GetService("Workspace").SeaBeasts:GetChildren()) do
                             if CheckSeaBeast() then
                                 repeat task.wait()
-                                    CFrameSeaBeast = v.HumanoidRootPart.CFrame * CFrame.new(0,200,0)
-                                    if (CFrameSeaBeast.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Position).Magnitude <= 300 then
-                                        SeaSkill = true
+                                    if _G.TeleYLowHeal == false then
+                                        CFrameSeaBeast = v.HumanoidRootPart.CFrame * CFrame.new(0,200,0)
+                                        if (CFrameSeaBeast.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Position).Magnitude <= 300 then
+                                            SeaSkill = true
+                                        else
+                                            SeaSkill = false
+                                        end
+                                        Skillaimbot = true
+                                        AimBotSkillPosition = v.HumanoidRootPart.CFrame.Position
+                                        spawn(TeleportSeabeast(v), 1)
+                                    elseif _G.TeleLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 <= _G.LowHeal then
+                                        topos(v.HumanoidRootPart.CFrame * CFrame.new(0,_G.PosHeal,0))
                                     else
-                                        SeaSkill = false
+                                        CFrameSeaBeast = v.HumanoidRootPart.CFrame * CFrame.new(0,200,0)
+                                        if (CFrameSeaBeast.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Position).Magnitude <= 300 then
+                                            SeaSkill = true
+                                        else
+                                            SeaSkill = false
+                                        end
+                                        Skillaimbot = true
+                                        AimBotSkillPosition = v.HumanoidRootPart.CFrame.Position
+                                        spawn(TeleportSeabeast(v), 1)
                                     end
-                                    Skillaimbot = true
-                                    AimBotSkillPosition = v.HumanoidRootPart.CFrame.Position
-                                    spawn(TeleportSeabeast(v), 1)
                                 until not _G.AutoSeaBest or CheckSeaBeast() == false or not v:FindFirstChild("Humanoid") or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health < 0 or not v.Parent
                                 Skillaimbot = false
                                 SeaSkill = false
@@ -7058,9 +7125,17 @@ spawn(function()
                             if v.Name == "Terrorshark" then
                                 if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                                     repeat task.wait()
-                                        EquipWeapon(_G.SelectWeapon)
-                                        SeaSkill = false
-                                        topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 60, 0))
+                                        if _G.TeleYLowHeal == false then
+                                            EquipWeapon(_G.SelectWeapon)
+                                            topos(v.HumanoidRootPart.CFrame * Pos)
+                                            SeaSkill = false
+                                        elseif _G.TeleLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 <= _G.LowHeal then
+                                            topos(v.HumanoidRootPart.CFrame * CFrame.new(0,_G.PosHeal,0))
+                                        else
+                                            EquipWeapon(_G.SelectWeapon)
+                                            topos(v.HumanoidRootPart.CFrame * Pos)
+                                            SeaSkill = false
+                                        end
                                     until not  _G.AutoTerrorshark or not v.Parent or v.Humanoid.Health <= 0
                                 end
                             end
@@ -7072,8 +7147,17 @@ spawn(function()
                             if v.Name == "Piranha" then
                                 if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                                     repeat task.wait()
-                                        EquipWeapon(_G.SelectWeapon)
-                                        topos(v.HumanoidRootPart.CFrame * Pos)
+                                        if _G.TeleYLowHeal == false then
+                                            EquipWeapon(_G.SelectWeapon)
+                                            topos(v.HumanoidRootPart.CFrame * Pos)
+                                            SeaSkill = false
+                                        elseif _G.TeleLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 <= _G.LowHeal then
+                                            topos(v.HumanoidRootPart.CFrame * CFrame.new(0,_G.PosHeal,0))
+                                        else
+                                            EquipWeapon(_G.SelectWeapon)
+                                            topos(v.HumanoidRootPart.CFrame * Pos)
+                                            SeaSkill = false
+                                        end
                                     until not _G.AutoKillPiranha or not v.Parent or v.Humanoid.Health <= 0
                                 end
                             end
@@ -7085,9 +7169,17 @@ spawn(function()
                             if v.Name == "Shark" then
                                 if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                                     repeat task.wait()
-                                        EquipWeapon(_G.SelectWeapon)
-                                        topos(v.HumanoidRootPart.CFrame * Pos)
-                                        SeaSkill = false
+                                        if _G.TeleYLowHeal == false then
+                                            EquipWeapon(_G.SelectWeapon)
+                                            topos(v.HumanoidRootPart.CFrame * Pos)
+                                            SeaSkill = false
+                                        elseif _G.TeleLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 <= _G.LowHeal then
+                                            topos(v.HumanoidRootPart.CFrame * CFrame.new(0,_G.PosHeal,0))
+                                        else
+                                            EquipWeapon(_G.SelectWeapon)
+                                            topos(v.HumanoidRootPart.CFrame * Pos)
+                                            SeaSkill = false
+                                        end
                                     until not _G.AutoKillShark or not v.Parent or v.Humanoid.Health <= 0
                                 end
                             end
@@ -7209,11 +7301,49 @@ Sea:AddButton({
 })
 
 local Section = Sea:AddSection({
+    Name = "~ Low Health ~"
+})
+
+Sea:AddSlider({
+	Name = "Value Health",
+	Min = 1,
+	Max = 100,
+	Default = 30,
+	Color = Color3.fromRGB(255, 255, 255),
+	Increment = 1,
+	ValueName = "%",
+	Callback = function(Value)
+		_G.LowHeal = Value
+	end
+})
+
+Sea:AddSlider({
+	Name = "Distance Teleport Y",
+	Min = 1,
+	Max = 1200,
+	Default = 500,
+	Color = Color3.fromRGB(255, 255, 255),
+	Increment = 1,
+	ValueName = "",
+	Callback = function(Value)
+		_G.PosHeal = Value
+	end
+})
+
+Sea:AddToggle({
+	Name = "Teleport To Y If Low Health",
+	Default = false,
+	Callback = function(Value)
+		_G.TeleYLowHeal = Value
+	end
+})
+
+local Section = Sea:AddSection({
     Name = "~ Use Weapon Skill ~"
 })
 
 Sea:AddToggle({
-	Name = "Use Skill Devil Fruit",
+	Name = "Auto Spam Skill Devil Fruit",
 	Default = false,
 	Callback = function(Value)
 		_G.UseSeaFruitSkill = Value
@@ -7221,7 +7351,7 @@ Sea:AddToggle({
 })
 
 Sea:AddToggle({
-	Name = "Use Skill Melee",
+	Name = "Auto Spam Skill Melee",
 	Default = false,
 	Callback = function(Value)
 		_G.UseSeaMeleeSkill = Value
@@ -7229,7 +7359,7 @@ Sea:AddToggle({
 })
 
 Sea:AddToggle({
-	Name = "Use Skill Sword",
+	Name = "Auto Spam Skill Sword",
 	Default = false,
 	Callback = function(Value)
 		_G.UseSeaSwordSkill = Value
@@ -7237,7 +7367,7 @@ Sea:AddToggle({
 })
 
 Sea:AddToggle({
-	Name = "Use Skill Gun",
+	Name = "Auto Spam Skill Gun",
 	Default = false,
 	Callback = function(Value)
 		_G.UseSeaGunSkill = Value
@@ -7245,7 +7375,7 @@ Sea:AddToggle({
 })
 
 local Section = Sea:AddSection({
-    Name = "~ Aimbot Skill To Monster Sea Event ~"
+    Name = "~ Aimbot Skill To Ship & Sea Beast ~"
 })
 
 Sea:AddLabel("Select Use Skill Devil Fruit")
