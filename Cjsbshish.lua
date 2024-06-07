@@ -1681,25 +1681,27 @@ spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
         local player = game.Players.LocalPlayer
         local character = player.Character or player.CharacterAdded:Wait()
-        local head = character:WaitForChild("Head", 1)
-        if _G.Clip then
-            if not head:FindFirstChild("BodyVelocity") then
-                local ag = Instance.new("BodyVelocity")
-                ag.Velocity = Vector3.new(0, 0, 0)
-                ag.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
-                ag.P = 9000
-                ag.Parent = head
-                for _, v in pairs(character:GetDescendants()) do
-                    if v:IsA("BasePart") then
-                        v.CanCollide = false
+        local head = character:FindFirstChild("Head") or character:WaitForChild("Head", 1)
+        if head then
+            if _G.Clip then
+                if not head:FindFirstChild("BodyVelocity") then
+                    local ag = Instance.new("BodyVelocity")
+                    ag.Velocity = Vector3.new(0, 0, 0)
+                    ag.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+                    ag.P = 9000
+                    ag.Parent = head
+                    for _, v in pairs(character:GetDescendants()) do
+                        if v:IsA("BasePart") then
+                            v.CanCollide = false
+                        end
                     end
                 end
-            end
-        elseif not _G.Clip and head:FindFirstChild("BodyVelocity") then
-            head:FindFirstChild("BodyVelocity"):Destroy()
-            for _, v in pairs(character:GetDescendants()) do
-                if v:IsA("BasePart") then
-                    v.CanCollide = true
+            elseif not _G.Clip and head:FindFirstChild("BodyVelocity") then
+                head:FindFirstChild("BodyVelocity"):Destroy()
+                for _, v in pairs(character:GetDescendants()) do
+                    if v:IsA("BasePart") then
+                        v.CanCollide = true
+                    end
                 end
             end
         end
