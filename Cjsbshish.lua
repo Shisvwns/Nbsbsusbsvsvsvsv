@@ -1656,14 +1656,15 @@ function topos(Pos)
     Tween:Play()
     _G.Clip = true
     if _G.StopTween == true then
-        Tween:Play()
         _G.Clip = false
+        Tween:Cancel()
     end
 end
 
 function StopTween(target)
     if not target then
         _G.StopTween = true
+        wait(0.5)
         topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
         _G.StopTween = false
         _G.Clip = false
@@ -1681,7 +1682,7 @@ spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
         local player = game.Players.LocalPlayer
         local character = player.Character or player.CharacterAdded:Wait()
-        local head = character:FindFirstChild("Head") or character:WaitForChild("Head", 1)
+        local head = character:FindFirstChild("Head") or character:WaitForChild("Head", 1)        
         if head then
             if _G.Clip then
                 if not head:FindFirstChild("BodyVelocity") then
