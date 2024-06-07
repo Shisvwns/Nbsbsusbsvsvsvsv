@@ -7075,23 +7075,37 @@ Sea:AddToggle({
 })
 
 spawn(function()
-    while wait() do
-        for i, boat in pairs(game:GetService("Workspace").Boats:GetChildren()) do
-            for _, v in pairs(game:GetService("Workspace").Boats[boat.Name]:GetDescendants()) do
-                if v:IsA("BasePart") then
-                    if _G.NoClipRock or _G.SailBoat then
-                        v.CanCollide = false
-                    else
-                        v.CanCollide = true
-                    end
-                end
-            end
-        end
-    end
+	while wait() do
+		if _G.NoClipRock or _G.SailBoat then
+			if game.Players.LocalPlayer.Character.Humanoid.Sit == true then
+				for _, v in pairs(game.Workspace.Boats:GetDescendants()) do
+					if v:IsA("BasePart") and v.CanCollide == true then
+						v.CanCollide = false
+					end
+				end
+				for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+					if v:IsA("BasePart") and v.CanCollide == true then
+						v.CanCollide = false
+					end
+				end
+			elseif game.Players.LocalPlayer.Character.Humanoid.Sit == false then
+				for _, v in pairs(game.Workspace.Boats:GetDescendants()) do
+					if v:IsA("BasePart") and v.CanCollide == false then
+						v.CanCollide = true
+					end
+				end
+				for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+					if v:IsA("BasePart") and v.CanCollide == false then
+						v.CanCollide = true
+					end
+				end
+			end
+		end
+	end
 end)
 
 Sea:AddToggle({
-	Name = "Auto Reset Character Back To Place Buy Boats When Boats Destroy",
+	Name = "Auto Reset Character When Boats Destroy",
 	Default = false,
 	Callback = function(Value)
 		_G.ResetChar = Value
