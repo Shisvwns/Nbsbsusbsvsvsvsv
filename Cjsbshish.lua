@@ -6699,11 +6699,11 @@ local ListSeaBoat = {
 }
 
 Sea:AddDropdown({
-	Name = "Guardian",
-	Default = "Grand Brigade",
+	Name = "Select Boats",
+	Default = "Guardian",
 	Options = ListSeaBoat,
 	Callback = function(Value)
-		_G.Boat = Value
+		_G.SelectedBoat = Value
 	end    
 })
 
@@ -6880,7 +6880,6 @@ end)
 spawn(function()
     while wait() do
         if _G.SailBoat and World3 then
-            pcall(function()
             if not CheckBoat() then
                 local BuyBoatCFrame = CFrame.new(-16927.451171875, 9.0863618850708, 433.8642883300781)
                 buyb = topos(BuyBoatCFrame)
@@ -6918,7 +6917,6 @@ spawn(function()
                     end
                 end
             end
-            end)
         end
     end
 end)
@@ -6963,6 +6961,7 @@ spawn(function()
                                             SeaSkill = false
                                         elseif _G.TeleYLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 <= _G.LowHeal then
                                             topos(v.HumanoidRootPart.CFrame * CFrame.new(0,_G.PosHeal,0))
+                                            wait(30)
                                         else
                                             EquipWeapon(_G.SelectWeapon)
                                             topos(v.HumanoidRootPart.CFrame * Pos)
@@ -6990,6 +6989,7 @@ spawn(function()
                                     AimBotSkillPosition = AimSkill.Position
                                 elseif _G.TeleYLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 <= _G.LowHeal then
                                     topos(v.HumanoidRootPart.CFrame * CFrame.new(0,_G.PosHeal,0))
+                                    wait(30)
                                 else
                                     local BoatCFrame = v.Engine.CFrame
                                     if (BoatCFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
@@ -7024,6 +7024,7 @@ spawn(function()
                                     AimBotSkillPosition = AimSkill.Position
                                 elseif _G.TeleYLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 <= _G.LowHeal then
                                     topos(v.HumanoidRootPart.CFrame * CFrame.new(0,_G.PosHeal,0))
+                                    wait(30)
                                 else
                                     local BoatCFrame = v.Engine.CFrame
                                     if (BoatCFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
@@ -7058,6 +7059,7 @@ spawn(function()
                                     AimBotSkillPosition = AimSkill.Position
                                 elseif _G.TeleYLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 <= _G.LowHeal then
                                     topos(v.HumanoidRootPart.CFrame * CFrame.new(0,_G.PosHeal,0))
+                                    wait(30)
                                 else
                                     local BoatCFrame = v.Engine.CFrame
                                     if (BoatCFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
@@ -7092,6 +7094,7 @@ spawn(function()
                                         spawn(TeleportSeabeast(v), 1)
                                     elseif _G.TeleYLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 <= _G.LowHeal then
                                         topos(v.HumanoidRootPart.CFrame * CFrame.new(0,_G.PosHeal,0))
+                                        wait(30)
                                     else
                                         CFrameSeaBeast = v.HumanoidRootPart.CFrame * CFrame.new(0,200,0)
                                         if (CFrameSeaBeast.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Position).Magnitude <= 300 then
@@ -7124,6 +7127,7 @@ spawn(function()
                                             SeaSkill = false
                                         elseif _G.TeleYLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 <= _G.LowHeal then
                                             topos(v.HumanoidRootPart.CFrame * CFrame.new(0,_G.PosHeal,0))
+                                            wait(30)
                                         else
                                             EquipWeapon(_G.SelectWeapon)
                                             topos(v.HumanoidRootPart.CFrame * Pos)
@@ -7146,6 +7150,7 @@ spawn(function()
                                             SeaSkill = false
                                         elseif _G.TeleYLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 <= _G.LowHeal then
                                             topos(v.HumanoidRootPart.CFrame * CFrame.new(0,_G.PosHeal,0))
+                                            wait(30)
                                         else
                                             EquipWeapon(_G.SelectWeapon)
                                             topos(v.HumanoidRootPart.CFrame * Pos)
@@ -7168,6 +7173,7 @@ spawn(function()
                                             SeaSkill = false
                                         elseif _G.TeleYLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 <= _G.LowHeal then
                                             topos(v.HumanoidRootPart.CFrame * CFrame.new(0,_G.PosHeal,0))
+                                            wait(30)
                                         else
                                             EquipWeapon(_G.SelectWeapon)
                                             topos(v.HumanoidRootPart.CFrame * Pos)
