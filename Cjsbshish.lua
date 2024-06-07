@@ -6959,7 +6959,7 @@ spawn(function()
                                             EquipWeapon(_G.SelectWeapon)
                                             topos(v.HumanoidRootPart.CFrame * Pos)
                                             SeaSkill = false
-                                        elseif _G.TeleYLowHeal == true game.Players.LocalPlayer.Character.Humanoid.Health <= _G.LowHeal then
+                                        elseif _G.TeleYLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health <= _G.LowHeal then
                                             topos(v.HumanoidRootPart.CFrame * CFrame.new(0,_G.PosHeal,0))
                                             wait(30)
                                         else
@@ -6987,7 +6987,7 @@ spawn(function()
                                     Skillaimbot = true
                                     AimSkill = v.Engine.CFrame * CFrame.new(0, -20, 0)
                                     AimBotSkillPosition = AimSkill.Position
-                                elseif _G.TeleYLowHeal == true game.Players.LocalPlayer.Character.Humanoid.Health <= _G.LowHeal then
+                                elseif _G.TeleYLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health <= _G.LowHeal then
                                     topos(v.HumanoidRootPart.CFrame * CFrame.new(0,_G.PosHeal,0))
                                     wait(30)
                                 else
@@ -7022,7 +7022,7 @@ spawn(function()
                                     Skillaimbot = true
                                     AimSkill = v.Engine.CFrame * CFrame.new(0, -20, 0)
                                     AimBotSkillPosition = AimSkill.Position
-                                elseif _G.TeleYLowHeal == true game.Players.LocalPlayer.Character.Humanoid.Health <= _G.LowHeal then
+                                elseif _G.TeleYLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health <= _G.LowHeal then
                                     topos(v.HumanoidRootPart.CFrame * CFrame.new(0,_G.PosHeal,0))
                                     wait(30)
                                 else
@@ -7057,7 +7057,7 @@ spawn(function()
                                     Skillaimbot = true
                                     AimSkill = v.Engine.CFrame * CFrame.new(0, -20, 0)
                                     AimBotSkillPosition = AimSkill.Position
-                                elseif _G.TeleYLowHeal == true game.Players.LocalPlayer.Character.Humanoid.Health <= _G.LowHeal then
+                                elseif _G.TeleYLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health <= _G.LowHeal then
                                     topos(v.HumanoidRootPart.CFrame * CFrame.new(0,_G.PosHeal,0))
                                     wait(30)
                                 else
@@ -7092,7 +7092,7 @@ spawn(function()
                                         Skillaimbot = true
                                         AimBotSkillPosition = v.HumanoidRootPart.CFrame.Position
                                         spawn(TeleportSeabeast(v), 1)
-                                    elseif _G.TeleYLowHeal == true game.Players.LocalPlayer.Character.Humanoid.Health <= _G.LowHeal then
+                                    elseif _G.TeleYLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health <= _G.LowHeal then
                                         topos(v.HumanoidRootPart.CFrame * CFrame.new(0,_G.PosHeal,0))
                                         wait(30)
                                     else
@@ -7125,7 +7125,7 @@ spawn(function()
                                             EquipWeapon(_G.SelectWeapon)
                                             topos(v.HumanoidRootPart.CFrame * Pos)
                                             SeaSkill = false
-                                        elseif _G.TeleYLowHeal == true game.Players.LocalPlayer.Character.Humanoid.Health <= _G.LowHeal then
+                                        elseif _G.TeleYLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health <= _G.LowHeal then
                                             topos(v.HumanoidRootPart.CFrame * CFrame.new(0,_G.PosHeal,0))
                                             wait(30)
                                         else
@@ -7148,7 +7148,7 @@ spawn(function()
                                             EquipWeapon(_G.SelectWeapon)
                                             topos(v.HumanoidRootPart.CFrame * Pos)
                                             SeaSkill = false
-                                        elseif _G.TeleYLowHeal == true game.Players.LocalPlayer.Character.Humanoid.Health <= _G.LowHeal then
+                                        elseif _G.TeleYLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health <= _G.LowHeal then
                                             topos(v.HumanoidRootPart.CFrame * CFrame.new(0,_G.PosHeal,0))
                                             wait(30)
                                         else
@@ -7171,7 +7171,7 @@ spawn(function()
                                             EquipWeapon(_G.SelectWeapon)
                                             topos(v.HumanoidRootPart.CFrame * Pos)
                                             SeaSkill = false
-                                        elseif _G.TeleYLowHeal == true game.Players.LocalPlayer.Character.Humanoid.Health <= _G.LowHeal then
+                                        elseif _G.TeleYLowHeal == true and game.Players.LocalPlayer.Character.Humanoid.Health <= _G.LowHeal then
                                             topos(v.HumanoidRootPart.CFrame * CFrame.new(0,_G.PosHeal,0))
                                             wait(30)
                                         else
