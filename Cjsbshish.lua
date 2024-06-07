@@ -1658,10 +1658,6 @@ function StopTween(target)
     end
 end
 
-function TelePlayer(Pos)
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
-end
-
 Type = 1
 spawn(function()
     while task.wait() do
@@ -1689,6 +1685,10 @@ spawn(function()
         wait(0.5)
     end
 end)
+
+function TelePlayer(Pos)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
+end
 
 spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
@@ -6787,9 +6787,9 @@ spawn(function()
     while wait() do
         if _G.SailBoat and World2 then
             if not CheckBoat() then
-                local BuyBoatCFrame = CFrame.new(-13.488054275512695, 10.311711311340332, 2927.69287109375)
+                local BuyBoatCFrame = CFrame.new(90.488054275512695, 10.311711311340332, 2950.69287109375)
                 buyb = topos(BuyBoatCFrame)
-                if (CFrame.new(-13.488054275512695, 10.311711311340332, 2927.69287109375).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
+                if (CFrame.new(90.488054275512695, 10.311711311340332, 2950.69287109375).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
                     if buyb then buyb:Stop() end
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyBoat", _G.SelectedBoat)
                     for i, v in pairs(game:GetService("Workspace").Boats:GetChildren()) do
