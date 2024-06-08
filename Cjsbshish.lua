@@ -1639,7 +1639,7 @@ function topos(Pos)
         lp.Character.Humanoid.Sit = false
     end 
     if Distance <= 250 then
-        lp.Character.PartTele.CFrame = Pos
+        lp.Character.HumanoidRootPart.CFrame = Pos
     end
     Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
     Tween:Play() 
@@ -1719,21 +1719,13 @@ end)
 
 -- [ No Clip Farm ]
 
-function TelePlayer(Pos)
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
-end
-
 spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
         if Clip then
             if not game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
-                setfflag("HumanoidParallelRemoveNoPhysics", "False")
-                setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
-                local Hold = Instance.new("BodyVelocity")
-                Hold.Velocity = Vector3.new(0, 0, 0)
+                local Hold = Instance.new("BodyVelocity", game.Players.LocalPlayer.Character.PrimaryPart)
+                Hold.Velocity = Vector3.new(0,0,0)
                 Hold.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
-                Hold.P = 9000
-                Hold.Parent = game.Players.LocalPlayer.Character.Head
                 for r, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
                     if v:IsA("BasePart") then
                         v.CanCollide = false
