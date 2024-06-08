@@ -6880,6 +6880,7 @@ end)
 spawn(function()
     while wait() do
         if _G.SailBoat and World3 then
+            pcall(function()
             if not CheckBoat() then
                 local BuyBoatCFrame = CFrame.new(-16927.451171875, 9.0863618850708, 433.8642883300781)
                 buyb = topos(BuyBoatCFrame)
@@ -6917,6 +6918,7 @@ spawn(function()
                     end
                 end
             end
+            end)
         end
     end
 end)
