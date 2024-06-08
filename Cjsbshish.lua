@@ -1614,8 +1614,6 @@ function topos(Pos)
         end
         Portal = GetPortal(Pos) 
         Spawn = GetBypassPos(Pos) 
-        MyCFrame = WaitHRP(lp).CFrame
-        Distance = CalcDistance(MyCFrame, Pos)
         if CalcDistance(Portal, Pos) < CalcDistance(Pos) and CalcDistance(Portal) > 500 then
             return RequestEntrance(Portal)
         end
@@ -1630,6 +1628,7 @@ function topos(Pos)
         if lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid:FindFirstChild("Sit") and lp.Character.Humanoid.Sit == true then
             lp.Character.Humanoid.Sit = false
         end 
+        Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
         Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/_G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
         Tween:Play()
         _G.Clip = true
