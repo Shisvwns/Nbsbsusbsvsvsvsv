@@ -6836,7 +6836,7 @@ end
 function CheckPirateGrandBrigade()
     for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
         if v.Name == "PirateGrandBrigade" and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-            if (v.Engine.CFrame - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then
+            if (v.Engine.CFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then
                 return true
             end
         end
@@ -6847,7 +6847,7 @@ end
 function CheckFishBoat()
     for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
         if v.Name == "FishBoat" and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-            if (v.Engine.CFrame - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then
+            if (v.Engine.CFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then
                 return true
             end
         end
@@ -6858,10 +6858,8 @@ end
 function CheckPirateBrigade()
     for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
         if v.Name == "PirateBrigade" and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-            if game:GetService("Workspace").Enemies:FindFirstChild("PirateBrigade") then
-                if (v.Engine.CFrame - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then
-                    return true
-                end
+            if (v.Engine.CFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then
+                return true
             end
         end
     end
@@ -6871,7 +6869,7 @@ end
 function CheckSeaBeast()
     if game:GetService("Workspace"):FindFirstChild("SeaBeasts") then
         for i,v in pairs(game:GetService("Workspace").SeaBeasts:GetChildren()) do
-            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+            if v:FindFirstChild("Humanoid") or v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health < 0 then
                 if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then
                     return true
                 end
@@ -6928,7 +6926,7 @@ function TPB(pos, boat)
 end
 
 spawn(function()
-    while wait() do
+    while task.wait() do
         if _G.SailBoat and World2 then
             pcall(function()
                 if not CheckBoat() then
@@ -6978,7 +6976,7 @@ spawn(function()
 end)
 
 spawn(function()
-    while wait() do
+    while task.wait() do
         if _G.SailBoat and World3 then
             pcall(function()
                 if not CheckBoat() then
@@ -7030,7 +7028,7 @@ spawn(function()
 end)
 
 spawn(function()
-    while wait() do
+    while task.wait() do
         if _G.SailBoat then
             if ((CheckShark() and _G.AutoKillShark) or (game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") and _G.AutoTerrorshark) or (CheckPiranha() and _G.AutoKillPiranha) or (game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") and _G.AutoKillFishCrew) or (game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and _G.RelzFishBoat) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateBrigade") and _G.RelzPirateBrigade) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateGrandBrigade") and _G.RelzPirateGrandBrigade) or (CheckSeaBeast() and _G.AutoSeaBest)) then
                 if game.Players.LocalPlayer.Character.Humanoid.Sit == true then
@@ -7044,7 +7042,7 @@ spawn(function()
 end)
 
 spawn(function()
-    while wait() do
+    while task.wait() do
         if _G.SailBoat then
             pcall(function()
                 if CheckFishCrewMember() and _G.AutoKillFishCrew then
