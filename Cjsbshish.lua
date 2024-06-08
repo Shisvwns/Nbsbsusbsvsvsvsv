@@ -1723,23 +1723,21 @@ end
 
 spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
-        local character = game.Players.LocalPlayer.Character
-        local head = character:FindFirstChild("Head")
         if _G.Clip then
-            if head and not head:FindFirstChild("BodyVelocity") then
+            if not game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
                 local ag = Instance.new("BodyVelocity")
                 ag.Velocity = Vector3.new(0, 0, 0)
                 ag.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
                 ag.P = 9000
-                ag.Parent = head
-                for r, v in pairs(character:GetDescendants()) do
+                ag.Parent = game.Players.LocalPlayer.Character.Head
+                for r, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
                     if v:IsA("BasePart") then
                         v.CanCollide = false
                     end
                 end
             end
-        elseif not _G.Clip and head and head:FindFirstChild("BodyVelocity") then
-            head:FindFirstChild("BodyVelocity"):Destroy()
+        elseif not _G.Clip and game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
+            game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity"):Destroy()
         end
     end)
 end)
