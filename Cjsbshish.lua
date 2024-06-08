@@ -1613,18 +1613,6 @@ function topos(Pos)
         if not Pos then
             return
         end
-        if not lp.Character:FindFirstChild("PartTele") then
-            local PartTele = Instance.new("Part", lp.Character)
-            PartTele.Name = "PartTele"
-            PartTele.Anchored = true
-            PartTele.Transparency = 1
-            PartTele.CanCollide = false
-            PartTele.CFrame = WaitHRP(lp).CFrame 
-            PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
-                task.wait()
-                WaitHRP(lp).CFrame = PartTele.CFrame
-            end)
-        end
         Portal = GetPortal(Pos) 
         Spawn = GetBypassPos(Pos) 
         MyCFrame = WaitHRP(lp).CFrame
@@ -1643,7 +1631,7 @@ function topos(Pos)
         if lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid:FindFirstChild("Sit") and lp.Character.Humanoid.Sit == true then
             lp.Character.Humanoid.Sit = false
         end 
-        Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
+        Tween = game:GetService("TweenService"):Create(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance/_G.TweenSpeed, Enum.EasingStyle.Linear), {CFrame = Pos})
         Tween:Play()
         _G.Clip = true
         if _G.StopTween == true then
@@ -1653,9 +1641,11 @@ function topos(Pos)
 end
 
 function Tween(Pos)
-    local Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-    local Tween = game:GetService("TweenService"):Create(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance/325, Enum.EasingStyle.Linear), {CFrame = Pos})
-    Tween:Play()
+    pcall(function()
+        local Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+        local Tween = game:GetService("TweenService"):Create(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance/_G.TweenSpeed, Enum.EasingStyle.Linear), {CFrame = Pos})
+        Tween:Play()
+    end
 end
 
 function StopTween(target)
@@ -1732,35 +1722,26 @@ function TelePlayer(Pos)
 end
 
 spawn(function()
-    while task.wait() do
-        if _G.Clip and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
-            setfflag("HumanoidParallelRemoveNoPhysics", "False")
-            setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
-            if not game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
-                local Hold = Instance.new("BodyVelocity", game.Players.LocalPlayer.Character.PrimaryPart)
-                Hold.Name = "Hold"
-                Hold.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
-                Hold.Velocity = Vector3.new(0, 0, 0)
-                for a, b in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
-                    if b:IsA("BasePart") then
-                        b.CanCollide = false
-                    end
-                end
-                for r, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+    game:GetService("RunService").Stepped:Connect(function()
+        local character = game.Players.LocalPlayer.Character
+        local head = character:FindFirstChild("Head")
+        if _G.Clip then
+            if head and not head:FindFirstChild("BodyVelocity") then
+                local ag = Instance.new("BodyVelocity")
+                ag.Velocity = Vector3.new(0, 0, 0)
+                ag.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+                ag.P = 9000
+                ag.Parent = head
+                for r, v in pairs(character:GetDescendants()) do
                     if v:IsA("BasePart") then
                         v.CanCollide = false
                     end
                 end
             end
-            for _, v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
-                if v:IsA("BasePart") then
-                    v.CanCollide = false    
-                end
-            end
-        elseif not _G.Clip and game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
-            game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity"):Destroy()
+        elseif not _G.Clip and head and head:FindFirstChild("BodyVelocity") then
+            head:FindFirstChild("BodyVelocity"):Destroy()
         end
-    end
+    end)
 end)
 
 spawn(function()
