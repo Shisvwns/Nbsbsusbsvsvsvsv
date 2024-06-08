@@ -1609,33 +1609,9 @@ function CalcDistance(I, II)
     return (Vector3.new(I.X, 0, I.Z)-Vector3.new(II.X, 0, II.Z)).Magnitude 
 end 
 function topos(Pos)
-        if not Pos then
-            return
-        end
-        Portal = GetPortal(Pos) 
-        Spawn = GetBypassPos(Pos) 
-        if CalcDistance(Portal, Pos) < CalcDistance(Pos) and CalcDistance(Portal) > 500 then
-            return RequestEntrance(Portal)
-        end
-        if _G.BypassTele == true then
-            if CalcDistance(Pos) - CalcDistance(Spawn, Pos) > 1000 and CalcDistance(Spawn) > 1000 then
-                return BypassTeleport(Spawn)
-            end
-        end
-        if Distance <= 250 then
-            lp.Character.PartTele.CFrame = Pos
-        end
-        if lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid:FindFirstChild("Sit") and lp.Character.Humanoid.Sit == true then
-            lp.Character.Humanoid.Sit = false
-        end 
-        Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-        Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/_G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
-        Tween:Play()
-        _G.Clip = true
-        if _G.StopTween == true then
-            _G.Clip = false
-            Tween:Cancel()
-        end
+    Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/_G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
+    Tween:Play()
 end
 
 function Tween(Pos)
