@@ -6716,35 +6716,57 @@ Sea:AddDropdown({
 	Default = "Guardian",
 	Options = ListSeaBoat,
 	Callback = function(Value)
-		_G.SelectedBoat = Value
+		_G.Boat = Value
 	end    
 })
 
 spawn(function()
     while task.wait() do
         if _G.Boat == "Grand Brigade" then
-            _G.SelectedBoat = "PirateGrandBrigade"
+            SelectedBoat = "PirateGrandBrigade"
         elseif _G.Boat == "Sloop" then
-            _G.SelectedBoat = "PirateSloop"
+            SelectedBoat = "PirateSloop"
         elseif _G.Boat == "Lantern" then
-            _G.SelectedBoat = "Lantern"
+            SelectedBoat = "Lantern"
         elseif _G.Boat == "Brigade" then
-            _G.SelectedBoat = "PirateBrigade"
+            SelectedBoat = "PirateBrigade"
         elseif _G.Boat == "Beast Hunter" then
-            _G.SelectedBoat = "BeastHunter"
+            SelectedBoat = "BeastHunter"
         elseif _G.Boat == "Guardian" then
-            _G.SelectedBoat = "Guardian"
+            SelectedBoat = "Guardian"
         end
     end
 end)
             
 if World3 then
 	Sea:AddDropdown({
-		Name = "Select Zone",
+		Name = "Select Zone Sea",
 		Default = "Zone 5 [ Crazy ]",
 		Options = {"Zone 0 [ None ]", "Zone 1 [ Low ]","Zone 2 [ Medium ]","Zone 3 [ High ]","Zone 4 [ Extreme ]","Zone 5 [ Crazy ]","Zone 6 [ ??? ]","Zone ∞ [ ??? ]"},
 		Callback = function(Value)
 			_G.SelectedZone = Value
+		end
+	})
+end
+
+if World2 then
+	Sea:AddDropdown({
+		Name = "Select Zone Sea",
+		Default = "Sea [ Normal ]",
+		Options = {"Sea [ Normal ]"},
+		Callback = function(Value)
+			_G.SelectedZone = Value
+		end
+	})
+end
+
+if World1 then
+	Sea:AddDropdown({
+		Name = "Select Zone Sea",
+		Default = "No Zone Sea",
+		Options = {"No Zone Sea"},
+		Callback = function()
+			print("No Zone Sea")
 		end
 	})
 end
@@ -6767,6 +6789,8 @@ spawn(function()
             CFrameSelectedZone = CFrame.new(-44541.7617, 30.0003204, -1244.8584, -0.0844199061, -0.00553312758, 0.9964149, -0.0654025897, 0.997858942, 2.02319411e-10, -0.99428153, -0.0651681125, -0.0846010372)
         elseif _G.SelectedZone == "Zone ∞ [ ??? ]" then
             CFrameSelectedZone = CFrame.new(-148073.359, 8.99999523, 7721.05078, -0.0825930536, -1.54416148e-06, 0.996583343, -1.8696026e-05, 1, -3.91858095e-13, -0.996583343, -1.86321486e-05, -0.0825930536)
+        elseif _G.SelectedZone == "Sea [ Normal ]" then
+            CFrameSelectedZone = CFrame.new(210.99585, 12.9606171, 4158.57959, -0.917689145, 7.58163254e-11, -0.39729917, 1.20923558e-11, 1, 1.62898153e-10, 0.39729917, 1.44685583e-10, -0.917689145)
         end
     end
 end)
@@ -6782,7 +6806,7 @@ Sea:AddToggle({
 
 function CheckBoat()
     for i, v in pairs(game:GetService("Workspace").Boats:GetChildren()) do
-        if v.Name == _G.SelectedBoat then
+        if v.Name == SelectedBoat then
             for _, child in pairs(v:GetChildren()) do
                 if child.Name == "MyBoatEsp" then
                     return v
@@ -6912,9 +6936,9 @@ spawn(function()
                         if buyb then
                             buyb:Stop()
                         end
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyBoat", _G.SelectedBoat)
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyBoat", SelectedBoat)
                         for i, v in pairs(game:GetService("Workspace").Boats:GetChildren()) do
-                            if v.Name == _G.SelectedBoat then
+                            if v.Name == SelectedBoat then
                                 if (v.VehicleSeat.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
                                     AddEsp('MyBoatEsp', v)
                                 end
@@ -6923,7 +6947,7 @@ spawn(function()
                     end
                 elseif CheckBoat() then
                     for i,v in pairs(game:GetService("Workspace").Boats:GetChildren()) do
-                        if v.Name == _G.SelectedBoat then
+                        if v.Name == SelectedBoat then
                             if v:FindFirstChild("MyBoatEsp") then
                                 if game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Sit == false then
                                     if ((CheckShark() and _G.AutoKillShark) or (CheckTerrorshark() and _G.AutoTerrorshark) or (CheckPiranha() and _G.AutoKillPiranha) or (CheckFishCrewMember() and _G.AutoKillFishCrew) or (game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and _G.RelzFishBoat) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateBrigade") and _G.RelzPirateBrigade) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateGrandBrigade") and _G.RelzPirateGrandBrigade) or (CheckSeaBeast() and _G.AutoSeaBest)) then
@@ -6933,7 +6957,7 @@ spawn(function()
                                     end
                                 else
                                     repeat task.wait()
-                                        local stopboat = TPB(CFrame.new(210.99585, 12.9606171, 4158.57959, -0.917689145, 7.58163254e-11, -0.39729917, 1.20923558e-11, 1, 1.62898153e-10, 0.39729917, 1.44685583e-10, -0.917689145), v.VehicleSeat)
+                                        local stopboat = TPB(CFrameSelectedZone, v.VehicleSeat)
                                     until ((CheckShark() and _G.AutoKillShark) or (CheckTerrorshark() and _G.AutoTerrorshark) or (CheckPiranha() and _G.AutoKillPiranha) or (CheckFishCrewMember() and _G.AutoKillFishCrew) or (game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and _G.RelzFishBoat) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateBrigade") and _G.RelzPirateBrigade) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateGrandBrigade") and _G.RelzPirateGrandBrigade) or (CheckSeaBeast() and _G.AutoSeaBest)) or game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Sit == false or _G.SailBoat == false
                                     if stopboat then
                                         stopboat:Stop()
@@ -6962,9 +6986,9 @@ spawn(function()
                         if buyb then
                             buyb:Stop()
                         end
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyBoat", _G.SelectedBoat)
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyBoat", SelectedBoat)
                         for i, v in pairs(game:GetService("Workspace").Boats:GetChildren()) do
-                            if v.Name == _G.SelectedBoat then
+                            if v.Name == SelectedBoat then
                                 if (v.VehicleSeat.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
                                     AddEsp('MyBoatEsp', v)
                                 end
@@ -6973,7 +6997,7 @@ spawn(function()
                     end
                 elseif CheckBoat() then
                     for i,v in pairs(game:GetService("Workspace").Boats:GetChildren()) do
-                        if v.Name == _G.SelectedBoat then
+                        if v.Name == SelectedBoat then
                             if v:FindFirstChild("MyBoatEsp") then
                                 if game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Sit == false then
                                     if ((CheckShark() and _G.AutoKillShark) or (CheckTerrorshark() and _G.AutoTerrorshark) or (CheckPiranha() and _G.AutoKillPiranha) or (CheckFishCrewMember() and _G.AutoKillFishCrew) or (game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and _G.RelzFishBoat) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateBrigade") and _G.RelzPirateBrigade) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateGrandBrigade") and _G.RelzPirateGrandBrigade) or (CheckSeaBeast() and _G.AutoSeaBest)) then
@@ -7008,7 +7032,7 @@ spawn(function()
         if _G.SailBoat then
             if ((CheckShark() and _G.AutoKillShark) or (CheckTerrorshark() and _G.AutoTerrorshark) or (CheckPiranha() and _G.AutoKillPiranha) or (CheckFishCrewMember() and _G.AutoKillFishCrew) or (game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and _G.RelzFishBoat) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateBrigade") and _G.RelzPirateBrigade) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateGrandBrigade") and _G.RelzPirateGrandBrigade) or (CheckSeaBeast() and _G.AutoSeaBest)) then
                 if game.Players.LocalPlayer.Character.Humanoid.Sit == true then
-                    game:GetService("VirtualInputManager"):SendKeyEvent(true, 32, false, game)
+                    game:GetService("VirtualInputManager"):SendKeyEvent(true, 32, false, game) 
                     wait()
                     game:GetService("VirtualInputManager"):SendKeyEvent(false, 32, false, game)
                 end
