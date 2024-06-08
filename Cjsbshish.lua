@@ -3635,6 +3635,15 @@ Farm:AddButton({
     Name = "Refresh Boss List",
     Callback = function()
         BossName:Refresh(BossCheck,true)
+        local BossCheck = {}
+        for i, v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
+            if (v.Name == "rip_indra" or v.Name == "Ice Admiral")
+                    or (v.Name == "Saber Expert" or v.Name == "The Saw" or v.Name == "Greybeard" or v.Name == "Mob Leader" or v.Name == "The Gorilla King" or v.Name == "Bobby" or v.Name == "Yeti" or v.Name == "Vice Admiral" or v.Name == "Warden" or v.Name == "Chief Warden" or v.Name == "Swan" or v.Name == "Magma Admiral" or v.Name == "Fishman Lord" or v.Name == "Wysper" or v.Name == "Thunder God" or v.Name == "Cyborg")
+                    or (v.Name == "Don Swan" or v.Name == "Diamond" or v.Name == "Jeremy" or v.Name == "Fajita" or v.Name == "Smoke Admiral" or v.Name == "Awakened Ice Admiral" or v.Name == "Tide Keeper" or v.Name == "Order" or v.Name == "Darkbeard" or v.Name == "Cursed Captain")
+                    or (v.Name == "Stone" or v.Name == "Island Empress" or v.Name == "Kilo Admiral" or v.Name == "Captain Elephant" or v.Name == "Beautiful Pirate" or v.Name == "Cake Queen" or v.Name == "rip_indra True Form" or v.Name == "Longma" or v.Name == "Soul Reaper" or v.Name == "Cake Prince" or v.Name == "Dough King") then
+                table.insert(BossCheck, v.Name)
+            end
+        end
         BossName:Refresh(BossCheck)
     end
 })
@@ -5464,7 +5473,7 @@ spawn(function()
         if _G.Auto_Saber and World1 and game.Players.LocalPlayer.Data.Level.Value >= 200 then
             if game:GetService("Workspace").Map.Jungle.Final.Part.Transparency == 0 then
                 if game:GetService("Workspace").Map.Jungle.QuestPlates.Door.Transparency == 0 then
-                    if (CFrame.new(-1612.55884, 36.9774132, 148.719543, 0.37091279, 3.0717151e-09, -0.928667724, 3.97099491e-08, 1, 1.91679348e-08, 0.928667724, -4.39869794e-08, 0.37091279).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
+                    if (CFrame.new(-1612.55884, 36.9774132, 148.719543, 0.37091279, 3.0717151e-09, -0.928667724, 3.97099491e-08, 1, 1.91679348e-08, 0.928667724, -4.39869794e-08, 0.37091279).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 250 then
                         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Map.Jungle.QuestPlates.Plate1.Button.CFrame
                         wait(1)
                         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Map.Jungle.QuestPlates.Plate2.Button.CFrame
@@ -6891,108 +6900,6 @@ end
 
 spawn(function()
     while task.wait() do
-        if _G.SailBoat and World2 then
-            pcall(function()
-                if not CheckBoat() then
-                    local BuyBoatCFrame = CFrame.new(90.488054275512695, 10.311711311340332, 2950.69287109375)
-                    buyb = topos(BuyBoatCFrame)
-                    if (CFrame.new(90.488054275512695, 10.311711311340332, 2950.69287109375).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 300 then
-                        if buyb then
-                            buyb:Stop()
-                        end
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyBoat", SelectedBoat)
-                        for i, v in pairs(game:GetService("Workspace").Boats:GetChildren()) do
-                            if v.Name == SelectedBoat then
-                                if (v.VehicleSeat.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
-                                    AddEsp('MyBoatEsp', v)
-                                end
-                            end
-                        end
-                    end
-                elseif CheckBoat() then
-                    for i,v in pairs(game:GetService("Workspace").Boats:GetChildren()) do
-                        if v.Name == SelectedBoat then
-                            if v:FindFirstChild("MyBoatEsp") then
-                                if game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Sit == false then
-                                    if ((CheckShark() and _G.AutoKillShark) or (CheckTerrorshark() and _G.AutoTerrorshark) or (CheckPiranha() and _G.AutoKillPiranha) or (CheckFishCrewMember() and _G.AutoKillFishCrew) or (game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and _G.RelzFishBoat) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateBrigade") and _G.RelzPirateBrigade) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateGrandBrigade") and _G.RelzPirateGrandBrigade) or (CheckSeaBeast() and _G.AutoSeaBest)) then
-                                        if stoppos then stoppos:Stop() end
-                                    else
-                                        local stoppos = topos(v.VehicleSeat.CFrame * CFrame.new(0,1,0))
-                                    end
-                                else
-                                    repeat task.wait()
-                                        local stopboat = TPB(CFrameSelectedZone, v.VehicleSeat)
-                                    until ((CheckShark() and _G.AutoKillShark) or (CheckTerrorshark() and _G.AutoTerrorshark) or (CheckPiranha() and _G.AutoKillPiranha) or (CheckFishCrewMember() and _G.AutoKillFishCrew) or (game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and _G.RelzFishBoat) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateBrigade") and _G.RelzPirateBrigade) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateGrandBrigade") and _G.RelzPirateGrandBrigade) or (CheckSeaBeast() and _G.AutoSeaBest)) or game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Sit == false or _G.SailBoat == false
-                                    if stopboat then
-                                        stopboat:Stop()
-                                    end
-                                    game:GetService("VirtualInputManager"):SendKeyEvent(true, 32, false, game)
-                                    wait()
-                                    game:GetService("VirtualInputManager"):SendKeyEvent(false, 32, false, game)
-                                end
-                            end
-                        end
-                    end
-                end
-            end)
-        end
-    end
-end)
-
-spawn(function()
-    while task.wait() do
-        if _G.SailBoat and World3 then
-            pcall(function()
-                if not CheckBoat() then
-                    local BuyBoatCFrame = CFrame.new(-16927.451171875, 9.0863618850708, 433.8642883300781)
-                    buyb = topos(BuyBoatCFrame)
-                    if (CFrame.new(-16927.451171875, 9.0863618850708, 433.8642883300781).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 300 then
-                        if buyb then
-                            buyb:Stop()
-                        end
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyBoat", SelectedBoat)
-                        for i, v in pairs(game:GetService("Workspace").Boats:GetChildren()) do
-                            if v.Name == SelectedBoat then
-                                if (v.VehicleSeat.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
-                                    AddEsp('MyBoatEsp', v)
-                                end
-                            end
-                        end
-                    end
-                elseif CheckBoat() then
-                    for i,v in pairs(game:GetService("Workspace").Boats:GetChildren()) do
-                        if v.Name == SelectedBoat then
-                            if v:FindFirstChild("MyBoatEsp") then
-                                if game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Sit == false then
-                                    if ((CheckShark() and _G.AutoKillShark) or (CheckTerrorshark() and _G.AutoTerrorshark) or (CheckPiranha() and _G.AutoKillPiranha) or (CheckFishCrewMember() and _G.AutoKillFishCrew) or (game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and _G.RelzFishBoat) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateBrigade") and _G.RelzPirateBrigade) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateGrandBrigade") and _G.RelzPirateGrandBrigade) or (CheckSeaBeast() and _G.AutoSeaBest)) then
-                                        if stoppos then
-                                            stoppos:Stop()
-                                        end
-                                    else
-                                        local stoppos = topos(v.VehicleSeat.CFrame * CFrame.new(0,1,0))
-                                    end
-                                else
-                                    repeat task.wait()
-                                        local stopboat = TPB(CFrameSelectedZone, v.VehicleSeat)
-                                    until ((CheckShark() and _G.AutoKillShark) or (CheckTerrorshark() and _G.AutoTerrorshark) or (CheckPiranha() and _G.AutoKillPiranha) or (CheckFishCrewMember() and _G.AutoKillFishCrew) or (game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and _G.RelzFishBoat) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateBrigade") and _G.RelzPirateBrigade) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateGrandBrigade") and _G.RelzPirateGrandBrigade) or (CheckSeaBeast() and _G.AutoSeaBest)) or game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Sit == false or _G.SailBoat == false
-                                    if stopboat then
-                                        stopboat:Stop()
-                                    end
-                                    game:GetService("VirtualInputManager"):SendKeyEvent(true, 32, false, game)
-                                    wait()
-                                    game:GetService("VirtualInputManager"):SendKeyEvent(false, 32, false, game)
-                                end
-                            end
-                        end
-                    end
-                end
-            end)
-        end
-    end
-end)
-
-spawn(function()
-    while task.wait() do
         if _G.SailBoat then
             if ((CheckShark() and _G.AutoKillShark) or (CheckTerrorshark() and _G.AutoTerrorshark) or (CheckPiranha() and _G.AutoKillPiranha) or (CheckFishCrewMember() and _G.AutoKillFishCrew) or (game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and _G.RelzFishBoat) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateBrigade") and _G.RelzPirateBrigade) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateGrandBrigade") and _G.RelzPirateGrandBrigade) or (CheckSeaBeast() and _G.AutoSeaBest)) then
                 if game.Players.LocalPlayer.Character.Humanoid.Sit == true then
@@ -7132,6 +7039,64 @@ spawn(function()
                 else
                     Skillaimbot = false
                     SeaSkill = false
+                    if not CheckBoat() then
+                        if World3 then
+                            local BuyBoatCFrame = CFrame.new(-16927.451171875, 9.0863618850708, 433.8642883300781)
+                        elseif Workd2 then
+                            local BuyBoatCFrame = CFrame.new(90.488054275512695, 10.311711311340332, 2950.69287109375)
+                        end
+                        buyb = topos(BuyBoatCFrame)
+                        if (CFrame.new(-16927.451171875, 9.0863618850708, 433.8642883300781).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 300 then
+                            if buyb then
+                                buyb:Stop()
+                            end
+                            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyBoat", SelectedBoat)
+                            for i, v in pairs(game:GetService("Workspace").Boats:GetChildren()) do
+                                if v.Name == SelectedBoat then
+                                    if (v.VehicleSeat.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
+                                        AddEsp('MyBoatEsp', v)
+                                    end
+                                end
+                            end
+                        end
+                    elseif CheckBoat() then
+                        for i,v in pairs(game:GetService("Workspace").Boats:GetChildren()) do
+                            if v.Name == SelectedBoat then
+                                if v:FindFirstChild("MyBoatEsp") then
+                                    if game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Sit == false then
+                                        if ((CheckShark() and _G.AutoKillShark) or (CheckTerrorshark() and _G.AutoTerrorshark) or (CheckPiranha() and _G.AutoKillPiranha) or (CheckFishCrewMember() and _G.AutoKillFishCrew) or (game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and _G.RelzFishBoat) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateBrigade") and _G.RelzPirateBrigade) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateGrandBrigade") and _G.RelzPirateGrandBrigade) or (CheckSeaBeast() and _G.AutoSeaBest)) then
+                                            if stoppos then
+                                                stoppos:Stop()
+                                            end
+                                        else
+                                            local stoppos = topos(v.VehicleSeat.CFrame * CFrame.new(0,1,0))
+                                        end
+                                    else
+                                        repeat task.wait()
+                                            local stopboat = TPB(CFrameSelectedZone, v.VehicleSeat)
+                                        until ((CheckShark() and _G.AutoKillShark) or (CheckTerrorshark() and _G.AutoTerrorshark) or (CheckPiranha() and _G.AutoKillPiranha) or (CheckFishCrewMember() and _G.AutoKillFishCrew) or (game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and _G.RelzFishBoat) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateBrigade") and _G.RelzPirateBrigade) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateGrandBrigade") and _G.RelzPirateGrandBrigade) or (CheckSeaBeast() and _G.AutoSeaBest)) or game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Sit == false or _G.SailBoat == false
+                                        if stopboat then
+                                            stopboat:Stop()
+                                        end
+                                        game:GetService("VirtualInputManager"):SendKeyEvent(true, 32, false, game)
+                                        wait()
+                                        game:GetService("VirtualInputManager"):SendKeyEvent(false, 32, false, game)
+                                    end
+                                end
+                            end
+                        end
+                    else
+                    if _G.ResetChar == true then
+                        for i,v in pairs(game.Workspace.Boats:GetChildren()) do
+                            if game:GetService("Workspace").Boats[SelectedBoat] then
+                                if not v:FindFirstChild("VehicleSeat") and v:FindFirstChild("Humanoid") then
+                                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - game:GetService("Workspace").Boats[SelectedBoat].VehicleSeat.Position).Magnitude > 1500 then
+                                        game.Players.LocalPlayer.Humanoid.Health = 0
+                                    end
+                                end
+                            end
+                        end
+                    end
                 end
             end)
         end
