@@ -1609,7 +1609,6 @@ function CalcDistance(I, II)
     return (Vector3.new(I.X, 0, I.Z)-Vector3.new(II.X, 0, II.Z)).Magnitude 
 end 
 function topos(Pos)
-    pcall(function()
         if not Pos then
             return
         end
@@ -1636,8 +1635,8 @@ function topos(Pos)
         _G.Clip = true
         if _G.StopTween == true then
             _G.Clip = false
+            Tween:Stop()
         end
-    end)
 end
 
 function Tween(Pos)
@@ -1651,6 +1650,7 @@ end
 function StopTween(target)
     if not target then
         _G.StopTween = true
+        wait(0.5)
         topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
         _G.StopTween = false
         _G.Clip = false
