@@ -1712,7 +1712,6 @@ end
 spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
         if _G.Clip then
-            pcall(function()
             if not game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
                 local ag = Instance.new("BodyVelocity")
                 ag.Velocity = Vector3.new(0, 0, 0)
@@ -1727,7 +1726,6 @@ spawn(function()
             end
         elseif not _G.Clip and game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
             game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity"):Destroy()
-        end)
         end
     end)
 end)
