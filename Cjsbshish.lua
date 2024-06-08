@@ -3643,7 +3643,7 @@ Farm:AddButton({
                                 or (v.Name == "Stone" or v.Name == "Island Empress" or v.Name == "Kilo Admiral" or v.Name == "Captain Elephant" or v.Name == "Beautiful Pirate" or v.Name == "Cake Queen" or v.Name == "rip_indra True Form" or v.Name == "Longma" or v.Name == "Soul Reaper" or v.Name == "Cake Prince" or v.Name == "Dough King") then
                 table.insert(BossNew, v.Name)
             else
-                table.insert("No Boss")
+                table.insert(BossNew, "No Boss")
             end
         end
         BossName:Refresh(BossNew)
