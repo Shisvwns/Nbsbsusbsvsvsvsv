@@ -1508,21 +1508,32 @@ function GetDistance(Pos)
     end
 end
 
-local plrs = game.Players
+local plrs = game:GetService("Players")
 local lp = plrs.LocalPlayer
 local Workspace = game:GetService("Workspace")
 NpcList = {}
-for i, v in pairs(Workspace.NPCs:GetChildren()) do 
-    if string.find(string.lower(v.Name), "home point") then
-        table.insert(NpcList, v:GetModelCFrame())
+
+-- Kiểm tra sự tồn tại của Workspace.NPCs và NpcList
+if Workspace:FindFirstChild("NPCs") then
+    for i, v in pairs(Workspace.NPCs:GetChildren()) do 
+        if string.find(string.lower(v.Name), "home point") then
+            table.insert(NpcList, v:GetModelCFrame())
+        end
     end
 end
-for i, v in pairs(getnilinstances()) do 
-    if string.find(string.lower(v.Name), "home point") then
-        table.insert(NpcList, v:GetModelCFrame())
+
+-- Sử dụng pcall để kiểm tra sự tồn tại của hàm getnilinstances
+pcall(function()
+    for i, v in pairs(getnilinstances()) do 
+        if string.find(string.lower(v.Name), "home point") then
+            table.insert(NpcList, v:GetModelCFrame())
+        end
     end
-end
+end)
+
 local w = game.PlaceId
+local gQ = {}
+
 if w == 2753915549 then
     World1 = true
     gQ = {
@@ -1550,16 +1561,18 @@ elseif w == 7449423635 then
         Vector3.new(5314.58203125, 25.419387817382812, -125.94227600097656)
     }
 end
+
 function GetPortal(check2)
     local check3 = check2.Position
-    local aM, aN = Vector3.new(0,0,0), math.huge
+    local aM, aN = Vector3.new(0, 0, 0), math.huge
     for _, aL in pairs(gQ) do
-        if (aL-check3).Magnitude < aN and aM ~= aL then
-            aM, aN = aL, (aL-check3).Magnitude
+        if (aL - check3).Magnitude < aN and aM ~= aL then
+            aM, aN = aL, (aL - check3).Magnitude
         end
     end
     return aM
-end 
+end
+
 function BypassTeleport(is)
     if lp.Character:FindFirstChild("PartTele") then
         lp.Character.PartTele.CFrame = CFrame.new(lp.Character.PartTele.CFrame.X, lp.Character.PartTele.CFrame.Y, lp.Character.PartTele.CFrame.Z)
@@ -1580,6 +1593,7 @@ function BypassTeleport(is)
         until lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid.Health > 0
     end
 end
+
 function GetBypassPos(pos)
     pos = Vector3.new(pos.X, pos.Y, pos.Z)
     local lll, mmm = nil, math.huge
@@ -1591,6 +1605,7 @@ function GetBypassPos(pos)
     end
     return lll
 end
+
 function RequestEntrance(check1)
     game.ReplicatedStorage.Remotes.CommF_:InvokeServer(unpack({"requestEntrance", check1}))
     if lp.Character:FindFirstChild("PartTele") then
@@ -1598,18 +1613,21 @@ function RequestEntrance(check1)
     end
     task.wait(0.01)
 end
+
 function WaitHRP(q0) 
     if not q0 then return end
     return q0.Character:WaitForChild("HumanoidRootPart", 1) 
 end 
+
 function CalcDistance(I, II) 
     if not II then 
         II = lp.Character.PrimaryPart.CFrame 
     end 
-    return (Vector3.new(I.X, 0, I.Z)-Vector3.new(II.X, 0, II.Z)).Magnitude 
+    return (Vector3.new(I.X, 0, I.Z) - Vector3.new(II.X, 0, II.Z)).Magnitude 
 end 
+
 function topos(Pos)
-    Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    Distance = (Pos.Position - lp.Character.HumanoidRootPart.Position).Magnitude
     Portal = GetPortal(Pos) 
     Spawn = GetBypassPos(Pos)
     if CalcDistance(Portal, Pos) < CalcDistance(Pos) and CalcDistance(Portal) > 500 then
@@ -1626,8 +1644,9 @@ function topos(Pos)
     if lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid:FindFirstChild("Sit") and lp.Character.Humanoid.Sit == true then
         lp.Character.Humanoid.Sit = false
     end 
-    Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/_G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
+    Tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear), {CFrame = Pos})
     Tween:Play()
+    _G.Clip = true
 end
 
 function Tween(Pos)
@@ -1639,7 +1658,6 @@ end
 function StopTween(target)
     if not target then
         _G.StopTween = true
-        wait(0.5)
         topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
         _G.StopTween = false
         _G.Clip = false
