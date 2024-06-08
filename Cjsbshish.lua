@@ -1667,6 +1667,8 @@ function StopTween(target)
     end
 end
 
+-- [ Pos Farm ]
+
 Type = 1
 spawn(function()
     while task.wait() do
@@ -1698,16 +1700,32 @@ end)
 spawn(function()
     while task.wait() do
         if Type == 1 then
-            PosSea = CFrame.new(0,400,-50)
+            PosSea = CFrame.new(0,400,-60)
         elseif Type == 2 then
-            PosSea = CFrame.new(50,400,0)
+            PosSea = CFrame.new(60,400,0)
         elseif Type == 3 then
-            PosSea = CFrame.new(0,400,50)	
+            PosSea = CFrame.new(0,400,60)	
         elseif Type == 4 then
-            PosSea = CFrame.new(-50,400,0)
+            PosSea = CFrame.new(-60,400,0)
         end
     end
 end)
+
+spawn(function()
+    while task.wait() do
+        if Type == 1 then
+            PosCaMap = CFrame.new(0,60,-30)
+        elseif Type == 2 then
+            PosCaMap = CFrame.new(30,60,0)
+        elseif Type == 3 then
+            PosCaMap = CFrame.new(0,60,30)	
+        elseif Type == 4 then
+            PosCaMap = CFrame.new(-30,60,0)
+        end
+    end
+end)
+
+-- [ No Clip Farm ]
 
 function TelePlayer(Pos)
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
@@ -1736,7 +1754,7 @@ end)
 
 spawn(function()
     game:GetService("RunService").RenderStepped:Connect(function()
-        if _G.AutoClick or Fastattack then
+        if _G.AutoClick then
             game:GetService'VirtualUser':CaptureController()
             game:GetService'VirtualUser':Button1Down(Vector2.new(0,1,0,1))
         end
@@ -1910,7 +1928,7 @@ function AttackNoCD()
                 require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(
                 PBlade.Character,
                 {PBlade.Character:FindFirstChild("HumanoidRootPart")},
-                60
+                70
             )
             local W = {}
             local X = {}
@@ -6833,9 +6851,20 @@ function CheckTerrorshark()
     return false
 end
 
+function CheckSeaBeast()
+    if game:GetService("Workspace"):FindFirstChild("SeaBeasts") then
+        for i,v in pairs(game:GetService("Workspace").SeaBeasts:GetChildren()) do
+            if v:FindFirstChild("Humanoid") or v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health < 0 then
+                return true
+            end
+        end
+    end
+    return false
+end
+
 function CheckPirateGrandBrigade()
     for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-        if v.Name == "PirateGrandBrigade" and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+        if v.Name == "PirateGrandBrigade" then
             if (v.Engine.CFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then
                 return true
             end
@@ -6846,7 +6875,7 @@ end
 
 function CheckFishBoat()
     for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-        if v.Name == "FishBoat" and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+        if v.Name == "FishBoat" then
             if (v.Engine.CFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then
                 return true
             end
@@ -6857,22 +6886,9 @@ end
 
 function CheckPirateBrigade()
     for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-        if v.Name == "PirateBrigade" and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+        if v.Name == "PirateBrigade" then
             if (v.Engine.CFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then
                 return true
-            end
-        end
-    end
-    return false
-end
-
-function CheckSeaBeast()
-    if game:GetService("Workspace"):FindFirstChild("SeaBeasts") then
-        for i,v in pairs(game:GetService("Workspace").SeaBeasts:GetChildren()) do
-            if v:FindFirstChild("Humanoid") or v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health < 0 then
-                if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then
-                    return true
-                end
             end
         end
     end
@@ -6950,7 +6966,7 @@ spawn(function()
                         if v.Name == _G.SelectedBoat then
                             if v:FindFirstChild("MyBoatEsp") then
                                 if game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Sit == false then
-                                    if ((CheckShark() and _G.AutoKillShark) or (CheckTerrorshark() and _G.AutoTerrorshark) or (CheckPiranha() and _G.AutoKillPiranha) or (CheckFishCrewMember() and _G.AutoKillFishCrew) or (CheckFishBoat() and _G.RelzFishBoat) or (CheckPirateBrigade() and _G.RelzPirateBrigade) or (CheckPirateGrandBrigade() and _G.RelzPirateGrandBrigade) or (CheckSeaBeast() and _G.AutoSeaBest)) then
+                                    if ((CheckShark() and _G.AutoKillShark) or (CheckTerrorshark() and _G.AutoTerrorshark) or (CheckPiranha() and _G.AutoKillPiranha) or (CheckFishCrewMember() and _G.AutoKillFishCrew) or (game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and _G.RelzFishBoat) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateBrigade") and _G.RelzPirateBrigade) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateGrandBrigade") and _G.RelzPirateGrandBrigade) or (CheckSeaBeast() and _G.AutoSeaBest)) then
                                         if stoppos then stoppos:Stop() end
                                     else
                                         local stoppos = topos(v.VehicleSeat.CFrame * CFrame.new(0,1,0))
@@ -6958,7 +6974,7 @@ spawn(function()
                                 else
                                     repeat task.wait()
                                         local stopboat = TPB(CFrame.new(210.99585, 12.9606171, 4158.57959, -0.917689145, 7.58163254e-11, -0.39729917, 1.20923558e-11, 1, 1.62898153e-10, 0.39729917, 1.44685583e-10, -0.917689145), v.VehicleSeat)
-                                    until ((CheckShark() and _G.AutoKillShark) or (CheckTerrorshark() and _G.AutoTerrorshark) or (CheckPiranha() and _G.AutoKillPiranha) or (CheckFishCrewMember() and _G.AutoKillFishCrew) or (CheckFishBoat() and _G.RelzFishBoat) or (CheckPirateBrigade() and _G.RelzPirateBrigade) or (CheckPirateGrandBrigade() and _G.RelzPirateGrandBrigade) or (CheckSeaBeast() and _G.AutoSeaBest)) or game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Sit == false or _G.SailBoat == false
+                                    until ((CheckShark() and _G.AutoKillShark) or (CheckTerrorshark() and _G.AutoTerrorshark) or (CheckPiranha() and _G.AutoKillPiranha) or (CheckFishCrewMember() and _G.AutoKillFishCrew) or (game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and _G.RelzFishBoat) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateBrigade") and _G.RelzPirateBrigade) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateGrandBrigade") and _G.RelzPirateGrandBrigade) or (CheckSeaBeast() and _G.AutoSeaBest)) or game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Sit == false or _G.SailBoat == false
                                     if stopboat then
                                         stopboat:Stop()
                                     end
@@ -7000,7 +7016,7 @@ spawn(function()
                         if v.Name == _G.SelectedBoat then
                             if v:FindFirstChild("MyBoatEsp") then
                                 if game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Sit == false then
-                                    if ((CheckShark() and _G.AutoKillShark) or (CheckTerrorshark() and _G.AutoTerrorshark) or (CheckPiranha() and _G.AutoKillPiranha) or (CheckFishCrewMember() and _G.AutoKillFishCrew) or (CheckFishBoat() and _G.RelzFishBoat) or (CheckPirateBrigade() and _G.RelzPirateBrigade) or (CheckPirateGrandBrigade() and _G.RelzPirateGrandBrigade) or (CheckSeaBeast() and _G.AutoSeaBest)) then
+                                    if ((CheckShark() and _G.AutoKillShark) or (CheckTerrorshark() and _G.AutoTerrorshark) or (CheckPiranha() and _G.AutoKillPiranha) or (CheckFishCrewMember() and _G.AutoKillFishCrew) or (game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and _G.RelzFishBoat) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateBrigade") and _G.RelzPirateBrigade) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateGrandBrigade") and _G.RelzPirateGrandBrigade) or (CheckSeaBeast() and _G.AutoSeaBest)) then
                                         if stoppos then
                                             stoppos:Stop()
                                         end
@@ -7010,7 +7026,7 @@ spawn(function()
                                 else
                                     repeat task.wait()
                                         local stopboat = TPB(CFrameSelectedZone, v.VehicleSeat)
-                                    until ((CheckShark() and _G.AutoKillShark) or (CheckTerrorshark() and _G.AutoTerrorshark) or (CheckPiranha() and _G.AutoKillPiranha) or (CheckFishCrewMember() and _G.AutoKillFishCrew) or (CheckFishBoat() and _G.RelzFishBoat) or (CheckPirateBrigade() and _G.RelzPirateBrigade) or (CheckPirateGrandBrigade() and _G.RelzPirateGrandBrigade) or (CheckSeaBeast() and _G.AutoSeaBest)) or game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Sit == false or _G.SailBoat == false
+                                    until ((CheckShark() and _G.AutoKillShark) or (CheckTerrorshark() and _G.AutoTerrorshark) or (CheckPiranha() and _G.AutoKillPiranha) or (CheckFishCrewMember() and _G.AutoKillFishCrew) or (game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and _G.RelzFishBoat) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateBrigade") and _G.RelzPirateBrigade) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateGrandBrigade") and _G.RelzPirateGrandBrigade) or (CheckSeaBeast() and _G.AutoSeaBest)) or game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Sit == false or _G.SailBoat == false
                                     if stopboat then
                                         stopboat:Stop()
                                     end
@@ -7140,7 +7156,7 @@ spawn(function()
                         if game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") then
                             repeat task.wait()
                                 EquipWeapon(_G.SelectWeapon)
-                                topos(v.HumanoidRootPart.CFrame * Pos)
+                                topos(v.HumanoidRootPart.CFrame * PosCaMap)
                                 SeaSkill = false
                             until not  _G.AutoTerrorshark or not v.Parent or v.Humanoid.Health <= 0
                         end
