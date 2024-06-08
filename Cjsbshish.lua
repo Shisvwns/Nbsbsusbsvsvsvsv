@@ -6792,10 +6792,8 @@ end
 function CheckShark()
     for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
         if v.Name == "Shark" and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-            if game:GetService("Workspace").Enemies:FindFirstChild("Shark") then
-                if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then
-                    return true
-                end
+            if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then
+                return true
             end
         end
     end
@@ -6805,10 +6803,8 @@ end
 function CheckPiranha()
     for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
         if v.Name == "Piranha" and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-            if game:GetService("Workspace").Enemies:FindFirstChild("Piranha") then
-                if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then
-                    return true
-                end
+            if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then
+                return true
             end
         end
     end
@@ -6818,10 +6814,8 @@ end
 function CheckFishCrewMember()
     for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
         if v.Name == "Fish Crew Member" and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-            if game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") then
-                if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then
-                    return true
-                end
+            if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then
+                return true
             end
         end
     end
@@ -6831,10 +6825,8 @@ end
 function CheckTerrorshark()
     for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
         if v.Name == "Terrorshark" and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-            if game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") then
-                if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then
-                    return true
-                end
+            if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then
+                return true
             end
         end
     end
@@ -6844,10 +6836,8 @@ end
 function CheckPirateGrandBrigade()
     for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
         if v.Name == "PirateGrandBrigade" and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-            if game:GetService("Workspace").Enemies:FindFirstChild("PirateGrandBrigade") then
-                if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then
-                    return true
-                end
+            if (v.Engine.CFrame - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then
+                return true
             end
         end
     end
@@ -6857,10 +6847,8 @@ end
 function CheckFishBoat()
     for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
         if v.Name == "FishBoat" and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-            if game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") then
-                if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then
-                    return true
-                end
+            if (v.Engine.CFrame - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then
+                return true
             end
         end
     end
@@ -6871,7 +6859,7 @@ function CheckPirateBrigade()
     for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
         if v.Name == "PirateBrigade" and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
             if game:GetService("Workspace").Enemies:FindFirstChild("PirateBrigade") then
-                if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then
+                if (v.Engine.CFrame - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then
                     return true
                 end
             end
@@ -6881,9 +6869,9 @@ function CheckPirateBrigade()
 end
 
 function CheckSeaBeast()
-    for i,v in pairs(game:GetService("Workspace").SeaBeasts:GetChildren()) do
-        if v:FindFirstChild("Humanoid") or v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health < 0 then
-            if game:GetService("Workspace"):FindFirstChild("SeaBeasts") then
+    if game:GetService("Workspace"):FindFirstChild("SeaBeasts") then
+        for i,v in pairs(game:GetService("Workspace").SeaBeasts:GetChildren()) do
+            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                 if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then
                     return true
                 end
@@ -7261,44 +7249,6 @@ Sea:AddButton({
             end
         end)
     end
-})
-
-local Section = Sea:AddSection({
-    Name = "~ Low Health ~"
-})
-
-Sea:AddSlider({
-	Name = "Value Health",
-	Min = 1,
-	Max = 2550,
-	Default = 3000,
-	Color = Color3.fromRGB(255, 255, 255),
-	Increment = 1,
-	ValueName = "/ 2550",
-	Callback = function(Value)
-		_G.LowHeal = Value
-	end
-})
-
-Sea:AddSlider({
-	Name = "Distance Teleport Y",
-	Min = 1,
-	Max = 1200,
-	Default = 500,
-	Color = Color3.fromRGB(255, 255, 255),
-	Increment = 1,
-	ValueName = "",
-	Callback = function(Value)
-		_G.PosHeal = Value
-	end
-})
-
-Sea:AddToggle({
-	Name = "Teleport To Y If Low Health",
-	Default = false,
-	Callback = function(Value)
-		_G.TeleYLowHeal = Value
-	end
 })
 
 local Section = Sea:AddSection({
