@@ -6723,18 +6723,7 @@ local Section = Sea:AddSection({
     Name = "~ Settings Farm Sea Event~"
 })
 
-local ListSeaBoat = {
-    "Guardian",
-    "PirateGrandBrigade",
-    "MarineGrandBrigade",
-    "PirateBrigade",
-    "MarineBrigade",
-    "PirateSloop",
-    "MarineSloop",
-    "Lantern",
-    "Brigade",
-    "BeastHunter",
-}
+local ListSeaBoat = {"Guardian","Grand Brigade","Sloop","Lantern","Brigade","Beast Hunter",}
 
 Sea:AddDropdown({
 	Name = "Select Boats",
@@ -6745,6 +6734,24 @@ Sea:AddDropdown({
 	end    
 })
 
+spawn(function()
+    while task.wait() do
+        if _G.Boat == "Grand Brigade" then
+            _G.SelectedBoat = "PirateGrandBrigade"
+        elseif _G.Boat == "Sloop" then
+            _G.SelectedBoat = "PirateSloop"
+        elseif _G.Boat == "Lantern" then
+            _G.SelectedBoat = "Lantern"
+        elseif _G.Boat == "Brigade" then
+            _G.SelectedBoat = "PirateBrigade"
+        elseif _G.Boat == "Beast Hunter" then
+            _G.SelectedBoat = "BeastHunter"
+        elseif _G.Boat == "Guardian" then
+            _G.SelectedBoat = "Guardian"
+        end
+    end
+end)
+            
 if World3 then
 	Sea:AddDropdown({
 		Name = "Select Zone",
@@ -6855,39 +6862,6 @@ function CheckSeaBeast()
     if game:GetService("Workspace"):FindFirstChild("SeaBeasts") then
         for i,v in pairs(game:GetService("Workspace").SeaBeasts:GetChildren()) do
             if v:FindFirstChild("Humanoid") or v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health < 0 then
-                return true
-            end
-        end
-    end
-    return false
-end
-
-function CheckPirateGrandBrigade()
-    for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-        if v.Name == "PirateGrandBrigade" then
-            if (v.Engine.CFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then
-                return true
-            end
-        end
-    end
-    return false
-end
-
-function CheckFishBoat()
-    for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-        if v.Name == "FishBoat" then
-            if (v.Engine.CFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then
-                return true
-            end
-        end
-    end
-    return false
-end
-
-function CheckPirateBrigade()
-    for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-        if v.Name == "PirateBrigade" then
-            if (v.Engine.CFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then
                 return true
             end
         end
@@ -7046,7 +7020,7 @@ end)
 spawn(function()
     while task.wait() do
         if _G.SailBoat then
-            if ((CheckShark() and _G.AutoKillShark) or (game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") and _G.AutoTerrorshark) or (CheckPiranha() and _G.AutoKillPiranha) or (game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") and _G.AutoKillFishCrew) or (game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and _G.RelzFishBoat) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateBrigade") and _G.RelzPirateBrigade) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateGrandBrigade") and _G.RelzPirateGrandBrigade) or (CheckSeaBeast() and _G.AutoSeaBest)) then
+            if ((CheckShark() and _G.AutoKillShark) or (CheckTerrorshark() and _G.AutoTerrorshark) or (CheckPiranha() and _G.AutoKillPiranha) or (CheckFishCrewMember() and _G.AutoKillFishCrew) or (game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and _G.RelzFishBoat) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateBrigade") and _G.RelzPirateBrigade) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateGrandBrigade") and _G.RelzPirateGrandBrigade) or (CheckSeaBeast() and _G.AutoSeaBest)) then
                 if game.Players.LocalPlayer.Character.Humanoid.Sit == true then
                     game:GetService("VirtualInputManager"):SendKeyEvent(true, 32, false, game)
                     wait()
@@ -7071,7 +7045,7 @@ spawn(function()
                             until not _G.AutoKillFishCrew or not v.Parent or v.Humanoid.Health <= 0
                         end
                     end
-                elseif CheckFishBoat() and _G.RelzFishBoat then
+                elseif game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and _G.RelzFishBoat then
                     for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") then
                             repeat task.wait()
@@ -7090,7 +7064,7 @@ spawn(function()
                             SeaSkill = false
                         end
                     end
-                elseif CheckPirateGrandBrigade() and _G.RelzPirateGrandBrigade then
+                elseif game:GetService("Workspace").Enemies:FindFirstChild("PirateGrandBrigade") and _G.RelzPirateGrandBrigade then
                     for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if game:GetService("Workspace").Enemies:FindFirstChild("PirateGrandBrigade") then
                             repeat task.wait()
@@ -7109,7 +7083,7 @@ spawn(function()
                             SeaSkill = false
                         end
                     end
-                elseif CheckPirateBrigade() and _G.RelzPirateBrigade then
+                elseif game:GetService("Workspace").Enemies:FindFirstChild("PirateBrigade") and _G.RelzPirateBrigade then
                     for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if game:GetService("Workspace").Enemies:FindFirstChild("PirateBrigade") then
                             repeat task.wait()
