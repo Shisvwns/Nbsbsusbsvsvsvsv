@@ -3635,18 +3635,7 @@ Farm:AddButton({
     Name = "Refresh Boss List",
     Callback = function()
         BossName:Refresh(BossCheck,true)
-        local BossNew = {}
-        for i, v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
-            if (v.Name == "rip_indra" or v.Name == "Ice Admiral")
-                                or (v.Name == "Saber Expert" or v.Name == "The Saw" or v.Name == "Greybeard" or v.Name == "Mob Leader" or v.Name == "The Gorilla King" or v.Name == "Bobby" or v.Name == "Yeti" or v.Name == "Vice Admiral" or v.Name == "Warden" or v.Name == "Chief Warden" or v.Name == "Swan" or v.Name == "Magma Admiral" or v.Name == "Fishman Lord" or v.Name == "Wysper" or v.Name == "Thunder God" or v.Name == "Cyborg")
-                                or (v.Name == "Don Swan" or v.Name == "Diamond" or v.Name == "Jeremy" or v.Name == "Fajita" or v.Name == "Smoke Admiral" or v.Name == "Awakened Ice Admiral" or v.Name == "Tide Keeper" or v.Name == "Order" or v.Name == "Darkbeard" or v.Name == "Cursed Captain")
-                                or (v.Name == "Stone" or v.Name == "Island Empress" or v.Name == "Kilo Admiral" or v.Name == "Captain Elephant" or v.Name == "Beautiful Pirate" or v.Name == "Cake Queen" or v.Name == "rip_indra True Form" or v.Name == "Longma" or v.Name == "Soul Reaper" or v.Name == "Cake Prince" or v.Name == "Dough King") then
-                table.insert(BossNew, v.Name)
-            else
-                table.insert(BossNew, "No Boss")
-            end
-        end
-        BossName:Refresh(BossNew)
+        BossName:Refresh(BossCheck)
     end
 })
 
@@ -3958,106 +3947,6 @@ spawn(function()
     end
 end)
 
-local RarityFruits = {
-    ["Common"] = {
-        "Rocket Fruit",
-        "Spin Fruit",
-        "Chop Fruit",
-        "Spring Fruit",
-        "Bomb Fruit",
-        "Smoke Fruit",
-        "Spike Fruit"
-    },
-    ["Uncommon"] = {
-        "Flame Fruit",
-        "Falcon Fruit",
-        "Ice Fruit",
-        "Sand Fruit",
-        "Diamond Fruit",
-        "Dark Fruit"
-    },
-    ["Rare"] = {
-        "Light Fruit",
-        "Rubber Fruit",
-        "Barrier Fruit",
-        "Ghost Fruit",
-        "Magma Fruit"
-    },
-    ["Legendary"] = {
-        "Quake Fruit",
-        "Budha Fruit",
-        "Love Fruit",
-        "Spider Fruit",
-        "Sound Fruit",
-        "Phoenix Fruit",
-        "Portal Fruit",
-        "Rumble Fruit",
-        "Pain Fruit",
-        "Blizzard Fruit",
-    },
-    ["Mythical"] = {
-        "Gravity Fruit",
-        "Mammoth Fruit",
-        "T-Rex Fruit",
-        "Dough Fruit",
-        "Shadow Fruit",
-        "Venom Fruit",
-        "Control Fruit",
-        "Spirit Fruit",
-        "Dragon Fruit",
-        "Leopard Fruit",
-        "Kitsune Fruit",
-    }
-}
-
-local SelectRarityFruits = {"Common -> Mythical","Uncommon -> Mythical","Rare -> Mythical","Legendary -> Mythical","Mythical"}
-
-local ResultUnstoreFruits = {}
-FruitRaid:AddDropdown({
-	Name = "Select Rare Devil Fruit To Store",
-	Default = "Common -> Mythical",
-	Options = SelectRarityFruits,
-	Callback = function(Value)
-		SetRarityFruits = Value
-	end
-})
-
-function CheckFruits()
-    for i, v in pairs(RarityFruits) do
-        if SetRarityFruits == "Common -> Mythical" then
-            if i == "Common" or i == "Uncommon" or i == "Rare" or i == "Legendary" or i == "Mythical" then
-                for _, fruit in ipairs(v) do
-                    table.insert(ResultStoreFruits, fruit)
-                end
-            end
-        elseif SetRarityFruits == "Uncommon -> Mythical" then
-            if i == "Uncommon" or i == "Rare" or i == "Legendary" or i == "Mythical" then
-                for _, fruit in ipairs(v) do
-                    table.insert(ResultStoreFruits, fruit)
-                end
-            end
-        elseif SetRarityFruits == "Rare -> Mythical" then
-            if i == "Rare" or i == "Legendary" or i == "Mythical" then
-                for _, fruit in ipairs(v) do
-                    table.insert(ResultStoreFruits, fruit)
-                end
-            end
-        elseif SetRarityFruits == "Legendary -> Mythical" then
-            if i == "Legendary" or i == "Mythical" then
-                for _, fruit in ipairs(v) do
-                    table.insert(ResultStoreFruits, fruit)
-                end
-            end
-        elseif SetRarityFruits == "Mythical" then
-            if i == "Mythical" then
-                for _, fruit in ipairs(v) do
-                    table.insert(ResultStoreFruits, fruit)
-                end
-            end
-        end
-    end  
-end
-
 FruitRaid:AddToggle({
 	Name = "Auto Store Devil Fruit",
 	Default = false,
@@ -4066,37 +3955,103 @@ FruitRaid:AddToggle({
 	end
 })
 
+function Get_Fruit(Fruit)
+    if Fruit == "Rocket Fruit" then
+        return "Rocket-Rocket"
+    elseif Fruit == "Spin Fruit" then
+        return "Spin-Spin"
+    elseif Fruit == "Chop Fruit" then
+        return "Chop-Chop"
+    elseif Fruit == "Spring Fruit" then
+        return "Spring-Spring"
+    elseif Fruit == "Bomb Fruit" then
+        return "Bomb-Bomb"
+    elseif Fruit == "Smoke Fruit" then
+        return "Smoke-Smoke"
+    elseif Fruit == "Spike Fruit" then
+        return "Spike-Spike"
+    elseif Fruit == "Flame Fruit" then
+        return "Flame-Flame"
+    elseif Fruit == "Falcon Fruit" then
+        return "Falcon-Falcon"
+    elseif Fruit == "Ice Fruit" then
+        return "Ice-Ice"
+    elseif Fruit == "Sand Fruit" then
+        return "Sand-Sand"
+    elseif Fruit == "Dark Fruit" then
+        return "Dark-Dark"
+    elseif Fruit == "Ghost Fruit" then
+        return "Ghost-Ghost"
+    elseif Fruit == "Diamond Fruit" then
+        return "Diamond-Diamond"
+    elseif Fruit == "Light Fruit" then
+        return "Light-Light"
+    elseif Fruit == "Rubber Fruit" then
+        return "Rubber-Rubber"
+    elseif Fruit == "Barrier Fruit" then
+        return "Barrier-Barrier"
+    elseif Fruit == "Magma Fruit" then
+        return "Magma-Magma"
+    elseif Fruit == "Quake Fruit" then
+        return "Quake-Quake"
+    elseif Fruit == "Buddha Fruit" then
+        return "Buddha-Buddha"
+    elseif Fruit == "Love Fruit" then
+        return "Love-Love"
+    elseif Fruit == "Spider Fruit" then
+        return "Spider-Spider"
+    elseif Fruit == "Sound Fruit" then
+        return "Sound-Sound"
+    elseif Fruit == "Phoenix Fruit" then
+        return "Phoenix-Phoenix"
+    elseif Fruit == "Portal Fruit" then
+        return "Portal-Portal"
+    elseif Fruit == "Rumble Fruit" then
+        return "Rumble-Rumble"
+    elseif Fruit == "Pain Fruit" then
+        return "Pain-Pain"
+    elseif Fruit == "Blizzard Fruit" then
+        return "Blizzard-Blizzard"
+    elseif Fruit == "Gravity Fruit" then
+        return "Gravity-Gravity"
+    elseif Fruit == "Mammoth Fruit" then
+        return "Mammoth-Mammoth"
+    elseif Fruit == "Dough Fruit" then
+        return "Dough-Dough"
+    elseif Fruit == "Shadow Fruit" then
+        return "Shadow-Shadow"
+    elseif Fruit == "Venom Fruit" then
+        return "Venom-Venom"
+    elseif Fruit == "Control Fruit" then
+        return "Control-Control"
+    elseif Fruit == "Spirit Fruit" then
+        return "Spirit-Spirit"
+    elseif Fruit == "Dragon Fruit" then
+        return "Dragon-Dragon"
+    elseif Fruit == "T-Rex Fruit" then
+        return "T-Rex-T-Rex"
+    elseif Fruit == "Leopard Fruit" then
+        return "Leopard-Leopard"
+    elseif Fruit == "Kitsune Fruit" then
+        return "Kitsune-Kitsune"
+    end
+end
+
 spawn(function()
     while task.wait() do
         if _G.AutoStoreFruit then
-            for i, v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
-                if string.find(v.Name, "Fruit") then
-                    ResultStoreFruits = {}
-                    CheckFruits()
-                    for z, Res in pairs(ResultStoreFruits) do
-                        if v.Name == Res then
-                            local NameFruit = v.Name
-                            local FirstNameFruit = string.gsub(v.Name, " Fruit", "")
-                            if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(NameFruit) then
-                                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StoreFruit",FirstNameFruit.."-"..FirstNameFruit,game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(NameFruit))
-                            end
-                        end
-                    end
+            local plrBag = game:GetService("Players").LocalPlayer.Backpack
+            local plrChar = game:GetService("Players").LocalPlayer.Character
+            game.Players.LocalPlayer.PlayerGui.Main.FruitInventory.Position = UDim2.new(10.100, 0, 0.100, 0) -- HideUi
+	    	game.Players.LocalPlayer.PlayerGui.Main.FruitInventory.Visible = true
+            for _,Fruit in pairs(plrChar:GetChildren()) do
+                if Fruit:IsA("Tool") and Fruit:FindFirstChild("Fruit") then
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StoreFruit", Get_Fruit(Fruit.Name), Fruit)
                 end
             end
-            for i, v in pairs(game:GetService("Players").LocalPlayer.Character:GetChildren()) do
-                if string.find(v.Name, "Fruit") then
-                    ResultStoreFruits = {}
-                    CheckFruits()
-                    for z, Res in pairs(ResultStoreFruits) do
-                        if v.Name == Res then
-                            local NameFruit = v.Name
-                            local FirstNameFruit = string.gsub(v.Name, " Fruit", "")
-                            if game:GetService("Players").LocalPlayer.Character:FindFirstChild(NameFruit) then
-                                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StoreFruit",FirstNameFruit.."-"..FirstNameFruit,game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(NameFruit))
-                            end
-                        end
-                    end
+            for _,Fruit in pairs(plrBag:GetChildren()) do
+                if Fruit:IsA("Tool") and Fruit:FindFirstChild("Fruit") then
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StoreFruit", Get_Fruit(Fruit.Name), Fruit)
                 end
             end
         end
@@ -5963,42 +5918,44 @@ ItemQuest:AddToggle({
 spawn(function()
     while wait() do
         if _G.Auto_EvoRace then
-            if not game:GetService("Players").LocalPlayer.Data.Race:FindFirstChild("Evolved") then
-                if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Alchemist","1") == 0 then
-                    topos(CFrame.new(-2779.83521, 72.9661407, -3574.02002, -0.730484903, 6.39014104e-08, -0.68292886, 3.59963224e-08, 1, 5.50667032e-08, 0.68292886, 1.56424669e-08, -0.730484903))
-                    if (Vector3.new(-2779.83521, 72.9661407, -3574.02002) - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 4 then
-                        wait(1.3)
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Alchemist","2")
-                    end
-                elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Alchemist","1") == 1 then
-                    pcall(function()
-                        if not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Flower 1") and not game:GetService("Players").LocalPlayer.Character:FindFirstChild("Flower 1") then
-                            topos(game:GetService("Workspace").Flower1.CFrame)
-                        elseif not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Flower 2") and not game:GetService("Players").LocalPlayer.Character:FindFirstChild("Flower 2") then
-                            topos(game:GetService("Workspace").Flower2.CFrame)
-                        elseif not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Flower 3") and not game:GetService("Players").LocalPlayer.Character:FindFirstChild("Flower 3") then
-                            if game:GetService("Workspace").Enemies:FindFirstChild("Zombie") then
-                                for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                                    if v.Name == "Zombie" then
-                                        repeat task.wait()
-                                            EquipWeapon(_G.SelectWeapon)
-                                            topos(v.HumanoidRootPart.CFrame * Pos)
-                                            PosMonEvo = v.HumanoidRootPart.CFrame
-                                            StartEvoMagnet = true
-                                        until game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Flower 3") or not v.Parent or v.Humanoid.Health <= 0 or _G.Auto_EvoRace == false
-                                        StartEvoMagnet = false
-                                    end
-                                end
-                            else
-                                StartEvoMagnet = false
-                                topos(CFrame.new(-5685.9233398438, 48.480125427246, -853.23724365234))
-                            end
+            pcall(function()
+                if not game:GetService("Players").LocalPlayer.Data.Race:FindFirstChild("Evolved") then
+                    if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Alchemist","1") == 0 then
+                        topos(CFrame.new(-2779.83521, 72.9661407, -3574.02002, -0.730484903, 6.39014104e-08, -0.68292886, 3.59963224e-08, 1, 5.50667032e-08, 0.68292886, 1.56424669e-08, -0.730484903))
+                        if (Vector3.new(-2779.83521, 72.9661407, -3574.02002) - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 4 then
+                            wait(1.3)
+                            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Alchemist","2")
                         end
-                    end)
-                elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Alchemist","1") == 2 then
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Alchemist","3")
+                    elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Alchemist","1") == 1 then
+                        pcall(function()
+                            if not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Flower 1") and not game:GetService("Players").LocalPlayer.Character:FindFirstChild("Flower 1") then
+                                topos(game:GetService("Workspace").Flower1.CFrame)
+                            elseif not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Flower 2") and not game:GetService("Players").LocalPlayer.Character:FindFirstChild("Flower 2") then
+                                topos(game:GetService("Workspace").Flower2.CFrame)
+                            elseif not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Flower 3") and not game:GetService("Players").LocalPlayer.Character:FindFirstChild("Flower 3") then
+                                if game:GetService("Workspace").Enemies:FindFirstChild("Zombie") then
+                                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                                        if v.Name == "Zombie" then
+                                            repeat task.wait()
+                                                EquipWeapon(_G.SelectWeapon)
+                                                topos(v.HumanoidRootPart.CFrame * Pos)
+                                                PosMonEvo = v.HumanoidRootPart.CFrame
+                                                StartEvoMagnet = true
+                                            until game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Flower 3") or not v.Parent or v.Humanoid.Health <= 0 or _G.Auto_EvoRace == false
+                                            StartEvoMagnet = false
+                                        end
+                                    end
+                                else
+                                    StartEvoMagnet = false
+                                    topos(CFrame.new(-5685.9233398438, 48.480125427246, -853.23724365234))
+                                end
+                            end
+                        end)
+                    elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Alchemist","1") == 2 then
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Alchemist","3")
+                    end
                 end
-            end
+            end)
         end
     end
 end)
@@ -6768,7 +6725,12 @@ if World1 then
 		Default = "No Zone Sea",
 		Options = {"No Zone Sea"},
 		Callback = function()
-			print("No Zone Sea")
+			OrionLib:MakeNotification({
+        	Name = "Tinh Linh Hub",
+        	Content = "Please Go To Second Sea Or Third Sea!",
+        	Image = "rbxassetid://16730867128",
+        	Time = 5
+        })
 		end
 	})
 end
@@ -8765,8 +8727,8 @@ StatusServer:AddButton({
     Callback = function()
         setclipboard(tostring(game.JobId))
         OrionLib:MakeNotification({
-        	Name = "Tinh Linh Hub!",
-        	Content = "Copied Server Job-Id !",
+        	Name = "Tinh Linh Hub",
+        	Content = "Copied Server Job-Id!",
         	Image = "rbxassetid://16730867128",
         	Time = 5
         })
