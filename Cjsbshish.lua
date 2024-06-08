@@ -6845,7 +6845,9 @@ function CheckSeaBeast()
     if game:GetService("Workspace"):FindFirstChild("SeaBeasts") then
         for i,v in pairs(game:GetService("Workspace").SeaBeasts:GetChildren()) do
             if v:FindFirstChild("Humanoid") or v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health < 0 then
-                return true
+                if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Position).Magnitude <= 200 then
+                    return true
+                end
             end
         end
     end
@@ -6905,11 +6907,11 @@ spawn(function()
                 if not CheckBoat() then
                     if World3 then
                         local BuyBoatCFrame = CFrame.new(-16927.451171875, 9.0863618850708, 433.8642883300781)
-                    elseif Workd2 then
+                    elseif World2 then
                         local BuyBoatCFrame = CFrame.new(90.488054275512695, 10.311711311340332, 2950.69287109375)
                     end
                     buyb = topos(BuyBoatCFrame)
-                    if (CFrame.new(-16927.451171875, 9.0863618850708, 433.8642883300781).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 300 then
+                    if (BuyBoatCFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 300 then
                         if buyb then
                             buyb:Stop()
                         end
