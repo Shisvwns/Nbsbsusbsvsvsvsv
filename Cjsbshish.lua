@@ -1629,6 +1629,7 @@ function topos(Pos)
     pcall(function()
         game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/_G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos}):Play()
     end)
+    _G.Clip = true
 end
 
 function Tween(Pos)
