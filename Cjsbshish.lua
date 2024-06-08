@@ -1609,6 +1609,7 @@ function CalcDistance(I, II)
     return (Vector3.new(I.X, 0, I.Z)-Vector3.new(II.X, 0, II.Z)).Magnitude 
 end 
 function topos(Pos)
+    pcall(function()
         if not Pos then
             return
         end
@@ -1637,6 +1638,7 @@ function topos(Pos)
             _G.Clip = false
             Tween:Stop()
         end
+    end)
 end
 
 function Tween(Pos)
