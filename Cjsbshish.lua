@@ -1612,6 +1612,7 @@ function topos(Pos)
     if not Pos then return end 
     if not lp.Character:FindFirstChild("PartTele") then
         local PartTele = Instance.new("Part", lp.Character)
+        PartTele.Size = Vector3.new(0,0,0)
         PartTele.Name = "PartTele"
         PartTele.Anchored = true
         PartTele.Transparency = 1
@@ -1723,35 +1724,26 @@ function TelePlayer(Pos)
 end
 
 spawn(function()
-    while task.wait() do
-        if Clip and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
-            setfflag("HumanoidParallelRemoveNoPhysics", "False")
-            setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
+    game:GetService("RunService").Stepped:Connect(function()
+        if Clip then
             if not game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
-                local Hold = Instance.new("BodyVelocity", game.Players.LocalPlayer.Character.PrimaryPart)
-                Hold.Name = "Hold"
-                Hold.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+                setfflag("HumanoidParallelRemoveNoPhysics", "False")
+                setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
+                local Hold = Instance.new("BodyVelocity")
                 Hold.Velocity = Vector3.new(0, 0, 0)
-                for a, b in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
-                    if b:IsA("BasePart") then
-                        b.CanCollide = false
-                    end
-                end
+                Hold.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+                Hold.P = 9000
+                Hold.Parent = game.Players.LocalPlayer.Character.Head
                 for r, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
                     if v:IsA("BasePart") then
                         v.CanCollide = false
                     end
                 end
             end
-            for _, v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
-                if v:IsA("BasePart") then
-                    v.CanCollide = false    
-                end
-            end
         elseif not Clip and game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
             game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity"):Destroy()
         end
-    end
+    end)
 end)
 
 spawn(function()
