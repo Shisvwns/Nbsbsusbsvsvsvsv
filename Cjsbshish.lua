@@ -1600,7 +1600,7 @@ function RequestEntrance(check1)
 end
 function WaitHRP(q0) 
     if not q0 then return end
-    return q0.Character:WaitForChild("HumanoidRootPart", 1) 
+    return q0.Character:WaitForChild("HumanoidRootPart", 9) 
 end 
 function CalcDistance(I, II) 
     if not II then 
@@ -1609,33 +1609,43 @@ function CalcDistance(I, II)
     return (Vector3.new(I.X, 0, I.Z)-Vector3.new(II.X, 0, II.Z)).Magnitude 
 end 
 function topos(Pos)
-pcall(function()
-    if not Pos then
-            return
-        end
-    Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    if not Pos then return end 
+    lp.Character:WaitForChild("HumanoidRootPart", 9)
+    lp.Character:WaitForChild("Head", 9)
+    if not lp.Character:FindFirstChild("PartTele") then
+        local PartTele = Instance.new("Part", lp.Character) -- Create part
+        PartTele.Size = Vector3.new(10,1,10)
+        PartTele.Name = "PartTele"
+        PartTele.Anchored = true
+        PartTele.Transparency = 1
+        PartTele.CanCollide = false
+        PartTele.CFrame = WaitHRP(lp).CFrame 
+        PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
+            task.wait(0.01)
+            WaitHRP(lp).CFrame = PartTele.CFrame
+        end)
+    end
     Portal = GetPortal(Pos) 
-    Spawn = GetBypassPos(Pos)
+    Spawn = GetBypassPos(Pos) 
+    MyCFrame = WaitHRP(lp).CFrame
+    Distance = CalcDistance(MyCFrame, Pos)
     if CalcDistance(Portal, Pos) < CalcDistance(Pos) and CalcDistance(Portal) > 500 then
         return RequestEntrance(Portal)
     end
     if _G.BypassTele == true then
-        if CalcDistance(Pos) - CalcDistance(Spawn, Pos) > 1000 and CalcDistance(Spawn) > 1000 then
+        if not CalcDistance(Pos) - CalcDistance(Spawn, Pos) > 1000 and CalcDistance(Spawn) > 1000 then
             return BypassTeleport(Spawn)
         end
-    end
-    if Distance <= 250 then
-        lp.Character.PartTele.CFrame = Pos
     end
     if lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid:FindFirstChild("Sit") and lp.Character.Humanoid.Sit == true then
         lp.Character.Humanoid.Sit = false
     end 
-    game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/_G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos}):Play()
-    _G.Clip = true
-    if _G.StopTween == true then
-        game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/_G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos}):Cancel()
+    if Distance <= 250 then
+        lp.Character.PartTele.CFrame = Pos
     end
-end)
+    Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
+    Tween:Play() 
+    _G.Clip = true
 end
 
 function Tween(Pos)
