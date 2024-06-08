@@ -7086,12 +7086,13 @@ spawn(function()
                             end
                         end
                     else
-                    if _G.ResetChar == true then
-                        for i,v in pairs(game.Workspace.Boats:GetChildren()) do
-                            if game:GetService("Workspace").Boats[SelectedBoat] then
-                                if not v:FindFirstChild("VehicleSeat") and v:FindFirstChild("Humanoid") then
-                                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - game:GetService("Workspace").Boats[SelectedBoat].VehicleSeat.Position).Magnitude > 1500 then
-                                        game.Players.LocalPlayer.Humanoid.Health = 0
+                        if _G.ResetChar == true then
+                            for i,v in pairs(game.Workspace.Boats:GetChildren()) do
+                                if game:GetService("Workspace").Boats[SelectedBoat] then
+                                    if not v:FindFirstChild("VehicleSeat") and v:FindFirstChild("Humanoid") then
+                                        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - game:GetService("Workspace").Boats[SelectedBoat].VehicleSeat.Position).Magnitude > 1500 then
+                                            game.Players.LocalPlayer.Humanoid.Health = 0
+                                        end
                                     end
                                 end
                             end
