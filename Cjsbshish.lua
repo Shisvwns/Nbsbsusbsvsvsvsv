@@ -1613,15 +1613,14 @@ function topos(Pos)
     lp.Character:WaitForChild("HumanoidRootPart", 9)
     lp.Character:WaitForChild("Head", 9)
     if not lp.Character:FindFirstChild("PartTele") then
-        local PartTele = Instance.new("Part", lp.Character) -- Create part
-        PartTele.Size = Vector3.new(10,1,10)
+        local PartTele = Instance.new("Part", lp.Character)
         PartTele.Name = "PartTele"
         PartTele.Anchored = true
         PartTele.Transparency = 1
         PartTele.CanCollide = false
         PartTele.CFrame = WaitHRP(lp).CFrame 
         PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
-            task.wait(0.01)
+            task.wait()
             WaitHRP(lp).CFrame = PartTele.CFrame
         end)
     end
@@ -1682,13 +1681,13 @@ end)
 spawn(function()
     while task.wait() do
         if Type == 1 then
-            Pos = CFrame.new(0,45,-20)
+            Pos = CFrame.new(0,40,-25)
         elseif Type == 2 then
-            Pos = CFrame.new(20,45,0)
+            Pos = CFrame.new(25,40,0)
         elseif Type == 3 then
-            Pos = CFrame.new(0,45,20)	
+            Pos = CFrame.new(0,40,25)	
         elseif Type == 4 then
-            Pos = CFrame.new(-20,45,0)
+            Pos = CFrame.new(-25,40,0)
         end
     end
 end)
