@@ -6906,9 +6906,9 @@ spawn(function()
             pcall(function()
                 if not CheckBoat() then
                     if World3 then
-                        local BuyBoatCFrame = CFrame.new(-16927.451171875, 9.0863618850708, 433.8642883300781)
+                        BuyBoatCFrame = CFrame.new(-16927.451171875, 9.0863618850708, 433.8642883300781)
                     elseif World2 then
-                        local BuyBoatCFrame = CFrame.new(90.488054275512695, 10.311711311340332, 2950.69287109375)
+                        BuyBoatCFrame = CFrame.new(90.488054275512695, 10.311711311340332, 2950.69287109375)
                     end
                     buyb = topos(BuyBoatCFrame)
                     if (BuyBoatCFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 300 then
