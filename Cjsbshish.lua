@@ -1644,7 +1644,7 @@ function topos(Pos)
     end
     Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
     Tween:Play() 
-    _G.Clip = true
+    Clip = true
 end
 
 function Tween(Pos)
@@ -1655,10 +1655,8 @@ end
 
 function StopTween(target)
     if not target then
-        _G.StopTween = true
         topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
-        _G.StopTween = false
-        _G.Clip = false
+        Clip = false
     end
 end
 
@@ -1728,7 +1726,7 @@ end
 
 spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
-        if _G.Clip then
+        if Clip then
             if not game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
                 local ag = Instance.new("BodyVelocity")
                 ag.Velocity = Vector3.new(0, 0, 0)
@@ -1741,7 +1739,7 @@ spawn(function()
                     end
                 end
             end
-        elseif not _G.Clip and game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
+        elseif not Clip and game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
             game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity"):Destroy()
         end
     end)
