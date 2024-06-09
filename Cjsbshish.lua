@@ -1,6 +1,5 @@
 --[ Anti Ban ]
 
-local RunService = game:GetService("RunService")
 assert(getrawmetatable)
     grm = getrawmetatable(game)
     setreadonly(grm, false)
@@ -1818,14 +1817,13 @@ end)
 
 task.spawn(function() -- Remove Effect
   local _hookfunc = (hookfunction or hookfunc or function(...) end)
-  local Container = ReplicatedStorage.Effect.Container
-  local CameraShaker = require(ReplicatedStorage.Util.CameraShaker)
+  local Container = game.ReplicatedStorage.Effect.Container
   local Death = Container:FindFirstChild("Death")
   local Respawn = Container:FindFirstChild("Respawn")
   _hookfunc(Death, function() return nil end)
   _hookfunc(Respawn, function() return nil end)
-  CameraShaker:Stop()
 end)
+require(game.ReplicatedStorage.Util.CameraShaker):Stop()
 game:GetService("ReplicatedStorage").Util.Sound.Storage.Swing:Destroy()
 
 -- [ Super Fast Attack ]
@@ -2075,6 +2073,11 @@ spawn(function()
     end
 end)
 
+function Click()
+    game:GetService'VirtualUser':CaptureController()
+        game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
+end
+
 Setting:AddToggle({
 	Name = "Auto Click [ 75% Kick System ]",
 	Default = false,
@@ -2100,7 +2103,7 @@ Setting:AddToggle({
 	end
 })
 
-RunService.Heartbeat:Connect(function()
+spawn(function()
         if _G.BringMonster then
             pcall(function()
                 CheckQuest()
@@ -2208,7 +2211,7 @@ Setting:AddToggle({
 })
 
 Setting:AddButton({
-    Name = "Set Clip = false",
+    Name = "Set Clip = False",
     Callback = function()
         _G.Clip = false
     end
@@ -2678,7 +2681,7 @@ local CayLevel = Farm:AddToggle({
 	end
 })
 
-RunService.Heartbeat:Connect(function()
+spawn(function()
         if LevelFMode == "No Quest" and _G.AutoFarm then
             pcall(function()
                 CheckQuest()
@@ -2815,7 +2818,8 @@ spawn(function()
                                         EquipWeapon(_G.SelectWeapon)
                                         topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,5))
                                         if (v.Character.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 30 then
-                                            FastAttackPlayer = true
+                                            AimBotSkillPosition = nil
+                                            Click()
                                             game:GetService("VirtualInputManager"):SendKeyEvent(true, "X", false, game)
                                             game:GetService("VirtualInputManager"):SendKeyEvent(false, "X", false, game)
                                             wait()
@@ -2823,7 +2827,6 @@ spawn(function()
                                             game:GetService("VirtualInputManager"):SendKeyEvent(false, "Z", false, game)
                                         end
                                     until not _G.FarmSkip or not v:FindFirstChild("HumanoidRootPart") or v.Character.Humanoid.Health <= 0
-                                        FastAttackPlayer = false
                                 end
                             end
                         else
@@ -7920,6 +7923,7 @@ spawn(function()
                                     SpamOnRace = true
                                     AimBotSkillPosition = nil
                                     Skillaimbot = true
+                                    Click()
                                 until _G.KillAfterTrials == false or v.Humanoid.Health <= 0 or not v.Parent or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid")
                                 UseSkillTrial = false
                                 SpamOnRace = false
