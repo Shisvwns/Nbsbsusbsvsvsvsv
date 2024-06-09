@@ -6418,8 +6418,6 @@ spawn(function()
 	while wait() do
 		if _G.WalkWater then
 			game:GetService("Workspace").Map["WaterBase-Plane"].Size = Vector3.new(1000,112,1000)
-		else
-			game:GetService("Workspace").Map["WaterBase-Plane"].Size = Vector3.new(1000,80,1000)
 		end
 	end
 end)
@@ -6871,7 +6869,7 @@ end
 
 local stopboat = {}
 function TPB(pos, boat)
-	Tween = game:service"TweenService":Create(boat, TweenInfo.new((boat.CFrame.Position - pos.Position).Magnitude/_G.SpeedBoat, Enum.EasingStyle.Linear), {CFrame = pos})
+	Tween = game:service"TweenService":Create(game.Players.LocalPlayer.Character.PartTele, TweenInfo.new((boat.CFrame.Position - pos.Position).Magnitude/_G.SpeedBoat, Enum.EasingStyle.Linear), {CFrame = pos})
     if (boat.CFrame.Position - pos.Position).Magnitude <= 25 then
         Tween:Cancel()
     else
@@ -7122,47 +7120,6 @@ spawn(function()
 			end
 		end
 	end
-end)
-
-Sea:AddToggle({
-	Name = "Flying Boat",
-	Default = false,
-	Callback = function(Value)
-		_G.FlyBoat = Value
-	end
-})
-
-function FlyBoat(boat,enable) 
-    if not boat then return end
-    if not enable then 
-        if boat:FindFirstChild("Fly Model") then 
-            boat:FindFirstChild("Fly Model"):Destroy() 
-        end  
-        if boat:FindFirstChild("Fly Model V2") then 
-            boat:FindFirstChild("Fly Model V2"):Destroy() 
-        end  
-        boat.VehicleSeat.CFrame = CFrame.new(boat.VehicleSeat.CFrame.X,25,boat.VehicleSeat.CFrame.Z) 
-        return 
-    end  
-    local bg = Instance.new("BodyGyro", boat)
-    bg.P = 9e4
-    bg.Name = "Fly Model V2"
-    bg.maxTorque = Vector3.new(9e9, 9e9, 9e9)
-    bg.cframe = boat.VehicleSeat.CFrame
-    NoClipInstance = Instance.new("BodyVelocity",boat)
-    NoClipInstance.Name = "Fly Model"
-    NoClipInstance.P = 15000
-    NoClipInstance.MaxForce = Vector3.new(9e9, 9e9, 9e9)
-    NoClipInstance.Velocity = Vector3.new(0,0,0) 
-    boat.VehicleSeat.CFrame = CFrame.new(boat.VehicleSeat.CFrame.X,boat.VehicleSeat.CFrame.Y+250,boat.VehicleSeat.CFrame.Z)
-end
-
-spawn(function()
-    while wait() do
-        if _G.FlyBoat then
-            FlyBoat(CheckBoat())
-        end
-    end
 end)
 
 Sea:AddSlider({
