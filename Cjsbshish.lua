@@ -59,10 +59,8 @@ end
 
 spawn(function()
     while wait() do
-        pcall(function()
-            CheckAntiCheatBypass()
-            bypassAntiExploit()
-        end)
+        CheckAntiCheatBypass()
+        bypassAntiExploit()
     end
 end)
 
@@ -93,9 +91,9 @@ if game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseT
 end
 
 local function TeleportToServer(JobId)
-    local Succ, Err = pcall(function()
+    local Succ, Err = function()
         game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, JobId, game.Players.LocalPlayer)
-    end)
+    end
     if not Succ then print(Err) end
 end
 local CheckAdmin = {"rip_indra","wenlocktoad","toilamvidamme","Uzoth","Azarth","Hingoi","Axiore","Death_King","Polkster","Lunoven","TheGreateAced","rip_fud","drip_mama","oofficialnoobie","Daigrock","layandikit12","red_game43","arlthmetic",}
@@ -1253,10 +1251,10 @@ function Hop()
                         end
                     else
                         if tonumber(actualHour) ~= tonumber(Existing) then
-                            local delFile = pcall(function()
+                            local delFile = function()
                                 AllIDs = {}
                                 table.insert(AllIDs, actualHour)
-                            end)
+                            end
                         end
                     end
                     num = num + 1
@@ -1264,10 +1262,10 @@ function Hop()
                 if Possible == true then
                     table.insert(AllIDs, ID)
                     wait()
-                    pcall(function()
+                    function()
                         wait()
                         game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
-                    end)
+                    end
                     wait(4)
                 end
             end
@@ -1293,7 +1291,6 @@ end
 Number = math.random(1, 1000000)
 function UpdatePlayerChams()
     for i,v in pairs(game:GetService'Players':GetChildren()) do
-        pcall(function()
             if not isnil(v.Character) then
                 if _G.ESPPlayer then
                     if not isnil(v.Character.Head) and not v.Character.Head:FindFirstChild('NameEsp'..Number) then
@@ -1321,13 +1318,11 @@ function UpdatePlayerChams()
                     end
                 end
             end
-        end)
     end
 end
 
 function UpdateIslandESP() 
     for i,v in pairs(game:GetService("Workspace")["_WorldOrigin"].Locations:GetChildren()) do
-        pcall(function()
             if _G.IslandESP then 
                 if v.Name ~= "Sea" then
                     if not v:FindFirstChild('NameEsp') then
@@ -1355,13 +1350,11 @@ function UpdateIslandESP()
                     v:FindFirstChild('NameEsp'):Destroy()
                 end
             end
-        end)
     end
 end
 
 function UpdateChestChams() 
 	for i,v in pairs(game.Workspace:GetChildren()) do
-		pcall(function()
 			if string.find(v.Name,"Chest") then
 				if _G.ChestESP then
 					if string.find(v.Name,"Chest") then
@@ -1399,13 +1392,11 @@ function UpdateChestChams()
 					end
 				end
 			end
-		end)
 	end
 end
 
 function UpdateDevilChams() 
 	for i,v in pairs(game.Workspace:GetChildren()) do
-		pcall(function()
 			if _G.DevilFruitESP then
 				if string.find(v.Name, "Fruit") then   
 					if not v.Handle:FindFirstChild('NameEsp'..Number) then
@@ -1433,13 +1424,11 @@ function UpdateDevilChams()
 					v.Handle:FindFirstChild('NameEsp'..Number):Destroy()
 				end
 			end
-		end)
 	end
 end
 
 function UpdateFlowerChams() 
 	for i,v in pairs(game.Workspace:GetChildren()) do
-		pcall(function()
 			if v.Name == "Flower2" or v.Name == "Flower1" then
 				if _G.FlowerESP then 
 					if not v:FindFirstChild('NameEsp'..Number) then
@@ -1473,7 +1462,6 @@ function UpdateFlowerChams()
 					end
 				end
 			end
-		end)
 	end
 end
 
@@ -1504,10 +1492,10 @@ function GetDistance(target1, taget2)
     if not taget2 then
         taget2 = game.Players.LocalPlayer.Character.HumanoidRootPart
     end
-    bbos, bbos2 = pcall(function()
+    bbos, bbos2 = function()
             a = target1.Position
             a2 = taget2.Position
-    end)
+    end
     if bbos then
         a = target1.Position
         a2 = taget2.Position
@@ -1855,17 +1843,15 @@ end
 
 spawn(function()
     game:GetService("RunService").RenderStepped:Connect(function()
-        pcall(function()
-            if UseSkill or UseGunSkill or SeaSkill then
-                for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.Notifications:GetChildren()) do
-                    for _, Notif in pairs(v:GetChildren()) do
-                        if string.find(Notif.Text,"Skill locked!") then
-                            v:Destroy()
-                        end
+        if UseSkill or UseGunSkill or SeaSkill then
+            for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.Notifications:GetChildren()) do
+                for _, Notif in pairs(v:GetChildren()) do
+                    if string.find(Notif.Text,"Skill locked!") then
+                        v:Destroy()
                     end
                 end
             end
-        end)
+        end
     end)
 end)
 
@@ -2157,7 +2143,6 @@ Setting:AddToggle({
 spawn(function()
     while task.wait() do
         if _G.BringMonster then
-            pcall(function()
                 CheckQuest()
                 for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                     if _G.AutoFarm or _G.AutoFarmFruitMastery or _G.AutoFarmGunMastery or _G.AutoSwordMastery then
@@ -2233,7 +2218,6 @@ spawn(function()
                         end
                     end
                 end
-            end)
         end
     end
 end)
@@ -2871,7 +2855,7 @@ spawn(function()
                                             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EnablePvp")
                                         end
                                         EquipWeapon(_G.SelectWeapon)
-                                        topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,0))
+                                        topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,5))
                                         if (v.Character.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 30 then
                                             FastAttackPlayer = true
                                             game:GetService("VirtualInputManager"):SendKeyEvent(true, "X", false, game)
@@ -6468,7 +6452,7 @@ local Slplayer = PvP:AddDropdown({
 	Default = "",
 	Options = Playerslist,
 	Callback = function(Value)
-		_G.SelectPly = Value
+		SelectPly = Value
 	end
 })
 
@@ -6496,8 +6480,8 @@ PvP:AddToggle({
 spawn(function()
 	while wait() do
 		if _G.Teleport then
-			if game.Players:FindFirstChild(_G.SelectPly) then
-				topos(game.Players[_G.SelectPly].Character.HumanoidRootPart.CFrame * CFrame.new(0,0,3))
+			if game.Players:FindFirstChild(SelectPly) then
+				topos(game.Players[SelectPly].Character.HumanoidRootPart.CFrame * CFrame.new(0,0,0))
 			end
 		end
 	end
@@ -6514,9 +6498,9 @@ PvP:AddToggle({
 spawn(function()
 	while wait() do
 		if _G.SpectatePlys then
-			if game.Players:FindFirstChild(_G.SelectPly) then
+			if game.Players:FindFirstChild(SelectPly) then
 				repeat wait(.1)
-	                game:GetService("Workspace").Camera.CameraSubject = game:GetService("Players"):FindFirstChild(_G.SelectPly).Character.Humanoid
+	                game:GetService("Workspace").Camera.CameraSubject = game:GetService("Players"):FindFirstChild(SelectPly).Character.Humanoid
 				until _G.SpectatePlys == false
 				game:GetService("Workspace").Camera.CameraSubject = game:GetService("Players").LocalPlayer.Character.Humanoid
 			end
@@ -6562,19 +6546,17 @@ local mouse = lp:GetMouse()
 spawn(function()
 	while wait() do
 		if _G.Aimbot_Skill_Fov then
-		    pcall(function()
-		    	local MaxDist, Closest = math.huge
-		    	for i,v in pairs(game:GetService("Players"):GetChildren()) do 
-		    		local Head = v.Character:FindFirstChild("HumanoidRootPart")
-		    		local Pos, Vis = game.Workspace.CurrentCamera.WorldToScreenPoint(game.Workspace.CurrentCamera, Head.Position)
-		    		local MousePos, TheirPos = Vector2.new(mouse.X, mouse.Y), Vector2.new(Pos.X, Pos.Y)
-		    		local Dist = (TheirPos - MousePos).Magnitude
-	    			if Dist < MaxDist and Dist <= _G.Select_Size_Fov and v.Name == _G.SelectPly then
-		    			MaxDist = Dist
-		    			_G.Aim_Players = v
-		    		end
+	    	local MaxDist, Closest = math.huge
+	    	for i,v in pairs(game:GetService("Players"):GetChildren()) do 
+	    		local Head = v.Character:FindFirstChild("HumanoidRootPart")
+	    		local Pos, Vis = game.Workspace.CurrentCamera.WorldToScreenPoint(game.Workspace.CurrentCamera, Head.Position)
+	    		local MousePos, TheirPos = Vector2.new(mouse.X, mouse.Y), Vector2.new(Pos.X, Pos.Y)
+	    		local Dist = (TheirPos - MousePos).Magnitude
+    			if Dist < MaxDist and Dist <= _G.Select_Size_Fov and v.Name == SelectPly then
+	    			MaxDist = Dist
+	    			_G.Aim_Players = v
 		    	end
-			end)
+		    end
 		end
 	end
 end)
@@ -7549,13 +7531,11 @@ end
 spawn(function()
     while wait() do
         if _G.TradeAureEmber then
-            pcall(function()
-                local AzureAvilable = GetCountMaterials("Azure Ember")
-                if AzureAvilable >= _G.SetToTradeAureEmber then
-                    game:GetService("ReplicatedStorage").Modules.Net:FindFirstChild("RF/KitsuneStatuePray"):InvokeServer()
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("KitsuneStatuePray")
-                end
-            end)
+            local AzureAvilable = GetCountMaterials("Azure Ember")
+            if AzureAvilable >= _G.SetToTradeAureEmber then
+                game:GetService("ReplicatedStorage").Modules.Net:FindFirstChild("RF/KitsuneStatuePray"):InvokeServer()
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("KitsuneStatuePray")
+            end
         end
     end
 end)
@@ -7961,28 +7941,26 @@ Race:AddToggle({
 spawn(function()
     while task.wait() do
         if _G.KillAfterTrials then
-            pcall(function()
-                TempleCFrame = CFrame.new( 28730.0645, 14887.5371, -91.0957718, 0.557085216, -4.57713725e-08, 0.830455363, 9.81919115e-08, 1, -1.07530047e-08, -0.830455363, 8.75343389e-08, 0.557085216)
-                if game.Players.LocalPlayer.PlayerGui.Main.Timer.Visible then
-                    if GetDistance(TempleCFrame) <= 380 then
-                        for i, v in pairs(game.Players:GetChildren()) do
-                            if v.Name ~= game.Players.LocalPlayer.Name and (GetDistance(TempleCFrame, v.Character.HumanoidRootPart) <= 300) and v.Character.Humanoid.Health > 0 then
-                                repeat task.wait()
-                                    EquipWeapon(_G.SelectWeaponTrials)
-                                    topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 0))
-                                    UseSkillTrial = true
-                                    SpamOnRace = true
-                                    AimBotSkillPosition = nil
-                                    Skillaimbot = true
-                                until _G.KillAfterTrials == false or v.Humanoid.Health <= 0 or not v.Parent or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid")
-                                UseSkillTrial = false
-                                SpamOnRace = false
-                                Skillaimbot = false
-                            end
+            TempleCFrame = CFrame.new( 28730.0645, 14887.5371, -91.0957718, 0.557085216, -4.57713725e-08, 0.830455363, 9.81919115e-08, 1, -1.07530047e-08, -0.830455363, 8.75343389e-08, 0.557085216)
+            if game.Players.LocalPlayer.PlayerGui.Main.Timer.Visible then
+                if GetDistance(TempleCFrame) <= 380 then
+                    for i, v in pairs(game.Players:GetChildren()) do
+                        if v.Name ~= game.Players.LocalPlayer.Name and (GetDistance(TempleCFrame, v.Character.HumanoidRootPart) <= 300) and v.Character.Humanoid.Health > 0 then
+                            repeat task.wait()
+                                EquipWeapon(_G.SelectWeaponTrials)
+                                topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 5))
+                                UseSkillTrial = true
+                                SpamOnRace = true
+                                AimBotSkillPosition = nil
+                                Skillaimbot = true
+                            until _G.KillAfterTrials == false or v.Humanoid.Health <= 0 or not v.Parent or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid")
+                            UseSkillTrial = false
+                            SpamOnRace = false
+                            Skillaimbot = false
                         end
                     end
                 end
-            end)
+            end
         end
     end
 end)
