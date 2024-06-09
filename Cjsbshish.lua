@@ -4489,9 +4489,9 @@ local EliteStatus = Other:AddParagraph("Elite")
 spawn(function()
     while wait() do
         if game:GetService("ReplicatedStorage"):FindFirstChild("Diablo") or game:GetService("ReplicatedStorage"):FindFirstChild("Deandre") or game:GetService("ReplicatedStorage"):FindFirstChild("Urban") or game:GetService("Workspace").Enemies:FindFirstChild("Diablo") or game:GetService("Workspace").Enemies:FindFirstChild("Deandre") or game:GetService("Workspace").Enemies:FindFirstChild("Urban") then
-            EliteStatus:Set("Elite: 🟢")	
+            EliteStatus:Set("Spawn")	
         else
-            EliteStatus:Set("Elite: 🔴")	
+            EliteStatus:Set("Not Spawn")	
         end
     end
 end)
@@ -5313,7 +5313,7 @@ local Yama = ItemQuest:AddParagraph("Elite Progress")
 
 spawn(function()
     while wait() do
-        Yama:Set("Elite: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter","Progress"))
+        Yama:Set("Progress: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter","Progress"))
     end
 end)
 
@@ -6792,7 +6792,7 @@ end
 function CheckShark()
     for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
         if v.Name == "Shark" and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-            if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then
+            if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 300 then
                 return true
             end
         end
@@ -6803,7 +6803,7 @@ end
 function CheckPiranha()
     for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
         if v.Name == "Piranha" and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-            if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then
+            if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 300 then
                 return true
             end
         end
@@ -6814,7 +6814,7 @@ end
 function CheckFishCrewMember()
     for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
         if v.Name == "Fish Crew Member" and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-            if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then
+            if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 300 then
                 return true
             end
         end
@@ -6825,7 +6825,7 @@ end
 function CheckTerrorshark()
     for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
         if v.Name == "Terrorshark" and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-            if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then
+            if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 300 then
                 return true
             end
         end
@@ -6837,9 +6837,7 @@ function CheckSeaBeast()
     if game:GetService("Workspace"):FindFirstChild("SeaBeasts") then
         for i,v in pairs(game:GetService("Workspace").SeaBeasts:GetChildren()) do
             if v:FindFirstChild("Humanoid") or v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health < 0 then
-                if (v.HumanoidRootPart.CFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Position).Magnitude <= 200 then
-                    return true
-                end
+                return true
             end
         end
     end
@@ -6849,7 +6847,7 @@ end
 function TeleportSeabeast(c5)
     local a = Vector3.new(0, c5:FindFirstChild("HumanoidRootPart").Position.Y, 0)
     local ab = Vector3.new(0, game:GetService("Workspace").Map["WaterBase-Plane"].Position.Y, 0)
-    if (a - ab).Magnitude <= 200 then
+    if (a - ab).Magnitude <= 300 then
         topos(c5.HumanoidRootPart.CFrame * PosSea)
     else
         topos(CFrame.new(c5.HumanoidRootPart.Position.X, game:GetService("Workspace").Map["WaterBase-Plane"].Position.Y + 200, c5.HumanoidRootPart.Position.Z))
@@ -7133,14 +7131,6 @@ spawn(function()
 	end
 end)
 
-Sea:AddToggle({
-	Name = "Auto Reset Character When Boats Destroy [ Not Work ]",
-	Default = false,
-	Callback = function(Value)
-		_G.ResetChar = Value
-	end
-})
-
 Sea:AddSlider({
 	Name = "Speed Boats",
 	Min = 120,
@@ -7152,22 +7142,6 @@ Sea:AddSlider({
 	Callback = function(Value)
 		_G.SpeedBoat = Value
 	end
-})
-
-Sea:AddButton({
-    Name = "Set Boats Speed",
-    Callback = function(Value)
-        _G.increaseboatspeed = Value
-        game:GetService("RunService").RenderStepped:Connect(function()
-            if _G.increaseboatspeed then
-                for i, v in pairs(game:GetService("Workspace").Boats:GetChildren()) do
-                    if game:GetService("Players").LocalPlayer.Character.Humanoid.Sit then
-                        v:FindFirstChild("VehicleSeat").MaxSpeed = _G.SpeedBoat
-                    end
-                end
-            end
-        end)
-    end
 })
 
 local Section = Sea:AddSection({
@@ -7510,6 +7484,106 @@ spawn(function()
     end
 end)
 
+local Section = Sea:AddSection({
+    Name = "~ Kitsune Island ~"
+})
+
+local CheckKitsune = Sea:AddParagraph("Kitsune Island")
+
+spawn(function()
+    while wait() do
+        if game:GetService("Workspace").Map:FindFirstChild('KitsuneIsland') then
+            CheckKitsune:Set("Spawn")
+        else
+            CheckKitsune:Set("Not Spawn")
+        end
+    end
+end)
+
+Sea:AddToggle({
+	Name = "Teleport To Kitsune Island",
+	Default =false,
+	Callback = function(Value)
+		_G.TeleportKitsune = Value
+		StopTween(_G.TeleportKitsune)		
+	end
+})
+
+spawn(function()
+    while wait() do
+        if _G.TeleportKitsune then
+            if game:GetService("Workspace").Map:FindFirstChild("KitsuneIsland") then
+                topos(game.Workspace.Map.KitsuneIsland.ShrineActive.NeonShrinePart.CFrame * CFrame.new(0,0,10))
+            end
+        end
+    end
+end)
+
+Sea:AddToggle({
+	Name = "Auto Collect Azure",
+	Default =false,
+	Callback = function(Value)
+		_G.CollectAzure = Value
+		StopTween(_G.CollectAzure)		
+	end
+})
+
+spawn(function()
+    while wait() do
+        if _G.CollectAzure then
+            pcall(function()
+                if game:GetService("Workspace"):FindFirstChild("AttachedAzureEmber") then
+                    topos(game:GetService("Workspace"):WaitForChild("EmberTemplate"):FindFirstChild("Part").CFrame)
+                end
+            end)
+        end
+    end
+end)
+
+Sea:AddSlider({
+	Name = "Set Azure Ember",
+	Min = 10,
+	Max = 25,
+	Default = 20,
+	Color = Color3.fromRGB(255, 255, 255),
+	Increment = 1,
+	ValueName = "",
+	Callback = function(Value)
+		_G.SetToTradeAureEmber = Value
+	end
+})
+
+Sea:AddToggle({
+	Name = "Auto Trade Azure Ember",
+	Default =false,
+	Callback = function(Value)
+		_G.TradeAureEmber = Value	
+	end
+})
+
+function GetCountMaterials(MaterialName)
+    local Inventory = game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventory")
+    for i, v in pairs(Inventory) do
+        if v.Name == MaterialName then
+            return v["Count"]
+        end
+    end
+end
+
+spawn(function()
+    while wait() do
+        if _G.TradeAureEmber then
+            pcall(function()
+                local AzureAvilable = GetCountMaterials("Azure Ember")
+                if AzureAvilable >= _G.SetToTradeAureEmber then
+                    game:GetService("ReplicatedStorage").Modules.Net:FindFirstChild("RF/KitsuneStatuePray"):InvokeServer()
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("KitsuneStatuePray")
+                end
+            end)
+        end
+    end
+end)
+
 -- [ Tab Race ]
 
 local Section = Race:AddSection({
@@ -7657,9 +7731,9 @@ local StatusMirage = Race:AddParagraph("Mirage Island")
 spawn(function()
     while wait() do
         if game.Workspace._WorldOrigin.Locations:FindFirstChild('Mirage Island') then
-            StatusMirage:Set("Mirage Island: 🟢")
+            StatusMirage:Set("Spawn")
         else
-            StatusMirage:Set("Mirage Island: 🔴")
+            StatusMirage:Set("Not Spawn")
         end
     end
 end)
@@ -8600,9 +8674,9 @@ local Elite = StatusServer:AddParagraph("Elite")
 spawn(function()
     while wait() do
         if game:GetService("ReplicatedStorage"):FindFirstChild("Diablo") or game:GetService("ReplicatedStorage"):FindFirstChild("Deandre") or game:GetService("ReplicatedStorage"):FindFirstChild("Urban") or game:GetService("Workspace").Enemies:FindFirstChild("Diablo") or game:GetService("Workspace").Enemies:FindFirstChild("Deandre") or game:GetService("Workspace").Enemies:FindFirstChild("Urban") then
-            Elite:Set("Elite: 🟢")	
+            Elite:Set("Spawn")	
         else
-            Elite:Set("Elite: 🔴")	
+            Elite:Set("Not Spawn")	
         end
     end
 end)
@@ -8612,9 +8686,9 @@ local Mirage = StatusServer:AddParagraph("Mirage Island")
 spawn(function()
     while wait() do
         if game.Workspace._WorldOrigin.Locations:FindFirstChild('Mirage Island') then
-            Mirage:Set("Mirage Island: 🟢")
+            Mirage:Set("Spawn")
         else
-            Mirage:Set("Mirage Island: 🔴")
+            Mirage:Set("Not Spawn")
         end
     end
 end)
@@ -8624,9 +8698,9 @@ local Kitsune = StatusServer:AddParagraph("Kitsune Island")
 spawn(function()
     while wait() do
         if game:GetService("Workspace").Map:FindFirstChild('KitsuneIsland') then
-            Kitsune:Set("Kitsune Island: 🟢")
+            Kitsune:Set("Spawn")
         else
-            Kitsune:Set("Kitsune Island: 🔴")
+            Kitsune:Set("Not Spawn")
         end
     end
 end)
@@ -8636,9 +8710,9 @@ local Frozen = StatusServer:AddParagraph("Frozen Dimension")
 spawn(function()
     while wait() do
         if game.Workspace._WorldOrigin.Locations:FindFirstChild('Frozen Dimension') then
-            Frozen:Set("Frozen Dimension: 🟢")
+            Frozen:Set("Spawn")
         else
-            Frozen:Set("Frozen Dimension: 🔴")
+            Frozen:Set("Not Spawn")
         end
     end
 end)
