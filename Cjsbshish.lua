@@ -1,5 +1,6 @@
 --[ Anti Ban ]
 
+local RunService = game:GetService("RunService")
 assert(getrawmetatable)
     grm = getrawmetatable(game)
     setreadonly(grm, false)
@@ -127,7 +128,7 @@ else
     game.Players.LocalPlayer:Kick("Script Only Support Blox Fruit")
 end
 
--- [ Quest Check ]
+-- [ Check Monster & Material & Boss & Quest & Pos ]
 
 function CheckQuest()
     MyLevel = game:GetService("Players").LocalPlayer.Data.Level.Value
@@ -728,8 +729,6 @@ function CheckQuest()
     end
 end
 
--- [ Check Monster Material ]
-
 function MaterialMon()
     if World1 then
         if SelectMaterial == "Magma Ore" then
@@ -821,8 +820,6 @@ function MaterialMon()
         end
     end
 end
-
--- [ Check Monster Pos ]
 
 function CheckMonFarm()
     if World1 then
@@ -1001,8 +998,6 @@ function CheckMonFarm()
         end
     end
 end
-
--- [ Check Quest Boss ]
 
 function CheckBossQuest()
 	if SelectBoss == "Saber Expert" then 
@@ -1222,67 +1217,7 @@ function CheckBossQuest()
 	end
 end
 
--- [ Other ]
-
-function Hop()
-    local PlaceID = game.PlaceId
-    local AllIDs = {}
-    local foundAnything = ""
-    local actualHour = os.date("!*t").hour
-    local Deleted = false
-    function TPReturner()
-        local Site;
-        if foundAnything == "" then
-            Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100'))
-        else
-            Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100&cursor=' .. foundAnything))
-        end
-        local ID = ""
-        if Site.nextPageCursor and Site.nextPageCursor ~= "null" and Site.nextPageCursor ~= nil then
-            foundAnything = Site.nextPageCursor
-        end
-        local num = 0;
-        for i,v in pairs(Site.data) do
-            local Possible = true
-            ID = tostring(v.id)
-            if tonumber(v.maxPlayers) > tonumber(v.playing) then
-                for _,Existing in pairs(AllIDs) do
-                    if num ~= 0 then
-                        if ID == tostring(Existing) then
-                            Possible = false
-                        end
-                    else
-                        if tonumber(actualHour) ~= tonumber(Existing) then
-                            local delFile = pcall(function()
-                                AllIDs = {}
-                                table.insert(AllIDs, actualHour)
-                            end)
-                        end
-                    end
-                    num = num + 1
-                end
-                if Possible == true then
-                    table.insert(AllIDs, ID)
-                    wait()
-                    pcall(function()
-                        wait()
-                        game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
-                    end)
-                    wait(4)
-                end
-            end
-        end
-    end
-    function Teleport() 
-        while wait() do
-            TPReturner()
-            if foundAnything ~= "" then
-                TPReturner()
-            end
-        end
-    end
-    Teleport()
-end
+-- [ Esp ]
 
 function isnil(thing)
     return (thing == nil)
@@ -1477,11 +1412,7 @@ function UpdateFlowerChams()
 	end
 end
 
-function AutoHaki()
-    if not game:GetService("Players").LocalPlayer.Character:FindFirstChild("HasBuso") then
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
-    end
-end
+-- [ Equip Weapon ]
 
 function UnEquipWeapon(Weapon)
     if game.Players.LocalPlayer.Character:FindFirstChild(Weapon) then
@@ -1499,6 +1430,8 @@ function EquipWeapon(a)
         game.Players.LocalPlayer.Character.Humanoid:EquipTool(a)
     end
 end
+
+-- [ Tween ]
 
 function GetDistance(target1, taget2)
     if not taget2 then
@@ -1745,14 +1678,7 @@ spawn(function()
     end)
 end)
 
-spawn(function()
-    game:GetService("RunService").RenderStepped:Connect(function()
-        if _G.AutoClick then
-            game:GetService'VirtualUser':CaptureController()
-            game:GetService'VirtualUser':Button1Down(Vector2.new(0,1,0,1))
-        end
-    end)
-end)
+-- [ Miscellaneous ]
 
 spawn(function()
 	while wait() do
@@ -1888,11 +1814,22 @@ gg.__namecall = newcclosure(function(...)
 	return old(...)
 end)
 
+-- [ Effect ]
+
+task.spawn(function() -- Remove Effect
+  local _hookfunc = (hookfunction or hookfunc or function(...) end)
+  local Container = ReplicatedStorage.Effect.Container
+  local CameraShaker = require(ReplicatedStorage.Util.CameraShaker)
+  local Death = Container:FindFirstChild("Death")
+  local Respawn = Container:FindFirstChild("Respawn")
+  _hookfunc(Death, function() return nil end)
+  _hookfunc(Respawn, function() return nil end)
+  CameraShaker:Stop()
+end)
+game:GetService("ReplicatedStorage").Util.Sound.Storage.Swing:Destroy()
+
 -- [ Super Fast Attack ]
 
-game:GetService("ReplicatedStorage").Util.Sound.Storage.Swing:Destroy()
-local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
-CamShake:Stop()
 local PBlade = game.Players.LocalPlayer
 local QBlade = getupvalues(require(PBlade.PlayerScripts.CombatFramework))
 local RBlade = QBlade[2]
@@ -2146,6 +2083,15 @@ Setting:AddToggle({
 	end
 })
 
+spawn(function()
+    game:GetService("RunService").RenderStepped:Connect(function()
+        if _G.AutoClick then
+            game:GetService'VirtualUser':CaptureController()
+            game:GetService'VirtualUser':Button1Down(Vector2.new(0,1,0,1))
+        end
+    end)
+end)
+
 Setting:AddToggle({
 	Name = "Bring Monster",
 	Default = true,
@@ -2154,8 +2100,7 @@ Setting:AddToggle({
 	end
 })
 
-spawn(function()
-    while wait() do
+RunService.Heartbeat:Connect(function()
         if _G.BringMonster then
             pcall(function()
                 CheckQuest()
@@ -2235,7 +2180,6 @@ spawn(function()
                 end
             end)
         end
-    end
 end)
 
 local Section = Setting:AddSection({
@@ -2734,8 +2678,7 @@ local CayLevel = Farm:AddToggle({
 	end
 })
 
-spawn(function()
-    while wait() do
+RunService.Heartbeat:Connect(function()
         if LevelFMode == "No Quest" and _G.AutoFarm then
             pcall(function()
                 CheckQuest()
@@ -2763,7 +2706,6 @@ spawn(function()
                 end
             end)
         end
-    end
 end)
 
 spawn(function()
@@ -6213,6 +6155,12 @@ Player:AddToggle({
 	end
 })
 
+function AutoHaki()
+    if not game:GetService("Players").LocalPlayer.Character:FindFirstChild("HasBuso") then
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
+    end
+end
+
 spawn(function()
     while task.wait() do
         if _G.AutoHaki then
@@ -8757,6 +8705,66 @@ StatusServer:AddButton({
         Hop()
     end
 })
+
+function Hop()
+    local PlaceID = game.PlaceId
+    local AllIDs = {}
+    local foundAnything = ""
+    local actualHour = os.date("!*t").hour
+    local Deleted = false
+    function TPReturner()
+        local Site;
+        if foundAnything == "" then
+            Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100'))
+        else
+            Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100&cursor=' .. foundAnything))
+        end
+        local ID = ""
+        if Site.nextPageCursor and Site.nextPageCursor ~= "null" and Site.nextPageCursor ~= nil then
+            foundAnything = Site.nextPageCursor
+        end
+        local num = 0;
+        for i,v in pairs(Site.data) do
+            local Possible = true
+            ID = tostring(v.id)
+            if tonumber(v.maxPlayers) > tonumber(v.playing) then
+                for _,Existing in pairs(AllIDs) do
+                    if num ~= 0 then
+                        if ID == tostring(Existing) then
+                            Possible = false
+                        end
+                    else
+                        if tonumber(actualHour) ~= tonumber(Existing) then
+                            local delFile = pcall(function()
+                                AllIDs = {}
+                                table.insert(AllIDs, actualHour)
+                            end)
+                        end
+                    end
+                    num = num + 1
+                end
+                if Possible == true then
+                    table.insert(AllIDs, ID)
+                    wait()
+                    pcall(function()
+                        wait()
+                        game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
+                    end)
+                    wait(4)
+                end
+            end
+        end
+    end
+    function Teleport() 
+        while wait() do
+            TPReturner()
+            if foundAnything ~= "" then
+                TPReturner()
+            end
+        end
+    end
+    Teleport()
+end
 
 -- [ Tab Shop ]
 
