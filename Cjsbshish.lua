@@ -7132,17 +7132,6 @@ Sea:AddToggle({
 	end
 })
 
-function GetLocalBoat()
-    for i, v in next, game:GetService("Workspace").Boats:GetChildren() do
-        if v:IsA("Model") then
-            if v:FindFirstChild("Owner") and tostring(v.Owner.Value) == game:GetService("Players").LocalPlayer.Name and v.Humanoid.Value > 0 then
-                return v
-            end
-        end
-    end
-    return false
-end
-
 function FlyBoat(boat,enable) 
     if not boat then return end
     if not enable then 
@@ -7171,7 +7160,7 @@ end
 spawn(function()
     while wait() do
         if _G.FlyBoat then
-            FlyBoat(GetLocalBoat())
+            FlyBoat(CheckBoat())
         end
     end
 end)
