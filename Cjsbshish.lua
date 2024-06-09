@@ -1,4 +1,16 @@
---[ Anti Ban ]
+repeat wait() until game:IsLoaded()
+repeat wait() until game:GetService("Players")
+repeat wait() until game:GetService("Players").LocalPlayer
+repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui
+repeat wait() until game:GetService("ReplicatedStorage").Effect.Container
+
+if not game:IsLoaded() then
+	local GameLoadGui = Instance.new("Message",workspace)
+	GameLoadGui.Text = 'Wait Game Loading'
+	game.Loaded:Wait()
+	GameLoadGui:Destroy()
+	wait()
+end
 
 assert(getrawmetatable)
     grm = getrawmetatable(game)
@@ -66,6 +78,25 @@ spawn(function()
     end
 end)
 
+local GC = getconnections or get_signal_cons
+if GC then
+    for i,v in pairs(GC(game.Players.LocalPlayer.Idled)) do
+        if v["Disable"] then
+            v["Disable"](v)
+        elseif v["Disconnect"] then
+            v["Disconnect"](v)
+        end
+    end
+else
+    print("Unlucky.")
+    local vu = game:GetService("VirtualUser")
+    game:GetService("Players").LocalPlayer.Idled:connect(function()
+        vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+        wait(1)
+        vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+    end)
+end
+
 _G.AntiFlagReset = true
 spawn(function()
     while wait(2000) do
@@ -75,7 +106,6 @@ spawn(function()
     end
 end)
 
-repeat wait() until game:IsLoaded()
 if game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseTeam") then
 	repeat wait()
 		if game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Main").ChooseTeam.Visible == true then
@@ -1227,6 +1257,7 @@ end
 Number = math.random(1, 1000000)
 function UpdatePlayerChams()
     for i,v in pairs(game:GetService'Players':GetChildren()) do
+        pcall(function()
             if not isnil(v.Character) then
                 if _G.ESPPlayer then
                     if not isnil(v.Character.Head) and not v.Character.Head:FindFirstChild('NameEsp'..Number) then
@@ -1254,11 +1285,13 @@ function UpdatePlayerChams()
                     end
                 end
             end
+        end)
     end
 end
 
 function UpdateIslandESP() 
     for i,v in pairs(game:GetService("Workspace")["_WorldOrigin"].Locations:GetChildren()) do
+        pcall(function()
             if _G.IslandESP then 
                 if v.Name ~= "Sea" then
                     if not v:FindFirstChild('NameEsp') then
@@ -1286,11 +1319,13 @@ function UpdateIslandESP()
                     v:FindFirstChild('NameEsp'):Destroy()
                 end
             end
+        end)
     end
 end
 
 function UpdateChestChams() 
 	for i,v in pairs(game.Workspace:GetChildren()) do
+		pcall(function()
 			if string.find(v.Name,"Chest") then
 				if _G.ChestESP then
 					if string.find(v.Name,"Chest") then
@@ -1328,11 +1363,13 @@ function UpdateChestChams()
 					end
 				end
 			end
+		end)
 	end
 end
 
 function UpdateDevilChams() 
 	for i,v in pairs(game.Workspace:GetChildren()) do
+		pcall(function()
 			if _G.DevilFruitESP then
 				if string.find(v.Name, "Fruit") then   
 					if not v.Handle:FindFirstChild('NameEsp'..Number) then
@@ -1360,11 +1397,13 @@ function UpdateDevilChams()
 					v.Handle:FindFirstChild('NameEsp'..Number):Destroy()
 				end
 			end
+		end)
 	end
 end
 
 function UpdateFlowerChams() 
 	for i,v in pairs(game.Workspace:GetChildren()) do
+		pcall(function()
 			if v.Name == "Flower2" or v.Name == "Flower1" then
 				if _G.FlowerESP then 
 					if not v:FindFirstChild('NameEsp'..Number) then
@@ -1398,6 +1437,7 @@ function UpdateFlowerChams()
 					end
 				end
 			end
+		end)
 	end
 end
 
@@ -2466,21 +2506,6 @@ spawn(function()
     end
 end)
 
-Setting:AddToggle({
-	Name = "Anti Afk",
-	Default = true,
-	Callback = function()
-		local Anti = game:GetService("VirtualUser")
-		repeat wait() until game:IsLoaded() 
-		game:GetService("Players").LocalPlayer.Idled:connect(function()
-			game:GetService("VirtualUser"):ClickButton2(Vector2.new())
-			Anti:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-			wait(1)
-			Anti:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-		end)
-	end
-})
-
 local Section = Setting:AddSection({
     Name = "~ Hold Skill Mastery ~"
 })
@@ -2812,7 +2837,7 @@ spawn(function()
                                         EquipWeapon(_G.SelectWeapon)
                                         topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,5))
                                         if (v.Character.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 30 then
-                                            AimBotSkillPosition = nil
+                                            AimBotSkillPosition = v.Character.HumanoidRootPart.CFrame
                                             Click()
                                             game:GetService("VirtualInputManager"):SendKeyEvent(true, "X", false, game)
                                             game:GetService("VirtualInputManager"):SendKeyEvent(false, "X", false, game)
@@ -7915,7 +7940,7 @@ spawn(function()
                                     topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 5))
                                     UseSkillTrial = true
                                     SpamOnRace = true
-                                    AimBotSkillPosition = nil
+                                    AimBotSkillPosition = v.Character.HumanoidRootPart.CFrame
                                     Skillaimbot = true
                                     Click()
                                 until _G.KillAfterTrials == false or v.Humanoid.Health <= 0 or not v.Parent or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid")
@@ -8318,7 +8343,6 @@ StatsEsp:AddToggle({
 
 spawn(function()
 	while task.wait() do
-	    pcall(function()
 	    if _G.FlowerESP then
 		    UpdateFlowerChams() 
 	    end
@@ -8334,7 +8358,6 @@ spawn(function()
 	    if _G.DevilFruitESP then
 		    UpdateDevilChams()
 	    end
-	    end)
 	end
 end)
 
