@@ -1500,11 +1500,18 @@ function EquipWeapon(a)
     end
 end
 
-function GetDistance(Pos)
-    if typeof(Pos) == "CFrame" then
-        return game:GetService("Players").LocalPlayer:DistanceFromCharacter(Pos.Position)
-    elseif typeof(Pos) == "Vector3" then
-        return game:GetService("Players").LocalPlayer:DistanceFromCharacter(Pos)
+function GetDistance(target1, taget2)
+    if not taget2 then
+        taget2 = game.Players.LocalPlayer.Character.HumanoidRootPart
+    end
+    bbos, bbos2 = pcall(function()
+            a = target1.Position
+            a2 = taget2.Position
+    end)
+    if bbos then
+        a = target1.Position
+        a2 = taget2.Position
+        return (a - a2).Magnitude
     end
 end
 
@@ -4760,7 +4767,7 @@ spawn(function()
     while wait() do
         if _G.AutoSpawnDark then
             if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") then
-                if GetDistance(game:GetService("Workspace").Map.DarkbeardArena.Summoner.Detection) <= 5 then
+                if GetDistance(game:GetService("Workspace").Map.DarkbeardArena.Summoner.Detection).Magnitude <= 5 then
                     EquipWeapon("Fist of Darkness")
                     firetouchinterest(game.Players.LocalPlayer.Character["Fist of Darkness"].Handle, game:GetService("Workspace").Map.DarkbeardArena.Summoner.Detection, 0)
                     firetouchinterest(game.Players.LocalPlayer.Character["Fist of Darkness"].Handle, game:GetService("Workspace").Map.DarkbeardArena.Summoner.Detection, 1)
@@ -6869,7 +6876,7 @@ end
 
 local stopboat = {}
 function TPB(pos, boat)
-	Tween = game:service"TweenService":Create(game.Players.LocalPlayer.Character.PartTele, TweenInfo.new((boat.CFrame.Position - pos.Position).Magnitude/_G.SpeedBoat, Enum.EasingStyle.Linear), {CFrame = pos})
+	Tween = game:service"TweenService":Create(boat, TweenInfo.new((boat.CFrame.Position - pos.Position).Magnitude/_G.SpeedBoat, Enum.EasingStyle.Linear), {CFrame = pos})
     if (boat.CFrame.Position - pos.Position).Magnitude <= 25 then
         Tween:Cancel()
     else
@@ -7976,24 +7983,28 @@ Race:AddToggle({
 spawn(function()
     while task.wait() do
         if _G.KillAfterTrials then
-            for i, v in pairs(game.Workspace.Characters:GetChildren()) do
-                if v.Name ~= game.Players.LocalPlayer.Name then
-                    if v.Humanoid.Health > 0 and v:FindFirstChild("HumanoidRootPart") and v.Parent and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).Magnitude <= 150 then
-                        repeat task.wait()
-                            EquipWeapon(_G.SelectWeaponTrials)
-                            topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 0, 0))
-                            if (v.Character.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 30 then
-                                UseSkillTrial = true
-                                SpamOnRace = true
-                                FastAttackPlayer = true
+            pcall(function()
+                TempleCFrame = CFrame.new( 28730.0645, 14887.5371, -91.0957718, 0.557085216, -4.57713725e-08, 0.830455363, 9.81919115e-08, 1, -1.07530047e-08, -0.830455363, 8.75343389e-08, 0.557085216)
+                if game.Players.LocalPlayer.PlayerGui.Main.Timer.Visible then
+                    if GetDistance(TempleCFrame) <= 380 then
+                        for i, v in pairs(game.Players:GetChildren()) do
+                            if v.Name ~= game.Players.LocalPlayer.Name and (GetDistance(TempleCFrame, v.Character.HumanoidRootPart) <= 300) and v.Character.Humanoid.Health > 0 then
+                                repeat task.wait()
+                                    EquipWeapon(_G.SelectWeaponTrials)
+                                    topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 0))
+                                    UseSkillTrial = true
+                                    SpamOnRace = true
+                                    AimBotSkillPosition = nil
+                                    Skillaimbot = true
+                                until _G.KillAfterTrials == false or v.Humanoid.Health <= 0 or not v.Parent or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid")
+                                UseSkillTrial = false
+                                SpamOnRace = false
+                                Skillaimbot = false
                             end
-                        until _G.KillAfterTrials == false or v.Humanoid.Health <= 0 or not v.Parent or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid")
-                        UseSkillTrial = false
-                        SpamOnRace = false
-                        FastAttackPlayer = false
+                        end
                     end
                 end
-            end
+            end)
         end
     end
 end)
@@ -8062,18 +8073,18 @@ spawn(function()
             if _G.Z then
                 game:GetService("VirtualInputManager"):SendKeyEvent(true, "Z", false, game)
                 game:GetService("VirtualInputManager"):SendKeyEvent(false, "Z", false, game)
-                if _G.X then
-                    game:GetService("VirtualInputManager"):SendKeyEvent(true, "X", false, game)
-                    game:GetService("VirtualInputManager"):SendKeyEvent(false, "X", false, game)
-                    if _G.C then
-                        game:GetService("VirtualInputManager"):SendKeyEvent(true, "C", false, game)
-                        game:GetService("VirtualInputManager"):SendKeyEvent(false, "C", false, game)
-                        if _G.V then
-                            game:GetService("VirtualInputManager"):SendKeyEvent(true, "V", false, game)
-                            game:GetService("VirtualInputManager"):SendKeyEvent(false, "V", false, game)
-                        end
-                    end
-                end
+            end
+            if _G.X then
+                game:GetService("VirtualInputManager"):SendKeyEvent(true, "X", false, game)
+                game:GetService("VirtualInputManager"):SendKeyEvent(false, "X", false, game)
+            end
+            if _G.C then
+                game:GetService("VirtualInputManager"):SendKeyEvent(true, "C", false, game)
+                game:GetService("VirtualInputManager"):SendKeyEvent(false, "C", false, game)
+            end
+            if _G.V then
+                game:GetService("VirtualInputManager"):SendKeyEvent(true, "V", false, game)
+                game:GetService("VirtualInputManager"):SendKeyEvent(false, "V", false, game)
             end
         end
     end
