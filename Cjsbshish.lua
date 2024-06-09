@@ -58,7 +58,7 @@ local function bypassAntiExploit()
 end
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         pcall(function()
             CheckAntiCheatBypass()
             bypassAntiExploit()
@@ -1676,7 +1676,7 @@ spawn(function()
 end)
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if Type == 1 then
             Pos = CFrame.new(0,40,-20)
         elseif Type == 2 then
@@ -1690,7 +1690,7 @@ spawn(function()
 end)
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if Type == 1 then
             PosSea = CFrame.new(0,400,-60)
         elseif Type == 2 then
@@ -1704,7 +1704,7 @@ spawn(function()
 end)
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if Type == 1 then
             PosCaMap = CFrame.new(0,60,-30)
         elseif Type == 2 then
@@ -1748,7 +1748,7 @@ spawn(function()
 end)
 
 spawn(function()
-	while task.wait() do
+	while wait() do
 		if setscriptable then
 			setscriptable(game.Players.LocalPlayer, "SimulationRadius", true)
 		end
@@ -2093,7 +2093,7 @@ local CheckWeapon1 = Setting:AddDropdown({
 })
 
 spawn(function()
-	while task.wait() do
+	while wait() do
 		if SelectWeapon == SelectWeapon then
 			for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
 				if v.ToolTip == SelectWeapon then
@@ -2509,7 +2509,7 @@ Setting:AddToggle({
 })
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if _G.LowHealth then
             if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
                 if game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 < _G.Health then
@@ -2822,7 +2822,7 @@ Farm:AddToggle({
 })
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if _G.FarmSkip then
             pcall(function()
                 LvCount = game:GetService("Players").LocalPlayer.Data.Level.Value
@@ -3835,7 +3835,7 @@ Farm:AddToggle({
 })
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if _G.AutoMaterial then
             pcall(function()
                 MaterialMon(SelectMaterial)
@@ -3925,7 +3925,7 @@ FruitRaid:AddToggle({
 })
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if _G.AutoBuyFruitSniper then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("GetFruits")
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("PurchaseRawFruit",_G.SelectFruit)
@@ -3949,7 +3949,7 @@ FruitRaid:AddToggle({
 })
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if _G.Random_Auto then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Cousin","Buy")
         end 
@@ -4047,7 +4047,7 @@ function Get_Fruit(Fruit)
 end
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if _G.AutoStoreFruit then
             local plrBag = game:GetService("Players").LocalPlayer.Backpack
             local plrChar = game:GetService("Players").LocalPlayer.Character
@@ -4140,7 +4140,7 @@ FruitRaid:AddToggle({
 })
 
 spawn(function()
-    while task.wait() do
+    while wait() do
 		if _G.AutoBuyChip then
 			local args = {
 				[1] = "RaidsNpc",
@@ -4261,7 +4261,7 @@ FruitRaid:AddToggle({
 })
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if _G.Auto_StartRaid then
             if game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Timer.Visible == false then
                 if not game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1") and game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Special Microchip") or game:GetService("Players").LocalPlayer.Character:FindFirstChild("Special Microchip") then
@@ -4311,7 +4311,7 @@ FruitRaid:AddToggle({
 
 RaidPos = CFrame.new(0,70,0)
 spawn(function()
-    while task.wait() do
+    while wait() do
         if _G.NextIsland and game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Timer.Visible == true then
             if game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5") then
                 topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5").CFrame * RaidPos)
@@ -4337,7 +4337,7 @@ FruitRaid:AddToggle({
 })
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if _G.Auto_Awakener then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Awakener","Check")
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Awakener","Awaken")
@@ -4370,7 +4370,7 @@ FruitRaid:AddToggle({
 })
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if _G.StartRaidLaw and World2 then
             fireclickdetector(game:GetService("Workspace").Map.CircleIsland.RaidSummon.Button.Main.ClickDetector)
         end
@@ -4387,7 +4387,7 @@ FruitRaid:AddToggle({
 })
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if _G.AutoOderSword then
             if game:GetService("ReplicatedStorage"):FindFirstChild("Order") or game:GetService("Workspace").Enemies:FindFirstChild("Order") then
                 if game:GetService("Workspace").Enemies:FindFirstChild("Order") then
@@ -4487,7 +4487,7 @@ local Section = Other:AddSection({
 local EliteStatus = Other:AddParagraph("Elite")
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if game:GetService("ReplicatedStorage"):FindFirstChild("Diablo") or game:GetService("ReplicatedStorage"):FindFirstChild("Deandre") or game:GetService("ReplicatedStorage"):FindFirstChild("Urban") or game:GetService("Workspace").Enemies:FindFirstChild("Diablo") or game:GetService("Workspace").Enemies:FindFirstChild("Deandre") or game:GetService("Workspace").Enemies:FindFirstChild("Urban") then
             EliteStatus:Set("Elite: 🟢")	
         else
@@ -4561,7 +4561,7 @@ Other:AddToggle({
 })
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if _G.ChestBypass then
             local ohString1 = "SetTeam"
             local ohString2 = _G.TeamChest
@@ -4571,7 +4571,7 @@ spawn(function()
 end)
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if _G.ChestBypass then
             local hasChar = game.Players.LocalPlayer:FindFirstChild("Character")
             if not game.Players.LocalPlayer.Character then
@@ -4664,7 +4664,7 @@ Other:AddToggle({
 })
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if _G.TeleSafe then
             if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
                 if World3 then
@@ -4691,7 +4691,7 @@ Other:AddToggle({
 })
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if _G.AutoSpawnRip then
             if game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("activateColor","Winter Sky")
@@ -4757,7 +4757,7 @@ Other:AddToggle({
 })
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if _G.AutoSpawnDark then
             if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") then
                 if GetDistance(game:GetService("Workspace").Map.DarkbeardArena.Summoner.Detection) <= 5 then
@@ -4973,7 +4973,7 @@ local Section = ItemQuest:AddSection({
 local LegendSwords = ItemQuest:AddParagraph("Legendary Sword Dealer")
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer", "1") then
             LegendSwords:Set("Sword Name: Shisui")
         elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer","2") then
@@ -5078,7 +5078,7 @@ ItemQuest:AddToggle({
 })
 
 spawn(function()
-    while wait(.1) do
+    while wait() do
         if _G.Auto_Rainbow_Haki and World3 then
             if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
                 topos(CFrame.new(-11892.0703125, 930.57672119141, -8760.1591796875))
@@ -5469,7 +5469,7 @@ ItemQuest:AddToggle({
 })
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if _G.Auto_Saber and World1 and game.Players.LocalPlayer.Data.Level.Value >= 200 then
             if game:GetService("Workspace").Map.Jungle.Final.Part.Transparency == 0 then
                 if game:GetService("Workspace").Map.Jungle.QuestPlates.Door.Transparency == 0 then
@@ -5979,7 +5979,7 @@ ItemQuest:AddToggle({
 })
 
 spawn(function()
-    while wait(.1) do
+    while wait() do
         if _G.AutoMusketeerHat then
             if game:GetService("Players").LocalPlayer.Data.Level.Value >= 1800 and game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CitizenQuestProgress").KilledBandits == false then
                 if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, "Forest Pirate") and string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, "50") and game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
@@ -6223,10 +6223,9 @@ Player:AddToggle({
 })
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if _G.OnV3 then
             game:GetService('VirtualUser'):SetKeyDown('0x74')
-            wait(0.1)
             game:GetService('VirtualUser'):SetKeyUp('0x74')
         end
     end
@@ -6241,10 +6240,9 @@ Player:AddToggle({
 })
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if _G.OnV4 then
             game:GetService('VirtualUser'):SetKeyDown('0x59')
-            wait(0.1)
            game:GetService('VirtualUser'):SetKeyUp('0x59')
         end
     end
@@ -6259,7 +6257,7 @@ Player:AddToggle({
 })
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if _G.OnHaki then
             repeat wait()
                 if not game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") then
@@ -6417,7 +6415,7 @@ Player:AddToggle({
 })
 
 spawn(function()
-	while task.wait() do
+	while wait() do
 		if _G.WalkWater then
 			game:GetService("Workspace").Map["WaterBase-Plane"].Size = Vector3.new(1000,112,1000)
 		else
@@ -6466,7 +6464,7 @@ local Section = PvP:AddSection({
 local plyserv = PvP:AddParagraph("Player In Server")
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         for i,v in pairs(game:GetService("Players"):GetPlayers()) do
             if i == 12 then
                 plyserv:Set("Player: "..i.."/".."12")
@@ -6646,7 +6644,7 @@ PvP:AddToggle({
 })
 
 spawn(function()
-    while wait(.1) do
+    while wait() do
         if _G.EnabledPvP then
             if game:GetService("Players").LocalPlayer.PlayerGui.Main.PvpDisabled.Visible == true then
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EnablePvp")
@@ -6662,7 +6660,7 @@ local Section = PvP:AddSection({
 local checkbotihoron = PvP:AddParagraph("Your Bounty / Honor")
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if game:GetService("Players").LocalPlayer.Team.Name == "Pirates" then
             checkbotihoron:Set("Bounty: "..tostring(game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].Value))
         elseif game:GetService("Players").LocalPlayer.Team.Name == "Marines" then
@@ -6689,7 +6687,7 @@ Sea:AddDropdown({
 })
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if _G.Boat == "Grand Brigade" then
             SelectedBoat = "PirateGrandBrigade"
         elseif _G.Boat == "Sloop" then
@@ -6734,12 +6732,6 @@ if World1 then
 		Default = "No Zone Sea",
 		Options = {"No Zone Sea"},
 		Callback = function()
-			OrionLib:MakeNotification({
-        	Name = "Tinh Linh Hub",
-        	Content = "Please Go To Second Sea Or Third Sea!",
-        	Image = "rbxassetid://16730867128",
-        	Time = 5
-        })
 		end
 	})
 end
@@ -6901,7 +6893,7 @@ function TPB(pos, boat)
 end
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if _G.SailBoat then
             pcall(function()
                 if not CheckBoat() then
@@ -6911,7 +6903,7 @@ spawn(function()
                         BuyBoatCFrame = CFrame.new(90.488054275512695, 10.311711311340332, 2950.69287109375)
                     end
                     buyb = topos(BuyBoatCFrame)
-                    if (BuyBoatCFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 300 then
+                    if (BuyBoatCFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 10 then
                         if buyb then
                             buyb:Stop()
                         end
@@ -6957,7 +6949,7 @@ spawn(function()
 end)
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if _G.SailBoat then
             if ((CheckShark() and _G.AutoKillShark) or (CheckTerrorshark() and _G.AutoTerrorshark) or (CheckPiranha() and _G.AutoKillPiranha) or (CheckFishCrewMember() and _G.AutoKillFishCrew) or (game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and _G.RelzFishBoat) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateBrigade") and _G.RelzPirateBrigade) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateGrandBrigade") and _G.RelzPirateGrandBrigade) or (CheckSeaBeast() and _G.AutoSeaBest)) then
                 if game.Players.LocalPlayer.Character.Humanoid.Sit == true then
@@ -6971,7 +6963,7 @@ spawn(function()
 end)
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if _G.SailBoat then
             pcall(function()
                 if CheckFishCrewMember() and _G.AutoKillFishCrew then
@@ -7142,7 +7134,7 @@ spawn(function()
 end)
 
 Sea:AddToggle({
-	Name = "Auto Reset Character When Boats Destroy",
+	Name = "Auto Reset Character When Boats Destroy [ Not Work ]",
 	Default = false,
 	Callback = function(Value)
 		_G.ResetChar = Value
@@ -7403,7 +7395,7 @@ DoneSkillSword = false
 DoneSkillFruit = false
 DoneSkillMelee = false
 spawn(function()
-    while task.wait() do
+    while wait() do
         if SeaSkill then
             if _G.UseSeaFruitSkill and DoneSkillFruit == false then
                 for _, v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
@@ -7727,7 +7719,7 @@ Race:AddToggle({
 })
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if _G.LockCamToMoon then
            workspace.CurrentCamera.CFrame = CFrame.new(workspace.CurrentCamera.CFrame.Position,game:GetService("Lighting"):GetMoonDirection() + workspace.CurrentCamera.CFrame.Position)
         end
@@ -7760,7 +7752,7 @@ local Section = Race:AddSection({
 local Moon1 = Race:AddParagraph("Moon")
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         Moon1:Set(CheckMoon().." | "..function7().." | "..function8())
     end
 end)
@@ -7894,7 +7886,7 @@ Race:AddDropdown({
 })
 
 spawn(function()
-	while task.wait() do
+	while wait() do
 		if SelectWeaponTrials == SelectWeaponTrials then
 			for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
 				if v.ToolTip == SelectWeaponTrials then
@@ -8231,7 +8223,7 @@ StatsEsp:AddToggle({
 })
 
 spawn(function()
-	while task.wait() do
+	while wait() do
 		if game.Players.localPlayer.Data.Points.Value >= PointStats then
 			if Melee then
 				local args = {
@@ -8554,7 +8546,7 @@ end)
 local Moon = StatusServer:AddParagraph("Moon")
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         Moon:Set(CheckMoon().." | "..function7().." | "..function8())
     end
 end)
@@ -8673,7 +8665,7 @@ StatusServer:AddToggle({
 })
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if _G.Join then
             game:GetService("TeleportService"):TeleportToPlaceInstance(game.placeId,_G.Job, game.Players.LocalPlayer)
         end
