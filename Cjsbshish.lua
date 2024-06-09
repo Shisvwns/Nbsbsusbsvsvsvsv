@@ -6386,34 +6386,6 @@ spawn(function()
 end)
 
 Player:AddToggle({
-	Name = "Geppo No CD [ Wait Fix ]",
-	Default = false,
-	Callback = function(Value)
-		_G.Infinit_SkyJump = Value
-	end
-})
-
-spawn(function()
-    while wait() do
-        if _G.Infinit_SkyJump then
-            for i,v in next, getgc() do
-                if game.Players.LocalPlayer.Character.Geppo then
-                    if typeof(v) == "function" and getfenv(v).script == game.Players.LocalPlayer.Character.Geppo then
-                        for i2,v2 in next, getupvalues(v) do
-                            if tostring(v2) == "0" then
-                                repeat wait(.1)
-                                    setupvalue(v,i2,0)
-                                until not _G.Infinit_SkyJump
-                            end
-                        end
-                    end
-                end
-            end
-        end
-    end
-end)
-
-Player:AddToggle({
 	Name = "Walk On Water",
 	Default = false,
 	Callback = function(Value)
@@ -6423,8 +6395,12 @@ Player:AddToggle({
 
 spawn(function()
 	while wait() do
-		if _G.WalkWater then
-			game:GetService("Workspace").Map["WaterBase-Plane"].Size = Vector3.new(1000,112,1000)
+	    pcall(function()
+	    	if _G.WalkWater then
+	    		game:GetService("Workspace").Map["WaterBase-Plane"].Size = Vector3.new(1000,112,1000)
+    		else
+    			game:GetService("Workspace").Map["WaterBase-Plane"].Size = Vector3.new(1000,80,1000)
+            end)
 		end
 	end
 end)
@@ -6521,7 +6497,7 @@ spawn(function()
 	while wait() do
 		if _G.Teleport then
 			if game.Players:FindFirstChild(_G.SelectPly) then
-				topos(game.Players[_G.SelectPly].Character.HumanoidRootPart.CFrame)
+				topos(game.Players[_G.SelectPly].Character.HumanoidRootPart.CFrame * CFrame.new(0,0,3))
 			end
 		end
 	end
@@ -6586,17 +6562,19 @@ local mouse = lp:GetMouse()
 spawn(function()
 	while wait() do
 		if _G.Aimbot_Skill_Fov then
-			local MaxDist, Closest = math.huge
-			for i,v in pairs(game:GetService("Players"):GetChildren()) do 
-				local Head = v.Character:FindFirstChild("HumanoidRootPart")
-				local Pos, Vis = game.Workspace.CurrentCamera.WorldToScreenPoint(game.Workspace.CurrentCamera, Head.Position)
-				local MousePos, TheirPos = Vector2.new(mouse.X, mouse.Y), Vector2.new(Pos.X, Pos.Y)
-				local Dist = (TheirPos - MousePos).Magnitude
-				if Dist < MaxDist and Dist <= _G.Select_Size_Fov and v.Name == _G.SelectPly then
-					MaxDist = Dist
-					_G.Aim_Players = v
-				end
-			end
+		    pcall(function()
+		    	local MaxDist, Closest = math.huge
+		    	for i,v in pairs(game:GetService("Players"):GetChildren()) do 
+		    		local Head = v.Character:FindFirstChild("HumanoidRootPart")
+		    		local Pos, Vis = game.Workspace.CurrentCamera.WorldToScreenPoint(game.Workspace.CurrentCamera, Head.Position)
+		    		local MousePos, TheirPos = Vector2.new(mouse.X, mouse.Y), Vector2.new(Pos.X, Pos.Y)
+		    		local Dist = (TheirPos - MousePos).Magnitude
+	    			if Dist < MaxDist and Dist <= _G.Select_Size_Fov and v.Name == _G.SelectPly then
+		    			MaxDist = Dist
+		    			_G.Aim_Players = v
+		    		end
+		    	end
+			end)
 		end
 	end
 end)
