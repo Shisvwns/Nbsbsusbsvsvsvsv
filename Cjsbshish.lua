@@ -2104,6 +2104,7 @@ Setting:AddToggle({
 })
 
 spawn(function()
+    while wait() do
         if _G.BringMonster then
             pcall(function()
                 CheckQuest()
@@ -2183,6 +2184,7 @@ spawn(function()
                 end
             end)
         end
+    end
 end)
 
 local Section = Setting:AddSection({
@@ -2682,6 +2684,7 @@ local CayLevel = Farm:AddToggle({
 })
 
 spawn(function()
+    while wait() do
         if LevelFMode == "No Quest" and _G.AutoFarm then
             pcall(function()
                 CheckQuest()
@@ -2709,6 +2712,7 @@ spawn(function()
                 end
             end)
         end
+    end
 end)
 
 spawn(function()
