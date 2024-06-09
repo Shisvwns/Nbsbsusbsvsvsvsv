@@ -7171,11 +7171,7 @@ end
 spawn(function()
     while wait() do
         if _G.FlyBoat then
-            getgenv().BoatFloated = not getgenv().BoatFloated
-            if not GetLocalBoat() then
-                return
-            end 
-            FlyBoat(GetLocalBoat(),getgenv().BoatFloated)
+            FlyBoat(GetLocalBoat())
         end
     end
 end)
