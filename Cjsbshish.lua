@@ -1648,7 +1648,7 @@ function topos(Pos)
     if Distance <= 250 then
         lp.Character.HumanoidRootPart.CFrame = Pos
     end
-    Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
+    Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
     Tween:Play() 
     Clip = true
 end
@@ -2155,7 +2155,7 @@ Setting:AddToggle({
 })
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if _G.BringMonster then
             pcall(function()
                 CheckQuest()
