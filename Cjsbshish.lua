@@ -1227,7 +1227,6 @@ end
 Number = math.random(1, 1000000)
 function UpdatePlayerChams()
     for i,v in pairs(game:GetService'Players':GetChildren()) do
-        pcall(function()
             if not isnil(v.Character) then
                 if _G.ESPPlayer then
                     if not isnil(v.Character.Head) and not v.Character.Head:FindFirstChild('NameEsp'..Number) then
@@ -1255,13 +1254,11 @@ function UpdatePlayerChams()
                     end
                 end
             end
-        end)
     end
 end
 
 function UpdateIslandESP() 
     for i,v in pairs(game:GetService("Workspace")["_WorldOrigin"].Locations:GetChildren()) do
-        pcall(function()
             if _G.IslandESP then 
                 if v.Name ~= "Sea" then
                     if not v:FindFirstChild('NameEsp') then
@@ -1289,13 +1286,11 @@ function UpdateIslandESP()
                     v:FindFirstChild('NameEsp'):Destroy()
                 end
             end
-        end)
     end
 end
 
 function UpdateChestChams() 
 	for i,v in pairs(game.Workspace:GetChildren()) do
-		pcall(function()
 			if string.find(v.Name,"Chest") then
 				if _G.ChestESP then
 					if string.find(v.Name,"Chest") then
@@ -1333,13 +1328,11 @@ function UpdateChestChams()
 					end
 				end
 			end
-		end)
 	end
 end
 
 function UpdateDevilChams() 
 	for i,v in pairs(game.Workspace:GetChildren()) do
-		pcall(function()
 			if _G.DevilFruitESP then
 				if string.find(v.Name, "Fruit") then   
 					if not v.Handle:FindFirstChild('NameEsp'..Number) then
@@ -1367,13 +1360,11 @@ function UpdateDevilChams()
 					v.Handle:FindFirstChild('NameEsp'..Number):Destroy()
 				end
 			end
-		end)
 	end
 end
 
 function UpdateFlowerChams() 
 	for i,v in pairs(game.Workspace:GetChildren()) do
-		pcall(function()
 			if v.Name == "Flower2" or v.Name == "Flower1" then
 				if _G.FlowerESP then 
 					if not v:FindFirstChild('NameEsp'..Number) then
@@ -1407,7 +1398,6 @@ function UpdateFlowerChams()
 					end
 				end
 			end
-		end)
 	end
 end
 
@@ -3133,7 +3123,7 @@ local Section = Farm:AddSection({
 local YourBone = Farm:AddParagraph("Your Bone")
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Bones","Check") then
             YourBone:Set("Bone: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Bones","Check").."/5000")
         else
@@ -4763,7 +4753,7 @@ local Section = Other:AddSection({
 local ObservationStatus = Other:AddParagraph("Observation Level")
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         ObservationStatus:Set("Level: "..math.floor(game:GetService("Players").LocalPlayer.VisionRadius.Value))
     end
 end)
@@ -6169,7 +6159,7 @@ function AutoHaki()
 end
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if _G.AutoHaki then
             AutoHaki()
         end
@@ -8328,6 +8318,7 @@ StatsEsp:AddToggle({
 
 spawn(function()
 	while task.wait() do
+	    pcall(function()
 	    if _G.FlowerESP then
 		    UpdateFlowerChams() 
 	    end
@@ -8343,6 +8334,7 @@ spawn(function()
 	    if _G.DevilFruitESP then
 		    UpdateDevilChams()
 	    end
+	    end)
 	end
 end)
 
