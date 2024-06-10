@@ -7074,8 +7074,8 @@ Sea:AddToggle({
 
 spawn(function()
 	while wait() do
-	    pcall(function()
-			if _G.NoClipRock or _G.SailBoat then
+		if _G.NoClipRock or _G.SailBoat then
+		    pcall(function()
 				if game.Players.LocalPlayer.Character.Humanoid.Sit == true then
 					for _, v in pairs(game.Workspace.Boats:GetDescendants()) do
 						if v:IsA("BasePart") and v.CanCollide == true then
