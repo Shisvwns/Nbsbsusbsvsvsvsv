@@ -2956,7 +2956,7 @@ local StatusCakePrince = Farm:AddParagraph("Cake Prince")
 
 spawn(function()
     while wait() do
-        StatusCakePrince:Set(StatusCakePrince())
+        StatusCakePrince:Set(tostring(CheckCakePrinceStatus()))
     end
 end)
 
@@ -8625,7 +8625,7 @@ local KillCake = StatusServer:AddParagraph("Cake Prince")
 
 spawn(function()
     while wait() do
-        KillCake:Set(StatusCakePrince())
+        KillCake:Set(tostring(CheckCakePrinceStatus()))
     end
 end)
 
