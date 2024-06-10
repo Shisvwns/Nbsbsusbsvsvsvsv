@@ -1275,9 +1275,9 @@ function UpdatePlayerChams()
                         name.TextYAlignment = 'Top'
                         name.BackgroundTransparency = 1
                         name.TextStrokeTransparency = 0.5
-                        name.TextColor3 = Color3.fromRGB(117, 8, 0)
+                        name.TextColor3 = Color3.fromRGB(255, 0, 0)
                     else
-                        v.Character.Head['NameEsp'..Number].TextLabel.Text = ('[ Player: '..v.Name..' ]\n[ Health: '..math.floor(v.Character.Humanoid.Health)..'/'..v.Character.Humanoid.MaxHealth..' ]\n[ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3)..'m ]')
+                        v.Character.Head['NameEsp'..Number].TextLabel.Text = ('[ Player: '..v.Name..' ] - [ Health: '..math.floor(v.Character.Humanoid.Health)..'/'..v.Character.Humanoid.MaxHealth..' ]\n[ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3)..'m ]')
                     end
                 else
                     if v.Character.Head:FindFirstChild('NameEsp'..Number) then
@@ -1622,10 +1622,8 @@ function Tween(Pos)
 end
 
 function StopTween(target)
-    if not target then
-        topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
-        Clip = false
-    end
+    topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
+    Clip = false
 end
 
 -- [ Pos Farm ]
@@ -1703,6 +1701,26 @@ spawn(function()
             end
         elseif not Clip and game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
             game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity"):Destroy()
+        end
+    end)
+end)
+
+spawn(function()
+    game:GetService("RunService").Stepped:Connect(function()
+        if Clip then
+            if not game.Players.LocalPlayer.Character.PrimaryPart:FindFirstChild("BodyVelocity") then
+                local Hold = Instance.new("BodyVelocity", game.Players.LocalPlayer.Character.PrimaryPart)
+                Hold.Velocity = Vector3.new(0,0,0)
+                Hold.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+                Hold.P = 9000
+                for r, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                    if v:IsA("BasePart") then
+                        v.CanCollide = false
+                    end
+                end
+            end
+        elseif not Clip and game.Players.LocalPlayer.Character.PrimaryPart:FindFirstChild("BodyVelocity") then
+            game.Players.LocalPlayer.Character.PrimaryPart:FindFirstChild("BodyVelocity"):Destroy()
         end
     end)
 end)
