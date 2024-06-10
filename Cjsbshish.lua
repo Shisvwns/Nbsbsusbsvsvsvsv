@@ -1277,7 +1277,7 @@ function UpdatePlayerChams()
                         name.TextStrokeTransparency = 0.5
 						if game:GetService("Players").LocalPlayer.Team.Name == "Marines" then
 							name.TextColor3 = Color3.new(0,0,255)
-						else game:GetService("Players").LocalPlayer.Team.Name == "Pirates" then
+						elseif game:GetService("Players").LocalPlayer.Team.Name == "Pirates" then
 							name.TextColor3 = Color3.new(255,0,0)
 						end
                     elseif game:GetService("Players").LocalPlayer.Team.Name == "Marines"
