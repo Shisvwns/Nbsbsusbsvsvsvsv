@@ -1699,19 +1699,25 @@ end)
 spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
         if Clip then
-            if not game.Players.LocalPlayer.Character.PrimaryPart:FindFirstChild("BodyVelocity") then
-                local Hold = Instance.new("BodyVelocity", game.Players.LocalPlayer.Character.PrimaryPart)
-                Hold.Velocity = Vector3.new(0,0,0)
-                Hold.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
-                Hold.P = 9000
+            if not game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
+                local ag = Instance.new("BodyVelocity")
+                ag.Velocity = Vector3.new(0, 0, 0)
+                ag.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+                ag.P = 9000
+                ag.Parent = game.Players.LocalPlayer.Character.Head
                 for r, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
                     if v:IsA("BasePart") then
                         v.CanCollide = false
                     end
                 end
             end
-        elseif not Clip and game.Players.LocalPlayer.Character.PrimaryPart:FindFirstChild("BodyVelocity") then
-            game.Players.LocalPlayer.Character.PrimaryPart:FindFirstChild("BodyVelocity"):Destroy()
+            for _, v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
+                if v:IsA("BasePart") then
+                    v.CanCollide = false    
+                end
+            end
+        elseif not Clip and game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
+            game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity"):Destroy()
         end
     end)
 end)
@@ -2856,7 +2862,7 @@ spawn(function()
                                         EquipWeapon(_G.SelectWeapon)
                                         topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,5))
                                         if (v.Character.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 30 then
-                                            AimBotSkillPosition = v.Character.HumanoidRootPart.CFrame
+                                            AimBotSkillPosition = v.Character.HumanoidRootPart.CFrame.Position
                                             Skillaimbot = true
                                             Click()
                                             game:GetService("VirtualInputManager"):SendKeyEvent(true, "X", false, game)
@@ -3458,7 +3464,7 @@ spawn(function()
                                                 UseGunSkill = false
                                                 Skillaimbot = false
                                             end
-                                            AimBotSkillPosition = v.HumanoidRootPart.Position
+                                            AimBotSkillPosition = v.HumanoidRootPart.CFrame.Position
                                             StartMagnet = true 
                                             PosFarm = v.HumanoidRootPart.CFrame
                                             MonFarm = v.Name
@@ -7060,7 +7066,7 @@ end)
 
 Sea:AddToggle({
 	Name = "No Clip Rock",
-	Default = true,
+	Default = false,
 	Callback = function(Value)
 		_G.NoClipRock = Value
 	end
@@ -7068,30 +7074,32 @@ Sea:AddToggle({
 
 spawn(function()
 	while wait() do
-		if _G.NoClipRock or _G.SailBoat then
-			if game.Players.LocalPlayer.Character.Humanoid.Sit == true then
-				for _, v in pairs(game.Workspace.Boats:GetDescendants()) do
-					if v:IsA("BasePart") and v.CanCollide == true then
-						v.CanCollide = false
+	    pcall(function()
+			if _G.NoClipRock or _G.SailBoat then
+				if game.Players.LocalPlayer.Character.Humanoid.Sit == true then
+					for _, v in pairs(game.Workspace.Boats:GetDescendants()) do
+						if v:IsA("BasePart") and v.CanCollide == true then
+							v.CanCollide = false
+						end
+					end
+					for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+						if v:IsA("BasePart") and v.CanCollide == true then
+							v.CanCollide = false
+						end
+					end
+				elseif game.Players.LocalPlayer.Character.Humanoid.Sit == false then
+					for _, v in pairs(game.Workspace.Boats:GetDescendants()) do
+						if v:IsA("BasePart") and v.CanCollide == false then
+							v.CanCollide = true
+						end
+					end
+					for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+						if v:IsA("BasePart") and v.CanCollide == false then
+							v.CanCollide = true
+						end
 					end
 				end
-				for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
-					if v:IsA("BasePart") and v.CanCollide == true then
-						v.CanCollide = false
-					end
-				end
-			elseif game.Players.LocalPlayer.Character.Humanoid.Sit == false then
-				for _, v in pairs(game.Workspace.Boats:GetDescendants()) do
-					if v:IsA("BasePart") and v.CanCollide == false then
-						v.CanCollide = true
-					end
-				end
-				for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
-					if v:IsA("BasePart") and v.CanCollide == false then
-						v.CanCollide = true
-					end
-				end
-			end
+			end)
 		end
 	end
 end)
@@ -7963,7 +7971,7 @@ spawn(function()
                                     topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 5))
                                     UseSkillTrial = true
                                     SpamOnRace = true
-                                    AimBotSkillPosition = v.Character.HumanoidRootPart.CFrame
+                                    AimBotSkillPosition = v.Character.HumanoidRootPart.CFrame.Position
                                     Skillaimbot = true
                                     Click()
                                 until _G.KillAfterTrials == false or v.Humanoid.Health <= 0 or not v.Parent or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid")
