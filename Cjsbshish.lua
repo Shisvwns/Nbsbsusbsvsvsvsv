@@ -1854,6 +1854,8 @@ gg.__namecall = newcclosure(function(...)
 	return old(...)
 end)
 
+local gt = getrawmetatable(game)
+local old = gt.__namecall
 setreadonly(gt,false)
 gt.__namecall = newcclosure(function(...)
     local args = {...}
