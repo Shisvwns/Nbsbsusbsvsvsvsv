@@ -1275,15 +1275,9 @@ function UpdatePlayerChams()
                         name.TextYAlignment = 'Top'
                         name.BackgroundTransparency = 1
                         name.TextStrokeTransparency = 0.5
-						if game:GetService("Players").LocalPlayer.Team.Name == "Marines" then
-							name.TextColor3 = Color3.new(0,0,255)
-						elseif game:GetService("Players").LocalPlayer.Team.Name == "Pirates" then
-							name.TextColor3 = Color3.new(255,0,0)
-						end
-                    elseif game:GetService("Players").LocalPlayer.Team.Name == "Marines"
-                        v.Character.Head['NameEsp'..Number].TextLabel.Text = ('[ Player: '..v.Name..' ] - [ Marines ]\n[ Health: '..math.floor(v.Character.Humanoid.Health)..'/'..v.Character.Humanoid.MaxHealth..' ] - [ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3)..'m ]')
-                    elseif game:GetService("Players").LocalPlayer.Team.Name == "Pirates" then
-                        v.Character.Head['NameEsp'..Number].TextLabel.Text = ('[ Player: '..v.Name..' ] - [ Pirates ]\n[ Health: '..math.floor(v.Character.Humanoid.Health)..'/'..v.Character.Humanoid.MaxHealth..' ] - [ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3)..'m ]')
+                        name.TextColor3 = Color3.new(0,255,0)
+                    else
+                        v.Character.Head['NameEsp'..Number].TextLabel.Text = ('[ Player: '..v.Name..' ]\n[ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3)..'m ]')
                     end
                 else
                     if v.Character.Head:FindFirstChild('NameEsp'..Number) then
