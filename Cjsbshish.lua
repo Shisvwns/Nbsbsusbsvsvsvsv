@@ -1833,6 +1833,8 @@ spawn(function()
     end)
 end)
 
+-- [ Aimbot Farm ]
+
 local gg = getrawmetatable(game)
 local old = gg.__namecall
 setreadonly(gg,false)
@@ -1850,6 +1852,20 @@ gg.__namecall = newcclosure(function(...)
 		end
 	end
 	return old(...)
+end)
+
+setreadonly(gt,false)
+gt.__namecall = newcclosure(function(...)
+    local args = {...}
+    if getnamecallmethod() == "InvokeServer" then 
+        if tostring(args[2]) == "TAP" then
+            if Skillaimbot then
+                args[3] = AimBotSkillPosition
+                return old(unpack(args))
+            end
+        end
+    end
+    return old(...)
 end)
 
 -- [ Effect ]
@@ -2839,6 +2855,7 @@ spawn(function()
                                         topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,5))
                                         if (v.Character.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 30 then
                                             AimBotSkillPosition = v.Character.HumanoidRootPart.CFrame
+                                            Skillaimbot = true
                                             Click()
                                             game:GetService("VirtualInputManager"):SendKeyEvent(true, "X", false, game)
                                             game:GetService("VirtualInputManager"):SendKeyEvent(false, "X", false, game)
@@ -2847,6 +2864,7 @@ spawn(function()
                                             game:GetService("VirtualInputManager"):SendKeyEvent(false, "Z", false, game)
                                         end
                                     until not _G.FarmSkip or not v:FindFirstChild("HumanoidRootPart") or v.Character.Humanoid.Health <= 0
+                                    Skillaimbot = false
                                 end
                             end
                         else
@@ -7807,7 +7825,9 @@ spawn(function()
 			elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Fishman" then
 				for i,v in pairs(game:GetService("Workspace").SeaBeasts.SeaBeast1:GetDescendants()) do
 					if v.Name ==  "HumanoidRootPart" then
-						topos(v.CFrame* Pos)
+						topos(v.CFrame* PosSea)
+						Skillaimbot = true
+						AimBotSkillPosition = v.HumanoidRootPart.CFrame.Position
 						for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
 							if v:IsA("Tool") then
 								if v.ToolTip == "Melee" then -- "Blox Fruit" , "Sword" , "Wear" , "Agility"
@@ -7817,10 +7837,10 @@ spawn(function()
 						end
 						game:GetService("VirtualInputManager"):SendKeyEvent(true,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
 						game:GetService("VirtualInputManager"):SendKeyEvent(false,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
-						wait(.2)
+						wait()
 						game:GetService("VirtualInputManager"):SendKeyEvent(true,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
 						game:GetService("VirtualInputManager"):SendKeyEvent(false,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
-						wait(.2)
+						wait()
 						game:GetService("VirtualInputManager"):SendKeyEvent(true,99,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
 						game:GetService("VirtualInputManager"):SendKeyEvent(false,99,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
 						for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
@@ -7832,10 +7852,10 @@ spawn(function()
 						end
 						game:GetService("VirtualInputManager"):SendKeyEvent(true,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
 						game:GetService("VirtualInputManager"):SendKeyEvent(false,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
-						wait(.2)
+						wait()
 						game:GetService("VirtualInputManager"):SendKeyEvent(true,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
 						game:GetService("VirtualInputManager"):SendKeyEvent(false,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
-						wait(.2)
+						wait()
 						game:GetService("VirtualInputManager"):SendKeyEvent(true,99,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
 						game:GetService("VirtualInputManager"):SendKeyEvent(false,99,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
 						wait(0.5)
@@ -7848,10 +7868,10 @@ spawn(function()
 						end
 						game:GetService("VirtualInputManager"):SendKeyEvent(true,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
 						game:GetService("VirtualInputManager"):SendKeyEvent(false,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
-						wait(.2)
+						wait()
 						game:GetService("VirtualInputManager"):SendKeyEvent(true,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
 						game:GetService("VirtualInputManager"):SendKeyEvent(false,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
-						wait(.2)
+						wait()
 						game:GetService("VirtualInputManager"):SendKeyEvent(true,99,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
 						game:GetService("VirtualInputManager"):SendKeyEvent(false,99,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
 						wait(0.5)
@@ -7864,10 +7884,10 @@ spawn(function()
 						end
 						game:GetService("VirtualInputManager"):SendKeyEvent(true,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
 						game:GetService("VirtualInputManager"):SendKeyEvent(false,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
-						wait(.2)
+						wait()
 						game:GetService("VirtualInputManager"):SendKeyEvent(true,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
 						game:GetService("VirtualInputManager"):SendKeyEvent(false,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
-						wait(.2)
+						wait()
 						game:GetService("VirtualInputManager"):SendKeyEvent(true,99,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
 						game:GetService("VirtualInputManager"):SendKeyEvent(false,99,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
 					end
