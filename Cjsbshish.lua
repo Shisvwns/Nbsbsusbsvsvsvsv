@@ -1823,7 +1823,7 @@ function CheckCakePrinceStatus()
                 return "Dough King Spawned"
             end
         else
-            return "Defeat: "..tonumber(string.match(game.ReplicatedStorage.Remotes.CommF_:InvokeServer("CakePrinceSpawner", true), "%d+")).."/500"
+            return tonumber(string.match(game.ReplicatedStorage.Remotes.CommF_:InvokeServer("CakePrinceSpawner", true), "%d+")).."/500 Mobs Remaining"
         end
     end)
     if ab then
