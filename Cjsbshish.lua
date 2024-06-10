@@ -1631,8 +1631,8 @@ function StopTween(target)
         wait()
         topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
         wait()
-        SiTopTween = false
         Clip = false
+        SiTopTween = false
     end
 end
 
@@ -1695,25 +1695,6 @@ spawn(function()
 end)
 
 -- [ No Clip Farm ]
-
-spawn(function()
-    game:GetService("RunService").Stepped:Connect(function()
-        if Clip then
-            if not game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
-                local Hold = Instance.new("BodyVelocity", game.Players.LocalPlayer.Character.PrimaryPart)
-                Hold.Velocity = Vector3.new(0,0,0)
-                Hold.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
-                for r, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
-                    if v:IsA("BasePart") then
-                        v.CanCollide = false
-                    end
-                end
-            end
-        elseif not Clip and game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
-            game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity"):Destroy()
-        end
-    end)
-end)
 
 spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
@@ -1873,16 +1854,6 @@ end)
 
 -- [ Effect ]
 
-task.spawn(function() -- Remove Effect
-  local _hookfunc = (hookfunction or hookfunc or function(...) end)
-  local Container = game.ReplicatedStorage.Effect.Container
-  local Death = Container:FindFirstChild("Death")
-  local Respawn = Container:FindFirstChild("Respawn")
-  if Death and Respawn then
-    _hookfunc(Death.Destroy, function() return nil end)
-    _hookfunc(Respawn.Destroy, function() return nil end)
-  end
-end)
 require(game.ReplicatedStorage.Util.CameraShaker):Stop()
 game:GetService("ReplicatedStorage").Util.Sound.Storage.Swing:Destroy()
 
