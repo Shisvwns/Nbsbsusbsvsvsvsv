@@ -1850,8 +1850,10 @@ task.spawn(function() -- Remove Effect
   local Container = game.ReplicatedStorage.Effect.Container
   local Death = Container:FindFirstChild("Death")
   local Respawn = Container:FindFirstChild("Respawn")
-  _hookfunc(Death, function() return nil end)
-  _hookfunc(Respawn, function() return nil end)
+  if Death and Respawn then
+    _hookfunc(Death.Destroy, function() return nil end)
+    _hookfunc(Respawn.Destroy, function() return nil end)
+  end
 end)
 require(game.ReplicatedStorage.Util.CameraShaker):Stop()
 game:GetService("ReplicatedStorage").Util.Sound.Storage.Swing:Destroy()
@@ -2141,6 +2143,7 @@ spawn(function()
                 for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                     if _G.AutoFarm or _G.AutoFarmFruitMastery or _G.AutoFarmGunMastery or _G.AutoSwordMastery then
                         if StartMagnet and v.Name == Mon and (v.HumanoidRootPart.Position - PosFarm.Position).Magnitude <= 300 then
+                            wait(0.5)
                             v.HumanoidRootPart.CFrame = PosFarm
                             v.Humanoid:ChangeState(14)
                         end
