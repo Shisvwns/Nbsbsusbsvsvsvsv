@@ -1583,7 +1583,7 @@ function topos(Pos)
         local PartTele = Instance.new("Part", lp.Character)
         PartTele.Size = Vector3.new(0,0,0)
         PartTele.Name = "PartTele"
-        PartTele.Anchored = true
+        PartTele.Anchored = false
         PartTele.Transparency = 1
         PartTele.CanCollide = false
         PartTele.CFrame = WaitHRP(lp).CFrame 
@@ -4555,6 +4555,7 @@ Other:AddToggle({
 	Default = false,
 	Callback = function(Value)
 		_G.ChestBypass = Value
+		StopTween(_G.ChestBypass)
 	end
 })
 
