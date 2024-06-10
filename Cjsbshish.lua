@@ -1577,6 +1577,7 @@ function CalcDistance(I, II)
     end 
     return (Vector3.new(I.X, 0, I.Z)-Vector3.new(II.X, 0, II.Z)).Magnitude 
 end 
+local stoppos = {}
 function topos(Pos)
     if not Pos then return end 
     if not lp.Character:FindFirstChild("PartTele") then
@@ -1613,6 +1614,10 @@ function topos(Pos)
     Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
     Tween:Play() 
     Clip = true
+    function stoppos:Stop()
+        Tween:Cancel()
+    end
+    return stoppos
 end
 
 function Tween(Pos)
@@ -1622,8 +1627,10 @@ function Tween(Pos)
 end
 
 function StopTween(target)
-    topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
-    Clip = false
+    if not target then
+        topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
+        Clip = false
+    end
 end
 
 -- [ Pos Farm ]
