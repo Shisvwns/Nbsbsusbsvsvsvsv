@@ -2146,6 +2146,7 @@ spawn(function()
                             wait(0.5)
                             v.HumanoidRootPart.CFrame = PosFarm
                             v.Humanoid:ChangeState(14)
+                            wait(0.5)
                         end
                     end
                     if MagnetNear then
