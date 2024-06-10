@@ -1724,7 +1724,7 @@ spawn(function()
     end)
 end)
 
--- [ Miscellaneous ]
+-- [ Check Status ]
 
 spawn(function()
 	while wait() do
@@ -1810,20 +1810,29 @@ function FullMoobCheck()
     return function8()
 end
 
-if game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit') then
-    game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit'):Destroy()
+function CheckCakePrinceStatus()
+    ab, bb = pcall(function()
+        if not World3 then
+            return "Please Go To Third Sea!"
+        end
+        if CheckBoss("Cake Prince [Lv. 2300] [Raid Boss]") or CheckBoss("Dough King [Lv. 2300] [Raid Boss]") then
+            if CheckBoss("Cake Prince [Lv. 2300] [Raid Boss]") then
+                return "Cake Prince Spawned"
+            end
+            if CheckBoss("Dough King [Lv. 2300] [Raid Boss]") then
+                return "Dough King Spawned"
+            end
+        else
+            return "Defeat: "..tonumber(string.match(game.ReplicatedStorage.Remotes.CommF_:InvokeServer("CakePrinceSpawner", true), "%d+")).."/500"
+        end
+    end)
+    if ab then
+        return bb
+    end
+    return "None"
 end
 
-function StartDialog(DialogName)
-    local ReplicatedStorage = game:GetService("ReplicatedStorage")
-    local DialogueController = require(ReplicatedStorage.DialogueController)
-    local DialoguesList = require(ReplicatedStorage.DialoguesList)
-    for Index,Dialog in pairs(DialoguesList) do
-        if tostring(Index) == DialogName then
-            DialogueController.Start(DialogueController, Dialog)
-        end
-    end
-end
+-- [ Aimbot Farm ]
 
 spawn(function()
     game:GetService("RunService").RenderStepped:Connect(function()
@@ -1840,8 +1849,6 @@ spawn(function()
         end)
     end)
 end)
-
--- [ Aimbot Farm ]
 
 local gg = getrawmetatable(game)
 local old = gg.__namecall
@@ -1880,6 +1887,9 @@ end)
 
 -- [ Effect ]
 
+if game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit') then
+    game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit'):Destroy()
+end
 require(game.ReplicatedStorage.Util.CameraShaker):Stop()
 game:GetService("ReplicatedStorage").Util.Sound.Storage.Swing:Destroy()
 
@@ -2946,19 +2956,7 @@ local StatusCakePrince = Farm:AddParagraph("Cake Prince")
 
 spawn(function()
     while wait() do
-        if World3 then
-            if string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 88 then
-                StatusCakePrince:Set("Defeat: "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,41).."/500")
-            elseif string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 87 then
-                StatusCakePrince:Set("Defeat: "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,40).."/500")
-            elseif string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 86 then
-                StatusCakePrince:Set("Defeat: "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,39).."/500")
-            else
-                StatusCakePrince:Set("Boss Is Spawning")
-            end
-        elseif World1 or World2 then
-            StatusCakePrince:Set("Please Go To Third Sea!")
-        end
+        StatusCakePrince:Set(StatusCakePrince())
     end
 end)
 
@@ -6332,6 +6330,17 @@ Player:AddButton({
     end
 })
 
+function StartDialog(DialogName)
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+    local DialogueController = require(ReplicatedStorage.DialogueController)
+    local DialoguesList = require(ReplicatedStorage.DialoguesList)
+    for Index,Dialog in pairs(DialoguesList) do
+        if tostring(Index) == DialogName then
+            DialogueController.Start(DialogueController, Dialog)
+        end
+    end
+end
+
 Player:AddButton({
     Name = "Open Title",
     Callback = function()
@@ -8616,19 +8625,7 @@ local KillCake = StatusServer:AddParagraph("Cake Prince")
 
 spawn(function()
     while wait() do
-        if World3 then
-            if string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 88 then
-                KillCake:Set("Defeat: "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,41).."/500")
-            elseif string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 87 then
-                KillCake:Set("Defeat: "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,40).."/500")
-            elseif string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 86 then
-                KillCak:Set("Defeat: "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,39).."/500")
-            else
-                KillCake:Set("Boss Is Spawning")
-            end
-        elseif World1 or World2 then
-            KillCake:Set("Please Go To Third Sea!")
-        end
+        KillCake:Set(StatusCakePrince())
     end
 end)
 
