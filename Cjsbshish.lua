@@ -1737,6 +1737,19 @@ spawn(function()
 	end
 end)
 
+function CheckMob(MobName)
+    for i, v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
+        if v.Name == MobName then
+            return v
+        end
+    end
+    for i, v in pairs(game.workspace.Enemies:GetChildren()) do
+        if v.Name == MobName then
+            return v
+        end
+    end
+end
+
 function MoonTextureId()
     if World1 then
         return game:GetService("Lighting").FantasySky.MoonTextureId
@@ -1810,26 +1823,46 @@ function FullMoobCheck()
     return function8()
 end
 
-function CheckCakePrinceStatus()
-    ab, bb = pcall(function()
-        if not World3 then
-            return "Please Go To Third Sea!"
+function CheckCakeSpawn()
+    if World3 then
+        if string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 88 then
+            return "Defeat: "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,41).."/500 Mobs"
+        elseif string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 87 then
+            return "Defeat: "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,40).."/500 Mobs"
+        elseif string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 86 then
+            return "Defeat: "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,39).."/500 Mobs"
+        elseif CheckMob("Cake Prince") then
+            return "Cake Prince Spawned"
+        elseif CheckMob("Dough King") then
+            return "Dough King Spawned"
         end
-        if CheckBoss("Cake Prince [Lv. 2300] [Raid Boss]") or CheckBoss("Dough King [Lv. 2300] [Raid Boss]") then
-            if CheckBoss("Cake Prince [Lv. 2300] [Raid Boss]") then
-                return "Cake Prince Spawned"
-            end
-            if CheckBoss("Dough King [Lv. 2300] [Raid Boss]") then
-                return "Dough King Spawned"
-            end
-        else
-            return tonumber(string.match(game.ReplicatedStorage.Remotes.CommF_:InvokeServer("CakePrinceSpawner", true), "%d+")).."/500 Mobs Remaining"
-        end
-    end)
-    if ab then
-        return bb
+    elseif World1 or World2 then
+        return "Defeat: 500/500 Mobs"
     end
-    return "None"
+end
+
+function CheckElite()
+    if CheckMob("Diablo") then
+        return "Diablo Spawned"
+    elseif CheckMob("Deandre")
+        return "Deandre Spawned"
+    elseif CheckMob("Urban")
+        return "Urban Spawned"
+    else
+        return "Elite Not Spawned"
+    end
+end
+
+function CheckSword()
+    if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer", "1") then
+        return "Sword Name: Shisui"
+    elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer","2") then
+        return "Sword Name: Wando"
+    elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer","3") then
+        return "Sword Name: Saddi"
+    else
+        return "Not Found Legendary Sword Dealer"
+    end
 end
 
 -- [ Aimbot Farm ]
@@ -2163,7 +2196,7 @@ spawn(function()
 end)
 
 Setting:AddToggle({
-	Name = "Bring Monster",
+	Name = "Bring Mobs",
 	Default = true,
 	Callback = function(Value)
 		_G.BringMonster = Value
@@ -2429,41 +2462,6 @@ spawn(function()
 			game:GetService("ReplicatedStorage").Assets.GUI.DamageCounter.Enabled = true
 		end
 	end
-end)
-
-Setting:AddToggle({
-	Name = "Hide Monster",
-	Default = false,
-	Callback = function(Value)
-		_G.invmob = Value
-	end
-})
-
-spawn(function()
-    while wait() do
-        if _G.invmob then
-            for i,v in pairs(game:GetService("Workspace").Enemies:GetDescendants()) do
-                if v.ClassName == "MeshPart" then
-                    v.Transparency = 1
-                end
-            end
-            for i,v in pairs(game:GetService("Workspace").Enemies:GetDescendants()) do
-                if v.Name == "Head" then
-                    v.Transparency = 1
-                end
-            end
-            for i,v in pairs(game:GetService("Workspace").Enemies:GetDescendants()) do
-                if v.ClassName == "Accessory" then
-                    v.Handle.Transparency = 1
-                end
-            end
-            for i,v in pairs(game:GetService("Workspace").Enemies:GetDescendants()) do
-                if v.ClassName == "Decal" then
-                    v.Transparency = 1
-                end
-            end
-        end
-    end
 end)
 
 Setting:AddSlider({
@@ -2956,7 +2954,7 @@ local StatusCakePrince = Farm:AddParagraph("Cake Prince")
 
 spawn(function()
     while wait() do
-        StatusCakePrince:Set(tostring(CheckCakePrinceStatus()))
+        StatusCakePrince:Set(CheckCakeSpawn())
     end
 end)
 
@@ -3491,7 +3489,7 @@ spawn(function()
 end)
 
 Farm:AddSlider({
-	Name = "Kill Monster At % Health",
+	Name = "Kill Mobs At % Health",
 	Min = 0,
 	Max = 100,
 	Default = 20,
@@ -3749,7 +3747,7 @@ spawn(function()
 end)
 
 local Section = Farm:AddSection({
-    Name = "~ Monster ~"
+    Name = "~ Mobs ~"
 })
 
 if World1 then
@@ -3761,7 +3759,7 @@ elseif World3 then
 end
 
 Farm:AddDropdown({
-	Name = "Select Monster",
+	Name = "Select Mobs",
 	Default = "",
 	Options = TableMon,
 	Callback = function(Value)
@@ -3770,7 +3768,7 @@ Farm:AddDropdown({
 })
 
 Farm:AddToggle({
-	Name = "Auto Farm Monster",
+	Name = "Auto Farm Mobs",
 	Default = false,
 	Callback = function(Value)
 		_G.AutoFarmMob = Value
@@ -4490,13 +4488,9 @@ local EliteStatus = Other:AddParagraph("Elite")
 
 spawn(function()
     while wait() do
-        if game:GetService("ReplicatedStorage"):FindFirstChild("Diablo") or game:GetService("ReplicatedStorage"):FindFirstChild("Deandre") or game:GetService("ReplicatedStorage"):FindFirstChild("Urban") or game:GetService("Workspace").Enemies:FindFirstChild("Diablo") or game:GetService("Workspace").Enemies:FindFirstChild("Deandre") or game:GetService("Workspace").Enemies:FindFirstChild("Urban") then
-            EliteStatus:Set("Spawn")	
-        else
-            EliteStatus:Set("Not Spawn")	
-        end
+        EliteStatus:Set(CheckElite())
     end
-end)
+end)  
 
 Other:AddToggle({
 	Name = "Auto Kill Elite",
@@ -4977,15 +4971,7 @@ local LegendSwords = ItemQuest:AddParagraph("Legendary Sword Dealer")
 
 spawn(function()
     while wait() do
-        if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer", "1") then
-            LegendSwords:Set("Sword Name: Shisui")
-        elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer","2") then
-            LegendSwords:Set("Sword Name: Wando")
-        elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer","3") then
-            LegendSwords:Set("Sword Name: Saddi")
-        else
-            LegendSwords:Set("Not Found Legendary Sword Dealer")
-        end
+        LegendSwords:Set(CheckSword())
     end
 end)
 
@@ -7286,7 +7272,7 @@ Sea:AddToggle({
 })
 
 local Section = Sea:AddSection({
-    Name = "~ Monster Sea Event ~"
+    Name = "~ Mobs Sea Event ~"
 })
 
 Sea:AddToggle({
@@ -8625,7 +8611,7 @@ local KillCake = StatusServer:AddParagraph("Cake Prince")
 
 spawn(function()
     while wait() do
-        KillCake:Set(tostring(CheckCakePrinceStatus()))
+        KillCake:Set(CheckCakeSpawn())
     end
 end)
 
@@ -8633,15 +8619,7 @@ local LegendSwords1 = StatusServer:AddParagraph("Legendary Sword Dealer")
 
 spawn(function()
     while wait() do
-        if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer", "1") then
-            LegendSwords1:Set("Sword Name: Shisui")
-        elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer","2") then
-            LegendSwords1:Set("Sword Name: Wando")
-        elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer","3") then
-            LegendSwords1:Set("Sword Name: Saddi")
-        else
-            LegendSwords1:Set("Not Found Legendary Sword Dealer")
-        end
+        LegendSwords1:Set(CheckSword())
     end
 end)
 
@@ -8661,11 +8639,7 @@ local Elite = StatusServer:AddParagraph("Elite")
 
 spawn(function()
     while wait() do
-        if game:GetService("ReplicatedStorage"):FindFirstChild("Diablo") or game:GetService("ReplicatedStorage"):FindFirstChild("Deandre") or game:GetService("ReplicatedStorage"):FindFirstChild("Urban") or game:GetService("Workspace").Enemies:FindFirstChild("Diablo") or game:GetService("Workspace").Enemies:FindFirstChild("Deandre") or game:GetService("Workspace").Enemies:FindFirstChild("Urban") then
-            Elite:Set("Spawn")	
-        else
-            Elite:Set("Not Spawn")	
-        end
+        Elite:Set(CheckElite())
     end
 end)
 
