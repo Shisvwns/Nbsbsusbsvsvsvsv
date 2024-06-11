@@ -1924,7 +1924,7 @@ gg.__namecall = newcclosure(function(...)
 	if tostring(method) == "FireServer" then
 		if tostring(args[1]) == "RemoteEvent" then
 			if tostring(args[2]) ~= "true" and tostring(args[2]) ~= "false" then
-				if Skillaimbot then
+				if Skillaimbot or Skillaimbotpl then
 					args[2] = AimBotSkillPosition
 					return old(unpack(args))
 				end
@@ -1941,7 +1941,7 @@ gt.__namecall = newcclosure(function(...)
     local args = {...}
     if getnamecallmethod() == "InvokeServer" then 
         if tostring(args[2]) == "TAP" then
-            if Skillaimbot then
+            if Skillaimbot or Skillaimbotpl then
                 args[3] = AimBotSkillPosition
                 return old(unpack(args))
             end
@@ -5001,12 +5001,6 @@ local Section = ItemQuest:AddSection({
 
 local LegendSwords = ItemQuest:AddParagraph("Legendary Sword Dealer")
 
-spawn(function()
-    while wait() do
-        LegendSwords:Set(CheckSword())
-    end
-end)
-
 ItemQuest:AddToggle({
 	Name = "Auto Buy Legendary Sword",
 	Default = false,
@@ -5061,6 +5055,7 @@ local ColorHaki = ItemQuest:AddParagraph("Haki Dealer")
 
 spawn(function()
     while wait() do
+        LegendSwords:Set(CheckSword())
         ColorHaki:Set(CheckHaki())
     end
 end)
@@ -5149,7 +5144,6 @@ spawn(function()
                 if game:GetService("Workspace").Enemies:FindFirstChild("Captain Elephant") then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == "Captain Elephant" then
-                            OldCFrameRainbow = v.HumanoidRootPart.CFrame
                             repeat task.wait()
                                 EquipWeapon(_G.SelectWeapon)
                                 topos(v.HumanoidRootPart.CFrame * Pos)
@@ -5190,7 +5184,7 @@ local Section = ItemQuest:AddSection({
 })
 
 ItemQuest:AddToggle({
-	Name = "Auto Get Soul Guitar",
+	Name = "Auto Get Soul Guitar [ Not Work ]",
 	Default = false,
 	Callback = function(Value)
 		_G.AutoNevaSoulGuitar = Value
@@ -6552,94 +6546,32 @@ spawn(function()
 end)
 
 local Section = PvP:AddSection({
-    Name = "~ Aimbot ~"
-})
-
-PvP:AddSlider({
-	Name = "Size Fov Aimbot Skill",
-	Min = 0,
-	Max = 500,
-	Default = 100,
-	Color = Color3.fromRGB(255,255,255),
-	Increment = 1,
-	ValueName = "",
-	Callback = function(Value)
-		_G.Select_Size_Fov = Value
-	end
-})
-
-PvP:AddToggle({
-	Name = "Show Fov Aimbot Skill",
-	Default = false,
-	Callback = function(Value)
-		_G.Show_Fov = Value
-	end
+    Name = "~ Aimbot [ Error ] ~"
 })
 
 PvP:AddToggle({
 	Name = "Aimbot Skill To Player",
 	Default = false,
 	Callback = function(Value)
-		_G.Aimbot_Skill_Fov = Value
+		_G.Aimbotplayer = Value
 	end
 })
 
-local lp = game:GetService('Players').LocalPlayer
-local mouse = lp:GetMouse()
 spawn(function()
-	while wait() do
-		if _G.Aimbot_Skill_Fov then
-	    	local MaxDist, Closest = math.huge
-	    	for i,v in pairs(game:GetService("Players"):GetChildren()) do 
-	    		local Head = v.Character:FindFirstChild("HumanoidRootPart")
-	    		local Pos, Vis = game.Workspace.CurrentCamera.WorldToScreenPoint(game.Workspace.CurrentCamera, Head.Position)
-	    		local MousePos, TheirPos = Vector2.new(mouse.X, mouse.Y), Vector2.new(Pos.X, Pos.Y)
-	    		local Dist = (TheirPos - MousePos).Magnitude
-    			if Dist < MaxDist and Dist <= _G.Select_Size_Fov and v.Name == SelectPly then
-	    			MaxDist = Dist
-	    			_G.Aim_Players = v
-		    	end
-		    end
-		end
-	end
-end)
-spawn(function()
-	local gg = getrawmetatable(game)
-	local old = gg.__namecall
-	setreadonly(gg,false)
-	gg.__namecall = newcclosure(function(...)
-		local method = getnamecallmethod()
-		local args = {...}
-		if tostring(method) == "FireServer" then
-			if tostring(args[1]) == "RemoteEvent" then
-				if tostring(args[2]) ~= "true" and tostring(args[2]) ~= "false" then
-					if _G.Aimbot_Skill_Fov then
-						args[2] = _G.Aim_Players.Character.HumanoidRootPart.Position
-						return old(unpack(args))
-					end
-				end
-			end
-		end
-		return old(...)
-	end)
-end)
-local Circle = Drawing.new("Circle")
-Circle.Color =  Color3.fromRGB(0, 244, 0)
-Circle.Thickness = 1
-Circle.Radius = 250
-Circle.NumSides = 460
-Circle.Filled = false
-Circle.Transparency = 1
-
-game:GetService("RunService").Stepped:Connect(function()
-    Circle.Radius = _G.Select_Size_Fov
-    Circle.Thickness = 1
-    Circle.NumSides = 460
-    Circle.Position = game:GetService('UserInputService'):GetMouseLocation()
-    if _G.Show_Fov then
-        Circle.Visible = true
-    else
-        Circle.Visible = false
+    while wait() do
+        if _G.Aimbotplayer then
+            pcall(function()
+                for i, v in pairs(game.Players:GetChildren()) do
+                    if v.Name ~= SelectPly then
+                        repeat task.wait()
+                            AimBotSkillPosition = v.Character.HumanoidRootPart.CFrame.Position
+                            Skillaimbotpl = true
+                        until _G.Aimbotplayer == false or v.Humanoid.Health <= 0 or not v.Parent or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid")
+                        Skillaimbotpl = false
+                    end
+                end
+            end)
+        end
     end
 end)
 
@@ -8613,6 +8545,12 @@ function UpdateTime()
     Time:Set(Hour.." Hour | "..Minute.." Minute | "..Second.." Seconds")
 end
 
+spawn(function()
+    while task.wait() do
+        UpdateTime()
+    end
+end)
+
 local Moon = StatusServer:AddParagraph("Moon")
 
 local KillCake = StatusServer:AddParagraph("Cake Prince")
@@ -8631,7 +8569,6 @@ local Frozen = StatusServer:AddParagraph("Frozen Dimension")
 
 spawn(function()
     while task.wait() do
-        UpdateTime()
         Moon:Set(CheckMoon().." | "..function7().." | "..function8())
         KillCake:Set(CheckCakeSpawn())
         LegendSwords1:Set(CheckSword())
