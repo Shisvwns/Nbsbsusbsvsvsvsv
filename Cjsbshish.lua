@@ -6546,7 +6546,7 @@ spawn(function()
 end)
 
 local Section = PvP:AddSection({
-    Name = "~ Aimbot [ Error ] ~"
+    Name = "~ Aimbot ~"
 })
 
 PvP:AddToggle({
@@ -6562,7 +6562,7 @@ spawn(function()
         if _G.Aimbotplayer then
             pcall(function()
                 for i, v in pairs(game.Players:GetChildren()) do
-                    if v.Name ~= SelectPly then
+                    if v.Name == SelectPly then
                         repeat task.wait()
                             AimBotSkillPosition = v.Character.HumanoidRootPart.CFrame.Position
                             Skillaimbotpl = true
