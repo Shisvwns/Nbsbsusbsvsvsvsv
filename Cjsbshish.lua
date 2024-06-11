@@ -1844,9 +1844,9 @@ end
 function CheckElite()
     if CheckMob("Diablo") then
         return "Diablo Spawned"
-    elseif CheckMob("Deandre")
+    elseif CheckMob("Deandre") then
         return "Deandre Spawned"
-    elseif CheckMob("Urban")
+    elseif CheckMob("Urban") then
         return "Urban Spawned"
     else
         return "Elite Not Spawned"
