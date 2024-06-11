@@ -6561,7 +6561,7 @@ spawn(function()
     while wait() do
         if _G.Aimbotplayer then
             pcall(function()
-                for i, v in pairs(game.Players:GetChildren()) do
+                for i, v in pairs(game:GetService("Players"):GetPlayers()) do
                     if v.Name == SelectPly then
                         repeat task.wait()
                             AimBotSkillPosition = v.Character.HumanoidRootPart.CFrame.Position
