@@ -1750,6 +1750,14 @@ function CheckMob(MobName)
     end
 end
 
+function UpdateTime()
+    local GameTime = math.floor(workspace.DistributedGameTime+0.5)
+    local Hour = math.floor(GameTime/(60^2))%24
+    local Minute = math.floor(GameTime/(60^1))%60
+    local Second = math.floor(GameTime/(60^0))%60
+    Time:Set(Hour.." Hour | "..Minute.." Minute | "..Second.." Seconds")
+end
+
 function MoonTextureId()
     if World1 then
         return game:GetService("Lighting").FantasySky.MoonTextureId
@@ -1877,7 +1885,7 @@ function CheckMirage()
     if game.Workspace._WorldOrigin.Locations:FindFirstChild('Mirage Island') then
         return "Spawned"
     else
-        return "Not Spawned")
+        return "Not Spawned"
     end
 end
 
@@ -8604,14 +8612,6 @@ local Section = StatusServer:AddSection({
 })
 
 local Time = StatusServer:AddParagraph("Time Played")
-
-function UpdateTime()
-    local GameTime = math.floor(workspace.DistributedGameTime+0.5)
-    local Hour = math.floor(GameTime/(60^2))%24
-    local Minute = math.floor(GameTime/(60^1))%60
-    local Second = math.floor(GameTime/(60^0))%60
-    Time:Set(Hour.." Hour | "..Minute.." Minute | "..Second.." Seconds")
-end
 
 local Moon = StatusServer:AddParagraph("Moon")
 
