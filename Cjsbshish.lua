@@ -1698,28 +1698,28 @@ end)
 
 spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
-    pcall(function()
-        if Clip then
-            if not game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
-                local ag = Instance.new("BodyVelocity")
-                ag.Velocity = Vector3.new(0, 0, 0)
-                ag.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
-                ag.P = 9000
-                ag.Parent = game.Players.LocalPlayer.Character.Head
-                for r, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
-                    if v:IsA("BasePart") then
-                        v.CanCollide = false
+        pcall(function()
+            if Clip then
+                if not game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
+                    local ag = Instance.new("BodyVelocity")
+                    ag.Velocity = Vector3.new(0, 0, 0)
+                    ag.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+                    ag.P = 9000
+                    ag.Parent = game.Players.LocalPlayer.Character.Head
+                    for r, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                        if v:IsA("BasePart") then
+                            v.CanCollide = false
+                        end
                     end
                 end
-            end
-            for _, v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
-                if v:IsA("BasePart") then
-                    v.CanCollide = false    
+                for _, v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
+                    if v:IsA("BasePart") then
+                        v.CanCollide = false    
+                    end
                 end
+            elseif not Clip and game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
+                game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity"):Destroy()
             end
-        elseif not Clip and game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
-            game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity"):Destroy()
-        end
         end)
     end)
 end)
@@ -1748,6 +1748,14 @@ function CheckMob(MobName)
             return v
         end
     end
+end
+
+function UpdateTime()
+    local GameTime = math.floor(workspace.DistributedGameTime+0.5)
+    local Hour = math.floor(GameTime/(60^2))%24
+    local Minute = math.floor(GameTime/(60^1))%60
+    local Second = math.floor(GameTime/(60^0))%60
+    Time:Set(Hour.." Hour | "..Minute.." Minute | "..Second.." Seconds")
 end
 
 function MoonTextureId()
@@ -1862,6 +1870,38 @@ function CheckSword()
         return "Sword Name: Saddi"
     else
         return "Not Found Legendary Sword Dealer"
+    end
+end
+
+function CheckHaki()
+    if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer", "1") then
+        return "Haki Colors: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer", "1")
+    else
+        return "Not Found Haki Dealer"
+    end
+end
+
+function CheckMirage()
+    if game.Workspace._WorldOrigin.Locations:FindFirstChild('Mirage Island') then
+        return "Spawned"
+    else
+        return "Not Spawned")
+    end
+end
+
+function CheckKitsune()
+    if game:GetService("Workspace").Map:FindFirstChild('KitsuneIsland') then
+        return "Spawned"
+    else
+        return "Not Spawned"
+    end
+end
+
+function CheckFrozen()
+    if game.Workspace._WorldOrigin.Locations:FindFirstChild('Frozen Dimension') then
+        return "Spawned"
+    else
+        return "Not Spawned"
     end
 end
 
@@ -2175,7 +2215,7 @@ end)
 
 function Click()
     game:GetService'VirtualUser':CaptureController()
-        game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
+    game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
 end
 
 Setting:AddToggle({
@@ -5029,11 +5069,7 @@ local ColorHaki = ItemQuest:AddParagraph("Haki Dealer")
 
 spawn(function()
     while wait() do
-        if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer", "1") then
-            ColorHaki:Set("Haki Colors: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer", "1"))
-        else
-            ColorHaki:Set("Not Found Haki Dealer")
-        end
+        ColorHaki:Set(CheckHaki())
     end
 end)
 
@@ -7463,15 +7499,11 @@ local Section = Sea:AddSection({
     Name = "~ Kitsune Island ~"
 })
 
-local CheckKitsune = Sea:AddParagraph("Kitsune Island")
+local CheckKitsunee = Sea:AddParagraph("Kitsune Island")
 
 spawn(function()
     while wait() do
-        if game:GetService("Workspace").Map:FindFirstChild('KitsuneIsland') then
-            CheckKitsune:Set("Spawn")
-        else
-            CheckKitsune:Set("Not Spawn")
-        end
+        CheckKitsunee:Set(CheckKitsune())
     end
 end)
 
@@ -7705,11 +7737,7 @@ local StatusMirage = Race:AddParagraph("Mirage Island")
 
 spawn(function()
     while wait() do
-        if game.Workspace._WorldOrigin.Locations:FindFirstChild('Mirage Island') then
-            StatusMirage:Set("Spawn")
-        else
-            StatusMirage:Set("Not Spawn")
-        end
+        StatusMirage:Set(CheckMirage())
     end
 end)
 
@@ -8585,97 +8613,33 @@ local Section = StatusServer:AddSection({
 
 local Time = StatusServer:AddParagraph("Time Played")
 
-function UpdateTime()
-    local GameTime = math.floor(workspace.DistributedGameTime+0.5)
-    local Hour = math.floor(GameTime/(60^2))%24
-    local Minute = math.floor(GameTime/(60^1))%60
-    local Second = math.floor(GameTime/(60^0))%60
-    Time:Set(Hour.." Hour | "..Minute.." Minute | "..Second.." Seconds")
-end
-
-spawn(function()
-    while task.wait() do
-        UpdateTime()
-    end
-end)
-
 local Moon = StatusServer:AddParagraph("Moon")
-
-spawn(function()
-    while wait() do
-        Moon:Set(CheckMoon().." | "..function7().." | "..function8())
-    end
-end)
 
 local KillCake = StatusServer:AddParagraph("Cake Prince")
 
-spawn(function()
-    while wait() do
-        KillCake:Set(CheckCakeSpawn())
-    end
-end)
-
 local LegendSwords1 = StatusServer:AddParagraph("Legendary Sword Dealer")
-
-spawn(function()
-    while wait() do
-        LegendSwords1:Set(CheckSword())
-    end
-end)
 
 local ColorHaki1 = StatusServer:AddParagraph("Haki Dealer")
 
-spawn(function()
-    while wait() do
-        if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer", "1") then
-            ColorHaki1:Set("Haki Colors: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer", "1"))
-        else
-            ColorHaki1:Set("Not Found Haki Dealer")
-        end
-    end
-end)
-
 local Elite = StatusServer:AddParagraph("Elite")
-
-spawn(function()
-    while wait() do
-        Elite:Set(CheckElite())
-    end
-end)
 
 local Mirage = StatusServer:AddParagraph("Mirage Island")
 
-spawn(function()
-    while wait() do
-        if game.Workspace._WorldOrigin.Locations:FindFirstChild('Mirage Island') then
-            Mirage:Set("Spawn")
-        else
-            Mirage:Set("Not Spawn")
-        end
-    end
-end)
-
 local Kitsune = StatusServer:AddParagraph("Kitsune Island")
-
-spawn(function()
-    while wait() do
-        if game:GetService("Workspace").Map:FindFirstChild('KitsuneIsland') then
-            Kitsune:Set("Spawn")
-        else
-            Kitsune:Set("Not Spawn")
-        end
-    end
-end)
 
 local Frozen = StatusServer:AddParagraph("Frozen Dimension")
 
 spawn(function()
-    while wait() do
-        if game.Workspace._WorldOrigin.Locations:FindFirstChild('Frozen Dimension') then
-            Frozen:Set("Spawn")
-        else
-            Frozen:Set("Not Spawn")
-        end
+    while task.wait() do
+        UpdateTime()
+        Moon:Set(CheckMoon().." | "..function7().." | "..function8())
+        KillCake:Set(CheckCakeSpawn())
+        LegendSwords1:Set(CheckSword())
+        ColorHaki1:Set(CheckHaki())
+        Elite:Set(CheckElite())
+        Mirage:Set(CheckMirage())
+        Kitsune:Set(CheckKitsune())
+        Frozen:Set(CheckFrozen())
     end
 end)
 
