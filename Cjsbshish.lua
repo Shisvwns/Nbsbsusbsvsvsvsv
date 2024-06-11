@@ -5183,6 +5183,13 @@ function CheckTool(toolnam)
         end
     end
 end
+function CheckItem(itemcc)
+    for k, v in pairs(game:GetService("ReplicatedStorage").Remotes["CommF_"]:InvokeServer("getInventory")) do
+        if v.Name == itemcc then
+            return v
+        end
+    end
+end
 function ToposNearestChest()
     Chest = GetNearestChest()
     if Chest then 
@@ -5196,30 +5203,12 @@ function AutoDarkBeard(collectchest)
         if CheckTool("Fist of Darkness") then
             if GetDistance(game:GetService("Workspace").Map.DarkbeardArena.Summoner.Detection) <= 5 then
                 EquipWeapon("Fist of Darkness")
-                pcall(
-                    function()
-                        firetouchinterest(
-                            game.Players.LocalPlayer.Character["Fist of Darkness"].Handle,
-                            game:GetService("Workspace").Map.DarkbeardArena.Summoner.Detection,
-                            0
-                        )
-                        firetouchinterest(
-                            game.Players.LocalPlayer.Character["Fist of Darkness"].Handle,
-                            game:GetService("Workspace").Map.DarkbeardArena.Summoner.Detection,
-                            1
-                        )
-                        firetouchinterest(
-                            game.Players.LocalPlayer.Character.HumanoidRootPart,
-                            game:GetService("Workspace").Map.DarkbeardArena.Summoner.Detection,
-                            0
-                        )
-                        firetouchinterest(
-                            game.Players.LocalPlayer.Character.HumanoidRootPart,
-                            game:GetService("Workspace").Map.DarkbeardArena.Summoner.Detection,
-                            1
-                        )
-                    end
-                )
+                pcall(function()
+                    firetouchinterest(game.Players.LocalPlayer.Character["Fist of Darkness"].Handle, game:GetService("Workspace").Map.DarkbeardArena.Summoner.Detection, 0)
+                    firetouchinterest(game.Players.LocalPlayer.Character["Fist of Darkness"].Handle, game:GetService("Workspace").Map.DarkbeardArena.Summoner.Detection, 1)
+                    firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Map.DarkbeardArena.Summoner.Detection, 0)
+                    firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Map.DarkbeardArena.Summoner.Detection, 1)
+                end)
             else
                 topos(game:GetService("Workspace").Map.DarkbeardArena.Summoner.Detection.CFrame)
             end
