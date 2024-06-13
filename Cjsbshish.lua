@@ -2788,9 +2788,6 @@ spawn(function()
                     topos(CFrameMon)
                     UnEquipWeapon(_G.SelectWeapon)
                     StartMagnet = false
-                    if game:GetService("ReplicatedStorage"):FindFirstChild(Mon) then
-                        topos(game:GetService("ReplicatedStorage"):FindFirstChild(Mon).HumanoidRootPart.CFrame * CFrame.new(15, 10, 2))
-                    end
                 end
             end)
         end
@@ -2837,9 +2834,6 @@ spawn(function()
                         topos(CFrameMon)
                         UnEquipWeapon(_G.SelectWeapon)
                         StartMagnet = false
-                        if game:GetService("ReplicatedStorage"):FindFirstChild(Mon) then
-                            topos(game:GetService("ReplicatedStorage"):FindFirstChild(Mon).HumanoidRootPart.CFrame * Pos)
-                        end
                     end
                 end
             end)
@@ -3060,26 +3054,6 @@ spawn(function()
                                 topos(CakePos)
                                 MagnetDought = false
                                 UnEquipWeapon(_G.SelectWeapon)
-                                topos(CFrame.new(-2091.911865234375, 70.00884246826172, -12142.8359375))
-                                if game:GetService("ReplicatedStorage"):FindFirstChild("Cookie Crafter") then
-                                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Cookie Crafter").HumanoidRootPart.CFrame * Pos) 
-                                else
-                                    if game:GetService("ReplicatedStorage"):FindFirstChild("Cake Guard") then
-                                        topos(game:GetService("ReplicatedStorage"):FindFirstChild("Cake Guard").HumanoidRootPart.CFrame * Pos) 
-                                    else
-                                        if game:GetService("ReplicatedStorage"):FindFirstChild("Baking Staff") then
-                                            topos(game:GetService("ReplicatedStorage"):FindFirstChild("Baking Staff").HumanoidRootPart.CFrame * Pos)
-                                        else
-                                            if game:GetService("ReplicatedStorage"):FindFirstChild("Head Baker") then
-                                                topos(game:GetService("ReplicatedStorage"):FindFirstChild("Head Baker").HumanoidRootPart.CFrame * Pos)
-                                            end
-                                        end
-                                    end
-                                end
-                            end
-                        else
-                            if game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince") then
-                                topos(game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince").HumanoidRootPart.CFrame * Pos)
                             end
                         end
                     end
@@ -3104,10 +3078,6 @@ spawn(function()
                                 until not _G.AutoDoughtBoss or not v.Parent or v.Humanoid.Health <= 0
                             end
                         end
-                    end
-                else
-                    if game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince") then
-                        topos(game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince").HumanoidRootPart.CFrame * CFrame.new(5,10,2))
                     end
                 end
             end)
@@ -3149,10 +3119,9 @@ spawn(function()
                             end
                         end
                     else
+                        topos(CakePos)
                         MagnetDought = false
-                        if game:GetService("ReplicatedStorage"):FindFirstChild("Cookie Crafter") then
-                            topos(game:GetService("ReplicatedStorage"):FindFirstChild("Cookie Crafter").HumanoidRootPart.CFrame * Pos)
-                        end
+                        UnEquipWeapon(_G.SelectWeapon)
                     end
                 end
             end)
@@ -3167,40 +3136,6 @@ Farm:AddToggle({
 		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner",Value)
 	end
 })
-
-Farm:AddToggle({
-	Name = "Auto Kill Dough King",
-	Default = false,
-	Callback = function(Value)
-		_G.Autodoughking = Value
-		StopTween(_G.Autodoughking)
-	end
-})
-
-spawn(function()
-    while wait() do
-        if  _G.Autodoughking and World3 then
-            if game:GetService("Workspace").Enemies:FindFirstChild("Dough King") then
-                for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                    if v.Name == "Dough King" then
-                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                            repeat task.wait()
-                                EquipWeapon(_G.SelectWeapon)
-                                topos(v.HumanoidRootPart.CFrame * Pos)
-                            until not  _G.Autodoughking or not v.Parent or v.Humanoid.Health <= 0
-                        end
-                    end
-                end
-            else
-            UnEquipWeapon(_G.SelectWeapon)
-            topos(CFrame.new(-2662.818603515625, 1062.3480224609375, -11853.6953125))
-                if game:GetService("ReplicatedStorage"):FindFirstChild("Dough King") then
-                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Dough King").HumanoidRootPart.CFrame * Pos)
-                end
-            end
-        end
-    end
-end)
 
 local Section = Farm:AddSection({
     Name = "~ Bone ~"
@@ -3258,18 +3193,6 @@ spawn(function()
                     topos(BonePos)
                     UnEquipWeapon(_G.SelectWeapon)
                     StartMagnetBoneMon = false
-                    topos(CFrame.new(-9506.234375, 172.130615234375, 6117.0771484375))
-                    for i,v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do 
-                        if v.Name == "Reborn Skeleton" then
-                            topos(v.HumanoidRootPart.CFrame * Pos)
-                        elseif v.Name == "Living Zombie" then
-                            topos(v.HumanoidRootPart.CFrame * Pos)
-                        elseif v.Name == "Demonic Soul" then
-                            topos(v.HumanoidRootPart.CFrame * Pos)
-                        elseif v.Name == "Posessed Mummy" then
-                            topos(v.HumanoidRootPart.CFrame * Pos)
-                        end
-                    end
                 end
             end)
         end
@@ -3312,10 +3235,9 @@ spawn(function()
                             end
                         end
                     else
+                        topos(BonePos)
+                        UnEquipWeapon(_G.SelectWeapon)
                         StartMagnetBoneMon = false
-                        if game:GetService("ReplicatedStorage"):FindFirstChild("Demonic Soul [Lv. 2025]") then
-                            topos(game:GetService("ReplicatedStorage"):FindFirstChild("Demonic Soul [Lv. 2025]").HumanoidRootPart.CFrame * Pos)
-                        end
                     end
                 end
             end)
@@ -3368,6 +3290,8 @@ spawn(function()
                     end
                 end
             else
+                topos(BonePos)
+                UnEquipWeapon(_G.SelectWeapon)
                 local args = { [1] = "Bones", [2] = "Buy", [3] = 1, [4] = 1 }
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
             end
@@ -5061,22 +4985,34 @@ spawn(function()
 end)
 
 ItemQuest:AddToggle({
-	Name = "Auto Buy Haki Colors",
+	Name = "Auto Buy Haki Colors [ All Haki Colors ]",
 	Default = false,
 	Callback = function(Value)
 		_G.Auto_Buy_Enchancement = Value
 	end
 })
 
+ItemQuest:AddToggle({
+	Name = "Auto Buy Haki Colors [ Haki Legendary ]",
+	Default = false,
+	Callback = function(Value)
+		_G.Auto_Buy_Haki_Legends = Value
+	end
+})
+
 spawn(function()
 	while task.wait() do
 		if _G.Auto_Buy_Enchancement then
-			local args = {
-				[1] = "ColorsDealer",
-				[2] = "2"
-			}
-			game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
-		end 
+			game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer","2")
+		elseif _G.Auto_Buy_Haki_Legends then
+		    if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer","1") == "Snow White" then
+		        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer","2")
+		    elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer","1") == "Winter Sky" then
+		        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer","2")
+		    elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer","1") == "Pure Red" then
+		        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer","2")
+		    end
+		end
 	end
 end)
 
@@ -5105,7 +5041,6 @@ spawn(function()
                             repeat task.wait()
                                 EquipWeapon(_G.SelectWeapon)
                                 topos(v.HumanoidRootPart.CFrame * Pos)
-                                v.HumanoidRootPart.CFrame = OldCFrameRainbow
                             until _G.Auto_Rainbow_Haki == false or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
                         end
                     end
@@ -5119,7 +5054,6 @@ spawn(function()
                             repeat task.wait()
                                 EquipWeapon(_G.SelectWeapon)
                                 topos(v.HumanoidRootPart.CFrame * Pos)
-                                v.HumanoidRootPart.CFrame = OldCFrameRainbow
                             until _G.Auto_Rainbow_Haki == false or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
                         end
                     end
@@ -5147,7 +5081,6 @@ spawn(function()
                             repeat task.wait()
                                 EquipWeapon(_G.SelectWeapon)
                                 topos(v.HumanoidRootPart.CFrame * Pos)
-                                v.HumanoidRootPart.CFrame = OldCFrameRainbow
                             until _G.Auto_Rainbow_Haki == false or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
                         end
                     end
@@ -5161,7 +5094,6 @@ spawn(function()
                             repeat task.wait()
                                 EquipWeapon(_G.SelectWeapon)
                                 topos(v.HumanoidRootPart.CFrame * Pos)
-                                v.HumanoidRootPart.CFrame = OldCFrameRainbow
                             until _G.Auto_Rainbow_Haki == false or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
                         end
                     end
@@ -5319,11 +5251,8 @@ spawn(function()
                     end
                 end
             else
-            topos(TushitaPos)
-            UnEquipWeapon(_G.SelectWeapon)
-                if game:GetService("ReplicatedStorage"):FindFirstChild("Longma") then
-                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Longma").HumanoidRootPart.CFrame * Pos)
-                end
+                topos(TushitaPos)
+                UnEquipWeapon(_G.SelectWeapon)
             end
         end
     end
@@ -5460,9 +5389,6 @@ spawn(function()
             else
                 topos(NamfonPos)
                 UnEquipWeapon(_G.SelectWeapon)
-                if game:GetService("ReplicatedStorage"):FindFirstChild("Chief Warden") then
-                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Chief Warden").HumanoidRootPart.CFrame * Pos)
-                end
             end
         end
     end
@@ -5495,9 +5421,6 @@ spawn(function()
             else
                 topos(PolePos)
                 UnEquipWeapon(_G.SelectWeapon)
-                if game:GetService("ReplicatedStorage"):FindFirstChild("Thunder God") then
-                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Thunder God").HumanoidRootPart.CFrame * Pos)
-                end
             end
         end
     end
@@ -5530,9 +5453,6 @@ spawn(function()
             else
                 topos(SharkPos)
                 UnEquipWeapon(_G.SelectWeapon)
-                if game:GetService("ReplicatedStorage"):FindFirstChild("The Saw") then
-                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("The Saw").HumanoidRootPart.CFrame * Pos)
-                end
             end
         end
     end
@@ -5601,9 +5521,6 @@ spawn(function()
             else
                 topos(TridentPos)
                 UnEquipWeapon(_G.SelectWeapon)
-                if game:GetService("ReplicatedStorage"):FindFirstChild("Tide Keeper") then
-                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Tide Keeper").HumanoidRootPart.CFrame * Pos)
-                end
             end
         end
     end
@@ -5636,9 +5553,6 @@ spawn(function()
             else
                 topos(CavandisPos)
                 UnEquipWeapon(_G.SelectWeapon)
-                if game:GetService("ReplicatedStorage"):FindFirstChild("Beautiful Pirate") then
-                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Beautiful Pirate").HumanoidRootPart.CFrame * Pos)
-                end
             end
         end
     end
@@ -5671,9 +5585,6 @@ spawn(function()
             else
                 topos(BigMomPos)
                 UnEquipWeapon(_G.SelectWeapon)
-                if game:GetService("ReplicatedStorage"):FindFirstChild("Cake Queen") then
-                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Cake Queen").HumanoidRootPart.CFrame * Pos)
-                end
             end
         end
     end
@@ -5706,9 +5617,6 @@ spawn(function()
             else
                 topos(ElephantPos)
                 UnEquipWeapon(_G.SelectWeapon)
-                if game:GetService("ReplicatedStorage"):FindFirstChild("Captain Elephant") then
-                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Captain Elephant").HumanoidRootPart.CFrame * Pos)
-                end
             end
         end
     end
@@ -5743,6 +5651,8 @@ spawn(function()
                     end
                 end
             else
+                topos(BonePos)
+                UnEquipWeapon(_G.SelectWeapon)
                 local args = { [1] = "Bones", [2] = "Buy", [3] = 1, [4] = 1 }
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
             end
