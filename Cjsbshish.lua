@@ -1936,21 +1936,18 @@ end)
 
 local gt = getrawmetatable(game)
 local old = gt.__namecall
-spawn(function ()
-    setreadonly(gt,false)
-    gt.__namecall = newcclosure(function(...)
-        local args = {...}
-        if getnamecallmethod() == "InvokeServer" then 
-            if tostring(args[2]) == "TAP" then
-                if Skillaimbot or Skillaimbotpl then
-                    args[3] = AimBotSkillPosition
-                    return old(unpack(args))
-                end
+setreadonly(gt,false)
+gt.__namecall = newcclosure(function(...)
+    local args = {...}
+    if getnamecallmethod() == "InvokeServer" then 
+        if tostring(args[2]) == "TAP" then
+            if Skillaimbot or Skillaimbotpl then
+                args[3] = AimBotSkillPosition
+                return old(unpack(args))
             end
         end
-        return old(...)
-    end)
-    setreadonly(gt,true)
+    end
+    return old(...)
 end)
 
 -- [ Effect ]
@@ -8574,7 +8571,7 @@ SelectSword = {"Cutlass","Katana","Iron Mace","Dual Katana","Triple Katana","Pip
 
 Shop:AddDropdown({
     Name = "Select Sword",
-    Default = "",
+    Default = "Cutlass",
     Options = SelectSword,
     Callback = function(Value)
 		SelectSword = Value
