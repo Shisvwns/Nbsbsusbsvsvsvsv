@@ -1917,84 +1917,37 @@ end)
 
 local gg = getrawmetatable(game)
 local old = gg.__namecall
-
-spawn(function()
-    setreadonly(gg,false)
-    gg.__namecall = newcclosure(function(...)
-    	local method = getnamecallmethod()
-    	local args = {...}
-    	if tostring(method) == "FireServer" then
-    		if tostring(args[1]) == "RemoteEvent" then
-	    		if tostring(args[2]) ~= "true" and tostring(args[2]) ~= "false" then
-		    		if Skillaimbot or Skillaimbotpl then
-		    			args[2] = AimBotSkillPosition
-		    			return old(unpack(args))
-	    			end
-	    		end
-	    	end
-	    end
-    	return old(...)
-    end)
-end)
-
-spawn(function()
-    setreadonly(gg,false)
-    gg.__namecall = newcclosure(function(...)
-    local method = getnamecallmethod()
-    local args = {...}
-    	if tostring(method) == "FireServer" then
-	    	if tostring(args[1]) == "RemoteEvent" then
-	    		if tostring(args[2]) ~= "true" and tostring(args[2]) ~= "false" then
-		    		if Skillaimbot or Skillaimbotpl then
-		    			if type(args[2]) == "vector" then
-		    				args[2] = AimBotSkillPosition
-		    			else
-		    				args[2] = CFrame.new(AimBotSkillPosition)
-		    			end
-	    				return old(unpack(args))
-	    			end
-	    		end
-	    	end
-    	end
-    	return old(...)
-    end)
-end)
-
-spawn(function()
-    setreadonly(gg,false)
-    gg.__namecall = newcclosure(function(...)
-        local args = {...}
-        if getnamecallmethod() == "InvokeServer" then 
-            if tostring(args[2]) == "TAP" then
-                if Skillaimbot or Skillaimbotpl then
-                    args[3] = AimBotSkillPosition
-                    return old(unpack(args))
-                end
-            end
-        end
-        return old(...)
-    end)
-    setreadonly(gg, true)
-end)
-
-spawn(function()
-	setreadonly(gg, false)
-	gg.__namecall = newcclosure(function(...)
-		local args = {...}
-		if getnamecallmethod() == "InvokeServer" then
-			if EquipWeaponGun() then
-				if EquipWeaponGun() == EquipWeaponGun() then
-					if tostring(args[2]) == "TAP" then
-						if Skillaimbot or Skillaimbotpl then
-							args[3] = AimBotSkillPosition
-						end
-					end
+setreadonly(gg,false)
+gg.__namecall = newcclosure(function(...)
+	local method = getnamecallmethod()
+	local args = {...}
+	if tostring(method) == "FireServer" then
+		if tostring(args[1]) == "RemoteEvent" then
+			if tostring(args[2]) ~= "true" and tostring(args[2]) ~= "false" then
+				if Skillaimbot or Skillaimbotpl then
+					args[2] = AimBotSkillPosition
+					return old(unpack(args))
 				end
 			end
-		end;
-		return old(unpack(args))
-	end)
-	setreadonly(gg, true)
+		end
+	end
+	return old(...)
+end)
+
+local gt = getrawmetatable(game)
+local old = gt.__namecall
+setreadonly(gt,false)
+gt.__namecall = newcclosure(function(...)
+    local args = {...}
+    if getnamecallmethod() == "InvokeServer" then 
+        if tostring(args[2]) == "TAP" then
+            if Skillaimbot or Skillaimbotpl then
+                args[3] = AimBotSkillPosition
+                return old(unpack(args))
+            end
+        end
+    end
+    return old(...)
 end)
 
 -- [ Effect ]
@@ -2835,6 +2788,9 @@ spawn(function()
                     topos(CFrameMon)
                     UnEquipWeapon(_G.SelectWeapon)
                     StartMagnet = false
+                    if game:GetService("ReplicatedStorage"):FindFirstChild(Mon) then
+                        topos(game:GetService("ReplicatedStorage"):FindFirstChild(Mon).HumanoidRootPart.CFrame * CFrame.new(15, 10, 2))
+                    end
                 end
             end)
         end
@@ -2881,6 +2837,9 @@ spawn(function()
                         topos(CFrameMon)
                         UnEquipWeapon(_G.SelectWeapon)
                         StartMagnet = false
+                        if game:GetService("ReplicatedStorage"):FindFirstChild(Mon) then
+                            topos(game:GetService("ReplicatedStorage"):FindFirstChild(Mon).HumanoidRootPart.CFrame * Pos)
+                        end
                     end
                 end
             end)
@@ -3101,6 +3060,22 @@ spawn(function()
                                 topos(CakePos)
                                 MagnetDought = false
                                 UnEquipWeapon(_G.SelectWeapon)
+                                topos(CFrame.new(-2091.911865234375, 70.00884246826172, -12142.8359375))
+                                if game:GetService("ReplicatedStorage"):FindFirstChild("Cookie Crafter") then
+                                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Cookie Crafter").HumanoidRootPart.CFrame * Pos) 
+                                else
+                                    if game:GetService("ReplicatedStorage"):FindFirstChild("Cake Guard") then
+                                        topos(game:GetService("ReplicatedStorage"):FindFirstChild("Cake Guard").HumanoidRootPart.CFrame * Pos) 
+                                    else
+                                        if game:GetService("ReplicatedStorage"):FindFirstChild("Baking Staff") then
+                                            topos(game:GetService("ReplicatedStorage"):FindFirstChild("Baking Staff").HumanoidRootPart.CFrame * Pos)
+                                        else
+                                            if game:GetService("ReplicatedStorage"):FindFirstChild("Head Baker") then
+                                                topos(game:GetService("ReplicatedStorage"):FindFirstChild("Head Baker").HumanoidRootPart.CFrame * Pos)
+                                            end
+                                        end
+                                    end
+                                end
                             end
                         else
                             if game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince") then
@@ -3129,6 +3104,10 @@ spawn(function()
                                 until not _G.AutoDoughtBoss or not v.Parent or v.Humanoid.Health <= 0
                             end
                         end
+                    end
+                else
+                    if game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince") then
+                        topos(game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince").HumanoidRootPart.CFrame * CFrame.new(5,10,2))
                     end
                 end
             end)
@@ -3170,9 +3149,10 @@ spawn(function()
                             end
                         end
                     else
-                        topos(CakePos)
                         MagnetDought = false
-                        UnEquipWeapon(_G.SelectWeapon)
+                        if game:GetService("ReplicatedStorage"):FindFirstChild("Cookie Crafter") then
+                            topos(game:GetService("ReplicatedStorage"):FindFirstChild("Cookie Crafter").HumanoidRootPart.CFrame * Pos)
+                        end
                     end
                 end
             end)
@@ -3187,6 +3167,40 @@ Farm:AddToggle({
 		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner",Value)
 	end
 })
+
+Farm:AddToggle({
+	Name = "Auto Kill Dough King",
+	Default = false,
+	Callback = function(Value)
+		_G.Autodoughking = Value
+		StopTween(_G.Autodoughking)
+	end
+})
+
+spawn(function()
+    while wait() do
+        if  _G.Autodoughking and World3 then
+            if game:GetService("Workspace").Enemies:FindFirstChild("Dough King") then
+                for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                    if v.Name == "Dough King" then
+                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                            repeat task.wait()
+                                EquipWeapon(_G.SelectWeapon)
+                                topos(v.HumanoidRootPart.CFrame * Pos)
+                            until not  _G.Autodoughking or not v.Parent or v.Humanoid.Health <= 0
+                        end
+                    end
+                end
+            else
+            UnEquipWeapon(_G.SelectWeapon)
+            topos(CFrame.new(-2662.818603515625, 1062.3480224609375, -11853.6953125))
+                if game:GetService("ReplicatedStorage"):FindFirstChild("Dough King") then
+                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Dough King").HumanoidRootPart.CFrame * Pos)
+                end
+            end
+        end
+    end
+end)
 
 local Section = Farm:AddSection({
     Name = "~ Bone ~"
@@ -3244,6 +3258,18 @@ spawn(function()
                     topos(BonePos)
                     UnEquipWeapon(_G.SelectWeapon)
                     StartMagnetBoneMon = false
+                    topos(CFrame.new(-9506.234375, 172.130615234375, 6117.0771484375))
+                    for i,v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do 
+                        if v.Name == "Reborn Skeleton" then
+                            topos(v.HumanoidRootPart.CFrame * Pos)
+                        elseif v.Name == "Living Zombie" then
+                            topos(v.HumanoidRootPart.CFrame * Pos)
+                        elseif v.Name == "Demonic Soul" then
+                            topos(v.HumanoidRootPart.CFrame * Pos)
+                        elseif v.Name == "Posessed Mummy" then
+                            topos(v.HumanoidRootPart.CFrame * Pos)
+                        end
+                    end
                 end
             end)
         end
@@ -3286,9 +3312,10 @@ spawn(function()
                             end
                         end
                     else
-                        topos(BonePos)
                         StartMagnetBoneMon = false
-                        UnEquipWeapon(_G.SelectWeapon)
+                        if game:GetService("ReplicatedStorage"):FindFirstChild("Demonic Soul [Lv. 2025]") then
+                            topos(game:GetService("ReplicatedStorage"):FindFirstChild("Demonic Soul [Lv. 2025]").HumanoidRootPart.CFrame * Pos)
+                        end
                     end
                 end
             end)
@@ -3334,7 +3361,7 @@ spawn(function()
                             if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                                 repeat wait()
                                     EquipWeapon(_G.SelectWeapon)
-                                    topos(v.HumanoidRootPart.CFrame * Pos)
+                                     topos(v.HumanoidRootPart.CFrame * Pos)
                                 until not _G.Auto_Soul_Reaper or not v.Parent or v.Humanoid.Health <= 0
                             end
                         end
@@ -3590,12 +3617,12 @@ spawn(function()
                 if v.Name == MonFarm and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health <= v.Humanoid.MaxHealth * _G.Kill_At / 100 then
                     if _G.SkillZ then
                         game:service('VirtualInputManager'):SendKeyEvent(true, "Z", false, game)
-                        wait()
+                        wait(0)
                         game:service('VirtualInputManager'):SendKeyEvent(false, "Z", false, game)
                     end
                     if _G.SkillX then
                         game:service('VirtualInputManager'):SendKeyEvent(true, "X", false, game)
-                        wait()
+                        wait(0)
                         game:service('VirtualInputManager'):SendKeyEvent(false, "X", false, game)
                     end
                 end
@@ -3714,7 +3741,7 @@ spawn(function()
 						if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
 							repeat wait() topos(CFrameQuestBoss) until (CFrameQuestBoss.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3 or not _G.AutoFarmBoss
 							if (CFrameQuestBoss.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 4 then
-								wait(0.5)
+								wait(1.1)
 								game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NameQuestBoss, LevelQuestBoss)
 							end
 						elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
@@ -3803,7 +3830,6 @@ spawn(function()
                 else
                     topos(PosMonster)
                     UnEquipWeapon(_G.SelectWeapon)
-                    SelectMag = false
                 end
             end)
         end
@@ -3860,7 +3886,6 @@ spawn(function()
                         end
                     end
                 else
-                    BringMonMaterial = false
                     UnEquipWeapon(_G.SelectWeapon)
                     topos(MPos)
                     wait(3)
@@ -3891,7 +3916,6 @@ spawn(function()
                 else
                     topos(CFrame.new(916.928589, 181.092773, 33422))
                     UnEquipWeapon(_G.SelectWeapon)
-                    StartEctoplasmMagnet = false
                 end
             end)
         end
@@ -4360,16 +4384,12 @@ local Section = FruitRaid:AddSection({
 FruitRaid:AddButton({
     Name = "Buy Chip Law",
     Callback = function()
-        if World2 then
-            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Microchip","2")
-        elseif World1 or World1 then
-            OrionLib:MakeNotification({
-                Name = "Tinh Linh Hub",
-                Content = "Only Second Sea",
-                Image = "rbxassetid://16730867128",
-                Time = 5
-            })
-        end
+        local args = {
+            [1] = "BlackbeardReward",
+            [2] = "Microchip",
+            [3] = "2"
+         }
+         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
     end
 })
 
