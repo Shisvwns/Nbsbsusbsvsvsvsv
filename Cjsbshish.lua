@@ -1917,37 +1917,84 @@ end)
 
 local gg = getrawmetatable(game)
 local old = gg.__namecall
-setreadonly(gg,false)
-gg.__namecall = newcclosure(function(...)
-	local method = getnamecallmethod()
-	local args = {...}
-	if tostring(method) == "FireServer" then
-		if tostring(args[1]) == "RemoteEvent" then
-			if tostring(args[2]) ~= "true" and tostring(args[2]) ~= "false" then
-				if Skillaimbot or Skillaimbotpl then
-					args[2] = AimBotSkillPosition
-					return old(unpack(args))
-				end
-			end
-		end
-	end
-	return old(...)
+
+spawn(function()
+    setreadonly(gg,false)
+    gg.__namecall = newcclosure(function(...)
+    	local method = getnamecallmethod()
+    	local args = {...}
+    	if tostring(method) == "FireServer" then
+    		if tostring(args[1]) == "RemoteEvent" then
+	    		if tostring(args[2]) ~= "true" and tostring(args[2]) ~= "false" then
+		    		if Skillaimbot or Skillaimbotpl then
+		    			args[2] = AimBotSkillPosition
+		    			return old(unpack(args))
+	    			end
+	    		end
+	    	end
+	    end
+    	return old(...)
+    end)
 end)
 
-local gt = getrawmetatable(game)
-local old = gt.__namecall
-setreadonly(gt,false)
-gt.__namecall = newcclosure(function(...)
+spawn(function()
+    setreadonly(gg,false)
+    gg.__namecall = newcclosure(function(...)
+    local method = getnamecallmethod()
     local args = {...}
-    if getnamecallmethod() == "InvokeServer" then 
-        if tostring(args[2]) == "TAP" then
-            if Skillaimbot or Skillaimbotpl then
-                args[3] = AimBotSkillPosition
-                return old(unpack(args))
+    	if tostring(method) == "FireServer" then
+	    	if tostring(args[1]) == "RemoteEvent" then
+	    		if tostring(args[2]) ~= "true" and tostring(args[2]) ~= "false" then
+		    		if Skillaimbot or Skillaimbotpl then
+		    			if type(args[2]) == "vector" then
+		    				args[2] = AimBotSkillPosition
+		    			else
+		    				args[2] = CFrame.new(AimBotSkillPosition)
+		    			end
+	    				return old(unpack(args))
+	    			end
+	    		end
+	    	end
+    	end
+    	return old(...)
+    end)
+end)
+
+spawn(function()
+    setreadonly(gg,false)
+    gg.__namecall = newcclosure(function(...)
+        local args = {...}
+        if getnamecallmethod() == "InvokeServer" then 
+            if tostring(args[2]) == "TAP" then
+                if Skillaimbot or Skillaimbotpl then
+                    args[3] = AimBotSkillPosition
+                    return old(unpack(args))
+                end
             end
         end
-    end
-    return old(...)
+        return old(...)
+    end)
+    setreadonly(gg, true)
+end)
+
+spawn(function()
+	setreadonly(gg, false)
+	gg.__namecall = newcclosure(function(...)
+		local args = {...}
+		if getnamecallmethod() == "InvokeServer" then
+			if EquipWeaponGun() then
+				if EquipWeaponGun() == EquipWeaponGun() then
+					if tostring(args[2]) == "TAP" then
+						if Skillaimbot or Skillaimbotpl then
+							args[3] = AimBotSkillPosition
+						end
+					end
+				end
+			end
+		end;
+		return old(unpack(args))
+	end)
+	setreadonly(gg, true)
 end)
 
 -- [ Effect ]
@@ -5061,22 +5108,34 @@ spawn(function()
 end)
 
 ItemQuest:AddToggle({
-	Name = "Auto Buy Haki Colors",
+	Name = "Auto Buy Haki Colors [ All Haki Colors ]",
 	Default = false,
 	Callback = function(Value)
 		_G.Auto_Buy_Enchancement = Value
 	end
 })
 
+ItemQuest:AddToggle({
+	Name = "Auto Buy Haki Colors [ Haki Legendary ]",
+	Default = false,
+	Callback = function(Value)
+		_G.Auto_Buy_Haki_Legends = Value
+	end
+})
+
 spawn(function()
 	while task.wait() do
 		if _G.Auto_Buy_Enchancement then
-			local args = {
-				[1] = "ColorsDealer",
-				[2] = "2"
-			}
-			game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
-		end 
+			game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer","2")
+		elseif _G.Auto_Buy_Haki_Legends then
+		    if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer","2") == "Snow White" then
+		        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer","2")
+		    elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer","2") == "Winter Sky" then
+		        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer","2")
+		    elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer","2") == "Pure Red" then
+		        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer","2")
+		    end
+		end
 	end
 end)
 
@@ -5180,143 +5239,6 @@ spawn(function()
 end)
 
 local Section = ItemQuest:AddSection({
-    Name = "~ Soul Guitar ~"
-})
-
-ItemQuest:AddToggle({
-	Name = "Auto Get Soul Guitar [ Not Work ]",
-	Default = false,
-	Callback = function(Value)
-		_G.AutoNevaSoulGuitar = Value
-		StopTween(_G.AutoNevaSoulGuitar)
-	end
-})
-
-spawn(function()
-    while wait() do
-        if _G.AutoNevaSoulGuitar and World3 then
-            pcall(function()
-            if GetWeaponInventory("Soul Guitar") == false then
-                if (CFrame.new(-9681.458984375, 6.139880657196045, 6341.3720703125).Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5000 then
-                    if game:GetService("Workspace").NPCs:FindFirstChild("Skeleton Machine") then
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("soulGuitarBuy",true)
-                    else
-                        if game:GetService("Workspace").Map["Haunted Castle"].Candle1.Transparency == 0 then
-                            if game:GetService("Workspace").Map["Haunted Castle"].Placard1.Left.Part.Transparency == 0 then
-                                Quest2 = true
-                                repeat wait() topos(CFrame.new(-8762.69140625, 176.84783935546875, 6171.3076171875)) until (CFrame.new(-8762.69140625, 176.84783935546875, 6171.3076171875).Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3 or not _G.AutoNevaSoulGuitar
-                                wait(1)
-                                fireclickdetector(game:GetService("Workspace").Map["Haunted Castle"].Placard7.Left.ClickDetector)
-                                wait(1)
-                                fireclickdetector(game:GetService("Workspace").Map["Haunted Castle"].Placard6.Left.ClickDetector)
-                                wait(1)
-                                fireclickdetector(game:GetService("Workspace").Map["Haunted Castle"].Placard5.Left.ClickDetector)
-                                wait(1)
-                                fireclickdetector(game:GetService("Workspace").Map["Haunted Castle"].Placard4.Right.ClickDetector)
-                                wait(1)
-                                fireclickdetector(game:GetService("Workspace").Map["Haunted Castle"].Placard3.Left.ClickDetector)
-                                wait(1)
-                                fireclickdetector(game:GetService("Workspace").Map["Haunted Castle"].Placard2.Right.ClickDetector)
-                                wait(1)
-                                fireclickdetector(game:GetService("Workspace").Map["Haunted Castle"].Placard1.Right.ClickDetector)
-                                wait(1)
-                            elseif game:GetService("Workspace").Map["Haunted Castle"].Tablet.Segment1:FindFirstChild("ClickDetector") then
-                                if game:GetService("Workspace").Map["Haunted Castle"]["Lab Puzzle"].ColorFloor.Model.Part1:FindFirstChild("ClickDetector") then
-                                    Quest4 = true
-                                    repeat wait() topos(CFrame.new(-9553.5986328125, 65.62338256835938, 6041.58837890625)) until (CFrame.new(-9553.5986328125, 65.62338256835938, 6041.58837890625).Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3 or not _G.AutoNevaSoulGuitar
-                                    wait(1)
-                                    topos(game:GetService("Workspace").Map["Haunted Castle"]["Lab Puzzle"].ColorFloor.Model.Part3.CFrame)
-                                    wait(1)
-                                    fireclickdetector(game:GetService("Workspace").Map["Haunted Castle"]["Lab Puzzle"].ColorFloor.Model.Part3.ClickDetector)
-                                    wait(1)
-                                    topos(game:GetService("Workspace").Map["Haunted Castle"]["Lab Puzzle"].ColorFloor.Model.Part4.CFrame)
-                                    wait(1)
-                                    fireclickdetector(game:GetService("Workspace").Map["Haunted Castle"]["Lab Puzzle"].ColorFloor.Model.Part4.ClickDetector)
-                                    wait(1)
-                                    fireclickdetector(game:GetService("Workspace").Map["Haunted Castle"]["Lab Puzzle"].ColorFloor.Model.Part4.ClickDetector)
-                                    wait(1)
-                                    fireclickdetector(game:GetService("Workspace").Map["Haunted Castle"]["Lab Puzzle"].ColorFloor.Model.Part4.ClickDetector)
-                                    wait(1)
-                                    topos(game:GetService("Workspace").Map["Haunted Castle"]["Lab Puzzle"].ColorFloor.Model.Part6.CFrame)
-                                    wait(1)
-                                    fireclickdetector(game:GetService("Workspace").Map["Haunted Castle"]["Lab Puzzle"].ColorFloor.Model.Part6.ClickDetector)
-                                    wait(1)
-                                    fireclickdetector(game:GetService("Workspace").Map["Haunted Castle"]["Lab Puzzle"].ColorFloor.Model.Part6.ClickDetector)
-                                    wait(1)
-                                    topos(game:GetService("Workspace").Map["Haunted Castle"]["Lab Puzzle"].ColorFloor.Model.Part8.CFrame)
-                                    wait(1)
-                                    fireclickdetector(game:GetService("Workspace").Map["Haunted Castle"]["Lab Puzzle"].ColorFloor.Model.Part8.ClickDetector)
-                                    wait(1)
-                                    topos(game:GetService("Workspace").Map["Haunted Castle"]["Lab Puzzle"].ColorFloor.Model.Part10.CFrame)
-                                    wait(1)
-                                    fireclickdetector(game:GetService("Workspace").Map["Haunted Castle"]["Lab Puzzle"].ColorFloor.Model.Part10.ClickDetector)
-                                    wait(1)
-                                    fireclickdetector(game:GetService("Workspace").Map["Haunted Castle"]["Lab Puzzle"].ColorFloor.Model.Part10.ClickDetector)
-                                    wait(1)
-                                    fireclickdetector(game:GetService("Workspace").Map["Haunted Castle"]["Lab Puzzle"].ColorFloor.Model.Part10.ClickDetector)
-                                else
-                                    Quest3 = true
-                                    --Not Work Yet
-                                end
-                            else
-                                if game:GetService("Workspace").NPCs:FindFirstChild("Ghost") then
-                                    local args = {
-                                        [1] = "GuitarPuzzleProgress",
-                                        [2] = "Ghost"
-                                    }
-
-                                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
-                                end
-                                if game.Workspace.Enemies:FindFirstChild("Living Zombie") then
-                                    for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
-                                        if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
-                                            if v.Name == "Living Zombie" then
-                                                EquipWeapon(_G.SelectWeapon)
-                                                v.HumanoidRootPart.Size = Vector3.new(60,60,60)
-                                                v.HumanoidRootPart.Transparency = 1
-                                                v.Humanoid.JumpPower = 0
-                                                v.Humanoid.WalkSpeed = 0
-                                                v.HumanoidRootPart.CanCollide = false
-                                                v.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0,20,0)
-                                                topos(CFrame.new(-10160.787109375, 138.6616973876953, 5955.03076171875))
-                                            end
-                                        end
-                                    end
-                                else
-                                    topos(CFrame.new(-10160.787109375, 138.6616973876953, 5955.03076171875))
-                                end
-                            end
-                        else    
-                            if string.find(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("gravestoneEvent",2), "Error") then
-                                OrionLib:MakeNotification({
-									    Name = "Tinh Linh Hub",
-									    Content = "Go to Grave",
-									    Image = "rbxassetid://16730867128",
-									    Time = 5
-									})
-									topos(CFrame.new(-8653.2060546875, 140.98487854003906, 6160.033203125))
-								elseif string.find(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("gravestoneEvent",2), "Nothing") then
-									OrionLib:MakeNotification({
-									    Name = "Tinh Linh Hub",
-									    Content = "Wait Next Night",
-									    Image = "rbxassetid://16730867128",
-									    Time = 5
-									})
-                            else
-                                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("gravestoneEvent",2,true)
-                            end
-                        end
-                    end
-                else
-                    topos(CFrame.new(-9681.458984375, 6.139880657196045, 6341.3720703125))
-                end
-            end
-            end)
-        end
-    end
-end)
-
-local Section = ItemQuest:AddSection({
     Name = "~ Cursed Dual Katana ~"
 })
 
@@ -5394,9 +5316,8 @@ ItemQuest:AddToggle({
 	end
 })
 
--- topos(game:GetService("Workspace").Map.Waterfall.SecretRoom.Room.Door.Door.Hitbox.CFrame)
 spawn(function()
-    while wait(.5) do
+    while wait() do
         if _G.AutoHolyTorch then
             if game.Players.LocalPlayer.Backpack:FindFirstChild("Holy Torch") or game.Players.LocalPlayer.Character:FindFirstChild("Holy Torch") then
                 repeat wait(.2)
@@ -5456,11 +5377,8 @@ spawn(function()
                     end
                 end
             else
-            topos(TushitaPos)
-            UnEquipWeapon(_G.SelectWeapon)
-                if game:GetService("ReplicatedStorage"):FindFirstChild("Longma") then
-                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Longma").HumanoidRootPart.CFrame * Pos)
-                end
+                topos(TushitaPos)
+                UnEquipWeapon(_G.SelectWeapon)
             end
         end
     end
@@ -5597,9 +5515,6 @@ spawn(function()
             else
                 topos(NamfonPos)
                 UnEquipWeapon(_G.SelectWeapon)
-                if game:GetService("ReplicatedStorage"):FindFirstChild("Chief Warden") then
-                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Chief Warden").HumanoidRootPart.CFrame * Pos)
-                end
             end
         end
     end
@@ -5632,9 +5547,6 @@ spawn(function()
             else
                 topos(PolePos)
                 UnEquipWeapon(_G.SelectWeapon)
-                if game:GetService("ReplicatedStorage"):FindFirstChild("Thunder God") then
-                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Thunder God").HumanoidRootPart.CFrame * Pos)
-                end
             end
         end
     end
@@ -5667,9 +5579,6 @@ spawn(function()
             else
                 topos(SharkPos)
                 UnEquipWeapon(_G.SelectWeapon)
-                if game:GetService("ReplicatedStorage"):FindFirstChild("The Saw") then
-                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("The Saw").HumanoidRootPart.CFrame * Pos)
-                end
             end
         end
     end
@@ -5738,9 +5647,6 @@ spawn(function()
             else
                 topos(TridentPos)
                 UnEquipWeapon(_G.SelectWeapon)
-                if game:GetService("ReplicatedStorage"):FindFirstChild("Tide Keeper") then
-                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Tide Keeper").HumanoidRootPart.CFrame * Pos)
-                end
             end
         end
     end
@@ -5773,9 +5679,6 @@ spawn(function()
             else
                 topos(CavandisPos)
                 UnEquipWeapon(_G.SelectWeapon)
-                if game:GetService("ReplicatedStorage"):FindFirstChild("Beautiful Pirate") then
-                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Beautiful Pirate").HumanoidRootPart.CFrame * Pos)
-                end
             end
         end
     end
@@ -5808,9 +5711,6 @@ spawn(function()
             else
                 topos(BigMomPos)
                 UnEquipWeapon(_G.SelectWeapon)
-                if game:GetService("ReplicatedStorage"):FindFirstChild("Cake Queen") then
-                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Cake Queen").HumanoidRootPart.CFrame * Pos)
-                end
             end
         end
     end
@@ -5843,9 +5743,6 @@ spawn(function()
             else
                 topos(ElephantPos)
                 UnEquipWeapon(_G.SelectWeapon)
-                if game:GetService("ReplicatedStorage"):FindFirstChild("Captain Elephant") then
-                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Captain Elephant").HumanoidRootPart.CFrame * Pos)
-                end
             end
         end
     end
@@ -5914,9 +5811,6 @@ spawn(function()
             else
                 topos(EmpressPos)
                 UnEquipWeapon(_G.SelectWeapon)
-                if game:GetService("ReplicatedStorage"):FindFirstChild("Island Empress") then
-                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Island Empress").HumanoidRootPart.CFrame * Pos)
-                end
             end
         end
     end
@@ -6134,11 +6028,7 @@ spawn(function()
                                     EquipWeapon(_G.SelectWeapon)
                                     topos(v.HumanoidRootPart.CFrame * Pos)
                                     v.HumanoidRootPart.CFrame = OldCFrameThird
-                                    v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                    v.HumanoidRootPart.CanCollide = false
-                                    v.Humanoid.WalkSpeed = 0
                                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("TravelZou")
-                                    sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
                                 until _G.AutoThirdSea == false or v.Humanoid.Health <= 0 or not v.Parent
                             end
                         end
