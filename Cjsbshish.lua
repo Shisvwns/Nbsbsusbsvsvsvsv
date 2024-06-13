@@ -6270,11 +6270,11 @@ PvP:AddButton({
     Name = "Refresh Player List",
     Callback = function()
         Slplayer:Refresh(Playerslist,true)
-        NewPlayerList = {}
+        Playerslist = {}
         for i,v in pairs(game:GetService("Players"):GetChildren()) do
-            table.insert(NewPlayerList, v.Name)
+            table.insert(Playerslist, v.Name)
         end
-        Slplayer:Refresh(NewPlayerList)
+        Slplayer:Refresh(Playerslist)
     end
 })
 
@@ -6370,11 +6370,6 @@ Sea:AddDropdown({
 	Options = ListSeaBoat,
 	Callback = function(Value)
 		_G.Boat = Value
-	end    
-})
-
-spawn(function()
-    while wait() do
         if _G.Boat == "Grand Brigade" then
             SelectedBoat = "PirateGrandBrigade"
         elseif _G.Boat == "Sloop" then
@@ -6388,8 +6383,8 @@ spawn(function()
         elseif _G.Boat == "Guardian" then
             SelectedBoat = "Guardian"
         end
-    end
-end)
+	end    
+})
             
 if World3 then
 	Sea:AddDropdown({
@@ -6398,6 +6393,23 @@ if World3 then
 		Options = {"Zone 0 [ None ]", "Zone 1 [ Low ]","Zone 2 [ Medium ]","Zone 3 [ High ]","Zone 4 [ Extreme ]","Zone 5 [ Crazy ]","Zone 6 [ ??? ]","Zone ∞ [ ??? ]"},
 		Callback = function(Value)
 			_G.SelectedZone = Value
+            if _G.SelectedZone == "Zone 0 [ None ]" then
+                CFrameSelectedZone = CFrame.new(-19118.041015625, 24.44040298461914, 858.4185791015625)
+            elseif _G.SelectedZone == "Zone 1 [ Low ]" then
+                CFrameSelectedZone = CFrame.new(-21998.375, 30.0006084, -682.309143, 0.120013528, 0.00690158736, 0.99274826, -0.0574118942, 0.998350561, -2.36509201e-10, -0.991110802, -0.0569955558, 0.120211802)
+            elseif _G.SelectedZone == "Zone 2 [ Medium ]" then
+                CFrameSelectedZone = CFrame.new(-26779.5215, 30.0005474, -822.858032, 0.307457417, 0.019647358, 0.951358974, -0.0637726262, 0.997964442, -4.15334017e-10, -0.949422479, -0.0606706589, 0.308084518)
+            elseif _G.SelectedZone == "Zone 3 [ High ]" then
+                CFrameSelectedZone = CFrame.new(-31171.957, 30.0001011, -2256.93774, 0.37637493, 0.0150483791, 0.926345229, -0.0399504974, 0.999201655, 2.70896673e-11, -0.925605655, -0.0370079502, 0.376675636)
+            elseif _G.SelectedZone == "Zone 4 [ Extreme ]" then
+                CFrameSelectedZone = CFrame.new(-34054.6875, 30.2187767, -2560.12012, 0.0935864747, -0.00122954219, 0.995610416, 0.0624034069, 0.998040259, -0.00463332096, -0.993653536, 0.062563099, 0.0934797972)
+            elseif _G.SelectedZone == "Zone 5 [ Crazy ]" then
+                CFrameSelectedZone = CFrame.new(-38887.5547, 30.0004578, -2162.99023, -0.188895494, -0.00704088295, 0.981971979, -0.0372481011, 0.999306023, -1.39882339e-09, -0.981290519, -0.0365765914, -0.189026669)
+            elseif _G.SelectedZone == "Zone 6 [ ??? ]" then
+                CFrameSelectedZone = CFrame.new(-44541.7617, 30.0003204, -1244.8584, -0.0844199061, -0.00553312758, 0.9964149, -0.0654025897, 0.997858942, 2.02319411e-10, -0.99428153, -0.0651681125, -0.0846010372)
+            elseif _G.SelectedZone == "Zone ∞ [ ??? ]" then
+                CFrameSelectedZone = CFrame.new(-148073.359, 8.99999523, 7721.05078, -0.0825930536, -1.54416148e-06, 0.996583343, -1.8696026e-05, 1, -3.91858095e-13, -0.996583343, -1.86321486e-05, -0.0825930536)
+            end
 		end
 	})
 end
@@ -6409,6 +6421,9 @@ if World2 then
 		Options = {"Sea [ Normal ]"},
 		Callback = function(Value)
 			_G.SelectedZone = Value
+            if _G.SelectedZone == "Sea [ Normal ]" then
+                CFrameSelectedZone = CFrame.new(210.99585, 12.9606171, 4158.57959, -0.917689145, 7.58163254e-11, -0.39729917, 1.20923558e-11, 1, 1.62898153e-10, 0.39729917, 1.44685583e-10, -0.917689145)
+            end
 		end
 	})
 end
@@ -6422,30 +6437,6 @@ if World1 then
 		end
 	})
 end
-
-spawn(function()
-    while wait() do
-        if _G.SelectedZone == "Zone 0 [ None ]" then
-            CFrameSelectedZone = CFrame.new(-19118.041015625, 24.44040298461914, 858.4185791015625)
-        elseif _G.SelectedZone == "Zone 1 [ Low ]" then
-            CFrameSelectedZone = CFrame.new(-21998.375, 30.0006084, -682.309143, 0.120013528, 0.00690158736, 0.99274826, -0.0574118942, 0.998350561, -2.36509201e-10, -0.991110802, -0.0569955558, 0.120211802)
-        elseif _G.SelectedZone == "Zone 2 [ Medium ]" then
-            CFrameSelectedZone = CFrame.new(-26779.5215, 30.0005474, -822.858032, 0.307457417, 0.019647358, 0.951358974, -0.0637726262, 0.997964442, -4.15334017e-10, -0.949422479, -0.0606706589, 0.308084518)
-        elseif _G.SelectedZone == "Zone 3 [ High ]" then
-            CFrameSelectedZone = CFrame.new(-31171.957, 30.0001011, -2256.93774, 0.37637493, 0.0150483791, 0.926345229, -0.0399504974, 0.999201655, 2.70896673e-11, -0.925605655, -0.0370079502, 0.376675636)
-        elseif _G.SelectedZone == "Zone 4 [ Extreme ]" then
-            CFrameSelectedZone = CFrame.new(-34054.6875, 30.2187767, -2560.12012, 0.0935864747, -0.00122954219, 0.995610416, 0.0624034069, 0.998040259, -0.00463332096, -0.993653536, 0.062563099, 0.0934797972)
-        elseif _G.SelectedZone == "Zone 5 [ Crazy ]" then
-            CFrameSelectedZone = CFrame.new(-38887.5547, 30.0004578, -2162.99023, -0.188895494, -0.00704088295, 0.981971979, -0.0372481011, 0.999306023, -1.39882339e-09, -0.981290519, -0.0365765914, -0.189026669)
-        elseif _G.SelectedZone == "Zone 6 [ ??? ]" then
-            CFrameSelectedZone = CFrame.new(-44541.7617, 30.0003204, -1244.8584, -0.0844199061, -0.00553312758, 0.9964149, -0.0654025897, 0.997858942, 2.02319411e-10, -0.99428153, -0.0651681125, -0.0846010372)
-        elseif _G.SelectedZone == "Zone ∞ [ ??? ]" then
-            CFrameSelectedZone = CFrame.new(-148073.359, 8.99999523, 7721.05078, -0.0825930536, -1.54416148e-06, 0.996583343, -1.8696026e-05, 1, -3.91858095e-13, -0.996583343, -1.86321486e-05, -0.0825930536)
-        elseif _G.SelectedZone == "Sea [ Normal ]" then
-            CFrameSelectedZone = CFrame.new(210.99585, 12.9606171, 4158.57959, -0.917689145, 7.58163254e-11, -0.39729917, 1.20923558e-11, 1, 1.62898153e-10, 0.39729917, 1.44685583e-10, -0.917689145)
-        end
-    end
-end)
 
 Sea:AddToggle({
 	Name = "Auto Sail Boats",
@@ -6650,8 +6641,10 @@ spawn(function()
                             repeat task.wait()
                                 EquipWeapon(_G.SelectWeapon)
                                 topos(v.HumanoidRootPart.CFrame * Pos)
+                                MagnetNear = true
                                 SeaSkill = false
                             until not _G.AutoKillFishCrew or not v.Parent or v.Humanoid.Health <= 0
+                            MagnetNear = false
                         end
                     end
                 elseif game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and _G.RelzFishBoat then
@@ -6740,8 +6733,10 @@ spawn(function()
                             repeat task.wait()
                                 EquipWeapon(_G.SelectWeapon)
                                 topos(v.HumanoidRootPart.CFrame * PosCaMap)
+                                MagnetNear = true
                                 SeaSkill = false
                             until not  _G.AutoTerrorshark or not v.Parent or v.Humanoid.Health <= 0
+                            MagnetNear = false
                         end
                     end
                 elseif CheckPiranha() and _G.AutoKillPiranha then
@@ -6750,8 +6745,10 @@ spawn(function()
                             repeat task.wait()
                                 EquipWeapon(_G.SelectWeapon)
                                 topos(v.HumanoidRootPart.CFrame * Pos)
+                                MagnetNear = true
                                 SeaSkill = false
                             until not _G.AutoKillPiranha or not v.Parent or v.Humanoid.Health <= 0
+                            MagnetNear = false
                         end
                     end
                 elseif CheckShark() and _G.AutoKillShark then
@@ -6760,13 +6757,16 @@ spawn(function()
                             repeat task.wait()
                                 EquipWeapon(_G.SelectWeapon)
                                 topos(v.HumanoidRootPart.CFrame * Pos)
+                                MagnetNear = true
                                 SeaSkill = false
                             until not _G.AutoKillShark or not v.Parent or v.Humanoid.Health <= 0
+                            MagnetNear = false
                         end
                     end
                 else
                     Skillaimbot = false
                     SeaSkill = false
+                    MagnetNear = false
                 end
             end)
         end
@@ -8571,7 +8571,7 @@ SelectSword = {"Cutlass","Katana","Iron Mace","Dual Katana","Triple Katana","Pip
 
 Shop:AddDropdown({
     Name = "Select Sword",
-    Default = "Cutlass",
+    Default = "",
     Options = SelectSword,
     Callback = function(Value)
 		SelectSword = Value
