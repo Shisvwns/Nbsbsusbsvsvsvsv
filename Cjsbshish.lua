@@ -1849,7 +1849,7 @@ function CheckElite()
     elseif CheckMob("Urban") then
         return "Urban Spawned"
     else
-        return "Elite Not Spawned"
+        return "Not Spawned"
     end
 end
 
@@ -1936,18 +1936,21 @@ end)
 
 local gt = getrawmetatable(game)
 local old = gt.__namecall
-setreadonly(gt,false)
-gt.__namecall = newcclosure(function(...)
-    local args = {...}
-    if getnamecallmethod() == "InvokeServer" then 
-        if tostring(args[2]) == "TAP" then
-            if Skillaimbot or Skillaimbotpl then
-                args[3] = AimBotSkillPosition
-                return old(unpack(args))
+spawn(function ()
+    setreadonly(gt,false)
+    gt.__namecall = newcclosure(function(...)
+        local args = {...}
+        if getnamecallmethod() == "InvokeServer" then 
+            if tostring(args[2]) == "TAP" then
+                if Skillaimbot or Skillaimbotpl then
+                    args[3] = AimBotSkillPosition
+                    return old(unpack(args))
+                end
             end
         end
-    end
-    return old(...)
+        return old(...)
+    end)
+    setreadonly(gt,true)
 end)
 
 -- [ Effect ]
