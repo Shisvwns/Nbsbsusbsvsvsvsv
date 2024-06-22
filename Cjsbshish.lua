@@ -3335,7 +3335,7 @@ spawn(function()
 end)
 
 local Section = Farm:AddSection({
-    Name = "~ Mastery ~"
+    Name = "~ Gun & Devil Fruit Mastery ~"
 })
 
 Farm:AddToggle({
@@ -3479,7 +3479,120 @@ spawn(function()
     end
 end)
 
-local CoinCard = Farm:AddParagraph("Farm All Melee & Sword Mastery", "Select Mastery Only Farm Melee Or Sword Mastery")
+Farm:AddSlider({
+	Name = "Kill Mobs At % Health",
+	Min = 0,
+	Max = 100,
+	Default = 20,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "%",
+	Callback = function(Value)
+		_G.Kill_At = Value
+	end
+})
+
+Farm:AddToggle({
+	Name = "Use Skill Z",
+	Default = false,
+	Callback = function(Value)
+		_G.SkillZ = Value
+	end
+})
+
+Farm:AddToggle({
+	Name = "Use Skill X",
+	Default = false,
+	Callback = function(Value)
+		_G.SkillX = Value
+	end
+})
+
+Farm:AddToggle({
+	Name = "Use Skill C",
+	Default = false,
+	Callback = function(Value)
+		_G.SkillC = Value
+	end
+})
+
+Farm:AddToggle({
+	Name = "Use Skill V",
+	Default = false,
+	Callback = function(Value)
+		_G.SkillV = Value
+	end
+})
+
+Farm:AddToggle({
+	Name = "Use Skill F",
+	Default = false,
+	Callback = function(Value)
+		_G.SkillF = Value
+	end
+})
+
+spawn(function()
+    while wait() do
+        if UseSkill then
+            for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                if v.Name == MonFarm and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health <= v.Humanoid.MaxHealth * _G.Kill_At / 100 then
+                    if _G.SkillZ then
+                        game:service('VirtualInputManager'):SendKeyEvent(true, "Z", false, game)
+                        wait(_G.HoldSKillZ)
+                        game:service('VirtualInputManager'):SendKeyEvent(false, "Z", false, game)
+                    end
+                    if _G.SkillX then
+                        game:service('VirtualInputManager'):SendKeyEvent(true, "X", false, game)
+                        wait(_G.HoldSKillX)
+                        game:service('VirtualInputManager'):SendKeyEvent(false, "X", false, game)
+                    end
+                    if _G.SkillC then
+                        game:service('VirtualInputManager'):SendKeyEvent(true, "C", false, game)
+                        wait(_G.HoldSKillC)
+                        game:service('VirtualInputManager'):SendKeyEvent(false, "C", false, game)
+                    end
+                    if _G.SkillV then
+                        game:service('VirtualInputManager'):SendKeyEvent(true, "V", false, game)
+                        wait(_G.HoldSKillV)
+                        game:service('VirtualInputManager'):SendKeyEvent(false, "V", false, game)
+                    end
+                    if _G.SkillF then
+                        game:service('VirtualInputManager'):SendKeyEvent(true, "F", false, game)
+                        wait(_G.HoldSKillF)
+                        game:service('VirtualInputManager'):SendKeyEvent(false, "F", false, game)
+                    end
+                end
+            end
+        end
+    end
+end)
+
+
+spawn(function()
+    while wait() do
+        if UseGunSkill then
+            for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                if v.Name == MonFarm and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health <= v.Humanoid.MaxHealth * _G.Kill_At / 100 then
+                    if _G.SkillZ then
+                        game:service('VirtualInputManager'):SendKeyEvent(true, "Z", false, game)
+                        wait(0)
+                        game:service('VirtualInputManager'):SendKeyEvent(false, "Z", false, game)
+                    end
+                    if _G.SkillX then
+                        game:service('VirtualInputManager'):SendKeyEvent(true, "X", false, game)
+                        wait(0)
+                        game:service('VirtualInputManager'):SendKeyEvent(false, "X", false, game)
+                    end
+                end
+            end
+        end
+    end
+end)
+
+local Section = Farm:AddSection({
+    Name = "~ Melee & Sword Mastery ~"
+})
 
 Farm:AddSlider({
 	Name = "Select Mastery ",
@@ -3504,57 +3617,53 @@ end
 
 spawn(function()
     while wait() do
-        pcall(function()
-            if _G.FarmAllMelee then
-                if CheckMasSelect("Melee") == _G.SeMastery then
-                    for i,v in pairs(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventory")) do
-                        if type(v) == "table" then
-                            if v.Type == "Melee" and v.Mastery >= _G.SeMastery then
-                                if not (game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(v.Name) or game:GetService("Players").LocalPlayer.Character:FindFirstChild(v.Name)) then
-                                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LoadItem",v.Name)
-                                end
-                            end
-                        end
-                    end
-                end
-            elseif _G.FarmAllSword then
-                if CheckMasSelect("Sword") == _G.SeMastery then
-                    for i,v in pairs(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventory")) do
-                        if type(v) == "table" then
-                            if v.Type == "Sword" and v.Mastery >= _G.SeMastery then
-                                if not (game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(v.Name) or game:GetService("Players").LocalPlayer.Character:FindFirstChild(v.Name)) then
-                                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LoadItem",v.Name)
-                                end
+        if _G.FarmAllMelee then
+            if CheckMasSelect("Melee") == _G.SeMastery then
+                for i,v in pairs(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventory")) do
+                    if type(v) == "table" then
+                        if v.Type == "Melee" and v.Mastery >= _G.SeMastery then
+                            if not (game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(v.Name) or game:GetService("Players").LocalPlayer.Character:FindFirstChild(v.Name)) then
+                                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LoadItem",v.Name)
                             end
                         end
                     end
                 end
             end
-        end)
+        elseif _G.FarmAllSword then
+            if CheckMasSelect("Sword") == _G.SeMastery then
+                for i,v in pairs(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventory")) do
+                    if type(v) == "table" then
+                        if v.Type == "Sword" and v.Mastery >= _G.SeMastery then
+                            if not (game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(v.Name) or game:GetService("Players").LocalPlayer.Character:FindFirstChild(v.Name)) then
+                                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LoadItem",v.Name)
+                            end
+                        end
+                    end
+                end
+            end
+        end
     end
 end)
 
 spawn(function()
 	while wait() do
-	    pcall(function()
-		    if _G.FarmAllMelee then
-	    		for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-		    		if v.ToolTip == "Melee" then
-		    			if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-						    SelectAllMelee = v.Name
-		    			end
-		    		end
+	    if _G.FarmAllMelee then
+    		for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+	    		if v.ToolTip == "Melee" then
+	    			if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+					    SelectAllMelee = v.Name
+	    			end
 	    		end
-	    	elseif _G.FarmAllSword then
-	    		for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-		    		if v.ToolTip == "Sword" then
-		    			if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-			    			SelectAllSword = v.Name
-		    			end
+    		end
+    	elseif _G.FarmAllSword then
+    		for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+	    		if v.ToolTip == "Sword" then
+	    			if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+		    			SelectAllSword = v.Name
 		            end
 				end
 			end
-		end)
+		end
 	end
 end)
 
@@ -3664,117 +3773,6 @@ spawn(function()
                     end
                 end
             end)
-        end
-    end
-end)
-
-Farm:AddSlider({
-	Name = "Kill Mobs At % Health",
-	Min = 0,
-	Max = 100,
-	Default = 20,
-	Color = Color3.fromRGB(255,255,255),
-	Increment = 1,
-	ValueName = "%",
-	Callback = function(Value)
-		_G.Kill_At = Value
-	end
-})
-
-Farm:AddToggle({
-	Name = "Use Skill Z",
-	Default = false,
-	Callback = function(Value)
-		_G.SkillZ = Value
-	end
-})
-
-Farm:AddToggle({
-	Name = "Use Skill X",
-	Default = false,
-	Callback = function(Value)
-		_G.SkillX = Value
-	end
-})
-
-Farm:AddToggle({
-	Name = "Use Skill C",
-	Default = false,
-	Callback = function(Value)
-		_G.SkillC = Value
-	end
-})
-
-Farm:AddToggle({
-	Name = "Use Skill V",
-	Default = false,
-	Callback = function(Value)
-		_G.SkillV = Value
-	end
-})
-
-Farm:AddToggle({
-	Name = "Use Skill F",
-	Default = false,
-	Callback = function(Value)
-		_G.SkillF = Value
-	end
-})
-
-spawn(function()
-    while wait() do
-        if UseSkill then
-            for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                if v.Name == MonFarm and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health <= v.Humanoid.MaxHealth * _G.Kill_At / 100 then
-                    if _G.SkillZ then
-                        game:service('VirtualInputManager'):SendKeyEvent(true, "Z", false, game)
-                        wait(_G.HoldSKillZ)
-                        game:service('VirtualInputManager'):SendKeyEvent(false, "Z", false, game)
-                    end
-                    if _G.SkillX then
-                        game:service('VirtualInputManager'):SendKeyEvent(true, "X", false, game)
-                        wait(_G.HoldSKillX)
-                        game:service('VirtualInputManager'):SendKeyEvent(false, "X", false, game)
-                    end
-                    if _G.SkillC then
-                        game:service('VirtualInputManager'):SendKeyEvent(true, "C", false, game)
-                        wait(_G.HoldSKillC)
-                        game:service('VirtualInputManager'):SendKeyEvent(false, "C", false, game)
-                    end
-                    if _G.SkillV then
-                        game:service('VirtualInputManager'):SendKeyEvent(true, "V", false, game)
-                        wait(_G.HoldSKillV)
-                        game:service('VirtualInputManager'):SendKeyEvent(false, "V", false, game)
-                    end
-                    if _G.SkillF then
-                        game:service('VirtualInputManager'):SendKeyEvent(true, "F", false, game)
-                        wait(_G.HoldSKillF)
-                        game:service('VirtualInputManager'):SendKeyEvent(false, "F", false, game)
-                    end
-                end
-            end
-        end
-    end
-end)
-
-
-spawn(function()
-    while wait() do
-        if UseGunSkill then
-            for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                if v.Name == MonFarm and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health <= v.Humanoid.MaxHealth * _G.Kill_At / 100 then
-                    if _G.SkillZ then
-                        game:service('VirtualInputManager'):SendKeyEvent(true, "Z", false, game)
-                        wait(0)
-                        game:service('VirtualInputManager'):SendKeyEvent(false, "Z", false, game)
-                    end
-                    if _G.SkillX then
-                        game:service('VirtualInputManager'):SendKeyEvent(true, "X", false, game)
-                        wait(0)
-                        game:service('VirtualInputManager'):SendKeyEvent(false, "X", false, game)
-                    end
-                end
-            end
         end
     end
 end)
@@ -4762,7 +4760,7 @@ spawn(function()
                             game.Players.LocalPlayer.Character:PivotTo(Chest:GetPivot())
                             firesignal(Chest.Touched,game.Players.LocalPlayer.Character.HumanoidRootPart)
                         else
-                            if _G.StopChest == true then
+                            if _G.TeleSafe == true then
                                 if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
                                     _G.ChestBypass = false
                                 break
@@ -4813,25 +4811,6 @@ spawn(function()
 end)
 
 Other:AddToggle({
-	Name = "Stop Farm Chest If Have Item",
-	Default = false,
-	Callback = function(Value)
-		_G.StopChest = Value
-	end
-})
-
-spawn(function()
-    while task.wait() do
-        if _G.StopChest then
-            if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
-                _G.ChestBypass = false
-                _G.AutoFarmChest = false
-            end
-        end
-    end
-end)
-
-Other:AddToggle({
 	Name = "Teleport To Safe If Have Item",
 	Default = false,
 	Callback = function(Value)
@@ -4841,9 +4820,11 @@ Other:AddToggle({
 })
 
 spawn(function()
-    while wait() do
+    while task.wait() do
         if _G.TeleSafe then
             if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
+                _G.ChestBypass = false
+                _G.AutoFarmChest = false
                 if World3 then
                     topos(CFrame.new(-12489.4893, 336.895721, -7446.056153))
                 elseif World2 then
@@ -6857,9 +6838,22 @@ spawn(function()
         if _G.SailBoat then
             if ((CheckShark() and _G.AutoKillShark) or (CheckTerrorshark() and _G.AutoTerrorshark) or (CheckPiranha() and _G.AutoKillPiranha) or (CheckFishCrewMember() and _G.AutoKillFishCrew) or (game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and _G.RelzFishBoat) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateBrigade") and _G.RelzPirateBrigade) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateGrandBrigade") and _G.RelzPirateGrandBrigade) or (CheckSeaBeast() and _G.AutoSeaBest)) then
                 if game.Players.LocalPlayer.Character.Humanoid.Sit == true then
-                    game:GetService("VirtualInputManager"):SendKeyEvent(true, 32, false, game) 
-                    wait()
-                    game:GetService("VirtualInputManager"):SendKeyEvent(false, 32, false, game)
+                    game.Players.LocalPlayer.Character.Humanoid.Sit = false
+                end
+            elseif _G.DogeRoughSea == true then
+                if game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Rough Sea") and checkboat() then
+                    if game.Players.LocalPlayer.Character.Humanoid.Sit then
+                        game.Players.LocalPlayer.Character.Humanoid.Sit = false
+                    end
+                    if (checkboat().VehicleSeat.Position - Vector3.new(-16207.501953125, 9.0863618850708, 475.1490783691406)).Magnitude > 100 then
+                        checkboat().VehicleSeat.CFrame = CFrame.new(-28464.876953125, 12.553319931030273, 6896.8076171875)
+                    end
+                    if not game:GetService("Players").LocalPlayer.Character.Humanoid.Sit then
+                        _G.Clip = true
+                        topos(checkboat().VehicleSeat.CFrame)
+                    else
+                        _G.Clip = false
+                    end
                 end
             end
         end
@@ -7007,6 +7001,14 @@ spawn(function()
         end
     end
 end)
+
+Sea:AddToggle({
+	Name = "Auto Dodge Rough Sea",
+	Default = false,
+	Callback = function(Value)
+		_G.DogeRoughSea = Value
+	end
+})
 
 Sea:AddToggle({
 	Name = "No Clip Rock",
@@ -7450,6 +7452,14 @@ spawn(function()
                 end
             end)
         end
+    end
+end)
+
+local YourAzure = Sea:AddParagraph("Your Azure Ember")
+
+spawn(function()
+    while wait() do
+        YourAzure:Set("Azure Ember: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventory","Azure Ember"))
     end
 end)
 
