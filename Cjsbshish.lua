@@ -7456,14 +7456,6 @@ spawn(function()
     end
 end)
 
-local YourAzure = Sea:AddParagraph("Your Azure Ember")
-
-spawn(function()
-    while wait() do
-        YourAzure:Set("Azure Ember: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Azure Ember","Check"))
-    end
-end)
-
 Sea:AddSlider({
 	Name = "Set Azure Ember",
 	Min = 10,
