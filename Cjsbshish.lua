@@ -1623,8 +1623,8 @@ end
 function StopTween(target)
     if not target then
         topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
-        Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
-        Tween:Cancel()
+--        Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
+--        Tween:Cancel()
         Clip = false
     end
 end
@@ -1897,7 +1897,6 @@ function CDarkness()
         return "Fist Of Darkness: No"
     end
 end
-
 function CheckRauDen()
     if CheckMob("Darkbeard") then
         return "Darkbeard Spawned"
@@ -1913,7 +1912,6 @@ function GodChalice()
         return "God's Chalice: No"
     end
 end
-
 function CheckTrumAd()
     if CheckMob("rip_indra True Form") then
         return "Rip_Indra Spawned"
@@ -3481,7 +3479,7 @@ spawn(function()
     end
 end)
 
-local YourBone = Farm:AddParagraph("Farm All Melee & Sword Mastery", "Select Mastery Only Farm Melee Or Sword Mastery")
+local CoinCard = Farm:AddParagraph("Farm All Melee & Sword Mastery", "Select Mastery Only Farm Melee Or Sword Mastery")
 
 Farm:AddSlider({
 	Name = "Select Mastery ",
