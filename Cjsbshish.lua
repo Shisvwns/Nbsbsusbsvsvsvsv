@@ -13,36 +13,36 @@ if not game:IsLoaded() then
 end
 
 assert(getrawmetatable)
-    grm = getrawmetatable(game)
-    setreadonly(grm, false)
-    old = grm.__namecall
-    grm.__namecall = newcclosure(function(self, ...)
-        local args = {...}
-        if tostring(args[1]) == "TeleportDetect" then
-            return
-        elseif tostring(args[1]) == "CHECKER_1" then
-            return
-        elseif tostring(args[1]) == "CHECKER" then
-            return
-        elseif tostring(args[1]) == "GUI_CHECK" then
-            return
-        elseif tostring(args[1]) == "OneMoreTime" then
-            return
-        elseif tostring(args[1]) == "checkingSPEED" then
-            return
-        elseif tostring(args[1]) == "BANREMOTE" then
-            return
-        elseif tostring(args[1]) == "PERMAIDBAN" then
-            return
-        elseif tostring(args[1]) == "KICKREMOTE" then
-            return
-        elseif tostring(args[1]) == "BR_KICKPC" then
-            return
-        elseif tostring(args[1]) == "BR_KICKMOBILE" then
-            return
-        end
-        return old(self, ...)
-    end)
+grm = getrawmetatable(game)
+setreadonly(grm, false)
+old = grm.__namecall
+grm.__namecall = newcclosure(function(self, ...)
+local args = {...}
+    if tostring(args[1]) == "TeleportDetect" then
+        return
+    elseif tostring(args[1]) == "CHECKER_1" then
+        return
+    elseif tostring(args[1]) == "CHECKER" then
+        return
+    elseif tostring(args[1]) == "GUI_CHECK" then
+        return
+    elseif tostring(args[1]) == "OneMoreTime" then
+        return
+    elseif tostring(args[1]) == "checkingSPEED" then
+        return
+    elseif tostring(args[1]) == "BANREMOTE" then
+        return
+    elseif tostring(args[1]) == "PERMAIDBAN" then
+        return
+    elseif tostring(args[1]) == "KICKREMOTE" then
+        return
+    elseif tostring(args[1]) == "BR_KICKPC" then
+        return
+    elseif tostring(args[1]) == "BR_KICKMOBILE" then
+        return
+    end
+    return old(self, ...)
+end)
     
 function CheckAntiCheatBypass()
     for i,v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
@@ -88,7 +88,6 @@ if GC then
         end
     end
 else
-    print("Unlucky.")
     local vu = game:GetService("VirtualUser")
     game:GetService("Players").LocalPlayer.Idled:connect(function()
         vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
@@ -1613,10 +1612,6 @@ function topos(Pos)
     Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
     Tween:Play() 
     Clip = true
-    if SiTopTween == true then
-        Tween:Cancel()
-        Clip = false
-    end
 end
 
 function Tween(Pos)
@@ -1627,12 +1622,10 @@ end
 
 function StopTween(target)
     if not target then
-        SiTopTween = true
-        wait()
         topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
-        wait()
+        Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
+        Tween:Cancel()
         Clip = false
-        SiTopTween = false
     end
 end
 
@@ -1843,11 +1836,11 @@ end
 
 function CheckElite()
     if CheckMob("Diablo") then
-        return "Diablo Spawned"
+        return "Elite Diablo Spawned"
     elseif CheckMob("Deandre") then
-        return "Deandre Spawned"
+        return "Elite Deandre Spawned"
     elseif CheckMob("Urban") then
-        return "Urban Spawned"
+        return "Elite Urban Spawned"
     else
         return "Not Spawned"
     end
@@ -1897,6 +1890,38 @@ function CheckFrozen()
     end
 end
 
+function CDarkness()
+    if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") then
+        return "Fist Of Darkness: Yes"
+    else
+        return "Fist Of Darkness: No"
+    end
+end
+
+function CheckRauDen()
+    if CheckMob("Darkbeard") then
+        return "Darkbeard Spawned"
+    else
+        return "Darkbeard Not Spawned"
+    end
+end
+
+function GodChalice()
+    if game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
+        return "God's Chalice: Yes"
+    else
+        return "God's Chalice: No"
+    end
+end
+
+function CheckTrumAd()
+    if CheckMob("rip_indra True Form") then
+        return "Rip_Indra Spawned"
+    else
+        return "Rip_Indra Not Spawned"
+    end
+end
+
 -- [ Aimbot Farm ]
 
 spawn(function()
@@ -1934,10 +1959,8 @@ gg.__namecall = newcclosure(function(...)
 	return old(...)
 end)
 
-local gt = getrawmetatable(game)
-local old = gt.__namecall
-setreadonly(gt,false)
-gt.__namecall = newcclosure(function(...)
+setreadonly(gg,false)
+gg.__namecall = newcclosure(function(...)
     local args = {...}
     if getnamecallmethod() == "InvokeServer" then 
         if tostring(args[2]) == "TAP" then
@@ -2036,6 +2059,19 @@ function AttackNoCD()
         end
     end
 end
+
+function Click()
+    game:GetService'VirtualUser':CaptureController()
+    game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
+end
+
+spawn(function()
+    while task.wait do
+        if KillPlayerAttack then
+            Click()
+        end
+    end
+end)
 
 -- [ Ui Orion ]
 
@@ -2896,11 +2932,11 @@ spawn(function()
                                             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EnablePvp")
                                         end
                                         EquipWeapon(_G.SelectWeapon)
-                                        topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,5))
+                                        topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,0))
                                         if (v.Character.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 30 then
                                             AimBotSkillPosition = v.Character.HumanoidRootPart.CFrame.Position
                                             Skillaimbot = true
-                                            Click()
+                                            KillPlayerAttack = true
                                             game:GetService("VirtualInputManager"):SendKeyEvent(true, "X", false, game)
                                             game:GetService("VirtualInputManager"):SendKeyEvent(false, "X", false, game)
                                             wait()
@@ -2909,6 +2945,7 @@ spawn(function()
                                         end
                                     until not _G.FarmSkip or not v:FindFirstChild("HumanoidRootPart") or v.Character.Humanoid.Health <= 0
                                     Skillaimbot = false
+                                    KillPlayerAttack = false
                                 end
                             end
                         else
@@ -3145,9 +3182,9 @@ local YourBone = Farm:AddParagraph("Your Bone")
 
 spawn(function()
     while wait() do
-        if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Bones","Check") then
+        if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Bones","Check") and World3 then
             YourBone:Set("Bone: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Bones","Check").."/5000")
-        else
+        elseif World1 or World2 then
             YourBone:Set("Only Third Sea")
         end
     end
@@ -3438,6 +3475,191 @@ spawn(function()
                        topos(CFrameMon)
                        UnEquipWeapon(_G.SelectWeapon)
                     end 
+                end
+            end)
+        end
+    end
+end)
+
+local YourBone = Farm:AddParagraph("Farm All Melee & Sword Mastery", "Select Mastery Only Farm Melee Or Sword Mastery")
+
+Farm:AddSlider({
+	Name = "Select Mastery ",
+	Min = 1,
+	Max = 600,
+	Default = 300,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "Mastery",
+	Callback = function(Value)
+		_G.SeMastery = Value
+	end
+})
+
+function CheckMasSelect(Weapon)
+    for i,v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
+        if v.ToolTip == Weapon then
+            return v.Level.Value
+        end
+    end
+end
+
+spawn(function()
+    while wait() do
+        if _G.FarmAllMelee then
+            if CheckMasSelect("Melee") == _G.SeMastery then
+                for i,v in pairs(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventory")) do
+                    if type(v) == "table" then
+                        if v.Type == "Melee" and v.Mastery >= 600 then
+                            if not (game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(v.Name) or game:GetService("Players").LocalPlayer.Character:FindFirstChild(v.Name)) then
+                                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LoadItem",v.Name)
+                            end
+                        end
+                    end
+                end
+            end
+        elseif _G.FarmAllSword then
+            if CheckMasSelect("Sword") == _G.SeMastery then
+                for i,v in pairs(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventory")) do
+                    if type(v) == "table" then
+                        if v.Type == "Sword" and v.Mastery >= 600 then
+                            if not (game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(v.Name) or game:GetService("Players").LocalPlayer.Character:FindFirstChild(v.Name)) then
+                                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LoadItem",v.Name)
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+end)
+
+spawn(function()
+	while wait() do
+		if _G.FarmAllMelee then
+			for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+				if v.ToolTip == "Melee" then
+					if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+						SelectAllMelee = v.Name
+					end
+				end
+			end
+		elseif _G.FarmAllSword then
+			for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+				if v.ToolTip == "Sword" then
+					if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+						SelectAllSword = v.Name
+					end
+				end
+			end
+		end
+	end
+end)
+
+Farm:AddToggle({
+	Name = "Auto Farm All Melee Mastery",
+	Default = false,
+	Callback = function(Value)
+		_G.FarmAllMelee = Value
+	end
+})
+
+spawn(function()
+    while wait() do
+        if _G.FarmAllMelee then
+            pcall(function()
+                local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
+                if not string.find(QuestTitle, NameMon) then
+                    StartMagnet = false
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+                end
+                if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
+                    StartMagnet = false
+                    CheckQuest()
+	    			topos(CFrameQuest)
+		    		if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQuest.Position).Magnitude <= 5 then
+	    				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest",NameQuest,LevelQuest)
+                    end
+                elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
+                    CheckQuest()
+                    if game:GetService("Workspace").Enemies:FindFirstChild(Mon) then
+                        for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                            if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                                if v.Name == Mon then
+                                    if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
+                                        repeat task.wait()
+                                            EquipWeapon(SelectAllMelee)
+                                            topos(v.HumanoidRootPart.CFrame * Pos)
+                                            PosFarm = v.HumanoidRootPart.CFrame
+                                            StartMagnet = true
+                                        until not _G.FarmAllMelee or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
+                                    else
+                                        StartMagnet = false
+                                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+                                    end
+                                end
+                            end
+                        end
+                    else
+                        topos(CFrameMon)
+                        UnEquipWeapon(_G.SelectWeapon)
+                        StartMagnet = false
+                    end
+                end
+            end)
+        end
+    end
+end)
+
+Farm:AddToggle({
+	Name = "Auto Farm All Sword Mastery",
+	Default = false,
+	Callback = function(Value)
+		_G.FarmAllSword = Value
+	end
+})
+
+spawn(function()
+    while wait() do
+        if _G.FarmAllSword then
+            pcall(function()
+                local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
+                if not string.find(QuestTitle, NameMon) then
+                    StartMagnet = false
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+                end
+                if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
+                    StartMagnet = false
+                    CheckQuest()
+	    			topos(CFrameQuest)
+		    		if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQuest.Position).Magnitude <= 5 then
+	    				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest",NameQuest,LevelQuest)
+                    end
+                elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
+                    CheckQuest()
+                    if game:GetService("Workspace").Enemies:FindFirstChild(Mon) then
+                        for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                            if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                                if v.Name == Mon then
+                                    if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
+                                        repeat task.wait()
+                                            EquipWeapon(SelectAllSword)
+                                            topos(v.HumanoidRootPart.CFrame * Pos)
+                                            PosFarm = v.HumanoidRootPart.CFrame
+                                            StartMagnet = true
+                                        until not _G.FarmAllSword or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
+                                    else
+                                        StartMagnet = false
+                                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+                                    end
+                                end
+                            end
+                        end
+                    else
+                        topos(CFrameMon)
+                        UnEquipWeapon(_G.SelectWeapon)
+                        StartMagnet = false
+                    end
                 end
             end)
         end
@@ -4634,6 +4856,8 @@ local Section = Other:AddSection({
     Name = "~ Rip_Indra ~"
 })
 
+local CheckRip = Other:AddParagraph("Rip_Indra Status")
+
 Other:AddToggle({
 	Name = "Auto Summon Rip_Indra",
 	Default = false,
@@ -4699,6 +4923,15 @@ end)
 local Section = Other:AddSection({
     Name = "~ Darkbeard ~"
 })
+
+local CheckRauu = Other:AddParagraph("Darkbeard Status")
+
+spawn(function()
+    while wait() do
+        CheckRip:Set(GodChalice().." | "..CheckTrumAd())
+        CheckRauu:Set(CDarkness().." | "..CheckRauDen())
+    end
+end)
 
 Other:AddToggle({
 	Name = "Auto Summon Darkbeard",
@@ -7669,16 +7902,17 @@ spawn(function()
                             if v.Name ~= game.Players.LocalPlayer.Name and (GetDistance(TempleCFrame, v.Character.HumanoidRootPart) <= 300) and v.Character.Humanoid.Health > 0 then
                                 repeat task.wait()
                                     EquipWeapon(_G.SelectWeaponTrials)
-                                    topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 5))
+                                    topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 0))
                                     UseSkillTrial = true
                                     SpamOnRace = true
                                     AimBotSkillPosition = v.Character.HumanoidRootPart.CFrame.Position
                                     Skillaimbot = true
-                                    Click()
+                                    KillPlayerAttack = true
                                 until _G.KillAfterTrials == false or v.Humanoid.Health <= 0 or not v.Parent or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid")
                                 UseSkillTrial = false
                                 SpamOnRace = false
                                 Skillaimbot = false
+                                KillPlayerAttack = false
                             end
                         end
                     end
@@ -7890,7 +8124,7 @@ spawn(function()
                 else
                     StartMagnetBoneMon = false
                     if game:GetService("ReplicatedStorage"):FindFirstChild("Demonic Soul [Lv. 2025]") then
-                     topos(game:GetService("ReplicatedStorage"):FindFirstChild("Demonic Soul [Lv. 2025]").HumanoidRootPart.CFrame * Pos)
+                        topos(game:GetService("ReplicatedStorage"):FindFirstChild("Demonic Soul [Lv. 2025]").HumanoidRootPart.CFrame * Pos)
                     end
                 end
             end
