@@ -4,14 +4,6 @@ repeat wait() until game:GetService("Players").LocalPlayer
 repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui
 repeat wait() until game:GetService("ReplicatedStorage").Effect.Container
 
-if not game:IsLoaded() then
-	local GameLoadGui = Instance.new("Message",workspace)
-	GameLoadGui.Text = 'Wait Game Loading'
-	game.Loaded:Wait()
-	GameLoadGui:Destroy()
-	wait()
-end
-
 assert(getrawmetatable)
 grm = getrawmetatable(game)
 setreadonly(grm, false)
@@ -2072,92 +2064,6 @@ spawn(function()
 end)
 
 -- [ Ui Orion ]
-
-ScreenGui = Instance.new("ScreenGui");
-Frame = Instance.new("Frame");
-UIStroke = Instance.new("UIStroke");
-UIGradient = Instance.new("UIGradient");
-UICorner = Instance.new("UICorner");
-TextLabel = Instance.new("TextLabel");
-UIGradient1 = Instance.new("UIGradient");
-TextLabel1 = Instance.new("TextLabel");
-UIGradient2 = Instance.new("UIGradient");
-ImageLabel = Instance.new("ImageButton");
-adiadi = true
-ImageLabel.Activated: Connect(function () 
-    game:GetService"RunService": Set3dRenderingEnabled(not a)
-    adiadi = not a
-end) 
-
-ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-ScreenGui.Parent = game:GetService("CoreGui")
-
-Frame.AnchorPoint = Vector2.new(0.5, 0.5)
-Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-Frame.BackgroundTransparency = 0.5
-Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Frame.BorderSizePixel = 0
-Frame.Position = UDim2.new(0.499250829, 0, 0.05, 0)
-Frame.Size = UDim2.new(0, 170, 0, 50)
-Frame.Parent = ScreenGui
-
-UIStroke.Color = Color3.fromRGB(255, 255, 255)
-UIStroke.Thickness = 1.5
-UIStroke.Parent = Frame
-
-UIGradient.Color = ColorSequence.new{
-	ColorSequenceKeypoint.new(0, Color3.fromRGB(15.000000055879354, 255, 255)),
-	ColorSequenceKeypoint.new(1, Color3.fromRGB(207.00000286102295, 62.00000010430813, 255))
-}
-UIGradient.Parent = UIStroke
-
-UICorner.CornerRadius = UDim.new(0, 5)
-UICorner.Parent = Frame
-
-TextLabel.Font = Enum.Font.FredokaOne
-TextLabel.Text = "Tinh Linh Hub Script"
-TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-TextLabel.TextSize = 15
-TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-TextLabel.BackgroundTransparency = 1
-TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TextLabel.BorderSizePixel = 0
-TextLabel.Position = UDim2.new(0.0199637525, 0, 0.276315689, 0)
-TextLabel.Size = UDim2.new(0, 170, 0, 6)
-TextLabel.Parent = Frame
-
-UIGradient1.Color = ColorSequence.new{
-	ColorSequenceKeypoint.new(0, Color3.fromRGB(15.000000055879354, 255, 255)),
-	ColorSequenceKeypoint.new(1, Color3.fromRGB(207.00000286102295, 62.00000010430813, 255))
-}
-UIGradient1.Parent = TextLabel
-
-TextLabel1.Font = Enum.Font.FredokaOne
-TextLabel1.Text = "discord.gg/C8YjpmQPJp"
-TextLabel1.TextColor3 = Color3.fromRGB(255, 255, 255)
-TextLabel1.TextSize = 15
-TextLabel1.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-TextLabel1.BackgroundTransparency = 1
-TextLabel1.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TextLabel1.BorderSizePixel = 0
-TextLabel1.Position = UDim2.new(0.0199637525, 0, 0.539473593, 0)
-TextLabel1.Size = UDim2.new(0, 170, 0, 11)
-TextLabel1.Parent = Frame
-
-UIGradient2.Color = ColorSequence.new{
-	ColorSequenceKeypoint.new(0, Color3.fromRGB(15.000000055879354, 255, 255)),
-	ColorSequenceKeypoint.new(1, Color3.fromRGB(207.00000286102295, 62.00000010430813, 255))
-}
-UIGradient2.Parent = TextLabel1
-
-ImageLabel.Image = "rbxassetid://16730867128"
-ImageLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-ImageLabel.BackgroundTransparency = 1
-ImageLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
-ImageLabel.BorderSizePixel = 0
-ImageLabel.Position = UDim2.new(0.448140889, 0, -0.3, 0)
-ImageLabel.Size = UDim2.new(0, 30, 0, 30)
-ImageLabel.Parent = Frame
 
 local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/HuyLocDz/Ui/main/OrionUi.lua"))()
 local Window =OrionLib:MakeWindow({Name = ":)", IntroEnabled = true, IntroText = "Tinh Linh Hub", IntroIcon = "rbxassetid://16730867128", HidePremium = false, SaveConfig = true, ConfigFolder = "TinhLinhHub"})
