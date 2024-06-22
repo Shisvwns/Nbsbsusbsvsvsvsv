@@ -7459,7 +7459,7 @@ local YourAzure = Sea:AddParagraph("Your Azure Ember")
 
 spawn(function()
     while wait() do
-        YourAzure:Set("Azure Ember: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventory","Azure Ember"))
+        YourAzure:Set("Azure Ember: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Azure Ember","Check"))
     end
 end)
 
@@ -7485,8 +7485,7 @@ Sea:AddToggle({
 })
 
 function GetCountMaterials(MaterialName)
-    local Inventory = game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventory")
-    for i, v in pairs(Inventory) do
+    for i, v in pairs(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventory")) do
         if v.Name == MaterialName then
             return v["Count"]
         end
