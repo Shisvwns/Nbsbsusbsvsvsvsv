@@ -1622,10 +1622,11 @@ end
 
 function StopTween(target)
     if not target then
-        topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
---        Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
---        Tween:Cancel()
-        Clip = false
+        pcall(function()
+            topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
+            game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos}):Cancel()
+            Clip = false
+        end
     end
 end
 
