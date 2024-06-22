@@ -3510,7 +3510,7 @@ spawn(function()
             if CheckMasSelect("Melee") == _G.SeMastery then
                 for i,v in pairs(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventory")) do
                     if type(v) == "table" then
-                        if v.Type == "Melee" and v.Mastery >= 600 then
+                        if v.Type == "Melee" and v.Mastery >= _G.SeMastery then
                             if not (game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(v.Name) or game:GetService("Players").LocalPlayer.Character:FindFirstChild(v.Name)) then
                                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LoadItem",v.Name)
                             end
@@ -3522,7 +3522,7 @@ spawn(function()
             if CheckMasSelect("Sword") == _G.SeMastery then
                 for i,v in pairs(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventory")) do
                     if type(v) == "table" then
-                        if v.Type == "Sword" and v.Mastery >= 600 then
+                        if v.Type == "Sword" and v.Mastery >= _G.SeMastery then
                             if not (game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(v.Name) or game:GetService("Players").LocalPlayer.Character:FindFirstChild(v.Name)) then
                                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LoadItem",v.Name)
                             end
