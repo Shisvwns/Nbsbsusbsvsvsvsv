@@ -2053,11 +2053,11 @@ local Module = require(game:GetService("Players").LocalPlayer.PlayerScripts.Comb
 local CombatFramework = debug.getupvalues(Module)[2]
 spawn(function()
     while task.wait(_G.FastAttackDelay) do
-        if _G.FastAttack then
+        if _G.FastAttack and CombatFramework.activeController then
             CombatFramework.activeController.attacking = false
             CombatFramework.activeController.timeToNextAttack = 0
             CombatFramework.activeController.increment = 3
-            CombatFramework.activeController.hitboxMagnitude = 100
+            CombatFramework.activeController.hitboxMagnitude = 70
             CombatFramework.activeController.blocking = false
             CombatFramework.activeController.timeToNextBlock = 0
             CombatFramework.activeController.focusStart = 0
