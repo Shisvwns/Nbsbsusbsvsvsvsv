@@ -4,14 +4,6 @@ repeat wait() until game:GetService("Players").LocalPlayer
 repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui
 repeat wait() until game:GetService("ReplicatedStorage").Effect.Container
 
-if not game:IsLoaded() then
-	local GameLoadGui = Instance.new("Message",workspace)
-	GameLoadGui.Text = 'Wait Game Loading'
-	game.Loaded:Wait()
-	GameLoadGui:Destroy()
-	wait()
-end
-
 assert(getrawmetatable)
 grm = getrawmetatable(game)
 setreadonly(grm, false)
@@ -1622,11 +1614,9 @@ end
 
 function StopTween(target)
     if not target then
-        pcall(function()
-            topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
-            game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos}):Cancel()
-            Clip = false
-        end)
+        topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
+        game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos}):Cancel()
+        Clip = false
     end
 end
 
@@ -1929,7 +1919,7 @@ spawn(function()
             if UseSkill or UseGunSkill or SeaSkill then
                 for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.Notifications:GetChildren()) do
                     for _, Notif in pairs(v:GetChildren()) do
-                        if string.find(Notif.Text,"Skill locked!") then
+                        if string.find(Notif.Text,"Skill Locked!") then
                             v:Destroy()
                         end
                     end
@@ -2058,6 +2048,23 @@ function AttackNoCD()
         end
     end
 end
+
+local Module = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
+local CombatFramework = debug.getupvalues(Module)[2]
+spawn(function()
+    while task.wait(_G.FastAttackDelay) do
+        if _G.FastAttack then
+            CombatFramework.activeController.attacking = false
+            CombatFramework.activeController.timeToNextAttack = 0
+            CombatFramework.activeController.increment = 3
+            CombatFramework.activeController.hitboxMagnitude = 100
+            CombatFramework.activeController.blocking = false
+            CombatFramework.activeController.timeToNextBlock = 0
+            CombatFramework.activeController.focusStart = 0
+            CombatFramework.activeController.humanoid.AutoRotate = true
+        end
+    end
+end)
 
 function Click()
     game:GetService'VirtualUser':CaptureController()
@@ -3595,6 +3602,8 @@ local Section = Farm:AddSection({
     Name = "~ Melee & Sword Mastery ~"
 })
 
+local Paragraph = Farm:AddParagraph("Note", "Put Points Into Melee If Farming Melee Mastery, Same For Sword Mastery")
+
 Farm:AddSlider({
 	Name = "Select Mastery ",
 	Min = 1,
@@ -3923,6 +3932,34 @@ spawn(function()
 			end)
 		end
 	end
+end)
+
+Farm:AddToggle({
+	Name = "Auto Farm All Boss",
+	Default = false,
+	Callback = function(Value)
+		_G.AutoAllBoss = Value
+		StopTween(_G.AutoAllBoss)
+	end
+})
+
+spawn(function()
+    while wait() do
+        if _G.AutoAllBoss then
+            pcall(function()
+                for i,v in pairs(game.ReplicatedStorage:GetChildren()) do
+                    if (v.Name == "rip_indra" or v.Name == "Ice Admiral") or (v.Name == "Saber Expert" or v.Name == "The Saw" or v.Name == "Greybeard" or v.Name == "Mob Leader" or v.Name == "The Gorilla King" or v.Name == "Bobby" or v.Name == "Yeti" or v.Name == "Vice Admiral" or v.Name == "Warden" or v.Name == "Chief Warden" or v.Name == "Swan" or v.Name == "Magma Admiral" or v.Name == "Fishman Lord" or v.Name == "Wysper" or v.Name == "Thunder God" or v.Name == "Cyborg") or (v.Name == "Don Swan" or v.Name == "Diamond" or v.Name == "Jeremy" or v.Name == "Fajita" or v.Name == "Smoke Admiral" or v.Name == "Awakened Ice Admiral" or v.Name == "Tide Keeper" or v.Name == "Order" or v.Name == "Darkbeard" or v.Name =="Cursed Captain") or (v.Name == "Stone" or v.Name == "Island Empress" or v.Name == "Kilo Admiral" or v.Name == "Captain Elephant" or v.Name == "Beautiful Pirate" or v.Name == "Cake Queen" or v.Name == "rip_indra True Form" or v.Name == "Longma" or v.Name == "Soul Reaper" or v.Name == "Cake Prince" or v.Name == "Dough King") then
+                        if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 17000 then
+                            repeat task.wait()
+                                EquipWeapon(_G.SelectWeapon)
+                                topos(v.HumanoidRootPart.CFrame*Pos)
+                            until v.Humanoid.Health <= 0 or _G.AutoAllBoss == false or not v.Parent
+                        end
+                    end
+                end
+            end)
+        end
+    end
 end)
 
 local Section = Farm:AddSection({
@@ -5406,38 +5443,48 @@ ItemQuest:AddToggle({
 	end
 })
 
--- topos(game:GetService("Workspace").Map.Waterfall.SecretRoom.Room.Door.Door.Hitbox.CFrame)
+function CheckTool(toolnam)
+    lol = {game.Players.LocalPlayer.Character, game.Players.LocalPlayer.Backpack}
+    for i, v in pairs(lol) do
+        if v:FindFirstChild(toolnam) then
+            return v:FindFirstChild(toolnam)
+        end
+    end
+end
+
+function CheckTorchTushita()
+    local a
+    if not game:GetService("Workspace").Map.Turtle.QuestTorches.Torch1.Particles.Main.Enabled then
+        a = "1"
+    elseif not game:GetService("Workspace").Map.Turtle.QuestTorches.Torch2.Particles.Main.Enabled then
+        a = "2"
+    elseif not game:GetService("Workspace").Map.Turtle.QuestTorches.Torch3.Particles.Main.Enabled then
+        a = "3"
+    elseif not game:GetService("Workspace").Map.Turtle.QuestTorches.Torch4.Particles.Main.Enabled then
+        a = "4"
+    elseif not game:GetService("Workspace").Map.Turtle.QuestTorches.Torch5.Particles.Main.Enabled then
+        a = "5"
+    end
+    for i, v in next, game:GetService("Workspace").Map.Turtle.QuestTorches:GetChildren() do
+        if v:IsA("MeshPart") and string.find(v.Name, a) and not v.Particles.Main.Enabled then
+            return v
+        end
+    end
+end
+
 spawn(function()
-    while wait(.5) do
+    while wait() do
         if _G.AutoHolyTorch then
-            if game.Players.LocalPlayer.Backpack:FindFirstChild("Holy Torch") or game.Players.LocalPlayer.Character:FindFirstChild("Holy Torch") then
-                repeat wait(.2)
+            if CheckMob("rip_indra True Form") then
+                if CheckTool("Holy Torch" then
                     EquipWeapon("Holy Torch")
-                    topos(CFrame.new(-10752.4434, 415.261749, -9367.43848, 1, 0, 0, 0, 1, 0, 0, 0, 1))
-                until (Vector3.new(-10752.4434, 415.261749, -9367.43848)-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 5
-                wait(2)
-                repeat wait(.2)
-                    EquipWeapon("Holy Torch")
-                    topos(CFrame.new(-11671.6289, 333.78125, -9474.31934, 0.300932229, 0, -0.953645527, 0, 1, 0, 0.953645527, 0, 0.300932229))
-                until (Vector3.new(-11671.6289, 333.78125, -9474.31934)-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 5
-                wait(2)
-                repeat wait(.2)
-                    EquipWeapon("Holy Torch")
-                    topos(CFrame.new(-12133.1406, 521.507446, -10654.292, 0.80428642, 0, -0.594241858, 0, 1, 0, 0.594241858, 0, 0.80428642))
-                until (Vector3.new(-12133.1406, 521.507446, -10654.292)-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 5
-                wait(2)
-                repeat wait(.2)
-                    EquipWeapon("Holy Torch")
-                    topos(CFrame.new(-13336.127, 484.521179, -6985.31689, 0.853732228, 0, -0.520712316, 0, 1, 0, 0.520712316, 0, 0.853732228))
-                until (Vector3.new(-13336.127, 484.521179, -6985.31689)-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 5
-                wait(2)
-                EquipWeapon("Holy Torch")
-                repeat wait(.2)
-                    topos(CFrame.new(-13487.623, 336.436188, -7924.53857, -0.982848108, 0, 0.184417039, 0, 1, 0, -0.184417039, 0, -0.982848108))
-                until (Vector3.new(-13487.623, 336.436188, -7924.53857)-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 5
-                wait(2)
-                Com()
-                wait(20)
+                    if CheckTorchTushita() then
+                        topos(CheckTorchTushita().CFrame)
+                    end
+                else
+                    topos(game:GetService("Workspace").Map.Waterfall.SecretRoom.Room.Door.Door.Hitbox.CFrame)
+                    wait(1)
+                end
             end
         end
     end
