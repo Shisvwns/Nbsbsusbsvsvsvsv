@@ -2052,8 +2052,9 @@ end
 local Module = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
 local CombatFramework = debug.getupvalues(Module)[2]
 spawn(function()
-    while task.wait(_G.FastAttackDelay) do
-        if _G.FastAttack and CombatFramework.activeController then
+    while task.wait() do
+        if KillPlayerAttack and CombatFramework.activeController then
+            Click()
             CombatFramework.activeController.attacking = false
             CombatFramework.activeController.timeToNextAttack = 0
             CombatFramework.activeController.increment = 3
@@ -2070,14 +2071,6 @@ function Click()
     game:GetService'VirtualUser':CaptureController()
     game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
 end
-
-spawn(function()
-    while task.wait() do
-        if KillPlayerAttack then
-            Click()
-        end
-    end
-end)
 
 -- [ Ui Orion ]
 
