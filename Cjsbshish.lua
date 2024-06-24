@@ -1266,7 +1266,7 @@ function UpdatePlayerChams()
                         name.TextYAlignment = 'Top'
                         name.BackgroundTransparency = 1
                         name.TextStrokeTransparency = 0.5
-                        name.TextColor3 = Color3.fromRGB(255, 0, 0)
+                        name.TextColor3 = Color3.fromRGB(255, 105, 180)
                     else
                         v.Character.Head['NameEsp'..Number].TextLabel.Text = ('[ Player: '..v.Name..' ] - [ Health: '..math.floor(v.Character.Humanoid.Health)..'/'..v.Character.Humanoid.MaxHealth..' ]\n[ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3)..'m ]')
                     end
@@ -1601,14 +1601,14 @@ function topos(Pos)
     if Distance <= 250 then
         lp.Character.HumanoidRootPart.CFrame = Pos
     end
-    Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
+    Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
     Tween:Play() 
     Clip = true
 end
 
 function Tween(Pos)
-    Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-    Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/_G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
+    Distance = (Pos.Position - game.Players.LocalPlayer.Character.PartTele.Position).Magnitude
+    Tween = game:GetService("TweenService"):Create(lp.Character.PartTele,TweenInfo.new(Distance/_G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
     Tween:Play()
 end
 
@@ -2071,6 +2071,14 @@ function Click()
     game:GetService'VirtualUser':CaptureController()
     game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
 end
+
+spawn(function()
+    while task.wait() do
+        if KillPlayerAttack then
+            AttackNoCD()
+        end
+    end
+end)
 
 -- [ Ui Orion ]
 
