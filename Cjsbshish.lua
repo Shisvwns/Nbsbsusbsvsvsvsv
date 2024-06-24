@@ -1601,14 +1601,14 @@ function topos(Pos)
     if Distance <= 250 then
         lp.Character.HumanoidRootPart.CFrame = Pos
     end
-    Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
+    Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
     Tween:Play() 
     Clip = true
 end
 
 function Tween(Pos)
-    Distance = (Pos.Position - game.Players.LocalPlayer.Character.PartTele.Position).Magnitude
-    Tween = game:GetService("TweenService"):Create(lp.Character.PartTele,TweenInfo.new(Distance/_G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
+    Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/_G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
     Tween:Play()
 end
 
@@ -2168,41 +2168,48 @@ ImageLabel.Position = UDim2.new(0.448140889, 0, -0.3, 0)
 ImageLabel.Size = UDim2.new(0, 30, 0, 30)
 ImageLabel.Parent = Frame
 
-local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/HuyLocDz/Ui/main/OrionUi.lua"))()
-local Window =OrionLib:MakeWindow({Name = ":)", IntroEnabled = true, IntroText = "Tinh Linh Hub", IntroIcon = "rbxassetid://16730867128", HidePremium = false, SaveConfig = true, ConfigFolder = "TinhLinhHub"})
+local UiVip = loadstring(game:HttpGet("https://raw.githubusercontent.com/HuyLocDz/Ui/main/UiDeoBiet.lua"))()
+local Window = UiVip:CreateWindow({
+    Name = "Tinh Linh Hub | Blox Fruits",
+    LoadingTitle = "Welcome To Tinh Linh Hub Script",
+    LoadingSubtitle = "by HuyLoc",
+    ConfigurationSaving = {
+        Enabled = true,
+        FolderName = nil,
+        FileName = "Tinh Linh Hub"
+    }
+})
 
-OrionLib:MakeNotification({
-    Name = "Tinh Linh Hub",
+UiVip:Notify({
+    Title = "Tinh Linh Hub",
     Content = "Loading Script Tinh Linh Hub...",
-    Image = "rbxassetid://16730867128",
-    Time = 5
+    Image = "16730867128",
+    Duration = 5
 })
 
 -- [ Create Tab ]
 
-local Setting = Window:MakeTab({Name = "Settings", Icon = "rbxassetid://4483345998", PremiumOnly = false})
-local Farm = Window:MakeTab({Name = "Farm", Icon = "rbxassetid://4483345998", PremiumOnly = false})
-local FruitRaid = Window:MakeTab({Name = "Fruit & Raid", Icon = "rbxassetid://4483345998", PremiumOnly = false})
-local Other = Window:MakeTab({Name = "Other", Icon = "rbxassetid://4483345998", PremiumOnly = false})
-local ItemQuest = Window:MakeTab({Name = "Item & Quest", Icon = "rbxassetid://4483345998",PremiumOnly = false})
-local Player = Window:MakeTab({Name = "Player", Icon = "rbxassetid://4483345998", PremiumOnly = false})
-local PvP = Window:MakeTab({Name = "PvP", Icon = "rbxassetid://4483345998", PremiumOnly = false})
-local Sea = Window:MakeTab({Name = "Sea Event", Icon = "rbxassetid://4483345998",PremiumOnly = false})
-local Race = Window:MakeTab({Name = "Race", Icon = "rbxassetid://4483345998", PremiumOnly = false})
-local StatsEsp = Window:MakeTab({Name = "Stats & Esp", Icon = "rbxassetid://4483345998",PremiumOnly = false})
-local Teleport = Window:MakeTab({Name = "Teleport", Icon = "rbxassetid://4483345998", PremiumOnly = false})
-local StatusServer = Window:MakeTab({Name = "Status & Server", Icon = "rbxassetid://4483345998", PremiumOnly = false})
-local Shop = Window:MakeTab({Name = "Shop", Icon = "rbxassetid://4483345998", PremiumOnly = false})
+local Setting = Window:CreateTab("Settings", 4483345998)
+local Farm = Window:CreateTab("Farm", 4483345998)
+local FruitRaid = Window:CreateTab("Fruit & Raid", 4483345998)
+local Other = Window:CreateTab("Other", 4483345998)
+local ItemQuest = Window:CreateTab("Item & Quest", 4483345998)
+local Player = Window:CreateTab("Player", 4483345998)
+local PvP = Window:CreateTab("PvP", 4483345998)
+local Sea = Window:CreateTab("Sea Event", 4483345998)
+local Race = Window:CreateTab("Race", 4483345998)
+local StatsEsp = Window:CreateTab("Stats & Esp", 4483345998)
+local Teleport = Window:CreateTab("Teleport", 4483345998)
+local StatusServer = Window:CreateTab("Status & Server", 4483345998)
+local Shop = Window:CreateTab("Shop", 4483345998)
 
 -- [ Tab Settings]
 
-local Section = Setting:AddSection({
-    Name = "~ Setting Farm ~"
-})
+local Section = Setting:AddSection("~ Setting Farm ~", true)
 
-local CheckWeapon1 = Setting:AddDropdown({
+Setting:AddDropdown({
 	Name = "Select Weapon",
-	Default = "Melee",
+	CurrentValue = "Melee",
 	Options = {"Melee","Sword","Gun","Blox Fruit"},
 	Callback = function(Value)
 		SelectWeapon = Value
@@ -2225,7 +2232,7 @@ end)
 
 Setting:AddDropdown({
 	Name = "Select Speed ​​Attack",
-	Default = "0.15",
+	CurrentValue = "0.15",
 	Options = {"0","0.1","0.15","0.5","1"},
 	Callback = function(Value)
 		_G.FastAttackDelay = Value
@@ -2234,7 +2241,7 @@ Setting:AddDropdown({
 
 Setting:AddToggle({
 	Name = "Fast Attack",
-	Default = true,
+	CurrentValue = true,
 	Callback = function(Value)
 		_G.FastAttack = Value
 	end
@@ -2255,7 +2262,7 @@ end
 
 Setting:AddToggle({
 	Name = "Auto Click [ 75% Kick System ]",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoClick = Value
 	end
@@ -2272,7 +2279,7 @@ end)
 
 Setting:AddToggle({
 	Name = "Bring Mobs",
-	Default = true,
+	CurrentValue = true,
 	Callback = function(Value)
 		_G.BringMonster = Value
 	end
@@ -2362,18 +2369,14 @@ spawn(function()
     end
 end)
 
-local Section = Setting:AddSection({
-    Name = "~ Tween ~"
-})
+local Section = Setting:AddSection("~ Tween ~", true)
 
 Setting:AddSlider({
 	Name = "Tween Speed",
-	Min = 0,
-	Max = 350,
-	Default = 325,
-	Color = Color3.fromRGB(255,255,255),
+	Range = {1, 350},
 	Increment = 1,
-	ValueName = "",
+	Suffix = "",
+	CurrentValue = 325,
 	Callback = function(Value)
 		_G.TweenSpeed = Value
 	end
@@ -2381,7 +2384,7 @@ Setting:AddSlider({
 
 Setting:AddToggle({
 	Name = "Bypass Teleport",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.BypassTele = Value
 	end
@@ -2389,6 +2392,7 @@ Setting:AddToggle({
 
 Setting:AddButton({
     Name = "Set Clip = False",
+    Interact = "Button",
     Callback = function()
         _G.Clip = false
     end
@@ -2396,18 +2400,17 @@ Setting:AddButton({
 
 Setting:AddButton({
 	Name = "Reset Character",
+	Interact = "Button",
 	Callback = function()
       	game:GetService("Players").LocalPlayer.Character.Humanoid.Health = 0
 	end    
 })
 
-local Section = Setting:AddSection({
-    Name = "~ Graphic & Reduce Lag ~"
-})
+local Section = Setting:AddSection("~ Graphic & Reduce Lag ~", true)
 
 Setting:AddToggle({
 	Name = "White Screen",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.WhiteScreen = Value
 		if _G.WhiteScreen == true then
@@ -2432,6 +2435,7 @@ end)
 
 Setting:AddButton({
     Name = "Remove Fog",
+    Interact = "Button",
     Callback = function()
         game:GetService("Lighting").LightingLayers:Destroy()
     	game:GetService("Lighting").Sky:Destroy()
@@ -2440,6 +2444,7 @@ Setting:AddButton({
 
 Setting:AddButton({
     Name = "Fps Booster",
+    Interact = "Button",
     Callback = function()
         FPSBooster()
     end
@@ -2489,6 +2494,7 @@ end
 
 Setting:AddButton({
     Name = "Remove Lava",
+    Interact = "Button",
     Callback = function()
         for i,v in pairs(game.Workspace:GetDescendants()) do
 			if v.Name == "Lava" then   
@@ -2505,7 +2511,7 @@ Setting:AddButton({
 
 Setting:AddToggle({
 	Name = "Disabled Notifications Text",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.Remove_trct = Value
 	end
@@ -2523,7 +2529,7 @@ end)
 
 Setting:AddToggle({
 	Name = "Disabled Damage Counter",
-	Default = true,
+	CurrentValue = true,
 	Callback = function(Value)
 		_G.DisabledDamage = Value
 	end
@@ -2541,12 +2547,10 @@ end)
 
 Setting:AddSlider({
 	Name = "Brightnes",
-	Min = 1,
-	Max = 100,
-	Default = 20,
-	Color = Color3.fromRGB(255, 255, 255),
+	Range = {1, 100},
 	Increment = 1,
-	ValueName = "%",
+	Suffix = "%",
+	CurrentValue = 20,
 	Callback = function(Value)
 		_G.BrightValue = Value
 	end
@@ -2554,18 +2558,17 @@ Setting:AddSlider({
 
 Setting:AddButton({
     Name = "Set Brightnes",
+    Interact = "Button",
     Callback = function()
         game:GetService("Lighting").Brightness = _G.BrightValue
     end
 })
 
-local Section = Setting:AddSection({
-    Name = "~ Other ~"
-})
+local Section = Setting:AddSection("~ Other ~", true)
 
 Setting:AddToggle({
 	Name = "Auto Rejoin When Disconnect",
-	Default = true,
+	CurrentValue = true,
 	Callback = function(Value)
 		_G.AutoRejoin = Value
 	end
@@ -2585,20 +2588,18 @@ end)
 
 Setting:AddSlider({
 	Name = "Value Health",
-	Min = 0,
-	Max = 100,
-	Default = 30,
-	Color = Color3.fromRGB(255,255,255),
+	Range = {1, 100},
 	Increment = 1,
-	ValueName = "%",
+	Suffix = "%",
+	CurrentValue = 20,
 	Callback = function(Value)
 		_G.Health = Value
 	end
-})
+}))
 
 Setting:AddToggle({
 	Name = "Teleport To Y If Low Health",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.LowHealth = Value
 	end
@@ -2616,103 +2617,109 @@ spawn(function()
     end
 end)
 
-local Section = Setting:AddSection({
-    Name = "~ Hold Skill Mastery ~"
-})
+local Section = Setting:AddSection("~ Hold Skill Mastery ~", true)
 
 Setting:AddLabel("Hold Skill Devil Fruit")
 
-Setting:AddTextbox({
+Setting:AddInput({
 	Name = "Hold Skill Z",
-	Default = "0",
-	TextDisappear = false,
+	CurrentValue = "0",
+	PlaceholderText = "Input",
+    RemoveTextAfterFocusLost = false,
 	Callback = function(Value)
 		_G.HoldSKillZ = Value
 	end
 })
 
-Setting:AddTextbox({
+Setting:AddInput({
 	Name = "Hold Skill X",
-	Default = "0",
-	TextDisappear = false,
+	CurrentValue = "0",
+	PlaceholderText = "Input",
+    RemoveTextAfterFocusLost = false,
 	Callback = function(Value)
 		_G.HoldSKillX = Value
 	end
 })
 
-Setting:AddTextbox({
+Setting:AddInput({
 	Name = "Hold Skill C",
-	Default = "0",
-	TextDisappear = false,
+	CurrentValue = "0",
+	PlaceholderText = "Input",
+    RemoveTextAfterFocusLost = false,
 	Callback = function(Value)
 		_G.HoldSKillC = Value
 	end
 })
 
-Setting:AddTextbox({
+Setting:AddInput({
 	Name = "Hold Skill V",
-	Default = "0",
-	TextDisappear = false,
+	CurrentValue = "0",
+	PlaceholderText = "Input",
+    RemoveTextAfterFocusLost = false,
 	Callback = function(Value)
 		_G.HoldSKillV = Value
 	end
 })
 
-Setting:AddTextbox({
+Setting:AddInput({
 	Name = "Hold Skill F",
-	Default = "0",
-	TextDisappear = false,
+	CurrentValue = "0",
+	PlaceholderText = "Input",
+    RemoveTextAfterFocusLost = false,
 	Callback = function(Value)
 		_G.HoldSKillF = Value
 	end
 })
 
-local Section = Setting:AddSection({
-    Name = "~ Hold Skill Sea Event ~"
-})
+local Section = Setting:AddSection("~ Hold Skill Sea Event ~", true)
 
 Setting:AddLabel("Hold Skill Devil Fruit")
 
-Setting:AddTextbox({
+Setting:AddInput({
 	Name = "Hold Skill Z",
-	Default = "0",
-	TextDisappear = false,
+	CurrentValue = "0",
+	PlaceholderText = "Input",
+    RemoveTextAfterFocusLost = false,
 	Callback = function(Value)
 		_G.HoldSKillFruitZ = Value
 	end
 })
 
-Setting:AddTextbox({
+Setting:AddInput({
 	Name = "Hold Skill X",
-	Default = "0",
-	TextDisappear = false,
+	CurrentValue = "0",
+	PlaceholderText = "Input",
+    RemoveTextAfterFocusLost = false,
 	Callback = function(Value)
 		_G.HoldSKillFruitX = Value
 	end
 })
 
-Setting:AddTextbox({
+Setting:AddInput({
 	Name = "Hold Skill C",
-	Default = "0",
-	TextDisappear = false,
+	CurrentValue = "0",
+	PlaceholderText = "Input",
+    RemoveTextAfterFocusLost = false,
 	Callback = function(Value)
 		_G.HoldSKillFruitC = Value
 	end
 })
 
-Setting:AddTextbox({
+Setting:AddInput({
 	Name = "Hold Skill V",
-	Default = "0",
-	TextDisappear = false,
+	CurrentValue = "0",
+	PlaceholderText = "Input",
+    RemoveTextAfterFocusLost = false,
 	Callback = function(Value)
 		_G.HoldSKillFruitV = Value
 	end
 })
 
-Setting:AddTextbox({
+Setting:AddInput({
 	Name = "Hold Skill F",
-	Default = "0",
-	TextDisappear = false,
+	CurrentValue = "0",
+	PlaceholderText = "Input",
+    RemoveTextAfterFocusLost = false,
 	Callback = function(Value)
 		_G.HoldSKillFruitF = Value
 	end
@@ -2720,37 +2727,41 @@ Setting:AddTextbox({
 
 Setting:AddLabel("Hold Skill Melee")
 
-Setting:AddTextbox({
+Setting:AddInput({
 	Name = "Hold Skill Z",
-	Default = "0",
-	TextDisappear = false,
+	CurrentValue = "0",
+	PlaceholderText = "Input",
+    RemoveTextAfterFocusLost = false,
 	Callback = function(Value)
 		_G.HoldSKillMeleeZ = Value
 	end
 })
 
-Setting:AddTextbox({
+Setting:AddInput({
 	Name = "Hold Skill X",
-	Default = "0",
-	TextDisappear = false,
+	CurrentValue = "0",
+	PlaceholderText = "Input",
+    RemoveTextAfterFocusLost = false,
 	Callback = function(Value)
 		_G.HoldSKillMeleeX = Value
 	end
 })
 
-Setting:AddTextbox({
+Setting:AddInput({
 	Name = "Hold Skill C",
-	Default = "0",
-	TextDisappear = false,
+	CurrentValue = "0",
+	PlaceholderText = "Input",
+    RemoveTextAfterFocusLost = false,
 	Callback = function(Value)
 		_G.HoldSKillMeleeC = Value
 	end
 })
 
-Setting:AddTextbox({
+Setting:AddInput({
 	Name = "Hold Skill V",
-	Default = "0",
-	TextDisappear = false,
+	CurrentValue = "0",
+	PlaceholderText = "Input",
+    RemoveTextAfterFocusLost = false,
 	Callback = function(Value)
 		_G.HoldSKillMeleeV = Value
 	end
@@ -2758,19 +2769,21 @@ Setting:AddTextbox({
 
 Setting:AddLabel("Hold Skill Sword")
 
-Setting:AddTextbox({
+Setting:AddInput({
 	Name = "Hold Skill Z",
-	Default = "0",
-	TextDisappear = false,
+	CurrentValue = "0",
+	PlaceholderText = "Input",
+    RemoveTextAfterFocusLost = false,
 	Callback = function(Value)
 		_G.HoldSKillSwordZ = Value
 	end
 })
 
-Setting:AddTextbox({
+Setting:AddInput({
 	Name = "Hold Skill X",
-	Default = "0",
-	TextDisappear = false,
+	CurrentValue = "0",
+	PlaceholderText = "Input",
+    RemoveTextAfterFocusLost = false,
 	Callback = function(Value)
 		_G.HoldSKillSwordX = Value
 	end
@@ -2778,11 +2791,9 @@ Setting:AddTextbox({
 
 -- [ Tab Farm ]
 
-local Section = Farm:AddSection({
-    Name = "~ Level ~"
-})
+local Section = Farm:AddSection("~ Level ~", true)
 
-local YourLevel = Farm:AddParagraph("Your Level")
+local YourLevel = Farm:AddParagraph({Title = "Your Level", Content = ""})
 
 spawn(function()
     while wait() do
@@ -2792,7 +2803,7 @@ end)
 
 Farm:AddDropdown({
 	Name = "Select Farm Level Mode",
-	Default = "Get Quest",
+	CurrentValue = "Get Quest",
 	Options = {"No Quest","Get Quest"},
 	Callback = function(Value)
 		LevelFMode = Value
@@ -2801,7 +2812,7 @@ Farm:AddDropdown({
 
 local CayLevel = Farm:AddToggle({
 	Name = "Auto Farm Level",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoFarm = Value
         StopTween(_G.AutoFarm)
@@ -2886,7 +2897,7 @@ end)
 
 Farm:AddToggle({
 	Name = "Farm Fast [ Lv. 1 -> Lv. 310 ]",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.FarmSkip = Value
 		if _G.FarmSkip == true then
@@ -2966,11 +2977,11 @@ spawn(function()
                     if CheckPlayer >= 12 and Quest.Visible == false and not string.find(QuestTitle, "Defeat") then
                         Hop()
                         wait(0.1)
-                        OrionLib:MakeNotification({
-                            Name = "Tinh Linh Hub",
+                        UiVip:Notify({
+                            Title = "Tinh Linh Hub",
                             Content = "Hop Servers Because Not Players",
-                            Image = "rbxassetid://16730867128",
-                            Time = 5
+                            Image = "16730867128",
+                            Duration = 5
                         })
                     end 
                 else
@@ -2987,7 +2998,7 @@ end)
 
 Farm:AddToggle({
 	Name = "Auto Farm Nearest",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoFarmNearest = Value
         StopTween(_G.AutoFarmNearest)
@@ -3016,11 +3027,9 @@ spawn(function()
 	end
 end)
 
-local Section = Farm:AddSection({
-    Name = "~ Katakuri ~"
-})
+local Section = Farm:AddSection("~ Katakuri ~", true)
 
-local StatusCakePrince = Farm:AddParagraph("Cake Prince")
+local StatusCakePrince = Farm:AddParagraph({Title = "Cake Prince", Content = ""})
 
 spawn(function()
     while wait() do
@@ -3030,7 +3039,7 @@ end)
 
 Farm:AddDropdown({
 	Name = "Select Farm Katakuri Mode",
-	Default = "Get Quest",
+	CurrentValue = "Get Quest",
 	Options = {"No Quest","Get Quest"},
 	Callback = function(Value)
 		CakeFMode = Value
@@ -3039,7 +3048,7 @@ Farm:AddDropdown({
 
 Farm:AddToggle({
 	Name = "Auto Farm Cake Prince",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoDoughtBoss = Value
         StopTween(_G.AutoDoughtBoss)
@@ -3175,17 +3184,15 @@ end)
 
 Farm:AddToggle({
 	Name = "Auto Spawn Katakuri",
-	Default = true,
+	CurrentValue = true,
 	Callback = function(Value)
 		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner",Value)
 	end
 })
 
-local Section = Farm:AddSection({
-    Name = "~ Bone ~"
-})
+local Section = Farm:AddSection("~ Bone ~", true)
 
-local YourBone = Farm:AddParagraph("Your Bone")
+local YourBone = Farm:AddParagraph({Title = "Your Bone", Content = ""})
 
 spawn(function()
     while wait() do
@@ -3199,7 +3206,7 @@ end)
 
 Farm:AddDropdown({
 	Name = "Select Farm Bone Mode",
-	Default = "Get Quest",
+	CurrentValue = "Get Quest",
 	Options = {"No Quest","Get Quest"},
 	Callback = function(Value)
 		BoneFMode = Value
@@ -3208,7 +3215,7 @@ Farm:AddDropdown({
 
 Farm:AddToggle({
 	Name = "Auto Farm Bone",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.Auto_Bone = Value
 		StopTween(_G.Auto_Bone)
@@ -3291,7 +3298,7 @@ end)
 
 Farm:AddToggle({
 	Name = "Auto Random Bone",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.Auto_Random_Bone = Value
 	end
@@ -3307,7 +3314,7 @@ end)
 
 Farm:AddToggle({
 	Name = "Auto Spawn & Kill Soul Reaper",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.Auto_Soul_Reaper = Value
 		StopTween(_G.Auto_Soul_Reaper)
@@ -3343,13 +3350,11 @@ spawn(function()
     end
 end)
 
-local Section = Farm:AddSection({
-    Name = "~ Gun & Devil Fruit Mastery ~"
-})
+local Section = Farm:AddSection("~ Gun & Devil Fruit Mastery ~", true)
 
 Farm:AddToggle({
 	Name = "Auto Farm Devil Fruit Mastery",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoFarmFruitMastery = Value
 		StopTween(_G.AutoFarmFruitMastery)
@@ -3415,7 +3420,7 @@ end)
 
 Farm:AddToggle({
 	Name = "Auto Farm Gun Mastery",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoFarmGunMastery = Value
 		StopTween(_G.AutoFarmGunMastery)
@@ -3490,12 +3495,10 @@ end)
 
 Farm:AddSlider({
 	Name = "Kill Mobs At % Health",
-	Min = 0,
-	Max = 100,
-	Default = 20,
-	Color = Color3.fromRGB(255,255,255),
+	Range = {1, 100},
 	Increment = 1,
-	ValueName = "%",
+	Suffix = "%",
+	CurrentValue = 20,
 	Callback = function(Value)
 		_G.Kill_At = Value
 	end
@@ -3503,7 +3506,7 @@ Farm:AddSlider({
 
 Farm:AddToggle({
 	Name = "Use Skill Z",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.SkillZ = Value
 	end
@@ -3511,7 +3514,7 @@ Farm:AddToggle({
 
 Farm:AddToggle({
 	Name = "Use Skill X",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.SkillX = Value
 	end
@@ -3519,7 +3522,7 @@ Farm:AddToggle({
 
 Farm:AddToggle({
 	Name = "Use Skill C",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.SkillC = Value
 	end
@@ -3527,7 +3530,7 @@ Farm:AddToggle({
 
 Farm:AddToggle({
 	Name = "Use Skill V",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.SkillV = Value
 	end
@@ -3535,7 +3538,7 @@ Farm:AddToggle({
 
 Farm:AddToggle({
 	Name = "Use Skill F",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.SkillF = Value
 	end
@@ -3599,20 +3602,16 @@ spawn(function()
     end
 end)
 
-local Section = Farm:AddSection({
-    Name = "~ Melee & Sword Mastery ~"
-})
+local Section = Farm:AddSection("~ Melee & Sword Mastery ~", true)
 
-local Paragraph = Farm:AddParagraph("Note", "Put Points Into Melee If Farming Melee Mastery, Same For Sword Mastery")
+local Paragraph = Farm:AddParagraph({Title = "Note", Content = "Put Points Into Melee If Farming Melee Mastery, Same For Sword Mastery"})
 
 Farm:AddSlider({
-	Name = "Select Mastery ",
-	Min = 1,
-	Max = 600,
-	Default = 300,
-	Color = Color3.fromRGB(255,255,255),
+	Name = "Select Mastery",
+	Range = {1, 600},
 	Increment = 1,
-	ValueName = "Mastery",
+	Suffix = "Mastery",
+	CurrentValue = 300,
 	Callback = function(Value)
 		_G.SeMastery = Value
 	end
@@ -3680,7 +3679,7 @@ end)
 
 Farm:AddToggle({
 	Name = "Auto Farm All Melee Mastery",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.FarmAllMelee = Value
 	end
@@ -3735,7 +3734,7 @@ end)
 
 Farm:AddToggle({
 	Name = "Auto Farm All Sword Mastery",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.FarmAllSword = Value
 	end
@@ -3788,9 +3787,7 @@ spawn(function()
     end
 end)
 
-local Section = Farm:AddSection({
-    Name = "~ Boss ~"
-})
+local Section = Farm:AddSection("~ Boss ~", true)
 
 local BossCheck = {}
 for i, v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
@@ -3804,7 +3801,7 @@ end
 
 local BossName = Farm:AddDropdown({
 	Name = "Select Farm Boss Mode",
-	Default = "No Quest",
+	CurrentValue = "No Quest",
 	Options = {"No Quest","Get Quest"},
 	Callback = function(Value)
 		ModeBoss = Value
@@ -3813,7 +3810,7 @@ local BossName = Farm:AddDropdown({
 
 local BossName = Farm:AddDropdown({
 	Name = "Select Boss",
-	Default = "",
+	CurrentValue = "",
 	Options = BossCheck,
 	Callback = function(Value)
 		SelectBoss = Value
@@ -3822,8 +3819,8 @@ local BossName = Farm:AddDropdown({
 
 Farm:AddButton({
     Name = "Refresh Boss List",
+    Interact = "Button",
     Callback = function()
-        BossName:Refresh(BossCheck,true)
         local BossCheck = {}
         for i, v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
             if (v.Name == "rip_indra" or v.Name == "Ice Admiral")
@@ -3833,13 +3830,13 @@ Farm:AddButton({
                 table.insert(BossCheck, v.Name)
             end
         end
-        BossName:Refresh(BossCheck)
+        BossName:Refresh(BossCheck, false)
     end
 })
 
 Farm:AddToggle({
 	Name = "Auto Farm Boss",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoFarmBoss = Value
 		StopTween(_G.AutoFarmBoss)
@@ -3937,7 +3934,7 @@ end)
 
 Farm:AddToggle({
 	Name = "Auto Farm All Boss",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoAllBoss = Value
 		StopTween(_G.AutoAllBoss)
@@ -3963,9 +3960,7 @@ spawn(function()
     end
 end)
 
-local Section = Farm:AddSection({
-    Name = "~ Mobs ~"
-})
+local Section = Farm:AddSection("~ Mobs ~", true)
 
 if World1 then
 	TableMon = {"Bandit","Monkey","Gorilla","Pirate","Brute","Desert Bandit","Desert Officer","Snow Bandit","Snowman","Chief Petty Officer","Sky Bandit","Dark Master","Toga Warrior","Gladiator","Military Soldier","Military Spy","Fishman Warrior","Fishman Commando","God's Guard","Shanda","Royal Squad","Royal Soldier","Galley Pirate","Galley Captain"}
@@ -3977,7 +3972,7 @@ end
 
 Farm:AddDropdown({
 	Name = "Select Mobs",
-	Default = "",
+	CurrentValue = "",
 	Options = TableMon,
 	Callback = function(Value)
 		SelectMob = Value
@@ -3986,7 +3981,7 @@ Farm:AddDropdown({
 
 Farm:AddToggle({
 	Name = "Auto Farm Mobs",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoFarmMob = Value
 		StopTween(_G.AutoFarmMob)
@@ -4021,9 +4016,7 @@ spawn(function()
     end
 end)
 
-local Section = Farm:AddSection({
-    Name = "~ Material ~"
-})
+local Section = Farm:AddSection("~ Material ~", true)
 
 if World1 then
     MaterialList = {"Scrap Metal","Leather","Angel Wings","Magma Ore","Fish Tail"}
@@ -4035,7 +4028,7 @@ end
 
 Farm:AddDropdown({
 	Name = "Select Material",
-	Default = "",
+	CurrentValue = "",
 	Options = MaterialList,
 	Callback = function(Value)
 		SelectMaterial = Value
@@ -4044,7 +4037,7 @@ Farm:AddDropdown({
 
 Farm:AddToggle({
 	Name = "Auto Farm Material",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoMaterial = Value
 		StopTween(_G.AutoMaterial)
@@ -4107,9 +4100,7 @@ spawn(function()
     end
 end)
 
-local Section = FruitRaid:AddSection({
-    Name = "~ Devil Fruit ~"
-})
+local Section = FruitRaid:AddSection("~ Devil Fruit ~", true)
 
 FruitList = {"Rocket-Rocket","Spin-Spin","Chop-Chop","Spring-Spring","Bomb-Bomb","Smoke-Smoke","Spike-Spike","Flame-Flame","Falcon-Falcon","Ice-Ice","Sand-Sand","Dark-Dark","Diamond-Diamond","Light-Light","Rubber-Rubber","Barrier-Barrier","Ghost-Ghost","Magma-Magma","Quake-Quake","Buddha-Buddha","Love-Love","Spider-Spider","Sound-Sound","Phoenix-Phoenix","Portal-Portal","Rumble-Rumble","Pain-Pain","Blizzard-Blizzard","Gravity-Gravity","Mammoth-Mammoth","T-Rex-T-Rex","Dough-Dough","Shadow-Shadow","Venom-Venom","Control-Control","Spirit-Spirit","Dragon-Dragon","Leopard-Leopard","Kitsune-Kitsune"}
 
@@ -4126,7 +4117,7 @@ end
 _G.SelectFruit = ""
 FruitRaid:AddDropdown({
 	Name = "Select Devil Fruit",
-	Default = "",
+	CurrentValue = "",
 	Options = Table_DevilFruitSniper,
 	Callback = function(Value)
 		_G.SelectFruit = Value
@@ -4135,7 +4126,7 @@ FruitRaid:AddDropdown({
 
 FruitRaid:AddToggle({
 	Name = "Auto Buy Devil Fruit Sniper",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoBuyFruitSniper = Value
 	end
@@ -4152,6 +4143,7 @@ end)
 
 FruitRaid:AddButton({
     Name = "Random Devil Fruit",
+    Interact = "Button",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Cousin","Buy")
     end
@@ -4159,7 +4151,7 @@ FruitRaid:AddButton({
 
 FruitRaid:AddToggle({
 	Name = "Auto Random Devil Fruit",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.Random_Auto = Value
 	end
@@ -4175,7 +4167,7 @@ end)
 
 FruitRaid:AddToggle({
 	Name = "Auto Store Devil Fruit",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoStoreFruit = Value
 	end
@@ -4286,7 +4278,7 @@ end)
 
 FruitRaid:AddToggle({
 	Name = "Teleport To Devil Fruit",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.Tweenfruit = Value
 		StopTween(_G.Tweenfruit)
@@ -4307,7 +4299,7 @@ end)
 
 FruitRaid:AddToggle({
 	Name = "Bring To Devil Fruit [ 75% Kick System ]",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.Grabfruit = Value
 	end
@@ -4325,9 +4317,7 @@ spawn(function()
     end
 end)
 
-local Section = FruitRaid:AddSection({
-    Name = "~ Raid ~"
-})
+local Section = FruitRaid:AddSection("~ Raid ~", true)
 
 SelectChip = selectraids or ""
 Raidslist = {}
@@ -4341,7 +4331,7 @@ end
 
 FruitRaid:AddDropdown({
 	Name = "Select Chip",
-	Default = "",
+	CurrentValue = "",
 	Options = Raidslist,
 	Callback = function(Value)
 		SelectChip = Value
@@ -4350,7 +4340,7 @@ FruitRaid:AddDropdown({
 
 FruitRaid:AddToggle({
 	Name = "Auto Buy Chip",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoBuyChip = Value
 	end
@@ -4371,7 +4361,7 @@ end)
 
 FruitRaid:AddToggle({
 	Name = "Auto Get Devil Fruit [ Under 1M Beli ]",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoFruit = Value
 	end
@@ -4471,7 +4461,7 @@ end)
 
 FruitRaid:AddToggle({
 	Name = "Auto Start Raid",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.Auto_StartRaid = Value
 	end
@@ -4495,7 +4485,7 @@ end)
 
 FruitRaid:AddToggle({
 	Name = "Kill Aura",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.Kill_Aura = Value
 	end
@@ -4519,7 +4509,7 @@ end)
 
 FruitRaid:AddToggle({
 	Name = "Auto Next Island",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.NextIsland = Value
 		StopTween(_G.NextIsland)
@@ -4547,7 +4537,7 @@ end)
 
 FruitRaid:AddToggle({
 	Name = "Auto Awakener Devil Fruit",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.Auto_Awakener = Value
 	end
@@ -4562,12 +4552,11 @@ spawn(function()
     end
 end)
 
-local Section = FruitRaid:AddSection({
-    Name = "~ Law Raid ~"
-})
+local Section = FruitRaid:AddSection("~ Law Raid ~", true)
 
 FruitRaid:AddButton({
     Name = "Buy Chip Law",
+    Interact = "Button",
     Callback = function()
         local args = {
             [1] = "BlackbeardReward",
@@ -4580,7 +4569,7 @@ FruitRaid:AddButton({
 
 FruitRaid:AddToggle({
 	Name = "Auto Start Raid Law",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.StartRaidLaw = Value
 	end
@@ -4596,7 +4585,7 @@ end)
 
 FruitRaid:AddToggle({
 	Name = "Auto Kill Law",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoOderSword = Value
 		StopTween(_G.AutoOderSword)
@@ -4626,13 +4615,11 @@ end)
 
 -- [ Tab Other ]
 
-local Section = Other:AddSection({
-    Name = "~ Game Event ~"
-})
+local Section = Other:AddSection("~ Game Event ~", true)
 
 Other:AddToggle({
 	Name = "Auto Pirate Raid",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.RaidPirate = Value
 		StopTween(_G.RaidPirate)
@@ -4670,7 +4657,7 @@ end)
 
 Other:AddToggle({
 	Name = "Auto Factory",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoFactory = Value
 		StopTween(_G.AutoFactory)
@@ -4697,11 +4684,9 @@ spawn(function()
     end
 end)
 
-local Section = Other:AddSection({
-    Name = "~ Elite Hunter ~"
-})
+local Section = Other:AddSection("~ Elite Hunter ~", true)
 
-local EliteStatus = Other:AddParagraph("Elite")
+local EliteStatus = Other:AddParagraph({Title = "Elite", Content = ""})
 
 spawn(function()
     while wait() do
@@ -4711,7 +4696,7 @@ end)
 
 Other:AddToggle({
 	Name = "Auto Kill Elite",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoElitehunter = Value
 		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
@@ -4752,13 +4737,11 @@ spawn(function()
     end
 end)
 
-local Section = Other:AddSection({
-    Name = "~ Chest ~"
-})
+local Section = Other:AddSection("~ Chest ~", true)
 
 Other:AddDropdown({
 	Name = "Select Team When Farm Chest [ Bypass ]",
-	Default = "Pirates",
+	CurrentValue = "Pirates",
 	Options = {"Pirates","Marines"},
 	Callback = function(Value)
 		_G.TeamChest = Value
@@ -4767,7 +4750,7 @@ Other:AddDropdown({
 
 Other:AddToggle({
 	Name = "Auto Farm Chest [ Bypass ]",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.ChestBypass = Value
 		StopTween(_G.ChestBypass)
@@ -4814,7 +4797,7 @@ end)
 
 Other:AddToggle({
 	Name = "Auto Farm Chest [ Tween ]",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoFarmChest = Value
 		StopTween(_G.AutoFarmChest)
@@ -4851,7 +4834,7 @@ end)
 
 Other:AddToggle({
 	Name = "Teleport To Safe If Have Item",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.TeleSafe = Value
 		StopTween(_G.TeleSafe)
@@ -4874,15 +4857,13 @@ spawn(function()
     end
 end)
 
-local Section = Other:AddSection({
-    Name = "~ Rip_Indra ~"
-})
+local Section = Other:AddSection("~ Rip_Indra ~", true)
 
-local CheckRip = Other:AddParagraph("Rip_Indra Status")
+local CheckRip = Other:AddParagraph({Title = "Rip_Indra Status", Content = ""})
 
 Other:AddToggle({
 	Name = "Auto Summon Rip_Indra",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoSpawnRip = Value
 		StopTween(_G.AutoSpawnRip)
@@ -4917,7 +4898,7 @@ end)
 
 Other:AddToggle({
 	Name = "Auto Kill Rip_Indra",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoKillRipIndra = Value
 		StopTween(_G.AutoKillRipIndra)
@@ -4942,11 +4923,9 @@ spawn(function()
     end
 end)
 
-local Section = Other:AddSection({
-    Name = "~ Darkbeard ~"
-})
+local Section = Other:AddSection("~ Darkbeard ~", true)
 
-local CheckRauu = Other:AddParagraph("Darkbeard Status")
+local CheckRauu = Other:AddParagraph({Title = "Darkbeard Status", Content = ""})
 
 spawn(function()
     while wait() do
@@ -4957,7 +4936,7 @@ end)
 
 Other:AddToggle({
 	Name = "Auto Summon Darkbeard",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoSpawnDark = Value
 		StopTween(_G.AutoSpawnDark)
@@ -4984,7 +4963,7 @@ end)
 
 Other:AddToggle({
 	Name = "Auto Kill Darkbeard",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoKillDark = Value
 		StopTween(_G.AutoKillDark)
@@ -5008,11 +4987,9 @@ spawn(function()
     end
 end)
 
-local Section = Other:AddSection({
-    Name = "~ Observation Haki ~"
-})
+local Section = Other:AddSection("~ Observation Haki ~", true)
 
-local ObservationStatus = Other:AddParagraph("Observation Level")
+local ObservationStatus = Other:AddParagraph({Title = "Observation Level", Content = ""})
 
 spawn(function()
     while wait() do
@@ -5022,7 +4999,7 @@ end)
 
 Other:AddToggle({
 	Name = "Auto Farm Observation",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoObservation = Value
 		StopTween(_G.AutoObservation)
@@ -5047,7 +5024,7 @@ end)
 
 Other:AddToggle({
 	Name = "Auto Farm Observation [ Hop ]",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoObservation_Hop = Value
 	end
@@ -5057,11 +5034,11 @@ spawn(function()
     while wait() do
         if _G.AutoObservation then
             if game:GetService("Players").LocalPlayer.VisionRadius.Value >= 5000 then
-                    OrionLib:MakeNotification({
-                        Name = "Tinh Linh Hub",
+                    UiVip:Notify({
+                        Title = "Tinh Linh Hub",
                         Content = "You Have Max Points",
-                        Image = "rbxassetid://16730867128",
-                        Time = 5
+                        Image = "16730867128",
+                        Duration = 5
                     })
                 wait(2)
             else
@@ -5127,7 +5104,7 @@ end)
 
 Other:AddToggle({
 	Name = "Auto Upgrade Observation Haki V2",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoObservationv2 = Value
 		StopTween(_G.AutoObservationv2)
@@ -5174,15 +5151,13 @@ end)
 
 -- [ Tab Item & Quest ]
 
-local Section = ItemQuest:AddSection({
-    Name = "~ Legendary Sword ~"
-})
+local Section = ItemQuest:AddSection("~ Legendary Sword ~", true)
 
-local LegendSwords = ItemQuest:AddParagraph("Legendary Sword Dealer")
+local LegendSwords = ItemQuest:AddParagraph({Title = "Legendary Sword Dealer", Content = ""})
 
 ItemQuest:AddToggle({
 	Name = "Auto Buy Legendary Sword",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoBuyLegendarySword = Value
 	end
@@ -5212,7 +5187,7 @@ end)
 
 ItemQuest:AddToggle({
 	Name = "Auto Buy True Triple Katana",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoTrueTriplKatana = Value
 	end
@@ -5226,11 +5201,9 @@ spawn(function()
     end
 end)
 
-local Section = ItemQuest:AddSection({
-    Name = "~ Haki Colors ~"
-})
+local Section = ItemQuest:AddSection("~ Haki Colors ~", true)
 
-local ColorHaki = ItemQuest:AddParagraph("Haki Dealer")
+local ColorHaki = ItemQuest:AddParagraph({Title = "Haki Dealer", Content = ""})
 
 spawn(function()
     while wait() do
@@ -5241,7 +5214,7 @@ end)
 
 ItemQuest:AddToggle({
 	Name = "Auto Buy Haki Colors [ All Haki Colors ]",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.Auto_Buy_Enchancement = Value
 	end
@@ -5249,7 +5222,7 @@ ItemQuest:AddToggle({
 
 ItemQuest:AddToggle({
 	Name = "Auto Buy Haki Colors [ Haki Legendary ]",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.Auto_Buy_Haki_Legends = Value
 	end
@@ -5273,7 +5246,7 @@ end)
 
 ItemQuest:AddToggle({
 	Name = "Auto Get Rainbow Haki",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.Auto_Rainbow_Haki = Value
 		StopTween(_G.Auto_Rainbow_Haki)
@@ -5366,11 +5339,9 @@ spawn(function()
     end
 end)
 
-local Section = ItemQuest:AddSection({
-    Name = "~ Cursed Dual Katana ~"
-})
+local Section = ItemQuest:AddSection("~ Cursed Dual Katana ~", true)
 
-local Yama = ItemQuest:AddParagraph("Elite Progress")
+local Yama = ItemQuest:AddParagraph({Title = "Elite Progress", Content = ""})
 
 spawn(function()
     while wait() do
@@ -5380,7 +5351,7 @@ end)
 
 ItemQuest:AddToggle({
 	Name = "Auto Get Yama",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoYama = Value
 		if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter","Progress") < 30 then
@@ -5437,7 +5408,7 @@ end)
 
 ItemQuest:AddToggle({
 	Name = "Auto Holy Torch",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoHolyTorch = Value
 		StopTween(_G.AutoHolyTorch)
@@ -5493,7 +5464,7 @@ end)
 
 ItemQuest:AddToggle({
 	Name = "Auto Get Tushita",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.Autotushita = Value
 		StopTween(_G.Autotushita)
@@ -5523,13 +5494,11 @@ spawn(function()
     end
 end)
 
-local Section = ItemQuest:AddSection({
-    Name = "~ Weapon ~"
-})
+local Section = ItemQuest:AddSection("~ Weapon ~", true)
 
 ItemQuest:AddToggle({
 	Name = "Auto Get Saber",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.Auto_Saber = Value
 		StopTween(_G.Auto_Saber)
@@ -5629,7 +5598,7 @@ end)
 
 ItemQuest:AddToggle({
 	Name = "Auto Get Waden Sword",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.Autowaden = Value
 		StopTween(_G.Autowaden)
@@ -5661,7 +5630,7 @@ end)
 
 ItemQuest:AddToggle({
 	Name = "Auto Get Pole V1",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.Autopole = Value
 		StopTween(_G.Autopole)
@@ -5693,7 +5662,7 @@ end)
 
 ItemQuest:AddToggle({
 	Name = "Auto Get Shark Saw",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.Autosaw = Value
 		StopTween(_G.Autosaw)
@@ -5725,7 +5694,7 @@ end)
 
 ItemQuest:AddToggle({
 	Name = "Auto Get Rengoku",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoRengoku = Value
 		StopTween(_G.AutoRengoku)
@@ -5761,7 +5730,7 @@ end)
 
 ItemQuest:AddToggle({
 	Name = "Auto Get Dragon Trident",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.Auto_Dragon_Trident = Value
 		StopTween(_G.Auto_Dragon_Trident)
@@ -5793,7 +5762,7 @@ end)
 
 ItemQuest:AddToggle({
 	Name = "Auto Get Carvander",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoCarvender = Value
 		StopTween(_G.AutoCarvender)
@@ -5825,7 +5794,7 @@ end)
 
 ItemQuest:AddToggle({
 	Name = "Auto Get Buddy Sword",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoBudySword = Value
 		StopTween(_G.AutoBudySword)
@@ -5857,7 +5826,7 @@ end)
 
 ItemQuest:AddToggle({
 	Name = "Auto Get Twin Hook",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoTwinHook = Value
 		StopTween(_G.AutoTwinHook)
@@ -5889,7 +5858,7 @@ end)
 
 ItemQuest:AddToggle({
 	Name = "Auto Get Hallow Scythe",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoFarmBossHallow = Value
 		StopTween(_G.AutoFarmBossHallow)
@@ -5927,7 +5896,7 @@ end)
 
 ItemQuest:AddToggle({
 	Name = "Auto Get Serpent Bow",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoSerpentBow = Value
 		StopTween(_G.AutoSerpentBow)
@@ -5960,13 +5929,11 @@ spawn(function()
     end
 end)
 
-local Section = ItemQuest:AddSection({
-    Name = "~ Other ~"
-})
+local Section = ItemQuest:AddSection("~ Other ~", true)
 
 ItemQuest:AddToggle({
 	Name = "Auto Evo Race V2",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.Auto_EvoRace = Value
 		StopTween(_G.Auto_EvoRace)
@@ -6020,7 +5987,7 @@ end)
 
 ItemQuest:AddToggle({
 	Name = "Auto Get Musketeer Hat",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoMusketeerHat = Value
 		StopTween(_G.AutoMusketeerHat)
@@ -6086,7 +6053,7 @@ end)
 
 ItemQuest:AddToggle({
 	Name = "Auto Quest Second Sea",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoSecondSea = Value
 		StopTween(_G.AutoSecondSea)
@@ -6145,7 +6112,7 @@ end)
 
 ItemQuest:AddToggle({
 	Name = "Auto Quest Third Sea",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoThirdSea = Value
 		StopTween(_G.AutoThirdSea)
@@ -6191,12 +6158,11 @@ end)
 
 -- [ Tab Player ]
 
-local Section = Player:AddSection({
-    Name = "~ Player ~"
-})
+local Section = Player:AddSection("~ Player ~", true)
 
 Player:AddButton({
     Name = "Join Pirates Team",
+    Interact = "Button",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetTeam","Pirates")
     end
@@ -6204,6 +6170,7 @@ Player:AddButton({
 
 Player:AddButton({
     Name = "Join Marines Team",
+    Interact = "Button",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetTeam","Marines")
     end
@@ -6211,7 +6178,7 @@ Player:AddButton({
 
 Player:AddToggle({
 	Name = "Auto Set Spawn Point",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.Pos_Spawn = Value
 	end
@@ -6229,7 +6196,7 @@ end)
 
 Player:AddToggle({
 	Name = "Auto Ken",
-	Default = true,
+	CurrentValue = true,
 	Callback = function(Value)
 		_G.AutoKen = Value
 	end
@@ -6243,13 +6210,11 @@ spawn(function()
     end
 end)
 
-local Section = Player:AddSection({
-    Name = "~ Turn On ~"
-})
+local Section = Player:AddSection("~ Turn On ~", true)
 
 Player:AddToggle({
 	Name = "Auto Turn On Buso Haki",
-	Default = true,
+	CurrentValue = true,
 	Callback = function(Value)
 		_G.AutoHaki = Value
 	end
@@ -6271,7 +6236,7 @@ end)
 
 Player:AddToggle({
 	Name = "Auto Turn On Race V3",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.OnV3 = Value
 	end
@@ -6288,7 +6253,7 @@ end)
 
 Player:AddToggle({
 	Name = "Auto Turn On Race V4",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.OnV4 = Value
 	end
@@ -6305,7 +6270,7 @@ end)
 
 Player:AddToggle({
 	Name = "Auto Turn On Observation",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.OnHaki = Value
 	end
@@ -6325,13 +6290,11 @@ spawn(function()
     end
 end)
 
-local Section = Player:AddSection({
-    Name = "~ Haki State ~"
-})
+local Section = Player:AddSection("~ Haki State ~", true)
 
 Player:AddDropdown({
 	Name = "Select Haki State",
-	Default = "",
+	CurrentValue = "",
 	Options = {"State 0","State 1","State 2","State 3","State 4","State 5"},
 	Callback = function(Value)
 		_G.SelectStateHaki = Value
@@ -6340,6 +6303,7 @@ Player:AddDropdown({
 
 Player:AddButton({
     Name = "Set State Haki",
+    Interact = "Button",
     Callback = function()
         if _G.SelectStateHaki == "State 0" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ChangeBusoStage",0)
@@ -6357,12 +6321,11 @@ Player:AddButton({
     end
 })
 
-local Section = Player:AddSection({
-    Name = "~ Open ~"
-})
+local Section = Player:AddSection("~ Open ~", true)
 
 Player:AddButton({
     Name = "Open Devil Fruit Shop [ Normal ]",
+    Interact = "Button",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("GetFruits")
         game:GetService("Players").LocalPlayer.PlayerGui.Main.FruitShop.Visible = true
@@ -6371,6 +6334,7 @@ Player:AddButton({
 
 Player:AddButton({
     Name = "Open Devil Fruit Shop [ Mirage ]",
+    Interact = "Button",
     Callback = function()
         StartDialog("FruitShop2")
     end
@@ -6389,6 +6353,7 @@ end
 
 Player:AddButton({
     Name = "Open Title",
+    Interact = "Button",
     Callback = function()
         local args = {
             [1] = "getTitles"
@@ -6400,6 +6365,7 @@ Player:AddButton({
 
 Player:AddButton({
     Name = "Open Haki Colors",
+    Interact = "Button",
     Callback = function()
         game.Players.localPlayer.PlayerGui.Main.Colors.Visible = true
     end
@@ -6407,18 +6373,17 @@ Player:AddButton({
 
 Player:AddButton({
     Name = "Open Awakening",
+    Interact = "Button",
     Callback = function()
         game:GetService("Players").LocalPlayer.PlayerGui.Main.AwakeningToggler.Visible = true
     end
 })
 
-local Section = Player:AddSection({
-    Name = "~ Abilities ~"
-})
+local Section = Player:AddSection("~ Abilities ~", true)
 
 Player:AddToggle({
 	Name = "Soru No CD",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		getgenv().InfSoru = Value
 	end
@@ -6446,7 +6411,7 @@ end)
 
 Player:AddToggle({
 	Name = "Walk On Water",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.WalkWater = Value
 	end
@@ -6466,7 +6431,7 @@ end)
 
 Player:AddToggle({
 	Name = "No Clip",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.LOf = Value
 	end
@@ -6484,12 +6449,11 @@ spawn(function()
     end)
 end)
 
-local Section = Player:AddSection({
-    Name = "~ Misc ~"
-})
+local Section = Player:AddSection("~ Misc ~", true)
 
 Player:AddButton({
     Name = "Show Item",
+    Interact = "Button",
     Callback = function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/HuyLocDz/ShowItem/main/ShowItem.lua"))()
     end
@@ -6497,11 +6461,9 @@ Player:AddButton({
 
 -- [ Tab PvP ]
 
-local Section = PvP:AddSection({
-    Name = "~ Player ~"
-})
+local Section = PvP:AddSection("~ Player ~", true)
 
-local plyserv = PvP:AddParagraph("Player In Server")
+local plyserv = PvP:AddParagraph({Title = "Player In Server", Content = ""})
 
 spawn(function()
     while wait() do
@@ -6524,7 +6486,7 @@ end
 
 local Slplayer = PvP:AddDropdown({
 	Name = "Select Player",
-	Default = "",
+	CurrentValue = "",
 	Options = Playerslist,
 	Callback = function(Value)
 		SelectPly = Value
@@ -6533,19 +6495,19 @@ local Slplayer = PvP:AddDropdown({
 
 PvP:AddButton({
     Name = "Refresh Player List",
+    Interact = "Button",
     Callback = function()
-        Slplayer:Refresh(Playerslist,true)
         Playerslist = {}
         for i,v in pairs(game:GetService("Players"):GetChildren()) do
             table.insert(Playerslist, v.Name)
         end
-        Slplayer:Refresh(Playerslist)
+        Slplayer:Refresh(Playerslist, false)
     end
 })
 
 PvP:AddToggle({
 	Name = "Teleport To Player",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.Teleport = Value
 		StopTween(_G.Teleport)
@@ -6564,7 +6526,7 @@ end)
 
 PvP:AddToggle({
 	Name = "Spectate Player",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.SpectatePlys = Value
 	end
@@ -6583,13 +6545,11 @@ spawn(function()
 	end
 end)
 
-local Section = PvP:AddSection({
-    Name = "~ Aimbot ~"
-})
+local Section = PvP:AddSection("~ Aimbot ~", true)
 
 PvP:AddToggle({
 	Name = "Enabled PvP",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.EnabledPvP = Value
 	end
@@ -6605,11 +6565,9 @@ spawn(function()
     end
 end)
 
-local Section = PvP:AddSection({
-    Name = "~ Bounty / Honor ~"
-})
+local Section = PvP:AddSection("~ Bounty / Honor ~", true)
 
-local checkbotihoron = PvP:AddParagraph("Your Bounty / Honor")
+local checkbotihoron = PvP:AddParagraph({Title = "Your Bounty / Honor", Content = ""})
 
 spawn(function()
     while wait() do
@@ -6623,15 +6581,14 @@ end)
 
 -- [ Tab Sea Event ]
 
-local Section = Sea:AddSection({
-    Name = "~ Settings Farm Sea Event~"
+local Section = Sea:AddSection("~ Settings Farm Sea Event~"
 })
 
 local ListSeaBoat = {"Guardian","Grand Brigade","Sloop","Lantern","Brigade","Beast Hunter",}
 
 Sea:AddDropdown({
 	Name = "Select Boats",
-	Default = "Guardian",
+	CurrentValue = "Guardian",
 	Options = ListSeaBoat,
 	Callback = function(Value)
 		_G.Boat = Value
@@ -6654,7 +6611,7 @@ Sea:AddDropdown({
 if World3 then
 	Sea:AddDropdown({
 		Name = "Select Zone Sea",
-		Default = "Zone 5 [ Crazy ]",
+		CurrentValue = "Zone 5 [ Crazy ]",
 		Options = {"Zone 0 [ None ]", "Zone 1 [ Low ]","Zone 2 [ Medium ]","Zone 3 [ High ]","Zone 4 [ Extreme ]","Zone 5 [ Crazy ]","Zone 6 [ ??? ]","Zone ∞ [ ??? ]"},
 		Callback = function(Value)
 			_G.SelectedZone = Value
@@ -6682,7 +6639,7 @@ end
 if World2 then
 	Sea:AddDropdown({
 		Name = "Select Zone Sea",
-		Default = "Sea [ Normal ]",
+		CurrentValue = "Sea [ Normal ]",
 		Options = {"Sea [ Normal ]"},
 		Callback = function(Value)
 			_G.SelectedZone = Value
@@ -6696,7 +6653,7 @@ end
 if World1 then
 	Sea:AddDropdown({
 		Name = "Select Zone Sea",
-		Default = "No Zone Sea",
+		CurrentValue = "No Zone Sea",
 		Options = {"No Zone Sea"},
 		Callback = function()
 		end
@@ -6705,7 +6662,7 @@ end
 
 Sea:AddToggle({
 	Name = "Auto Sail Boats",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.SailBoat = Value
 		StopTween(_G.SailBoat)
@@ -7053,7 +7010,7 @@ end)
 
 Sea:AddToggle({
 	Name = "Auto Dodge Rough Sea",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.DogeRoughSea = Value
 	end
@@ -7061,7 +7018,7 @@ Sea:AddToggle({
 
 Sea:AddToggle({
 	Name = "No Clip Rock",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.NoClipRock = Value
 	end
@@ -7101,24 +7058,20 @@ end)
 
 Sea:AddSlider({
 	Name = "Speed Boats",
-	Min = 120,
-	Max = 600,
-	Default = 300,
-	Color = Color3.fromRGB(255, 255, 255),
+	Range = {120, 600},
 	Increment = 1,
-	ValueName = "",
+	Suffix = "",
+	CurrentValue = 300,
 	Callback = function(Value)
 		_G.SpeedBoat = Value
 	end
 })
 
-local Section = Sea:AddSection({
-    Name = "~ Use Weapon Skill ~"
-})
+local Section = Sea:AddSection("~ Use Weapon Skill ~", true)
 
 Sea:AddToggle({
 	Name = "Auto Spam Skill Devil Fruit",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.UseSeaFruitSkill = Value
 	end
@@ -7126,7 +7079,7 @@ Sea:AddToggle({
 
 Sea:AddToggle({
 	Name = "Auto Spam Skill Melee",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.UseSeaMeleeSkill = Value
 	end
@@ -7134,7 +7087,7 @@ Sea:AddToggle({
 
 Sea:AddToggle({
 	Name = "Auto Spam Skill Sword",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.UseSeaSwordSkill = Value
 	end
@@ -7142,21 +7095,19 @@ Sea:AddToggle({
 
 Sea:AddToggle({
 	Name = "Auto Spam Skill Gun",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.UseSeaGunSkill = Value
 	end
 })
 
-local Section = Sea:AddSection({
-    Name = "~ Aimbot Skill To Ship & Sea Beast ~"
-})
+local Section = Sea:AddSection("~ Aimbot Skill To Ship & Sea Beast ~", true)
 
 Sea:AddLabel("Select Use Skill Devil Fruit")
 
 Sea:AddToggle({
 	Name = "Use Skill Z",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.SkillFruitZ = Value
 	end
@@ -7164,7 +7115,7 @@ Sea:AddToggle({
 
 Sea:AddToggle({
 	Name = "Use Skill X",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.SkillFruitX = Value
 	end
@@ -7172,7 +7123,7 @@ Sea:AddToggle({
 
 Sea:AddToggle({
 	Name = "Use Skill C",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.SkillFruitC = Value
 	end
@@ -7180,7 +7131,7 @@ Sea:AddToggle({
 
 Sea:AddToggle({
 	Name = "Use Skill V",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.SkillFruitV = Value
 	end
@@ -7188,7 +7139,7 @@ Sea:AddToggle({
 
 Sea:AddToggle({
 	Name = "Use Skill F",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.SkillFruitF = Value
 	end
@@ -7198,7 +7149,7 @@ Sea:AddLabel("Select Use Skill Melee")
 
 Sea:AddToggle({
 	Name = "Use Skill Z",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.SkillMeleeZ = Value
 	end
@@ -7206,7 +7157,7 @@ Sea:AddToggle({
 
 Sea:AddToggle({
 	Name = "Use Skill X",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.SkillMeleeX = Value
 	end
@@ -7214,7 +7165,7 @@ Sea:AddToggle({
 
 Sea:AddToggle({
 	Name = "Use Skill C",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.SkillMeleeC = Value
 	end
@@ -7222,7 +7173,7 @@ Sea:AddToggle({
 
 Sea:AddToggle({
 	Name = "Use Skill V",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.SkillMeleeV = Value
 	end
@@ -7232,7 +7183,7 @@ Sea:AddLabel("Select Use Skill Sword")
 
 Sea:AddToggle({
 	Name = "Use Skill Z",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 	    _G.SkillSwordZ = Value
 	end
@@ -7240,7 +7191,7 @@ Sea:AddToggle({
 
 Sea:AddToggle({
 	Name = "Use Skill X",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 	    _G.SkillSwordX = Value
 	end
@@ -7250,7 +7201,7 @@ Sea:AddLabel("Select Use Skill Gun")
 
 Sea:AddToggle({
 	Name = "Use Skill Z",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.SkillGunZ = Value
 	end
@@ -7258,19 +7209,17 @@ Sea:AddToggle({
 
 Sea:AddToggle({
 	Name = "Use Skill X",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.SkillGunX = Value
 	end
 })
 
-local Section = Sea:AddSection({
-    Name = "~ Mobs Sea Event ~"
-})
+local Section = Sea:AddSection("~ Mobs Sea Event ~", true)
 
 Sea:AddToggle({
 	Name = "Auto Kill Shark",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoKillShark = Value
 		StopTween(_G.AutoKillShark)
@@ -7279,7 +7228,7 @@ Sea:AddToggle({
 
 Sea:AddToggle({
 	Name = "Auto Kill Piranha",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoKillPiranha = Value
 		StopTween(_G.AutoKillPiranha)
@@ -7288,7 +7237,7 @@ Sea:AddToggle({
 
 Sea:AddToggle({
 	Name = "Auto Kill Fish Crew Member",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoKillFishCrew = Value
 		StopTween(_G.AutoKillFishCrew)
@@ -7297,7 +7246,7 @@ Sea:AddToggle({
 
 Sea:AddToggle({
 	Name = "Auto Kill Ship",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.RelzFishBoat = Value
 		_G.RelzPirateBrigade = Value
@@ -7312,7 +7261,7 @@ Sea:AddToggle({
 
 Sea:AddToggle({
 	Name = "Auto Kill Terrorshark",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoTerrorshark = Value
 		StopTween(_G.AutoTerrorshark)
@@ -7321,7 +7270,7 @@ Sea:AddToggle({
 
 Sea:AddToggle({
 	Name = "Auto Kill Sea Beast",
-	Default =false,
+	CurrentValue =false,
 	Callback = function(Value)
 		_G.AutoSeaBest = Value
 		StopTween(_G.AutoSeaBest)
@@ -7452,11 +7401,9 @@ spawn(function()
     end
 end)
 
-local Section = Sea:AddSection({
-    Name = "~ Kitsune Island ~"
-})
+local Section = Sea:AddSection("~ Kitsune Island ~", true)
 
-local CheckKitsunee = Sea:AddParagraph("Kitsune Island")
+local CheckKitsunee = Sea:AddParagraph({Title = "Kitsune Island", Content = ""})
 
 spawn(function()
     while wait() do
@@ -7466,7 +7413,7 @@ end)
 
 Sea:AddToggle({
 	Name = "Teleport To Kitsune Island",
-	Default =false,
+	CurrentValue =false,
 	Callback = function(Value)
 		_G.TeleportKitsune = Value
 		StopTween(_G.TeleportKitsune)		
@@ -7485,7 +7432,7 @@ end)
 
 Sea:AddToggle({
 	Name = "Auto Collect Azure",
-	Default =false,
+	CurrentValue =false,
 	Callback = function(Value)
 		_G.CollectAzure = Value
 		StopTween(_G.CollectAzure)		
@@ -7506,12 +7453,10 @@ end)
 
 Sea:AddSlider({
 	Name = "Set Azure Ember",
-	Min = 10,
-	Max = 25,
-	Default = 20,
-	Color = Color3.fromRGB(255, 255, 255),
+	Range = {10, 25},
 	Increment = 1,
-	ValueName = "",
+	Suffix = "",
+	CurrentValue = 20,
 	Callback = function(Value)
 		_G.SetToTradeAureEmber = Value
 	end
@@ -7519,7 +7464,7 @@ Sea:AddSlider({
 
 Sea:AddToggle({
 	Name = "Auto Trade Azure Ember",
-	Default =false,
+	CurrentValue =false,
 	Callback = function(Value)
 		_G.TradeAureEmber = Value	
 	end
@@ -7549,9 +7494,7 @@ end)
 
 -- [ Tab Race ]
 
-local Section = Race:AddSection({
-    Name = "~ Templete Of Time ~"
-})
+local Section = Race:AddSection("~ Templete Of Time ~", true)
 
 function CheckRace()
     local a = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Wenlocktoad","1")
@@ -7581,7 +7524,7 @@ function CheckAndTweenTemple()
     end
 end
 
-local CRace = Race:AddParagraph("Your Race")
+local CRace = Race:AddParagraph({Title = "Your Race", Content = ""})
 
 spawn(function()
     while wait() do
@@ -7591,6 +7534,7 @@ end)
 
 Race:AddButton({
     Name = "Teleport To Temple Of Time",
+    Interact = "Button",
     Callback = function()
         Templeteleport()
     end
@@ -7598,13 +7542,14 @@ Race:AddButton({
 
 Race:AddButton({
     Name = "Pull Lever",
+    Interact = "Button",
     Callback = function()
         PullLever()
-        OrionLib:MakeNotification({
-			Name = "Tinh Linh Hub",
+        UiVip:Notify({
+			Title = "Tinh Linh Hub",
 			Content = "Pull Lever Complete!",
-			Image = "rbxassetid://16730867128",
-			Time = 5
+			Image = "16730867128",
+			Duration = 5
 		})
     end
 })
@@ -7628,6 +7573,7 @@ end
 
 Race:AddButton({
     Name = "Teleport To Clock",
+    Interact = "Button",
     Callback = function()
         if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - PosTemplete.Position).Magnitude > 1000 then
             Templeteleport()
@@ -7642,6 +7588,7 @@ Race:AddButton({
 
 Race:AddButton({
     Name = "Teleport To Anclient One",
+    Interact = "Button",
     Callback = function()
         if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - PosTemplete.Position).Magnitude > 1000 then
             Templeteleport()
@@ -7673,6 +7620,7 @@ end
 
 Race:AddButton({
     Name = "Teleport To Race Doors",
+    Interact = "Button",
     Callback = function()
         if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - PosTemplete.Position).Magnitude > 1000 then
             Templeteleport()
@@ -7685,11 +7633,9 @@ Race:AddButton({
     end
 })
 
-local Section = Race:AddSection({
-    Name = "~ Mirage Island ~"
-})
+local Section = Race:AddSection("~ Mirage Island ~", true)
 
-local StatusMirage = Race:AddParagraph("Mirage Island")
+local StatusMirage = Race:AddParagraph({Title = "Mirage Island", Content = ""})
 
 spawn(function()
     while wait() do
@@ -7699,7 +7645,7 @@ end)
 
 Race:AddToggle({
 	Name = "Teleport To Mirage Island",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoMysticIsland = Value
 		StopTween(_G.AutoMysticIsland)
@@ -7720,7 +7666,7 @@ end)
 
 Race:AddToggle({
 	Name = "Tween Blue Gear",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.TweenMGear = Value
 		StopTween(_G.TweenMGear)
@@ -7745,7 +7691,7 @@ end)
 
 Race:AddToggle({
 	Name = "Lock Cam To Moon",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.LockCamToMoon = Value
 	end
@@ -7761,7 +7707,7 @@ end)
 
 Race:AddToggle({
 	Name = "Teleport To Advanced Fruit Dealer",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.Miragenpc = Value
 		StopTween(_G.Miragenpc)
@@ -7778,11 +7724,9 @@ spawn(function()
     end
 end)
 
-local Section = Race:AddSection({
-    Name = "~ Trials ~"
-})
+local Section = Race:AddSection("~ Trials ~", true)
 
-local Moon1 = Race:AddParagraph("Moon")
+local Moon1 = Race:AddParagraph({Title = "Moon", Content = ""})
 
 spawn(function()
     while wait() do
@@ -7792,7 +7736,7 @@ end)
 
 Race:AddToggle({
 	Name = "Auto Complete Trials",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoQuestRace = Value
 		StopTween(_G.AutoQuestRace)
@@ -7913,7 +7857,7 @@ end)
 
 Race:AddDropdown({
 	Name = "Select Weapon Kill Players Trials",
-	Default = "Melee",
+	CurrentValue = "Melee",
 	Options = {"Melee","Sword","Gun","Blox Fruit"},
 	Callback = function(Value)
 		SelectWeaponTrials = Value
@@ -7936,7 +7880,7 @@ end)
 
 Race:AddToggle({
 	Name = "Auto Kill Players After Trials",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.KillAfterTrials = Value
 		StopTween(_G.KillAfterTrials)
@@ -8002,7 +7946,7 @@ end)
 
 Race:AddToggle({
 	Name = "Use Skill Z",
-	Default = true,
+	CurrentValue = true,
 	Callback = function(Value)
 		_G.Z = Value
 	end
@@ -8010,7 +7954,7 @@ Race:AddToggle({
 
 Race:AddToggle({
 	Name = "Use Skill X",
-	Default = true,
+	CurrentValue = true,
 	Callback = function(Value)
 		_G.X = Value
 	end
@@ -8018,7 +7962,7 @@ Race:AddToggle({
 
 Race:AddToggle({
 	Name = "Use Skill C",
-	Default = true,
+	CurrentValue = true,
 	Callback = function(Value)
 		_G.C = Value
 	end
@@ -8026,7 +7970,7 @@ Race:AddToggle({
 
 Race:AddToggle({
 	Name = "Use Skill V",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.V = Value
 	end
@@ -8055,9 +7999,7 @@ spawn(function()
     end
 end)
 
-local Section = Race:AddSection({
-    Name = "~ Train ~"
-})
+local Section = Race:AddSection("~ Train ~", true)
 
 function CheckAncientOneStatus()
     if not game.Players.LocalPlayer.Character:FindFirstChild("RaceTransformed") then
@@ -8088,7 +8030,7 @@ function CheckAncientOneStatus()
     return "Remaining " .. 10 - v228 .. " Training Sessions"
 end
 
-local AnOn = Race:AddParagraph("Ancient One")
+local AnOn = Race:AddParagraph({Title = "Ancient One", Content = ""})
 
 spawn(function()
     while wait() do
@@ -8098,7 +8040,7 @@ end)
 
 Race:AddToggle({
 	Name = "Auto Buy Gear",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoBuyGear = Value
 	end
@@ -8121,7 +8063,7 @@ end)
 
 Race:AddToggle({
 	Name = "Auto Ancient One Quest",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.AutoRace = Value
 		StardFarm = Value
@@ -8206,26 +8148,22 @@ end)
 
 -- [ Tab Stats & Esp ]
 
-local Section = StatsEsp:AddSection({
-    Name = "~ Stats ~"
-})
+local Section = StatsEsp:AddSection("~ Stats ~", true)
 
 StatsEsp:AddSlider({
 	Name = "Point",
-	Min = 0,
-	Max = 100,
-	Default = 3,
-	Color = Color3.fromRGB(255,255,255),
+	Range = {1, 100},
 	Increment = 1,
-	ValueName = "",
+	Suffix = "",
+	CurrentValue = 3,
 	Callback = function(Value)
-		PointStats = Value
+		_G.SpeedBoat = Value
 	end
 })
 
 StatsEsp:AddToggle({
 	Name = "Auto Melee",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		Melee = Value
 	end
@@ -8233,7 +8171,7 @@ StatsEsp:AddToggle({
 
 StatsEsp:AddToggle({
 	Name = "Auto Defense",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		Defense = Value
 	end
@@ -8241,7 +8179,7 @@ StatsEsp:AddToggle({
 
 StatsEsp:AddToggle({
 	Name = "Auto Sword",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		Sword = Value
 	end
@@ -8249,7 +8187,7 @@ StatsEsp:AddToggle({
 
 StatsEsp:AddToggle({
 	Name = "Auto Gun",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		Gun = Value
 	end
@@ -8257,7 +8195,7 @@ StatsEsp:AddToggle({
 
 StatsEsp:AddToggle({
 	Name = "Auto Devil Fruit",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		DemonFruit = Value
 	end
@@ -8310,13 +8248,11 @@ spawn(function()
 	end
 end)
 
-local Section = StatsEsp:AddSection({
-    Name = "~ Esp ~"
-})
+local Section = StatsEsp:AddSection("~ Esp ~", true)
 
 StatsEsp:AddToggle({
 	Name = "Esp Player",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.ESPPlayer = Value
 		UpdatePlayerChams()
@@ -8325,7 +8261,7 @@ StatsEsp:AddToggle({
 
 StatsEsp:AddToggle({
 	Name = "Esp Island",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.IslandESP = Value
 		UpdateIslandESP()
@@ -8334,7 +8270,7 @@ StatsEsp:AddToggle({
 
 StatsEsp:AddToggle({
 	Name = "Esp Devil Fruit",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.DevilFruitESP = Value
 		UpdateDevilChams()
@@ -8343,7 +8279,7 @@ StatsEsp:AddToggle({
 
 StatsEsp:AddToggle({
 	Name = "Esp Flower",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.FlowerESP = Value
 		UpdateFlowerChams()
@@ -8352,7 +8288,7 @@ StatsEsp:AddToggle({
 
 StatsEsp:AddToggle({
 	Name = "Esp Chest",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.ChestESP = Value
 		UpdateChestChams()
@@ -8381,13 +8317,11 @@ end)
 
 -- [ Tab Teleport ]
 
-local Section = Teleport:AddSection({
-    Name = "~ Sea ~"
-})
+local Section = Teleport:AddSection("~ Sea ~", true)
 
 Teleport:AddDropdown({
 	Name = "Select Sea",
-	Default = "",
+	CurrentValue = "",
 	Options = {"First Sea","Second Sea","Third Sea"},
 	Callback = function(Value)
 		SelectSea = Value
@@ -8396,6 +8330,7 @@ Teleport:AddDropdown({
 
 Teleport:AddButton({
     Name = "Teleport To Sea",
+    Interact = "Button",
     Callback = function()
         if SelectSea == "First Sea" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("TravelMain")
@@ -8407,14 +8342,12 @@ Teleport:AddButton({
     end
 })
 
-local Section = Teleport:AddSection({
-    Name = "~ Island ~"
-})
+local Section = Teleport:AddSection("~ Island ~", true)
 
 if World1 then
 Teleport:AddDropdown({
     Name = "Select Island",
-    Default = "",
+    CurrentValue = "",
     Options = {"WindMill","Marine","Middle Town","Jungle","Pirate Village","Desert","Snow Island","MarineFord","Colosseum","Sky Island 1","Sky Island 2","Sky Island 3","Prison","Magma Village","Under Water Island","Fountain City","Shank Room","Mob Island"},
     Callback = function(Value)
 		SelectIsland = Value
@@ -8425,7 +8358,7 @@ end
 if World2 then
 Teleport:AddDropdown({
     Name = "Select Island",
-    Default = "",
+    CurrentValue = "",
     Options = {"The Cafe","Frist Spot","Dark Area","Flamingo Mansion","Flamingo Room","Green Zone","Factory","Colossuim","Zombie Island","Raid Lab","Two Snow Mountains","Punk Hazard","Cursed Ship","Ice Castle","Forgotten Island","Ussop Island","Mini Sky Island"},
     Callback = function(Value)
 		SelectIsland = Value
@@ -8436,7 +8369,7 @@ end
 if World3 then
 Teleport:AddDropdown({
     Name = "Select Island",
-    Default = "",
+    CurrentValue = "",
     Options = {"Mansion","Port Town","Great Tree","Castle On The Sea","Raid Lab","MiniSky", "Hydra Island","Beautiful Pirate","Floating Turtle","Haunted Castle","Ice Cream Island","Peanut Island","Cake Island","Cocoa Island","Candy Island","Tiki Outpost"},
     Callback = function(Value)
 		SelectIsland = Value
@@ -8446,7 +8379,7 @@ end
 
 Teleport:AddToggle({
 	Name = "Teleport To Island",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.TeleportIsland = Value
 	    if _G.TeleportIsland == true then
@@ -8564,11 +8497,9 @@ Teleport:AddToggle({
 
 -- [ Tab Status & Server ]
 
-local Section = StatusServer:AddSection({
-    Name = "~ Status Server ~"
-})
+local Section = StatusServer:AddSection("~ Status Server ~", true)
 
-local Time = StatusServer:AddParagraph("Time Played")
+local Time = StatusServer:AddParagraph({Title = "Time Played", Content = ""})
 
 function UpdateTime()
     local GameTime = math.floor(workspace.DistributedGameTime+0.5)
@@ -8584,21 +8515,21 @@ spawn(function()
     end
 end)
 
-local Moon = StatusServer:AddParagraph("Moon")
+local Moon = StatusServer:AddParagraph({Title = "Moon", Content = ""})
 
-local KillCake = StatusServer:AddParagraph("Cake Prince")
+local KillCake = StatusServer:AddParagraph({Title = "Cake Prince", Content = ""})
 
-local LegendSwords1 = StatusServer:AddParagraph("Legendary Sword Dealer")
+local LegendSwords1 = StatusServer:AddParagraph({Title = "Legendary Sword Dealer", Content = ""})
 
-local ColorHaki1 = StatusServer:AddParagraph("Haki Dealer")
+local ColorHaki1 = StatusServer:AddParagraph({Title = "Haki Dealer", Content = ""})
 
-local Elite = StatusServer:AddParagraph("Elite")
+local Elite = StatusServer:AddParagraph({Title = "Elite", Content = ""})
 
-local Mirage = StatusServer:AddParagraph("Mirage Island")
+local Mirage = StatusServer:AddParagraph({Title = "Mirage Island", Content = ""})
 
-local Kitsune = StatusServer:AddParagraph("Kitsune Island")
+local Kitsune = StatusServer:AddParagraph({Title = "Kitsune Island", Content = ""})
 
-local Frozen = StatusServer:AddParagraph("Frozen Dimension")
+local Frozen = StatusServer:AddParagraph({Title = "Frozen Dimension", Content = ""})
 
 spawn(function()
     while task.wait() do
@@ -8613,14 +8544,13 @@ spawn(function()
     end
 end)
 
-local Section = StatusServer:AddSection({
-    Name = "~ Server ~"
-})
+local Section = StatusServer:AddSection("~ Server ~", true)
 
-StatusServer:AddTextbox({
+StatusServer:AddInput({
 	Name = "Input Job-Id",
-	Default = "",
-	TextDisappear = true,
+	CurrentValue = "",
+	PlaceholderText = "Input",
+    RemoveTextAfterFocusLost = true,
 	Callback = function(Value)
 		_G.Job = Value
 	end
@@ -8628,7 +8558,7 @@ StatusServer:AddTextbox({
 
 StatusServer:AddToggle({
 	Name = "Spam Join Server",
-	Default = false,
+	CurrentValue = false,
 	Callback = function(Value)
 		_G.Join = Value
 	end
@@ -8644,6 +8574,7 @@ end)
 
 StatusServer:AddButton({
     Name = "Join Server",
+    Interact = "Button",
     Callback = function()
         game:GetService("TeleportService"):TeleportToPlaceInstance(game.placeId,_G.Job, game.Players.LocalPlayer)
     end
@@ -8651,19 +8582,21 @@ StatusServer:AddButton({
 
 StatusServer:AddButton({
     Name = "Copy Server Job-Id",
+    Interact = "Button",
     Callback = function()
         setclipboard(tostring(game.JobId))
-        OrionLib:MakeNotification({
-        	Name = "Tinh Linh Hub",
+        UiVip:Notify({
+        	Title = "Tinh Linh Hub",
         	Content = "Copied Server Job-Id!",
-        	Image = "rbxassetid://16730867128",
-        	Time = 5
+        	Image = "16730867128",
+        	Duration = 5
         })
     end
 })
 
 StatusServer:AddButton({
     Name = "Rejoin Server",
+    Interact = "Button",
     Callback = function()
         game:GetService("TeleportService"):Teleport(game.PlaceId, game:GetService("Players").LocalPlayer)
     end
@@ -8671,6 +8604,7 @@ StatusServer:AddButton({
 
 StatusServer:AddButton({
     Name = "Hop Server",
+    Interact = "Button",
     Callback = function()
         Hop()
     end
@@ -8738,15 +8672,13 @@ end
 
 -- [ Tab Shop ]
 
-local Section = Shop:AddSection({
-    Name = "~ Code ~"
-})
+local Section = Shop:AddSection("~ Code ~", true)
 
 CodeA = {"TantaiGaming","Axiore","SUB2DAIGROCK","Sub2UncleKizaru","SUB2NOOBMASTER123","StrawHatMaine","Sub2OfficialNoobie","SUB2GAMERROBOT_EXP1","THEGREATACE","BIGNEWS","FUDD10","fudd10_v2","Bluxxy","StarcodeHEO","JCWK","Magicbus","Enyu_is_Pro","Sub2Fer999","KittGaming","SUB2GAMERROBOT_RESET1","Sub2CaptainMaui"}
 
 Shop:AddDropdown({
     Name = "Select Code",
-    Default = "",
+    CurrentValue = "",
     Options = CodeA,
     Callback = function(Value)
 		CodeRd = Value
@@ -8755,6 +8687,7 @@ Shop:AddDropdown({
 
 Shop:AddButton({
     Name = "Redeem Code",
+    Interact = "Button",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer(CodeRd)
     end
@@ -8762,6 +8695,7 @@ Shop:AddButton({
 
 Shop:AddButton({
     Name = "Redeem All Code",
+    Interact = "Button",
     Callback = function()
         function RedeemCode(value)
             game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer(value)
@@ -8772,15 +8706,13 @@ Shop:AddButton({
     end
 })
 
-local Section = Shop:AddSection({
-    Name = "~ Fighting Style ~"
-})
+local Section = Shop:AddSection("~ Fighting Style ~", true)
 
 SelectMelee = {"Black Leg","Electro","Fishman Karate","Dragon Claw","SuperHuman","Death Step","Sharkman Karate","Electric Claw","Dragon Talon","GodHuman","Sanguine Art"}
 
 Shop:AddDropdown({
     Name = "Select Fighting Style",
-    Default = "",
+    CurrentValue = "",
     Options = SelectMelee,
     Callback = function(Value)
 		SelectMelee = Value
@@ -8789,6 +8721,7 @@ Shop:AddDropdown({
 
 Shop:AddButton({
     Name = "Buy Fighting Style",
+    Interact = "Button",
     Callback = function()
         if SelectMelee == "Black Leg" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyBlackLeg")
@@ -8819,15 +8752,13 @@ Shop:AddButton({
     end
 })
 
-local Section = Shop:AddSection({
-    Name = "~ Abilities ~"
-})
+local Section = Shop:AddSection("~ Abilities ~", true)
 
 SelectAbilities = {"Sky Jump [ Geppo ]","Buso Haki","Soru","Observation Haki"}
 
 Shop:AddDropdown({
     Name = "Select Abilities",
-    Default = "",
+    CurrentValue = "",
     Options = SelectAbilities,
     Callback = function(Value)
 		SelectAbilities = Value
@@ -8836,6 +8767,7 @@ Shop:AddDropdown({
 
 Shop:AddButton({
     Name = "Buy Abilities",
+    Interact = "Button",
     Callback = function()
         if SelectAbilities == "Sky Jump [ Geppo ]" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyHaki","Geppo")
@@ -8849,15 +8781,13 @@ Shop:AddButton({
     end
 })
 
-local Section = Shop:AddSection({
-    Name = "~ Sword ~"
-})
+local Section = Shop:AddSection("~ Sword ~", true)
 
 SelectSword = {"Cutlass","Katana","Iron Mace","Dual Katana","Triple Katana","Pipe","Dual-Headed Blade","Bisento","Soul Cane","Pole V2"}
 
 Shop:AddDropdown({
     Name = "Select Sword",
-    Default = "",
+    CurrentValue = "",
     Options = SelectSword,
     Callback = function(Value)
 		SelectSword = Value
@@ -8866,6 +8796,7 @@ Shop:AddDropdown({
 
 Shop:AddButton({
     Name = "Buy Sword",
+    Interact = "Button",
     Callback = function()
         if SelectSword == "Cutlass" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Cutlass")
@@ -8891,15 +8822,13 @@ Shop:AddButton({
     end
 })
 
-local Section = Shop:AddSection({
-    Name = "~ Gun ~"
-})
+local Section = Shop:AddSection("~ Gun ~", true)
 
 SelectGun = {"Slingshot","Flintlock","Musket","Cannon","Refined Flintlock","Refined Slingshot","Bizarre Rifle","Kabucha"}
 
 Shop:AddDropdown({
     Name = "Select Gun",
-    Default = "",
+    CurrentValue = "",
     Options = SelectGun,
     Callback = function(Value)
 		SelectGun = Value
@@ -8908,6 +8837,7 @@ Shop:AddDropdown({
 
 Shop:AddButton({
     Name = "Buy Gun",
+    
     Callback = function()
         if SelectGun == "Slingshot" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Slingshot")
@@ -8938,15 +8868,13 @@ Shop:AddButton({
     end
 })
 
-local Section = Shop:AddSection({
-    Name = "~ Other ~"
-})
+local Section = Shop:AddSection("~ Other ~", true)
 
 SelectOther = {"Reroll Race","Reset Stats","Cyborg Race","Ghoul Race"}
 
 Shop:AddDropdown({
     Name = "Select Other Things",
-    Default = "",
+    CurrentValue = "",
     Options = SelectOther,
     Callback = function(Value)
 		SelectOther = Value
@@ -8955,6 +8883,7 @@ Shop:AddDropdown({
 
 Shop:AddButton({
     Name = "Buy Other Things Selected",
+    Interact = "Button",
     Callback = function()
         if SelectOther == "Reroll Race" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Reroll","1")
@@ -8985,9 +8914,9 @@ Shop:AddButton({
     end
 })
 
-OrionLib:MakeNotification({
-    Name = "Tinh Linh Hub",
+UiVip:Notify({
+    Title = "Tinh Linh Hub",
     Content = "Script Loaded Successfully!",
-    Image = "rbxassetid://16730867128",
-    Time = 5
+    Image = "16730867128",
+    Duration = 5
 })
