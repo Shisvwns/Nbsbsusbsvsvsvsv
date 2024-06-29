@@ -2241,12 +2241,6 @@ spawn(function()
                             v.Humanoid:ChangeState(14)
                         end
                     end
-                    if _G.AutoRengoku and StartRengokuMagnet then
-                        if (v.Name == "Snow Lurker" or v.Name == "Arctic Warrior") and (v.HumanoidRootPart.Position - RengokuMon.Position).Magnitude <= 300 then
-                            v.HumanoidRootPart.CFrame = RengokuMon
-                            v.Humanoid:ChangeState(14)
-                        end
-                    end
                     if _G.AutoMusketeerHat and StartMagnetMusketeerhat then
                         if v.Name == "Forest Pirate" and (v.HumanoidRootPart.Position - MusketeerHatMon.Position).Magnitude <= 300 then
                             v.HumanoidRootPart.CFrame = MusketeerHatMon
@@ -2274,18 +2268,6 @@ spawn(function()
                     if _G.AutoBartilo and AutoBartiloBring then
                         if v.Name == "Swan Pirate" and (v.HumanoidRootPart.Position - PosMonBarto.Position).Magnitude <= 300 then
                             v.HumanoidRootPart.CFrame = PosMonBarto
-                            v.Humanoid:ChangeState(14)
-                        end
-                    end
-                    if _G.Auto_Bone and StartMagnetBoneMon then
-                        if (v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy") and (v.HumanoidRootPart.Position - PosMonBone.Position).Magnitude <= 300 then
-                            v.HumanoidRootPart.CFrame = PosMonBone
-                            v.Humanoid:ChangeState(14)
-                        end
-                    end
-                    if _G.AutoDoughtBoss and MagnetDought then
-                        if (v.Name == "Cookie Crafter" or v.Name == "Cake Guard" or v.Name == "Baking Staff" or v.Name == "Head Baker") and (v.HumanoidRootPart.Position - PosMonDoughtOpenDoor.Position).Magnitude <= 300 then
-                            v.HumanoidRootPart.CFrame = PosMonDoughtOpenDoor
                             v.Humanoid:ChangeState(14)
                         end
                     end
@@ -3029,15 +3011,15 @@ spawn(function()
                                             repeat task.wait()
                                                 EquipWeapon(_G.SelectWeapon)
                                                 topos(v.HumanoidRootPart.CFrame * Pos)
-                                                PosMonDoughtOpenDoor = v.HumanoidRootPart.CFrame
-                                                MagnetDought = true
+                                                PosNear = v.HumanoidRootPart.CFrame
+                                                MagnetNear = true
                                             until not _G.AutoDoughtBoss or not v.Parent or v.Humanoid.Health <= 0 or game:GetService("Workspace").Map.CakeLoaf.BigMirror.Other.Transparency == 0 or game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince [Lv. 2300] [Raid Boss]") or game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince [Lv. 2300] [Raid Boss]") or KillMob == 0
                                         end
                                     end
                                 end
                             else
                                 topos(CakePos)
-                                MagnetDought = false
+                                MagnetNear = false
                                 UnEquipWeapon(_G.SelectWeapon)
                             end
                         end
@@ -3075,11 +3057,11 @@ spawn(function()
             pcall(function()
                 local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
                 if not string.find(QuestTitle, "Cookie Crafter") then
-                    MagnetDought = false
+                    MagnetNear = false
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
                 end
                 if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
-                    MagnetDought = false
+                    MagnetNear = false
                     topos(CakeQuestPos)
                     if (CakeQuestPos.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3 then                            
                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest","CakeQuest1",1)
@@ -3093,11 +3075,11 @@ spawn(function()
                                         repeat task.wait()
                                             EquipWeapon(_G.SelectWeapon)
                                             topos(v.HumanoidRootPart.CFrame * Pos)
-                                            PosMonDoughtOpenDoor = v.HumanoidRootPart.CFrame
-                                            MagnetDought = true
+                                            PosNear = v.HumanoidRootPart.CFrame
+                                            MagnetNear = true
                                         until not _G.AutoDoughtBoss or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false or v.Humanoid.Health <= 0 or game:GetService("Workspace").Map.CakeLoaf.BigMirror.Other.Transparency == 0 or game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince [Lv. 2300] [Raid Boss]") or game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince [Lv. 2300] [Raid Boss]") or KillMob == 0
                                     else
-                                        MagnetDought = false
+                                        MagnetNear = false
                                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
                                     end
                                 end
@@ -3105,7 +3087,7 @@ spawn(function()
                         end
                     else
                         topos(CakePos)
-                        MagnetDought = false
+                        MagnetNear = false
                         UnEquipWeapon(_G.SelectWeapon)
                     end
                 end
@@ -3168,8 +3150,8 @@ spawn(function()
                                repeat task.wait()
                                     EquipWeapon(_G.SelectWeapon)
                                     topos(v.HumanoidRootPart.CFrame * Pos)
-                                    PosMonBone = v.HumanoidRootPart.CFrame
-                                    StartMagnetBoneMon = true
+                                    PosNear = v.HumanoidRootPart.CFrame
+                                    MagnetNear = true
                                 until not _G.Auto_Bone or not v.Parent or v.Humanoid.Health <= 0
                             end
                         end
@@ -3177,7 +3159,7 @@ spawn(function()
                 else
                     topos(BonePos)
                     UnEquipWeapon(_G.SelectWeapon)
-                    StartMagnetBoneMon = false
+                    MagnetNear = false
                 end
             end)
         end
@@ -3191,11 +3173,11 @@ spawn(function()
             pcall(function()
                 local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
                 if not string.find(QuestTitle, "Demonic Soul") then
-                    StartMagnetBoneMon = false
+                    MagnetNear = false
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
                 end
                 if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
-                    StartMagnetBoneMon = false
+                    MagnetNear = false
                     topos(BoneQuestPos)
                     if (BoneQuestPos.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3 then    
                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest","HauntedQuest2",1)
@@ -3209,11 +3191,11 @@ spawn(function()
                                         repeat task.wait()
                                             EquipWeapon(_G.SelectWeapon)
                                             topos(v.HumanoidRootPart.CFrame * Pos)
-                                            PosMonBone = v.HumanoidRootPart.CFrame
-                                            StartMagnetBoneMon = true
+                                            PosNear = v.HumanoidRootPart.CFrame
+                                            MagnetNear = true
                                         until not _G.Auto_Bone or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
                                     else
-                                        StartMagnetBoneMon = false
+                                        MagnetNear = false
                                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
                                     end
                                 end
@@ -3222,7 +3204,7 @@ spawn(function()
                     else
                         topos(BonePos)
                         UnEquipWeapon(_G.SelectWeapon)
-                        StartMagnetBoneMon = false
+                        MagnetNear = false
                     end
                 end
             end)
@@ -5721,10 +5703,10 @@ spawn(function()
                         repeat task.wait()
                             EquipWeapon(_G.SelectWeapon)
                             topos(v.HumanoidRootPart.CFrame * Pos)
-                            RengokuMon = v.HumanoidRootPart.CFrame
-                            StartRengokuMagnet = true
+                            PosNear = v.HumanoidRootPart.CFrame
+                            MagnetNear = true
                         until game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Hidden Key") or _G.AutoRengoku == false or not v.Parent or v.Humanoid.Health <= 0
-                        StartRengokuMagnet = false
+                        MagnetNear = false
                     end
                 end
             else
@@ -8093,7 +8075,7 @@ Race:AddToggle({
 	Default = false,
 	Callback = function(Value)
 		_G.AutoRace = Value
-		StardFarm = Value
+		_G.Auto_Bone = Value
 		StopTween(_G.AutoRace)
 	end
 })
@@ -8102,52 +8084,8 @@ spawn(function()
     while wait() do
         if _G.AutoRace then
             if game.Players.LocalPlayer.Character.RaceTransformed.Value == true then
-                StardFarm = false
+                _G.Auto_Bone = false
                 topos(CFrame.new(-9515.3720703125, 164.00624084473, 5786.0610351562))
-            end
-        end
-    end
-end)
-
-spawn(function()
-    while wait() do
-        if StardFarm and World3 then
-            local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
-            if not string.find(QuestTitle, "Demonic Soul") then
-                StartMagnetBoneMon = false
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
-            end
-            if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
-                StartMagnetBoneMon = false
-                topos(BoneQuestPos)
-            if (BoneQuestPos.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3 then    
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest","HauntedQuest2",1)
-                end
-            elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
-                if game:GetService("Workspace").Enemies:FindFirstChild("Reborn Skeleton") or game:GetService("Workspace").Enemies:FindFirstChild("Living Zombie") or game:GetService("Workspace").Enemies:FindFirstChild("Demonic Soul") or game:GetService("Workspace").Enemies:FindFirstChild("Posessed Mummy") then
-                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                        if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
-                            if v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy" then
-                                if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, "Demonic Soul") then
-                                    repeat task.wait()
-                                        EquipWeapon(_G.SelectWeapon)
-                                        topos(v.HumanoidRootPart.CFrame * Pos)
-                                        PosMonBone = v.HumanoidRootPart.CFrame
-                                        StartMagnetBoneMon = true
-                                    until not StardFarm or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
-                                else
-                                    StartMagnetBoneMon = false
-                                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
-                                end
-                            end
-                        end
-                    end
-                else
-                    StartMagnetBoneMon = false
-                    if game:GetService("ReplicatedStorage"):FindFirstChild("Demonic Soul [Lv. 2025]") then
-                        topos(game:GetService("ReplicatedStorage"):FindFirstChild("Demonic Soul [Lv. 2025]").HumanoidRootPart.CFrame * Pos)
-                    end
-                end
             end
         end
     end
@@ -8157,7 +8095,7 @@ spawn(function()
     while wait() do
         if _G.AutoRace then
             if game.Players.LocalPlayer.Character.RaceTransformed.Value == false then
-                StardFarm = true
+                _G.Auto_Bone = true
             end
         end
     end
@@ -8394,7 +8332,7 @@ if World1 then
     ChonDao = {"WindMill","Marine","Middle Town","Jungle","Pirate Village","Desert","Snow Island","MarineFord","Colosseum","Sky Island 1","Sky Island 2","Sky Island 3","Prison","Magma Village","Under Water Island","Fountain City","Shank Room","Mob Island"}
 elseif Word2 then
     ChonDao = {"The Cafe","Frist Spot","Dark Area","Flamingo Mansion","Flamingo Room","Green Zone","Factory","Colossuim","Zombie Island","Raid Lab","Two Snow Mountains","Punk Hazard","Cursed Ship","Ice Castle","Forgotten Island","Ussop Island","Mini Sky Island"}
-else World3 then
+elseif World3 then
     ChonDao = {"Mansion","Port Town","Great Tree","Castle On The Sea","Raid Lab","MiniSky", "Hydra Island","Beautiful Pirate","Floating Turtle","Haunted Castle","Ice Cream Island","Peanut Island","Cake Island","Cocoa Island","Candy Island","Tiki Outpost"}
 end
 
