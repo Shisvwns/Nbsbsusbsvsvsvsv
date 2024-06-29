@@ -1451,12 +1451,12 @@ end
 function BypassTeleport(is)
     if lp.Character:FindFirstChild("PartTele") then
         lp.Character.PartTele.CFrame = CFrame.new(lp.Character.PartTele.CFrame.X, lp.Character.PartTele.CFrame.Y, lp.Character.PartTele.CFrame.Z)
-        task.wait(0.5)
+        wait(0.5)
         lp.Character.PartTele.CFrame = is
-        task.wait(0.1)
+        wait(0.1)
         lp.Character.PrimaryPart.CFrame = is   
         lp.Character:WaitForChild("Humanoid"):ChangeState(15)
-        task.wait(0.5)
+        wait(0.5)
         repeat task.wait() until lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid.Health <= 0
         repeat task.wait()
             if lp.Character:FindFirstChild("PartTele") then
@@ -1484,7 +1484,7 @@ function RequestEntrance(check1)
     if lp.Character:FindFirstChild("PartTele") then
         lp.Character.PartTele.CFrame = WaitHRP(lp).CFrame 
     end
-    task.wait(0.01)
+    wait(0.01)
 end
 function WaitHRP(q0) 
     if not q0 then return end
@@ -1552,7 +1552,7 @@ end
 
 Type = 1
 spawn(function()
-    while task.wait() do
+    while wait() do
         Type = 1
         wait(0.5)
         Type = 2
@@ -3256,7 +3256,7 @@ Farm:AddToggle({
 })
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if _G.Auto_Random_Bone then    
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Bones","Buy",1,1)
         end
@@ -4845,7 +4845,7 @@ Other:AddToggle({
 })
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if _G.TeleSafe then
             if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
                 _G.ChestBypass = false
@@ -5162,7 +5162,7 @@ ItemQuest:AddToggle({
 })
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if _G.AutoBuyLegendarySword then
             local args = {
                 [1] = "LegendarySwordDealer",
@@ -5192,7 +5192,7 @@ ItemQuest:AddToggle({
 })
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if _G.AutoTrueTriplKatana then
             game:GetService("ReplicatedStorage").Remotes["CommF_"]:InvokeServer("MysteriousMan", "2")
         end
@@ -5206,7 +5206,7 @@ local Section = ItemQuest:AddSection({
 local ColorHaki = ItemQuest:AddParagraph("Haki Dealer")
 
 ItemQuest:AddToggle({
-	Name = "Auto Buy Haki Colors [ All Haki Colors ]",
+	Name = "Auto Buy All Haki Colors",
 	Default = false,
 	Callback = function(Value)
 		_G.Auto_Buy_Enchancement = Value
@@ -5214,7 +5214,7 @@ ItemQuest:AddToggle({
 })
 
 ItemQuest:AddToggle({
-	Name = "Auto Buy Haki Colors [ Haki Legendary ]",
+	Name = "Auto Buy Legendary Haki Colors",
 	Default = false,
 	Callback = function(Value)
 		_G.Auto_Buy_Haki_Legends = Value
@@ -5222,7 +5222,7 @@ ItemQuest:AddToggle({
 })
 
 spawn(function()
-	while task.wait() do
+	while wait() do
 		if _G.Auto_Buy_Enchancement then
 			game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer","2")
 		elseif _G.Auto_Buy_Haki_Legends then
@@ -7820,7 +7820,7 @@ Race:AddToggle({
 })
 
 spawn(function()
-    while task.wait() do
+    while wait() do
         if _G.KillAfterTrials then
             pcall(function()
                 TempleCFrame = CFrame.new( 28730.0645, 14887.5371, -91.0957718, 0.557085216, -4.57713725e-08, 0.830455363, 9.81919115e-08, 1, -1.07530047e-08, -0.830455363, 8.75343389e-08, 0.557085216)
@@ -8184,12 +8184,12 @@ local Section = Teleport:AddSection({
 
 local CheckSea = Teleport:AddParagraph("Check Sea")
 
-if Word1 then
-    CheckSea:Set("Sea: First Sea")
+if World1 then
+    CheckSea:Set("First Sea")
 elseif World2 then
-    CheckSea:Set("Sea: Second Sea")
+    CheckSea:Set("Second Sea")
 elseif World3 then
-    CheckSea:Set("Sea: Third Sea")
+    CheckSea:Set("Third Sea")
 end
 
 Teleport:AddDropdown({
@@ -8469,6 +8469,13 @@ StatusServer:AddTextbox({
 	end
 })
 
+StatusServer:AddButton({
+    Name = "Join Server",
+    Callback = function()
+        game:GetService("TeleportService"):TeleportToPlaceInstance(game.placeId,_G.Job, game.Players.LocalPlayer)
+    end
+})
+
 StatusServer:AddToggle({
 	Name = "Spam Join Server",
 	Default = false,
@@ -8484,13 +8491,6 @@ spawn(function()
         end
     end
 end)
-
-StatusServer:AddButton({
-    Name = "Join Server",
-    Callback = function()
-        game:GetService("TeleportService"):TeleportToPlaceInstance(game.placeId,_G.Job, game.Players.LocalPlayer)
-    end
-})
 
 StatusServer:AddButton({
     Name = "Copy Server Job-Id",
