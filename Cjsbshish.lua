@@ -2943,12 +2943,6 @@ local Section = Farm:AddSection({
 
 local StatusCakePrince = Farm:AddParagraph("Cake Prince")
 
-spawn(function()
-    while wait() do
-        StatusCakePrince:Set(CheckCakeSpawn())
-    end
-end)
-
 Farm:AddDropdown({
 	Name = "Select Farm Katakuri Mode",
 	Default = "Get Quest",
@@ -3109,16 +3103,6 @@ local Section = Farm:AddSection({
 })
 
 local YourBone = Farm:AddParagraph("Your Bone")
-
-spawn(function()
-    while wait() do
-        if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Bones","Check") and World3 then
-            YourBone:Set("Bone: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Bones","Check").."/5000")
-        elseif World1 or World2 then
-            YourBone:Set("Only Third Sea")
-        end
-    end
-end)
 
 Farm:AddDropdown({
 	Name = "Select Farm Bone Mode",
@@ -8503,14 +8487,22 @@ local Frozen = StatusServer:AddParagraph("Frozen Dimension")
 
 spawn(function()
     while task.wait() do
-        Moon:Set(CheckMoon().." | "..function7().." | "..function8())
-        KillCake:Set(CheckCakeSpawn())
-        LegendSwords1:Set(CheckSword())
-        ColorHaki1:Set(CheckHaki())
-        Elite:Set(CheckElite())
-        Mirage:Set(CheckMirage())
-        Kitsune:Set(CheckKitsune())
-        Frozen:Set(CheckFrozen())
+        pcall(function()
+            Moon:Set(CheckMoon().." | "..function7().." | "..function8())
+            KillCake:Set(CheckCakeSpawn())
+            StatusCakePrince:Set(CheckCakeSpawn())
+            LegendSwords1:Set(CheckSword())
+            ColorHaki1:Set(CheckHaki())
+            Elite:Set(CheckElite())
+            Mirage:Set(CheckMirage())
+            Kitsune:Set(CheckKitsune())
+            Frozen:Set(CheckFrozen())
+            if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Bones","Check") and World3 then
+                YourBone:Set("Bone: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Bones","Check").."/5000")
+            elseif World1 or World2 then
+                YourBone:Set("Only Third Sea")
+            end
+        end)
     end
 end)
 
