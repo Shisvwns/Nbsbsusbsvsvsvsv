@@ -2151,20 +2151,10 @@ spawn(function()
 	end
 end)
 
-SelectAttack = {
-	"No Delay [ 0.0s ]",
-    "Super Fast [ 0.05s ]",
-    "Fast [ 0.1s ]",
-    "Moderate [ 0.3s ]",
-    "Default [ 0.5s ]",
-    "Medium [ 0.8s ]",
-    "Slow [ 1.0s ]"
-}
-
 Setting:AddDropdown({
 	Name = "Select Speed ​​Attack",
-	Default = "Default [ 0.5s ]",
-	Options = SelectAttack,
+	Default = "Fast [ 0.1s ]",
+	Options = {"No Delay [ 0.0s ]","Super Fast [ 0.05s ]","Fast [ 0.1s ]","Moderate [ 0.3s ]","Default [ 0.5s ]","Medium [ 0.8s ]","Slow [ 1.0s ]"},
 	Callback = function(Value)
 		_G.SelectAttackDelay = Value
         if _G.SelectAttackDelay == "No Delay [ 0.0s ]" then
@@ -2497,6 +2487,7 @@ Setting:AddToggle({
 })
 
 spawn(function()
+    pcall(function()
         while wait() do
             if _G.SafeZoneView then
                 for i,v in pairs(game:GetService("Workspace")["_WorldOrigin"].SafeZones:GetChildren()) do
@@ -2514,6 +2505,7 @@ spawn(function()
                 end
             end
         end
+    end)
 end)
 
 Setting:AddSlider({
@@ -6637,12 +6629,10 @@ local Section = Sea:AddSection({
     Name = "~ Settings Farm Sea Event~"
 })
 
-local ListSeaBoat = {"Guardian","Grand Brigade","Sloop","Lantern","Brigade","Beast Hunter",}
-
 Sea:AddDropdown({
 	Name = "Select Boats",
 	Default = "Guardian",
-	Options = ListSeaBoat,
+	Options = {"Guardian","Grand Brigade","Sloop","Lantern","Brigade","Beast Hunter"},
 	Callback = function(Value)
 		_G.Boat = Value
         if _G.Boat == "Grand Brigade" then
