@@ -2478,36 +2478,6 @@ spawn(function()
 	end
 end)
 
-Setting:AddToggle({
-	Name = "Safe Zone Show",
-	Default = false,
-	Callback = function(Value)
-		_G.SafeZoneView = Value
-	end
-})
-
-spawn(function()
-    pcall(function()
-        while wait() do
-            if _G.SafeZoneView then
-                for i,v in pairs(game:GetService("Workspace")["_WorldOrigin"].SafeZones:GetChildren()) do
-                    if v.Name == "Safezone" then
-                        v.Transparency = 0.7
-                        v.Color = Color3.fromRGB(0,255,0)
-                    end
-                end
-            else
-                for i,v in pairs(game:GetService("Workspace")["_WorldOrigin"].SafeZones:GetChildren()) do
-                    if v.Name == "Safezone" then
-                        v.Transparency = 1
-                        v.Color = Color3.fromRGB(255,255,0)
-                    end
-                end
-            end
-        end
-    end)
-end)
-
 Setting:AddSlider({
 	Name = "Brightnes",
 	Min = 1,
@@ -3017,13 +2987,15 @@ Farm:AddToggle({
 
 spawn(function()
     while wait() do
-        if string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 88 then
-            KillMob = (tonumber(string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,41)) - 500)
-        elseif string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 87 then
-            KillMob = (tonumber(string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),40,41)) - 500)
-        elseif string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 86 then
-            KillMob = (tonumber(string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),41,41)) - 500)
-        end
+        pcall(function()
+            if string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 88 then
+                KillMob = (tonumber(string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,41)) - 500)
+            elseif string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 87 then
+                KillMob = (tonumber(string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),40,41)) - 500)
+            elseif string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 86 then
+                KillMob = (tonumber(string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),41,41)) - 500)
+            end
+        end)
     end
 end)
 
@@ -4782,6 +4754,7 @@ spawn(function()
             local ohString1 = "SetTeam"
             local ohString2 = _G.TeamChest
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(ohString1, ohString2)
+            Clip = true
         end
     end
 end)
@@ -5376,7 +5349,9 @@ local Yama = ItemQuest:AddParagraph("Elite Progress")
 
 spawn(function()
     while wait() do
-        Yama:Set("Progress: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter","Progress"))
+        pcall(function()
+            Yama:Set("Progress: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter","Progress"))
+        end)
     end
 end)
 
@@ -6279,15 +6254,6 @@ Player:AddToggle({
 	end
 })
 
-spawn(function()
-    while wait() do
-        if _G.OnV3 then
-            game:GetService('VirtualUser'):SetKeyDown('0x74')
-            game:GetService('VirtualUser'):SetKeyUp('0x74')
-        end
-    end
-end)
-
 Player:AddToggle({
 	Name = "Auto Turn On Race V4",
 	Default = false,
@@ -6298,9 +6264,12 @@ Player:AddToggle({
 
 spawn(function()
     while wait() do
-        if _G.OnV4 then
+        if _G.OnV3 then
+            game:GetService('VirtualUser'):SetKeyDown('0x74')
+            game:GetService('VirtualUser'):SetKeyUp('0x74')
+        elseif _G.OnV4 then
             game:GetService('VirtualUser'):SetKeyDown('0x59')
-           game:GetService('VirtualUser'):SetKeyUp('0x59')
+            game:GetService('VirtualUser'):SetKeyUp('0x59')
         end
     end
 end)
