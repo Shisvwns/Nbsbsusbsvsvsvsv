@@ -1662,6 +1662,63 @@ function CheckMob(MobName)
     end
 end
 
+function CheckAncientOneStatus()
+    if not game.Players.LocalPlayer.Character:FindFirstChild("RaceTransformed") then
+        return "You Have Yet To Achieve Greatness"
+    end
+    local v227 = nil
+    local v228 = nil
+    local v229 = nil
+    v229, v228, v227 = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("UpgradeRace", "Check")
+    if v229 == 1 then
+        return "Required Train More"
+    elseif v229 == 2 or v229 == 4 or v229 == 7 then
+        return "Can Buy Gear With " .. v227 .. " Fragments"
+    elseif v229 == 3 then
+        return "Required Train More"
+    elseif v229 == 5 then
+        return "You Are Done Your Race."
+    elseif v229 == 6 then
+        return "Upgrades completed: " .. v228 - 2 .. "/3, Need Trains More"
+    end
+    if v229 ~= 8 then
+        if v229 == 0 then
+            return "Ready For Trial"
+        else
+            return "You Have Yet To Achieve Greatness"
+        end
+    end
+    return "Remaining " .. 10 - v228 .. " Training Sessions"
+end
+
+function CheckRace()
+    local a = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Wenlocktoad","1")
+    local b = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Alchemist","1")
+    if game.Players.LocalPlayer.Character:FindFirstChild("RaceTransformed") then
+        return game:GetService("Players").LocalPlayer.Data.Race.Value.." V4"
+    end
+    if a == -2 then
+        return game:GetService("Players").LocalPlayer.Data.Race.Value.." V3"
+    end
+    if b == -2 then
+        return game:GetService("Players").LocalPlayer.Data.Race.Value.." V2"
+    end
+    return game:GetService("Players").LocalPlayer.Data.Race.Value.." V1"
+end
+
+local PosTemplete = CFrame.new(28282.5703125, 14896.8505859375, 105.1042709350586)
+function Templeteleport()
+    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(28282.5703125, 14896.8505859375, 105.1042709350586))
+end
+function CheckAndTweenTemple()
+    if (PosTemplete.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 1200 then
+        Templeteleport()
+    end
+    if (PosTemplete.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 1200 then
+        Templeteleport()
+    end
+end
+
 function MoonTextureId()
     if World1 then
         return game:GetService("Lighting").FantasySky.MoonTextureId
@@ -2704,12 +2761,6 @@ local Section = Farm:AddSection({
 })
 
 local YourLevel = Farm:AddParagraph("Your Level")
-
-spawn(function()
-    while wait() do
-        YourLevel:Set("Level: "..game:GetService("Players").LocalPlayer.Data.Level.Value.."/2550")
-    end
-end)
 
 Farm:AddDropdown({
 	Name = "Select Farm Level Mode",
@@ -4643,12 +4694,6 @@ local Section = Other:AddSection({
 
 local EliteStatus = Other:AddParagraph("Elite")
 
-spawn(function()
-    while wait() do
-        EliteStatus:Set(CheckElite())
-    end
-end)  
-
 Other:AddToggle({
 	Name = "Auto Kill Elite",
 	Default = false,
@@ -4889,13 +4934,6 @@ local Section = Other:AddSection({
 
 local CheckRauu = Other:AddParagraph("Darkbeard Status")
 
-spawn(function()
-    while wait() do
-        CheckRip:Set(GodChalice().." | "..CheckTrumAd())
-        CheckRauu:Set(CDarkness().." | "..CheckRauDen())
-    end
-end)
-
 Other:AddToggle({
 	Name = "Auto Summon Darkbeard",
 	Default = false,
@@ -4954,12 +4992,6 @@ local Section = Other:AddSection({
 })
 
 local ObservationStatus = Other:AddParagraph("Observation Level")
-
-spawn(function()
-    while wait() do
-        ObservationStatus:Set("Level: "..math.floor(game:GetService("Players").LocalPlayer.VisionRadius.Value))
-    end
-end)
 
 Other:AddToggle({
 	Name = "Auto Farm Observation",
@@ -5173,13 +5205,6 @@ local Section = ItemQuest:AddSection({
 
 local ColorHaki = ItemQuest:AddParagraph("Haki Dealer")
 
-spawn(function()
-    while wait() do
-        LegendSwords:Set(CheckSword())
-        ColorHaki:Set(CheckHaki())
-    end
-end)
-
 ItemQuest:AddToggle({
 	Name = "Auto Buy Haki Colors [ All Haki Colors ]",
 	Default = false,
@@ -5312,14 +5337,6 @@ local Section = ItemQuest:AddSection({
 })
 
 local Yama = ItemQuest:AddParagraph("Elite Progress")
-
-spawn(function()
-    while wait() do
-        pcall(function()
-            Yama:Set("Progress: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter","Progress"))
-        end)
-    end
-end)
 
 ItemQuest:AddToggle({
 	Name = "Auto Get Yama",
@@ -6440,20 +6457,6 @@ local Section = PvP:AddSection({
 
 local plyserv = PvP:AddParagraph("Player In Server")
 
-spawn(function()
-    while wait() do
-        for i,v in pairs(game:GetService("Players"):GetPlayers()) do
-            if i == 12 then
-                plyserv:Set("Player: "..i.."/".."12")
-            elseif i == 1 then
-                plyserv:Set("Player: "..i.."/".."12")
-            else
-                plyserv:Set("Player: "..i.."/".."12")
-            end
-        end
-    end
-end)
-
 local Playerslist = {}
 for i,v in pairs(game:GetService("Players"):GetChildren()) do
     table.insert(Playerslist,v.Name)
@@ -6547,16 +6550,6 @@ local Section = PvP:AddSection({
 })
 
 local checkbotihoron = PvP:AddParagraph("Your Bounty / Honor")
-
-spawn(function()
-    while wait() do
-        if game:GetService("Players").LocalPlayer.Team.Name == "Pirates" then
-            checkbotihoron:Set("Bounty: "..tostring(game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].Value))
-        elseif game:GetService("Players").LocalPlayer.Team.Name == "Marines" then
-            checkbotihoron:Set("Honor: "..tostring(game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].Value))
-        end
-    end
-end)
 
 -- [ Tab Sea Event ]
 
@@ -7393,12 +7386,6 @@ local Section = Sea:AddSection({
 
 local CheckKitsunee = Sea:AddParagraph("Kitsune Island")
 
-spawn(function()
-    while wait() do
-        CheckKitsunee:Set(CheckKitsune())
-    end
-end)
-
 Sea:AddToggle({
 	Name = "Teleport To Kitsune Island",
 	Default =false,
@@ -7488,41 +7475,7 @@ local Section = Race:AddSection({
     Name = "~ Templete Of Time ~"
 })
 
-function CheckRace()
-    local a = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Wenlocktoad","1")
-    local b = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Alchemist","1")
-    if game.Players.LocalPlayer.Character:FindFirstChild("RaceTransformed") then
-        return game:GetService("Players").LocalPlayer.Data.Race.Value.." V4"
-    end
-    if a == -2 then
-        return game:GetService("Players").LocalPlayer.Data.Race.Value.." V3"
-    end
-    if b == -2 then
-        return game:GetService("Players").LocalPlayer.Data.Race.Value.." V2"
-    end
-    return game:GetService("Players").LocalPlayer.Data.Race.Value.." V1"
-end
-
-local PosTemplete = CFrame.new(28282.5703125, 14896.8505859375, 105.1042709350586)
-function Templeteleport()
-    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(28282.5703125, 14896.8505859375, 105.1042709350586))
-end
-function CheckAndTweenTemple()
-    if (PosTemplete.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 1200 then
-        Templeteleport()
-    end
-    if (PosTemplete.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 1200 then
-        Templeteleport()
-    end
-end
-
 local CRace = Race:AddParagraph("Your Race")
-
-spawn(function()
-    while wait() do
-        CRace:Set("Race: "..CheckRace())
-    end
-end)
 
 Race:AddButton({
     Name = "Teleport To Temple Of Time",
@@ -7626,12 +7579,6 @@ local Section = Race:AddSection({
 
 local StatusMirage = Race:AddParagraph("Mirage Island")
 
-spawn(function()
-    while wait() do
-        StatusMirage:Set(CheckMirage())
-    end
-end)
-
 Race:AddToggle({
 	Name = "Teleport To Mirage Island",
 	Default = false,
@@ -7718,12 +7665,6 @@ local Section = Race:AddSection({
 })
 
 local Moon1 = Race:AddParagraph("Moon")
-
-spawn(function()
-    while wait() do
-        Moon1:Set(CheckMoon().." | "..function7().." | "..function8())
-    end
-end)
 
 Race:AddToggle({
 	Name = "Auto Complete Trials",
@@ -7994,42 +7935,7 @@ local Section = Race:AddSection({
     Name = "~ Train ~"
 })
 
-function CheckAncientOneStatus()
-    if not game.Players.LocalPlayer.Character:FindFirstChild("RaceTransformed") then
-        return "You Have Yet To Achieve Greatness"
-    end
-    local v227 = nil
-    local v228 = nil
-    local v229 = nil
-    v229, v228, v227 = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("UpgradeRace", "Check")
-    if v229 == 1 then
-        return "Required Train More"
-    elseif v229 == 2 or v229 == 4 or v229 == 7 then
-        return "Can Buy Gear With " .. v227 .. " Fragments"
-    elseif v229 == 3 then
-        return "Required Train More"
-    elseif v229 == 5 then
-        return "You Are Done Your Race."
-    elseif v229 == 6 then
-        return "Upgrades completed: " .. v228 - 2 .. "/3, Need Trains More"
-    end
-    if v229 ~= 8 then
-        if v229 == 0 then
-            return "Ready For Trial"
-        else
-            return "You Have Yet To Achieve Greatness"
-        end
-    end
-    return "Remaining " .. 10 - v228 .. " Training Sessions"
-end
-
 local AnOn = Race:AddParagraph("Ancient One")
-
-spawn(function()
-    while wait() do
-        AnOn:Set(CheckAncientOneStatus())
-    end
-end)
 
 Race:AddToggle({
 	Name = "Auto Buy Gear",
@@ -8488,15 +8394,32 @@ local Frozen = StatusServer:AddParagraph("Frozen Dimension")
 spawn(function()
     while task.wait() do
         pcall(function()
+            YourLevel:Set("Level: "..game:GetService("Players").LocalPlayer.Data.Level.Value.."/2550")
             Moon:Set(CheckMoon().." | "..function7().." | "..function8())
             KillCake:Set(CheckCakeSpawn())
-            StatusCakePrince:Set(CheckCakeSpawn())
             LegendSwords1:Set(CheckSword())
             ColorHaki1:Set(CheckHaki())
             Elite:Set(CheckElite())
+            AnOn:Set(CheckAncientOneStatus())
             Mirage:Set(CheckMirage())
             Kitsune:Set(CheckKitsune())
             Frozen:Set(CheckFrozen())
+        end)
+    end
+end)
+
+spawn(function()
+    while task.wait() do
+        pcall(function()
+            StatusCakePrince:Set(CheckCakeSpawn())
+            LegendSwords:Set(CheckSword())
+            ColorHaki:Set(CheckHaki())
+            CheckKitsunee:Set(CheckKitsune())
+            StatusMirage:Set(CheckMirage())
+            CRace:Set("Race: "..CheckRace())
+            EliteStatus:Set(CheckElite())
+            Moon1:Set(CheckMoon().." | "..function7().." | "..function8())
+            Yama:Set("Progress: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter","Progress"))
             if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Bones","Check") and World3 then
                 YourBone:Set("Bone: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Bones","Check").."/5000")
             elseif World1 or World2 then
@@ -8506,9 +8429,36 @@ spawn(function()
     end
 end)
 
+spawn(function()
+    while task.wait() do
+        pcall(function()
+            CheckRip:Set(GodChalice().." | "..CheckTrumAd())
+            CheckRauu:Set(CDarkness().." | "..CheckRauDen())
+            ObservationStatus:Set("Level: "..math.floor(game:GetService("Players").LocalPlayer.VisionRadius.Value))
+            for i,v in pairs(game:GetService("Players"):GetPlayers()) do
+                if i == 12 then
+                    plyserv:Set("Player: "..i.."/".."12")
+                elseif i == 1 then
+                    plyserv:Set("Player: "..i.."/".."12")
+                else
+                    plyserv:Set("Player: "..i.."/".."12")
+                end
+            end
+            if game:GetService("Players").LocalPlayer.Team.Name == "Pirates" then
+                checkbotihoron:Set("Bounty: "..tostring(game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].Value))
+            elseif game:GetService("Players").LocalPlayer.Team.Name == "Marines" then
+                checkbotihoron:Set("Honor: "..tostring(game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].Value))
+            end
+        end)
+    end
+end)
+            
+
 local Section = StatusServer:AddSection({
     Name = "~ Server ~"
 })
+
+local JobId = StatusServer:AddParagraph("Server Job-Id", game.JobId)
 
 StatusServer:AddTextbox({
 	Name = "Input Job-Id",
