@@ -4033,7 +4033,7 @@ spawn(function()
                             repeat task.wait()
                                 EquipWeapon(_G.SelectWeapon)
                                 topos(v.HumanoidRootPart.CFrame * Pos)
-                                EctoplasmMon = v.HumanoidRootPart.CFrame
+                                PosNear = v.HumanoidRootPart.CFrame
                                 MagnetNear = true
                             until not _G.AutoMaterial or not v.Parent or v.Humanoid.Health <= 0
                             MagnetNear = false
