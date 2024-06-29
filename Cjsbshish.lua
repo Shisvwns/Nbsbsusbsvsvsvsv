@@ -2317,7 +2317,7 @@ local Section = Setting:AddSection({
 
 Setting:AddSlider({
 	Name = "Tween Speed",
-	Min = 0,
+	Min = 1,
 	Max = 350,
 	Default = 325,
 	Color = Color3.fromRGB(255,255,255),
@@ -2488,6 +2488,34 @@ spawn(function()
 	end
 end)
 
+Setting:AddToggle({
+	Name = "Safe Zone Show",
+	Default = false,
+	Callback = function(Value)
+		_G.SafeZoneView = Value
+	end
+})
+
+spawn(function()
+        while wait() do
+            if _G.SafeZoneView then
+                for i,v in pairs(game:GetService("Workspace")["_WorldOrigin"].SafeZones:GetChildren()) do
+                    if v.Name == "Safezone" then
+                        v.Transparency = 0.7
+                        v.Color = Color3.fromRGB(0,255,0)
+                    end
+                end
+            else
+                for i,v in pairs(game:GetService("Workspace")["_WorldOrigin"].SafeZones:GetChildren()) do
+                    if v.Name == "Safezone" then
+                        v.Transparency = 1
+                        v.Color = Color3.fromRGB(255,255,0)
+                    end
+                end
+            end
+        end
+end)
+
 Setting:AddSlider({
 	Name = "Brightnes",
 	Min = 1,
@@ -2534,7 +2562,7 @@ end)
 
 Setting:AddSlider({
 	Name = "Value Health",
-	Min = 0,
+	Min = 1,
 	Max = 100,
 	Default = 30,
 	Color = Color3.fromRGB(255,255,255),
@@ -3439,7 +3467,7 @@ end)
 
 Farm:AddSlider({
 	Name = "Kill Mobs At % Health",
-	Min = 0,
+	Min = 1,
 	Max = 100,
 	Default = 20,
 	Color = Color3.fromRGB(255,255,255),
@@ -8194,7 +8222,7 @@ local Section = StatsEsp:AddSection({
 
 StatsEsp:AddSlider({
 	Name = "Point",
-	Min = 0,
+	Min = 1,
 	Max = 100,
 	Default = 3,
 	Color = Color3.fromRGB(255,255,255),
