@@ -1957,78 +1957,62 @@ game:GetService("ReplicatedStorage").Util.Sound.Storage.Swing:Destroy()
 
 -- [ Super Fast Attack ]
 
-local PBlade = game.Players.LocalPlayer
-local QBlade = getupvalues(require(PBlade.PlayerScripts.CombatFramework))
-local RBlade = QBlade[2]
-local CurveFrame = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework")))[2]
-
-function GetCurrentBlade()
-    local p13 = CurveFrame.activeController
-    if not p13 then
-        return nil
-    end
-    local wea = p13.blades[1]
-    if not wea then
-        return nil
-    end
-    while wea.Parent ~= game.Players.LocalPlayer.Character do
-        wea = wea.Parent
-    end
-    return wea
-end
+local up = getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework))
+local ret = up[2]
 
 function AttackNoCD()
-    local U = RBlade.activeController
-    if U then
-        for h = 1, 1 do
-            local V =
+    if game.Players.LocalPlayer.Character.Stun.Value == 0 then
+        local p13 = ret.activeController
+        if p13 and p13.attack then
+            for i=1,1 do 
+                local bladehit =
                 require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(
-                PBlade.Character,
-                {PBlade.Character:FindFirstChild("HumanoidRootPart")},
-                70
-            )
-            local W = {}
-            local X = {}
-            for k, i in pairs(V) do
-                if i.Parent:FindFirstChild("HumanoidRootPart") and not X[i.Parent] then
-                    table.insert(W, i.Parent:FindFirstChild("HumanoidRootPart"))
-                    X[i.Parent] = true
-                end
-            end
-            V = W
-            if #V > 0 then
-                local Y = debug.getupvalue(U.attack, 5)
-                local Z = debug.getupvalue(U.attack, 6)
-                local _ = debug.getupvalue(U.attack, 4)
-                local a0 = debug.getupvalue(U.attack, 7)
-                local a1 = (Y * 798405 + _ * 727595) % Z
-                local a2 = _ * 798405
-                (function()
-                    a1 = (a1 * Z + a2) % 1099511627776
-                    Y = math.floor(a1 / Z)
-                    _ = a1 - Y * Z
-                end)()
-                a0 = a0 + 1
-                debug.setupvalue(U.attack, 5, Y)
-                debug.setupvalue(U.attack, 6, Z)
-                debug.setupvalue(U.attack, 4, _)
-                debug.setupvalue(U.attack, 7, a0)
-                pcall(
-                    function()
-                        if PBlade.Character:FindFirstChildOfClass("Tool") and U.blades and U.blades[1] then
-                            U.animator.anims.basic[1]:Play(0.01, 0.01, 0.01)
-                            game:GetService("ReplicatedStorage").RigControllerEvent:FireServer(
-                                "weaponChange",
-                                tostring(GetCurrentBlade())
-                            )
-                            game.ReplicatedStorage.Remotes.Validator:FireServer(
-                                math.floor(a1 / 1099511627776 * 16777215),
-                                a0
-                            )
-                            game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", V, h, "")
+                    game.Players.LocalPlayer.Character,
+                    {game.Players.LocalPlayer.Character.HumanoidRootPart},
+                    50
+                )
+                local cac = {}
+                local hash = {}
+                for k, v in pairs(bladehit) do
+                    if v.Parent:FindFirstChild("HumanoidRootPart") and not hash[v.Parent] then
+                        if v.Parent.Parent.Name == "Enemies" then
+                            table.insert(cac, v.Parent.HumanoidRootPart)
+                            hash[v.Parent] = true
                         end
                     end
-                )
+                end
+                bladehit = cac
+                if #bladehit > 0 then
+                    local u8 = debug.getupvalue(p13.attack, 5)
+                    local u9 = debug.getupvalue(p13.attack, 6)
+                    local u7 = debug.getupvalue(p13.attack, 4)
+                    local u10 = debug.getupvalue(p13.attack, 7)
+
+                    local u12 = (u8 * 798405 + u7 * 727595) % u9
+                    local u13 = u7 * 798405
+                    (function()
+                        u12 = (u12 * u9 + u13) % 1099511627776
+                        u8 = math.floor(u12 / u9)
+                        u7 = u12 - u8 * u9
+                    end)()
+                    u10 = u10 + 1
+                    debug.setupvalue(p13.attack, 5, u8)
+                    debug.setupvalue(p13.attack, 6, u9)
+                    debug.setupvalue(p13.attack, 4, u7)
+                    debug.setupvalue(p13.attack, 7, u10)
+                    pcall(
+                        function()
+                            for k, v in pairs(p13.animator.anims.basic) do
+                                v:Play()
+                            end	
+                        end
+                    )
+                    if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") and p13.blades and p13.blades[1] then
+                        game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange", p13.blades[1].Parent.Parent.Name)
+                        game.ReplicatedStorage.Remotes.Validator:FireServer(math.floor(u12 / 1099511627776 * 16777215), u10)
+                        game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, i, "")
+                    end
+                end
             end
         end
     end
@@ -2185,20 +2169,20 @@ local Section = Setting:AddSection({
     Name = "~ Setting Farm ~"
 })
 
-local CheckWeapon1 = Setting:AddDropdown({
+Setting:AddDropdown({
 	Name = "Select Weapon",
 	Default = "Melee",
 	Options = {"Melee","Sword","Gun","Blox Fruit"},
 	Callback = function(Value)
-		SelectWeapon = Value
+		_G.SelectWeapons = Value
 	end
 })
 
 spawn(function()
 	while wait() do
-		if SelectWeapon == SelectWeapon then
+		if _G.SelectWeapons == _G.SelectWeapons then
 			for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-				if v.ToolTip == SelectWeapon then
+				if v.ToolTip == _G.SelectWeapons then
 					if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
 						_G.SelectWeapon = v.Name
 					end
@@ -2249,11 +2233,6 @@ spawn(function()
         end
     end
 end)
-
-function Click()
-    game:GetService'VirtualUser':CaptureController()
-    game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
-end
 
 Setting:AddToggle({
 	Name = "Auto Click [ 75% Kick System ]",
@@ -7792,17 +7771,17 @@ Race:AddDropdown({
 	Default = "Melee",
 	Options = {"Melee","Sword","Gun","Blox Fruit"},
 	Callback = function(Value)
-		SelectWeaponTrials = Value
+		_G.SelectTrialWeapon = Value
 	end
 })
 
 spawn(function()
 	while wait() do
-		if SelectWeaponTrials == SelectWeaponTrials then
+		if _G.SelectTrialWeapon == _G.SelectTrialWeapon then
 			for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-				if v.ToolTip == SelectWeaponTrials then
+				if v.ToolTip == _G.SelectTrialWeapon then
 					if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-						_G.SelectWeaponTrials = v.Name
+						_G.SelectTrialsWeapon = v.Name
 					end
 				end
 			end
@@ -7829,7 +7808,7 @@ spawn(function()
                         for i, v in pairs(game.Players:GetChildren()) do
                             if v.Name ~= game.Players.LocalPlayer.Name and (GetDistance(TempleCFrame, v.Character.HumanoidRootPart) <= 300) and v.Character.Humanoid.Health > 0 then
                                 repeat task.wait()
-                                    EquipWeapon(_G.SelectWeaponTrials)
+                                    EquipWeapon(_G.SelectTrialsWeapon)
                                     topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 0))
                                     UseSkillTrial = true
                                     SpamOnRace = true
