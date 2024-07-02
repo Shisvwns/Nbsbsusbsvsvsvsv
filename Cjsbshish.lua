@@ -5382,7 +5382,7 @@ spawn(function()
     while wait() do
         if _G.AutoYama then
             if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter","Progress") >= 30 then
-                repeat wait(.1)
+                repeat wait()
                     fireclickdetector(game:GetService("Workspace").Map.Waterfall.SealedKatana.Handle.ClickDetector)
                 until game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Yama") or not _G.AutoYama
             end
@@ -6381,7 +6381,7 @@ spawn(function()
                     if typeof(v) == "function" and getfenv(v).script == game:GetService("Players").LocalPlayer.Character.Soru then
                         for i2,v2 in next, getupvalues(v) do
                             if typeof(v2) == "table" then
-                                repeat wait(0.1)
+                                repeat wait()
                                     v2.LastUse = 0
                                 until not getgenv().InfSoru or game:GetService("Players").LocalPlayer.Character.Humanoid.Health <= 0
                             end
@@ -6509,7 +6509,7 @@ spawn(function()
 	while wait() do
 		if _G.SpectatePlys then
 			if game.Players:FindFirstChild(SelectPly) then
-				repeat wait(.1)
+				repeat wait()
 	                game:GetService("Workspace").Camera.CameraSubject = game:GetService("Players"):FindFirstChild(SelectPly).Character.Humanoid
 				until _G.SpectatePlys == false
 				game:GetService("Workspace").Camera.CameraSubject = game:GetService("Players").LocalPlayer.Character.Humanoid
@@ -7676,7 +7676,7 @@ spawn(function()
 			if game:GetService("Players").LocalPlayer.Data.Race.Value == "Human" then
 				for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
 					if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-						repeat wait(.1)
+						repeat wait()
 							v.Humanoid.Health = 0
 							v.HumanoidRootPart.CanCollide = false
 							sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
@@ -7764,7 +7764,7 @@ spawn(function()
 			elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Ghoul" then
 				for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
 					if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-						repeat wait(.1)
+						repeat wait()
 							v.Humanoid.Health = 0
 							v.HumanoidRootPart.CanCollide = false
 							sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
