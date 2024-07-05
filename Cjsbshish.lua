@@ -1624,7 +1624,7 @@ spawn(function()
                     v.CanCollide = false    
                 end
             end
-        elseif not game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
+        else
             game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip"):Destroy()
         end
     end)
