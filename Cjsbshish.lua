@@ -1531,7 +1531,6 @@ function topos(Pos)
     end
     Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
     Tween:Play() 
-    Clip = true
 end
 
 function Tween(Pos)
@@ -1544,7 +1543,6 @@ function StopTween(target)
     if not target then
         topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
         game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos}):Cancel()
-        Clip = false
     end
 end
 
@@ -1610,29 +1608,26 @@ end)
 
 spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
-        pcall(function()
-            if Clip then
-                if not game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
-                    local ag = Instance.new("BodyVelocity")
-                    ag.Velocity = Vector3.new(0, 0, 0)
-                    ag.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
-                    ag.P = 9000
-                    ag.Parent = game.Players.LocalPlayer.Character.Head
-                    for r, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
-                        if v:IsA("BasePart") then
-                            v.CanCollide = false
-                        end
-                    end
-                end
-                for _, v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
-                    if v:IsA("BasePart") then
-                        v.CanCollide = false    
-                    end
-                end
-            elseif not Clip and game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
-                game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity"):Destroy()
+    pcall(function()
+        if _G.AutoFarm or _G.FarmSkip or _G.AutoFarmNearest or _G.AutoDoughtBoss or _G.Auto_Bone or _G.Auto_Soul_Reaper or _G.AutoFarmFruitMastery or _G.AutoFarmGunMastery or _G.FarmAllSword or _G.FarmAllMelee or _G.AutoFarmBoss or _G.AutoAllBoss or _G.AutoFarmMob or _G.AutoMaterial or _G.Tweenfruit or _G.NextIsland or _G.AutoOderSword or _G.RaidPirate or _G.AutoFactory or _G.AutoElitehunter or _G.ChestBypass or _G.AutoFarmChest or _G.TeleSafe or _G.AutoSpawnRip or _G.AutoKillRipIndra or _G.AutoSpawnDark or _G.AutoKillDark or _G.AutoObservation or _G.AutoObservationv2 or _G.Auto_Rainbow_Haki or _G.AutoYama or _G.AutoHolyTorch or _G.Autotushita or _G.Auto_Saber or _G.Autowaden
+            or _G.AutoRengoku or _G.Autopole or _G.Autosaw or _G.AutoCarvender or _G.Auto_Dragon_Trident or _G.AutoTwinHook or _G.AutoCarvender or _G.AutoBudySword or _G.AutoSerpentBow or _G.Auto_EvoRace or _G.AutoMusketeerHat or _G.AutoSecondSea or _G.AutoThirdSea or _G.Teleport or _G.AutoKillFishCrew or _G.RelzFishBoat or _G.RelzPirateGrandBrigade or _G.RelzPirateBrigade or _G.AutoTerrorshark or _G.AutoSeaBest or _G.AutoKillShark or _G.AutoKillPiranha or _G.TeleportKitsune or _G.CollectAzure or _G.TweenMGear or _G.AutoMysticIsland or _G.Miragenpc or _G.AutoQuestRace or _G.KillAfterTrials or _G.TeleportIsland
+        then
+            if not game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
+                local NoClip = Instance.new("BodyVelocity")
+                NoClip.Name = "BodyClip"
+                NoClip.Parent = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart
+                NoClip.MaxForce = Vector3.new(100000, 100000, 100000)
+                NoClip.Velocity = Vector3.new(0, 0, 0)
             end
-        end)
+            for _, v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
+                if v:IsA("BasePart") then
+                    v.CanCollide = false    
+                end
+            end
+        elseif not game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
+            game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip"):Destroy()
+        end
+    end)
     end)
 end)
 
@@ -2361,16 +2356,9 @@ Setting:AddToggle({
 })
 
 Setting:AddButton({
-    Name = "Set Clip = False",
-    Callback = function()
-        _G.Clip = false
-    end
-})
-
-Setting:AddButton({
 	Name = "Reset Character",
 	Callback = function()
-      	game:GetService("Players").LocalPlayer.Character.Humanoid.Health = 0
+    	game:GetService("Players").LocalPlayer.Character.Humanoid.Health = 0
 	end    
 })
 
@@ -3777,15 +3765,6 @@ Farm:AddButton({
     Name = "Refresh Boss List",
     Callback = function()
         BossName:Refresh(BossCheck,true)
-        local BossCheck = {}
-        for i, v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
-            if (v.Name == "rip_indra" or v.Name == "Ice Admiral")
-                    or (v.Name == "Saber Expert" or v.Name == "The Saw" or v.Name == "Greybeard" or v.Name == "Mob Leader" or v.Name == "The Gorilla King" or v.Name == "Bobby" or v.Name == "Yeti" or v.Name == "Vice Admiral" or v.Name == "Warden" or v.Name == "Chief Warden" or v.Name == "Swan" or v.Name == "Magma Admiral" or v.Name == "Fishman Lord" or v.Name == "Wysper" or v.Name == "Thunder God" or v.Name == "Cyborg")
-                    or (v.Name == "Don Swan" or v.Name == "Diamond" or v.Name == "Jeremy" or v.Name == "Fajita" or v.Name == "Smoke Admiral" or v.Name == "Awakened Ice Admiral" or v.Name == "Tide Keeper" or v.Name == "Order" or v.Name == "Darkbeard" or v.Name == "Cursed Captain")
-                    or (v.Name == "Stone" or v.Name == "Island Empress" or v.Name == "Kilo Admiral" or v.Name == "Captain Elephant" or v.Name == "Beautiful Pirate" or v.Name == "Cake Queen" or v.Name == "rip_indra True Form" or v.Name == "Longma" or v.Name == "Soul Reaper" or v.Name == "Cake Prince" or v.Name == "Dough King") then
-                table.insert(BossCheck, v.Name)
-            end
-        end
         BossName:Refresh(BossCheck)
     end
 })
@@ -4760,7 +4739,6 @@ spawn(function()
             local ohString1 = "SetTeam"
             local ohString2 = _G.TeamChest
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(ohString1, ohString2)
-            Clip = true
         end
     end
 end)
@@ -4989,14 +4967,13 @@ local Section = Other:AddSection({
 local ObservationStatus = Other:AddParagraph("Observation Level")
 
 Other:AddToggle({
-	Name = "Auto Farm Observation",
+	Name = "Auto Farm Observation [ Error ]",
 	Default = false,
 	Callback = function(Value)
 		_G.AutoObservation = Value
 		StopTween(_G.AutoObservation)
 	end
 })
-
 
 spawn(function()
     while wait() do
@@ -5846,39 +5823,10 @@ ItemQuest:AddToggle({
 	Name = "Auto Get Hallow Scythe",
 	Default = false,
 	Callback = function(Value)
-		_G.AutoFarmBossHallow = Value
-		StopTween(_G.AutoFarmBossHallow)
+		_G.Auto_Soul_Reaper = Value
+		StopTween(_G.Auto_Soul_Reaper)
 	end
 })
-
-spawn(function()
-    while wait() do
-        if _G.AutoFarmBossHallow then
-            if game.Players.LocalPlayer.Backpack:FindFirstChild("Hallow Essence") then
-                 EquipWeapon("Hallow Essence")
-                 topos(CFrame.new(-8932.83789, 144.098709, 6059.34229, -0.999290943, 7.95623478e-09, -0.0376505218, 4.4684243e-09, 1, 9.27205832e-08, 0.0376505218, 9.24866086e-08, -0.999290943))
-            elseif game:GetService("Workspace").Enemies:FindFirstChild("Soul Reaper") then
-                if game.Workspace.Enemies:FindFirstChild ("Soul Reaper") then
-                    for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                        if v.Name == "Soul Reaper"  then
-                            if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
-                                repeat wait()
-                                    EquipWeapon(_G.SelectWeapon)
-                                    topos(v.HumanoidRootPart.CFrame * Pos)
-                                until not _G.AutoFarmBossHallow or not v.Parent or v.Humanoid.Health <= 0
-                            end
-                        end
-                    end
-                end
-            else
-                topos(BonePos)
-                UnEquipWeapon(_G.SelectWeapon)
-                local args = { [1] = "Bones", [2] = "Buy", [3] = 1, [4] = 1 }
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
-            end
-        end
-    end
-end)
 
 ItemQuest:AddToggle({
 	Name = "Auto Get Serpent Bow",
@@ -6470,10 +6418,6 @@ PvP:AddButton({
     Name = "Refresh Player List",
     Callback = function()
         Slplayer:Refresh(Playerslist,true)
-        Playerslist = {}
-        for i,v in pairs(game:GetService("Players"):GetChildren()) do
-            table.insert(Playerslist, v.Name)
-        end
         Slplayer:Refresh(Playerslist)
     end
 })
@@ -6519,7 +6463,7 @@ spawn(function()
 end)
 
 local Section = PvP:AddSection({
-    Name = "~ Aimbot ~"
+    Name = "~ Aimbot [ Wait Fix ] ~"
 })
 
 PvP:AddToggle({
@@ -6975,7 +6919,7 @@ spawn(function()
 end)
 
 Sea:AddToggle({
-	Name = "Auto Dodge Rough Sea",
+	Name = "Auto Dodge Rough Sea [ Test ]",
 	Default = false,
 	Callback = function(Value)
 		_G.DogeRoughSea = Value
