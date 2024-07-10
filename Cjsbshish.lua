@@ -1529,7 +1529,7 @@ function topos(Pos)
     if Distance <= 250 then
         lp.Character.HumanoidRootPart.CFrame = Pos
     end
-    Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Quad),{CFrame = Pos})
+    Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Quad),{CFrame = Pos})
     Tween:Play() 
 end
 
@@ -1542,7 +1542,7 @@ end
 function StopTween(target)
     if not target then
         topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
-        game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Quad),{CFrame = Pos}):Cancel()
+        game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Quad),{CFrame = Pos}):Cancel()
     end
 end
 
