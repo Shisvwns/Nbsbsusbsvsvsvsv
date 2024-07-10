@@ -1540,6 +1540,7 @@ end
 
 function StopTween(target)
     if not target then
+        local PartTele = Instance.new("Part", lp.Character)
         game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Quad),{CFrame = Pos}):Cancel()
     end
 end
