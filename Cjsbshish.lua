@@ -1498,17 +1498,17 @@ function CalcDistance(I, II)
 end
 function topos(Pos)
     if not Pos then return end 
-    if not lp.Character:FindFirstChild("PartTele") then
+    if not lp.Character:FindFirstChild("TweenSmooth") then
         local PartTele = Instance.new("Part", lp.Character)
         PartTele.Size = Vector3.new(0,0,0)
         PartTele.Name = "PartTele"
         PartTele.Anchored = true
         PartTele.Transparency = 1
         PartTele.CanCollide = false
-        PartTele.CFrame = WaitHRP(lp).CFrame 
+        PartTele.CFrame = lp.Character:WaitForChild("HumanoidRootPart").CFrame
         PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
             task.wait(0.01)
-            WaitHRP(lp).CFrame = PartTele.CFrame
+            lp.Character:WaitForChild("HumanoidRootPart").CFrame = PartTele.CFrame
         end)
     end
     Portal = GetPortal(Pos) 
@@ -1541,7 +1541,7 @@ end
 
 function StopTween(target)
     if not target then
-        topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
+        topos(game:GetService("Players").LocalPlayer.Character.PartTele.CFrame)
         game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Quad),{CFrame = Pos}):Cancel()
     end
 end
