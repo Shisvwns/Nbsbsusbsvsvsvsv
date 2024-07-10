@@ -1554,7 +1554,7 @@ spawn(function()
             end
         end
         if lp.Character:FindFirstChild("PartTele") then
-            if (lp.Character.HumanoidRootPart.Position - lp.Character:FindFirstChild("PartTele").Position).Magnitude = 0 then
+            if (lp.Character.HumanoidRootPart.Position - lp.Character:FindFirstChild("PartTele").Position).Magnitude <= 1 then
                 lp.Character:FindFirstChild("PartTele"):Destroy()
             end
         end
