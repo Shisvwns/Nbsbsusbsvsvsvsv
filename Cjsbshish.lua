@@ -1553,11 +1553,6 @@ spawn(function()
                 lp.Character:FindFirstChild("TweenSmooth"):Destroy()
             end
         end
-        if lp.Character:FindFirstChild("PartTele") then
-            if (lp.Character.HumanoidRootPart.Position - lp.Character:FindFirstChild("PartTele").Position).Magnitude >= 100 then
-                lp.Character:FindFirstChild("PartTele"):Destroy()
-            end
-        end
     end
 end)
 
