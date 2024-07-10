@@ -1543,10 +1543,19 @@ function StopTween(target)
     if not target then
         topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
         game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Quad),{CFrame = Pos}):Cancel()
-        lp.Character:FindFirstChild("PartTele"):Destroy()
-        lp.Character:FindFirstChild("TweenSmooth"):Destroy()
     end
 end
+
+spawn(function()
+    while wait() do
+            if lp.Character:FindFirstChild("TweenSmooth") then
+                lp.Character:FindFirstChild("TweenSmooth"):Destroy()
+            end
+        if lp.Character:FindFirstChild("PartTele") then
+                lp.Character:FindFirstChild("PartTele"):Destroy()
+        end
+    end
+end)
 
 -- [ Pos Farm ]
 
