@@ -1526,6 +1526,9 @@ function topos(Pos)
     if lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid:FindFirstChild("Sit") and lp.Character.Humanoid.Sit == true then
         lp.Character.Humanoid.Sit = false
     end 
+    if Distance <= 250 then
+        lp.Character.HumanoidRootPart.CFrame = Pos
+    end
     Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Quad),{CFrame = Pos})
     Tween:Play() 
 end
@@ -1550,8 +1553,8 @@ spawn(function()
                 lp.Character:FindFirstChild("TweenSmooth"):Destroy()
             end
         end
-        if lp.Character:FindFirstChild("PartTele") then
-            if (lp.Character.HumanoidRootPart.Position - lp.Character:FindFirstChild("PartTele").Position).Magnitude <= 1 then
+        if (lp.Character.HumanoidRootPart.Position - lp.Character:FindFirstChild("PartTele").Position).Magnitude <= 1 then
+            if lp.Character:FindFirstChild("PartTele") then
                 lp.Character:FindFirstChild("PartTele"):Destroy()
             end
         end
