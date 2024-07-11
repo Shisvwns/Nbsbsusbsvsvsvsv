@@ -1548,18 +1548,16 @@ end
 
 spawn(function()
     while wait() do
-        pcall(function()
         if lp.Character:FindFirstChild("Humanoid").Health <= 0 or not lp.Character:FindFirstChild("HumanoidRootPart") then
             if lp.Character:FindFirstChild("TweenSmooth") then
                 lp.Character:FindFirstChild("TweenSmooth"):Destroy()
             end
         end
-        if (lp.Character.HumanoidRootPart.Position - lp.Character:FindFirstChild("PartTele").Position).Magnitude <= 1 then
+        if (lp.Character.HumanoidRootPart.Position - lp.Character:FindFirstChild("PartTele").Position).Magnitude <= 100 then
             if lp.Character:FindFirstChild("PartTele") then
                 lp.Character:FindFirstChild("PartTele"):Destroy()
             end
         end
-        end)
     end
 end)
 
@@ -1582,13 +1580,13 @@ end)
 spawn(function()
     while wait() do
         if Type == 1 then
-            Pos = CFrame.new(0,40,-20)
+            Pos = CFrame.new(0,30,-20)
         elseif Type == 2 then
-            Pos = CFrame.new(20,40,0)
+            Pos = CFrame.new(20,30,0)
         elseif Type == 3 then
-            Pos = CFrame.new(0,40,20)	
+            Pos = CFrame.new(0,30,20)	
         elseif Type == 4 then
-            Pos = CFrame.new(-20,40,0)
+            Pos = CFrame.new(-20,30,0)
         end
     end
 end)
