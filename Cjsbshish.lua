@@ -1507,7 +1507,7 @@ function topos(Pos)
         PartTele.CanCollide = false
         PartTele.CFrame = WaitHRP(lp).CFrame
         PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
-            task.wait()
+            task.wait(0.01)
             WaitHRP(lp).CFrame = PartTele.CFrame
         end)
     end
@@ -1531,7 +1531,6 @@ function topos(Pos)
     end
     Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
     Tween:Play() 
-    Clip = true
 end
 
 function Tween(Pos)
@@ -1542,7 +1541,6 @@ end
 
 function StopTween(target)
     if not target then
-        Clip = false
         topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
         game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos}):Cancel()
     end
@@ -1626,26 +1624,24 @@ end)
 spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
         pcall(function()
-            if Clip then
-                if not game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
-                    local Bay = Instance.new("BodyVelocity")
-                    Bay.Velocity = Vector3.new(0, 0, 0)
-                    Bay.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
-                    Bay.P = 9000
-                    Bay.Parent = game.Players.LocalPlayer.Character.Head
-                    for r, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
-                        if v:IsA("BasePart") then
-                            v.CanCollide = false
-                        end
-                    end
+            if _G.AutoFarm or _G.FarmSkip or _G.AutoFarmNearest or _G.AutoDoughtBoss or _G.Auto_Bone or _G.Auto_Soul_Reaper or _G.AutoFarmFruitMastery or _G.AutoFarmGunMastery or _G.FarmAllSword or _G.FarmAllMelee or _G.AutoFarmBoss or _G.AutoAllBoss or _G.AutoFarmMob or _G.AutoMaterial or _G.Tweenfruit or _G.NextIsland or _G.AutoOderSword or _G.RaidPirate or _G.AutoFactory or _G.AutoElitehunter or _G.ChestBypass or _G.AutoFarmChest or _G.TeleSafe or _G.AutoSpawnRip or _G.AutoKillRipIndra or _G.AutoSpawnDark or _G.AutoKillDark or _G.AutoObservation or _G.AutoObservationv2 or _G.Auto_Rainbow_Haki or _G.AutoYama or _G.AutoHolyTorch or _G.Autotushita or _G.Auto_Saber or _G.Autowaden
+                or _G.AutoRengoku or _G.Autopole or _G.Autosaw or _G.AutoCarvender or _G.Auto_Dragon_Trident or _G.AutoTwinHook or _G.AutoCarvender or _G.AutoBudySword or _G.AutoSerpentBow or _G.Auto_EvoRace or _G.AutoMusketeerHat or _G.AutoSecondSea or _G.AutoThirdSea or _G.Teleport or _G.AutoKillFishCrew or _G.RelzFishBoat or _G.RelzPirateGrandBrigade or _G.RelzPirateBrigade or _G.AutoTerrorshark or _G.AutoSeaBest or _G.AutoKillShark or _G.AutoKillPiranha or _G.TeleportKitsune or _G.CollectAzure or _G.TweenMGear or _G.AutoMysticIsland or _G.Miragenpc or _G.AutoQuestRace or _G.KillAfterTrials or _G.TeleportIsland
+            then
+                if not game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyVelocity") then
+                    local NoClip = Instance.new("BodyVelocity")
+                    NoClip.Name = "BodyVelocity"
+                    NoClip.P = 9000
+                    NoClip.Parent = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart
+                    NoClip.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+                    NoClip.Velocity = Vector3.new(0, 0, 0)
                 end
                 for _, v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
                     if v:IsA("BasePart") then
                         v.CanCollide = false    
                     end
                 end
-            elseif not Clip and game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
-                game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity"):Destroy()
+            else
+                game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyVelocity"):Destroy()
             end
         end)
     end)
@@ -2280,6 +2276,26 @@ spawn(function()
     end)
 end)
 
+Setting:AddDropdown({
+	Name = "Select Range Collect Mob",
+	Default = "Slightly Far [ 300m ]",
+	Options = {"Really Far [ 350m ]","Distant [ 325m ]","Slightly Far [ 300m ]","Near The [ 275m ]","Very Close [ 250m ]"},
+	Callback = function(Value)
+		_G.SelectRange = Value
+        if _G.SelectRange == "Really Far [ 350m ]" then
+            BringRange = 350
+        elseif _G.SelectRange == "Distant [ 325m ]" then
+            BringRange = 325
+        elseif _G.SelectRange == "Slightly Far [ 300m ]" then
+            BringRange = 300
+        elseif _G.SelectRange == "Near The [ 275m ]" then
+            BringRange = 275
+        elseif _G.SelectRange == "Very Close [ 250m ]" then
+            BringRange = 250
+        end
+	end
+})
+
 Setting:AddToggle({
 	Name = "Bring Mobs",
 	Default = true,
@@ -2295,49 +2311,49 @@ spawn(function()
                 CheckQuest()
                 for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                     if _G.AutoFarm or _G.AutoFarmFruitMastery or _G.AutoFarmGunMastery or _G.AutoSwordMastery then
-                        if StartMagnet and v.Name == Mon and (v.HumanoidRootPart.Position - PosFarm.Position).Magnitude <= 300 then
+                        if StartMagnet and v.Name == Mon and (v.HumanoidRootPart.Position - PosFarm.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = PosFarm
                             v.Humanoid:ChangeState(14)
                         end
                     end
                     if MagnetNear then
-                        if not string.find(v.Name, "Boss") and (v.HumanoidRootPart.Position - PosNear.Position).Magnitude <= 300 then
+                        if not string.find(v.Name, "Boss") and (v.HumanoidRootPart.Position - PosNear.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = PosNear
                             v.Humanoid:ChangeState(14)
                         end
                     end
                     if _G.AutoMusketeerHat and StartMagnetMusketeerhat then
-                        if v.Name == "Forest Pirate" and (v.HumanoidRootPart.Position - MusketeerHatMon.Position).Magnitude <= 300 then
+                        if v.Name == "Forest Pirate" and (v.HumanoidRootPart.Position - MusketeerHatMon.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = MusketeerHatMon
                             v.Humanoid:ChangeState(14)
                         end
                     end
                     if _G.Auto_EvoRace and StartEvoMagnet then
-                        if v.Name == "Zombie" and (v.HumanoidRootPart.Position - PosMonEvo.Position).Magnitude <= 300 then
+                        if v.Name == "Zombie" and (v.HumanoidRootPart.Position - PosMonEvo.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = PosMonEvo
                             v.Humanoid:ChangeState(14)
                         end
                     end
                     if _G.AutoMaterial and BringMonMaterial then
-                        if (v.Name == MMon or v.Name == MMon1) and (v.HumanoidRootPart.Position - MaterialPos.Position).Magnitude <= 300 then
+                        if (v.Name == MMon or v.Name == MMon1) and (v.HumanoidRootPart.Position - MaterialPos.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = MaterialPos
                             v.Humanoid:ChangeState(14)
                         end
                     end
                     if _G.AutoFarmMob and SelectMag then
-                        if v.Name == SelectMob and (v.HumanoidRootPart.Position - PosMonFarm.Position).Magnitude <= 300 then
+                        if v.Name == SelectMob and (v.HumanoidRootPart.Position - PosMonFarm.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = PosMonFarm
                             v.Humanoid:ChangeState(14)
                         end
                     end
                     if _G.AutoBartilo and AutoBartiloBring then
-                        if v.Name == "Swan Pirate" and (v.HumanoidRootPart.Position - PosMonBarto.Position).Magnitude <= 300 then
+                        if v.Name == "Swan Pirate" and (v.HumanoidRootPart.Position - PosMonBarto.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = PosMonBarto
                             v.Humanoid:ChangeState(14)
                         end
                     end
                     if _G.FarmSkip and StartBring then
-                        if v.Name == "Shanda" and (v.HumanoidRootPart.Position - PosMon.Position).Magnitude <= 300 then
+                        if v.Name == "Shanda" and (v.HumanoidRootPart.Position - PosMon.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = PosMon
                             v.Humanoid:ChangeState(14)
                         end
@@ -2371,13 +2387,6 @@ Setting:AddToggle({
 	Callback = function(Value)
 		_G.BypassTele = Value
 	end
-})
-
-Setting:AddButton({
-    Name = "Set Clip = False",
-    Callback = function()
-        Clip = false
-    end
 })
 
 Setting:AddButton({
@@ -2797,7 +2806,7 @@ spawn(function()
                     for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                             if v.Name == Mon then
-                                repeat task.wait()
+                                repeat wait()
                                     EquipWeapon(_G.SelectWeapon)
                                     topos(v.HumanoidRootPart.CFrame * Pos)
                                     PosFarm = v.HumanoidRootPart.CFrame
@@ -2840,7 +2849,7 @@ spawn(function()
                             if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                                 if v.Name == Mon then
                                     if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
-                                        repeat task.wait()
+                                        repeat wait()
                                             EquipWeapon(_G.SelectWeapon)
                                             topos(v.HumanoidRootPart.CFrame * Pos)
                                             PosFarm = v.HumanoidRootPart.CFrame
@@ -2887,7 +2896,7 @@ spawn(function()
                     if game:GetService("Workspace").Enemies:FindFirstChild("Shanda") then     
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                             if v.Name == "Shanda" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
-                                repeat task.wait()
+                                repeat wait()
                                     EquipWeapon(_G.SelectWeapon)
                                     topos(v.HumanoidRootPart.CFrame * Pos)               
                                     PosMon = v.HumanoidRootPart.CFrame
@@ -2911,7 +2920,7 @@ spawn(function()
                             PlayerKill = string.split(QuestTitle," ")[2]
                             for i,v in pairs(Players) do
                                 if v.Name == PlayerKill and v.Character.Humanoid.Health > 0 then
-                                    repeat task.wait()
+                                    repeat wait()
                                         if v.Data.Level.Value < 20 or v.Data.Level.Value > mylevel * 5 then
                                             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("PlayerHunter")
                                         end
@@ -2920,10 +2929,10 @@ spawn(function()
                                         end
                                         EquipWeapon(_G.SelectWeapon)
                                         topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,0))
+                                        KillPlayerAttack = true
                                         if (v.Character.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 30 then
                                             AimBotSkillPosition = v.Character.HumanoidRootPart.CFrame.Position
                                             Skillaimbot = true
-                                            KillPlayerAttack = true
                                             game:GetService("VirtualInputManager"):SendKeyEvent(true, "X", false, game)
                                             game:GetService("VirtualInputManager"):SendKeyEvent(false, "X", false, game)
                                             wait()
@@ -2981,7 +2990,7 @@ spawn(function()
 				for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
          	       if v.Name and v:FindFirstChild("Humanoid") then
 				        if v.Humanoid.Health > 0 and (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1500 then
-			 	           repeat task.wait()
+			 	           repeat wait()
 			     	           EquipWeapon(_G.SelectWeapon)
 			  	              topos(v.HumanoidRootPart.CFrame * Pos)
 			 	               PosNear = v.HumanoidRootPart.CFrame
@@ -3043,7 +3052,7 @@ spawn(function()
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == "Cake Prince" or v.Name == "Dough King" then
                             if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                repeat task.wait()
+                                repeat wait()
                                     EquipWeapon(_G.SelectWeapon)
                                     topos(v.HumanoidRootPart.CFrame * Pos)
                                 until not _G.AutoDoughtBoss or not v.Parent or v.Humanoid.Health <= 0
@@ -3061,7 +3070,7 @@ spawn(function()
                                 for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                                     if v.Name == "Cookie Crafter" or v.Name == "Cake Guard" or v.Name == "Baking Staff" or v.Name == "Head Baker" then
                                         if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                            repeat task.wait()
+                                            repeat wait()
                                                 EquipWeapon(_G.SelectWeapon)
                                                 topos(v.HumanoidRootPart.CFrame * Pos)
                                                 PosNear = v.HumanoidRootPart.CFrame
@@ -3092,7 +3101,7 @@ spawn(function()
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == "Cake Prince" or v.Name == "Dough King" then
                             if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                repeat task.wait()
+                                repeat wait()
                                     EquipWeapon(_G.SelectWeapon)
                                     topos(v.HumanoidRootPart.CFrame * Pos)
                                 until not _G.AutoDoughtBoss or not v.Parent or v.Humanoid.Health <= 0
@@ -3125,7 +3134,7 @@ spawn(function()
                             if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                                 if v.Name == "Cookie Crafter" or v.Name == "Cake Guard" or v.Name == "Baking Staff" or v.Name == "Head Baker" then
                                     if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, "Cookie Crafter") then
-                                        repeat task.wait()
+                                        repeat wait()
                                             EquipWeapon(_G.SelectWeapon)
                                             topos(v.HumanoidRootPart.CFrame * Pos)
                                             PosNear = v.HumanoidRootPart.CFrame
@@ -3190,7 +3199,7 @@ spawn(function()
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy" then
                            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                               repeat task.wait()
+                               repeat wait()
                                     EquipWeapon(_G.SelectWeapon)
                                     topos(v.HumanoidRootPart.CFrame * Pos)
                                     PosNear = v.HumanoidRootPart.CFrame
@@ -3231,7 +3240,7 @@ spawn(function()
                             if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                                 if v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy" then
                                     if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, "Demonic Soul") then
-                                        repeat task.wait()
+                                        repeat wait()
                                             EquipWeapon(_G.SelectWeapon)
                                             topos(v.HumanoidRootPart.CFrame * Pos)
                                             PosNear = v.HumanoidRootPart.CFrame
@@ -3264,7 +3273,7 @@ Farm:AddToggle({
 })
 
 spawn(function()
-    while wait() do
+    while task.wait() do
         if _G.Auto_Random_Bone then    
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Bones","Buy",1,1)
         end
@@ -3345,7 +3354,7 @@ spawn(function()
                                 if v.Name == Mon then
                                     if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
                                         HealthMs = v.Humanoid.MaxHealth * _G.Kill_At/100
-                                        repeat task.wait()
+                                        repeat wait()
                                             if v.Humanoid.Health <= HealthMs then
                                                 EquipWeapon(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value)
                                                 UseSkill = true
@@ -3417,7 +3426,7 @@ spawn(function()
                             for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                                 if v.Name == Mon then
                                     if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
-                                        repeat task.wait()
+                                        repeat wait()
                                             HealthMin = v.Humanoid.MaxHealth * _G.Kill_At/100
                                             ShootPosition = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, -15, 0)
                                             if v.Humanoid.Health <= HealthMin then
@@ -3551,12 +3560,12 @@ spawn(function()
                 if v.Name == MonFarm and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health <= v.Humanoid.MaxHealth * _G.Kill_At / 100 then
                     if _G.SkillZ then
                         game:service('VirtualInputManager'):SendKeyEvent(true, "Z", false, game)
-                        wait(0)
+                        wait()
                         game:service('VirtualInputManager'):SendKeyEvent(false, "Z", false, game)
                     end
                     if _G.SkillX then
                         game:service('VirtualInputManager'):SendKeyEvent(true, "X", false, game)
-                        wait(0)
+                        wait()
                         game:service('VirtualInputManager'):SendKeyEvent(false, "X", false, game)
                     end
                 end
@@ -3675,7 +3684,7 @@ spawn(function()
                             if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                                 if v.Name == Mon then
                                     if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
-                                        repeat task.wait()
+                                        repeat wait()
                                             EquipWeapon(SelectAllMelee)
                                             topos(v.HumanoidRootPart.CFrame * Pos)
                                             PosFarm = v.HumanoidRootPart.CFrame
@@ -3730,7 +3739,7 @@ spawn(function()
                             if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                                 if v.Name == Mon then
                                     if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
-                                        repeat task.wait()
+                                        repeat wait()
                                             EquipWeapon(SelectAllSword)
                                             topos(v.HumanoidRootPart.CFrame * Pos)
                                             PosFarm = v.HumanoidRootPart.CFrame
@@ -3821,7 +3830,7 @@ spawn(function()
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == SelectBoss then
                             if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                repeat task.wait()
+                                repeat wait()
                                     EquipWeapon(_G.SelectWeapon)
                                     topos(v.HumanoidRootPart.CFrame * Pos)
                                 until not _G.AutoFarmBoss or not v.Parent or v.Humanoid.Health <= 0
@@ -3846,7 +3855,7 @@ spawn(function()
 					if game:GetService("Workspace").Enemies:FindFirstChild(MsBoss) then
 						for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
 							if v.Name == MsBoss then
-								repeat task.wait()
+								repeat wait()
 									EquipWeapon(_G.SelectWeapon)
 									topos(v.HumanoidRootPart.CFrame * Pos)
 								until _G.AutoFarmBoss == false or not v.Parent or v.Humanoid.Health <= 0
@@ -3871,7 +3880,7 @@ spawn(function()
 							if game:GetService("Workspace").Enemies:FindFirstChild(MsBoss) then
 								for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
 									if v.Name == MsBoss then
-										repeat task.wait()
+										repeat wait()
 											EquipWeapon(_G.SelectWeapon)
 											topos(v.HumanoidRootPart.CFrame * Pos)
 										until _G.AutoFarmBoss == false or not v.Parent or v.Humanoid.Health <= 0
@@ -3885,7 +3894,7 @@ spawn(function()
 						if game:GetService("Workspace").Enemies:FindFirstChild(MsBoss) then
 							for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
 								if v.Name == MsBoss then
-									repeat task.wait()
+									repeat wait()
 										EquipWeapon(_G.SelectWeapon)
 										topos(v.HumanoidRootPart.CFrame * Pos)										
 									until _G.AutoFarmBoss == false or not v.Parent or v.Humanoid.Health <= 0
@@ -3917,7 +3926,7 @@ spawn(function()
                 for i,v in pairs(game.ReplicatedStorage:GetChildren()) do
                     if (v.Name == "rip_indra" or v.Name == "Ice Admiral") or (v.Name == "Saber Expert" or v.Name == "The Saw" or v.Name == "Greybeard" or v.Name == "Mob Leader" or v.Name == "The Gorilla King" or v.Name == "Bobby" or v.Name == "Yeti" or v.Name == "Vice Admiral" or v.Name == "Warden" or v.Name == "Chief Warden" or v.Name == "Swan" or v.Name == "Magma Admiral" or v.Name == "Fishman Lord" or v.Name == "Wysper" or v.Name == "Thunder God" or v.Name == "Cyborg") or (v.Name == "Don Swan" or v.Name == "Diamond" or v.Name == "Jeremy" or v.Name == "Fajita" or v.Name == "Smoke Admiral" or v.Name == "Awakened Ice Admiral" or v.Name == "Tide Keeper" or v.Name == "Order" or v.Name == "Darkbeard" or v.Name == "Cursed Captain") or (v.Name == "Stone" or v.Name == "Island Empress" or v.Name == "Kilo Admiral" or v.Name == "Captain Elephant" or v.Name == "Beautiful Pirate" or v.Name == "Cake Queen" or v.Name == "rip_indra True Form" or v.Name == "Longma" or v.Name == "Soul Reaper" or v.Name == "Cake Prince" or v.Name == "Dough King") then
                         if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 17000 then
-                            repeat task.wait()
+                            repeat wait()
                                 EquipWeapon(_G.SelectWeapon)
                                 topos(v.HumanoidRootPart.CFrame*Pos)
                             until v.Humanoid.Health <= 0 or _G.AutoAllBoss == false or not v.Parent
@@ -3968,7 +3977,7 @@ spawn(function()
                     for i,v in pairs (game.Workspace.Enemies:GetChildren()) do
                         if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                             if v.Name == SelectMob then
-                                repeat task.wait()
+                                repeat wait()
                                     EquipWeapon(_G.SelectWeapon)
                                     topos(v.HumanoidRootPart.CFrame * Pos)
                                     PosMonFarm = v.HumanoidRootPart.CFrame
@@ -4026,7 +4035,7 @@ spawn(function()
                     for i,v in pairs (game:GetService("Workspace").Enemies:GetChildren()) do
                         if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                             if v.Name == MMon or v.Name == MMon1 then
-                                repeat task.wait()
+                                repeat wait()
                                     EquipWeapon(_G.SelectWeapon)
                                     topos(v.HumanoidRootPart.CFrame * Pos)
                                     MaterialPos = v.HumanoidRootPart.CFrame
@@ -4055,7 +4064,7 @@ spawn(function()
                 if game:GetService("Workspace").Enemies:FindFirstChild("Ship Deckhand") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Engineer") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Steward") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Officer") or game:GetService("Workspace").Enemies:FindFirstChild("Cursed Captain") then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == "Ship Deckhand" or v.Name == "Ship Engineer" or v.Name == "Ship Steward" or v.Name == "Ship Officer" or v.Name == "Cursed Captain" then
-                            repeat task.wait()
+                            repeat wait()
                                 EquipWeapon(_G.SelectWeapon)
                                 topos(v.HumanoidRootPart.CFrame * Pos)
                                 PosNear = v.HumanoidRootPart.CFrame
@@ -4505,7 +4514,7 @@ spawn(function()
         if _G.Kill_Aura then
             for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
                 if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                    repeat task.wait()
+                    repeat wait()
                         sethiddenproperty(game:GetService('Players').LocalPlayer,"SimulationRadius",math.huge)
                         v.Humanoid.Health = 0
                         v.HumanoidRootPart.CanCollide = false
@@ -4609,7 +4618,7 @@ spawn(function()
                 if game:GetService("Workspace").Enemies:FindFirstChild("Order") then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == "Order" then
-                            repeat task.wait()
+                            repeat wait()
                                 EquipWeapon(_G.SelectWeapon)
                                 topos(v.HumanoidRootPart.CFrame*Pos)
                             until not v.Parent or v.Humanoid.Health <= 0 or _G.AutoOderSword == false
@@ -4644,7 +4653,7 @@ spawn(function()
             if (CFrame.new(-5118.48682, 314.54129, -2958.64404, -0.387232125, 1.81507858e-08, 0.921982229, -7.54388907e-08, 1, -5.13709999e-08, -0.921982229, -8.94458196e-08, -0.387232125).Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 2000 then
                 for a, a in pairs(game.Workspace.Enemies:GetChildren()) do
                     if a:FindFirstChild("Humanoid") and a:FindFirstChild("HumanoidRootPart") and a.Humanoid.Health > 0 and (a.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1000 then
-                        repeat task.wait()
+                        repeat wait()
                             EquipWeapon(_G.SelectWeapon)
                             topos(a.HumanoidRootPart.CFrame * Pos)
                             PosNear = a.HumanoidRootPart.CFrame
@@ -4682,7 +4691,7 @@ spawn(function()
             if game:GetService("Workspace").Enemies:FindFirstChild("Core") then
                 for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                     if v.Name == "Core" and v.Humanoid.Health > 0 then
-                        repeat task.wait()
+                        repeat wait()
                             EquipWeapon(_G.SelectWeapon)
                             topos(CFrame.new(448.46756, 199.356781, -441.389252))                                  
                         until v.Humanoid.Health <= 0 or _G.AutoFactory == false
@@ -4721,7 +4730,7 @@ spawn(function()
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                             if v.Name == "Diablo" or v.Name == "Deandre" or v.Name == "Urban" then
                                 if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                    repeat task.wait()
+                                    repeat wait()
                                         EquipWeapon(_G.SelectWeapon)
                                         topos(v.HumanoidRootPart.CFrame * Pos)
                                     until not _G.AutoElitehunter or v.Humanoid.Health <= 0 or not v.Parent
@@ -4773,7 +4782,6 @@ spawn(function()
             local ohString1 = "SetTeam"
             local ohString2 = _G.TeamChest
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(ohString1, ohString2)
-            Clip = true
         end
     end
 end)
@@ -4823,7 +4831,7 @@ spawn(function()
 				if z.Name:find("Chest") then
 					if game:GetService("Workspace"):FindFirstChild(z.Name) then
 						if (z.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5000 + _G.MagnitudeAdd then
-							repeat task.wait()
+							repeat wait()
 								if game:GetService("Workspace"):FindFirstChild(z.Name) then
 									topos(z.CFrame)
 									if (z.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 30 then
@@ -4925,7 +4933,7 @@ spawn(function()
             if game:GetService("Workspace").Enemies:FindFirstChild("rip_indra True Form") or game:GetService("Workspace").Enemies:FindFirstChild("rip_indra") then
                 for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                     if v.Name == ("rip_indra True Form" or v.Name == "rip_indra") and v.Humanoid.Health > 0 and v:IsA("Model") and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") then
-                        repeat task.wait()
+                        repeat wait()
                             EquipWeapon(_G.SelectWeapon)
                             topos(v.HumanoidRootPart.CFrame * Pos)
                         until _G.AutoKillRipIndra == false or v.Humanoid.Health <= 0
@@ -4984,7 +4992,7 @@ spawn(function()
             if game:GetService("Workspace").Enemies:FindFirstChild("Darkbeard") then
                 for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                     if v.Name == "Darkbeard" and v.Humanoid.Health > 0 and v:IsA("Model") and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") then
-                        repeat task.wait()
+                        repeat wait()
                             EquipWeapon(_G.SelectWeapon)
                             topos(v.HumanoidRootPart.CFrame * Pos)
                         until _G.AutoKillDark == false or v.Humanoid.Health <= 0
@@ -5002,7 +5010,7 @@ local Section = Other:AddSection({
 local ObservationStatus = Other:AddParagraph("Observation Level")
 
 Other:AddToggle({
-	Name = "Auto Farm Observation",
+	Name = "Auto Farm Observation [ Error ]",
 	Default = false,
 	Callback = function(Value)
 		_G.AutoObservation = Value
@@ -5010,11 +5018,10 @@ Other:AddToggle({
 	end
 })
 
-
 spawn(function()
     while wait() do
         if _G.AutoObservation then
-            repeat task.wait()
+            repeat wait()
                 if not game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") then
                     game:GetService('VirtualUser'):CaptureController()
                     game:GetService('VirtualUser'):SetKeyDown('0x65')
@@ -5049,11 +5056,11 @@ spawn(function()
                 if World2 then
                     if game:GetService("Workspace").Enemies:FindFirstChild("Lava Pirate [Lv. 1200]") then
                         if game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") then
-                            repeat task.wait()
+                            repeat wait()
                                 game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Enemies:FindFirstChild("Lava Pirate").HumanoidRootPart.CFrame * CFrame.new(3,0,0)
                             until _G.AutoObservation == false or not game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel")
                         else
-                            repeat task.wait()
+                            repeat wait()
                                 game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Enemies:FindFirstChild("Lava Pirate").HumanoidRootPart.CFrame * CFrame.new(0,50,0)+
                                     wait(1)
                                 if not game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") and _G.AutoObservation_Hop == true then
@@ -5067,11 +5074,11 @@ spawn(function()
                 elseif World1 then
                     if game:GetService("Workspace").Enemies:FindFirstChild("Galley Captain") then
                         if game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") then
-                            repeat task.wait()
+                            repeat wait()
                                 game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Enemies:FindFirstChild("Galley Captain").HumanoidRootPart.CFrame * CFrame.new(3,0,0)
                             until _G.AutoObservation == false or not game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel")
                         else
-                            repeat task.wait()
+                            repeat wait()
                                 game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Enemies:FindFirstChild("Galley Captain").HumanoidRootPart.CFrame * CFrame.new(0,50,0)
                                 wait(1)
                                 if not game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") and _G.AutoObservation_Hop == true then
@@ -5085,11 +5092,11 @@ spawn(function()
                 elseif World3 then
                     if game:GetService("Workspace").Enemies:FindFirstChild("Giant Islander") then
                         if game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") then
-                            repeat task.wait()
+                            repeat wait()
                                 game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Enemies:FindFirstChild("Giant Islander").HumanoidRootPart.CFrame * CFrame.new(3,0,0)
                             until _G.AutoObservation == false or not game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel")
                         else
-                            repeat task.wait()
+                            repeat wait()
                                 game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Enemies:FindFirstChild("Giant Islander").HumanoidRootPart.CFrame * CFrame.new(0,50,0)
                                 wait(1)
                                 if not game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui:FindFirstChild("ImageLabel") and _G.AutoObservation_Hop == true then
@@ -5267,7 +5274,7 @@ spawn(function()
                 if game:GetService("Workspace").Enemies:FindFirstChild("Stone") then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == "Stone" then
-                            repeat task.wait()
+                            repeat wait()
                                 EquipWeapon(_G.SelectWeapon)
                                 topos(v.HumanoidRootPart.CFrame * Pos)
                             until _G.Auto_Rainbow_Haki == false or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
@@ -5280,7 +5287,7 @@ spawn(function()
                 if game:GetService("Workspace").Enemies:FindFirstChild("Island Empress") then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == "Island Empress" then
-                            repeat task.wait()
+                            repeat wait()
                                 EquipWeapon(_G.SelectWeapon)
                                 topos(v.HumanoidRootPart.CFrame * Pos)
                             until _G.Auto_Rainbow_Haki == false or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
@@ -5293,7 +5300,7 @@ spawn(function()
                 if game:GetService("Workspace").Enemies:FindFirstChild("Kilo Admiral") then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == "Kilo Admiral" then
-                            repeat task.wait()
+                            repeat wait()
                                 EquipWeapon(_G.SelectWeapon)
                                 topos(v.HumanoidRootPart.CFrame * Pos)
                                 v.HumanoidRootPart.CFrame = OldCFrameRainbow
@@ -5307,7 +5314,7 @@ spawn(function()
                 if game:GetService("Workspace").Enemies:FindFirstChild("Captain Elephant") then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == "Captain Elephant" then
-                            repeat task.wait()
+                            repeat wait()
                                 EquipWeapon(_G.SelectWeapon)
                                 topos(v.HumanoidRootPart.CFrame * Pos)
                             until _G.Auto_Rainbow_Haki == false or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
@@ -5320,7 +5327,7 @@ spawn(function()
                 if game:GetService("Workspace").Enemies:FindFirstChild("Beautiful Pirate") then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == "Beautiful Pirate" then
-                            repeat task.wait()
+                            repeat wait()
                                 EquipWeapon(_G.SelectWeapon)
                                 topos(v.HumanoidRootPart.CFrame * Pos)
                             until _G.Auto_Rainbow_Haki == false or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
@@ -5367,7 +5374,7 @@ spawn(function()
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                             if v.Name == "Diablo" or v.Name == "Deandre" or v.Name == "Urban" then
                                 if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                    repeat task.wait()
+                                    repeat wait()
                                         EquipWeapon(_G.SelectWeapon)
                                         topos(v.HumanoidRootPart.CFrame * Pos)
                                     until not _G.AutoYama or v.Humanoid.Health <= 0 or not v.Parent
@@ -5395,7 +5402,7 @@ spawn(function()
     while wait() do
         if _G.AutoYama then
             if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter","Progress") >= 30 then
-                repeat wait(.1)
+                repeat wait()
                     fireclickdetector(game:GetService("Workspace").Map.Waterfall.SealedKatana.Handle.ClickDetector)
                 until game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Yama") or not _G.AutoYama
             end
@@ -5476,7 +5483,7 @@ spawn(function()
                 for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                     if v.Name == "Longma" then
                         if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                            repeat task.wait()
+                            repeat wait()
                                 EquipWeapon(_G.SelectWeapon)
                                 topos(v.HumanoidRootPart.CFrame * Pos)
                             until not  _G.Autotushita or not v.Parent or v.Humanoid.Health <= 0
@@ -5537,7 +5544,7 @@ spawn(function()
                             EquipWeapon("Cup")
                             wait(0.5)
                             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ProQuestProgress","FillCup",game:GetService("Players").LocalPlayer.Character.Cup)
-                            wait(0)
+                            wait()
                             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ProQuestProgress","SickMan")
                         else
                             if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ProQuestProgress","RichSon") == nil then
@@ -5549,7 +5556,7 @@ spawn(function()
                                         if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                                             if v.Name == "Mob Leader" then
                                                if game:GetService("Workspace").Enemies:FindFirstChild("Mob Leader") then
-                                                   repeat task.wait()
+                                                   repeat wait()
                                                         EquipWeapon(_G.SelectWeapon)
                                                         topos(v.HumanoidRootPart.CFrame * Pos)
                                                 until v.Humanoid.Health <= 0 or not _G.Auto_Saber
@@ -5576,7 +5583,7 @@ spawn(function()
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                             if v.Name == "Saber Expert" then
-                                repeat task.wait()
+                                repeat wait()
                                     EquipWeapon(_G.SelectWeapon)
                                     topos(v.HumanoidRootPart.CFrame * Pos)
                                 until v.Humanoid.Health <= 0 or not _G.Auto_Saber
@@ -5612,7 +5619,7 @@ spawn(function()
                 for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                     if v.Name == "Chief Warden" then
                         if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                            repeat task.wait()
+                            repeat wait()
                                 EquipWeapon(_G.SelectWeapon)
                                 topos(v.HumanoidRootPart.CFrame * Pos)
                             until not  _G.Autowaden or not v.Parent or v.Humanoid.Health <= 0
@@ -5644,7 +5651,7 @@ spawn(function()
                 for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                     if v.Name == "Thunder God" then
                         if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                            repeat task.wait()
+                            repeat wait()
                                 EquipWeapon(_G.SelectWeapon)
                                 topos(v.HumanoidRootPart.CFrame * Pos)
                             until not  _G.Autopole or not v.Parent or v.Humanoid.Health <= 0
@@ -5676,7 +5683,7 @@ spawn(function()
                 for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                     if v.Name == "The Saw" then
                         if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                            repeat task.wait()
+                            repeat wait()
                                 EquipWeapon(_G.SelectWeapon)
                                 topos(v.HumanoidRootPart.CFrame * Pos)
                             until not  _G.Autosaw or not v.Parent or v.Humanoid.Health <= 0
@@ -5709,7 +5716,7 @@ spawn(function()
             elseif game:GetService("Workspace").Enemies:FindFirstChild("Snow Lurker") or game:GetService("Workspace").Enemies:FindFirstChild("Arctic Warrior") or game:GetService("Workspace").Enemies:FindFirstChild("Awakened Ice Admiral") then
                 for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                     if (v.Name == "Snow Lurker" or v.Name == "Arctic Warrior" or v.Name == "Awakened Ice Admiral") and v.Humanoid.Health > 0 then
-                        repeat task.wait()
+                        repeat wait()
                             EquipWeapon(_G.SelectWeapon)
                             topos(v.HumanoidRootPart.CFrame * Pos)
                             PosNear = v.HumanoidRootPart.CFrame
@@ -5744,7 +5751,7 @@ spawn(function()
                 for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                     if v.Name == "Tide Keeper" then
                         if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                            repeat task.wait()
+                            repeat wait()
                                 EquipWeapon(_G.SelectWeapon)
                                 topos(v.HumanoidRootPart.CFrame * Pos)
                             until not  _G.Auto_Dragon_Trident or not v.Parent or v.Humanoid.Health <= 0
@@ -5776,7 +5783,7 @@ spawn(function()
                 for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                     if v.Name == "Beautiful Pirate" then
                         if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                            repeat task.wait()
+                            repeat wait()
                                 EquipWeapon(_G.SelectWeapon)
                                 topos(v.HumanoidRootPart.CFrame * Pos)
                             until not  _G.AutoCarvender or not v.Parent or v.Humanoid.Health <= 0
@@ -5808,7 +5815,7 @@ spawn(function()
                 for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                     if v.Name == "Cake Queen" then
                         if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                            repeat task.wait()
+                            repeat wait()
                                 EquipWeapon(_G.SelectWeapon)
                                 topos(v.HumanoidRootPart.CFrame * Pos)
                             until not  _G.AutoBudySword or not v.Parent or v.Humanoid.Health <= 0
@@ -5840,7 +5847,7 @@ spawn(function()
                 for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                     if v.Name == "Captain Elephant" then
                         if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                            repeat task.wait()
+                            repeat wait()
                                 EquipWeapon(_G.SelectWeapon)
                                 topos(v.HumanoidRootPart.CFrame * Pos)
                             until not  _G.AutoTwinHook or not v.Parent or v.Humanoid.Health <= 0
@@ -5859,39 +5866,10 @@ ItemQuest:AddToggle({
 	Name = "Auto Get Hallow Scythe",
 	Default = false,
 	Callback = function(Value)
-		_G.AutoFarmBossHallow = Value
-		StopTween(_G.AutoFarmBossHallow)
+		_G.Auto_Soul_Reaper = Value
+		StopTween(_G.Auto_Soul_Reaper)
 	end
 })
-
-spawn(function()
-    while wait() do
-        if _G.AutoFarmBossHallow then
-            if game.Players.LocalPlayer.Backpack:FindFirstChild("Hallow Essence") then
-                 EquipWeapon("Hallow Essence")
-                 topos(CFrame.new(-8932.83789, 144.098709, 6059.34229, -0.999290943, 7.95623478e-09, -0.0376505218, 4.4684243e-09, 1, 9.27205832e-08, 0.0376505218, 9.24866086e-08, -0.999290943))
-            elseif game:GetService("Workspace").Enemies:FindFirstChild("Soul Reaper") then
-                if game.Workspace.Enemies:FindFirstChild ("Soul Reaper") then
-                    for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                        if v.Name == "Soul Reaper"  then
-                            if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
-                                repeat wait()
-                                    EquipWeapon(_G.SelectWeapon)
-                                    topos(v.HumanoidRootPart.CFrame * Pos)
-                                until not _G.AutoFarmBossHallow or not v.Parent or v.Humanoid.Health <= 0
-                            end
-                        end
-                    end
-                end
-            else
-                topos(BonePos)
-                UnEquipWeapon(_G.SelectWeapon)
-                local args = { [1] = "Bones", [2] = "Buy", [3] = 1, [4] = 1 }
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
-            end
-        end
-    end
-end)
 
 ItemQuest:AddToggle({
 	Name = "Auto Get Serpent Bow",
@@ -5910,7 +5888,7 @@ spawn(function()
                 for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                     if v.Name == "Island Empress" then
                         if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                            repeat task.wait()
+                            repeat wait()
                                 EquipWeapon(_G.SelectWeapon)
                                 topos(v.HumanoidRootPart.CFrame * Pos)
                             until not  _G.AutoSerpentBow or not v.Parent or v.Humanoid.Health <= 0
@@ -5962,7 +5940,7 @@ spawn(function()
                                 if game:GetService("Workspace").Enemies:FindFirstChild("Zombie") then
                                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                                         if v.Name == "Zombie" then
-                                            repeat task.wait()
+                                            repeat wait()
                                                 EquipWeapon(_G.SelectWeapon)
                                                 topos(v.HumanoidRootPart.CFrame * Pos)
                                                 PosMonEvo = v.HumanoidRootPart.CFrame
@@ -6003,7 +5981,7 @@ spawn(function()
                     if game:GetService("Workspace").Enemies:FindFirstChild("Forest Pirate") then
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                             if v.Name == "Forest Pirate" then
-                                repeat task.wait()
+                                repeat wait()
                                         EquipWeapon(_G.SelectWeapon)
                                         topos(v.HumanoidRootPart.CFrame * Pos)
                                         MusketeerHatMon = v.HumanoidRootPart.CFrame
@@ -6028,7 +6006,7 @@ spawn(function()
                     if game:GetService("Workspace").Enemies:FindFirstChild("Captain Elephant") then
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                             if v.Name == "Captain Elephant" then
-                                repeat task.wait()
+                                repeat wait()
                                         EquipWeapon(_G.SelectWeapon)
                                         topos(v.HumanoidRootPart.CFrame * Pos)
                                         v.HumanoidRootPart.CFrame = OldCFrameElephant
@@ -6083,7 +6061,7 @@ spawn(function()
                                     if not v.Humanoid.Health <= 0 then
                                         if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                                             OldCFrameSecond = v.HumanoidRootPart.CFrame
-                                            repeat task.wait()
+                                            repeat wait()
                                                 EquipWeapon(_G.SelectWeapon)
                                                 v.HumanoidRootPart.CanCollide = false
                                                 v.Humanoid.WalkSpeed = 0
@@ -6136,7 +6114,7 @@ spawn(function()
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                             if v.Name == "rip_indra" then
                                 OldCFrameThird = v.HumanoidRootPart.CFrame
-                                repeat task.wait()
+                                repeat wait()
                                     EquipWeapon(_G.SelectWeapon)
                                     topos(v.HumanoidRootPart.CFrame * Pos)
                                     v.HumanoidRootPart.CFrame = OldCFrameThird
@@ -6320,7 +6298,7 @@ Player:AddButton({
 })
 
 local Section = Player:AddSection({
-    Name = "~ Open ~"
+    Name = "~ Open Tab ~"
 })
 
 Player:AddButton({
@@ -6374,6 +6352,15 @@ Player:AddButton({
     end
 })
 
+Player:AddButton({
+    Name = "Open Inventory [ Old ]",
+    Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventoryWeapons")
+        wait()
+        game:GetService("Players").LocalPlayer.PlayerGui.Main.Inventory.Visible = true
+    end
+})
+
 local Section = Player:AddSection({
     Name = "~ Abilities ~"
 })
@@ -6394,7 +6381,7 @@ spawn(function()
                     if typeof(v) == "function" and getfenv(v).script == game:GetService("Players").LocalPlayer.Character.Soru then
                         for i2,v2 in next, getupvalues(v) do
                             if typeof(v2) == "table" then
-                                repeat wait(0.1)
+                                repeat wait()
                                     v2.LastUse = 0
                                 until not getgenv().InfSoru or game:GetService("Players").LocalPlayer.Character.Humanoid.Health <= 0
                             end
@@ -6483,9 +6470,9 @@ PvP:AddButton({
     Name = "Refresh Player List",
     Callback = function()
         Slplayer:Refresh(Playerslist,true)
-        Playerslist = {}
+        local Playerslist = {}
         for i,v in pairs(game:GetService("Players"):GetChildren()) do
-            table.insert(Playerslist, v.Name)
+            table.insert(PlayerList, v.Name)
         end
         Slplayer:Refresh(Playerslist)
     end
@@ -6522,7 +6509,7 @@ spawn(function()
 	while wait() do
 		if _G.SpectatePlys then
 			if game.Players:FindFirstChild(SelectPly) then
-				repeat wait(.1)
+				repeat wait()
 	                game:GetService("Workspace").Camera.CameraSubject = game:GetService("Players"):FindFirstChild(SelectPly).Character.Humanoid
 				until _G.SpectatePlys == false
 				game:GetService("Workspace").Camera.CameraSubject = game:GetService("Players").LocalPlayer.Character.Humanoid
@@ -6532,8 +6519,46 @@ spawn(function()
 end)
 
 local Section = PvP:AddSection({
-    Name = "~ Aimbot ~"
+    Name = "~ Aimbot & PvP ~"
 })
+
+PvP:AddToggle({
+	Name = "Aimbot Skill To Player Nearest",
+	Default = false,
+	Callback = function(Value)
+		_G.AimSkillNearest = Value
+	end
+})
+
+spawn(function()
+	while wait() do
+		pcall(function()
+			local MaxDistance = math.huge
+			for i,v in pairs(game:GetService("Players"):GetPlayers()) do
+				if v.Name ~= game.Players.LocalPlayer.Name then
+					local Distance = v:DistanceFromCharacter(game.Players.LocalPlayer.Character.HumanoidRootPart.Position)
+					if Distance < MaxDistance then
+						MaxDistance = Distance
+						TargetPlayerAim = v.Name
+					end
+				end
+			end
+		end)
+	end
+end)
+
+spawn(function()
+	pcall(function()
+		game:GetService("RunService").RenderStepped:connect(function()
+			if _G.AimSkillNearest and TargetPlayerAim ~= nil and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") and game.Players.LocalPlayer.Character[game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Name]:FindFirstChild("MousePos") then
+				local args = {
+					[1] = game:GetService("Players"):FindFirstChild(TargetPlayerAim).Character.HumanoidRootPart.Position
+				}
+				game:GetService("Players").LocalPlayer.Character[game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Name].RemoteEvent:FireServer(unpack(args))
+			end
+		end)
+	end)
+end)
 
 PvP:AddToggle({
 	Name = "Enabled PvP",
@@ -6554,7 +6579,7 @@ spawn(function()
 end)
 
 local Section = PvP:AddSection({
-    Name = "~ Bounty / Honor ~"
+    Name = "~ Bounty / Honor [ Soon ] ~"
 })
 
 local checkbotihoron = PvP:AddParagraph("Your Bounty / Honor")
@@ -6799,7 +6824,7 @@ spawn(function()
                                         local stoppos = topos(v.VehicleSeat.CFrame * CFrame.new(0,1,0))
                                     end
                                 else
-                                    repeat task.wait()
+                                    repeat wait()
                                         local stopboat = TPB(CFrameSelectedZone, v.VehicleSeat)
                                     until ((CheckShark() and _G.AutoKillShark) or (CheckTerrorshark() and _G.AutoTerrorshark) or (CheckPiranha() and _G.AutoKillPiranha) or (CheckFishCrewMember() and _G.AutoKillFishCrew) or (game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and _G.RelzFishBoat) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateBrigade") and _G.RelzPirateBrigade) or (game:GetService("Workspace").Enemies:FindFirstChild("PirateGrandBrigade") and _G.RelzPirateGrandBrigade) or (CheckSeaBeast() and _G.AutoSeaBest)) or game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Sit == false or _G.SailBoat == false
                                     if stopboat then
@@ -6852,7 +6877,7 @@ spawn(function()
                 if CheckFishCrewMember() and _G.AutoKillFishCrew then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") then
-                            repeat task.wait()
+                            repeat wait()
                                 EquipWeapon(_G.SelectWeapon)
                                 topos(v.HumanoidRootPart.CFrame * Pos)
                                 MagnetNear = true
@@ -6864,7 +6889,7 @@ spawn(function()
                 elseif game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and _G.RelzFishBoat then
                     for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") then
-                            repeat task.wait()
+                            repeat wait()
                                 local BoatCFrame = v.Engine.CFrame
                                 if (BoatCFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
                                     SeaSkill = true
@@ -6883,7 +6908,7 @@ spawn(function()
                 elseif game:GetService("Workspace").Enemies:FindFirstChild("PirateGrandBrigade") and _G.RelzPirateGrandBrigade then
                     for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if game:GetService("Workspace").Enemies:FindFirstChild("PirateGrandBrigade") then
-                            repeat task.wait()
+                            repeat wait()
                                 local BoatCFrame = v.Engine.CFrame
                                 if (BoatCFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
                                     SeaSkill = true
@@ -6902,7 +6927,7 @@ spawn(function()
                 elseif game:GetService("Workspace").Enemies:FindFirstChild("PirateBrigade") and _G.RelzPirateBrigade then
                     for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if game:GetService("Workspace").Enemies:FindFirstChild("PirateBrigade") then
-                            repeat task.wait()
+                            repeat wait()
                                 local BoatCFrame = v.Engine.CFrame
                                 if (BoatCFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
                                     SeaSkill = true
@@ -6922,7 +6947,7 @@ spawn(function()
                     if game:GetService("Workspace"):FindFirstChild("SeaBeasts") then
                         for i,v in pairs(game:GetService("Workspace").SeaBeasts:GetChildren()) do
                             if CheckSeaBeast() then
-                                repeat task.wait()
+                                repeat wait()
                                     CFrameSeaBeast = v.HumanoidRootPart.CFrame * CFrame.new(0,200,0)
                                     if (CFrameSeaBeast.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Position).Magnitude <= 200 then
                                         SeaSkill = true
@@ -6944,7 +6969,7 @@ spawn(function()
                 elseif CheckTerrorshark() and _G.AutoTerrorshark then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") then
-                            repeat task.wait()
+                            repeat wait()
                                 EquipWeapon(_G.SelectWeapon)
                                 topos(v.HumanoidRootPart.CFrame * PosCaMap)
                                 MagnetNear = true
@@ -6956,7 +6981,7 @@ spawn(function()
                 elseif CheckPiranha() and _G.AutoKillPiranha then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if game:GetService("Workspace").Enemies:FindFirstChild("Piranha") then
-                            repeat task.wait()
+                            repeat wait()
                                 EquipWeapon(_G.SelectWeapon)
                                 topos(v.HumanoidRootPart.CFrame * Pos)
                                 MagnetNear = true
@@ -6968,7 +6993,7 @@ spawn(function()
                 elseif CheckShark() and _G.AutoKillShark then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if game:GetService("Workspace").Enemies:FindFirstChild("Shark") then
-                            repeat task.wait()
+                            repeat wait()
                                 EquipWeapon(_G.SelectWeapon)
                                 topos(v.HumanoidRootPart.CFrame * Pos)
                                 MagnetNear = true
@@ -6988,7 +7013,7 @@ spawn(function()
 end)
 
 Sea:AddToggle({
-	Name = "Auto Dodge Rough Sea",
+	Name = "Auto Dodge Rough Sea [ Test ]",
 	Default = false,
 	Callback = function(Value)
 		_G.DogeRoughSea = Value
@@ -7370,12 +7395,12 @@ spawn(function()
                 end
                 if _G.SkillGunZ then
                     game:service('VirtualInputManager'):SendKeyEvent(true, "Z", false, game)
-                    wait(0)
+                    wait()
                     game:service('VirtualInputManager'):SendKeyEvent(false, "Z", false, game)
                 end
                 if _G.SkillGunX then
                     game:service('VirtualInputManager'):SendKeyEvent(true, "X", false, game)
-                    wait(0)
+                    wait()
                     game:service('VirtualInputManager'):SendKeyEvent(false, "X", false, game)
                 end
                 DoneSkillGun = true
@@ -7653,14 +7678,14 @@ Race:AddToggle({
 	Name = "Teleport To Advanced Fruit Dealer",
 	Default = false,
 	Callback = function(Value)
-		_G.Miragenpc = Value
-		StopTween(_G.Miragenpc)
+		_G.MirageNpc = Value
+		StopTween(_G.MirageNpc)
 	end
 })
 
 spawn(function()
     while wait() do
-        if _G.Miragenpc then
+        if _G.MirageNpc then
             if game:GetService("Workspace").NPCs:FindFirstChild("Advanced Fruit Dealer") then
                 topos(CFrame.new(game:GetService("Workspace").NPCs["Advanced Fruit Dealer"].HumanoidRootPart.Position))
             end
@@ -7669,7 +7694,7 @@ spawn(function()
 end)
 
 local Section = Race:AddSection({
-    Name = "~ Trials ~"
+    Name = "~ Trials Race ~"
 })
 
 local Moon1 = Race:AddParagraph("Moon")
@@ -7689,7 +7714,7 @@ spawn(function()
 			if game:GetService("Players").LocalPlayer.Data.Race.Value == "Human" then
 				for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
 					if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-						repeat wait(.1)
+						repeat wait()
 							v.Humanoid.Health = 0
 							v.HumanoidRootPart.CanCollide = false
 							sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
@@ -7777,7 +7802,7 @@ spawn(function()
 			elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Ghoul" then
 				for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
 					if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-						repeat wait(.1)
+						repeat wait()
 							v.Humanoid.Health = 0
 							v.HumanoidRootPart.CanCollide = false
 							sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
@@ -7836,7 +7861,7 @@ spawn(function()
                     if GetDistance(TempleCFrame) <= 380 then
                         for i, v in pairs(game.Players:GetChildren()) do
                             if v.Name ~= game.Players.LocalPlayer.Name and (GetDistance(TempleCFrame, v.Character.HumanoidRootPart) <= 300) and v.Character.Humanoid.Health > 0 then
-                                repeat task.wait()
+                                repeat wait()
                                     EquipWeapon(_G.SelectTrialsWeapon)
                                     topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 0))
                                     UseSkillTrial = true
@@ -7940,7 +7965,7 @@ spawn(function()
 end)
 
 local Section = Race:AddSection({
-    Name = "~ Train ~"
+    Name = "~ Train Race ~"
 })
 
 local AnOn = Race:AddParagraph("Ancient One")
