@@ -1196,7 +1196,7 @@ function UpdatePlayerChams()
                         name.TextStrokeTransparency = 0.5
                         name.TextColor3 = Color3.fromRGB(255, 105, 180)
                     else
-                        v.Character.Head['NameEsp'..Number].TextLabel.Text = ('[ Player: '..v.Name..' ] - [ Health: '..math.floor(v.Character.Humanoid.Health)..'/'..v.Character.Humanoid.MaxHealth..' ]\n[ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3)..'m ]')
+                        v.Character.Head['NameEsp'..Number].TextLabel.Text = ('[ Player: '..v.Name..' ]\n[ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3)..'m ]')
                     end
                 else
                     if v.Character.Head:FindFirstChild('NameEsp'..Number) then
@@ -1457,8 +1457,8 @@ function BypassTeleport(is)
         lp.Character.PrimaryPart.CFrame = is   
         lp.Character:WaitForChild("Humanoid"):ChangeState(15)
         wait(0.5)
-        repeat task.wait() until lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid.Health <= 0
-        repeat task.wait()
+        repeat wait() until lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid.Health <= 0
+        repeat wait()
             if lp.Character:FindFirstChild("PartTele") then
                 lp.Character.PartTele.CFrame = is  
             end
@@ -1505,7 +1505,7 @@ function topos(Pos)
         PartTele.Anchored = true
         PartTele.Transparency = 1
         PartTele.CanCollide = false
-        PartTele.CFrame = WaitHRP(lp).CFrame 
+        PartTele.CFrame = WaitHRP(lp).CFrame
         PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
             task.wait()
             WaitHRP(lp).CFrame = PartTele.CFrame
@@ -1525,11 +1525,11 @@ function topos(Pos)
     end
     if lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid:FindFirstChild("Sit") and lp.Character.Humanoid.Sit == true then
         lp.Character.Humanoid.Sit = false
-    end 
+    end
     if Distance <= 250 then
         lp.Character.HumanoidRootPart.CFrame = Pos
     end
-    Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
+    Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
     Tween:Play() 
     Clip = true
 end
@@ -1542,11 +1542,26 @@ end
 
 function StopTween(target)
     if not target then
-        topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
-        game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos}):Cancel()
         Clip = false
+        topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
+        game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos}):Cancel()
     end
 end
+
+spawn(function()
+    while wait() do
+        if lp.Character:FindFirstChild("Humanoid").Health <= 0 or not lp.Character:FindFirstChild("HumanoidRootPart") then
+            if lp.Character:FindFirstChild("TweenSmooth") then
+                lp.Character:FindFirstChild("TweenSmooth"):Destroy()
+            end
+        end
+        if (lp.Character.HumanoidRootPart.Position - lp.Character:FindFirstChild("PartTele").Position).Magnitude <= 100 then
+            if lp.Character:FindFirstChild("PartTele") then
+                lp.Character:FindFirstChild("PartTele"):Destroy()
+            end
+        end
+    end
+end)
 
 -- [ Pos Farm ]
 
@@ -1567,13 +1582,13 @@ end)
 spawn(function()
     while wait() do
         if Type == 1 then
-            Pos = CFrame.new(0,40,-20)
+            Pos = CFrame.new(0,30,-20)
         elseif Type == 2 then
-            Pos = CFrame.new(20,40,0)
+            Pos = CFrame.new(20,30,0)
         elseif Type == 3 then
-            Pos = CFrame.new(0,40,20)	
+            Pos = CFrame.new(0,30,20)	
         elseif Type == 4 then
-            Pos = CFrame.new(-20,40,0)
+            Pos = CFrame.new(-20,30,0)
         end
     end
 end)
@@ -1613,11 +1628,11 @@ spawn(function()
         pcall(function()
             if Clip then
                 if not game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
-                    local ag = Instance.new("BodyVelocity")
-                    ag.Velocity = Vector3.new(0, 0, 0)
-                    ag.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
-                    ag.P = 9000
-                    ag.Parent = game.Players.LocalPlayer.Character.Head
+                    local Bay = Instance.new("BodyVelocity")
+                    Bay.Velocity = Vector3.new(0, 0, 0)
+                    Bay.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+                    Bay.P = 9000
+                    Bay.Parent = game.Players.LocalPlayer.Character.Head
                     for r, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
                         if v:IsA("BasePart") then
                             v.CanCollide = false
@@ -2215,21 +2230,19 @@ Setting:AddDropdown({
 	Callback = function(Value)
 		_G.SelectAttackDelay = Value
         if _G.SelectAttackDelay == "No Delay [ 0.0s ]" then
-            _G.FastAttackDelay = 0
+            FastAttackDelay = 0
         elseif _G.SelectAttackDelay == "Super Fast [ 0.05s ]" then
-            _G.FastAttackDelay = 0.05
+            FastAttackDelay = 0.05
         elseif _G.SelectAttackDelay == "Fast [ 0.1s ]" then
-            _G.FastAttackDelay = 0.1
+            FastAttackDelay = 0.1
         elseif _G.SelectAttackDelay == "Moderate [ 0.3s ]" then
-            _G.FastAttackDelay = 0.3
+            FastAttackDelay = 0.3
         elseif _G.SelectAttackDelay == "Default [ 0.5s ]" then
-            _G.FastAttackDelay = 0.5
+            FastAttackDelay = 0.5
         elseif _G.SelectAttackDelay == "Medium [ 0.8s ]" then
-            _G.FastAttackDelay = 0.8
+            FastAttackDelay = 0.8
         elseif _G.SelectAttackDelay == "Slow [ 1.0s ]" then
-            _G.FastAttackDelay = 1
-        else
-            _G.FastAttackDelay = 0.5
+            FastAttackDelay = 1
         end
 	end
 })
@@ -2243,7 +2256,7 @@ Setting:AddToggle({
 })
 
 spawn(function()
-    while task.wait(_G.FastAttackDelay) do
+    while task.wait(FastAttackDelay) do
         if _G.FastAttack then
             AttackNoCD()
         end
@@ -2363,14 +2376,14 @@ Setting:AddToggle({
 Setting:AddButton({
     Name = "Set Clip = False",
     Callback = function()
-        _G.Clip = false
+        Clip = false
     end
 })
 
 Setting:AddButton({
 	Name = "Reset Character",
 	Callback = function()
-      	game:GetService("Players").LocalPlayer.Character.Humanoid.Health = 0
+    	game:GetService("Players").LocalPlayer.Character.Humanoid.Health = 0
 	end    
 })
 
@@ -2513,7 +2526,7 @@ spawn(function()
 end)
 
 Setting:AddSlider({
-	Name = "Brightnes",
+	Name = "Select Brightnes",
 	Min = 1,
 	Max = 100,
 	Default = 20,
@@ -2570,7 +2583,7 @@ Setting:AddSlider({
 })
 
 Setting:AddToggle({
-	Name = "Teleport To Y If Low Health",
+	Name = "Teleport To Y If Low Health [ Test ]",
 	Default = false,
 	Callback = function(Value)
 		_G.LowHealth = Value
