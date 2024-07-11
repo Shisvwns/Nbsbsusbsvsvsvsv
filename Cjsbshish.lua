@@ -1548,18 +1548,16 @@ end
 
 spawn(function()
     while wait() do
-        pcall(function()
-            if lp.Character:FindFirstChild("Humanoid").Health <= 0 or not lp.Character:FindFirstChild("HumanoidRootPart") then
-                if lp.Character:FindFirstChild("TweenSmooth") then
-                    lp.Character:FindFirstChild("TweenSmooth"):Destroy()
-                end
+        if lp.Character:FindFirstChild("Humanoid").Health <= 0 or not lp.Character:FindFirstChild("HumanoidRootPart") then
+            if lp.Character:FindFirstChild("TweenSmooth") then
+                lp.Character:FindFirstChild("TweenSmooth"):Destroy()
             end
-            if (lp.Character.HumanoidRootPart.Position - lp.Character:FindFirstChild("PartTele").Position).Magnitude <= 100 then
-                if lp.Character:FindFirstChild("PartTele") then
-                    lp.Character:FindFirstChild("PartTele"):Destroy()
-                end
+        end
+        if (lp.Character.HumanoidRootPart.Position - lp.Character:FindFirstChild("PartTele").Position).Magnitude <= 100 then
+            if lp.Character:FindFirstChild("PartTele") then
+                lp.Character:FindFirstChild("PartTele"):Destroy()
             end
-        end)
+        end
     end
 end)
 
