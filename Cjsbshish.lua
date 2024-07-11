@@ -1196,7 +1196,7 @@ function UpdatePlayerChams()
                         name.TextStrokeTransparency = 0.5
                         name.TextColor3 = Color3.fromRGB(255, 105, 180)
                     else
-                        v.Character.Head['NameEsp'..Number].TextLabel.Text = ('[ Player: '..v.Name..' ]\n[ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3)..'m ]')
+                        v.Character.Head['NameEsp'..Number].TextLabel.Text = ('[ Player: '..v.Name..' ] - [ Health: '..math.floor(v.Character.Humanoid.Health)..'/'..v.Character.Humanoid.MaxHealth..' ]\n[ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3)..'m ]')
                     end
                 else
                     if v.Character.Head:FindFirstChild('NameEsp'..Number) then
@@ -1505,9 +1505,9 @@ function topos(Pos)
         PartTele.Anchored = true
         PartTele.Transparency = 1
         PartTele.CanCollide = false
-        PartTele.CFrame = WaitHRP(lp).CFrame
+        PartTele.CFrame = WaitHRP(lp).CFrame 
         PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
-            task.wait(0.01)
+            task.wait()
             WaitHRP(lp).CFrame = PartTele.CFrame
         end)
     end
@@ -1525,11 +1525,11 @@ function topos(Pos)
     end
     if lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid:FindFirstChild("Sit") and lp.Character.Humanoid.Sit == true then
         lp.Character.Humanoid.Sit = false
-    end
+    end 
     if Distance <= 250 then
         lp.Character.HumanoidRootPart.CFrame = Pos
     end
-    Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
+    Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
     Tween:Play() 
 end
 
@@ -1542,19 +1542,9 @@ end
 function StopTween(target)
     if not target then
         topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
-        game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos}):Cancel()
+        game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos}):Cancel()
     end
 end
-
-spawn(function()
-    while wait() do
-        if (lp.Character.HumanoidRootPart.Position - lp.Character:FindFirstChild("PartTele").Position).Magnitude <= 100 then
-            if lp.Character:FindFirstChild("PartTele") then
-                lp.Character:FindFirstChild("PartTele"):Destroy()
-            end
-        end
-    end
-end)
 
 -- [ Pos Farm ]
 
@@ -1575,13 +1565,13 @@ end)
 spawn(function()
     while wait() do
         if Type == 1 then
-            Pos = CFrame.new(0,30,-20)
+            Pos = CFrame.new(0,40,-20)
         elseif Type == 2 then
-            Pos = CFrame.new(20,30,0)
+            Pos = CFrame.new(20,40,0)
         elseif Type == 3 then
-            Pos = CFrame.new(0,30,20)	
+            Pos = CFrame.new(0,40,20)	
         elseif Type == 4 then
-            Pos = CFrame.new(-20,30,0)
+            Pos = CFrame.new(-20,40,0)
         end
     end
 end)
@@ -2222,6 +2212,8 @@ Setting:AddDropdown({
             _G.FastAttackDelay = 0.8
         elseif _G.SelectAttackDelay == "Slow [ 1.0s ]" then
             _G.FastAttackDelay = 1
+        else
+            _G.FastAttackDelay = 0.5
         end
 	end
 })
@@ -2259,26 +2251,6 @@ spawn(function()
     end)
 end)
 
-Setting:AddDropdown({
-	Name = "Select Range Collect Mob",
-	Default = "Slightly Far [ 300m ]",
-	Options = {"Really Far [ 350m ]","Distant [ 325m ]","Slightly Far [ 300m ]","Near The [ 275m ]","Very Close [ 250m ]"},
-	Callback = function(Value)
-		_G.SelectRange = Value
-        if _G.SelectRange == "Really Far [ 350m ]" then
-            _G.BringRange = 350
-        elseif _G.SelectRange == "Distant [ 325m ]" then
-            _G.BringRange = 325
-        elseif _G.SelectRange == "Slightly Far [ 300m ]" then
-            _G.BringRange = 300
-        elseif _G.SelectRange == "Near The [ 275m ]" then
-            _G.BringRange = 275
-        elseif _G.SelectRange == "Very Close [ 250m ]" then
-            _G.BringRange = 250
-        end
-	end
-})
-
 Setting:AddToggle({
 	Name = "Bring Mobs",
 	Default = true,
@@ -2294,49 +2266,49 @@ spawn(function()
                 CheckQuest()
                 for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                     if _G.AutoFarm or _G.AutoFarmFruitMastery or _G.AutoFarmGunMastery or _G.AutoSwordMastery then
-                        if StartMagnet and v.Name == Mon and (v.HumanoidRootPart.Position - PosFarm.Position).Magnitude <= _G.BringRange then
+                        if StartMagnet and v.Name == Mon and (v.HumanoidRootPart.Position - PosFarm.Position).Magnitude <= 300 then
                             v.HumanoidRootPart.CFrame = PosFarm
                             v.Humanoid:ChangeState(14)
                         end
                     end
                     if MagnetNear then
-                        if not string.find(v.Name, "Boss") and (v.HumanoidRootPart.Position - PosNear.Position).Magnitude <= _G.BringRange then
+                        if not string.find(v.Name, "Boss") and (v.HumanoidRootPart.Position - PosNear.Position).Magnitude <= 300 then
                             v.HumanoidRootPart.CFrame = PosNear
                             v.Humanoid:ChangeState(14)
                         end
                     end
                     if _G.AutoMusketeerHat and StartMagnetMusketeerhat then
-                        if v.Name == "Forest Pirate" and (v.HumanoidRootPart.Position - MusketeerHatMon.Position).Magnitude <= _G.BringRange then
+                        if v.Name == "Forest Pirate" and (v.HumanoidRootPart.Position - MusketeerHatMon.Position).Magnitude <= 300 then
                             v.HumanoidRootPart.CFrame = MusketeerHatMon
                             v.Humanoid:ChangeState(14)
                         end
                     end
                     if _G.Auto_EvoRace and StartEvoMagnet then
-                        if v.Name == "Zombie" and (v.HumanoidRootPart.Position - PosMonEvo.Position).Magnitude <= _G.BringRange then
+                        if v.Name == "Zombie" and (v.HumanoidRootPart.Position - PosMonEvo.Position).Magnitude <= 300 then
                             v.HumanoidRootPart.CFrame = PosMonEvo
                             v.Humanoid:ChangeState(14)
                         end
                     end
                     if _G.AutoMaterial and BringMonMaterial then
-                        if (v.Name == MMon or v.Name == MMon1) and (v.HumanoidRootPart.Position - MaterialPos.Position).Magnitude <= _G.BringRange then
+                        if (v.Name == MMon or v.Name == MMon1) and (v.HumanoidRootPart.Position - MaterialPos.Position).Magnitude <= 300 then
                             v.HumanoidRootPart.CFrame = MaterialPos
                             v.Humanoid:ChangeState(14)
                         end
                     end
                     if _G.AutoFarmMob and SelectMag then
-                        if v.Name == SelectMob and (v.HumanoidRootPart.Position - PosMonFarm.Position).Magnitude <= _G.BringRange then
+                        if v.Name == SelectMob and (v.HumanoidRootPart.Position - PosMonFarm.Position).Magnitude <= 300 then
                             v.HumanoidRootPart.CFrame = PosMonFarm
                             v.Humanoid:ChangeState(14)
                         end
                     end
                     if _G.AutoBartilo and AutoBartiloBring then
-                        if v.Name == "Swan Pirate" and (v.HumanoidRootPart.Position - PosMonBarto.Position).Magnitude <= _G.BringRange then
+                        if v.Name == "Swan Pirate" and (v.HumanoidRootPart.Position - PosMonBarto.Position).Magnitude <= 300 then
                             v.HumanoidRootPart.CFrame = PosMonBarto
                             v.Humanoid:ChangeState(14)
                         end
                     end
                     if _G.FarmSkip and StartBring then
-                        if v.Name == "Shanda" and (v.HumanoidRootPart.Position - PosMon.Position).Magnitude <= _G.BringRange then
+                        if v.Name == "Shanda" and (v.HumanoidRootPart.Position - PosMon.Position).Magnitude <= 300 then
                             v.HumanoidRootPart.CFrame = PosMon
                             v.Humanoid:ChangeState(14)
                         end
@@ -2518,7 +2490,7 @@ spawn(function()
 end)
 
 Setting:AddSlider({
-	Name = "Select Brightnes",
+	Name = "Brightnes",
 	Min = 1,
 	Max = 100,
 	Default = 20,
@@ -2575,7 +2547,7 @@ Setting:AddSlider({
 })
 
 Setting:AddToggle({
-	Name = "Teleport To Y If Low Health [ Test ]",
+	Name = "Teleport To Y If Low Health",
 	Default = false,
 	Callback = function(Value)
 		_G.LowHealth = Value
@@ -3543,12 +3515,12 @@ spawn(function()
                 if v.Name == MonFarm and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health <= v.Humanoid.MaxHealth * _G.Kill_At / 100 then
                     if _G.SkillZ then
                         game:service('VirtualInputManager'):SendKeyEvent(true, "Z", false, game)
-                        wait()
+                        wait(0)
                         game:service('VirtualInputManager'):SendKeyEvent(false, "Z", false, game)
                     end
                     if _G.SkillX then
                         game:service('VirtualInputManager'):SendKeyEvent(true, "X", false, game)
-                        wait()
+                        wait(0)
                         game:service('VirtualInputManager'):SendKeyEvent(false, "X", false, game)
                     end
                 end
@@ -5527,7 +5499,7 @@ spawn(function()
                             EquipWeapon("Cup")
                             wait(0.5)
                             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ProQuestProgress","FillCup",game:GetService("Players").LocalPlayer.Character.Cup)
-                            wait()
+                            wait(0)
                             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ProQuestProgress","SickMan")
                         else
                             if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ProQuestProgress","RichSon") == nil then
@@ -6281,7 +6253,7 @@ Player:AddButton({
 })
 
 local Section = Player:AddSection({
-    Name = "~ Open Tab ~"
+    Name = "~ Open ~"
 })
 
 Player:AddButton({
@@ -6332,15 +6304,6 @@ Player:AddButton({
     Name = "Open Awakening",
     Callback = function()
         game:GetService("Players").LocalPlayer.PlayerGui.Main.AwakeningToggler.Visible = true
-    end
-})
-
-Player:AddButton({
-    Name = "Open Inventory [ Old ]",
-    Callback = function()
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventoryWeapons")
-        wait()
-        game:GetService("Players").LocalPlayer.PlayerGui.Main.Inventory.Visible = true
     end
 })
 
@@ -6453,6 +6416,7 @@ PvP:AddButton({
     Name = "Refresh Player List",
     Callback = function()
         Slplayer:Refresh(Playerslist,true)
+        local Playerslist = {}
         for i,v in pairs(game:GetService("Players"):GetChildren()) do
             table.insert(PlayerList, v.Name)
         end
@@ -6501,46 +6465,8 @@ spawn(function()
 end)
 
 local Section = PvP:AddSection({
-    Name = "~ Aimbot & PvP ~"
+    Name = "~ Aimbot [ Wait Fix ] ~"
 })
-
-PvP:AddToggle({
-	Name = "Aimbot Skill To Player Nearest",
-	Default = false,
-	Callback = function(Value)
-		_G.AimSkillNearest = Value
-	end
-})
-
-spawn(function()
-	while wait() do
-		pcall(function()
-			local MaxDistance = math.huge
-			for i,v in pairs(game:GetService("Players"):GetPlayers()) do
-				if v.Name ~= game.Players.LocalPlayer.Name then
-					local Distance = v:DistanceFromCharacter(game.Players.LocalPlayer.Character.HumanoidRootPart.Position)
-					if Distance < MaxDistance then
-						MaxDistance = Distance
-						TargetPlayerAim = v.Name
-					end
-				end
-			end
-		end)
-	end
-end)
-
-spawn(function()
-	pcall(function()
-		game:GetService("RunService").RenderStepped:connect(function()
-			if _G.AimSkillNearest and TargetPlayerAim ~= nil and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") and game.Players.LocalPlayer.Character[game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Name]:FindFirstChild("MousePos") then
-				local args = {
-					[1] = game:GetService("Players"):FindFirstChild(TargetPlayerAim).Character.HumanoidRootPart.Position
-				}
-				game:GetService("Players").LocalPlayer.Character[game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Name].RemoteEvent:FireServer(unpack(args))
-			end
-		end)
-	end)
-end)
 
 PvP:AddToggle({
 	Name = "Enabled PvP",
@@ -6561,7 +6487,7 @@ spawn(function()
 end)
 
 local Section = PvP:AddSection({
-    Name = "~ Bounty / Honor [ Soon ] ~"
+    Name = "~ Bounty / Honor ~"
 })
 
 local checkbotihoron = PvP:AddParagraph("Your Bounty / Honor")
@@ -7377,12 +7303,12 @@ spawn(function()
                 end
                 if _G.SkillGunZ then
                     game:service('VirtualInputManager'):SendKeyEvent(true, "Z", false, game)
-                    wait()
+                    wait(0)
                     game:service('VirtualInputManager'):SendKeyEvent(false, "Z", false, game)
                 end
                 if _G.SkillGunX then
                     game:service('VirtualInputManager'):SendKeyEvent(true, "X", false, game)
-                    wait()
+                    wait(0)
                     game:service('VirtualInputManager'):SendKeyEvent(false, "X", false, game)
                 end
                 DoneSkillGun = true
@@ -7660,14 +7586,14 @@ Race:AddToggle({
 	Name = "Teleport To Advanced Fruit Dealer",
 	Default = false,
 	Callback = function(Value)
-		_G.MirageNpc = Value
-		StopTween(_G.MirageNpc)
+		_G.Miragenpc = Value
+		StopTween(_G.Miragenpc)
 	end
 })
 
 spawn(function()
     while wait() do
-        if _G.MirageNpc then
+        if _G.Miragenpc then
             if game:GetService("Workspace").NPCs:FindFirstChild("Advanced Fruit Dealer") then
                 topos(CFrame.new(game:GetService("Workspace").NPCs["Advanced Fruit Dealer"].HumanoidRootPart.Position))
             end
@@ -7676,7 +7602,7 @@ spawn(function()
 end)
 
 local Section = Race:AddSection({
-    Name = "~ Trials Race ~"
+    Name = "~ Trials ~"
 })
 
 local Moon1 = Race:AddParagraph("Moon")
@@ -7947,7 +7873,7 @@ spawn(function()
 end)
 
 local Section = Race:AddSection({
-    Name = "~ Train Race ~"
+    Name = "~ Train ~"
 })
 
 local AnOn = Race:AddParagraph("Ancient One")
