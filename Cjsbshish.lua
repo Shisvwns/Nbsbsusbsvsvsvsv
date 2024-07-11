@@ -1546,21 +1546,6 @@ function StopTween(target)
     end
 end
 
-spawn(function()
-    while wait() do
-        if lp.Character:FindFirstChild("Humanoid").Health <= 0 or not lp.Character:FindFirstChild("HumanoidRootPart") then
-            if lp.Character:FindFirstChild("TweenSmooth") then
-                lp.Character:FindFirstChild("TweenSmooth"):Destroy()
-            end
-        end
-        if (lp.Character.HumanoidRootPart.Position - lp.Character:FindFirstChild("PartTele").Position).Magnitude <= 100 then
-            if lp.Character:FindFirstChild("PartTele") then
-                lp.Character:FindFirstChild("PartTele"):Destroy()
-            end
-        end
-    end
-end)
-
 -- [ Pos Farm ]
 
 Type = 1
