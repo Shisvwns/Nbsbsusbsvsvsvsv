@@ -1498,7 +1498,7 @@ function CalcDistance(I, II)
 end
 function topos(Pos)
     if not Pos then return end 
-    if not lp.Character:FindFirstChild("TweenSmooth") then
+    if not lp.Character:FindFirstChild("PartTele") then
         local PartTele = Instance.new("Part", lp.Character)
         PartTele.Size = Vector3.new(0,0,0)
         PartTele.Name = "PartTele"
@@ -1542,11 +1542,13 @@ end
 function StopTween(target)
     if not target then
         topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
+        game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Quad),{CFrame = Pos}):Cancel()
     end
 end
 
 spawn(function()
     while wait() do
+        pcall(function()
         if lp.Character:FindFirstChild("Humanoid").Health <= 0 or not lp.Character:FindFirstChild("HumanoidRootPart") then
             if lp.Character:FindFirstChild("TweenSmooth") then
                 lp.Character:FindFirstChild("TweenSmooth"):Destroy()
@@ -1557,6 +1559,7 @@ spawn(function()
                 lp.Character:FindFirstChild("PartTele"):Destroy()
             end
         end
+        end)
     end
 end)
 
