@@ -1546,6 +1546,16 @@ function StopTween(target)
     end
 end
 
+spawn(function()
+    while wait() do
+        if (lp.Character.HumanoidRootPart.Position - lp.Character:FindFirstChild("PartTele").Position).Magnitude <= 100 then
+            if lp.Character:FindFirstChild("PartTele") then
+                lp.Character:FindFirstChild("PartTele"):Destroy()
+            end
+        end
+    end
+end)
+
 -- [ Pos Farm ]
 
 Type = 1
@@ -2199,19 +2209,19 @@ Setting:AddDropdown({
 	Callback = function(Value)
 		_G.SelectAttackDelay = Value
         if _G.SelectAttackDelay == "No Delay [ 0.0s ]" then
-            FastAttackDelay = 0
+            _G.FastAttackDelay = 0
         elseif _G.SelectAttackDelay == "Super Fast [ 0.05s ]" then
-            FastAttackDelay = 0.05
+            _G.FastAttackDelay = 0.05
         elseif _G.SelectAttackDelay == "Fast [ 0.1s ]" then
-            FastAttackDelay = 0.1
+            _G.FastAttackDelay = 0.1
         elseif _G.SelectAttackDelay == "Moderate [ 0.3s ]" then
-            FastAttackDelay = 0.3
+            _G.FastAttackDelay = 0.3
         elseif _G.SelectAttackDelay == "Default [ 0.5s ]" then
-            FastAttackDelay = 0.5
+            _G.FastAttackDelay = 0.5
         elseif _G.SelectAttackDelay == "Medium [ 0.8s ]" then
-            FastAttackDelay = 0.8
+            _G.FastAttackDelay = 0.8
         elseif _G.SelectAttackDelay == "Slow [ 1.0s ]" then
-            FastAttackDelay = 1
+            _G.FastAttackDelay = 1
         end
 	end
 })
@@ -2225,7 +2235,7 @@ Setting:AddToggle({
 })
 
 spawn(function()
-    while task.wait(FastAttackDelay) do
+    while task.wait(_G.FastAttackDelay) do
         if _G.FastAttack then
             AttackNoCD()
         end
@@ -2256,15 +2266,15 @@ Setting:AddDropdown({
 	Callback = function(Value)
 		_G.SelectRange = Value
         if _G.SelectRange == "Really Far [ 350m ]" then
-            BringRange = 350
+            _G.BringRange = 350
         elseif _G.SelectRange == "Distant [ 325m ]" then
-            BringRange = 325
+            _G.BringRange = 325
         elseif _G.SelectRange == "Slightly Far [ 300m ]" then
-            BringRange = 300
+            _G.BringRange = 300
         elseif _G.SelectRange == "Near The [ 275m ]" then
-            BringRange = 275
+            _G.BringRange = 275
         elseif _G.SelectRange == "Very Close [ 250m ]" then
-            BringRange = 250
+            _G.BringRange = 250
         end
 	end
 })
@@ -2284,49 +2294,49 @@ spawn(function()
                 CheckQuest()
                 for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                     if _G.AutoFarm or _G.AutoFarmFruitMastery or _G.AutoFarmGunMastery or _G.AutoSwordMastery then
-                        if StartMagnet and v.Name == Mon and (v.HumanoidRootPart.Position - PosFarm.Position).Magnitude <= BringRange then
+                        if StartMagnet and v.Name == Mon and (v.HumanoidRootPart.Position - PosFarm.Position).Magnitude <= _G.BringRange then
                             v.HumanoidRootPart.CFrame = PosFarm
                             v.Humanoid:ChangeState(14)
                         end
                     end
                     if MagnetNear then
-                        if not string.find(v.Name, "Boss") and (v.HumanoidRootPart.Position - PosNear.Position).Magnitude <= BringRange then
+                        if not string.find(v.Name, "Boss") and (v.HumanoidRootPart.Position - PosNear.Position).Magnitude <= _G.BringRange then
                             v.HumanoidRootPart.CFrame = PosNear
                             v.Humanoid:ChangeState(14)
                         end
                     end
                     if _G.AutoMusketeerHat and StartMagnetMusketeerhat then
-                        if v.Name == "Forest Pirate" and (v.HumanoidRootPart.Position - MusketeerHatMon.Position).Magnitude <= BringRange then
+                        if v.Name == "Forest Pirate" and (v.HumanoidRootPart.Position - MusketeerHatMon.Position).Magnitude <= _G.BringRange then
                             v.HumanoidRootPart.CFrame = MusketeerHatMon
                             v.Humanoid:ChangeState(14)
                         end
                     end
                     if _G.Auto_EvoRace and StartEvoMagnet then
-                        if v.Name == "Zombie" and (v.HumanoidRootPart.Position - PosMonEvo.Position).Magnitude <= BringRange then
+                        if v.Name == "Zombie" and (v.HumanoidRootPart.Position - PosMonEvo.Position).Magnitude <= _G.BringRange then
                             v.HumanoidRootPart.CFrame = PosMonEvo
                             v.Humanoid:ChangeState(14)
                         end
                     end
                     if _G.AutoMaterial and BringMonMaterial then
-                        if (v.Name == MMon or v.Name == MMon1) and (v.HumanoidRootPart.Position - MaterialPos.Position).Magnitude <= BringRange then
+                        if (v.Name == MMon or v.Name == MMon1) and (v.HumanoidRootPart.Position - MaterialPos.Position).Magnitude <= _G.BringRange then
                             v.HumanoidRootPart.CFrame = MaterialPos
                             v.Humanoid:ChangeState(14)
                         end
                     end
                     if _G.AutoFarmMob and SelectMag then
-                        if v.Name == SelectMob and (v.HumanoidRootPart.Position - PosMonFarm.Position).Magnitude <= BringRange then
+                        if v.Name == SelectMob and (v.HumanoidRootPart.Position - PosMonFarm.Position).Magnitude <= _G.BringRange then
                             v.HumanoidRootPart.CFrame = PosMonFarm
                             v.Humanoid:ChangeState(14)
                         end
                     end
                     if _G.AutoBartilo and AutoBartiloBring then
-                        if v.Name == "Swan Pirate" and (v.HumanoidRootPart.Position - PosMonBarto.Position).Magnitude <= BringRange then
+                        if v.Name == "Swan Pirate" and (v.HumanoidRootPart.Position - PosMonBarto.Position).Magnitude <= _G.BringRange then
                             v.HumanoidRootPart.CFrame = PosMonBarto
                             v.Humanoid:ChangeState(14)
                         end
                     end
                     if _G.FarmSkip and StartBring then
-                        if v.Name == "Shanda" and (v.HumanoidRootPart.Position - PosMon.Position).Magnitude <= BringRange then
+                        if v.Name == "Shanda" and (v.HumanoidRootPart.Position - PosMon.Position).Magnitude <= _G.BringRange then
                             v.HumanoidRootPart.CFrame = PosMon
                             v.Humanoid:ChangeState(14)
                         end
