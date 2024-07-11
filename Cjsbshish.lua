@@ -1627,12 +1627,12 @@ spawn(function()
             if _G.AutoFarm or _G.FarmSkip or _G.AutoFarmNearest or _G.AutoDoughtBoss or _G.Auto_Bone or _G.Auto_Soul_Reaper or _G.AutoFarmFruitMastery or _G.AutoFarmGunMastery or _G.FarmAllSword or _G.FarmAllMelee or _G.AutoFarmBoss or _G.AutoAllBoss or _G.AutoFarmMob or _G.AutoMaterial or _G.Tweenfruit or _G.NextIsland or _G.AutoOderSword or _G.RaidPirate or _G.AutoFactory or _G.AutoElitehunter or _G.ChestBypass or _G.AutoFarmChest or _G.TeleSafe or _G.AutoSpawnRip or _G.AutoKillRipIndra or _G.AutoSpawnDark or _G.AutoKillDark or _G.AutoObservation or _G.AutoObservationv2 or _G.Auto_Rainbow_Haki or _G.AutoYama or _G.AutoHolyTorch or _G.Autotushita or _G.Auto_Saber or _G.Autowaden
                 or _G.AutoRengoku or _G.Autopole or _G.Autosaw or _G.AutoCarvender or _G.Auto_Dragon_Trident or _G.AutoTwinHook or _G.AutoCarvender or _G.AutoBudySword or _G.AutoSerpentBow or _G.Auto_EvoRace or _G.AutoMusketeerHat or _G.AutoSecondSea or _G.AutoThirdSea or _G.Teleport or _G.AutoKillFishCrew or _G.RelzFishBoat or _G.RelzPirateGrandBrigade or _G.RelzPirateBrigade or _G.AutoTerrorshark or _G.AutoSeaBest or _G.AutoKillShark or _G.AutoKillPiranha or _G.TeleportKitsune or _G.CollectAzure or _G.TweenMGear or _G.AutoMysticIsland or _G.Miragenpc or _G.AutoQuestRace or _G.KillAfterTrials or _G.TeleportIsland
             then
-                if not game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
+                if not game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
                     local NoClip = Instance.new("BodyVelocity")
-                    NoClip.Name = "BodyClip"
                     NoClip.Parent = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart
                     NoClip.MaxForce = Vector3.new(100000, 100000, 100000)
                     NoClip.Velocity = Vector3.new(0, 0, 0)
+                    NoClip.P = 9000
                 end
                 for _, v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
                     if v:IsA("BasePart") then
@@ -1640,7 +1640,7 @@ spawn(function()
                     end
                 end
             else
-                game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip"):Destroy()
+                game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity"):Destroy()
             end
         end)
     end)
