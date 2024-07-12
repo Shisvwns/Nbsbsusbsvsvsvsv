@@ -1457,8 +1457,8 @@ function BypassTeleport(is)
         lp.Character.PrimaryPart.CFrame = is   
         lp.Character:WaitForChild("Humanoid"):ChangeState(15)
         wait(0.5)
-        repeat wait() until lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid.Health <= 0
-        repeat wait()
+        repeat task.wait() until lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid.Health <= 0
+        repeat task.wait()
             if lp.Character:FindFirstChild("PartTele") then
                 lp.Character.PartTele.CFrame = is  
             end
@@ -1535,7 +1535,7 @@ end
 
 function Tween(Pos)
     Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-    Tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/_G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
+    Tween = game:GetService("TweenService"):Create(lp.Character.PartTele,TweenInfo.new(Distance/_G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
     Tween:Play()
 end
 
@@ -1547,7 +1547,7 @@ function StopTween(target)
 end
 
 spawn(function()
-    while wait() do
+    while task.wait() do
         if lp.Character:FindFirstChild("Humanoid").Health <= 0 or not lp.Character:FindFirstChild("HumanoidRootPart") then
             if lp.Character:FindFirstChild("TweenSmooth") then
                 lp.Character:FindFirstChild("TweenSmooth"):Destroy()
@@ -1650,7 +1650,7 @@ end)
 -- [ Check Status ]
 
 spawn(function()
-	while wait() do
+	while task.wait() do
 		if setscriptable then
 			setscriptable(game.Players.LocalPlayer, "SimulationRadius", true)
 		end
@@ -1658,6 +1658,18 @@ spawn(function()
 			sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
 		end
 	end
+end)
+
+spawn(function()
+    while wait() do
+        if sethiddenproperty then
+            sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",100)
+        end
+        if setscriptable then
+            setscriptable(game.Players.LocalPlayer, "SimulationRadius", true)
+            game.Players.LocalPlayer.SimulationRadius = math.huge * math.huge, math.huge * math.huge * 0 / 0 * 0 / 0 * 0 / 0 * 0 / 0 * 0 / 0
+        end
+    end
 end)
 
 function CheckMob(MobName)
@@ -6472,7 +6484,7 @@ PvP:AddButton({
         Slplayer:Refresh(Playerslist,true)
         local Playerslist = {}
         for i,v in pairs(game:GetService("Players"):GetChildren()) do
-            table.insert(PlayerList, v.Name)
+            table.insert(Playerlist, v.Name)
         end
         Slplayer:Refresh(Playerslist)
     end
