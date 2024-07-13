@@ -1526,7 +1526,8 @@ function topos(Pos)
     if lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid:FindFirstChild("Sit") and lp.Character.Humanoid.Sit == true then
         lp.Character.Humanoid.Sit = false
     end
-    if Distance <= 250 then
+    Dis = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    if Dis <= 250 then
         lp.Character.HumanoidRootPart.CFrame = Pos
     end
     Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
@@ -2383,8 +2384,8 @@ local Section = Setting:AddSection({
 Setting:AddSlider({
 	Name = "Tween Speed",
 	Min = 1,
-	Max = 350,
-	Default = 325,
+	Max = 400,
+	Default = 350,
 	Color = Color3.fromRGB(255,255,255),
 	Increment = 1,
 	ValueName = "",
