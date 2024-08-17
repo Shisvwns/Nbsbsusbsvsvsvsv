@@ -1524,6 +1524,7 @@ function topos(Pos)
                 return BypassTeleport(Spawn)
             end
         end
+    end
     if lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid:FindFirstChild("Sit") and lp.Character.Humanoid.Sit == true then
         lp.Character.Humanoid.Sit = false
     end
@@ -1546,18 +1547,18 @@ end
 
 spawn(function()
     while task.wait() do
-        pcall(function()
-            if lp.Character:FindFirstChild("Humanoid").Health <= 0 or not lp.Character:FindFirstChild("HumanoidRootPart") then
-                if lp.Character:FindFirstChild("TweenSmooth") then
-                    lp.Character:FindFirstChild("TweenSmooth"):Destroy()
-                end
+    pcall(function()
+        if lp.Character:FindFirstChild("Humanoid").Health <= 0 or not lp.Character:FindFirstChild("HumanoidRootPart") then
+            if lp.Character:FindFirstChild("TweenSmooth") then
+                lp.Character:FindFirstChild("TweenSmooth"):Destroy()
             end
-            if (lp.Character.HumanoidRootPart.Position - lp.Character:FindFirstChild("PartTele").Position).Magnitude <= 100 then
-                if lp.Character:FindFirstChild("PartTele") then
-                    lp.Character:FindFirstChild("PartTele"):Destroy()
-                end
+        end
+        if (lp.Character.HumanoidRootPart.Position - lp.Character:FindFirstChild("PartTele").Position).Magnitude <= 100 then
+            if lp.Character:FindFirstChild("PartTele") then
+                lp.Character:FindFirstChild("PartTele"):Destroy()
             end
-        end)
+        end
+    end)
     end
 end)
 
