@@ -2400,20 +2400,20 @@ Setting:AddToggle({
 	end
 })
 
+Setting:AddToggle({
+	Name = "Don't Bypass Teleport If Have Item",
+	Default = false,
+	Callback = function(Value)
+		_G.DontBypass = Value
+	end
+})
+
 Setting:AddDropdown({
 	Name = "Select Item",
 	Default = "",
 	Options = {"Devil Fruit","Fist Of Darkness & God's Chalice","Fist Of Darkness & God's Chalice & Devil Fruit"},
 	Callback = function(Value)
 		_G.SelectItem = Value
-	end
-})
-
-Setting:AddToggle({
-	Name = "Don't Bypass Teleport If Have Items",
-	Default = false,
-	Callback = function(Value)
-		_G.DontBypass = Value
 	end
 })
 
@@ -2424,17 +2424,21 @@ spawn(function()
                 if _G.SelectItem == "Devil Fruit" then
                     if game.Players.LocalPlayer.Backpack:FindFirstChild("Fruit") or game.Players.LocalPlayer.Character:FindFirstChild("Fruit") then
                         DungBypass = true
+                    else
+                        DungBypass = false
                     end
                 elseif _G.SelectItem == "Fist Of Darkness & God's Chalice" then
                     if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
                         DungBypass = true
+                    else
+                        DungBypass = false
                     end
                 elseif _G.SelectItem == "Fist Of Darkness & God's Chalice & Devil Fruit" then
                     if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Backpack:FindFirstChild("Fruit") or game.Players.LocalPlayer.Character:FindFirstChild("Fruit") then
                         DungBypass = true
+                    else
+                        DungBypass = false
                     end
-                else
-                    DungBypass = false
                 end
             end)
         end
