@@ -1524,7 +1524,6 @@ function topos(Pos)
                 return BypassTeleport(Spawn)
             end
         end
-    end
     if lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid:FindFirstChild("Sit") and lp.Character.Humanoid.Sit == true then
         lp.Character.Humanoid.Sit = false
     end
@@ -1539,18 +1538,26 @@ function StopTween(target)
     end
 end
 
+function Tween(Pos)
+    Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    TweenPos = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/_G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
+    TweenPos:Play()
+end
+
 spawn(function()
     while task.wait() do
-        if lp.Character:FindFirstChild("Humanoid").Health <= 0 or not lp.Character:FindFirstChild("HumanoidRootPart") then
-            if lp.Character:FindFirstChild("TweenSmooth") then
-                lp.Character:FindFirstChild("TweenSmooth"):Destroy()
+        pcall(function()
+            if lp.Character:FindFirstChild("Humanoid").Health <= 0 or not lp.Character:FindFirstChild("HumanoidRootPart") then
+                if lp.Character:FindFirstChild("TweenSmooth") then
+                    lp.Character:FindFirstChild("TweenSmooth"):Destroy()
+                end
             end
-        end
-        if (lp.Character.HumanoidRootPart.Position - lp.Character:FindFirstChild("PartTele").Position).Magnitude <= 100 then
-            if lp.Character:FindFirstChild("PartTele") then
-                lp.Character:FindFirstChild("PartTele"):Destroy()
+            if (lp.Character.HumanoidRootPart.Position - lp.Character:FindFirstChild("PartTele").Position).Magnitude <= 100 then
+                if lp.Character:FindFirstChild("PartTele") then
+                    lp.Character:FindFirstChild("PartTele"):Destroy()
+                end
             end
-        end
+        end)
     end
 end)
 
@@ -2189,7 +2196,7 @@ local ItemQuest = Window:MakeTab({Name = "Item & Quest", Icon = "rbxassetid://44
 local Player = Window:MakeTab({Name = "Player", Icon = "rbxassetid://4483345998", PremiumOnly = false})
 local PvP = Window:MakeTab({Name = "PvP", Icon = "rbxassetid://4483345998", PremiumOnly = false})
 local Sea = Window:MakeTab({Name = "Sea Event", Icon = "rbxassetid://4483345998",PremiumOnly = false})
-local Race = Window:MakeTab({Name = "Race", Icon = "rbxassetid://4483345998", PremiumOnly = false})
+local Race = Window:MakeTab({Name = "Upgrade Race", Icon = "rbxassetid://4483345998", PremiumOnly = false})
 local StatsEsp = Window:MakeTab({Name = "Stats & Esp", Icon = "rbxassetid://4483345998",PremiumOnly = false})
 local Teleport = Window:MakeTab({Name = "Teleport", Icon = "rbxassetid://4483345998", PremiumOnly = false})
 local StatusServer = Window:MakeTab({Name = "Status & Server", Icon = "rbxassetid://4483345998", PremiumOnly = false})
@@ -4446,7 +4453,7 @@ spawn(function()
 end)
 
 FruitRaid:AddToggle({
-	Name = "Auto Get Devil Fruit [ Under 1M Beli ]",
+	Name = "Auto Get Devil Fruit [ Under 1M Beli ] ( Test )",
 	Default = false,
 	Callback = function(Value)
 		_G.AutoFruit = Value
@@ -4607,15 +4614,15 @@ spawn(function()
     while wait() do
         if _G.NextIsland and game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Timer.Visible == true then
             if game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5") then
-                topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5").CFrame * RaidPos)
+                Tween(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5").CFrame * RaidPos)
             elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4") then
-                topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4").CFrame * RaidPos)
+                Tween(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4").CFrame * RaidPos)
             elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3") then
-                topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3").CFrame * RaidPos)
+                Tween(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3").CFrame * RaidPos)
             elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2") then
-                topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2").CFrame * RaidPos)
+                Tween(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2").CFrame * RaidPos)
             elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1") then
-                topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1").CFrame * RaidPos)
+                Tween(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1").CFrame * RaidPos)
             end
         end
     end
@@ -7528,7 +7535,7 @@ spawn(function()
 end)
 
 Sea:AddSlider({
-	Name = "Set Azure Ember",
+	Name = "Set Azure Ember Quantity To Trade",
 	Min = 10,
 	Max = 25,
 	Default = 20,
@@ -7604,9 +7611,9 @@ function PullLever()
     local bp = 0.2
     if game:GetService("Workspace").Map["Temple of Time"].Lever.Lever.CFrame.Z > bo.Z + bp or game:GetService("Workspace").Map["Temple of Time"].Lever.Lever.CFrame.Z < bo.Z - bp then
         CheckAndTweenTemple()
-        topos(CFrame.new(28575.181640625, 14936.6279296875, 72.31636810302734))
+        Tween(CFrame.new(28575.181640625, 14936.6279296875, 72.31636810302734))
         wait(0.01)
-        topos(game:GetService("Workspace").Map["Temple of Time"].Lever.Part.CFrame)
+        Tween(game:GetService("Workspace").Map["Temple of Time"].Lever.Part.CFrame)
         for r, v in pairs(game:GetService("Workspace").Map["Temple of Time"].Lever:GetDescendants()) do
             if v.Name == "ProximityPrompt" then
                 fireproximityprompt(v)
@@ -7621,10 +7628,10 @@ Race:AddButton({
         if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - PosTemplete.Position).Magnitude > 1000 then
             Templeteleport()
             wait(0.3)
-            topos(CFrame.new(29551.9941, 15069.002, -85.5179291))
+            Tween(CFrame.new(29551.9941, 15069.002, -85.5179291))
         elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - PosTemplete.Position).Magnitude < 1000 then
             wait(0.1)
-      	  topos(CFrame.new(29551.9941, 15069.002, -85.5179291))
+      	  Tween(CFrame.new(29551.9941, 15069.002, -85.5179291))
         end
     end
 })
@@ -7635,29 +7642,30 @@ Race:AddButton({
         if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - PosTemplete.Position).Magnitude > 1000 then
             Templeteleport()
             wait(0.3)
-            topos(CFrame.new(28973.0879, 14889.9756, -120.298691))
+            Tween(CFrame.new(28973.0879, 14889.9756, -120.298691))
         elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - PosTemplete.Position).Magnitude < 1000 then
             wait(0.1)
-            topos(CFrame.new(28973.0879, 14889.9756, -120.298691))
+            Tween(CFrame.new(28973.0879, 14889.9756, -120.298691))
         end
     end
 })
 
 function RaceDoors()
     if game:GetService("Players").LocalPlayer.Data.Race.Value == "Fishman" then
-        topos(CFrame.new(28224.056640625, 14889.4267578125, -210.5872039794922))
+        Tween(CFrame.new(28224.056640625, 14889.4267578125, -210.5872039794922))
     elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Human" then
-        topos(CFrame.new(29237.294921875, 14889.4267578125, -206.94955444335938))
+        Tween(CFrame.new(29237.294921875, 14889.4267578125, -206.94955444335938))
     elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Cyborg" then
-        topos(CFrame.new(28492.4140625, 14894.4267578125, -422.1100158691406))
+        Tween(CFrame.new(28492.4140625, 14894.4267578125, -422.1100158691406))
     elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Skypiea" then
-        topos(CFrame.new(28967.408203125, 14918.0751953125, 234.31198120117188))
+        Tween(CFrame.new(28967.408203125, 14918.0751953125, 234.31198120117188))
     elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Ghoul" then
-        topos(CFrame.new(28672.720703125, 14889.1279296875, 454.5961608886719))
+        Tween(CFrame.new(28672.720703125, 14889.1279296875, 454.5961608886719))
     elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Mink" then
-        topos(CFrame.new(29020.66015625, 14889.4267578125, -379.2682800292969))
+        Tween(CFrame.new(29020.66015625, 14889.4267578125, -379.2682800292969))
     end
 end
+    
 
 Race:AddButton({
     Name = "Teleport To Race Doors",
@@ -8032,7 +8040,7 @@ spawn(function()
 end)
 
 local Section = Race:AddSection({
-    Name = "~ Train Race ~"
+    Name = "~ Training Race ~"
 })
 
 local AnOn = Race:AddParagraph("Ancient One")
@@ -8598,7 +8606,7 @@ StatusServer:AddButton({
         setclipboard(tostring(game.JobId))
         OrionLib:MakeNotification({
         	Name = "Tinh Linh Hub",
-        	Content = "Copied Server Job-Id Success !",
+        	Content = "Copied Server Job-Id !",
         	Image = "rbxassetid://16730867128",
         	Time = 5
         })
