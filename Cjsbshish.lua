@@ -1532,17 +1532,17 @@ function topos(Pos)
     Tween:Play() 
 end
 
+function Tween(Pos)
+    Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    Tween = game:GetService("TweenService"):Create(lp.Character.PartTele,TweenInfo.new(Distance/_G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
+    Tween:Play()
+end
+
 function StopTween(target)
     if not target then
         topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
         game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos}):Cancel()
     end
-end
-
-function Tween(Pos)
-    Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-    TweenPos = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/_G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
-    TweenPos:Play()
 end
 
 spawn(function()
@@ -1582,39 +1582,19 @@ spawn(function()
     while wait() do
         if Type == 1 then
             Pos = CFrame.new(0,30,-20)
-        elseif Type == 2 then
-            Pos = CFrame.new(20,30,0)
-        elseif Type == 3 then
-            Pos = CFrame.new(0,30,20)	
-        elseif Type == 4 then
-            Pos = CFrame.new(-20,30,0)
-        end
-    end
-end)
-
-spawn(function()
-    while wait() do
-        if Type == 1 then
             PosSea = CFrame.new(0,400,-60)
-        elseif Type == 2 then
-            PosSea = CFrame.new(60,400,0)
-        elseif Type == 3 then
-            PosSea = CFrame.new(0,400,60)	
-        elseif Type == 4 then
-            PosSea = CFrame.new(-60,400,0)
-        end
-    end
-end)
-
-spawn(function()
-    while wait() do
-        if Type == 1 then
             PosCaMap = CFrame.new(0,60,-30)
         elseif Type == 2 then
+            Pos = CFrame.new(20,30,0)
+            PosSea = CFrame.new(60,400,0)
             PosCaMap = CFrame.new(30,60,0)
         elseif Type == 3 then
+            Pos = CFrame.new(0,30,20)
+            PosSea = CFrame.new(0,400,60)
             PosCaMap = CFrame.new(0,60,30)	
         elseif Type == 4 then
+            Pos = CFrame.new(-20,30,0)
+            PosSea = CFrame.new(-60,400,0)
             PosCaMap = CFrame.new(-30,60,0)
         end
     end
