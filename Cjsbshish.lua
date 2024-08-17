@@ -2417,12 +2417,26 @@ Setting:AddDropdown({
 	end
 })
 
+function CheckTraiAcQuy()
+    for i, v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
+        if string.find(v.Name, "Fruit") then
+            return v
+        end
+    end
+    for i, v in pairs(game:GetService("Players").LocalPlayer.Character:GetChildren()) do
+        if string.find(v.Name, "Fruit") then
+            return v
+        end
+    end
+end
+
+DungBypass = false
 spawn(function()
     while wait() do
         if _G.DontBypass then
             pcall(function()
                 if _G.SelectItem == "Devil Fruit" then
-                    if game.Players.LocalPlayer.Backpack:FindFirstChild("Fruit") or game.Players.LocalPlayer.Character:FindFirstChild("Fruit") then
+                    if CheckTraiAcQuy() then
                         DungBypass = true
                     else
                         DungBypass = false
@@ -2439,8 +2453,12 @@ spawn(function()
                     else
                         DungBypass = false
                     end
+                else
+                    DungBypass = false
                 end
             end)
+        else
+            DungBypass = false
         end
     end
 end)
