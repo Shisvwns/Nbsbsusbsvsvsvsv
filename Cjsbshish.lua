@@ -1519,8 +1519,10 @@ function topos(Pos)
         return RequestEntrance(Portal)
     end
     if _G.BypassTele == true then
-        if CalcDistance(Pos) - CalcDistance(Spawn, Pos) > 1000 and CalcDistance(Spawn) > 1000 then
-            return BypassTeleport(Spawn)
+        if DungBypass == false then
+            if CalcDistance(Pos) - CalcDistance(Spawn, Pos) > 1000 and CalcDistance(Spawn) > 1000 then
+                return BypassTeleport(Spawn)
+            end
         end
     end
     if lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid:FindFirstChild("Sit") and lp.Character.Humanoid.Sit == true then
@@ -1530,26 +1532,17 @@ function topos(Pos)
     Tween:Play() 
 end
 
-function StopTween(target)
-    if not target then
-        topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
-        game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos}):Cancel()
-    end
-end
-
 function Tween(Pos)
     Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
     Tween = game:GetService("TweenService"):Create(lp.Character.PartTele,TweenInfo.new(Distance/_G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
     Tween:Play()
 end
 
-function TweenNormal(Pos)
-    Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-    if Distance <= 250 then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
+function StopTween(target)
+    if not target then
+        topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
+        game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos}):Cancel()
     end
-    TweenPos = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/_G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
-    TweenPos:Play()
 end
 
 spawn(function()
@@ -2406,6 +2399,47 @@ Setting:AddToggle({
 		_G.BypassTele = Value
 	end
 })
+
+Setting:AddDropdown({
+	Name = "Select Item",
+	Default = "",
+	Options = {"Devil Fruit","Fist Of Darkness & God's Chalice","Fist Of Darkness & God's Chalice & Devil Fruit"},
+	Callback = function(Value)
+		_G.SelectItem = Value
+	end
+})
+
+Setting:AddToggle({
+	Name = "Don't Bypass Teleport If Have Items",
+	Default = false,
+	Callback = function(Value)
+		_G.DontBypass = Value
+	end
+})
+
+spawn(function()
+    while wait() do
+        if _G.DontBypass then
+            pcall(function()
+                if _G.SelectItem == "Devil Fruit" then
+                    if game.Players.LocalPlayer.Backpack:FindFirstChild("Fruit") or game.Players.LocalPlayer.Character:FindFirstChild("Fruit") then
+                        DungBypass = true
+                    end
+                elseif _G.SelectItem == "Fist Of Darkness & God's Chalice" then
+                    if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
+                        DungBypass = true
+                    end
+                elseif _G.SelectItem == "Fist Of Darkness & God's Chalice & Devil Fruit" then
+                    if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Backpack:FindFirstChild("Fruit") or game.Players.LocalPlayer.Character:FindFirstChild("Fruit") then
+                        DungBypass = true
+                    end
+                else
+                    DungBypass = false
+                end
+            end)
+        end
+    end
+end)
 
 Setting:AddButton({
 	Name = "Reset Character",
@@ -4396,7 +4430,7 @@ spawn(function()
 end)
 
 FruitRaid:AddToggle({
-	Name = "Auto Get Devil Fruit [ Under 1M Beli ] ( Test )",
+	Name = "Auto Get Devil Fruit [ Under 1M Beli ]",
 	Default = false,
 	Callback = function(Value)
 		_G.AutoFruit = Value
@@ -4557,15 +4591,15 @@ spawn(function()
     while wait() do
         if _G.NextIsland and game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Timer.Visible == true then
             if game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5") then
-                TweenNormal(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5").CFrame * RaidPos)
+                topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5").CFrame * RaidPos)
             elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4") then
-                TweenNormal(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4").CFrame * RaidPos)
+                topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4").CFrame * RaidPos)
             elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3") then
-                TweenNormal(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3").CFrame * RaidPos)
+                topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3").CFrame * RaidPos)
             elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2") then
-                TweenNormal(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2").CFrame * RaidPos)
+                topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2").CFrame * RaidPos)
             elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1") then
-                TweenNormal(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1").CFrame * RaidPos)
+                topos(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1").CFrame * RaidPos)
             end
         end
     end
@@ -7478,7 +7512,7 @@ spawn(function()
 end)
 
 Sea:AddSlider({
-	Name = "Set Azure Ember Quantity To Trade",
+	Name = "Set Azure Ember",
 	Min = 10,
 	Max = 25,
 	Default = 20,
@@ -7541,7 +7575,7 @@ Race:AddButton({
         PullLever()
         OrionLib:MakeNotification({
 			Name = "Tinh Linh Hub",
-			Content = "Pull Lever Complete!",
+			Content = "Pull Lever Complete !",
 			Image = "rbxassetid://16730867128",
 			Time = 5
 		})
@@ -8549,7 +8583,7 @@ StatusServer:AddButton({
         setclipboard(tostring(game.JobId))
         OrionLib:MakeNotification({
         	Name = "Tinh Linh Hub",
-        	Content = "Copied Server Job-Id!",
+        	Content = "Copied Server Job-Id Success !",
         	Image = "rbxassetid://16730867128",
         	Time = 5
         })
@@ -8871,7 +8905,7 @@ Shop:AddButton({
 
 OrionLib:MakeNotification({
     Name = "Tinh Linh Hub",
-    Content = "Script Loaded Successfully!",
+    Content = "Script Loaded Successfully !",
     Image = "rbxassetid://16730867128",
     Time = 5
 })
