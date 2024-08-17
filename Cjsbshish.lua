@@ -7661,7 +7661,7 @@ function RaceDoors()
     elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Ghoul" then
         Tween(CFrame.new(28672.720703125, 14889.1279296875, 454.5961608886719))
     elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Mink" then
-        Tween(CFrame.new(29020.66015625, 14889.4267578125, -379.2682800292969))
+        topos(CFrame.new(29020.66015625, 14889.4267578125, -379.2682800292969))
     end
 end
     
@@ -7669,14 +7669,7 @@ end
 Race:AddButton({
     Name = "Teleport To Race Doors",
     Callback = function()
-        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - PosTemplete.Position).Magnitude > 1000 then
-            Templeteleport()
-            wait(0.3)
-            RaceDoors()
-        elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - PosTemplete.Position).Magnitude < 1000 then
-            wait(0.1)
-            RaceDoors()
-        end
+        RaceDoors()
     end
 })
 
