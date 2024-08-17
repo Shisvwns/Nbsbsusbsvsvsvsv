@@ -1533,10 +1533,8 @@ function topos(Pos)
 end
 
 function Tween(Pos)
-    Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-    pcall(function()
-        Tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,TweenInfo.new(Distance/_G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
-    end)
+    local Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    Tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,TweenInfo.new(Distance/_G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
     Tween:Play()
 end
 
@@ -7646,7 +7644,6 @@ function RaceDoors()
         Tween(CFrame.new(29020.66015625, 14889.4267578125, -379.2682800292969))
     end
 end
-    
 
 Race:AddButton({
     Name = "Teleport To Race Doors",
