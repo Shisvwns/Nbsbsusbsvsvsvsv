@@ -1533,9 +1533,12 @@ function topos(Pos)
 end
 
 function Tween(Pos)
-    local Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-    Tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,TweenInfo.new(Distance/_G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
-    Tween:Play()
+    Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    if Distance <= 250 then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
+    else
+    TweenPos = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/_G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
+    TweenPos:Play()
 end
 
 function StopTween(target)
@@ -2412,7 +2415,7 @@ end
 
 DungBypass = false
 spawn(function()
-    while wait() do
+    while task.wait() do
         if _G.DontBypass then
             pcall(function()
                 if _G.SelectItem == "Devil Fruit" then
