@@ -1547,7 +1547,6 @@ end
 
 spawn(function()
     while task.wait() do
-    pcall(function()
         if lp.Character:FindFirstChild("Humanoid").Health <= 0 or not lp.Character:FindFirstChild("HumanoidRootPart") then
             if lp.Character:FindFirstChild("TweenSmooth") then
                 lp.Character:FindFirstChild("TweenSmooth"):Destroy()
@@ -1558,7 +1557,6 @@ spawn(function()
                 lp.Character:FindFirstChild("PartTele"):Destroy()
             end
         end
-    end)
     end
 end)
 
@@ -1579,7 +1577,7 @@ spawn(function()
 end)
 
 spawn(function()
-    while wait() do
+    while task.wait() do
         if Type == 1 then
             Pos = CFrame.new(0,30,-20)
             PosSea = CFrame.new(0,400,-60)
