@@ -1519,8 +1519,10 @@ function topos(Pos)
         return RequestEntrance(Portal)
     end
     if _G.BypassTele == true then
-        if CalcDistance(Pos) - CalcDistance(Spawn, Pos) > 1000 and CalcDistance(Spawn) > 1000 then
-            return BypassTeleport(Spawn)
+        if DungBypass == false then
+            if CalcDistance(Pos) - CalcDistance(Spawn, Pos) > 1000 and CalcDistance(Spawn) > 1000 then
+                return BypassTeleport(Spawn)
+            end
         end
     end
     if lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid:FindFirstChild("Sit") and lp.Character.Humanoid.Sit == true then
@@ -1530,20 +1532,17 @@ function topos(Pos)
     Tween:Play() 
 end
 
+function Tween(Pos)
+    local Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    local TweenPos = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear), {CFrame = Pos.CFrame})
+    TweenPos:Play()
+end
+
 function StopTween(target)
     if not target then
         topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
         game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos}):Cancel()
     end
-end
-
-function Tween(Pos)
-    Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-    if Distance <= 250 then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
-    end
-    TweenPos = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/_G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
-    TweenPos:Play()
 end
 
 spawn(function()
@@ -1578,42 +1577,22 @@ spawn(function()
 end)
 
 spawn(function()
-    while wait() do
+    while task.wait() do
         if Type == 1 then
             Pos = CFrame.new(0,30,-20)
-        elseif Type == 2 then
-            Pos = CFrame.new(20,30,0)
-        elseif Type == 3 then
-            Pos = CFrame.new(0,30,20)	
-        elseif Type == 4 then
-            Pos = CFrame.new(-20,30,0)
-        end
-    end
-end)
-
-spawn(function()
-    while wait() do
-        if Type == 1 then
             PosSea = CFrame.new(0,400,-60)
-        elseif Type == 2 then
-            PosSea = CFrame.new(60,400,0)
-        elseif Type == 3 then
-            PosSea = CFrame.new(0,400,60)	
-        elseif Type == 4 then
-            PosSea = CFrame.new(-60,400,0)
-        end
-    end
-end)
-
-spawn(function()
-    while wait() do
-        if Type == 1 then
             PosCaMap = CFrame.new(0,60,-30)
         elseif Type == 2 then
+            Pos = CFrame.new(20,30,0)
+            PosSea = CFrame.new(60,400,0)
             PosCaMap = CFrame.new(30,60,0)
         elseif Type == 3 then
+            Pos = CFrame.new(0,30,20)
+            PosSea = CFrame.new(0,400,60)
             PosCaMap = CFrame.new(0,60,30)	
         elseif Type == 4 then
+            Pos = CFrame.new(-20,30,0)
+            PosSea = CFrame.new(-60,400,0)
             PosCaMap = CFrame.new(-30,60,0)
         end
     end
@@ -2196,7 +2175,7 @@ local ItemQuest = Window:MakeTab({Name = "Item & Quest", Icon = "rbxassetid://44
 local Player = Window:MakeTab({Name = "Player", Icon = "rbxassetid://4483345998", PremiumOnly = false})
 local PvP = Window:MakeTab({Name = "PvP", Icon = "rbxassetid://4483345998", PremiumOnly = false})
 local Sea = Window:MakeTab({Name = "Sea Event", Icon = "rbxassetid://4483345998",PremiumOnly = false})
-local Race = Window:MakeTab({Name = "Race", Icon = "rbxassetid://4483345998", PremiumOnly = false})
+local Race = Window:MakeTab({Name = "Upgrade Race", Icon = "rbxassetid://4483345998", PremiumOnly = false})
 local StatsEsp = Window:MakeTab({Name = "Stats & Esp", Icon = "rbxassetid://4483345998",PremiumOnly = false})
 local Teleport = Window:MakeTab({Name = "Teleport", Icon = "rbxassetid://4483345998", PremiumOnly = false})
 local StatusServer = Window:MakeTab({Name = "Status & Server", Icon = "rbxassetid://4483345998", PremiumOnly = false})
@@ -2400,6 +2379,69 @@ Setting:AddToggle({
 		_G.BypassTele = Value
 	end
 })
+
+Setting:AddToggle({
+	Name = "Don't Bypass Teleport If Have Item",
+	Default = false,
+	Callback = function(Value)
+		_G.DontBypass = Value
+	end
+})
+
+Setting:AddDropdown({
+	Name = "Select Item",
+	Default = "",
+	Options = {"Devil Fruit","Fist Of Darkness & God's Chalice","Fist Of Darkness & God's Chalice & Devil Fruit"},
+	Callback = function(Value)
+		_G.SelectItem = Value
+	end
+})
+
+function CheckTraiAcQuy()
+    for i, v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
+        if string.find(v.Name, "Fruit") then
+            return v
+        end
+    end
+    for i, v in pairs(game:GetService("Players").LocalPlayer.Character:GetChildren()) do
+        if string.find(v.Name, "Fruit") then
+            return v
+        end
+    end
+end
+
+DungBypass = false
+spawn(function()
+    while task.wait() do
+        if _G.DontBypass then
+            pcall(function()
+                if _G.SelectItem == "Devil Fruit" then
+                    if CheckTraiAcQuy() then
+                        DungBypass = true
+                    else
+                        DungBypass = false
+                    end
+                elseif _G.SelectItem == "Fist Of Darkness & God's Chalice" then
+                    if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
+                        DungBypass = true
+                    else
+                        DungBypass = false
+                    end
+                elseif _G.SelectItem == "Fist Of Darkness & God's Chalice & Devil Fruit" then
+                    if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Backpack:FindFirstChild("Fruit") or game.Players.LocalPlayer.Character:FindFirstChild("Fruit") then
+                        DungBypass = true
+                    else
+                        DungBypass = false
+                    end
+                else
+                    DungBypass = false
+                end
+            end)
+        else
+            DungBypass = false
+        end
+    end
+end)
 
 Setting:AddButton({
 	Name = "Reset Character",
@@ -7535,7 +7577,7 @@ Race:AddButton({
         PullLever()
         OrionLib:MakeNotification({
 			Name = "Tinh Linh Hub",
-			Content = "Pull Lever Complete!",
+			Content = "Pull Lever Complete !",
 			Image = "rbxassetid://16730867128",
 			Time = 5
 		})
@@ -7602,7 +7644,6 @@ function RaceDoors()
         Tween(CFrame.new(29020.66015625, 14889.4267578125, -379.2682800292969))
     end
 end
-    
 
 Race:AddButton({
     Name = "Teleport To Race Doors",
@@ -7977,7 +8018,7 @@ spawn(function()
 end)
 
 local Section = Race:AddSection({
-    Name = "~ Train Race ~"
+    Name = "~ Training Race ~"
 })
 
 local AnOn = Race:AddParagraph("Ancient One")
@@ -8543,7 +8584,7 @@ StatusServer:AddButton({
         setclipboard(tostring(game.JobId))
         OrionLib:MakeNotification({
         	Name = "Tinh Linh Hub",
-        	Content = "Copied Server Job-Id!",
+        	Content = "Copied Server Job-Id !",
         	Image = "rbxassetid://16730867128",
         	Time = 5
         })
@@ -8865,7 +8906,7 @@ Shop:AddButton({
 
 OrionLib:MakeNotification({
     Name = "Tinh Linh Hub",
-    Content = "Script Loaded Successfully!",
+    Content = "Script Loaded Successfully !",
     Image = "rbxassetid://16730867128",
     Time = 5
 })
