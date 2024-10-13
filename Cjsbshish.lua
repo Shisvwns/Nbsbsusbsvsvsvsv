@@ -1536,8 +1536,8 @@ end
 
 function Tween(Pos)
     local Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-    local tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance/100, Enum.EasingStyle.Linear), {CFrame = Pos})
-    tween:Play()
+    local tweento = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance/100, Enum.EasingStyle.Linear), {CFrame = Pos})
+    tweento:Play()
 end
 
 function StopTween(target)
