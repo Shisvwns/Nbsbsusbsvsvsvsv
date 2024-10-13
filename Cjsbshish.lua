@@ -1535,9 +1535,9 @@ function topos(Pos)
 end
 
 function Tween(Pos)
-    local Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-    local TweenPos = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear), {CFrame = Pos})
-    TweenPos:Play()
+    Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    Tween = game:GetService("TweenService"):Create(lp.Character.PartTele,TweenInfo.new(Distance/_G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
+    Tween:Play()
 end
 
 function StopTween(target)
@@ -1546,6 +1546,21 @@ function StopTween(target)
         game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos}):Cancel()
     end
 end
+
+spawn(function()
+    while task.wait() do
+        if lp.Character:FindFirstChild("Humanoid").Health <= 0 or not lp.Character:FindFirstChild("HumanoidRootPart") then
+            if lp.Character:FindFirstChild("TweenSmooth") then
+                lp.Character:FindFirstChild("TweenSmooth"):Destroy()
+            end
+        end
+        if (lp.Character.HumanoidRootPart.Position - lp.Character:FindFirstChild("PartTele").Position).Magnitude <= 100 then
+            if lp.Character:FindFirstChild("PartTele") then
+                lp.Character:FindFirstChild("PartTele"):Destroy()
+            end
+        end
+    end
+end)
 
 -- [ Pos Farm ]
 
@@ -8447,7 +8462,7 @@ end
 spawn(function()
     while task.wait() do
         UpdateTime()
-        TimeServer:Set(tostring(game.Lighting.TimeOfDay).."[ "..function7().." ]")
+        TimeServer:Set(tostring(game.Lighting.TimeOfDay).." ( "..function7().." )")
     end
 end)
 
