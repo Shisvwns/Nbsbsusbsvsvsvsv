@@ -8447,7 +8447,7 @@ end
 spawn(function()
     while task.wait() do
         UpdateTime()
-        TimeServer:Set(tostring(Lighting.TimeOfDay).."[ "..function7().." ]")
+        TimeServer:Set(tostring(game.Lighting.TimeOfDay).."[ "..function7().." ]")
     end
 end)
 
