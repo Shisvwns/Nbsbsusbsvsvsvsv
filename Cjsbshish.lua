@@ -1795,7 +1795,7 @@ function CheckCakeSpawn()
             return "Dough King Spawned"
         end
     elseif World1 or World2 then
-        return "Defeat: 500/500 Mobs"
+        return "Only Third Sea"
     end
 end
 
@@ -8434,6 +8434,8 @@ local Section = StatusServer:AddSection({
 
 local Time = StatusServer:AddParagraph("Time Played")
 
+local TimeServer = StatusServer:AddParagraph("Time In Server")
+
 function UpdateTime()
     local GameTime = math.floor(workspace.DistributedGameTime+0.5)
     local Hour = math.floor(GameTime/(60^2))%24
@@ -8445,6 +8447,7 @@ end
 spawn(function()
     while task.wait() do
         UpdateTime()
+        TimeServer:Set(tostring(Lighting.TimeOfDay).."[ "..function7().." ]")
     end
 end)
 
@@ -8531,10 +8534,10 @@ local Section = StatusServer:AddSection({
     Name = "~ Server ~"
 })
 
-local JobId = StatusServer:AddParagraph("Server Job-Id", game.JobId)
+local JobId = StatusServer:AddParagraph("Server Job Id", game.JobId)
 
 StatusServer:AddTextbox({
-	Name = "Input Job-Id",
+	Name = "Input Job Id",
 	Default = "",
 	TextDisappear = true,
 	Callback = function(Value)
@@ -8566,12 +8569,12 @@ spawn(function()
 end)
 
 StatusServer:AddButton({
-    Name = "Copy Server Job-Id",
+    Name = "Copy Server Job Id",
     Callback = function()
         setclipboard(tostring(game.JobId))
         OrionLib:MakeNotification({
         	Name = "Tinh Linh Hub",
-        	Content = "Copied Server Job-Id !",
+        	Content = "Copied Server Job Id !",
         	Image = "rbxassetid://16730867128",
         	Time = 5
         })
