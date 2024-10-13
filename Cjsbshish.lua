@@ -1535,9 +1535,9 @@ function topos(Pos)
 end
 
 function Tween(Pos)
-    Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-    Tween = game:GetService("TweenService"):Create(lp.Character.PartTele,TweenInfo.new(Distance/_G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
-    Tween:Play()
+    local Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    local tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance/100, Enum.EasingStyle.Linear), {CFrame = Pos})
+    tween:Play()
 end
 
 function StopTween(target)
@@ -7632,17 +7632,18 @@ Race:AddButton({
 })
 
 function RaceDoors()
-    if game:GetService("Players").LocalPlayer.Data.Race.Value == "Fishman" then
+    local raceValue = game:GetService("Players").LocalPlayer.Data.Race.Value
+    if raceValue == "Fishman" then
         Tween(CFrame.new(28224.056640625, 14889.4267578125, -210.5872039794922))
-    elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Human" then
+    elseif raceValue == "Human" then
         Tween(CFrame.new(29237.294921875, 14889.4267578125, -206.94955444335938))
-    elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Cyborg" then
+    elseif raceValue == "Cyborg" then
         Tween(CFrame.new(28492.4140625, 14894.4267578125, -422.1100158691406))
-    elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Skypiea" then
+    elseif raceValue == "Skypiea" then
         Tween(CFrame.new(28967.408203125, 14918.0751953125, 234.31198120117188))
-    elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Ghoul" then
+    elseif raceValue == "Ghoul" then
         Tween(CFrame.new(28672.720703125, 14889.1279296875, 454.5961608886719))
-    elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Mink" then
+    elseif raceValue == "Mink" then
         Tween(CFrame.new(29020.66015625, 14889.4267578125, -379.2682800292969))
     end
 end
@@ -8449,8 +8450,6 @@ local Section = StatusServer:AddSection({
 
 local Time = StatusServer:AddParagraph("Time Played")
 
-local TimeServer = StatusServer:AddParagraph("Time In Server")
-
 function UpdateTime()
     local GameTime = math.floor(workspace.DistributedGameTime+0.5)
     local Hour = math.floor(GameTime/(60^2))%24
@@ -8462,6 +8461,13 @@ end
 spawn(function()
     while task.wait() do
         UpdateTime()
+    end
+end)
+
+local TimeServer = StatusServer:AddParagraph("Time In Server")
+
+spawn(function()
+    while task.wait() do
         TimeServer:Set(tostring(game.Lighting.TimeOfDay).." ( "..function7().." )")
     end
 end)
