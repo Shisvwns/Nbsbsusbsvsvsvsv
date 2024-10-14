@@ -1540,7 +1540,7 @@ function topos(Pos)
             lp.Character.Humanoid.Sit = false
         end
         isTeleporting = true
-        local Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / getgenv().TweenSpeed, Enum.EasingStyle.Linear), {CFrame = Pos})
+        local Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear), {CFrame = Pos})
         Tween:Play()
         Tween.Completed:Connect(function(status)
             if status == Enum.PlaybackState.Completed then
@@ -1580,7 +1580,7 @@ spawn(function()
     end
 end)
 
-local function onCharacterAdded(character)
+function onCharacterAdded(character)
     local humanoid = character:WaitForChild("Humanoid")
     humanoid.Died:Connect(function()
         stopTeleport()
