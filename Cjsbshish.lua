@@ -1963,7 +1963,7 @@ if not LPH_OBFUSCATED then
 	LPH_NO_UPVALUES = (function(...) return ... end)
 end
 
-NoAttackAnimation = true
+NoAttackAnimation = false
 local DmgAttack = game:GetService("ReplicatedStorage").Assets.GUI:WaitForChild("DamageCounter")
 local PC = require(game.Players.LocalPlayer.PlayerScripts.CombatFramework.Particle)
 local RL = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib)
@@ -2036,7 +2036,7 @@ CancelCoolDown = LPH_JIT_MAX(function()
 		AttackCoolDown = tick() + (FastAttackDelay or 0.01) + ((FireL/MaxFire)*0.3)
 		RigEven.FireServer(RigEven,"weaponChange",ac.currentWeaponModel.Name)
 		FireL = FireL + 1
-		fask.delay((FastAttackDelay or 0.01) + ((FireL+0.3/MaxFire)*0.3),function()
+		task.delay((FastAttackDelay or 0.01) + ((FireL+0.3/MaxFire)*0.3),function()
 			FireL = FireL - 1
 		end)
 	end
@@ -2059,14 +2059,14 @@ AttackFunction = LPH_JIT_MAX(function(typef)
 			end
 		end
 		if #bladehit > 0 then
-			pcall(fask.spawn,ac.attack,ac)
+			pcall(task.spawn,ac.attack,ac)
 			if tick() > AttackCoolDown then
 				CancelCoolDown()
 			end
 			if tick() - cooldowntickFire > 0.1 then
 				ac.timeToNextAttack = 0
 				ac.hitboxMagnitude = 60
-				pcall(fask.spawn,ac.attack,ac)
+				pcall(task.spawn,ac.attack,ac)
 				cooldowntickFire = tick()
 			end
 			local AMI3 = ac.anims.basic[3]
@@ -2076,7 +2076,7 @@ AttackFunction = LPH_JIT_MAX(function(typef)
 			local StartP = ac.humanoid:LoadAnimation(AttackAnim)
 			StartP:Play(0.01,0.01,0.01)
 			RigEven.FireServer(RigEven,"hit",bladehit,AMI3 and 3 or 2,"")
-			fask.delay(0.01,function()
+			task.delay(0.01,function()
 				StartP:Stop()
 			end)
 		end
@@ -2096,33 +2096,33 @@ LPH_JIT_MAX(function()
 			local ac = CombatFrameworkR.activeController
 			if ac and ac.equipped and not CheckStun() then
 				if NeedAttacking and Fast_Attack then
-					fask.spawn(function()
-						pcall(fask.spawn,AttackFunction,1)
+					task.spawn(function()
+						pcall(task.spawn,AttackFunction,1)
 					end)
 				elseif DamageAura then
-					fask.spawn(function()
-						pcall(fask.spawn,AttackFunction,3)
+					task.spawn(function()
+						pcall(task.spawn,AttackFunction,3)
 					end)
 				elseif UsefastattackPlayers and Fast_Attack then
-					fask.spawn(function()
-						pcall(fask.spawn,AttackFunction,2)
+					task.spawn(function()
+						pcall(task.spawn,AttackFunction,2)
 					end)
 				elseif NeedAttacking and Fast_Attack == false then
 					if ac.hitboxMagnitude ~= 55 then
 						ac.hitboxMagnitude = 55
 					end
-					pcall(fask.spawn,ac.attack,ac)
+					pcall(task.spawn,ac.attack,ac)
 				end
 			end
 		end
 	end)
 end)()
     
-    game:GetService("Players").LocalPlayer.Idled:connect(function()
-        game:GetService("VirtualUser"):Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-        wait(1)
-        game:GetService("VirtualUser"):Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-    end)
+game:GetService("Players").LocalPlayer.Idled:connect(function()
+    game:GetService("VirtualUser"):Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+    wait(1)
+    game:GetService("VirtualUser"):Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+end)
     
 inmyselfss = LPH_JIT_MAX(function(name)
 	if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(name) then
@@ -2359,22 +2359,6 @@ Setting:AddDropdown({
         end
 	end
 })
-
-Setting:AddToggle({
-	Name = "Fast Attack",
-	Default = true,
-	Callback = function(Value)
-		_G.FastAttack = Value
-	end
-})
-
-spawn(function()
-    while task.wait(FastAttackDelay) do
-        if _G.FastAttack then
-            AttackNoCD()
-        end
-    end
-end)
 
 Setting:AddToggle({
 	Name = "Auto Click [ 75% Kick System ]",
