@@ -1497,43 +1497,100 @@ function CalcDistance(I, II)
     end 
     return (Vector3.new(I.X, 0, I.Z)-Vector3.new(II.X, 0, II.Z)).Magnitude 
 end
+
+isTeleporting = false
 function topos(Pos)
-    if not Pos then
-        return
-    end 
-    if not lp.Character:FindFirstChild("PartTele") then
-        local PartTele = Instance.new("Part", lp.Character)
-        PartTele.Size = Vector3.new(0,0,0)
-        PartTele.Name = "PartTele"
-        PartTele.Anchored = true
-        PartTele.Transparency = 1
-        PartTele.CanCollide = false
-        PartTele.CFrame = WaitHRP(lp).CFrame
-        PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
-            task.wait(0.01)
-            WaitHRP(lp).CFrame = PartTele.CFrame
-        end)
-    end
-    Portal = GetPortal(Pos) 
-    Spawn = GetBypassPos(Pos) 
-    MyCFrame = WaitHRP(lp).CFrame
-    Distance = CalcDistance(MyCFrame, Pos)
-    if CalcDistance(Portal, Pos) < CalcDistance(Pos) and CalcDistance(Portal) > 500 then
-        return RequestEntrance(Portal)
-    end
-    if _G.BypassTele == true then
-        if DungBypass == false then
-            wait(0.3)
-            if CalcDistance(Pos) - CalcDistance(Spawn, Pos) > 1000 and CalcDistance(Spawn) > 1000 then
-                return BypassTeleport(Spawn)
+    if lp.Character and lp.Character.Humanoid.Health > 0 and lp.Character:FindFirstChild("HumanoidRootPart") then
+        local Distance = (Pos.Position - lp.Character.HumanoidRootPart.Position).Magnitude
+        if not Pos then 
+            return 
+        end
+        if not lp.Character:FindFirstChild("PartTele") then
+            local PartTele = Instance.new("Part", lp.Character)
+            PartTele.Size = Vector3.new(0,0,0)
+            PartTele.Name = "PartTele"
+            PartTele.Anchored = true
+            PartTele.Transparency = 1
+            PartTele.CanCollide = false
+            PartTele.CFrame = WaitHRP(lp).CFrame 
+            PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
+                if not isTeleporting then return end
+                task.wait()
+                if lp.Character and lp.Character:FindFirstChild("HumanoidRootPart") then
+                    WaitHRP(lp).CFrame = PartTele.CFrame
+                end
+            end)
+        end
+        Portal = GetPortal(Pos) 
+        Spawn = GetBypassPos(Pos) 
+        MyCFrame = WaitHRP(lp).CFrame
+        Distance = CalcDistance(MyCFrame, Pos)
+        if CalcDistance(Portal, Pos) < CalcDistance(Pos) and CalcDistance(Portal) > 500 then
+            return RequestEntrance(Portal)
+        end
+        if _G.BypassTele == true then
+            if DungBypass == false then
+                wait(0.3)
+                if CalcDistance(Pos) - CalcDistance(Spawn, Pos) > 1000 and CalcDistance(Spawn) > 1000 then
+                    return BypassTeleport(Spawn)
+                end
             end
         end
+        if lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid:FindFirstChild("Sit") and lp.Character.Humanoid.Sit == true then
+            lp.Character.Humanoid.Sit = false
+        end
+        isTeleporting = true
+        local Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / getgenv().TweenSpeed, Enum.EasingStyle.Linear), {CFrame = Pos})
+        Tween:Play()
+        Tween.Completed:Connect(function(status)
+            if status == Enum.PlaybackState.Completed then
+                if lp.Character:FindFirstChild("PartTele") then
+                    lp.Character.PartTele:Destroy()
+                end
+                isTeleporting = false
+            end
+        end)
     end
-    if lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid:FindFirstChild("Sit") and lp.Character.Humanoid.Sit == true then
-        lp.Character.Humanoid.Sit = false
+end
+
+function stopTeleport()
+    isTeleporting = false
+    if lp.Character:FindFirstChild("PartTele") then
+        lp.Character.PartTele:Destroy()
     end
-    Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
-    Tween:Play()
+end
+
+spawn(function()
+    while task.wait() do
+        if not isTeleporting then
+            stopTeleport()
+        end
+    end
+end)
+
+spawn(function()
+    while task.wait() do
+        pcall(function()
+            if lp.Character:FindFirstChild("PartTele") then
+                if (lp.Character.HumanoidRootPart.Position - lp.Character.PartTele.Position).Magnitude >= 100 then
+                    stopTeleport()
+                end
+            end
+        end)
+    end
+end)
+
+local function onCharacterAdded(character)
+    local humanoid = character:WaitForChild("Humanoid")
+    humanoid.Died:Connect(function()
+        stopTeleport()
+    end)
+end
+
+lp.CharacterAdded:Connect(onCharacterAdded)
+
+if lp.Character then
+    onCharacterAdded(lp.Character)
 end
 
 function StopTween(target)
@@ -1972,24 +2029,21 @@ RL.wrapAttackAnimationAsync = function(a,b,c,d,func)
 	if not NoAttackAnimation then
 		return oldRL(a,b,c,60,func)
 	end
+
 	local Hits = {}
 	local Client = game.Players.LocalPlayer
 	local Characters = game:GetService("Workspace").Characters:GetChildren()
 	for i,v in pairs(Characters) do
 		local Human = v:FindFirstChildOfClass("Humanoid")
-		if v.Name ~= game.Players.LocalPlayer.Name and Human and Human.RootPart and Human.Health > 0 then
-			if Human.RootPart.Position and Client:DistanceFromCharacter(Human.RootPart.Position) < 65 then
-				table.insert(Hits,Human.RootPart)
-			end
+		if v.Name ~= game.Players.LocalPlayer.Name and Human and Human.RootPart and Human.Health > 0 and Client:DistanceFromCharacter(Human.RootPart.Position) < 65 then
+			table.insert(Hits,Human.RootPart)
 		end
 	end
 	local Enemies = game:GetService("Workspace").Enemies:GetChildren()
 	for i,v in pairs(Enemies) do
 		local Human = v:FindFirstChildOfClass("Humanoid")
-		if Human and Human.RootPart and Human.Health > 0 then
-			if Human.RootPart.Position and Client:DistanceFromCharacter(Human.RootPart.Position) < 65 then
-				table.insert(Hits,Human.RootPart)
-			end
+		if Human and Human.RootPart and Human.Health > 0 and Client:DistanceFromCharacter(Human.RootPart.Position) < 65 then
+			table.insert(Hits,Human.RootPart)
 		end
 	end
 	a:Play(0.01,0.01,0.01)
@@ -2002,10 +2056,8 @@ getAllBladeHits = LPH_NO_VIRTUALIZE(function(Sizes)
 	local Enemies = game:GetService("Workspace").Enemies:GetChildren()
 	for i,v in pairs(Enemies) do
 		local Human = v:FindFirstChildOfClass("Humanoid")
-		if Human and Human.RootPart and Human.Health > 0 then
-			if Human.RootPart.Position and Client:DistanceFromCharacter(Human.RootPart.Position) < Sizes+5 then
-				table.insert(Hits,Human.RootPart)
-			end
+		if Human and Human.RootPart and Human.Health > 0 and Client:DistanceFromCharacter(Human.RootPart.Position) < Sizes+5 then
+			table.insert(Hits,Human.RootPart)
 		end
 	end
 	return Hits
@@ -2017,10 +2069,8 @@ getAllBladeHitsPlayers = LPH_NO_VIRTUALIZE(function(Sizes)
 	local Characters = game:GetService("Workspace").Characters:GetChildren()
 	for i,v in pairs(Characters) do
 		local Human = v:FindFirstChildOfClass("Humanoid")
-		if v.Name ~= game.Players.LocalPlayer.Name and Human and Human.RootPart and Human.Health > 0 then
-			if Human.RootPart.Position and Client:DistanceFromCharacter(Human.RootPart.Position) < Sizes+5 then
-				table.insert(Hits,Human.RootPart)
-			end
+		if v.Name ~= game.Players.LocalPlayer.Name and Human and Human.RootPart and Human.Health > 0 and Client:DistanceFromCharacter(Human.RootPart.Position) < Sizes+5 then
+			table.insert(Hits,Human.RootPart)
 		end
 	end
 	return Hits
@@ -2371,8 +2421,8 @@ Setting:AddToggle({
 	Name = "Fast Attack",
 	Default = true,
 	Callback = function(Value)
-		Fast_Attack = Value
-		DamageAura = Value
+		Fast_Attack =Value
+		DamageAura =Value
 		ClickNoCooldown = Value
 		DmgAttack.Enabled = not Value
 	end
@@ -3114,7 +3164,7 @@ spawn(function()
                                         EquipWeapon(_G.SelectWeapon)
                                         topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,5))
                                         v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-                                        UsefastattackPlayers = true
+                                       UsefastattackPlayers = true
                                         if (v.Character.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 30 then
                                             AimBotSkillPosition = v.Character.HumanoidRootPart.CFrame.Position
                                             Skillaimbot = true
@@ -3126,7 +3176,7 @@ spawn(function()
                                         end
                                     until not _G.FarmSkip or not v:FindFirstChild("HumanoidRootPart") or v.Character.Humanoid.Health <= 0
                                     Skillaimbot = false
-                                    UsefastattackPlayers = false
+                                   UsefastattackPlayers = false
                                 end
                             end
                         else
