@@ -1522,6 +1522,7 @@ function topos(Pos)
     end
     if _G.BypassTele == true then
         if DungBypass == false then
+            wait(0.3)
             if CalcDistance(Pos) - CalcDistance(Spawn, Pos) > 1000 and CalcDistance(Spawn) > 1000 then
                 return BypassTeleport(Spawn)
             end
@@ -1535,9 +1536,9 @@ function topos(Pos)
 end
 
 function Tween(Pos)
-    local Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-    local tweento = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance/100, Enum.EasingStyle.Linear), {CFrame = Pos})
-    tweento:Play()
+    Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    Tween = game:GetService("TweenService"):Create(lp.Character.PartTele,TweenInfo.new(Distance/_G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
+    Tween:Play()
 end
 
 function StopTween(target)
@@ -2170,6 +2171,7 @@ OrionLib:MakeNotification({
 -- [ Create Tab ]
 
 local Setting = Window:MakeTab({Name = "Settings", Icon = "rbxassetid://4483345998", PremiumOnly = false})
+local Hold = Window:MakeTab({Name = "Hold Skill", Icon = "rbxassetid://4483345998", PremiumOnly = false})
 local Farm = Window:MakeTab({Name = "Farm", Icon = "rbxassetid://4483345998", PremiumOnly = false})
 local FruitRaid = Window:MakeTab({Name = "Fruit & Raid", Icon = "rbxassetid://4483345998", PremiumOnly = false})
 local Other = Window:MakeTab({Name = "Other", Icon = "rbxassetid://4483345998", PremiumOnly = false})
@@ -2392,8 +2394,8 @@ Setting:AddToggle({
 
 Setting:AddDropdown({
 	Name = "Select Item",
-	Default = "",
-	Options = {"Devil Fruit","Fist Of Darkness & God's Chalice","Fist Of Darkness & God's Chalice & Devil Fruit"},
+	Default = "Fist Of Darkness Or God's Chalice & Devil Fruit",
+	Options = {"Devil Fruit","Fist Of Darkness Or God's Chalice","Fist Of Darkness Or God's Chalice & Devil Fruit"},
 	Callback = function(Value)
 		_G.SelectItem = Value
 	end
@@ -2423,13 +2425,13 @@ spawn(function()
                     else
                         DungBypass = false
                     end
-                elseif _G.SelectItem == "Fist Of Darkness & God's Chalice" then
+                elseif _G.SelectItem == "Fist Of Darkness Or God's Chalice" then
                     if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
                         DungBypass = true
                     else
                         DungBypass = false
                     end
-                elseif _G.SelectItem == "Fist Of Darkness & God's Chalice & Devil Fruit" then
+                elseif _G.SelectItem == "Fist Of Darkness Or God's Chalice & Devil Fruit" then
                     if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Backpack:FindFirstChild("Fruit") or game.Players.LocalPlayer.Character:FindFirstChild("Fruit") then
                         DungBypass = true
                     else
@@ -2667,13 +2669,15 @@ spawn(function()
     end
 end)
 
-local Section = Setting:AddSection({
+-- [ Hold Skill ]
+
+local Section = Hold:AddSection({
     Name = "~ Hold Skill Mastery ~"
 })
 
-Setting:AddLabel("Hold Skill Devil Fruit")
+Hold:AddLabel("Hold Skill Devil Fruit")
 
-Setting:AddTextbox({
+Hold:AddTextbox({
 	Name = "Hold Skill Z",
 	Default = "0",
 	TextDisappear = false,
@@ -2682,7 +2686,7 @@ Setting:AddTextbox({
 	end
 })
 
-Setting:AddTextbox({
+Hold:AddTextbox({
 	Name = "Hold Skill X",
 	Default = "0",
 	TextDisappear = false,
@@ -2691,7 +2695,7 @@ Setting:AddTextbox({
 	end
 })
 
-Setting:AddTextbox({
+Hold:AddTextbox({
 	Name = "Hold Skill C",
 	Default = "0",
 	TextDisappear = false,
@@ -2700,7 +2704,7 @@ Setting:AddTextbox({
 	end
 })
 
-Setting:AddTextbox({
+Hold:AddTextbox({
 	Name = "Hold Skill V",
 	Default = "0",
 	TextDisappear = false,
@@ -2709,7 +2713,7 @@ Setting:AddTextbox({
 	end
 })
 
-Setting:AddTextbox({
+Hold:AddTextbox({
 	Name = "Hold Skill F",
 	Default = "0",
 	TextDisappear = false,
@@ -2718,13 +2722,13 @@ Setting:AddTextbox({
 	end
 })
 
-local Section = Setting:AddSection({
+local Section = Hold:AddSection({
     Name = "~ Hold Skill Sea Event ~"
 })
 
-Setting:AddLabel("Hold Skill Devil Fruit")
+Hold:AddLabel("Hold Skill Devil Fruit")
 
-Setting:AddTextbox({
+Hold:AddTextbox({
 	Name = "Hold Skill Z",
 	Default = "0",
 	TextDisappear = false,
@@ -2733,7 +2737,7 @@ Setting:AddTextbox({
 	end
 })
 
-Setting:AddTextbox({
+Hold:AddTextbox({
 	Name = "Hold Skill X",
 	Default = "0",
 	TextDisappear = false,
@@ -2742,7 +2746,7 @@ Setting:AddTextbox({
 	end
 })
 
-Setting:AddTextbox({
+Hold:AddTextbox({
 	Name = "Hold Skill C",
 	Default = "0",
 	TextDisappear = false,
@@ -2751,7 +2755,7 @@ Setting:AddTextbox({
 	end
 })
 
-Setting:AddTextbox({
+Hold:AddTextbox({
 	Name = "Hold Skill V",
 	Default = "0",
 	TextDisappear = false,
@@ -2760,7 +2764,7 @@ Setting:AddTextbox({
 	end
 })
 
-Setting:AddTextbox({
+Hold:AddTextbox({
 	Name = "Hold Skill F",
 	Default = "0",
 	TextDisappear = false,
@@ -2769,9 +2773,9 @@ Setting:AddTextbox({
 	end
 })
 
-Setting:AddLabel("Hold Skill Melee")
+Hold:AddLabel("Hold Skill Melee")
 
-Setting:AddTextbox({
+Hold:AddTextbox({
 	Name = "Hold Skill Z",
 	Default = "0",
 	TextDisappear = false,
@@ -2780,7 +2784,7 @@ Setting:AddTextbox({
 	end
 })
 
-Setting:AddTextbox({
+Hold:AddTextbox({
 	Name = "Hold Skill X",
 	Default = "0",
 	TextDisappear = false,
@@ -2789,7 +2793,7 @@ Setting:AddTextbox({
 	end
 })
 
-Setting:AddTextbox({
+Hold:AddTextbox({
 	Name = "Hold Skill C",
 	Default = "0",
 	TextDisappear = false,
@@ -2798,7 +2802,7 @@ Setting:AddTextbox({
 	end
 })
 
-Setting:AddTextbox({
+Hold:AddTextbox({
 	Name = "Hold Skill V",
 	Default = "0",
 	TextDisappear = false,
@@ -2807,9 +2811,9 @@ Setting:AddTextbox({
 	end
 })
 
-Setting:AddLabel("Hold Skill Sword")
+Hold:AddLabel("Hold Skill Sword")
 
-Setting:AddTextbox({
+Hold:AddTextbox({
 	Name = "Hold Skill Z",
 	Default = "0",
 	TextDisappear = false,
@@ -2818,7 +2822,7 @@ Setting:AddTextbox({
 	end
 })
 
-Setting:AddTextbox({
+Hold:AddTextbox({
 	Name = "Hold Skill X",
 	Default = "0",
 	TextDisappear = false,
@@ -2954,7 +2958,7 @@ spawn(function()
                             if v.Name == "Shanda" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                                 repeat wait()
                                     EquipWeapon(_G.SelectWeapon)
-                                    topos(v.HumanoidRootPart.CFrame * Pos)               
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
                                     PosMon = v.HumanoidRootPart.CFrame
                                     StartBring = true
                                 until not _G.FarmSkip or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0
@@ -2985,6 +2989,7 @@ spawn(function()
                                         end
                                         EquipWeapon(_G.SelectWeapon)
                                         topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,5))
+                                        v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
                                         KillPlayerAttack = true
                                         if (v.Character.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 30 then
                                             AimBotSkillPosition = v.Character.HumanoidRootPart.CFrame.Position
@@ -3416,6 +3421,7 @@ spawn(function()
                                                 UseSkill = true
                                                 Skillaimbot = true
                                                 topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 20, 0))
+                                                v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
                                             else           
                                                 UseSkill = false 
                                                 Skillaimbot = false
@@ -3488,6 +3494,7 @@ spawn(function()
                                             if v.Humanoid.Health <= HealthMin then
                                                 EquipWeaponGun()
                                                 topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 20, 0))
+                                                v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
                                                 game:GetService("Players").LocalPlayer.Character.Humanoid:FindFirstChild(""):InvokeServer("TAP", Vector3.new(ShootPosition.Position))
                                                 UseGunSkill = true
                                                 Skillaimbot = true
@@ -7632,18 +7639,18 @@ Race:AddButton({
 })
 
 function RaceDoors()
-    local raceValue = game:GetService("Players").LocalPlayer.Data.Race.Value
-    if raceValue == "Fishman" then
+    local RaceValue = game:GetService("Players").LocalPlayer.Data.Race.Value
+    if RaceValue == "Fishman" then
         Tween(CFrame.new(28224.056640625, 14889.4267578125, -210.5872039794922))
-    elseif raceValue == "Human" then
+    elseif RaceValue == "Human" then
         Tween(CFrame.new(29237.294921875, 14889.4267578125, -206.94955444335938))
-    elseif raceValue == "Cyborg" then
+    elseif RaceValue == "Cyborg" then
         Tween(CFrame.new(28492.4140625, 14894.4267578125, -422.1100158691406))
-    elseif raceValue == "Skypiea" then
+    elseif RaceValue == "Skypiea" then
         Tween(CFrame.new(28967.408203125, 14918.0751953125, 234.31198120117188))
-    elseif raceValue == "Ghoul" then
+    elseif RaceValue == "Ghoul" then
         Tween(CFrame.new(28672.720703125, 14889.1279296875, 454.5961608886719))
-    elseif raceValue == "Mink" then
+    elseif RaceValue == "Mink" then
         Tween(CFrame.new(29020.66015625, 14889.4267578125, -379.2682800292969))
     end
 end
@@ -7909,17 +7916,18 @@ Race:AddToggle({
 })
 
 spawn(function()
-    while wait() do
+    while task.wait() do
         if _G.KillAfterTrials then
             pcall(function()
                 TempleCFrame = CFrame.new( 28730.0645, 14887.5371, -91.0957718, 0.557085216, -4.57713725e-08, 0.830455363, 9.81919115e-08, 1, -1.07530047e-08, -0.830455363, 8.75343389e-08, 0.557085216)
-                if game.Players.LocalPlayer.PlayerGui.Main.Timer.Visible then
+                if game.Players.LocalPlayer.PlayerGui.Main.Timer.Visible == true then
                     if GetDistance(TempleCFrame) <= 380 then
                         for i, v in pairs(game.Players:GetChildren()) do
                             if v.Name ~= game.Players.LocalPlayer.Name and (GetDistance(TempleCFrame, v.Character.HumanoidRootPart) <= 300) and v.Character.Humanoid.Health > 0 then
-                                repeat wait()
+                                repeat task.wait()
                                     EquipWeapon(_G.SelectTrialsWeapon)
-                                    topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 0))
+                                    topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(1, 1, 1))
+                                    v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
                                     UseSkillTrial = true
                                     SpamOnRace = true
                                     AimBotSkillPosition = v.Character.HumanoidRootPart.CFrame.Position
@@ -8118,7 +8126,7 @@ StatsEsp:AddToggle({
 })
 
 StatsEsp:AddToggle({
-	Name = "Auto + Defense",
+	Name = "Auto Up Stats Defense",
 	Default = false,
 	Callback = function(Value)
 		Defense = Value
@@ -8126,7 +8134,7 @@ StatsEsp:AddToggle({
 })
 
 StatsEsp:AddToggle({
-	Name = "Auto + Sword",
+	Name = "Auto Up Stats Sword",
 	Default = false,
 	Callback = function(Value)
 		Sword = Value
@@ -8134,7 +8142,7 @@ StatsEsp:AddToggle({
 })
 
 StatsEsp:AddToggle({
-	Name = "Auto + Gun",
+	Name = "Auto Up Stats Gun",
 	Default = false,
 	Callback = function(Value)
 		Gun = Value
@@ -8142,7 +8150,7 @@ StatsEsp:AddToggle({
 })
 
 StatsEsp:AddToggle({
-	Name = "Auto + Devil Fruit",
+	Name = "Auto Up Stats Devil Fruit",
 	Default = false,
 	Callback = function(Value)
 		DemonFruit = Value
