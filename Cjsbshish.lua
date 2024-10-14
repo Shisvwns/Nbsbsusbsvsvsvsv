@@ -1529,7 +1529,7 @@ function topos(Pos)
             return RequestEntrance(Portal)
         end
         if _G.BypassTele == true then
-            if DungBypass == false then
+            if DungBypass == true then
                 wait(0.3)
                 if CalcDistance(Pos) - CalcDistance(Spawn, Pos) > 1000 and CalcDistance(Spawn) > 1000 then
                     return BypassTeleport(Spawn)
@@ -2578,35 +2578,29 @@ function CheckTraiAcQuy()
     end
 end
 
-DungBypass = false
+DungBypass = true
 spawn(function()
     while task.wait() do
         if _G.DontBypass then
             pcall(function()
-                if _G.SelectItem == "Devil Fruit" then
-                    if CheckTraiAcQuy() then
-                        DungBypass = true
-                    else
-                        DungBypass = false
-                    end
-                elseif _G.SelectItem == "Fist Of Darkness Or God's Chalice" then
-                    if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
-                        DungBypass = true
-                    else
-                        DungBypass = false
-                    end
-                elseif _G.SelectItem == "Fist Of Darkness Or God's Chalice & Devil Fruit" then
-                    if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Backpack:FindFirstChild("Fruit") or game.Players.LocalPlayer.Character:FindFirstChild("Fruit") then
-                        DungBypass = true
-                    else
-                        DungBypass = false
-                    end
-                else
+                if _G.SelectItem == "Devil Fruit" and CheckTraiAcQuy() then
                     DungBypass = false
+                else
+                    DungBypass = true
+                end
+                if _G.SelectItem == "Fist Of Darkness Or God's Chalice" and game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
+                    DungBypass = false
+                else
+                    DungBypass = true
+                end
+                if _G.SelectItem == "Fist Of Darkness Or God's Chalice & Devil Fruit" and game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Backpack:FindFirstChild("Fruit") or game.Players.LocalPlayer.Character:FindFirstChild("Fruit") then
+                    DungBypass = false
+                else
+                    DungBypass = true
                 end
             end)
         else
-            DungBypass = false
+            DungBypass = true
         end
     end
 end)
@@ -2839,6 +2833,8 @@ local Section = Hold:AddSection({
     Name = "~ Hold Skill Mastery ~"
 })
 
+local Paragraph = Hold:AddParagraph("For Example", "If You Want To Wait 3 Seconds Before Using Skill Z Again, Set The Value To 3.")
+
 Hold:AddLabel("Hold Skill Devil Fruit")
 
 Hold:AddTextbox({
@@ -2934,6 +2930,26 @@ Hold:AddTextbox({
 	TextDisappear = false,
 	Callback = function(Value)
 		_G.HoldSKillFruitF = Value
+	end
+})
+
+Hold:AddLabel("Hold Skill Gun")
+
+Hold:AddTextbox({
+	Name = "Hold Skill Z",
+	Default = "0",
+	TextDisappear = false,
+	Callback = function(Value)
+		_G.HoldSKillGunZ = Value
+	end
+})
+
+Hold:AddTextbox({
+	Name = "Hold Skill X",
+	Default = "0",
+	TextDisappear = false,
+	Callback = function(Value)
+		_G.HoldSKillGunX = Value
 	end
 })
 
@@ -3787,12 +3803,12 @@ spawn(function()
                 if v.Name == MonFarm and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health <= v.Humanoid.MaxHealth * _G.Kill_At / 100 then
                     if _G.SkillZ then
                         game:service('VirtualInputManager'):SendKeyEvent(true, "Z", false, game)
-                        wait()
+                        wait(_G.HoldSKillGunZ)
                         game:service('VirtualInputManager'):SendKeyEvent(false, "Z", false, game)
                     end
                     if _G.SkillX then
                         game:service('VirtualInputManager'):SendKeyEvent(true, "X", false, game)
-                        wait()
+                        wait(_G.HoldSKillGunX)
                         game:service('VirtualInputManager'):SendKeyEvent(false, "X", false, game)
                     end
                 end
@@ -3805,7 +3821,7 @@ local Section = Farm:AddSection({
     Name = "~ Melee & Sword Mastery ~"
 })
 
-local Paragraph = Farm:AddParagraph("Note", "Put Points Into Melee If Farming Melee Mastery, Same For Sword Mastery")
+local Paragraph = Farm:AddParagraph("Note", "Up Stats In Melee If You Farm Mastery Melee, Farm Mastery Sword Also Do The Same.")
 
 Farm:AddSlider({
 	Name = "Select Mastery ",
