@@ -2361,6 +2361,17 @@ Setting:AddDropdown({
 })
 
 Setting:AddToggle({
+	Name = "Fast Attack",
+	Default = true,
+	Callback = function(Value)
+		Fast_Attack = Value
+		DamageAura = Value
+		ClickNoCooldown = Value
+		DmgAttack.Enabled = not Value
+	end
+})
+
+Setting:AddToggle({
 	Name = "Auto Click [ 75% Kick System ]",
 	Default = false,
 	Callback = function(Value)
@@ -3096,7 +3107,7 @@ spawn(function()
                                         EquipWeapon(_G.SelectWeapon)
                                         topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,5))
                                         v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-                                        KillPlayerAttack = true
+                                        UsefastattackPlayers = true
                                         if (v.Character.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 30 then
                                             AimBotSkillPosition = v.Character.HumanoidRootPart.CFrame.Position
                                             Skillaimbot = true
@@ -3108,7 +3119,7 @@ spawn(function()
                                         end
                                     until not _G.FarmSkip or not v:FindFirstChild("HumanoidRootPart") or v.Character.Humanoid.Health <= 0
                                     Skillaimbot = false
-                                    KillPlayerAttack = false
+                                    UsefastattackPlayers = false
                                 end
                             end
                         else
