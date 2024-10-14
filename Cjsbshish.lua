@@ -1972,21 +1972,24 @@ RL.wrapAttackAnimationAsync = function(a,b,c,d,func)
 	if not NoAttackAnimation then
 		return oldRL(a,b,c,60,func)
 	end
-
 	local Hits = {}
 	local Client = game.Players.LocalPlayer
 	local Characters = game:GetService("Workspace").Characters:GetChildren()
 	for i,v in pairs(Characters) do
 		local Human = v:FindFirstChildOfClass("Humanoid")
-		if v.Name ~= game.Players.LocalPlayer.Name and Human and Human.RootPart and Human.Health > 0 and Client:DistanceFromCharacter(Human.RootPart.Position) < 65 then
-			table.insert(Hits,Human.RootPart)
+		if v.Name ~= game.Players.LocalPlayer.Name and Human and Human.RootPart and Human.Health > 0 then
+			if Human.RootPart.Position and Client:DistanceFromCharacter(Human.RootPart.Position) < 65 then
+				table.insert(Hits,Human.RootPart)
+			end
 		end
 	end
 	local Enemies = game:GetService("Workspace").Enemies:GetChildren()
 	for i,v in pairs(Enemies) do
 		local Human = v:FindFirstChildOfClass("Humanoid")
-		if Human and Human.RootPart and Human.Health > 0 and Client:DistanceFromCharacter(Human.RootPart.Position) < 65 then
-			table.insert(Hits,Human.RootPart)
+		if Human and Human.RootPart and Human.Health > 0 then
+			if Human.RootPart.Position and Client:DistanceFromCharacter(Human.RootPart.Position) < 65 then
+				table.insert(Hits,Human.RootPart)
+			end
 		end
 	end
 	a:Play(0.01,0.01,0.01)
@@ -1999,8 +2002,10 @@ getAllBladeHits = LPH_NO_VIRTUALIZE(function(Sizes)
 	local Enemies = game:GetService("Workspace").Enemies:GetChildren()
 	for i,v in pairs(Enemies) do
 		local Human = v:FindFirstChildOfClass("Humanoid")
-		if Human and Human.RootPart and Human.Health > 0 and Client:DistanceFromCharacter(Human.RootPart.Position) < Sizes+5 then
-			table.insert(Hits,Human.RootPart)
+		if Human and Human.RootPart and Human.Health > 0 then
+			if Human.RootPart.Position and Client:DistanceFromCharacter(Human.RootPart.Position) < Sizes+5 then
+				table.insert(Hits,Human.RootPart)
+			end
 		end
 	end
 	return Hits
@@ -2012,8 +2017,10 @@ getAllBladeHitsPlayers = LPH_NO_VIRTUALIZE(function(Sizes)
 	local Characters = game:GetService("Workspace").Characters:GetChildren()
 	for i,v in pairs(Characters) do
 		local Human = v:FindFirstChildOfClass("Humanoid")
-		if v.Name ~= game.Players.LocalPlayer.Name and Human and Human.RootPart and Human.Health > 0 and Client:DistanceFromCharacter(Human.RootPart.Position) < Sizes+5 then
-			table.insert(Hits,Human.RootPart)
+		if v.Name ~= game.Players.LocalPlayer.Name and Human and Human.RootPart and Human.Health > 0 then
+			if Human.RootPart.Position and Client:DistanceFromCharacter(Human.RootPart.Position) < Sizes+5 then
+				table.insert(Hits,Human.RootPart)
+			end
 		end
 	end
 	return Hits
