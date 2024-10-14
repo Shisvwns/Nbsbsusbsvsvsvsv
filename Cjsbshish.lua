@@ -1500,7 +1500,7 @@ end
 
 isTeleporting = false
 function topos(Pos)
-    if lp.Character and lp.Character.Humanoid.Health > 0 and lp.Character:FindFirstChild("HumanoidRootPart") then
+    if lp.Character and lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid.Health > 0 and lp.Character:FindFirstChild("HumanoidRootPart") then
         local Distance = (Pos.Position - lp.Character.HumanoidRootPart.Position).Magnitude
         if not Pos then 
             return 
