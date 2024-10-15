@@ -1529,11 +1529,9 @@ function topos(Pos)
             return RequestEntrance(Portal)
         end
         if _G.BypassTele == true then
-            if DungBypass == true then
-                wait(0.3)
-                if CalcDistance(Pos) - CalcDistance(Spawn, Pos) > 1000 and CalcDistance(Spawn) > 1000 then
-                    return BypassTeleport(Spawn)
-                end
+            wait(0.3)
+            if CalcDistance(Pos) - CalcDistance(Spawn, Pos) > 1000 and CalcDistance(Spawn) > 1000 then
+                return BypassTeleport(Spawn)
             end
         end
         if lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid:FindFirstChild("Sit") and lp.Character.Humanoid.Sit == true then
@@ -2191,25 +2189,22 @@ task.spawn(function()
     if hookfunction and not islclosure(hookfunction) then 
         workspace._WorldOrigin.ChildAdded:Connect(function(v)
             if v.Name =='DamageCounter' then 
-                v.Enabled = false 
+                v.Enabled  = false 
             end
         end)
-        hookfunction(require(game:GetService("ReplicatedStorage"):WaitForChild("GuideModule")).ChangeDisplayedNPC, function() end)
+        hookfunction(require(game:GetService("ReplicatedStorage"):WaitForChild("GuideModule")).ChangeDisplayedNPC,function() end)
         task.spawn(function()
-            local NGU, NGUVL
+            local NGU,NGUVL
             repeat 
-                NGU, NGUVL = pcall(function()
-                    local combatFramework = getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework))
-                    if combatFramework and combatFramework[2] and combatFramework[2].activeController then
-                        for i, v in pairs(combatFramework[2].activeController.data) do  
-                            if typeof(v) == 'function' then 
-                                hookfunction(v, function() end)
-                            end
+                NGU,NGUVL = pcall(function()
+                    for i,v in pairs(getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework))[2].activeController.data) do  
+                        if typeof(v) == 'function' then 
+                            hookfunction(v,function() end )
                         end
                     end
                 end)
                 task.wait(1.5)
-            until NGU
+            until NGU 
         end) 
         abc = true
         task.spawn(function()
@@ -2227,14 +2222,13 @@ task.spawn(function()
                     c.wrapAttackAnimationAsync = function(d, e, f, g, h)
                         local i = c.getBladeHits(e, f, g)
                         if i then
-                            b.play = function() end
+                            b.play = function()
+                            end
                             d:Play(0.1, 0.1, 0.1)
                             h(i)
                             b.play = shared.cpc
-                            wait(0.5)
+                            wait(.5)
                             d:Stop()
-                        else
-                            print("No blade hits detected")
                         end
                     end
                 end)
@@ -2544,19 +2538,11 @@ Setting:AddSlider({
 	end
 })
 
-Setting:AddToggle({
+local Bypass = Setting:AddToggle({
 	Name = "Bypass Teleport",
-	Default = false,
+	Default = true,
 	Callback = function(Value)
 		_G.BypassTele = Value
-	end
-})
-
-Setting:AddToggle({
-	Name = "Don't Bypass Teleport If Have Item",
-	Default = false,
-	Callback = function(Value)
-		_G.DontBypass = Value
 	end
 })
 
@@ -2566,6 +2552,14 @@ Setting:AddDropdown({
 	Options = {"Devil Fruit","Fist Of Darkness Or God's Chalice","Fist Of Darkness Or God's Chalice & Devil Fruit"},
 	Callback = function(Value)
 		_G.SelectItem = Value
+	end
+})
+
+Setting:AddToggle({
+	Name = "Don't Bypass Teleport If Have Item In Inventory",
+	Default = true,
+	Callback = function(Value)
+		_G.DontBypass = Value
 	end
 })
 
@@ -2582,29 +2576,26 @@ function CheckTraiAcQuy()
     end
 end
 
-DungBypass = true
 spawn(function()
     while task.wait() do
         if _G.DontBypass then
             pcall(function()
                 if _G.SelectItem == "Devil Fruit" and CheckTraiAcQuy() then
-                    DungBypass = false
+                    Bypass:Set(false)
                 else
-                    DungBypass = true
+                    Bypass:Set(true)
                 end
                 if _G.SelectItem == "Fist Of Darkness Or God's Chalice" and game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
-                    DungBypass = false
+                    Bypass:Set(false)
                 else
-                    DungBypass = true
+                    Bypass:Set(true)
                 end
                 if _G.SelectItem == "Fist Of Darkness Or God's Chalice & Devil Fruit" and game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Backpack:FindFirstChild("Fruit") or game.Players.LocalPlayer.Character:FindFirstChild("Fruit") then
-                    DungBypass = false
+                    Bypass:Set(false)
                 else
-                    DungBypass = true
+                    Bypass:Set(true)
                 end
             end)
-        else
-            DungBypass = true
         end
     end
 end)
