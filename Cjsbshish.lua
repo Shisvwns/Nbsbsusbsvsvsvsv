@@ -1529,7 +1529,6 @@ function topos(Pos)
             return RequestEntrance(Portal)
         end
         if _G.BypassTele == true then
-            wait(0.3)
             if CalcDistance(Pos) - CalcDistance(Spawn, Pos) > 1000 and CalcDistance(Spawn) > 1000 then
                 return BypassTeleport(Spawn)
             end
