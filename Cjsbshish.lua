@@ -8736,7 +8736,7 @@ spawn(function()
             elseif game:GetService("Players").LocalPlayer.Team.Name == "Marines" then
                 checkbotihoron:Set("Honor: "..tostring(game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].Value))
             end
-            CAzure:Set("Azure Ember: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("KitsuneStatuePray", "Check").."/25")
+            CAzure:Set("Azure Ember: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Azure Ember", "Check").."/25")
         end)
     end
 end)
