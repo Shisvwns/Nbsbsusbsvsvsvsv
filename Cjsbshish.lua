@@ -2537,7 +2537,7 @@ Setting:AddSlider({
 	end
 })
 
-local Bypass = Setting:AddToggle({
+Setting:AddToggle({
 	Name = "Bypass Teleport",
 	Default = true,
 	Callback = function(Value)
@@ -2555,7 +2555,7 @@ Setting:AddDropdown({
 })
 
 Setting:AddToggle({
-	Name = "Don't Bypass Teleport If Have Item In Inventory",
+	Name = "Don't Bypass Teleport If Have Item In Inventory ( Test )",
 	Default = true,
 	Callback = function(Value)
 		_G.DontBypass = Value
@@ -2580,19 +2580,11 @@ spawn(function()
         if _G.DontBypass then
             pcall(function()
                 if _G.SelectItem == "Devil Fruit" and CheckTraiAcQuy() then
-                    Bypass:Set(false)
-                else
-                    Bypass:Set(true)
-                end
-                if _G.SelectItem == "Fist Of Darkness Or God's Chalice" and game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
-                    Bypass:Set(false)
-                else
-                    Bypass:Set(true)
-                end
-                if _G.SelectItem == "Fist Of Darkness Or God's Chalice & Devil Fruit" and game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Backpack:FindFirstChild("Fruit") or game.Players.LocalPlayer.Character:FindFirstChild("Fruit") then
-                    Bypass:Set(false)
-                else
-                    Bypass:Set(true)
+                    _G.BypassTele = false
+                elseif _G.SelectItem == "Fist Of Darkness Or God's Chalice" and game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
+                    _G.BypassTele = false
+                elseif _G.SelectItem == "Fist Of Darkness Or God's Chalice & Devil Fruit" and game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Backpack:FindFirstChild("Fruit") or game.Players.LocalPlayer.Character:FindFirstChild("Fruit") and CheckTraiAcQuy() then
+                    _G.BypassTele = false
                 end
             end)
         end
