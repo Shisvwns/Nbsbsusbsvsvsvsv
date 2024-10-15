@@ -3114,7 +3114,7 @@ spawn(function()
 end)
 
 Farm:AddToggle({
-	Name = "Farm Fast [ Lv. 1 -> Lv. 310 ]",
+	Name = "Farm Fast [ Lv. 1 -> Lv. 250 ]",
 	Default = false,
 	Callback = function(Value)
 		_G.FarmSkip = Value
@@ -7702,6 +7702,8 @@ spawn(function()
     end
 end)
 
+local CAzure = Sea:AddParagraph("Your Azure Ember")
+
 Sea:AddSlider({
 	Name = "Set Azure Ember Quantity To Trade",
 	Min = 10,
@@ -8298,7 +8300,7 @@ StatsEsp:AddSlider({
 })
 
 StatsEsp:AddToggle({
-	Name = "Auto + Melee",
+	Name = "Auto Up Stats Melee",
 	Default = false,
 	Callback = function(Value)
 		Melee = Value
@@ -8734,6 +8736,7 @@ spawn(function()
             elseif game:GetService("Players").LocalPlayer.Team.Name == "Marines" then
                 checkbotihoron:Set("Honor: "..tostring(game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].Value))
             end
+            CAzure:Set("Azure Ember: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("KitsuneStatuePray", "Check").."/25")
         end)
     end
 end)
