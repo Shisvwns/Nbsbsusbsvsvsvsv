@@ -2010,7 +2010,7 @@ if not LPH_OBFUSCATED then
 	LPH_NO_UPVALUES = (function(...) return ... end)
 end
 
-NoAttackAnimation = false
+NoAttackAnimation = true
 local DmgAttack = game:GetService("ReplicatedStorage").Assets.GUI:WaitForChild("DamageCounter")
 local PC = require(game.Players.LocalPlayer.PlayerScripts.CombatFramework.Particle)
 local RL = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib)
@@ -2191,22 +2191,25 @@ task.spawn(function()
     if hookfunction and not islclosure(hookfunction) then 
         workspace._WorldOrigin.ChildAdded:Connect(function(v)
             if v.Name =='DamageCounter' then 
-                v.Enabled  = false 
+                v.Enabled = false 
             end
         end)
-        hookfunction(require(game:GetService("ReplicatedStorage"):WaitForChild("GuideModule")).ChangeDisplayedNPC,function() end)
+        hookfunction(require(game:GetService("ReplicatedStorage"):WaitForChild("GuideModule")).ChangeDisplayedNPC, function() end)
         task.spawn(function()
-            local NGU,NGUVL
+            local NGU, NGUVL
             repeat 
-                NGU,NGUVL = pcall(function()
-                    for i,v in pairs(getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework))[2].activeController.data) do  
-                        if typeof(v) == 'function' then 
-                            hookfunction(v,function() end )
+                NGU, NGUVL = pcall(function()
+                    local combatFramework = getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework))
+                    if combatFramework and combatFramework[2] and combatFramework[2].activeController then
+                        for i, v in pairs(combatFramework[2].activeController.data) do  
+                            if typeof(v) == 'function' then 
+                                hookfunction(v, function() end)
+                            end
                         end
                     end
                 end)
                 task.wait(1.5)
-            until NGU 
+            until NGU
         end) 
         abc = true
         task.spawn(function()
@@ -2224,13 +2227,14 @@ task.spawn(function()
                     c.wrapAttackAnimationAsync = function(d, e, f, g, h)
                         local i = c.getBladeHits(e, f, g)
                         if i then
-                            b.play = function()
-                            end
+                            b.play = function() end
                             d:Play(0.1, 0.1, 0.1)
                             h(i)
                             b.play = shared.cpc
-                            wait(.5)
+                            wait(0.5)
                             d:Stop()
+                        else
+                            print("No blade hits detected")
                         end
                     end
                 end)
@@ -6592,15 +6596,6 @@ Player:AddButton({
     Name = "Open Awakening",
     Callback = function()
         game:GetService("Players").LocalPlayer.PlayerGui.Main.AwakeningToggler.Visible = true
-    end
-})
-
-Player:AddButton({
-    Name = "Open Inventory [ Old ]",
-    Callback = function()
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventoryWeapons")
-        wait()
-        game:GetService("Players").LocalPlayer.PlayerGui.Main.Inventory.Visible = true
     end
 })
 
