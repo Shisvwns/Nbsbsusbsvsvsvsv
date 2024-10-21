@@ -1,3 +1,6 @@
+local Notification = require(game:GetService("ReplicatedStorage").Notification)
+Notification.new("<Color=White>Welcome to Tinh Linh Hub<Color=/>"):Display()
+
 setfpscap(60)
 local GC = getconnections or get_signal_cons
 if GC then
@@ -1566,15 +1569,15 @@ spawn(function()
 end)
 
 spawn(function()
-    while task.wait() do
-        pcall(function()
+    pcall(function()
+        while task.wait() do
             if lp.Character:FindFirstChild("PartTele") then
                 if (lp.Character.HumanoidRootPart.Position - lp.Character.PartTele.Position).Magnitude >= 100 then
                     stopTeleport()
                 end
             end
-        end)
-    end
+        end
+    end)
 end)
 
 function onCharacterAdded(character)
@@ -1643,8 +1646,8 @@ end)
 -- [ No Clip Farm ]
 
 spawn(function()
-    game:GetService("RunService").Stepped:Connect(function()
-        pcall(function()
+    pcall(function()
+        game:GetService("RunService").Stepped:Connect(function()
             if _G.AutoFarm or _G.FarmSkip or _G.AutoFarmNearest or _G.AutoDoughtBoss or _G.Auto_Bone or _G.Auto_Soul_Reaper or _G.AutoFarmFruitMastery or _G.AutoFarmGunMastery or _G.FarmAllSword or _G.FarmAllMelee or _G.AutoFarmBoss or _G.AutoAllBoss or _G.AutoFarmMob or _G.AutoMaterial or _G.Tweenfruit or _G.NextIsland or _G.AutoOderSword or _G.RaidPirate or _G.AutoFactory or _G.AutoElitehunter or _G.ChestBypass or _G.AutoFarmChest or _G.TeleSafe or _G.AutoSpawnRip or _G.AutoKillRipIndra or _G.AutoSpawnDark or _G.AutoKillDark or _G.AutoObservation or _G.AutoObservationv2 or _G.Auto_Rainbow_Haki or _G.AutoYama or _G.AutoHolyTorch or _G.Autotushita or _G.Auto_Saber or _G.Autowaden
                 or _G.AutoRengoku or _G.Autopole or _G.Autosaw or _G.AutoCarvender or _G.Auto_Dragon_Trident or _G.AutoTwinHook or _G.AutoCarvender or _G.AutoBudySword or _G.AutoSerpentBow or _G.Auto_EvoRace or _G.AutoMusketeerHat or _G.AutoSecondSea or _G.AutoThirdSea or _G.Teleport or _G.AutoKillFishCrew or _G.RelzFishBoat or _G.RelzPirateGrandBrigade or _G.RelzPirateBrigade or _G.AutoTerrorshark or _G.AutoSeaBest or _G.AutoKillShark or _G.AutoKillPiranha or _G.TeleportKitsune or _G.CollectAzure or _G.TweenMGear or _G.AutoMysticIsland or _G.Miragenpc or _G.AutoQuestRace or _G.KillAfterTrials or _G.TeleportIsland
             then
@@ -1943,8 +1946,8 @@ end
 -- [ Aimbot Farm ]
 
 spawn(function()
-    game:GetService("RunService").RenderStepped:Connect(function()
-        pcall(function()
+    pcall(function()
+        game:GetService("RunService").RenderStepped:Connect(function()
             if UseSkill or UseGunSkill or SeaSkill then
                 for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.Notifications:GetChildren()) do
                     for _, Notif in pairs(v:GetChildren()) do
@@ -2461,9 +2464,9 @@ Setting:AddToggle({
 })
 
 spawn(function()
-    while wait() do
-        if _G.BringMonster then
-            pcall(function()
+    pcall(function()
+        while wait() do
+            if _G.BringMonster then
                 CheckQuest()
                 for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                     if _G.AutoFarm or _G.AutoFarmFruitMastery or _G.AutoFarmGunMastery or _G.AutoSwordMastery then
@@ -2515,9 +2518,9 @@ spawn(function()
                         end
                     end
                 end
-            end)
+            end
         end
-    end
+    end)
 end)
 
 local Section = Setting:AddSection({
@@ -2576,9 +2579,9 @@ function CheckTraiAcQuy()
 end
 
 spawn(function()
-    while task.wait() do
-        if _G.DontBypass then
-            pcall(function()
+    pcall(function()
+        while task.wait() do
+            if _G.DontBypass then
                 if _G.SelectItem == "Devil Fruit" and CheckTraiAcQuy() then
                     _G.BypassTele = false
                 elseif _G.SelectItem == "Fist Of Darkness Or God's Chalice" and game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
@@ -2586,9 +2589,9 @@ spawn(function()
                 elseif _G.SelectItem == "Fist Of Darkness Or God's Chalice & Devil Fruit" and game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Backpack:FindFirstChild("Fruit") or game.Players.LocalPlayer.Character:FindFirstChild("Fruit") and CheckTraiAcQuy() then
                     _G.BypassTele = false
                 end
-            end)
+            end
         end
-    end
+    end)
 end)
 
 Setting:AddButton({
@@ -2780,48 +2783,15 @@ spawn(function()
 	end
 end)
 
-Setting:AddSlider({
-	Name = "Value Health",
-	Min = 1,
-	Max = 100,
-	Default = 30,
-	Color = Color3.fromRGB(255,255,255),
-	Increment = 1,
-	ValueName = "%",
-	Callback = function(Value)
-		_G.Health = Value
-	end
-})
-
-Setting:AddToggle({
-	Name = "Teleport To Y If Low Health [ Test ]",
-	Default = false,
-	Callback = function(Value)
-		_G.LowHealth = Value
-	end
-})
-
-spawn(function()
-    while wait() do
-        if _G.LowHealth then
-            if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
-                if game.Players.LocalPlayer.Character.Humanoid.Health / game.Players.LocalPlayer.Character.Humanoid.MaxHealth * 100 < _G.Health then
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, 100, 0)
-                end
-            end
-        end
-    end
-end)
-
 -- [ Hold Skill ]
-
-local Section = Hold:AddSection({
-    Name = "~ Hold Skill Mastery ~"
-})
 
 local Paragraph = Hold:AddParagraph("For Example", "If You Want To Wait 3 Seconds Before Using Skill Z Again, Set The Value To 3.")
 
-Hold:AddLabel("Hold Skill Devil Fruit")
+local Section = Hold:AddSection({
+    Name = "~ Hold Skill Farm Mastery ~"
+})
+
+Hold:AddLabel("• Hold Skill Devil Fruit •")
 
 Hold:AddTextbox({
 	Name = "Hold Skill Z",
@@ -2868,11 +2838,31 @@ Hold:AddTextbox({
 	end
 })
 
+Hold:AddLabel("• Hold Skill Gun •")
+
+Hold:AddTextbox({
+	Name = "Hold Skill Z",
+	Default = "0",
+	TextDisappear = false,
+	Callback = function(Value)
+		_G.HoldSKillGZ = Value
+	end
+})
+
+Hold:AddTextbox({
+	Name = "Hold Skill X",
+	Default = "0",
+	TextDisappear = false,
+	Callback = function(Value)
+		_G.HoldSKillGX = Value
+	end
+})
+
 local Section = Hold:AddSection({
     Name = "~ Hold Skill Sea Event ~"
 })
 
-Hold:AddLabel("Hold Skill Devil Fruit")
+Hold:AddLabel("• Hold Skill Devil Fruit •")
 
 Hold:AddTextbox({
 	Name = "Hold Skill Z",
@@ -2919,27 +2909,7 @@ Hold:AddTextbox({
 	end
 })
 
-Hold:AddLabel("Hold Skill Gun")
-
-Hold:AddTextbox({
-	Name = "Hold Skill Z",
-	Default = "0",
-	TextDisappear = false,
-	Callback = function(Value)
-		_G.HoldSKillGunZ = Value
-	end
-})
-
-Hold:AddTextbox({
-	Name = "Hold Skill X",
-	Default = "0",
-	TextDisappear = false,
-	Callback = function(Value)
-		_G.HoldSKillGunX = Value
-	end
-})
-
-Hold:AddLabel("Hold Skill Melee")
+Hold:AddLabel("• Hold Skill Melee •")
 
 Hold:AddTextbox({
 	Name = "Hold Skill Z",
@@ -2977,7 +2947,7 @@ Hold:AddTextbox({
 	end
 })
 
-Hold:AddLabel("Hold Skill Sword")
+Hold:AddLabel("• Hold Skill Sword •")
 
 Hold:AddTextbox({
 	Name = "Hold Skill Z",
@@ -2994,6 +2964,26 @@ Hold:AddTextbox({
 	TextDisappear = false,
 	Callback = function(Value)
 		_G.HoldSKillSwordX = Value
+	end
+})
+
+Hold:AddLabel("• Hold Skill Gun •")
+
+Hold:AddTextbox({
+	Name = "Hold Skill Z",
+	Default = "0",
+	TextDisappear = false,
+	Callback = function(Value)
+		_G.HoldSKillGunZ = Value
+	end
+})
+
+Hold:AddTextbox({
+	Name = "Hold Skill X",
+	Default = "0",
+	TextDisappear = false,
+	Callback = function(Value)
+		_G.HoldSKillGunX = Value
 	end
 })
 
@@ -3024,9 +3014,9 @@ local CayLevel = Farm:AddToggle({
 })
 
 spawn(function()
-    while wait() do
-        if LevelFMode == "No Quest" and _G.AutoFarm then
-            pcall(function()
+    pcall(function()
+        while wait() do
+            if LevelFMode == "No Quest" and _G.AutoFarm then
                 CheckQuest()
                 if game:GetService("Workspace").Enemies:FindFirstChild(Mon) then
                     for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
@@ -3047,15 +3037,15 @@ spawn(function()
                     UnEquipWeapon(_G.SelectWeapon)
                     StartMagnet = false
                 end
-            end)
+            end
         end
-    end
+    end)
 end)
 
 spawn(function()
-    while wait() do
-        if LevelFMode == "Get Quest" and _G.AutoFarm then
-            pcall(function()
+    pcall(function()
+        while wait() do
+            if LevelFMode == "Get Quest" and _G.AutoFarm then
                 local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
                 if not string.find(QuestTitle, NameMon) then
                     StartMagnet = false
@@ -3094,9 +3084,9 @@ spawn(function()
                         StartMagnet = false
                     end
                 end
-            end)
+            end
         end
-    end
+    end)
 end)
 
 Farm:AddToggle({
@@ -3112,9 +3102,9 @@ Farm:AddToggle({
 })
 
 spawn(function()
-    while wait() do
-        if _G.FarmSkip then
-            pcall(function()
+    pcall(function()
+        while wait() do
+            if _G.FarmSkip then
                 LvCount = game:GetService("Players").LocalPlayer.Data.Level.Value
                 if LvCount >= 1 and LvCount < 60 then
                     local cframefarm = CFrame.new(-7894.6176757813, 5547.1416015625, -380.29119873047)
@@ -3196,9 +3186,9 @@ spawn(function()
                     local args = { [1] = "AddPoint", [2] = "Melee", [3] = 5 }
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
                 end
-            end)
+            end
         end
-    end
+    end)
 end)
 
 Farm:AddToggle({
@@ -3211,9 +3201,9 @@ Farm:AddToggle({
 })
 
 spawn(function()
-	while wait() do
-		if _G.AutoFarmNearest then
-		    pcall(function()
+    pcall(function()
+    	while wait() do
+    		if _G.AutoFarmNearest then
 				for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
          	       if v.Name and v:FindFirstChild("Humanoid") then
 				        if v.Humanoid.Health > 0 and (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1500 then
@@ -3227,9 +3217,9 @@ spawn(function()
 				        end
 				    end
 				end
-			end)
+			end
 		end
-	end
+	end)
 end)
 
 local Section = Farm:AddSection({
@@ -3257,8 +3247,8 @@ Farm:AddToggle({
 })
 
 spawn(function()
-    while wait() do
-        pcall(function()
+    pcall(function()
+        while wait() do
             if string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 88 then
                 KillMob = (tonumber(string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,41)) - 500)
             elseif string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 87 then
@@ -3266,15 +3256,15 @@ spawn(function()
             elseif string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 86 then
                 KillMob = (tonumber(string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),41,41)) - 500)
             end
-        end)
-    end
+        end
+    end)
 end)
 
 local CakePos = CFrame.new(-2091.911865234375, 70.00884246826172, -12142.8359375)
 spawn(function()
-    while wait() do
-        if CakeFMode == "No Quest" and _G.AutoDoughtBoss then
-            pcall(function()
+    pcall(function()
+        while wait() do
+            if CakeFMode == "No Quest" and _G.AutoDoughtBoss then
                 if game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince") then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == "Cake Prince" or v.Name == "Dough King" then
@@ -3314,16 +3304,16 @@ spawn(function()
                         end
                     end
                 end
-            end)
+            end
         end
-    end
+    end)
 end)
 
 local CakeQuestPos = CFrame.new(-2021.32007, 37.7982254, -12028.7295, 0.957576931, -8.80302053e-08, 0.288177818, 6.9301187e-08, 1, 7.51931211e-08, -0.288177818, -5.2032135e-08, 0.957576931)
 spawn(function()
-    while wait() do
-        if CakeFMode == "Get Quest" and _G.AutoDoughtBoss and World3 then
-            pcall(function()
+    pcall(function()
+        while wait() do
+            if CakeFMode == "Get Quest" and _G.AutoDoughtBoss and World3 then
                 if game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince") or game:GetService("Workspace").Enemies:FindFirstChild("Dough King") then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == "Cake Prince" or v.Name == "Dough King" then
@@ -3336,14 +3326,14 @@ spawn(function()
                         end
                     end
                 end
-            end)
+            end
         end
-    end
+    end)
 end) 
 spawn(function()
-    while wait() do
-        if CakeFMode == "Get Quest" and _G.AutoDoughtBoss and World3 and not game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince") then
-            pcall(function()
+    pcall(function()
+        while wait() do
+            if CakeFMode == "Get Quest" and _G.AutoDoughtBoss and World3 and not game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince") then
                 local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
                 if not string.find(QuestTitle, "Cookie Crafter") then
                     MagnetNear = false
@@ -3380,9 +3370,9 @@ spawn(function()
                         UnEquipWeapon(_G.SelectWeapon)
                     end
                 end
-            end)
+            end
         end
-    end
+    end)
 end)
 
 Farm:AddToggle({
@@ -3419,9 +3409,9 @@ Farm:AddToggle({
 
 local BonePos = CFrame.new(-9506.234375, 172.130615234375, 6117.0771484375)
 spawn(function()
-    while wait() do 
-        if BoneFMode == "No Quest" and _G.Auto_Bone and World3 then
-            pcall(function()
+    pcall(function()
+        while wait() do
+            if BoneFMode == "No Quest" and _G.Auto_Bone and World3 then
                 if game:GetService("Workspace").Enemies:FindFirstChild("Reborn Skeleton") or game:GetService("Workspace").Enemies:FindFirstChild("Living Zombie") or game:GetService("Workspace").Enemies:FindFirstChild("Demonic Soul") or game:GetService("Workspace").Enemies:FindFirstChild("Posessed Mummy") then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy" then
@@ -3440,16 +3430,16 @@ spawn(function()
                     UnEquipWeapon(_G.SelectWeapon)
                     MagnetNear = false
                 end
-            end)
+            end
         end
-    end
+    end)
 end)
 
 local BoneQuestPos = CFrame.new(-9516.99316, 172.017181, 6078.46533, 0, 0, -1, 0, 1, 0, 1, 0, 0)
 spawn(function()
-    while wait() do
-        if BoneFMode == "Get Quest" and _G.Auto_Bone and World3  then
-            pcall(function()
+    pcall(function()
+        while wait() do
+            if BoneFMode == "Get Quest" and _G.Auto_Bone and World3 then
                 local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
                 if not string.find(QuestTitle, "Demonic Soul") then
                     MagnetNear = false
@@ -3486,9 +3476,9 @@ spawn(function()
                         MagnetNear = false
                     end
                 end
-            end)
+            end
         end
-    end
+    end)
 end)
 
 Farm:AddToggle({
@@ -3559,9 +3549,9 @@ Farm:AddToggle({
 })
 
 spawn(function()
-    while wait() do
-        if _G.AutoFarmFruitMastery then
-            pcall(function()
+    pcall(function()
+        while wait() do
+            if _G.AutoFarmFruitMastery then
                 CheckQuest()
                 local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
                 if not string.find(QuestTitle, NameMon) then
@@ -3611,9 +3601,9 @@ spawn(function()
                         UnEquipWeapon(_G.SelectWeapon)
                     end
                 end
-            end)
+            end
         end
-    end
+    end)
 end)
 
 Farm:AddToggle({
@@ -3635,9 +3625,9 @@ function EquipWeaponGun()
 end
 
 spawn(function()
-    while wait() do
-        if _G.AutoFarmGunMastery then
-            pcall(function()
+    pcall(function()
+        while wait() do
+            if _G.AutoFarmGunMastery then
                 CheckQuest()
                 local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
                 if not string.find(QuestTitle, NameMon) then
@@ -3687,9 +3677,9 @@ spawn(function()
                        UnEquipWeapon(_G.SelectWeapon)
                     end 
                 end
-            end)
+            end
         end
-    end
+    end)
 end)
 
 Farm:AddSlider({
@@ -3789,12 +3779,12 @@ spawn(function()
                 if v.Name == MonFarm and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health <= v.Humanoid.MaxHealth * _G.Kill_At / 100 then
                     if _G.SkillZ then
                         game:service('VirtualInputManager'):SendKeyEvent(true, "Z", false, game)
-                        wait(_G.HoldSKillGunZ)
+                        wait(_G.HoldSKillGZ)
                         game:service('VirtualInputManager'):SendKeyEvent(false, "Z", false, game)
                     end
                     if _G.SkillX then
                         game:service('VirtualInputManager'):SendKeyEvent(true, "X", false, game)
-                        wait(_G.HoldSKillGunX)
+                        wait(_G.HoldSKillGX)
                         game:service('VirtualInputManager'):SendKeyEvent(false, "X", false, game)
                     end
                 end
@@ -3891,9 +3881,9 @@ Farm:AddToggle({
 })
 
 spawn(function()
-    while wait() do
-        if _G.FarmAllMelee then
-            pcall(function()
+    pcall(function()
+        while wait() do
+            if _G.FarmAllMelee then
                 local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
                 if not string.find(QuestTitle, NameMon) then
                     StartMagnet = false
@@ -3932,9 +3922,9 @@ spawn(function()
                         StartMagnet = false
                     end
                 end
-            end)
+            end
         end
-    end
+    end)
 end)
 
 Farm:AddToggle({
@@ -3946,9 +3936,9 @@ Farm:AddToggle({
 })
 
 spawn(function()
-    while wait() do
-        if _G.FarmAllSword then
-            pcall(function()
+    pcall(function()
+        while wait() do
+            if _G.FarmAllSword then
                 local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
                 if not string.find(QuestTitle, NameMon) then
                     StartMagnet = false
@@ -3987,9 +3977,9 @@ spawn(function()
                         StartMagnet = false
                     end
                 end
-            end)
+            end
         end
-    end
+    end)
 end)
 
 local Section = Farm:AddSection({
@@ -4051,9 +4041,9 @@ Farm:AddToggle({
 })
 
 spawn(function()
-    while wait() do
-        if ModeBoss == "No Quest" and _G.AutoFarmBoss then
-            pcall(function()
+    pcall(function()
+        while wait() do
+            if ModeBoss == "No Quest" and _G.AutoFarmBoss then
                 CheckBossQuest()
                 if game:GetService("Workspace").Enemies:FindFirstChild(SelectBoss) then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
@@ -4070,15 +4060,15 @@ spawn(function()
                     topos(CFrameBoss)
                     UnEquipWeapon(_G.SelectWeapon)
                 end
-            end)
+            end
         end
-    end
+    end)
 end)
 
 spawn(function()
-	while wait() do
-		if ModeBoss == "Get Quest" and _G.AutoFarmBoss then
-			pcall(function()
+    pcall(function()
+    	while wait() do
+    		if ModeBoss == "Get Quest" and _G.AutoFarmBoss then
 				CheckBossQuest()
 				if MsBoss == "Soul Reaper" or MsBoss == "Longma" or MsBoss == "Don Swan" or MsBoss == "Cursed Captain" or MsBoss == "Order" or MsBoss == "rip_indra True Form" then
 					if game:GetService("Workspace").Enemies:FindFirstChild(MsBoss) then
@@ -4134,9 +4124,9 @@ spawn(function()
 						end
 					end
 				end
-			end)
+			end
 		end
-	end
+	end)
 end)
 
 Farm:AddToggle({
@@ -4149,9 +4139,9 @@ Farm:AddToggle({
 })
 
 spawn(function()
-    while wait() do
-        if _G.AutoAllBoss then
-            pcall(function()
+    pcall(function()
+        while wait() do
+            if _G.AutoAllBoss then
                 for i,v in pairs(game.ReplicatedStorage:GetChildren()) do
                     if (v.Name == "rip_indra" or v.Name == "Ice Admiral") or (v.Name == "Saber Expert" or v.Name == "The Saw" or v.Name == "Greybeard" or v.Name == "Mob Leader" or v.Name == "The Gorilla King" or v.Name == "Bobby" or v.Name == "Yeti" or v.Name == "Vice Admiral" or v.Name == "Warden" or v.Name == "Chief Warden" or v.Name == "Swan" or v.Name == "Magma Admiral" or v.Name == "Fishman Lord" or v.Name == "Wysper" or v.Name == "Thunder God" or v.Name == "Cyborg") or (v.Name == "Don Swan" or v.Name == "Diamond" or v.Name == "Jeremy" or v.Name == "Fajita" or v.Name == "Smoke Admiral" or v.Name == "Awakened Ice Admiral" or v.Name == "Tide Keeper" or v.Name == "Order" or v.Name == "Darkbeard" or v.Name == "Cursed Captain") or (v.Name == "Stone" or v.Name == "Island Empress" or v.Name == "Kilo Admiral" or v.Name == "Captain Elephant" or v.Name == "Beautiful Pirate" or v.Name == "Cake Queen" or v.Name == "rip_indra True Form" or v.Name == "Longma" or v.Name == "Soul Reaper" or v.Name == "Cake Prince" or v.Name == "Dough King") then
                         if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 17000 then
@@ -4162,9 +4152,9 @@ spawn(function()
                         end
                     end
                 end
-            end)
+            end
         end
-    end
+    end)
 end)
 
 local Section = Farm:AddSection({
@@ -4198,9 +4188,9 @@ Farm:AddToggle({
 })
 
 spawn(function()
-    while wait() do
-        if _G.AutoFarmMob then
-            pcall(function()
+    pcall(function()
+        while wait() do
+            if _G.AutoFarmMob then
                 CheckMonFarm(SelectMob)
                 if game:GetService("Workspace").Enemies:FindFirstChild(SelectMob) then
                     for i,v in pairs (game.Workspace.Enemies:GetChildren()) do
@@ -4220,9 +4210,9 @@ spawn(function()
                     topos(PosMonster)
                     UnEquipWeapon(_G.SelectWeapon)
                 end
-            end)
+            end
         end
-    end
+    end)
 end)
 
 local Section = Farm:AddSection({
@@ -4256,9 +4246,9 @@ Farm:AddToggle({
 })
 
 spawn(function()
-    while wait() do
-        if _G.AutoMaterial then
-            pcall(function()
+    pcall(function()
+        while wait() do
+            if _G.AutoMaterial then
                 MaterialMon(SelectMaterial)
                 if game:GetService("Workspace").Enemies:FindFirstChild(MMon) or game:GetService("Workspace").Enemies:FindFirstChild(MMon1) then
                     for i,v in pairs (game:GetService("Workspace").Enemies:GetChildren()) do
@@ -4281,15 +4271,15 @@ spawn(function()
                     topos(MPos1)
                     wait(3)
                 end
-            end)
+            end
         end
-    end
+    end)
 end)
 
 spawn(function()
-    while wait() do
-        if SelectMaterial == "Ectoplasm" and _G.AutoMaterial then
-            pcall(function()
+    pcall(function()
+        while wait() do
+            if SelectMaterial == "Ectoplasm" and _G.AutoMaterial then
                 if game:GetService("Workspace").Enemies:FindFirstChild("Ship Deckhand") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Engineer") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Steward") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Officer") or game:GetService("Workspace").Enemies:FindFirstChild("Cursed Captain") then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == "Ship Deckhand" or v.Name == "Ship Engineer" or v.Name == "Ship Steward" or v.Name == "Ship Officer" or v.Name == "Cursed Captain" then
@@ -4306,9 +4296,9 @@ spawn(function()
                     topos(CFrame.new(916.928589, 181.092773, 33422))
                     UnEquipWeapon(_G.SelectWeapon)
                 end
-            end)
+            end
         end
-    end
+    end)
 end)
 
 local Section = FruitRaid:AddSection({
@@ -4483,8 +4473,8 @@ FruitRaid:AddToggle({
 })
 
 spawn(function()
-    while wait() do
-        pcall(function()
+    pcall(function()
+        while wait() do
             if _G.AutoStoreFruit then
                 for i, v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
                     if string.find(v.Name, "Fruit") then
@@ -4517,8 +4507,8 @@ spawn(function()
                     end
                 end
             end
-        end)
-    end
+        end
+    end)
 end)
 
 FruitRaid:AddToggle({
@@ -6149,9 +6139,9 @@ ItemQuest:AddToggle({
 })
 
 spawn(function()
-    while wait() do
-        if _G.Auto_EvoRace then
-            pcall(function()
+    pcall(function()
+        while wait() do
+            if _G.Auto_EvoRace then
                 if not game:GetService("Players").LocalPlayer.Data.Race:FindFirstChild("Evolved") then
                     if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Alchemist","1") == 0 then
                         topos(CFrame.new(-2779.83521, 72.9661407, -3574.02002, -0.730484903, 6.39014104e-08, -0.68292886, 3.59963224e-08, 1, 5.50667032e-08, 0.68292886, 1.56424669e-08, -0.730484903))
@@ -6188,9 +6178,9 @@ spawn(function()
                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Alchemist","3")
                     end
                 end
-            end)
+            end
         end
-    end
+    end)
 end)
 
 ItemQuest:AddToggle({
@@ -6622,15 +6612,15 @@ Player:AddToggle({
 })
 
 spawn(function()
-	while wait() do
-	    pcall(function()
+    pcall(function()
+    	while wait() do
 	    	if _G.WalkWater then
 	    		game:GetService("Workspace").Map["WaterBase-Plane"].Size = Vector3.new(1000,112,1000)
     		else
     			game:GetService("Workspace").Map["WaterBase-Plane"].Size = Vector3.new(1000,80,1000)
             end
-		end)
-	end
+		end
+	end)
 end)
 
 Player:AddToggle({
@@ -6751,8 +6741,8 @@ PvP:AddToggle({
 })
 
 spawn(function()
-	while wait() do
-		pcall(function()
+    pcall(function()
+    	while wait() do
 			local MaxDistance = math.huge
 			for i,v in pairs(game:GetService("Players"):GetPlayers()) do
 				if v.Name ~= game.Players.LocalPlayer.Name then
@@ -6763,8 +6753,8 @@ spawn(function()
 					end
 				end
 			end
-		end)
-	end
+		end
+	end)
 end)
 
 spawn(function()
@@ -7008,9 +6998,9 @@ function TPB(pos, boat)
 end
 
 spawn(function()
-    while wait() do
-        if _G.SailBoat then
-            pcall(function()
+    pcall(function()
+        while wait() do
+            if _G.SailBoat then
                 if not CheckBoat() then
                     if World3 then
                         BuyBoatCFrame = CFrame.new(-16927.451171875, 9.0863618850708, 433.8642883300781)
@@ -7058,9 +7048,9 @@ spawn(function()
                         end
                     end
                 end
-            end)
+            end
         end
-    end
+    end)
 end)
 
 spawn(function()
@@ -7091,9 +7081,9 @@ spawn(function()
 end)
 
 spawn(function()
-    while wait() do
-        if _G.SailBoat then
-            pcall(function()
+    pcall(function()
+        while wait() do
+            if _G.SailBoat then
                 if CheckFishCrewMember() and _G.AutoKillFishCrew then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") then
@@ -7227,9 +7217,9 @@ spawn(function()
                     SeaSkill = false
                     MagnetNear = false
                 end
-            end)
+            end
         end
-    end
+    end)
 end)
 
 Sea:AddToggle({
@@ -7249,9 +7239,9 @@ Sea:AddToggle({
 })
 
 spawn(function()
-	while wait() do
-		if _G.NoClipRock or _G.SailBoat then
-		    pcall(function()
+    pcall(function()
+    	while wait() do
+	    	if _G.NoClipRock or _G.SailBoat then
 				if game.Players.LocalPlayer.Character.Humanoid.Sit == true then
 					for _, v in pairs(game.Workspace.Boats:GetDescendants()) do
 						if v:IsA("BasePart") and v.CanCollide == true then
@@ -7275,9 +7265,9 @@ spawn(function()
 						end
 					end
 				end
-			end)
+			end
 		end
-	end
+	end)
 end)
 
 Sea:AddSlider({
@@ -7615,12 +7605,12 @@ spawn(function()
                 end
                 if _G.SkillGunZ then
                     game:service('VirtualInputManager'):SendKeyEvent(true, "Z", false, game)
-                    wait()
+                    wait(_G.HoldSKillGunZ)
                     game:service('VirtualInputManager'):SendKeyEvent(false, "Z", false, game)
                 end
                 if _G.SkillGunX then
                     game:service('VirtualInputManager'):SendKeyEvent(true, "X", false, game)
-                    wait()
+                    wait(_G.HoldSKillGunX)
                     game:service('VirtualInputManager'):SendKeyEvent(false, "X", false, game)
                 end
                 DoneSkillGun = true
@@ -7668,15 +7658,15 @@ Sea:AddToggle({
 })
 
 spawn(function()
-    while wait() do
-        if _G.CollectAzure then
-            pcall(function()
+    pcall(function()
+        while wait() do
+            if _G.CollectAzure then
                 if game:GetService("Workspace"):FindFirstChild("AttachedAzureEmber") then
                     topos(game:GetService("Workspace"):WaitForChild("EmberTemplate"):FindFirstChild("Part").CFrame)
                 end
-            end)
+            end
         end
-    end
+    end)
 end)
 
 local CAzure = Sea:AddParagraph("Your Azure Ember")
@@ -7711,17 +7701,17 @@ function GetCountMaterials(MaterialName)
 end
 
 spawn(function()
-    while wait() do
-        if _G.TradeAureEmber then
-            pcall(function()
+    pcall(function()
+        while wait() do
+            if _G.TradeAureEmber then
                 local AzureAvilable = GetCountMaterials("Azure Ember")
                 if AzureAvilable >= _G.SetToTradeAureEmber then
                     game:GetService("ReplicatedStorage").Modules.Net:FindFirstChild("RF/KitsuneStatuePray"):InvokeServer()
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("KitsuneStatuePray")
                 end
-            end)
+            end
         end
-    end
+    end)
 end)
 
 -- [ Tab Race ]
@@ -8075,9 +8065,9 @@ Race:AddToggle({
 })
 
 spawn(function()
-    while task.wait() do
-        if _G.KillAfterTrials then
-            pcall(function()
+    pcall(function()
+        while task.wait() do
+            if _G.KillAfterTrials then
                 TempleCFrame = CFrame.new( 28730.0645, 14887.5371, -91.0957718, 0.557085216, -4.57713725e-08, 0.830455363, 9.81919115e-08, 1, -1.07530047e-08, -0.830455363, 8.75343389e-08, 0.557085216)
                 if game.Players.LocalPlayer.PlayerGui.Main.Timer.Visible == true then
                     if GetDistance(TempleCFrame) <= 380 then
@@ -8101,9 +8091,9 @@ spawn(function()
                         end
                     end
                 end
-            end)
+            end
         end
-    end
+    end)
 end)
 
 spawn(function()
