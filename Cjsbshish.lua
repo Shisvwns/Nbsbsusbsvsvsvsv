@@ -1,6 +1,3 @@
-local Notification = require(game:GetService("ReplicatedStorage").Notification)
-Notification.new("<Color=White>Welcome to Tinh Linh Hub<Color=/>"):Display()
-
 setfpscap(60)
 local GC = getconnections or get_signal_cons
 if GC then
