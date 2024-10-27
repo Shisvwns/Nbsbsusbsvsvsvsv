@@ -1608,17 +1608,28 @@ function RayfieldLibrary:CreateWindow(Settings)
 		end
 
 		-- Paragraph
-		function Tab:CreateParagraph(ParagraphSettings)
+		function Tab:CreateParagraph(ParagraphSettings,SectionParent)
 			local ParagraphValue = {}
 
 			local Paragraph = Elements.Template.Paragraph:Clone()
 			Paragraph.Title.Text = ParagraphSettings.Title
 			Paragraph.Content.Text = ParagraphSettings.Content
 			Paragraph.Visible = true
-			Paragraph.Parent = TabPage
+
+			Tab.Elements[ParagraphSettings.Title] = {
+				type = 'paragraph',
+				section = ParagraphSettings.SectionParent,
+				element = Paragraph
+			}
+
+			if SectionParent or ParagraphSettings.SectionParent.Holder then
+				Paragraph.Parent = SectionParent.Holder or ParagraphSettings.SectionParent.Holder
+			else
+				Paragraph.Parent = TabPage
+			end
 
 			Paragraph.Content.Size = UDim2.new(0, 438, 0, Paragraph.Content.TextBounds.Y)
-			--Paragraph.Content.Position = UDim2.new(1, -10, 0.575,0 )
+			--Paragraph.Content.Position = UDim2.new(0,465, 0,76)
 			Paragraph.Size = UDim2.new(0,465, 0, Paragraph.Content.TextBounds.Y + 40)
 
 			Paragraph.BackgroundTransparency = 1
