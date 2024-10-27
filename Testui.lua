@@ -2353,11 +2353,6 @@ function RayfieldLibrary:CreateWindow(Settings)
 			Slider.Name = SliderSettings.Name
 			Slider.Title.Text = SliderSettings.Name
 			Slider.Visible = true
-			Tab.Elements[SliderSettings.Name] = {
-				type = 'slider',
-				section = SliderSettings.SectionParent,
-				element = Slider
-			}
 			AddInfos(Slider,SliderSettings,'slider')
 			if SliderSettings.SectionParent then
 				Slider.Parent = SliderSettings.SectionParent.Holder
