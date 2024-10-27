@@ -160,6 +160,8 @@ local Topbar = Main.Topbar
 local Elements = Main.Elements
 local LoadingFrame = Main.LoadingFrame
 local TabList = Main.TabList
+local Prompt = Main.Prompt
+local InfoPrompt = Rayfield.Info
 
 Rayfield.DisplayOrder = 100
 LoadingFrame.Version.Text = Release
@@ -173,6 +175,9 @@ local CEnabled = false
 local Minimised = false
 local Hidden = false
 local Debounce = false
+local clicked = false
+local InfoPromptOpen = false
+
 local Notifications = Rayfield.Notifications
 
 local SelectedTheme = RayfieldLibrary.Theme.Default
@@ -210,9 +215,9 @@ end
 
 local function AddDraggingFunctionality(DragPoint, Main)
 	pcall(function()
-		local Dragging, DragInput, MousePos, FramePos = false
+		local Dragging, DragInput, MousePos, FramePos = false,false,false,false
 		DragPoint.InputBegan:Connect(function(Input)
-			if Input.UserInputType == Enum.UserInputType.MouseButton1 or Input.UserInputType == Enum.UserInputType.Touch then
+			if Input.UserInputType == Enum.UserInputType.MouseButton1 then
 				Dragging = true
 				MousePos = Input.Position
 				FramePos = Main.Position
@@ -225,7 +230,7 @@ local function AddDraggingFunctionality(DragPoint, Main)
 			end
 		end)
 		DragPoint.InputChanged:Connect(function(Input)
-			if Input.UserInputType == Enum.UserInputType.MouseMovement or Input.UserInputType == Enum.UserInputType.Touch then
+			if Input.UserInputType == Enum.UserInputType.MouseMovement then
 				DragInput = Input
 			end
 		end)
@@ -233,10 +238,85 @@ local function AddDraggingFunctionality(DragPoint, Main)
 			if Input == DragInput and Dragging then
 				local Delta = Input.Position - MousePos
 				TweenService:Create(Main, TweenInfo.new(0.45, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Position  = UDim2.new(FramePos.X.Scale,FramePos.X.Offset + Delta.X, FramePos.Y.Scale, FramePos.Y.Offset + Delta.Y)}):Play()
+				TweenService:Create(InfoPrompt, TweenInfo.new(0.6, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Position  = UDim2.new(FramePos.X.Scale,FramePos.X.Offset + Delta.X+ 370, FramePos.Y.Scale, FramePos.Y.Offset + Delta.Y)}):Play()
 			end
 		end)
 	end)
-end   
+end
+
+function BoolToText(Bool)
+	if Bool == true then
+		return 'ENABLED',Color3.fromRGB(44, 186, 44)
+	else
+		return 'DISABLED',Color3.fromRGB(186, 44, 44)
+	end
+end
+
+local function FadeDescription(Infos,type,Out:boolean?)
+	local Size = UDim2.fromOffset(230,275)
+	local Transparency = 0
+	local WaitTime = .05
+	if Out then
+		Size = UDim2.fromOffset(212,254)
+		Transparency = 1
+		WaitTime = nil
+	end
+	if not Out then
+		-- Set the Status
+		if type == 'slider' then
+			InfoPrompt.Status.Text = Infos.CurrentValue
+		elseif type == 'button' then
+			InfoPrompt.Status.Text = 'Clickable'
+		elseif type == 'toggle' then
+			InfoPrompt.Status.Text,InfoPrompt.Status.TextColor3 = BoolToText(Infos.CurrentValue)
+		elseif type == 'dropdown' then
+			--=| Do this |=--
+		elseif type == 'colorpicker' then
+			InfoPrompt.Status.Text = Infos.Color.R..Infos.Color.G..Infos.Color.B
+		end
+
+		if not Infos.Info.Image then
+			InfoPrompt.ImageLabel.Visible = false
+			InfoPrompt.Description.Position = InfoPrompt.ImageLabel.Position
+		else
+			InfoPrompt.ImageLabel.Visible = true
+			InfoPrompt.ImageLabel.Image = 'rbxassetid://'..Infos.Info.Image
+			InfoPrompt.Description.Position = UDim2.new(.5,0,0,160)
+		end
+
+		InfoPrompt.Title.Text = Infos.Info.Title
+		InfoPrompt.Description.Text = Infos.Info.Description
+	end
+	TweenService:Create(InfoPrompt,TweenInfo.new(.3,Enum.EasingStyle.Quint,Enum.EasingDirection.Out),{
+		Size = Size,BackgroundTransparency = Transparency
+	}):Play()
+	TweenService:Create(InfoPrompt.ImageLabel,TweenInfo.new(.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{
+		ImageTransparency = Transparency
+	}):Play()
+	TweenService:Create(InfoPrompt.Description,TweenInfo.new(.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{
+		TextTransparency = Transparency
+	}):Play()
+	TweenService:Create(InfoPrompt.Status,TweenInfo.new(.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{
+		TextTransparency = Transparency
+	}):Play()
+	TweenService:Create(InfoPrompt.Title,TweenInfo.new(.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{
+		TextTransparency = Transparency
+	}):Play()
+end
+
+function AddInfos(Object:Frame,Settings,type)
+	--local Interact = Object:FindFirstChild('Interact') or Object:FindFirstChild('Main'):FindFirstChild('Interact')
+	Object.MouseEnter:Connect(function(input)
+		--if not (input.UserInputType == Enum.UserInputType.MouseButton2) then return end
+		if Settings and Settings.Info then
+			InfoPromptOpen = true
+			FadeDescription(Settings,type)
+		end
+	end)
+	Object.MouseLeave:Connect(function()
+		FadeDescription(nil,nil,true)
+	end)
+end
 
 local function PackColor(Color)
 	return {R = Color.R * 255, G = Color.G * 255, B = Color.B * 255}
@@ -2270,105 +2350,178 @@ function RayfieldLibrary:CreateWindow(Settings)
 
 		-- Slider
 		function Tab:CreateSlider(SliderSettings)
-            local Dragging = false
-            local Slider = Elements.Template.Slider:Clone()
-            Slider.Name = SliderSettings.Name
-            Slider.Title.Text = SliderSettings.Name
-            Slider.Visible = true
-            Slider.Parent = TabPage
+			local Dragging = false
+			local Slider = Elements.Template.Slider:Clone()
+			Slider.Name = SliderSettings.Name
+			Slider.Title.Text = SliderSettings.Name
+			Slider.Visible = true
+			Tab.Elements[SliderSettings.Name] = {
+				type = 'slider',
+				section = SliderSettings.SectionParent,
+				element = Slider
+			}
+			AddInfos(Slider,SliderSettings,'slider')
+			if SliderSettings.SectionParent then
+				Slider.Parent = SliderSettings.SectionParent.Holder
+			else
+				Slider.Parent = TabPage
+			end
 
-            Slider.BackgroundTransparency = 1
-            Slider.UIStroke.Transparency = 1
-            Slider.Title.TextTransparency = 1
+			Slider.BackgroundTransparency = 1
+			Slider.UIStroke.Transparency = 1
+			Slider.Title.TextTransparency = 1
 
-            if SelectedTheme ~= RayfieldLibrary.Theme.Default then
-                Slider.Main.Shadow.Visible = false
-            end
+			if SelectedTheme ~= RayfieldLibrary.Theme.Default then
+				Slider.Main.Shadow.Visible = false
+			end
 
-            Slider.Main.BackgroundColor3 = SelectedTheme.SliderBackground
-            Slider.Main.UIStroke.Color = SelectedTheme.SliderStroke
-            Slider.Main.Progress.BackgroundColor3 = SelectedTheme.SliderProgress
+			Slider.Main.BackgroundColor3 = SelectedTheme.SliderBackground
+			Slider.Main.UIStroke.Color = SelectedTheme.SliderStroke
+			Slider.Main.Progress.BackgroundColor3 = SelectedTheme.SliderProgress
 
-            TweenService:Create(Slider, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
-            TweenService:Create(Slider.UIStroke, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
-            TweenService:Create(Slider.Title, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
+			TweenService:Create(Slider, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
+			TweenService:Create(Slider.UIStroke, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
+			TweenService:Create(Slider.Title, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()	
 
-            Slider.Main.Progress.Size = UDim2.new(0, Slider.Main.AbsoluteSize.X * ((SliderSettings.CurrentValue + SliderSettings.Range[1]) / (SliderSettings.Range[2] - SliderSettings.Range[1])) > 5 and Slider.Main.AbsoluteSize.X * (SliderSettings.CurrentValue / (SliderSettings.Range[2] - SliderSettings.Range[1])) or 5, 1, 0)
+			Slider.Main.Progress.Size =	UDim2.new(0, Slider.Main.AbsoluteSize.X * ((SliderSettings.CurrentValue + SliderSettings.Range[1]) / (SliderSettings.Range[2] - SliderSettings.Range[1])) > 5 and Slider.Main.AbsoluteSize.X * (SliderSettings.CurrentValue / (SliderSettings.Range[2] - SliderSettings.Range[1])) or 5, 1, 0)
 
-            if not SliderSettings.Suffix then
-                Slider.Main.Information.Text = tostring(SliderSettings.CurrentValue)
-            else
-                Slider.Main.Information.Text = tostring(SliderSettings.CurrentValue) .. " " .. SliderSettings.Suffix
-            end
+			if not SliderSettings.Suffix then
+				Slider.Main.Information.Text = tostring(SliderSettings.CurrentValue)
+			else
+				Slider.Main.Information.Text = tostring(SliderSettings.CurrentValue) .. " " .. SliderSettings.Suffix
+			end
 
-            Slider.MouseEnter:Connect(function()
-                TweenService:Create(Slider, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackgroundHover}):Play()
-            end)
 
-            Slider.MouseLeave:Connect(function()
-                TweenService:Create(Slider, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
-            end)
+			Slider.MouseEnter:Connect(function()
+				TweenService:Create(Slider, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackgroundHover}):Play()
+			end)
+			Slider.Main.Interact.MouseLeave:Connect(function()
+				Dragging = false
+			end)
+			Slider.MouseLeave:Connect(function()
+				TweenService:Create(Slider, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
+			end)
+			local function UpdateSlider(X)
+				local Current = Slider.Main.Progress.AbsolutePosition.X + Slider.Main.Progress.AbsoluteSize.X
+				local Start = Current
+				local Location = X
 
-            Slider.Main.Interact.InputBegan:Connect(function(Input)
-                if Input.UserInputType == Enum.UserInputType.MouseButton1 or Input.UserInputType == Enum.UserInputType.Touch then 
-                    Dragging = true 
-                end 
-            end)
+				Location = UserInputService:GetMouseLocation().X
+				Current = Current + 0.025 * (Location - Start)
 
-            Slider.Main.Interact.InputEnded:Connect(function(Input) 
-                if Input.UserInputType == Enum.UserInputType.MouseButton1 or Input.UserInputType == Enum.UserInputType.Touch then 
-                    Dragging = false 
-                end 
-            end)
+				if Location < Slider.Main.AbsolutePosition.X then
+					Location = Slider.Main.AbsolutePosition.X
+				elseif Location > Slider.Main.AbsolutePosition.X + Slider.Main.AbsoluteSize.X then
+					Location = Slider.Main.AbsolutePosition.X + Slider.Main.AbsoluteSize.X
+				end
 
-            Slider.Main.Interact.InputChanged:Connect(function(Input)
-                if Dragging and (Input.UserInputType == Enum.UserInputType.MouseMovement or Input.UserInputType == Enum.UserInputType.Touch) then
-                    local Location = (Input.UserInputType == Enum.UserInputType.Touch) and UserInputService:GetTouchLocation().X or UserInputService:GetMouseLocation().X
-                    if Location < Slider.Main.AbsolutePosition.X then
-                        Location = Slider.Main.AbsolutePosition.X
-                    elseif Location > Slider.Main.AbsolutePosition.X + Slider.Main.AbsoluteSize.X then
-                        Location = Slider.Main.AbsolutePosition.X + Slider.Main.AbsoluteSize.X
-                    end
-                    Slider.Main.Progress.Size = UDim2.new(0, Location - Slider.Main.AbsolutePosition.X, 1, 0)
-                    local NewValue = SliderSettings.Range[1] + (Location - Slider.Main.AbsolutePosition.X) / Slider.Main.AbsoluteSize.X * (SliderSettings.Range[2] - SliderSettings.Range[1])
-                    NewValue = math.floor(NewValue / SliderSettings.Increment + 0.5) * SliderSettings.Increment
+				if Current < Slider.Main.AbsolutePosition.X + 5 then
+					Current = Slider.Main.AbsolutePosition.X + 5
+				elseif Current > Slider.Main.AbsolutePosition.X + Slider.Main.AbsoluteSize.X then
+					Current = Slider.Main.AbsolutePosition.X + Slider.Main.AbsoluteSize.X
+				end
 
-                    if not SliderSettings.Suffix then
-                        Slider.Main.Information.Text = tostring(NewValue)
-                    else
-                        Slider.Main.Information.Text = tostring(NewValue) .. " " .. SliderSettings.Suffix
-                    end
+				if Current <= Location and (Location - Start) < 0 then
+					Start = Location
+				elseif Current >= Location and (Location - Start) > 0 then
+					Start = Location
+				end
+				TweenService:Create(Slider.Main.Progress, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0, Location - Slider.Main.AbsolutePosition.X > 5 and Location - Slider.Main.AbsolutePosition.X or 5, 1, 0)}):Play()
+				local NewValue = SliderSettings.Range[1] + (Location - Slider.Main.AbsolutePosition.X) / Slider.Main.AbsoluteSize.X * (SliderSettings.Range[2] - SliderSettings.Range[1])
 
-                    -- Gọi callback
-                    local Success, Response = pcall(function()
-                        SliderSettings.Callback(NewValue)
-                    end)
-                    if not Success then
-                        -- Xử lý lỗi nếu cần
-                    end
-                end
-            end)
+				NewValue = math.floor(NewValue / SliderSettings.Increment + 0.5) * (SliderSettings.Increment * 10000000) / 10000000
+				if not SliderSettings.Suffix then
+					Slider.Main.Information.Text = tostring(NewValue)
+				else
+					Slider.Main.Information.Text = tostring(NewValue) .. " " .. SliderSettings.Suffix
+				end
 
-            function SliderSettings:Set(NewVal)
-                TweenService:Create(Slider.Main.Progress, TweenInfo.new(0.45, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Size = UDim2.new(0, Slider.Main.AbsoluteSize.X * ((NewVal + SliderSettings.Range[1]) / (SliderSettings.Range[2] - SliderSettings.Range[1])) > 5 and Slider.Main.AbsoluteSize.X * (NewVal / (SliderSettings.Range[2] - SliderSettings.Range[1])) or 5, 1, 0)}):Play()
-                Slider.Main.Information.Text = tostring(NewVal) .. " " .. (SliderSettings.Suffix or "")
-                local Success, Response = pcall(function()
-                    SliderSettings.Callback(NewVal)
-                end)
-                if not Success then
-                    -- Xử lý lỗi nếu cần
-                end
-                SliderSettings.CurrentValue = NewVal
-                SaveConfiguration()
-            end
+				if SliderSettings.CurrentValue ~= NewValue then
+					local Success, Response = pcall(function()
+						SliderSettings.Callback(NewValue)
+					end)
+					if not Success then
+						TweenService:Create(Slider, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = Color3.fromRGB(85, 0, 0)}):Play()
+						TweenService:Create(Slider.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
+						Slider.Title.Text = "Callback Error"
+						print("Rayfield | "..SliderSettings.Name.." Callback Error " ..tostring(Response))
+						wait(0.5)
+						Slider.Title.Text = SliderSettings.Name
+						TweenService:Create(Slider, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
+						TweenService:Create(Slider.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
+					end
 
-            if Settings.ConfigurationSaving then
-                if Settings.ConfigurationSaving.Enabled and SliderSettings.Flag then
-                    RayfieldLibrary.Flags[SliderSettings.Flag] = SliderSettings
-                end
-            end
-            return SliderSettings
-        end
+					SliderSettings.CurrentValue = NewValue
+					SaveConfiguration()
+				end
+			end
+			Slider.Main.Interact.MouseButton1Down:Connect(function(X)
+				if not SliderSettings.Locked then 
+					UpdateSlider(X)
+					Dragging = true 
+				end 
+			end)
+			Slider.Main.Interact.MouseButton1Up:Connect(function(X) 
+				Dragging = false 
+			end)
+			Slider.Main.Interact.MouseMoved:Connect(function(X)
+				if SliderSettings.Locked then return end
+				if Dragging then
+					UpdateSlider(X)
+				end
+			end)
+
+			function SliderSettings:Set(NewVal)
+				TweenService:Create(Slider.Main.Progress, TweenInfo.new(0.45, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Size = UDim2.new(0, Slider.Main.AbsoluteSize.X * ((NewVal + SliderSettings.Range[1]) / (SliderSettings.Range[2] - SliderSettings.Range[1])) > 5 and Slider.Main.AbsoluteSize.X * (NewVal / (SliderSettings.Range[2] - SliderSettings.Range[1])) or 5, 1, 0)}):Play()
+				Slider.Main.Information.Text = tostring(NewVal) .. " " .. SliderSettings.Suffix
+				local Success, Response = pcall(function()
+					SliderSettings.Callback(NewVal)
+				end)
+				if not Success then
+					TweenService:Create(Slider, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = Color3.fromRGB(85, 0, 0)}):Play()
+					TweenService:Create(Slider.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
+					Slider.Title.Text = "Callback Error"
+					print("Rayfield | "..SliderSettings.Name.." Callback Error " ..tostring(Response))
+					wait(0.5)
+					Slider.Title.Text = SliderSettings.Name
+					TweenService:Create(Slider, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
+					TweenService:Create(Slider.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
+				end
+				SliderSettings.CurrentValue = NewVal
+				SaveConfiguration()
+			end
+			function SliderSettings:Destroy()
+				Slider:Destroy()
+			end
+			function SliderSettings:Lock(Reason)
+				if SliderSettings.Locked then return end
+				SliderSettings.Locked = true
+				Slider.Lock.Reason.Text = Reason or 'Locked'
+				TweenService:Create(Slider.Lock,TweenInfo.new(0.4,Enum.EasingStyle.Quint,Enum.EasingDirection.Out),{BackgroundTransparency = 0}):Play()
+				TweenService:Create(Slider.Lock.Reason,TweenInfo.new(0.4,Enum.EasingStyle.Quint,Enum.EasingDirection.Out),{TextTransparency = 0}):Play()
+				wait(0.2)
+				if not SliderSettings.Locked then return end --no icon bug
+				TweenService:Create(Slider.Lock.Reason.Icon,TweenInfo.new(0.4,Enum.EasingStyle.Quint,Enum.EasingDirection.Out),{ImageTransparency = 0}):Play()
+			end
+			function SliderSettings:Unlock()
+				if not SliderSettings.Locked then return end
+				SliderSettings.Locked = false
+				wait(0.2)
+				TweenService:Create(Slider.Lock.Reason.Icon,TweenInfo.new(0.4,Enum.EasingStyle.Quint,Enum.EasingDirection.Out),{ImageTransparency = 1}):Play()
+				if SliderSettings.Locked then return end --no icon bug
+				TweenService:Create(Slider.Lock,TweenInfo.new(0.4,Enum.EasingStyle.Quint,Enum.EasingDirection.Out),{BackgroundTransparency = 1}):Play()
+				TweenService:Create(Slider.Lock.Reason,TweenInfo.new(0.4,Enum.EasingStyle.Quint,Enum.EasingDirection.Out),{TextTransparency = 1}):Play()
+			end
+			function SliderSettings:Visible(bool)
+				Slider.Visible = bool
+			end
+			if Settings.ConfigurationSaving then
+				if Settings.ConfigurationSaving.Enabled and SliderSettings.Flag then
+					RayfieldLibrary.Flags[SliderSettings.Flag] = SliderSettings
+				end
+			end
+			return SliderSettings
+		end
 
 
 		return Tab
@@ -2376,12 +2529,12 @@ function RayfieldLibrary:CreateWindow(Settings)
 
 	Elements.Visible = true
 
-	task.wait(0.7)
+	wait(1.2)
 	TweenService:Create(LoadingFrame.Title, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
 	TweenService:Create(LoadingFrame.Subtitle, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
 	TweenService:Create(LoadingFrame.Version, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
-	task.wait(0.2)
-	TweenService:Create(Main, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {Size = useMobileSizing and UDim2.new(0, 500, 0, 360) or UDim2.new(0, 500, 0, 475)}):Play()
+	wait(0.2)
+	TweenService:Create(Main, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 500, 0, 475)}):Play()
 	TweenService:Create(Main.Shadow.Image, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {ImageTransparency = 0.4}):Play()
 
 	Topbar.BackgroundTransparency = 1
@@ -2392,22 +2545,88 @@ function RayfieldLibrary:CreateWindow(Settings)
 	Topbar.ChangeSize.ImageTransparency = 1
 	Topbar.Hide.ImageTransparency = 1
 
-	task.wait(0.5)
+	wait(0.8)
 	Topbar.Visible = true
 	TweenService:Create(Topbar, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
 	TweenService:Create(Topbar.CornerRepair, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
-	task.wait(0.1)
+	wait(0.1)
 	TweenService:Create(Topbar.Divider, TweenInfo.new(1, Enum.EasingStyle.Quint), {Size = UDim2.new(1, 0, 0, 1)}):Play()
-	task.wait(0.1)
+	wait(0.1)
 	TweenService:Create(Topbar.Title, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
-	task.wait(0.1)
+	wait(0.1)
 	TweenService:Create(Topbar.Theme, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {ImageTransparency = 0.8}):Play()
-	task.wait(0.1)
+	wait(0.1)
 	TweenService:Create(Topbar.ChangeSize, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {ImageTransparency = 0.8}):Play()
-	task.wait(0.1)
+	wait(0.1)
 	TweenService:Create(Topbar.Hide, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {ImageTransparency = 0.8}):Play()
-	task.wait(0.3)
+	wait(0.3)
+	function Window:Prompt(PromptSettings)
+		local PromptUI = Prompt.Prompt
+		Prompt.Visible = true
+		Prompt.BackgroundTransparency = 1
+		PromptUI.BackgroundTransparency = 1
+		PromptUI.UIStroke.Transparency = 1
+		PromptUI.Content.TextTransparency = 1
+		PromptUI.Title.TextTransparency = 1
+		PromptUI.Sub.TextTransparency = 1
+		PromptUI.Size = UDim2.new(0,340,0,140)
+		PromptUI.Buttons.Template.Visible = false
+		PromptUI.Buttons.Template.TextLabel.TextTransparency = 1
+		PromptUI.Buttons.Template.UIStroke.Transparency = 1
+		--PromptUI.Buttons.Middle.Visible = false
+		--PromptUI.Buttons.Middle.TextLabel.TextTransparency = 1
+		--PromptUI.Buttons.Middle.UIStroke.Transparency = 1
 
+		PromptUI.Content.Text = PromptSettings.Content
+		PromptUI.Sub.Text = PromptSettings.SubTitle or ''
+		PromptUI.Title.Text = PromptSettings.Title or ''
+
+		if PromptSettings.Actions then
+			for name,info in pairs(PromptSettings.Actions) do
+				print(info)
+				local Button = PromptUI.Buttons.Template:Clone()
+				Button.TextLabel.Text = info.Name
+				Button.Interact.MouseButton1Up:Connect(function()
+					if not clicked then
+						local Success, Response = pcall(info.Callback)
+						clicked = true
+						if not Success then
+							ClosePrompt()
+							print("Rayfield | "..info.Name.." Callback Error " ..tostring(Response))
+						else
+							ClosePrompt()
+						end
+					end
+				end)
+				Button.Name = name
+				Button.Parent = PromptUI.Buttons -- saving memory
+				Button.Size = UDim2.fromOffset(Button.TextLabel.TextBounds.X + 24, 30)
+			end
+		end
+
+		TweenService:Create(Prompt, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundTransparency = .5}):Play()
+		wait(.2)
+		TweenService:Create(PromptUI, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {BackgroundTransparency = 0,Size = UDim2.new(0,350,0,150)}):Play()
+		wait(0.2)
+		TweenService:Create(PromptUI.UIStroke, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
+		TweenService:Create(PromptUI.Title, TweenInfo.new(0.45, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
+		TweenService:Create(PromptUI.Content, TweenInfo.new(0.45, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
+		TweenService:Create(PromptUI.Sub, TweenInfo.new(0.45, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
+		wait(1)
+		if PromptSettings.Actions then
+			for _,button in pairs(PromptUI.Buttons:GetChildren()) do
+				if button.Name ~= 'Template' and button.Name ~= 'Middle' and button:IsA('Frame') then
+					button.Visible = true
+					TweenService:Create(button.UIStroke,TweenInfo.new(0.3, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
+					TweenService:Create(button.TextLabel,TweenInfo.new(0.3, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
+					wait(.8)
+				end
+			end
+		else
+			--TweenService:Create(PromptUI.Buttons.Middle.UIStroke,TweenInfo.new(0.3, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
+			--TweenService:Create(PromptUI.Buttons.Middle.TextLabel,TweenInfo.new(0.3, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
+		end
+	end
 	return Window
 end
 
