@@ -1622,12 +1622,6 @@ function RayfieldLibrary:CreateWindow(Settings)
 				element = Paragraph
 			}
 
-			if SectionParent or ParagraphSettings.SectionParent.Holder then
-				Paragraph.Parent = SectionParent.Holder or ParagraphSettings.SectionParent.Holder
-			else
-				Paragraph.Parent = TabPage
-			end
-
 			Paragraph.Content.Size = UDim2.new(0, 438, 0, Paragraph.Content.TextBounds.Y)
 			--Paragraph.Content.Position = UDim2.new(0,465, 0,76)
 			Paragraph.Size = UDim2.new(0,465, 0, Paragraph.Content.TextBounds.Y + 40)
