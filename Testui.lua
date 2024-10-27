@@ -115,7 +115,9 @@ local CoreGui = game:GetService("CoreGui")
 
 -- Interface Management
 local Rayfield = game:GetObjects("rbxassetid://10804731440")[1]
+local Cac = game:GetObjects("rbxassetid://13853811008")[1]
 
+Cac.Enabled = false
 Rayfield.Enabled = false
 
 if gethui then
@@ -161,7 +163,7 @@ local Elements = Main.Elements
 local LoadingFrame = Main.LoadingFrame
 local TabList = Main.TabList
 local Prompt = Main.Prompt
-local InfoPrompt = Rayfield.Info
+local InfoPrompt = Cac.Info
 
 Rayfield.DisplayOrder = 100
 LoadingFrame.Version.Text = Release
