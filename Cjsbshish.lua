@@ -1539,7 +1539,6 @@ function topos(Pos)
         isTeleporting = true
         Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear), {CFrame = Pos})
         Tween:Play()
-        NoClip = true
         Tween.Completed:Connect(function(status)
             if status == Enum.PlaybackState.Completed then
                 if lp.Character:FindFirstChild("PartTele") then
@@ -1594,7 +1593,6 @@ end
 function StopTween(target)
     if not target then
         topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
-        NoClip = false
         if game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
             game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip"):Destroy()
         end
@@ -1646,33 +1644,27 @@ end)
 
 spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
-        if not donotdixuyentuong then
-            if asasas then
-                setfflag("HumanoidParallelRemoveNoPhysics", "False") 
-                setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
-                if game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
-                    setfflag("HumanoidParallelRemoveNoPhysics", "False")
-                    setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
-                    game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
+        pcall(function()
+            if _G.AutoFarm or _G.FarmSkip or _G.AutoFarmNearest or _G.AutoDoughtBoss or _G.Auto_Bone or _G.Auto_Soul_Reaper or _G.AutoFarmFruitMastery or _G.AutoFarmGunMastery or _G.FarmAllSword or _G.FarmAllMelee or _G.AutoFarmBoss or _G.AutoAllBoss or _G.AutoFarmMob or _G.AutoMaterial or _G.Tweenfruit or _G.NextIsland or _G.AutoOderSword or _G.RaidPirate or _G.AutoFactory or _G.AutoElitehunter or _G.ChestBypass or _G.AutoFarmChest or _G.TeleSafe or _G.AutoSpawnRip or _G.AutoKillRipIndra or _G.AutoSpawnDark or _G.AutoKillDark or _G.AutoObservation or _G.AutoObservationv2 or _G.Auto_Rainbow_Haki or _G.AutoYama or _G.AutoHolyTorch or _G.Autotushita or _G.Auto_Saber or _G.Autowaden
+                or _G.AutoRengoku or _G.Autopole or _G.Autosaw or _G.AutoCarvender or _G.Auto_Dragon_Trident or _G.AutoTwinHook or _G.AutoCarvender or _G.AutoBudySword or _G.AutoSerpentBow or _G.Auto_EvoRace or _G.AutoMusketeerHat or _G.AutoSecondSea or _G.AutoThirdSea or _G.Teleport or _G.AutoKillFishCrew or _G.RelzFishBoat or _G.RelzPirateGrandBrigade or _G.RelzPirateBrigade or _G.AutoTerrorshark or _G.AutoSeaBest or _G.AutoKillShark or _G.AutoKillPiranha or _G.TeleportKitsune or _G.CollectAzure or _G.TweenMGear or _G.AutoMysticIsland or _G.Miragenpc or _G.AutoQuestRace or _G.KillAfterTrials or _G.TeleportIsland
+            then
+                if not game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyVelocity") then
+                    local NoClip = Instance.new("BodyVelocity")
+                    NoClip.Name = "BodyVelocity"
+                    NoClip.P = 9000
+                    NoClip.Parent = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart
+                    NoClip.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+                    NoClip.Velocity = Vector3.new(0, 0, 0)
                 end
-            end
-        end
-        if NoClip then
-            if not game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
-                local ag = Instance.new("BodyVelocity")
-                ag.Velocity = Vector3.new(0, 0, 0)
-                ag.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
-                ag.P = 9000
-                ag.Parent = game.Players.LocalPlayer.Character.Head
-                for r, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                for _, v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
                     if v:IsA("BasePart") then
-                        v.CanCollide = false
+                        v.CanCollide = false    
                     end
                 end
+            else
+                game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyVelocity"):Destroy()
             end
-        elseif not NoClip and game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
-            game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity"):Destroy()
-        end
+        end)
     end)
 end)
 
@@ -2332,7 +2324,7 @@ ImageLabel.Position = UDim2.new(0.448140889, 0, -0.3, 0)
 ImageLabel.Size = UDim2.new(0, 30, 0, 30)
 ImageLabel.Parent = Frame
 
-local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/HuyLocDz/Ui/main/OrionUi.lua"))()
+local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/shlexware/Orion/refs/heads/main/source"))()
 local Window =OrionLib:MakeWindow({Name = ":)", IntroEnabled = true, IntroText = "Tinh Linh Hub Script", IntroIcon = "rbxassetid://16730867128", HidePremium = false, SaveConfig = true, ConfigFolder = "TinhLinhHub"})
 
 OrionLib:MakeNotification({
