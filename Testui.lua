@@ -160,7 +160,6 @@ local Topbar = Main.Topbar
 local Elements = Main.Elements
 local LoadingFrame = Main.LoadingFrame
 local TabList = Main.TabList
-local InfoPrompt = Rayfield.Info
 
 Rayfield.DisplayOrder = 100
 LoadingFrame.Version.Text = Release
