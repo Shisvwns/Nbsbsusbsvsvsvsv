@@ -115,9 +115,7 @@ local CoreGui = game:GetService("CoreGui")
 
 -- Interface Management
 local Rayfield = game:GetObjects("rbxassetid://10804731440")[1]
-local Cac = game:GetObjects("rbxassetid://13853811008")[1]
 
-Cac.Enabled = false
 Rayfield.Enabled = false
 
 if gethui then
