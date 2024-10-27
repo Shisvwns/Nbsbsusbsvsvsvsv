@@ -161,7 +161,6 @@ local Elements = Main.Elements
 local LoadingFrame = Main.LoadingFrame
 local TabList = Main.TabList
 local Prompt = Main.Prompt
-local InfoPrompt = Cac.Info
 
 Rayfield.DisplayOrder = 100
 LoadingFrame.Version.Text = Release
