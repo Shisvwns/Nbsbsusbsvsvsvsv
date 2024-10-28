@@ -1606,7 +1606,7 @@ function RayfieldLibrary:CreateWindow(Settings)
 			Paragraph.Parent = TabPage
 
 			Paragraph.Content.Size = UDim2.new(0, 438, 0, Paragraph.Content.TextBounds.Y)
-			Paragraph.Content.Position = UDim2.new(1, -10, 0.7,0 )
+			Paragraph.Content.Position = UDim2.new(1, -10, 0.650,0 )
 			Paragraph.Size = UDim2.new(1, -10, 0, Paragraph.Content.TextBounds.Y + 40)
 
 			Paragraph.BackgroundTransparency = 1
