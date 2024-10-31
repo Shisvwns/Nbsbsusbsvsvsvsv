@@ -1593,8 +1593,8 @@ end
 
 function StopTween(target)
     if not target then
-        _G.NoClip = false
         topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
+        _G.NoClip = false
         _G.NoClip = false
     end
 end
@@ -1655,7 +1655,7 @@ spawn(function()
                     local humanoid = player.Character:FindFirstChild("Humanoid")
                     local bodyVelocity = player.Character.HumanoidRootPart:FindFirstChild("BodyVelocity")
                     if humanoid and bodyVelocity then
-                        bodyVelocity.Velocity = humanoid.MoveDirection * 50
+                        bodyVelocity.Velocity = humanoid.MoveDirection * 60
                     end
                 end)
                 for _, v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
@@ -2326,7 +2326,7 @@ ImageLabel.Position = UDim2.new(0.448140889, 0, -0.3, 0)
 ImageLabel.Size = UDim2.new(0, 30, 0, 30)
 ImageLabel.Parent = Frame
 
-local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/HuyLocDz/Ui/main/OrionUi.lua"))()
+local OrionLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/Shisvwns/Nbsbsusbsvsvsvsv/refs/heads/main/Testui.lua'))()
 local Window =OrionLib:MakeWindow({Name = ":)", IntroEnabled = true, IntroText = "Tinh Linh Hub Script", IntroIcon = "rbxassetid://16730867128", HidePremium = false, SaveConfig = true, ConfigFolder = "TinhLinhHub"})
 
 OrionLib:MakeNotification({
@@ -9075,3 +9075,5 @@ OrionLib:MakeNotification({
     Image = "rbxassetid://16730867128",
     Time = 5
 })
+
+OrionLib:Init()
