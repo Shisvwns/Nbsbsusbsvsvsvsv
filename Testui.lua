@@ -1763,22 +1763,18 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 		-- Section
 		function Tab:CreateSection(SectionName)
 
-			local SectionValue = {
-				Holder = ArrayField.Holding,
-				Open = true
-			}
-			local Debounce = false
+			local SectionValue = {}
+
+			if SDone then
+				local SectionSpace = Elements.Template.SectionSpacing:Clone()
+				SectionSpace.Visible = true
+				SectionSpace.Parent = TabPage
+			end
+
 			local Section = Elements.Template.SectionTitle:Clone()
-			SectionValue.Holder = Section.Holder
 			Section.Title.Text = SectionName
 			Section.Visible = true
 			Section.Parent = TabPage
-
-			Tab.Elements[SectionName] = {
-				type = 'section',
-				sectionholder = Section.Holder,
-				element = Section
-			}
 
 			Section.Title.TextTransparency = 1
 			TweenService:Create(Section.Title, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
@@ -1786,83 +1782,8 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 			function SectionValue:Set(NewSection)
 				Section.Title.Text = NewSection
 			end
-			Section.Title.ImageButton.MouseButton1Down:Connect(function()
-				if Debounce then return end
-				if SectionValue.Open then
-					--Section.Holder.Visible = true
-					Debounce = true
-					TweenService:Create(Section._UIPadding_, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {PaddingBottom = UDim.new(0,0)}):Play()
-					for _, element in ipairs(Section.Holder:GetChildren()) do
-						if element.ClassName == "Frame" then
-							if element.Name ~= "SectionSpacing" and element.Name ~= "Placeholder" and element.Name ~= 'Topholder' then
-								if element.Name == "SectionTitle" then
-									TweenService:Create(element.Title, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
-								else
-									TweenService:Create(element, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
-									TweenService:Create(element.UIStroke, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
-									TweenService:Create(element.Title, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
-								end
-								for _, child in ipairs(element:GetChildren()) do
-									if child.ClassName == "Frame" then --or child.ClassName == "TextLabel" or child.ClassName == "TextBox" or child.ClassName == "ImageButton" or child.ClassName == "ImageLabel" then
-										child.Visible = false
-									end
-								end
-							end
-							element.Visible = false
-						end
-					end
-					TweenService:Create(Section.Title.ImageButton,TweenInfo.new(0.4,Enum.EasingStyle.Quart,Enum.EasingDirection.Out),{Rotation = 180}):Play()
-					SectionValue.Open = false
-					Debounce = false
-				else
-					Debounce = true
-					TweenService:Create(Section._UIPadding_, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {PaddingBottom = UDim.new(0,8)}):Play()
-					for _, element in ipairs(Section.Holder:GetChildren()) do
-						if element.ClassName == "Frame" then
-							if element.Name ~= "SectionSpacing" and element.Name ~= "Placeholder" and element.Name ~= 'Topholder' and not element:FindFirstChild('ColorPickerIs') then
-								if element.Name == "SectionTitle" then
-									TweenService:Create(element.Title, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
-								else
-									TweenService:Create(element, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
-									TweenService:Create(element.UIStroke, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
-									TweenService:Create(element.Title, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
-								end
-								for _, child in ipairs(element:GetChildren()) do
-									if (child.ClassName == "Frame" or child.ClassName == "TextLabel" or child.ClassName == "TextBox" or child.ClassName == "ImageButton" or child.ClassName == "ImageLabel") then
-										child.Visible = true
-									end
-								end
-							elseif element:FindFirstChild('ColorPickerIs') then
-								TweenService:Create(element, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
-								TweenService:Create(element.UIStroke, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
-								TweenService:Create(element.Title, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
-								if element.ColorPickerIs.Value then
-									element.ColorSlider.Visible = true
-									element.HexInput.Visible = true
-									element.RGB.Visible = true
-								end
-								element.CPBackground.Visible = true
-								element.Lock.Visible = true
-								element.Interact.Visible = true
-								element.Title.Visible = true
 
-							end
-							element.Visible = true
-						end
-					end
-					TweenService:Create(Section.Title.ImageButton,TweenInfo.new(0.4,Enum.EasingStyle.Quart,Enum.EasingDirection.Out),{Rotation = 0}):Play()
-					SectionValue.Open = true
-					wait(.3)
-					Debounce = false
-				end
-			end)
 			SDone = true
-			function SectionValue:Lock(Reason)
-
-			end
-			function SectionValue:Unlock(Reason)
-
-			end
 
 			return SectionValue
 		end
