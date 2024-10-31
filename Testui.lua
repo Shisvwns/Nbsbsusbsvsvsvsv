@@ -1715,7 +1715,6 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 			ButtonValue.Button = Button
 			Tab.Elements[Button.Name] = {
 				type = 'button',
-				section = ButtonSettings.SectionParent,
 				element = Button
 			}
 			AddInfos(Button,ButtonSettings.Info,'button')
@@ -1728,11 +1727,7 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 			Button.BackgroundTransparency = 1
 			Button.UIStroke.Transparency = 1
 			Button.Title.TextTransparency = 1
-			if ButtonSettings.SectionParent then
-				Button.Parent = ButtonSettings.SectionParent.Holder
-			else
-				Button.Parent = TabPage
-			end
+			Button.Parent = TabPage
 			TweenService:Create(Button, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
 			TweenService:Create(Button.UIStroke, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
 			TweenService:Create(Button.Title, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()	
@@ -1922,21 +1917,6 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 			return SectionValue
 		end
 
-		-- Spacing
-		function Tab:CreateSpacing(SectionParent,Size)
-			local Spacing = Elements.Template.SectionSpacing:Clone()
-			Spacing.Visible = true
-			Spacing.Parent = TabPage
-
-			Spacing.Size = UDim2.fromOffset(475,Size or 6)
-
-			if SectionParent then
-				Spacing.Parent = SectionParent.Holder
-			else
-				Spacing.Parent = TabPage
-			end
-		end
-
 		-- Label
 		function Tab:CreateLabel(LabelText)
 			local LabelValue = {}
@@ -1946,14 +1926,9 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 			Label.Visible = true
 			Tab.Elements[LabelText] = {
 				type = 'label',
-				section = SectionParent,
 				element = Label
 			}
-			if SectionParent then
-				Label.Parent = SectionParent.Holder
-			else
-				Label.Parent = TabPage
-			end
+			Label.Parent = TabPage
 
 			Label.BackgroundTransparency = 1
 			Label.UIStroke.Transparency = 1
@@ -1984,15 +1959,10 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 
 			Tab.Elements[ParagraphSettings.Title] = {
 				type = 'paragraph',
-				section = ParagraphSettings.SectionParent,
 				element = Paragraph
 			}
 
-			if SectionParent or ParagraphSettings.SectionParent.Holder then
-				Paragraph.Parent = SectionParent.Holder or ParagraphSettings.SectionParent.Holder
-			else
-				Paragraph.Parent = TabPage
-			end
+			Paragraph.Parent = TabPage
 
 			Paragraph.Content.Size = UDim2.new(0, 438, 0, Paragraph.Content.TextBounds.Y)
 			--Paragraph.Content.Position = UDim2.new(0,465, 0,76)
@@ -2028,14 +1998,10 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 			InputSettings.Locked = false
 			Tab.Elements[InputSettings.Name] = {
 				type = 'input',
-				section = InputSettings.SectionParent,
 				element = Input
 			}
-			if InputSettings.SectionParent then
-				Input.Parent = InputSettings.SectionParent.Holder
-			else
-				Input.Parent = TabPage
-			end
+
+			Input.Parent = TabPage
 			AddInfos(Input,InputSettings.Info,'input')
 			Input.BackgroundTransparency = 1
 			Input.UIStroke.Transparency = 1
@@ -2145,15 +2111,10 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 			Dropdown.Visible = true
 			Tab.Elements[DropdownSettings.Name] = {
 				type = 'dropdown',
-				section = DropdownSettings.SectionParent,
 				element = Dropdown
 			}
-			if DropdownSettings.SectionParent then
-				Dropdown.Parent = DropdownSettings.SectionParent.Holder
-			else
-				Dropdown.Parent = TabPage
-			end
 
+			Dropdown.Parent = TabPage
 			Dropdown.List.Visible = false
 			Dropdown.BackgroundTransparency = 1
 			Dropdown.UIStroke.Transparency = 1
@@ -2558,14 +2519,9 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 			Keybind.Visible = true
 			Tab.Elements[KeybindSettings.Name] = {
 				type = 'keybind',
-				section = KeybindSettings.SectionParent,
 				element = Keybind
 			}
-			if KeybindSettings.SectionParent then
-				Keybind.Parent = KeybindSettings.SectionParent.Holder
-			else
-				Keybind.Parent = TabPage
-			end
+			Keybind.Parent = TabPage
 			AddInfos(Keybind,KeybindSettings,'keybind')
 
 			Keybind.BackgroundTransparency = 1
@@ -2710,15 +2666,10 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 			Toggle.Switch.BackgroundColor3 = SelectedTheme.ToggleBackground
 			Tab.Elements[Toggle.Name] = {
 				type = 'toggle',
-				section = ToggleSettings.SectionParent,
 				element = Toggle
 			}
 			AddInfos(Toggle,ToggleSettings,'toggle')
-			if ToggleSettings.SectionParent then
-				Toggle.Parent = ToggleSettings.SectionParent.Holder
-			else
-				Toggle.Parent = TabPage
-			end
+			Toggle.Parent = TabPage
 			if SelectedTheme ~= ArrayFieldLibrary.Theme.Default then
 				Toggle.Switch.Shadow.Visible = false
 			end
@@ -2880,7 +2831,6 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 			local ColorPicker = Elements.Template.ColorPicker:Clone()
 			Tab.Elements[ColorPickerSettings.Name] = {
 				type = 'colorpicker',
-				section = ColorPickerSettings.SectionParent,
 				element = ColorPicker
 			}
 			AddInfos(ColorPicker,ColorPickerSettings,'colorpicker')
@@ -2894,11 +2844,7 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 			ColorPicker.Title.Text = ColorPickerSettings.Name
 			ColorPickerSettings.Locked = false
 			ColorPicker.Visible = true
-			if ColorPickerSettings.SectionParent then
-				ColorPicker.Parent = ColorPickerSettings.SectionParent.Holder
-			else
-				ColorPicker.Parent = TabPage
-			end
+			ColorPicker.Parent = TabPage
 			ColorPicker.Size = UDim2.new(0,465,0,40)
 			ColorPicker.ColorSlider.Visible = false
 			ColorPicker.HexInput.Visible = false
@@ -3171,15 +3117,10 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 			Slider.Visible = true
 			Tab.Elements[SliderSettings.Name] = {
 				type = 'slider',
-				section = SliderSettings.SectionParent,
 				element = Slider
 			}
 			AddInfos(Slider,SliderSettings,'slider')
-			if SliderSettings.SectionParent then
-				Slider.Parent = SliderSettings.SectionParent.Holder
-			else
-				Slider.Parent = TabPage
-			end
+			Slider.Parent = TabPage
 
 			Slider.BackgroundTransparency = 1
 			Slider.UIStroke.Transparency = 1
@@ -3634,267 +3575,5 @@ function ArrayFieldLibrary:LoadConfiguration()
 	end
 end
 task.delay(9, ArrayFieldLibrary.LoadConfiguration, ArrayFieldLibrary)
-
-local ArrayField = ArrayFieldLibrary
-
---[[
-local Window = ArrayField:CreateWindow({
-        Name = "ArrayField Example Window",
-        LoadingTitle = "ArrayField Interface Suite",
-        LoadingSubtitle = "by Arrays",
-        ConfigurationSaving = {
-            Enabled = true,
-            FolderName = nil, -- Create a custom folder for your hub/game
-            FileName = "ArrayField"
-        },
-        Discord = {
-            Enabled = false,
-            Invite = "sirius", -- The Discord invite code, do not include discord.gg/
-            RememberJoins = true -- Set this to false to make them join the discord every time they load it up
-        },
-        KeySystem = true, -- Set this to true to use our key system
-        KeySettings = {
-            Title = "ArrayField",
-            Subtitle = "Key System",
-            Note = "Join the discord (discord.gg/sirius)",
-            FileName = "ArrayFieldsKeys",
-            SaveKey = false,
-            GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like ArrayField to get the key from
-            Key = {"Hello",'Bye'},
-            Actions = {
-                [1] = {
-                    Text = 'Click here to copy the key link',
-                    OnPress = function()
-
-                    end,
-                }
-            },
-        }
-    })
-    local Tab = Window:CreateTab("Tab Example", 4483362458) -- Title, Image
-    local Tab2 = Window:CreateTab("Tab Example 2") -- Title, Image
-    local Section = Tab:CreateSection("Section Example",false) -- The 2nd argument is to tell if its only a Title and doesnt contain element
-    Tab2:CreateSpacing(nil,10)
-    local Button = Tab2:CreateButton({
-        Name = "Button Example",
-        Info = {
-            Title = 'This is a Button',
-            Description = 'This is a description for the button you know.',
-        },
-        Interact = 'Changable',
-        Callback = function()
-            print('Pressed')
-        end,
-    })
-    Tab:CreateSpacing(nil,10)
-    local Toggle = Tab:CreateToggle({
-        Name = "Toggle Example",
-        Info = {
-            Title = 'Slider template',
-            Image = '12735851647',
-            Description = 'Just a slider for stuff',
-        },
-        CurrentValue = false,
-        Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-        Callback = function(Value)
-            print(Value)
-        end,
-    })
-    Tab:CreateSpacing(nil,10)
-    local Button = Tab:CreateButton({
-        Name = "Button Example",
-        Info = {
-            Title = 'This is a Button',
-            Description = 'This is a description for the button you know.',
-        },
-        Interact = 'Changable',
-        Callback = function()
-            print('Pressed')
-        end,
-    })
-    Tab:CreateSpacing(nil,10)
-    local Toggle = Tab:CreateToggle({
-        Name = "Toggle Example",
-        Info = {
-            Title = 'Slider template',
-            Image = '12735851647',
-            Description = 'Just a slider for stuff',
-        },
-        CurrentValue = false,
-        Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-        Callback = function(Value)
-            print(Value)
-        end,
-    })
-    Tab:CreateSpacing(nil,10)
-    local ColorPicker = Tab:CreateColorPicker({
-        Name = "Color Picker",
-        Color = Color3.fromRGB(2,255,255),
-        Flag = "ColorPicker1",
-        Callback = function(Value)
-            print(Value)
-        end
-    })
-    Tab:CreateSpacing(nil,10)
-    local Slider = Tab:CreateSlider({
-        Name = "Slider Example",
-        Range = {0, 100},
-        Increment = 10,
-        Suffix = "Bananas",
-        CurrentValue = 10,
-        Flag = "Slider1",
-        Callback = function(Value)
-            print(Value)
-        end,
-    })
-    Tab:CreateSpacing(nil,10)
-    local Keybind = Tab:CreateKeybind({
-        Name = "Keybind Example",
-        CurrentKeybind = "Q",
-        HoldToInteract = false,
-        Flag = "Keybind1",
-        Callback = function(Keybind)
-
-        end,
-    })
-    Tab:CreateSpacing(nil,10)
-    local Section2 = Tab:CreateSection("Inputs Examples",true)
-    Tab:CreateInput({
-        Name = "Numbers Only",
-        PlaceholderText = "Amount",
-        NumbersOnly = true,
-        OnEnter = true,
-        RemoveTextAfterFocusLost = true,
-        Callback = function(Text)
-            print(Text)
-        end,
-    })
-    Tab:CreateInput({
-        Name = "11 Characters Limit",
-        PlaceholderText = "Text",
-        CharacterLimit = 11,
-        RemoveTextAfterFocusLost = true,
-        Callback = function(Text)
-            print(Text)
-        end,
-    })
-    Tab:CreateInput({
-        Name = "No RemoveTextAfterFocusLost",
-        PlaceholderText = "Input",
-        RemoveTextAfterFocusLost = false,
-        Callback = function(Text)
-            print(Text)
-        end,
-    })
-    local Section3= Tab:CreateSection("Dropdown Examples",true)
-    local MultiSelectionDropdown = Tab:CreateDropdown({
-        Name = "Multi Selection",
-        Options = {"Option 1","Option 2",'Option 3'},
-        CurrentOption = {"Option 1","Option 3"} ,
-        MultiSelection = true,
-        Flag = "Dropdown1",
-        Callback = function(Option)
-            print(Option)
-        end,
-    })
-    local SingleSelection = Tab:CreateDropdown({
-        Name = "Single Selection",
-        Options = {"Option 1","Option 2"},
-        CurrentOption = "Option 1",
-        MultiSelection = false,
-        Flag = "Dropdown2",
-        Callback = function(Option)
-            print(Option)
-        end,
-    })
-    local Label = Tab:CreateLabel("Thanks for using Arrayfield, there were alot of issues but here we are!",Section)
-    local Paragraph = Tab:CreateParagraph({Title = "Paragraph Example", Content = "Paragraph Example"},Section)
-    local Sets = Tab:CreateSection('Set Functions',false)
-    local SButton
-    SButton = Tab:CreateButton({
-        Name = "Button Example",
-        Interact = 'Interact',
-        SectionParent = Sets,
-        Callback = function()
-            SButton:Set(nil,'New Interaction')
-        end
-    })
-    Tab:CreateButton({
-        Name = "Dropdown Set",
-        Interact = 'Interact',
-        SectionParent = Sets,
-        Callback = function()
-            SingleSelection:Set('Option 1')
-        end
-    })
-
-    local LockTesting = Tab:CreateSection('Lockdown Section',false)
-    local ToLock = {}
-    Tab:CreateToggle({
-        Name = "Lockdown",
-        SectionParent = LockTesting,
-        CurrentValue = false,
-        Callback = function(Value)
-            if Value then
-                for _,v in ToLock do
-                    v:Lock('Locked')
-                end
-            else
-                for _,v in ToLock do
-                    v:Unlock('Locked')
-                end
-            end
-        end,
-    })
-    Tab:CreateSpacing(LockTesting)
-    ToLock.Button = Tab:CreateButton({
-        SectionParent = LockTesting,
-        Name = "Button Example",
-        Interact = 'Interact',
-        Callback = function()
-            print('Pressed')
-        end,
-    })
-    ToLock.Toggle = Tab:CreateToggle({
-        SectionParent = LockTesting,
-        Name = "Toggle Example",
-        CurrentValue = false,
-        Flag = "Toggle2", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-        Callback = function(Value)
-            print(Value)
-        end,
-    })
-    ToLock.ColorPicker = Tab:CreateColorPicker({
-        Name = "Color Picker",
-        SectionParent = LockTesting,
-        Color = Color3.fromRGB(2,255,255),
-        Flag = "ColorPicker2",
-        Callback = function(Value)
-            print(Value)
-        end
-    })
-    ToLock.Slider = Tab:CreateSlider({
-        SectionParent = LockTesting,
-        Name = "Slider Example",
-        Range = {0, 100},
-        Increment = 10,
-        Suffix = "anas",
-        CurrentValue = 10,
-        Flag = "Slider2",
-        Callback = function(Value)
-            print(Value)
-        end,
-    })
-    ToLock.Keybind = Tab:CreateKeybind({
-        Name = "Keybind Example",
-        CurrentKeybind = "Q",
-        HoldToInteract = false,
-        SectionParent = LockTesting,
-        Flag = "Keybind2",
-        Callback = function(Keybind)
-
-        end,
-    })
---]]
 
 return ArrayFieldLibrary
