@@ -1454,7 +1454,7 @@ function GetPortal(check2)
         end
     end
     return aM
-end 
+end
 function BypassTeleport(is)
     if lp.Character:FindFirstChild("PartTele") then
         lp.Character.PartTele.CFrame = CFrame.new(lp.Character.PartTele.CFrame.X, lp.Character.PartTele.CFrame.Y, lp.Character.PartTele.CFrame.Z)
@@ -1496,18 +1496,17 @@ end
 function WaitHRP(q0) 
     if not q0 then return end
     return q0.Character:WaitForChild("HumanoidRootPart", 9) 
-end 
+end
 function CalcDistance(I, II) 
     if not II then 
         II = lp.Character.PrimaryPart.CFrame 
-    end 
+    end
     return (Vector3.new(I.X, 0, I.Z)-Vector3.new(II.X, 0, II.Z)).Magnitude 
 end
 
 isTeleporting = false
 function topos(Pos)
     if lp.Character and lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid.Health > 0 and lp.Character:FindFirstChild("HumanoidRootPart") then
-        local Distance = (Pos.Position - lp.Character.HumanoidRootPart.Position).Magnitude
         if not Pos then 
             return 
         end
@@ -1600,7 +1599,6 @@ end
 function StopTween(target)
     if not target then
         topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
-        _G.NoClip = false
         _G.NoClip = false
     end
 end
@@ -2009,13 +2007,13 @@ game:GetService("ReplicatedStorage").Util.Sound.Storage.Swing:Destroy()
 spawn(function()
     for _, v in pairs(game:GetDescendants()) do
         if v:IsA('Texture') then
-            v.Texture = ''
-        elseif v:IsA('BasePart') and v.Material == Enum.Material.Water then
+            v.Texture = ""
+        elseif v:IsA("BasePart") and v.Material == Enum.Material.Water then
             v.Material = Enum.Material.SmoothPlastic
         end
     end
     for _, v in pairs(r33_33arg.LocalPlayer.PlayerScripts:GetDescendants()) do
-        local v641_args = {'WaterBlur', 'WaterEffect', 'WaterColorCorrection', 'WaterCFrame', 'MirageFog'}
+        local v641_args = {"WaterBlur", "WaterEffect", "WaterColorCorrection", "WaterCFrame"}
         if table.find(v641_args, v.Name) then
             v:Destroy()
         end
@@ -2215,7 +2213,7 @@ task.spawn(function()
                 NGU,NGUVL = pcall(function()
                     for i,v in pairs(getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework))[2].activeController.data) do  
                         if typeof(v) == 'function' then 
-                            hookfunction(v,function() end )
+                            hookfunction(v,function() end)
                         end
                     end
                 end)
@@ -2612,7 +2610,7 @@ Setting:AddButton({
 	Name = "Reset Character",
 	Callback = function()
     	game:GetService("Players").LocalPlayer.Character.Humanoid.Health = 0
-	end    
+	end
 })
 
 local Section = Setting:AddSection({
@@ -3133,9 +3131,9 @@ spawn(function()
                                     StartBring = true
                                 until not _G.FarmSkip or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0
                                 StartBring = false
-                            end 
+                            end
                         end
-                    end 
+                    end
                 elseif LvCount >= 60 and LvCount < 300 then
                     CheckPlayer = 0
                     local Players = game:GetService("Players"):GetPlayers()
@@ -3192,7 +3190,7 @@ spawn(function()
                             Image = "rbxassetid://16730867128",
                             Time = 5
                         })
-                    end 
+                    end
                 else
                     CayLevel:Set(true)
                 end
@@ -3689,7 +3687,7 @@ spawn(function()
                     else
                        topos(CFrameMon)
                        UnEquipWeapon(_G.SelectWeapon)
-                    end 
+                    end
                 end
             end)
         end
@@ -4354,7 +4352,7 @@ spawn(function()
         if _G.AutoBuyFruitSniper then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("GetFruits")
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("PurchaseRawFruit",_G.SelectFruit)
-        end 
+        end
     end
 end)
 
@@ -4377,7 +4375,7 @@ spawn(function()
     while wait() do
         if _G.Random_Auto then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Cousin","Buy")
-        end 
+        end
     end
 end)
 
@@ -4475,7 +4473,7 @@ function CheckFruits()
                 end
             end
         end
-    end  
+    end
 end
 
 FruitRaid:AddToggle({
@@ -5040,7 +5038,7 @@ spawn(function()
                                 break
                             end
                         end
-                    end 
+                    end
                 end
             end
         end
@@ -5427,7 +5425,7 @@ spawn(function()
                 [2] = "3"
             }
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
-        end 
+        end
     end
 end)
 
@@ -6833,7 +6831,7 @@ Sea:AddDropdown({
         elseif _G.Boat == "Guardian" then
             SelectedBoat = "Guardian"
         end
-	end    
+	end
 })
             
 if World3 then
@@ -7541,7 +7539,7 @@ spawn(function()
                 game:service('VirtualInputManager'):SendKeyEvent(true, "X", false, game)
                 wait(_G.HoldSKillFruitX)
                 game:service('VirtualInputManager'):SendKeyEvent(false, "X", false, game)
-            end       
+            end
             if _G.SkillFruitC then
                 game:service('VirtualInputManager'):SendKeyEvent(true, "C", false, game)
                 wait(_G.HoldSKillFruitC)
@@ -7576,7 +7574,7 @@ spawn(function()
                     game:service('VirtualInputManager'):SendKeyEvent(true, "X", false, game)
                     wait(_G.HoldSKillMeleeX)
                     game:service('VirtualInputManager'):SendKeyEvent(false, "X", false, game)
-                end 
+                end
                 if _G.SkillMeleeC then
                     game:service('VirtualInputManager'):SendKeyEvent(true, "C", false, game)
                     wait(_G.HoldSKillMeleeC)
@@ -8328,7 +8326,7 @@ spawn(function()
 					[3] = PointStats
 				}
 				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
-			end 
+			end
 			if Defense then
 				local args = {
 					[1] = "AddPoint",
@@ -8336,7 +8334,7 @@ spawn(function()
 					[3] = PointStats
 				}
 				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
-			end 
+			end
 			if Sword then
 				local args = {
 					[1] = "AddPoint",
@@ -8344,7 +8342,7 @@ spawn(function()
 					[3] = PointStats
 				}
 				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
-			end 
+			end
 			if Gun then
 				local args = {
 					[1] = "AddPoint",
@@ -8352,7 +8350,7 @@ spawn(function()
 					[3] = PointStats
 				}
 				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
-			end 
+			end
 			if DemonFruit then
 				local args = {
 					[1] = "AddPoint",
