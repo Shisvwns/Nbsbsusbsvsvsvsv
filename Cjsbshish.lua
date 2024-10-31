@@ -42,6 +42,12 @@ if game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseT
 	until game.Players.LocalPlayer.Team ~= nil and game:IsLoaded()
 end
 
+if not LPH_OBFUSCATED then
+	LPH_JIT_MAX = (function(...) return ... end)
+	LPH_NO_VIRTUALIZE = (function(...) return ... end)
+	LPH_NO_UPVALUES = (function(...) return ... end)
+end
+
 local function TeleportToServer(JobId)
     local Succ, Err = pcall(function()
         game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, JobId, game.Players.LocalPlayer)
@@ -2000,14 +2006,23 @@ if game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit') then
 end
 require(game.ReplicatedStorage.Util.CameraShaker):Stop()
 game:GetService("ReplicatedStorage").Util.Sound.Storage.Swing:Destroy()
+spawn(function()
+    for _, v in pairs(game:GetDescendants()) do
+        if v:IsA('Texture') then
+            v.Texture = ''
+        elseif v:IsA('BasePart') and v.Material == Enum.Material.Water then
+            v.Material = Enum.Material.SmoothPlastic
+        end
+    end
+    for _, v in pairs(r33_33arg.LocalPlayer.PlayerScripts:GetDescendants()) do
+        local v641_args = {'WaterBlur', 'WaterEffect', 'WaterColorCorrection', 'WaterCFrame', 'MirageFog'}
+        if table.find(v641_args, v.Name) then
+            v:Destroy()
+        end
+    end
+end)
 
 -- [ Super Fast Attack ]
-
-if not LPH_OBFUSCATED then
-	LPH_JIT_MAX = (function(...) return ... end)
-	LPH_NO_VIRTUALIZE = (function(...) return ... end)
-	LPH_NO_UPVALUES = (function(...) return ... end)
-end
 
 NoAttackAnimation = true
 local DmgAttack = game:GetService("ReplicatedStorage").Assets.GUI:WaitForChild("DamageCounter")
