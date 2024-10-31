@@ -137,7 +137,7 @@ ParentObject(ArrayField)
 
 local minSize = Vector2.new(1024, 768)
 local useMobileSizing
-if ArrayField.AbsoluteSize.X < minSize.X and Rayfield.AbsoluteSize.Y < minSize.Y then
+if ArrayField.AbsoluteSize.X < minSize.X and ArrayField.AbsoluteSize.Y < minSize.Y then
 	useMobileSizing = true
 end
 
