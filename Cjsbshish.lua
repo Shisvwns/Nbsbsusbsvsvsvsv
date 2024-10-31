@@ -1504,96 +1504,41 @@ function CalcDistance(I, II)
     return (Vector3.new(I.X, 0, I.Z)-Vector3.new(II.X, 0, II.Z)).Magnitude 
 end
 
-isTeleporting = false
 function topos(Pos)
-    if lp.Character and lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid.Health > 0 and lp.Character:FindFirstChild("HumanoidRootPart") then
-        if not Pos then 
-            return 
-        end
-        if not lp.Character:FindFirstChild("PartTele") then
-            local PartTele = Instance.new("Part", lp.Character)
-            PartTele.Size = Vector3.new(0,0,0)
-            PartTele.Name = "PartTele"
-            PartTele.Anchored = true
-            PartTele.Transparency = 1
-            PartTele.CanCollide = false
-            PartTele.CFrame = WaitHRP(lp).CFrame 
-            PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
-                if not isTeleporting then return end
-                task.wait()
-                if lp.Character and lp.Character:FindFirstChild("HumanoidRootPart") then
-                    WaitHRP(lp).CFrame = PartTele.CFrame
-                end
-            end)
-        end
-        Portal = GetPortal(Pos) 
-        Spawn = GetBypassPos(Pos) 
-        MyCFrame = WaitHRP(lp).CFrame
-        Distance = CalcDistance(MyCFrame, Pos)
-        if CalcDistance(Portal, Pos) < CalcDistance(Pos) and CalcDistance(Portal) > 500 then
-            return RequestEntrance(Portal)
-        end
-        if _G.BypassTele == true then
-            if CalcDistance(Pos) - CalcDistance(Spawn, Pos) > 1000 and CalcDistance(Spawn) > 1000 then
-                return BypassTeleport(Spawn)
-            end
-        end
-        if lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid:FindFirstChild("Sit") and lp.Character.Humanoid.Sit == true then
-            lp.Character.Humanoid.Sit = false
-        end
-        isTeleporting = true
-        _G.NoClip = true
-        Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear), {CFrame = Pos})
-        Tween:Play()
-        Tween.Completed:Connect(function(status)
-            if status == Enum.PlaybackState.Completed then
-                if lp.Character:FindFirstChild("PartTele") then
-                    lp.Character.PartTele:Destroy()
-                end
-                isTeleporting = false
-            end
+    if not Pos then
+        return
+    end 
+    if not lp.Character:FindFirstChild("PartTele") then
+        local PartTele = Instance.new("Part", lp.Character)
+        PartTele.Size = Vector3.new(0,0,0)
+        PartTele.Name = "PartTele"
+        PartTele.Anchored = true
+        PartTele.Transparency = 1
+        PartTele.CanCollide = false
+        PartTele.CFrame = WaitHRP(lp).CFrame
+        PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
+            task.wait(0.01)
+            WaitHRP(lp).CFrame = PartTele.CFrame
         end)
     end
-end
-
-function stopTeleport()
-    isTeleporting = false
-    if lp.Character:FindFirstChild("PartTele") then
-        lp.Character.PartTele:Destroy()
+    Portal = GetPortal(Pos) 
+    Spawn = GetBypassPos(Pos) 
+    MyCFrame = WaitHRP(lp).CFrame
+    Distance = CalcDistance(MyCFrame, Pos)
+    if CalcDistance(Portal, Pos) < CalcDistance(Pos) and CalcDistance(Portal) > 500 then
+        return RequestEntrance(Portal)
     end
-end
-
-spawn(function()
-    while task.wait() do
-        if not isTeleporting then
-            stopTeleport()
+    if _G.BypassTele == true then
+        if CalcDistance(Pos) - CalcDistance(Spawn, Pos) > 1000 and CalcDistance(Spawn) > 1000 then
+            return BypassTeleport(Spawn)
         end
     end
-end)
-
-spawn(function()
-    while task.wait() do
-        pcall(function()
-            if lp.Character:FindFirstChild("PartTele") then
-                if (lp.Character.HumanoidRootPart.Position - lp.Character.PartTele.Position).Magnitude >= 100 then
-                    stopTeleport()
-                end
-            end
-        end)
+    if lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid:FindFirstChild("Sit") and lp.Character.Humanoid.Sit == true then
+        lp.Character.Humanoid.Sit = false
     end
-end)
-
-function onCharacterAdded(character)
-    local humanoid = character:WaitForChild("Humanoid")
-    humanoid.Died:Connect(function()
-        stopTeleport()
-    end)
-end
-
-lp.CharacterAdded:Connect(onCharacterAdded)
-
-if lp.Character then
-    onCharacterAdded(lp.Character)
+    _G.NoClip = true
+    Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / _G.TweenSpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
+    Tween:Play()
 end
 
 function StopTween(target)
@@ -1654,6 +1599,14 @@ spawn(function()
                     NoClip.Parent = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart
                     NoClip.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
                 end
+                game:GetService("RunService").RenderStepped:Connect(function()
+                    local player = game:GetService("Players").LocalPlayer
+                    local humanoid = player.Character:FindFirstChild("Humanoid")
+                    local bodyVelocity = player.Character.HumanoidRootPart:FindFirstChild("BodyVelocity")
+                    if humanoid and bodyVelocity then
+                        bodyVelocity.Velocity = humanoid.MoveDirection * 60
+                    end
+                end)
                 for _, v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
                     if v:IsA("BasePart") then
                         v.CanCollide = false    
