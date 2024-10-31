@@ -135,6 +135,12 @@ local ParentObject = function(Gui)
 end
 ParentObject(ArrayField)
 
+local minSize = Vector2.new(1024, 768)
+local useMobileSizing
+if ArrayField.AbsoluteSize.X < minSize.X and Rayfield.AbsoluteSize.Y < minSize.Y then
+	useMobileSizing = true
+end
+
 --Object Variables
 
 local Camera = workspace.CurrentCamera
@@ -909,7 +915,7 @@ function Unhide()
 	Debounce = true
 	Main.Position = UDim2.new(0.5, 0, 0.5, 0)
 	Main.Visible = true
-	TweenService:Create(Main, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 500, 0, 360)}):Play()
+	TweenService:Create(Main, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Size = useMobileSizing and UDim2.new(0, 500, 0, 360) or UDim2.new(0, 500, 0, 475)}):Play()
 	TweenService:Create(Main.Topbar, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 500, 0, 45)}):Play()
 	TweenService:Create(Main.Shadow.Image, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {ImageTransparency = 0.4}):Play()
 	TweenService:Create(Main, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
@@ -1039,7 +1045,7 @@ function Maximise()
 	TweenService:Create(Main.Shadow.Image, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {ImageTransparency = 0.4}):Play()
 	TweenService:Create(Topbar.CornerRepair, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
 	TweenService:Create(Topbar.Divider, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
-	TweenService:Create(Main, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 500, 0, 360)}):Play()
+	TweenService:Create(Main, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Size = useMobileSizing and UDim2.new(0, 500, 0, 360) or UDim2.new(0, 500, 0, 475)}):Play()
 	TweenService:Create(Topbar, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 500, 0, 45)}):Play()
 	TabsList.Visible = true
 	wait(0.2)
@@ -1603,7 +1609,7 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 		--Create Elements Page
 		local TabPage = Elements.Template:Clone()
 		TabPage.Name = Name
-		TabPage.Visible = true
+		TabPage.Visible = false
 
 		TabPage.LayoutOrder = #Elements:GetChildren()
 
@@ -1636,8 +1642,8 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 			TweenService:Create(TopTabButton.UIStroke, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
 			TweenService:Create(TopTabButton.Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 0.7}):Play()
 
-			TweenService:Create(SideTabButton.Image, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {ImageTransparency = 0,ImageColor3 = Color3.fromRGB(205, 205, 205)}):Play()
-			TweenService:Create(SideTabButton.Title, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {TextTransparency = .2,TextColor3 = Color3.fromRGB(205, 205, 205)}):Play()	
+			TweenService:Create(SideTabButton.Image, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {ImageTransparency = 0,ImageColor3 = Color3.fromRGB(200, 200, 200)}):Play()
+			TweenService:Create(SideTabButton.Title, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {TextTransparency = .2,TextColor3 = Color3.fromRGB(200, 200, 200)}):Play()	
 		else
 			FirstTab = Name
 
@@ -3294,7 +3300,7 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 	TweenService:Create(LoadingFrame.Subtitle, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
 	TweenService:Create(LoadingFrame.Version, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
 	wait(0.2)
-	TweenService:Create(Main, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 500, 0, 360)}):Play()
+	TweenService:Create(Main, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {Size = useMobileSizing and UDim2.new(0, 500, 0, 275) or UDim2.new(0, 500, 0, 360)}):Play()
 	TweenService:Create(Main.Shadow.Image, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {ImageTransparency = 0.4}):Play()
 
 	Topbar.BackgroundTransparency = 1
@@ -3433,22 +3439,6 @@ Topbar.Hide.MouseButton1Click:Connect(function()
 	end
 end)
 
---[[
-local ContextActionService = game:GetService("ContextActionService")
-
-ContextActionService:BindAction("Field",function(name,inputState,inputObject)
-	if Debounce then return end
-	if Hidden then
-		Hidden = false
-		Unhide()
-	else
-		if not SearchHided then spawn(CloseSearch) end
-		Hidden = true
-		Hide()
-	end
-end,true)
---]]
-
 local FieldScreen = Instance.new("ScreenGui")
 FieldScreen.DisplayOrder = 100
 FieldScreen.ScreenInsets = Enum.ScreenInsets.DeviceSafeInsets
@@ -3503,16 +3493,6 @@ UniButtonClicked = function(name,inputState,inputObject)
 end
 
 UniBoxButton.MouseButton1Click:Connect(UniButtonClicked)
-
---[[
-local Field = ContextActionService:GetButton("Field")
-Field.Active = true
-Field.Parent.Parent = FieldScreen
-Field.ActionTitle.Text = "ArrayField"
-Field.AnchorPoint = Vector2.new(1,1)
-Field.ZIndex = 10
-Field.Position = UDim2.new(0.95,0,0.95,0)
---]]
 
 UserInputService.InputBegan:Connect(function(input, processed)
 	if (input.KeyCode == Enum.KeyCode.RightShift and not processed) then
