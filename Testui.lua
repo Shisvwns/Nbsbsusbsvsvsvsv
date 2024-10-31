@@ -1938,7 +1938,7 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 		end
 
 		-- Label
-		function Tab:CreateLabel(LabelText,SectionParent)
+		function Tab:CreateLabel(LabelText)
 			local LabelValue = {}
 
 			local Label = Elements.Template.Label:Clone()
@@ -1974,7 +1974,7 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 		end
 
 		-- Paragraph
-		function Tab:CreateParagraph(ParagraphSettings,SectionParent)
+		function Tab:CreateParagraph(ParagraphSettings)
 			local ParagraphValue = {}
 
 			local Paragraph = Elements.Template.Paragraph:Clone()
