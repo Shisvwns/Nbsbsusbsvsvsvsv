@@ -1578,7 +1578,7 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 		TopTabButton.Title.Text = Name SideTabButton.Title.Text = Name
 		SideTabButton.Title.TextWrapped = false TopTabButton.Title.TextWrapped = false 
 
-		TopTabButton.Size = UDim2.new(0, TopTabButton.Title.TextBounds.X + 30, 0, 30)
+		TopTabButton.Size = UDim2.new(0, TopTabButton.Title.TextBounds.X + 30, 0, 10)
 
 		if Image then
 			TopTabButton.Image.Image = "rbxassetid://"..Image
@@ -1586,9 +1586,9 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 
 			TopTabButton.Title.AnchorPoint = Vector2.new(0, 0.5)
 			TopTabButton.Title.Position = UDim2.new(0, 37, 0.5, 0)
-			TopTabButton.Image.Visible = true
+			TopTabButton.Image.Visible = false
 			TopTabButton.Title.TextXAlignment = Enum.TextXAlignment.Left
-			TopTabButton.Size = UDim2.new(0, TopTabButton.Title.TextBounds.X + 46, 0, 30)
+			TopTabButton.Size = UDim2.new(0, TopTabButton.Title.TextBounds.X + 46, 0, 10)
 		end
 
 		TopTabButton.BackgroundTransparency = 1
@@ -1609,7 +1609,7 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 		--Create Elements Page
 		local TabPage = Elements.Template:Clone()
 		TabPage.Name = Name
-		TabPage.Visible = false
+		TabPage.Visible = true
 
 		TabPage.LayoutOrder = #Elements:GetChildren()
 
@@ -3300,7 +3300,7 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 	TweenService:Create(LoadingFrame.Subtitle, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
 	TweenService:Create(LoadingFrame.Version, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
 	wait(0.2)
-	TweenService:Create(Main, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {Size = useMobileSizing and UDim2.new(0, 500, 0, 275) or UDim2.new(0, 500, 0, 360)}):Play()
+	TweenService:Create(Main, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {Size = useMobileSizing and UDim2.new(0, 500, 0, 360) or UDim2.new(0, 500, 0, 475)}):Play()
 	TweenService:Create(Main.Shadow.Image, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {ImageTransparency = 0.4}):Play()
 
 	Topbar.BackgroundTransparency = 1
