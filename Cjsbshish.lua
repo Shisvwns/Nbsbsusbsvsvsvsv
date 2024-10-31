@@ -1654,14 +1654,6 @@ spawn(function()
                     NoClip.Parent = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart
                     NoClip.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
                 end
-                game:GetService("RunService").RenderStepped:Connect(function()
-                    local player = game:GetService("Players").LocalPlayer
-                    local humanoid = player.Character:FindFirstChild("Humanoid")
-                    local bodyVelocity = player.Character.HumanoidRootPart:FindFirstChild("BodyVelocity")
-                    if humanoid and bodyVelocity then
-                        bodyVelocity.Velocity = humanoid.MoveDirection * 60
-                    end
-                end)
                 for _, v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
                     if v:IsA("BasePart") then
                         v.CanCollide = false    
@@ -1680,23 +1672,12 @@ spawn(function()
 	while task.wait() do
 		if setscriptable then
 			setscriptable(game.Players.LocalPlayer, "SimulationRadius", true)
+			game.Players.LocalPlayer.SimulationRadius = math.huge * math.huge, math.huge * math.huge * 0 / 0 * 0 / 0 * 0 / 0 * 0 / 0 * 0 / 0
 		end
 		if sethiddenproperty then
 			sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
 		end
 	end
-end)
-
-spawn(function()
-    while wait() do
-        if sethiddenproperty then
-            sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",100)
-        end
-        if setscriptable then
-            setscriptable(game.Players.LocalPlayer, "SimulationRadius", true)
-            game.Players.LocalPlayer.SimulationRadius = math.huge * math.huge, math.huge * math.huge * 0 / 0 * 0 / 0 * 0 / 0 * 0 / 0 * 0 / 0
-        end
-    end
 end)
 
 function CheckMob(MobName)
