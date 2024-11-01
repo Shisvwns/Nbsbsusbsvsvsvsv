@@ -1,18 +1,2523 @@
---[[
-     _      ___         ____  ______
-    | | /| / (_)__  ___/ / / / /  _/
-    | |/ |/ / / _ \/ _  / /_/ // /  
-    |__/|__/_/_//_/\_,_/\____/___/
-    
-    by .ftgs#0 (Discord)
-    
-    This script is NOT intended to be modified.
-    To view the source code, see the 'Src' folder on the official GitHub repository.
-    
-    Author: .ftgs#0 (Discord User)
-    Github: https://github.com/Footagesus/WindUI
-    Discord: https://discord.gg/84CNGY5wAV
-]]
+local Release = "Beta 8"
+local NotificationDuration = 6.5
+local RayfieldFolder = "Rayfield"
+local ConfigurationFolder = RayfieldFolder.."/Configurations"
+local ConfigurationExtension = ".rfld"
 
 
-local a a={cache={},load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}end return a.cache[b].c end}do function a.a()return{Name='Dark',Accent='#161616',Outline='#FFFFFF',Text='#FFFFFF',Text2='#000000',PlaceholderText='#999999'}end function a.b()return{Name='Light',Accent='#FFFFFF',Outline='#000000',Text='#000000',Text2='#FFFFFF',PlaceholderText='#777777'}end function a.c()return{Name='Lime',Accent='#ecfccb',Outline='#FFFFFF',Text='#1a2e05',Text2='#ecfccb',PlaceholderText='#999999'}end function a.d()return{Dark=a.load'a',Light=a.load'b',Lime=a.load'c'}end function a.e()return{assets={['lucide-accessibility']='rbxassetid://10709751939',['lucide-activity']='rbxassetid://10709752035',['lucide-air-vent']='rbxassetid://10709752131',['lucide-airplay']='rbxassetid://10709752254',['lucide-alarm-check']='rbxassetid://10709752405',['lucide-alarm-clock']='rbxassetid://10709752630',['lucide-alarm-clock-off']='rbxassetid://10709752508',['lucide-alarm-minus']='rbxassetid://10709752732',['lucide-alarm-plus']='rbxassetid://10709752825',['lucide-album']='rbxassetid://10709752906',['lucide-alert-circle']='rbxassetid://10709752996',['lucide-alert-octagon']='rbxassetid://10709753064',['lucide-alert-triangle']='rbxassetid://10709753149',['lucide-align-center']='rbxassetid://10709753570',['lucide-align-center-horizontal']='rbxassetid://10709753272',['lucide-align-center-vertical']='rbxassetid://10709753421',['lucide-align-end-horizontal']='rbxassetid://10709753692',['lucide-align-end-vertical']='rbxassetid://10709753808',['lucide-align-horizontal-distribute-center']='rbxassetid://10747779791',['lucide-align-horizontal-distribute-end']='rbxassetid://10747784534',['lucide-align-horizontal-distribute-start']='rbxassetid://10709754118',['lucide-align-horizontal-justify-center']='rbxassetid://10709754204',['lucide-align-horizontal-justify-end']='rbxassetid://10709754317',['lucide-align-horizontal-justify-start']='rbxassetid://10709754436',['lucide-align-horizontal-space-around']='rbxassetid://10709754590',['lucide-align-horizontal-space-between']='rbxassetid://10709754749',['lucide-align-justify']='rbxassetid://10709759610',['lucide-align-left']='rbxassetid://10709759764',['lucide-align-right']='rbxassetid://10709759895',['lucide-align-start-horizontal']='rbxassetid://10709760051',['lucide-align-start-vertical']='rbxassetid://10709760244',['lucide-align-vertical-distribute-center']='rbxassetid://10709760351',['lucide-align-vertical-distribute-end']='rbxassetid://10709760434',['lucide-align-vertical-distribute-start']='rbxassetid://10709760612',['lucide-align-vertical-justify-center']='rbxassetid://10709760814',['lucide-align-vertical-justify-end']='rbxassetid://10709761003',['lucide-align-vertical-justify-start']='rbxassetid://10709761176',['lucide-align-vertical-space-around']='rbxassetid://10709761324',['lucide-align-vertical-space-between']='rbxassetid://10709761434',['lucide-anchor']='rbxassetid://10709761530',['lucide-angry']='rbxassetid://10709761629',['lucide-annoyed']='rbxassetid://10709761722',['lucide-aperture']='rbxassetid://10709761813',['lucide-apple']='rbxassetid://10709761889',['lucide-archive']='rbxassetid://10709762233',['lucide-archive-restore']='rbxassetid://10709762058',['lucide-armchair']='rbxassetid://10709762327',['lucide-arrow-big-down']='rbxassetid://10747796644',['lucide-arrow-big-left']='rbxassetid://10709762574',['lucide-arrow-big-right']='rbxassetid://10709762727',['lucide-arrow-big-up']='rbxassetid://10709762879',['lucide-arrow-down']='rbxassetid://10709767827',['lucide-arrow-down-circle']='rbxassetid://10709763034',['lucide-arrow-down-left']='rbxassetid://10709767656',['lucide-arrow-down-right']='rbxassetid://10709767750',['lucide-arrow-left']='rbxassetid://10709768114',['lucide-arrow-left-circle']='rbxassetid://10709767936',['lucide-arrow-left-right']='rbxassetid://10709768019',['lucide-arrow-right']='rbxassetid://10709768347',['lucide-arrow-right-circle']='rbxassetid://10709768226',['lucide-arrow-up']='rbxassetid://10709768939',['lucide-arrow-up-circle']='rbxassetid://10709768432',['lucide-arrow-up-down']='rbxassetid://10709768538',['lucide-arrow-up-left']='rbxassetid://10709768661',['lucide-arrow-up-right']='rbxassetid://10709768787',['lucide-asterisk']='rbxassetid://10709769095',['lucide-at-sign']='rbxassetid://10709769286',['lucide-award']='rbxassetid://10709769406',['lucide-axe']='rbxassetid://10709769508',['lucide-axis-3d']='rbxassetid://10709769598',['lucide-baby']='rbxassetid://10709769732',['lucide-backpack']='rbxassetid://10709769841',['lucide-baggage-claim']='rbxassetid://10709769935',['lucide-banana']='rbxassetid://10709770005',['lucide-banknote']='rbxassetid://10709770178',['lucide-bar-chart']='rbxassetid://10709773755',['lucide-bar-chart-2']='rbxassetid://10709770317',['lucide-bar-chart-3']='rbxassetid://10709770431',['lucide-bar-chart-4']='rbxassetid://10709770560',['lucide-bar-chart-horizontal']='rbxassetid://10709773669',['lucide-barcode']='rbxassetid://10747360675',['lucide-baseline']='rbxassetid://10709773863',['lucide-bath']='rbxassetid://10709773963',['lucide-battery']='rbxassetid://10709774640',['lucide-battery-charging']='rbxassetid://10709774068',['lucide-battery-full']='rbxassetid://10709774206',['lucide-battery-low']='rbxassetid://10709774370',['lucide-battery-medium']='rbxassetid://10709774513',['lucide-beaker']='rbxassetid://10709774756',['lucide-bed']='rbxassetid://10709775036',['lucide-bed-double']='rbxassetid://10709774864',['lucide-bed-single']='rbxassetid://10709774968',['lucide-beer']='rbxassetid://10709775167',['lucide-bell']='rbxassetid://10709775704',['lucide-bell-minus']='rbxassetid://10709775241',['lucide-bell-off']='rbxassetid://10709775320',['lucide-bell-plus']='rbxassetid://10709775448',['lucide-bell-ring']='rbxassetid://10709775560',['lucide-bike']='rbxassetid://10709775894',['lucide-binary']='rbxassetid://10709776050',['lucide-bitcoin']='rbxassetid://10709776126',['lucide-bluetooth']='rbxassetid://10709776655',['lucide-bluetooth-connected']='rbxassetid://10709776240',['lucide-bluetooth-off']='rbxassetid://10709776344',['lucide-bluetooth-searching']='rbxassetid://10709776501',['lucide-bold']='rbxassetid://10747813908',['lucide-bomb']='rbxassetid://10709781460',['lucide-bone']='rbxassetid://10709781605',['lucide-book']='rbxassetid://10709781824',['lucide-book-open']='rbxassetid://10709781717',['lucide-bookmark']='rbxassetid://10709782154',['lucide-bookmark-minus']='rbxassetid://10709781919',['lucide-bookmark-plus']='rbxassetid://10709782044',['lucide-bot']='rbxassetid://10709782230',['lucide-box']='rbxassetid://10709782497',['lucide-box-select']='rbxassetid://10709782342',['lucide-boxes']='rbxassetid://10709782582',['lucide-briefcase']='rbxassetid://10709782662',['lucide-brush']='rbxassetid://10709782758',['lucide-bug']='rbxassetid://10709782845',['lucide-building']='rbxassetid://10709783051',['lucide-building-2']='rbxassetid://10709782939',['lucide-bus']='rbxassetid://10709783137',['lucide-cake']='rbxassetid://10709783217',['lucide-calculator']='rbxassetid://10709783311',['lucide-calendar']='rbxassetid://10709789505',['lucide-calendar-check']='rbxassetid://10709783474',['lucide-calendar-check-2']='rbxassetid://10709783392',['lucide-calendar-clock']='rbxassetid://10709783577',['lucide-calendar-days']='rbxassetid://10709783673',['lucide-calendar-heart']='rbxassetid://10709783835',['lucide-calendar-minus']='rbxassetid://10709783959',['lucide-calendar-off']='rbxassetid://10709788784',['lucide-calendar-plus']='rbxassetid://10709788937',['lucide-calendar-range']='rbxassetid://10709789053',['lucide-calendar-search']='rbxassetid://10709789200',['lucide-calendar-x']='rbxassetid://10709789407',['lucide-calendar-x-2']='rbxassetid://10709789329',['lucide-camera']='rbxassetid://10709789686',['lucide-camera-off']='rbxassetid://10747822677',['lucide-car']='rbxassetid://10709789810',['lucide-carrot']='rbxassetid://10709789960',['lucide-cast']='rbxassetid://10709790097',['lucide-charge']='rbxassetid://10709790202',['lucide-check']='rbxassetid://10709790644',['lucide-check-circle']='rbxassetid://10709790387',['lucide-check-circle-2']='rbxassetid://10709790298',['lucide-check-square']='rbxassetid://10709790537',['lucide-chef-hat']='rbxassetid://10709790757',['lucide-cherry']='rbxassetid://10709790875',['lucide-chevron-down']='rbxassetid://10709790948',['lucide-chevron-first']='rbxassetid://10709791015',['lucide-chevron-last']='rbxassetid://10709791130',['lucide-chevron-left']='rbxassetid://10709791281',['lucide-chevron-right']='rbxassetid://10709791437',['lucide-chevron-up']='rbxassetid://10709791523',['lucide-chevrons-down']='rbxassetid://10709796864',['lucide-chevrons-down-up']='rbxassetid://10709791632',['lucide-chevrons-left']='rbxassetid://10709797151',['lucide-chevrons-left-right']='rbxassetid://10709797006',['lucide-chevrons-right']='rbxassetid://10709797382',['lucide-chevrons-right-left']='rbxassetid://10709797274',['lucide-chevrons-up']='rbxassetid://10709797622',['lucide-chevrons-up-down']='rbxassetid://10709797508',['lucide-chrome']='rbxassetid://10709797725',['lucide-circle']='rbxassetid://10709798174',['lucide-circle-dot']='rbxassetid://10709797837',['lucide-circle-ellipsis']='rbxassetid://10709797985',['lucide-circle-slashed']='rbxassetid://10709798100',['lucide-citrus']='rbxassetid://10709798276',['lucide-clapperboard']='rbxassetid://10709798350',['lucide-clipboard']='rbxassetid://10709799288',['lucide-clipboard-check']='rbxassetid://10709798443',['lucide-clipboard-copy']='rbxassetid://10709798574',['lucide-clipboard-edit']='rbxassetid://10709798682',['lucide-clipboard-list']='rbxassetid://10709798792',['lucide-clipboard-signature']='rbxassetid://10709798890',['lucide-clipboard-type']='rbxassetid://10709798999',['lucide-clipboard-x']='rbxassetid://10709799124',['lucide-clock']='rbxassetid://10709805144',['lucide-clock-1']='rbxassetid://10709799535',['lucide-clock-10']='rbxassetid://10709799718',['lucide-clock-11']='rbxassetid://10709799818',['lucide-clock-12']='rbxassetid://10709799962',['lucide-clock-2']='rbxassetid://10709803876',['lucide-clock-3']='rbxassetid://10709803989',['lucide-clock-4']='rbxassetid://10709804164',['lucide-clock-5']='rbxassetid://10709804291',['lucide-clock-6']='rbxassetid://10709804435',['lucide-clock-7']='rbxassetid://10709804599',['lucide-clock-8']='rbxassetid://10709804784',['lucide-clock-9']='rbxassetid://10709804996',['lucide-cloud']='rbxassetid://10709806740',['lucide-cloud-cog']='rbxassetid://10709805262',['lucide-cloud-drizzle']='rbxassetid://10709805371',['lucide-cloud-fog']='rbxassetid://10709805477',['lucide-cloud-hail']='rbxassetid://10709805596',['lucide-cloud-lightning']='rbxassetid://10709805727',['lucide-cloud-moon']='rbxassetid://10709805942',['lucide-cloud-moon-rain']='rbxassetid://10709805838',['lucide-cloud-off']='rbxassetid://10709806060',['lucide-cloud-rain']='rbxassetid://10709806277',['lucide-cloud-rain-wind']='rbxassetid://10709806166',['lucide-cloud-snow']='rbxassetid://10709806374',['lucide-cloud-sun']='rbxassetid://10709806631',['lucide-cloud-sun-rain']='rbxassetid://10709806475',['lucide-cloudy']='rbxassetid://10709806859',['lucide-clover']='rbxassetid://10709806995',['lucide-code']='rbxassetid://10709810463',['lucide-code-2']='rbxassetid://10709807111',['lucide-codepen']='rbxassetid://10709810534',['lucide-codesandbox']='rbxassetid://10709810676',['lucide-coffee']='rbxassetid://10709810814',['lucide-cog']='rbxassetid://10709810948',['lucide-coins']='rbxassetid://10709811110',['lucide-columns']='rbxassetid://10709811261',['lucide-command']='rbxassetid://10709811365',['lucide-compass']='rbxassetid://10709811445',['lucide-component']='rbxassetid://10709811595',['lucide-concierge-bell']='rbxassetid://10709811706',['lucide-connection']='rbxassetid://10747361219',['lucide-contact']='rbxassetid://10709811834',['lucide-contrast']='rbxassetid://10709811939',['lucide-cookie']='rbxassetid://10709812067',['lucide-copy']='rbxassetid://10709812159',['lucide-copyleft']='rbxassetid://10709812251',['lucide-copyright']='rbxassetid://10709812311',['lucide-corner-down-left']='rbxassetid://10709812396',['lucide-corner-down-right']='rbxassetid://10709812485',['lucide-corner-left-down']='rbxassetid://10709812632',['lucide-corner-left-up']='rbxassetid://10709812784',['lucide-corner-right-down']='rbxassetid://10709812939',['lucide-corner-right-up']='rbxassetid://10709813094',['lucide-corner-up-left']='rbxassetid://10709813185',['lucide-corner-up-right']='rbxassetid://10709813281',['lucide-cpu']='rbxassetid://10709813383',['lucide-croissant']='rbxassetid://10709818125',['lucide-crop']='rbxassetid://10709818245',['lucide-cross']='rbxassetid://10709818399',['lucide-crosshair']='rbxassetid://10709818534',['lucide-crown']='rbxassetid://10709818626',['lucide-cup-soda']='rbxassetid://10709818763',['lucide-curly-braces']='rbxassetid://10709818847',['lucide-currency']='rbxassetid://10709818931',['lucide-database']='rbxassetid://10709818996',['lucide-delete']='rbxassetid://10709819059',['lucide-diamond']='rbxassetid://10709819149',['lucide-dice-1']='rbxassetid://10709819266',['lucide-dice-2']='rbxassetid://10709819361',['lucide-dice-3']='rbxassetid://10709819508',['lucide-dice-4']='rbxassetid://10709819670',['lucide-dice-5']='rbxassetid://10709819801',['lucide-dice-6']='rbxassetid://10709819896',['lucide-dices']='rbxassetid://10723343321',['lucide-diff']='rbxassetid://10723343416',['lucide-disc']='rbxassetid://10723343537',['lucide-divide']='rbxassetid://10723343805',['lucide-divide-circle']='rbxassetid://10723343636',['lucide-divide-square']='rbxassetid://10723343737',['lucide-dollar-sign']='rbxassetid://10723343958',['lucide-download']='rbxassetid://10723344270',['lucide-download-cloud']='rbxassetid://10723344088',['lucide-droplet']='rbxassetid://10723344432',['lucide-droplets']='rbxassetid://10734883356',['lucide-drumstick']='rbxassetid://10723344737',['lucide-edit']='rbxassetid://10734883598',['lucide-edit-2']='rbxassetid://10723344885',['lucide-edit-3']='rbxassetid://10723345088',['lucide-egg']='rbxassetid://10723345518',['lucide-egg-fried']='rbxassetid://10723345347',['lucide-electricity']='rbxassetid://10723345749',['lucide-electricity-off']='rbxassetid://10723345643',['lucide-equal']='rbxassetid://10723345990',['lucide-equal-not']='rbxassetid://10723345866',['lucide-eraser']='rbxassetid://10723346158',['lucide-euro']='rbxassetid://10723346372',['lucide-expand']='rbxassetid://10723346553',['lucide-external-link']='rbxassetid://10723346684',['lucide-eye']='rbxassetid://10723346959',['lucide-eye-off']='rbxassetid://10723346871',['lucide-factory']='rbxassetid://10723347051',['lucide-fan']='rbxassetid://10723354359',['lucide-fast-forward']='rbxassetid://10723354521',['lucide-feather']='rbxassetid://10723354671',['lucide-figma']='rbxassetid://10723354801',['lucide-file']='rbxassetid://10723374641',['lucide-file-archive']='rbxassetid://10723354921',['lucide-file-audio']='rbxassetid://10723355148',['lucide-file-audio-2']='rbxassetid://10723355026',['lucide-file-axis-3d']='rbxassetid://10723355272',['lucide-file-badge']='rbxassetid://10723355622',['lucide-file-badge-2']='rbxassetid://10723355451',['lucide-file-bar-chart']='rbxassetid://10723355887',['lucide-file-bar-chart-2']='rbxassetid://10723355746',['lucide-file-box']='rbxassetid://10723355989',['lucide-file-check']='rbxassetid://10723356210',['lucide-file-check-2']='rbxassetid://10723356100',['lucide-file-clock']='rbxassetid://10723356329',['lucide-file-code']='rbxassetid://10723356507',['lucide-file-cog']='rbxassetid://10723356830',['lucide-file-cog-2']='rbxassetid://10723356676',['lucide-file-diff']='rbxassetid://10723357039',['lucide-file-digit']='rbxassetid://10723357151',['lucide-file-down']='rbxassetid://10723357322',['lucide-file-edit']='rbxassetid://10723357495',['lucide-file-heart']='rbxassetid://10723357637',['lucide-file-image']='rbxassetid://10723357790',['lucide-file-input']='rbxassetid://10723357933',['lucide-file-json']='rbxassetid://10723364435',['lucide-file-json-2']='rbxassetid://10723364361',['lucide-file-key']='rbxassetid://10723364605',['lucide-file-key-2']='rbxassetid://10723364515',['lucide-file-line-chart']='rbxassetid://10723364725',['lucide-file-lock']='rbxassetid://10723364957',['lucide-file-lock-2']='rbxassetid://10723364861',['lucide-file-minus']='rbxassetid://10723365254',['lucide-file-minus-2']='rbxassetid://10723365086',['lucide-file-output']='rbxassetid://10723365457',['lucide-file-pie-chart']='rbxassetid://10723365598',['lucide-file-plus']='rbxassetid://10723365877',['lucide-file-plus-2']='rbxassetid://10723365766',['lucide-file-question']='rbxassetid://10723365987',['lucide-file-scan']='rbxassetid://10723366167',['lucide-file-search']='rbxassetid://10723366550',['lucide-file-search-2']='rbxassetid://10723366340',['lucide-file-signature']='rbxassetid://10723366741',['lucide-file-spreadsheet']='rbxassetid://10723366962',['lucide-file-symlink']='rbxassetid://10723367098',['lucide-file-terminal']='rbxassetid://10723367244',['lucide-file-text']='rbxassetid://10723367380',['lucide-file-type']='rbxassetid://10723367606',['lucide-file-type-2']='rbxassetid://10723367509',['lucide-file-up']='rbxassetid://10723367734',['lucide-file-video']='rbxassetid://10723373884',['lucide-file-video-2']='rbxassetid://10723367834',['lucide-file-volume']='rbxassetid://10723374172',['lucide-file-volume-2']='rbxassetid://10723374030',['lucide-file-warning']='rbxassetid://10723374276',['lucide-file-x']='rbxassetid://10723374544',['lucide-file-x-2']='rbxassetid://10723374378',['lucide-files']='rbxassetid://10723374759',['lucide-film']='rbxassetid://10723374981',['lucide-filter']='rbxassetid://10723375128',['lucide-fingerprint']='rbxassetid://10723375250',['lucide-flag']='rbxassetid://10723375890',['lucide-flag-off']='rbxassetid://10723375443',['lucide-flag-triangle-left']='rbxassetid://10723375608',['lucide-flag-triangle-right']='rbxassetid://10723375727',['lucide-flame']='rbxassetid://10723376114',['lucide-flashlight']='rbxassetid://10723376471',['lucide-flashlight-off']='rbxassetid://10723376365',['lucide-flask-conical']='rbxassetid://10734883986',['lucide-flask-round']='rbxassetid://10723376614',['lucide-flip-horizontal']='rbxassetid://10723376884',['lucide-flip-horizontal-2']='rbxassetid://10723376745',['lucide-flip-vertical']='rbxassetid://10723377138',['lucide-flip-vertical-2']='rbxassetid://10723377026',['lucide-flower']='rbxassetid://10747830374',['lucide-flower-2']='rbxassetid://10723377305',['lucide-focus']='rbxassetid://10723377537',['lucide-folder']='rbxassetid://10723387563',['lucide-folder-archive']='rbxassetid://10723384478',['lucide-folder-check']='rbxassetid://10723384605',['lucide-folder-clock']='rbxassetid://10723384731',['lucide-folder-closed']='rbxassetid://10723384893',['lucide-folder-cog']='rbxassetid://10723385213',['lucide-folder-cog-2']='rbxassetid://10723385036',['lucide-folder-down']='rbxassetid://10723385338',['lucide-folder-edit']='rbxassetid://10723385445',['lucide-folder-heart']='rbxassetid://10723385545',['lucide-folder-input']='rbxassetid://10723385721',['lucide-folder-key']='rbxassetid://10723385848',['lucide-folder-lock']='rbxassetid://10723386005',['lucide-folder-minus']='rbxassetid://10723386127',['lucide-folder-open']='rbxassetid://10723386277',['lucide-folder-output']='rbxassetid://10723386386',['lucide-folder-plus']='rbxassetid://10723386531',['lucide-folder-search']='rbxassetid://10723386787',['lucide-folder-search-2']='rbxassetid://10723386674',['lucide-folder-symlink']='rbxassetid://10723386930',['lucide-folder-tree']='rbxassetid://10723387085',['lucide-folder-up']='rbxassetid://10723387265',['lucide-folder-x']='rbxassetid://10723387448',['lucide-folders']='rbxassetid://10723387721',['lucide-form-input']='rbxassetid://10723387841',['lucide-forward']='rbxassetid://10723388016',['lucide-frame']='rbxassetid://10723394389',['lucide-framer']='rbxassetid://10723394565',['lucide-frown']='rbxassetid://10723394681',['lucide-fuel']='rbxassetid://10723394846',['lucide-function-square']='rbxassetid://10723395041',['lucide-gamepad']='rbxassetid://10723395457',['lucide-gamepad-2']='rbxassetid://10723395215',['lucide-gauge']='rbxassetid://10723395708',['lucide-gavel']='rbxassetid://10723395896',['lucide-gem']='rbxassetid://10723396000',['lucide-ghost']='rbxassetid://10723396107',['lucide-gift']='rbxassetid://10723396402',['lucide-gift-card']='rbxassetid://10723396225',['lucide-git-branch']='rbxassetid://10723396676',['lucide-git-branch-plus']='rbxassetid://10723396542',['lucide-git-commit']='rbxassetid://10723396812',['lucide-git-compare']='rbxassetid://10723396954',['lucide-git-fork']='rbxassetid://10723397049',['lucide-git-merge']='rbxassetid://10723397165',['lucide-git-pull-request']='rbxassetid://10723397431',['lucide-git-pull-request-closed']='rbxassetid://10723397268',['lucide-git-pull-request-draft']='rbxassetid://10734884302',['lucide-glass']='rbxassetid://10723397788',['lucide-glass-2']='rbxassetid://10723397529',['lucide-glass-water']='rbxassetid://10723397678',['lucide-glasses']='rbxassetid://10723397895',['lucide-globe']='rbxassetid://10723404337',['lucide-globe-2']='rbxassetid://10723398002',['lucide-grab']='rbxassetid://10723404472',['lucide-graduation-cap']='rbxassetid://10723404691',['lucide-grape']='rbxassetid://10723404822',['lucide-grid']='rbxassetid://10723404936',['lucide-grip-horizontal']='rbxassetid://10723405089',['lucide-grip-vertical']='rbxassetid://10723405236',['lucide-hammer']='rbxassetid://10723405360',['lucide-hand']='rbxassetid://10723405649',['lucide-hand-metal']='rbxassetid://10723405508',['lucide-hard-drive']='rbxassetid://10723405749',['lucide-hard-hat']='rbxassetid://10723405859',['lucide-hash']='rbxassetid://10723405975',['lucide-haze']='rbxassetid://10723406078',['lucide-headphones']='rbxassetid://10723406165',['lucide-heart']='rbxassetid://10723406885',['lucide-heart-crack']='rbxassetid://10723406299',['lucide-heart-handshake']='rbxassetid://10723406480',['lucide-heart-off']='rbxassetid://10723406662',['lucide-heart-pulse']='rbxassetid://10723406795',['lucide-help-circle']='rbxassetid://10723406988',['lucide-hexagon']='rbxassetid://10723407092',['lucide-highlighter']='rbxassetid://10723407192',['lucide-history']='rbxassetid://10723407335',['lucide-home']='rbxassetid://10723407389',['lucide-hourglass']='rbxassetid://10723407498',['lucide-ice-cream']='rbxassetid://10723414308',['lucide-image']='rbxassetid://10723415040',['lucide-image-minus']='rbxassetid://10723414487',['lucide-image-off']='rbxassetid://10723414677',['lucide-image-plus']='rbxassetid://10723414827',['lucide-import']='rbxassetid://10723415205',['lucide-inbox']='rbxassetid://10723415335',['lucide-indent']='rbxassetid://10723415494',['lucide-indian-rupee']='rbxassetid://10723415642',['lucide-infinity']='rbxassetid://10723415766',['lucide-info']='rbxassetid://10723415903',['lucide-inspect']='rbxassetid://10723416057',['lucide-italic']='rbxassetid://10723416195',['lucide-japanese-yen']='rbxassetid://10723416363',['lucide-joystick']='rbxassetid://10723416527',['lucide-key']='rbxassetid://10723416652',['lucide-keyboard']='rbxassetid://10723416765',['lucide-lamp']='rbxassetid://10723417513',['lucide-lamp-ceiling']='rbxassetid://10723416922',['lucide-lamp-desk']='rbxassetid://10723417016',['lucide-lamp-floor']='rbxassetid://10723417131',['lucide-lamp-wall-down']='rbxassetid://10723417240',['lucide-lamp-wall-up']='rbxassetid://10723417356',['lucide-landmark']='rbxassetid://10723417608',['lucide-languages']='rbxassetid://10723417703',['lucide-laptop']='rbxassetid://10723423881',['lucide-laptop-2']='rbxassetid://10723417797',['lucide-lasso']='rbxassetid://10723424235',['lucide-lasso-select']='rbxassetid://10723424058',['lucide-laugh']='rbxassetid://10723424372',['lucide-layers']='rbxassetid://10723424505',['lucide-layout']='rbxassetid://10723425376',['lucide-layout-dashboard']='rbxassetid://10723424646',['lucide-layout-grid']='rbxassetid://10723424838',['lucide-layout-list']='rbxassetid://10723424963',['lucide-layout-template']='rbxassetid://10723425187',['lucide-leaf']='rbxassetid://10723425539',['lucide-library']='rbxassetid://10723425615',['lucide-life-buoy']='rbxassetid://10723425685',['lucide-lightbulb']='rbxassetid://10723425852',['lucide-lightbulb-off']='rbxassetid://10723425762',['lucide-line-chart']='rbxassetid://10723426393',['lucide-link']='rbxassetid://10723426722',['lucide-link-2']='rbxassetid://10723426595',['lucide-link-2-off']='rbxassetid://10723426513',['lucide-list']='rbxassetid://10723433811',['lucide-list-checks']='rbxassetid://10734884548',['lucide-list-end']='rbxassetid://10723426886',['lucide-list-minus']='rbxassetid://10723426986',['lucide-list-music']='rbxassetid://10723427081',['lucide-list-ordered']='rbxassetid://10723427199',['lucide-list-plus']='rbxassetid://10723427334',['lucide-list-start']='rbxassetid://10723427494',['lucide-list-video']='rbxassetid://10723427619',['lucide-list-x']='rbxassetid://10723433655',['lucide-loader']='rbxassetid://10723434070',['lucide-loader-2']='rbxassetid://10723433935',['lucide-locate']='rbxassetid://10723434557',['lucide-locate-fixed']='rbxassetid://10723434236',['lucide-locate-off']='rbxassetid://10723434379',['lucide-lock']='rbxassetid://10723434711',['lucide-log-in']='rbxassetid://10723434830',['lucide-log-out']='rbxassetid://10723434906',['lucide-luggage']='rbxassetid://10723434993',['lucide-magnet']='rbxassetid://10723435069',['lucide-mail']='rbxassetid://10734885430',['lucide-mail-check']='rbxassetid://10723435182',['lucide-mail-minus']='rbxassetid://10723435261',['lucide-mail-open']='rbxassetid://10723435342',['lucide-mail-plus']='rbxassetid://10723435443',['lucide-mail-question']='rbxassetid://10723435515',['lucide-mail-search']='rbxassetid://10734884739',['lucide-mail-warning']='rbxassetid://10734885015',['lucide-mail-x']='rbxassetid://10734885247',['lucide-mails']='rbxassetid://10734885614',['lucide-map']='rbxassetid://10734886202',['lucide-map-pin']='rbxassetid://10734886004',['lucide-map-pin-off']='rbxassetid://10734885803',['lucide-maximize']='rbxassetid://10734886735',['lucide-maximize-2']='rbxassetid://10734886496',['lucide-medal']='rbxassetid://10734887072',['lucide-megaphone']='rbxassetid://10734887454',['lucide-megaphone-off']='rbxassetid://10734887311',['lucide-meh']='rbxassetid://10734887603',['lucide-menu']='rbxassetid://10734887784',['lucide-message-circle']='rbxassetid://10734888000',['lucide-message-square']='rbxassetid://10734888228',['lucide-mic']='rbxassetid://10734888864',['lucide-mic-2']='rbxassetid://10734888430',['lucide-mic-off']='rbxassetid://10734888646',['lucide-microscope']='rbxassetid://10734889106',['lucide-microwave']='rbxassetid://10734895076',['lucide-milestone']='rbxassetid://10734895310',['lucide-minimize']='rbxassetid://10734895698',['lucide-minimize-2']='rbxassetid://10734895530',['lucide-minus']='rbxassetid://10734896206',['lucide-minus-circle']='rbxassetid://10734895856',['lucide-minus-square']='rbxassetid://10734896029',['lucide-monitor']='rbxassetid://10734896881',['lucide-monitor-off']='rbxassetid://10734896360',['lucide-monitor-speaker']='rbxassetid://10734896512',['lucide-moon']='rbxassetid://10734897102',['lucide-more-horizontal']='rbxassetid://10734897250',['lucide-more-vertical']='rbxassetid://10734897387',['lucide-mountain']='rbxassetid://10734897956',['lucide-mountain-snow']='rbxassetid://10734897665',['lucide-mouse']='rbxassetid://10734898592',['lucide-mouse-pointer']='rbxassetid://10734898476',['lucide-mouse-pointer-2']='rbxassetid://10734898194',['lucide-mouse-pointer-click']='rbxassetid://10734898355',['lucide-move']='rbxassetid://10734900011',['lucide-move-3d']='rbxassetid://10734898756',['lucide-move-diagonal']='rbxassetid://10734899164',['lucide-move-diagonal-2']='rbxassetid://10734898934',['lucide-move-horizontal']='rbxassetid://10734899414',['lucide-move-vertical']='rbxassetid://10734899821',['lucide-music']='rbxassetid://10734905958',['lucide-music-2']='rbxassetid://10734900215',['lucide-music-3']='rbxassetid://10734905665',['lucide-music-4']='rbxassetid://10734905823',['lucide-navigation']='rbxassetid://10734906744',['lucide-navigation-2']='rbxassetid://10734906332',['lucide-navigation-2-off']='rbxassetid://10734906144',['lucide-navigation-off']='rbxassetid://10734906580',['lucide-network']='rbxassetid://10734906975',['lucide-newspaper']='rbxassetid://10734907168',['lucide-octagon']='rbxassetid://10734907361',['lucide-option']='rbxassetid://10734907649',['lucide-outdent']='rbxassetid://10734907933',['lucide-package']='rbxassetid://10734909540',['lucide-package-2']='rbxassetid://10734908151',['lucide-package-check']='rbxassetid://10734908384',['lucide-package-minus']='rbxassetid://10734908626',['lucide-package-open']='rbxassetid://10734908793',['lucide-package-plus']='rbxassetid://10734909016',['lucide-package-search']='rbxassetid://10734909196',['lucide-package-x']='rbxassetid://10734909375',['lucide-paint-bucket']='rbxassetid://10734909847',['lucide-paintbrush']='rbxassetid://10734910187',['lucide-paintbrush-2']='rbxassetid://10734910030',['lucide-palette']='rbxassetid://10734910430',['lucide-palmtree']='rbxassetid://10734910680',['lucide-paperclip']='rbxassetid://10734910927',['lucide-party-popper']='rbxassetid://10734918735',['lucide-pause']='rbxassetid://10734919336',['lucide-pause-circle']='rbxassetid://10735024209',['lucide-pause-octagon']='rbxassetid://10734919143',['lucide-pen-tool']='rbxassetid://10734919503',['lucide-pencil']='rbxassetid://10734919691',['lucide-percent']='rbxassetid://10734919919',['lucide-person-standing']='rbxassetid://10734920149',['lucide-phone']='rbxassetid://10734921524',['lucide-phone-call']='rbxassetid://10734920305',['lucide-phone-forwarded']='rbxassetid://10734920508',['lucide-phone-incoming']='rbxassetid://10734920694',['lucide-phone-missed']='rbxassetid://10734920845',['lucide-phone-off']='rbxassetid://10734921077',['lucide-phone-outgoing']='rbxassetid://10734921288',['lucide-pie-chart']='rbxassetid://10734921727',['lucide-piggy-bank']='rbxassetid://10734921935',['lucide-pin']='rbxassetid://10734922324',['lucide-pin-off']='rbxassetid://10734922180',['lucide-pipette']='rbxassetid://10734922497',['lucide-pizza']='rbxassetid://10734922774',['lucide-plane']='rbxassetid://10734922971',['lucide-play']='rbxassetid://10734923549',['lucide-play-circle']='rbxassetid://10734923214',['lucide-plus']='rbxassetid://10734924532',['lucide-plus-circle']='rbxassetid://10734923868',['lucide-plus-square']='rbxassetid://10734924219',['lucide-podcast']='rbxassetid://10734929553',['lucide-pointer']='rbxassetid://10734929723',['lucide-pound-sterling']='rbxassetid://10734929981',['lucide-power']='rbxassetid://10734930466',['lucide-power-off']='rbxassetid://10734930257',['lucide-printer']='rbxassetid://10734930632',['lucide-puzzle']='rbxassetid://10734930886',['lucide-quote']='rbxassetid://10734931234',['lucide-radio']='rbxassetid://10734931596',['lucide-radio-receiver']='rbxassetid://10734931402',['lucide-rectangle-horizontal']='rbxassetid://10734931777',['lucide-rectangle-vertical']='rbxassetid://10734932081',['lucide-recycle']='rbxassetid://10734932295',['lucide-redo']='rbxassetid://10734932822',['lucide-redo-2']='rbxassetid://10734932586',['lucide-refresh-ccw']='rbxassetid://10734933056',['lucide-refresh-cw']='rbxassetid://10734933222',['lucide-refrigerator']='rbxassetid://10734933465',['lucide-regex']='rbxassetid://10734933655',['lucide-repeat']='rbxassetid://10734933966',['lucide-repeat-1']='rbxassetid://10734933826',['lucide-reply']='rbxassetid://10734934252',['lucide-reply-all']='rbxassetid://10734934132',['lucide-rewind']='rbxassetid://10734934347',['lucide-rocket']='rbxassetid://10734934585',['lucide-rocking-chair']='rbxassetid://10734939942',['lucide-rotate-3d']='rbxassetid://10734940107',['lucide-rotate-ccw']='rbxassetid://10734940376',['lucide-rotate-cw']='rbxassetid://10734940654',['lucide-rss']='rbxassetid://10734940825',['lucide-ruler']='rbxassetid://10734941018',['lucide-russian-ruble']='rbxassetid://10734941199',['lucide-sailboat']='rbxassetid://10734941354',['lucide-save']='rbxassetid://10734941499',['lucide-scale']='rbxassetid://10734941912',['lucide-scale-3d']='rbxassetid://10734941739',['lucide-scaling']='rbxassetid://10734942072',['lucide-scan']='rbxassetid://10734942565',['lucide-scan-face']='rbxassetid://10734942198',['lucide-scan-line']='rbxassetid://10734942351',['lucide-scissors']='rbxassetid://10734942778',['lucide-screen-share']='rbxassetid://10734943193',['lucide-screen-share-off']='rbxassetid://10734942967',['lucide-scroll']='rbxassetid://10734943448',['lucide-search']='rbxassetid://10734943674',['lucide-send']='rbxassetid://10734943902',['lucide-separator-horizontal']='rbxassetid://10734944115',['lucide-separator-vertical']='rbxassetid://10734944326',['lucide-server']='rbxassetid://10734949856',['lucide-server-cog']='rbxassetid://10734944444',['lucide-server-crash']='rbxassetid://10734944554',['lucide-server-off']='rbxassetid://10734944668',['lucide-settings']='rbxassetid://10734950309',['lucide-settings-2']='rbxassetid://10734950020',['lucide-share']='rbxassetid://10734950813',['lucide-share-2']='rbxassetid://10734950553',['lucide-sheet']='rbxassetid://10734951038',['lucide-shield']='rbxassetid://10734951847',['lucide-shield-alert']='rbxassetid://10734951173',['lucide-shield-check']='rbxassetid://10734951367',['lucide-shield-close']='rbxassetid://10734951535',['lucide-shield-off']='rbxassetid://10734951684',['lucide-shirt']='rbxassetid://10734952036',['lucide-shopping-bag']='rbxassetid://10734952273',['lucide-shopping-cart']='rbxassetid://10734952479',['lucide-shovel']='rbxassetid://10734952773',['lucide-shower-head']='rbxassetid://10734952942',['lucide-shrink']='rbxassetid://10734953073',['lucide-shrub']='rbxassetid://10734953241',['lucide-shuffle']='rbxassetid://10734953451',['lucide-sidebar']='rbxassetid://10734954301',['lucide-sidebar-close']='rbxassetid://10734953715',['lucide-sidebar-open']='rbxassetid://10734954000',['lucide-sigma']='rbxassetid://10734954538',['lucide-signal']='rbxassetid://10734961133',['lucide-signal-high']='rbxassetid://10734954807',['lucide-signal-low']='rbxassetid://10734955080',['lucide-signal-medium']='rbxassetid://10734955336',['lucide-signal-zero']='rbxassetid://10734960878',['lucide-siren']='rbxassetid://10734961284',['lucide-skip-back']='rbxassetid://10734961526',['lucide-skip-forward']='rbxassetid://10734961809',['lucide-skull']='rbxassetid://10734962068',['lucide-slack']='rbxassetid://10734962339',['lucide-slash']='rbxassetid://10734962600',['lucide-slice']='rbxassetid://10734963024',['lucide-sliders']='rbxassetid://10734963400',['lucide-sliders-horizontal']='rbxassetid://10734963191',['lucide-smartphone']='rbxassetid://10734963940',['lucide-smartphone-charging']='rbxassetid://10734963671',['lucide-smile']='rbxassetid://10734964441',['lucide-smile-plus']='rbxassetid://10734964188',['lucide-snowflake']='rbxassetid://10734964600',['lucide-sofa']='rbxassetid://10734964852',['lucide-sort-asc']='rbxassetid://10734965115',['lucide-sort-desc']='rbxassetid://10734965287',['lucide-speaker']='rbxassetid://10734965419',['lucide-sprout']='rbxassetid://10734965572',['lucide-square']='rbxassetid://10734965702',['lucide-star']='rbxassetid://10734966248',['lucide-star-half']='rbxassetid://10734965897',['lucide-star-off']='rbxassetid://10734966097',['lucide-stethoscope']='rbxassetid://10734966384',['lucide-sticker']='rbxassetid://10734972234',['lucide-sticky-note']='rbxassetid://10734972463',['lucide-stop-circle']='rbxassetid://10734972621',['lucide-stretch-horizontal']='rbxassetid://10734972862',['lucide-stretch-vertical']='rbxassetid://10734973130',['lucide-strikethrough']='rbxassetid://10734973290',['lucide-subscript']='rbxassetid://10734973457',['lucide-sun']='rbxassetid://10734974297',['lucide-sun-dim']='rbxassetid://10734973645',['lucide-sun-medium']='rbxassetid://10734973778',['lucide-sun-moon']='rbxassetid://10734973999',['lucide-sun-snow']='rbxassetid://10734974130',['lucide-sunrise']='rbxassetid://10734974522',['lucide-sunset']='rbxassetid://10734974689',['lucide-superscript']='rbxassetid://10734974850',['lucide-swiss-franc']='rbxassetid://10734975024',['lucide-switch-camera']='rbxassetid://10734975214',['lucide-sword']='rbxassetid://10734975486',['lucide-swords']='rbxassetid://10734975692',['lucide-syringe']='rbxassetid://10734975932',['lucide-table']='rbxassetid://10734976230',['lucide-table-2']='rbxassetid://10734976097',['lucide-tablet']='rbxassetid://10734976394',['lucide-tag']='rbxassetid://10734976528',['lucide-tags']='rbxassetid://10734976739',['lucide-target']='rbxassetid://10734977012',['lucide-tent']='rbxassetid://10734981750',['lucide-terminal']='rbxassetid://10734982144',['lucide-terminal-square']='rbxassetid://10734981995',['lucide-text-cursor']='rbxassetid://10734982395',['lucide-text-cursor-input']='rbxassetid://10734982297',['lucide-thermometer']='rbxassetid://10734983134',['lucide-thermometer-snowflake']='rbxassetid://10734982571',['lucide-thermometer-sun']='rbxassetid://10734982771',['lucide-thumbs-down']='rbxassetid://10734983359',['lucide-thumbs-up']='rbxassetid://10734983629',['lucide-ticket']='rbxassetid://10734983868',['lucide-timer']='rbxassetid://10734984606',['lucide-timer-off']='rbxassetid://10734984138',['lucide-timer-reset']='rbxassetid://10734984355',['lucide-toggle-left']='rbxassetid://10734984834',['lucide-toggle-right']='rbxassetid://10734985040',['lucide-tornado']='rbxassetid://10734985247',['lucide-toy-brick']='rbxassetid://10747361919',['lucide-train']='rbxassetid://10747362105',['lucide-trash']='rbxassetid://10747362393',['lucide-trash-2']='rbxassetid://10747362241',['lucide-tree-deciduous']='rbxassetid://10747362534',['lucide-tree-pine']='rbxassetid://10747362748',['lucide-trees']='rbxassetid://10747363016',['lucide-trending-down']='rbxassetid://10747363205',['lucide-trending-up']='rbxassetid://10747363465',['lucide-triangle']='rbxassetid://10747363621',['lucide-trophy']='rbxassetid://10747363809',['lucide-truck']='rbxassetid://10747364031',['lucide-tv']='rbxassetid://10747364593',['lucide-tv-2']='rbxassetid://10747364302',['lucide-type']='rbxassetid://10747364761',['lucide-umbrella']='rbxassetid://10747364971',['lucide-underline']='rbxassetid://10747365191',['lucide-undo']='rbxassetid://10747365484',['lucide-undo-2']='rbxassetid://10747365359',['lucide-unlink']='rbxassetid://10747365771',['lucide-unlink-2']='rbxassetid://10747397871',['lucide-unlock']='rbxassetid://10747366027',['lucide-upload']='rbxassetid://10747366434',['lucide-upload-cloud']='rbxassetid://10747366266',['lucide-usb']='rbxassetid://10747366606',['lucide-user']='rbxassetid://10747373176',['lucide-user-check']='rbxassetid://10747371901',['lucide-user-cog']='rbxassetid://10747372167',['lucide-user-minus']='rbxassetid://10747372346',['lucide-user-plus']='rbxassetid://10747372702',['lucide-user-x']='rbxassetid://10747372992',['lucide-users']='rbxassetid://10747373426',['lucide-utensils']='rbxassetid://10747373821',['lucide-utensils-crossed']='rbxassetid://10747373629',['lucide-venetian-mask']='rbxassetid://10747374003',['lucide-verified']='rbxassetid://10747374131',['lucide-vibrate']='rbxassetid://10747374489',['lucide-vibrate-off']='rbxassetid://10747374269',['lucide-video']='rbxassetid://10747374938',['lucide-video-off']='rbxassetid://10747374721',['lucide-view']='rbxassetid://10747375132',['lucide-voicemail']='rbxassetid://10747375281',['lucide-volume']='rbxassetid://10747376008',['lucide-volume-1']='rbxassetid://10747375450',['lucide-volume-2']='rbxassetid://10747375679',['lucide-volume-x']='rbxassetid://10747375880',['lucide-wallet']='rbxassetid://10747376205',['lucide-wand']='rbxassetid://10747376565',['lucide-wand-2']='rbxassetid://10747376349',['lucide-watch']='rbxassetid://10747376722',['lucide-waves']='rbxassetid://10747376931',['lucide-webcam']='rbxassetid://10747381992',['lucide-wifi']='rbxassetid://10747382504',['lucide-wifi-off']='rbxassetid://10747382268',['lucide-wind']='rbxassetid://10747382750',['lucide-wrap-text']='rbxassetid://10747383065',['lucide-wrench']='rbxassetid://10747383470',['lucide-x']='rbxassetid://10747384394',['lucide-x-circle']='rbxassetid://10747383819',['lucide-x-octagon']='rbxassetid://10747384037',['lucide-x-square']='rbxassetid://10747384217',['lucide-zoom-in']='rbxassetid://10747384552',['lucide-zoom-out']='rbxassetid://10747384679'}}end function a.f()local b,c,d,e,f=game:GetService'RunService',game:GetService'UserInputService',game:GetService'TweenService',a.load'e',{Font='rbxassetid://12187365364',Theme=nil,Objects={},DefaultProperties={ScreenGui={ResetOnSpawn=false,ZIndexBehavior='Sibling'},CanvasGroup={BorderSizePixel=0,BackgroundColor3=Color3.new(1,1,1)},Frame={BorderSizePixel=0,BackgroundColor3=Color3.new(1,1,1)},TextLabel={BackgroundColor3=Color3.new(1,1,1),BorderSizePixel=0,Text='',TextColor3=Color3.new(1,1,1),TextSize=14},TextButton={BackgroundColor3=Color3.new(1,1,1),BorderSizePixel=0,Text='',AutoButtonColor=false,TextColor3=Color3.new(1,1,1),TextSize=14},TextBox={BackgroundColor3=Color3.new(1,1,1),BorderColor3=Color3.new(0,0,0),ClearTextOnFocus=false,Text='',TextColor3=Color3.new(0,0,0),TextSize=14},ImageLabel={BackgroundTransparency=1,BackgroundColor3=Color3.new(1,1,1),BorderSizePixel=0},ImageButton={BackgroundColor3=Color3.new(1,1,1),BorderSizePixel=0,AutoButtonColor=false},UIListLayout={SortOrder='LayoutOrder'}}}function f.SetTheme(g)f.Theme=g end local g=function(g,h)if h.ThemeTag then f.AddThemeObject(g,h.ThemeTag)end end function f.GetThemeProperty(h,i)return i[h]end function f.AddThemeObject(h,i)local j=#f.Objects+1 local k={Object=h,Properties=i,Index=j}f.Objects[h]=k f.UpdateTheme()return h end function f.UpdateTheme()for h,i in next,f.Objects do for j,k in next,i.Properties do f.Tween(h,0.08,{[j]=Color3.fromHex(f.GetThemeProperty(k,f.Theme))}):Play()end end end function f.Icon(h)return e.assets['lucide-'..h]end function f.New(h,i,j)local k=Instance.new(h)for l,m in next,f.DefaultProperties[h]or{}do k[l]=m end for n,o in next,i or{}do if n~='ThemeTag'then k[n]=o end end for p,q in next,j or{}do q.Parent=k end g(k,i)return k end function f.Tween(h,i,j,...)return d:Create(h,TweenInfo.new(i,...),j)end function f.Drag(h)local i,j,k,n local o=function(o)local p=o.Position-k h.Position=UDim2.new(n.X.Scale,n.X.Offset+p.X,n.Y.Scale,n.Y.Offset+p.Y)end h.InputBegan:Connect(function(p)if p.UserInputType==Enum.UserInputType.MouseButton1 or p.UserInputType==Enum.UserInputType.Touch then i=true k=p.Position n=h.Position p.Changed:Connect(function()if p.UserInputState==Enum.UserInputState.End then i=false end end)end end)h.InputChanged:Connect(function(p)if p.UserInputType==Enum.UserInputType.MouseMovement or p.UserInputType==Enum.UserInputType.Touch then j=p end end)c.InputChanged:Connect(function(p)if p==j and i then o(p)end end)end return f end function a.g()local b=a.load'f'local c,d,e=b.New,b.Tween,{Size=UDim2.new(0,300,1,-156),UICorner=9,UIPadding=12,ButtonPadding=9,Holder=nil,NotificationIndex=0,Notifications={}}function e.Init(f)return c('Frame',{Position=UDim2.new(1,-29,0,56),AnchorPoint=Vector2.new(1,0),Size=e.Size,Parent=f,BackgroundTransparency=1},{c('UIListLayout',{HorizontalAlignment='Center',SortOrder='LayoutOrder',VerticalAlignment='Bottom',Padding=UDim.new(0,8)})})end function e.New(f)local g={Title=f.Title or'Notification',Content=f.Content or nil,Duration=f.Duration,Callback=f.Callback,CanClose=f.CanClose,UIElements={},Closed=false}if g.CanClose==nil then g.CanClose=true end e.NotificationIndex=e.NotificationIndex+1 e.Notifications[e.NotificationIndex]=g local h,i=(c('ImageLabel',{Image='rbxassetid://8992230677',ImageColor3=Color3.new(0,0,0),ImageTransparency=0.75,Size=UDim2.new(1,120,1,116),Position=UDim2.new(0,-60,0,-58),ScaleType='Slice',SliceCenter=Rect.new(99,99,99,99),BackgroundTransparency=1}))if g.Duration then i=c('Frame',{Name='Duration',Size=UDim2.new(1,0,1,0),Position=UDim2.new(0,0,0,0),ThemeTag={BackgroundColor3='Outline'},BackgroundTransparency=0.9,ZIndex=999})end local j if g.CanClose then j=c('ImageButton',{Size=UDim2.new(0,18,0,18),Image=b.Icon'x',Position=UDim2.new(1,-e.UIPadding,0,e.UIPadding),AnchorPoint=Vector2.new(1,0),ThemeTag={ImageColor3='Text'},BackgroundTransparency=1,ZIndex=999})end local k,n={'Confirm','Cancel'}if g.Callback then n=c('Frame',{Size=UDim2.new(1,0,0,0),AutomaticSize='Y',BackgroundTransparency=1,LayoutOrder=5},{c('UIListLayout',{SortOrder='LayoutOrder',FillDirection='Horizontal',Padding=UDim.new(0,5.5)})})for o,p in next,k do local q=c('TextButton',{Size=UDim2.new(1/#k,-2.5,0,0),AutomaticSize='Y',ThemeTag={BackgroundColor3='Text',TextColor3=p=='Confirm'and'Text2'or'Text'},BackgroundTransparency=p=='Confirm'and 0.15 or 0.9,Text=p,FontFace=Font.new(b.Font,Enum.FontWeight.Medium),TextSize=15,Parent=n,LayoutOrder=p=='Confirm'and 0 or 1},{c('UICorner',{CornerRadius=UDim.new(0,e.UICorner-4)}),c('UIPadding',{PaddingTop=UDim.new(0,e.ButtonPadding),PaddingLeft=UDim.new(0,e.ButtonPadding),PaddingRight=UDim.new(0,e.ButtonPadding),PaddingBottom=UDim.new(0,e.ButtonPadding)}),c('Frame',{Size=UDim2.new(1,e.ButtonPadding*2,1,e.ButtonPadding*2),BackgroundColor3=Color3.new(0,0,0),BackgroundTransparency=1,Position=UDim2.new(0.5,0,0.5,0),AnchorPoint=Vector2.new(0.5,0.5)},{c('UICorner',{CornerRadius=UDim.new(0,e.UICorner-4)})})})q.MouseButton1Click:Connect(function()pcall(g.Callback,p)end)q.MouseEnter:Connect(function()d(q.Frame,0.1,{BackgroundTransparency=0.85}):Play()end)q.MouseLeave:Connect(function()d(q.Frame,0.1,{BackgroundTransparency=1}):Play()end)end end g.UIElements.MainContainer=c('Frame',{Size=UDim2.new(1,0,0,0),Parent=f.Holder,AnchorPoint=Vector2.new(0,0),BackgroundTransparency=1},{c('Frame',{Size=UDim2.new(1,0,1,0),BackgroundTransparency=1,AnchorPoint=Vector2.new(0,1),Position=UDim2.new(2,0,1,0)},{h,j,c('CanvasGroup',{Size=UDim2.new(1,0,0,0),AutomaticSize='Y',BackgroundTransparency=1,Name='Frame',ZIndex=2},{i,c('UICorner',{CornerRadius=UDim.new(0,e.UICorner)}),c('UIStroke',{Thickness=0.6,ThemeTag={Color='Outline'},Transparency=0.8}),c('Frame',{Size=UDim2.new(1,0,1,0),BackgroundTransparency=1,ZIndex=999},{c('UIPadding',{PaddingTop=UDim.new(0,e.UIPadding+2),PaddingLeft=UDim.new(0,e.UIPadding),PaddingRight=UDim.new(0,e.UIPadding),PaddingBottom=UDim.new(0,e.UIPadding+2)}),c('TextLabel',{Text=g.Title,ThemeTag={TextColor3='Text'},TextSize=15,FontFace=Font.new(b.Font,Enum.FontWeight.Medium),BackgroundTransparency=1,TextWrapped=true,AutomaticSize='Y',Size=UDim2.new(1,-18-e.UIPadding,0,0),TextXAlignment='Left',LayoutOrder=1}),n,c('UIListLayout',{SortOrder='LayoutOrder',Padding=UDim.new(0,11)})}),c('Frame',{BackgroundTransparency=0.15,Size=UDim2.new(1,0,1,0),ThemeTag={BackgroundColor3='Accent'}},{c('UICorner',{CornerRadius=UDim.new(0,e.UICorner)})}),c('Frame',{Size=UDim2.new(1,0,1,0),BackgroundTransparency=0,Name='Gradient',ZIndex=5},{c('UICorner',{CornerRadius=UDim.new(0,e.UICorner)}),c('UIGradient',{Color=ColorSequence.new(Color3.new(0,0,0),Color3.new(0,0,0)),Rotation=90,Transparency=NumberSequence.new{NumberSequenceKeypoint.new(0,1),NumberSequenceKeypoint.new(1,0.7)}})})})})})if g.Content then c('TextLabel',{Text=g.Content,ThemeTag={TextColor3='Text'},TextSize=15,FontFace=Font.new(b.Font,Enum.FontWeight.Medium),TextTransparency=0.4,TextWrapped=true,BackgroundTransparency=1,AutomaticSize='Y',Size=UDim2.new(1,-18-e.UIPadding,0,0),TextXAlignment='Left',LayoutOrder=1,Parent=g.UIElements.MainContainer.Frame.Frame.Frame})end task.spawn(function()d(g.UIElements.MainContainer.Frame,0.4,{Position=UDim2.new(0,0,1,0)},Enum.EasingStyle.Sine,Enum.EasingDirection.InOut):Play()if e.NotificationIndex~=1 then g.UIElements.MainContainer.Frame.Frame:GetPropertyChangedSignal'AbsoluteSize':Connect(function()d(g.UIElements.MainContainer,0.2,{Size=UDim2.new(1,0,0,g.UIElements.MainContainer.Frame.Frame.AbsoluteSize.Y)},Enum.EasingStyle.Sine,Enum.EasingDirection.InOut):Play()end)else g.UIElements.MainContainer.Frame.Frame:GetPropertyChangedSignal'AbsoluteSize':Connect(function()g.UIElements.MainContainer.Size=UDim2.new(1,0,0,g.UIElements.MainContainer.Frame.Frame.AbsoluteSize.Y)end)end end)function g.Close(o)if not g.Closed then d(g.UIElements.MainContainer.Frame,0.4,{Position=UDim2.new(2,0,1,0)},Enum.EasingStyle.Sine,Enum.EasingDirection.InOut):Play()g.Closed=true task.spawn(function()task.wait(0.3)g.UIElements.MainContainer.Frame.Frame:Destroy()d(g.UIElements.MainContainer,0.2,{Size=UDim2.new(1,0,0,0)},Enum.EasingStyle.Sine,Enum.EasingDirection.InOut):Play()task.wait(0.35)g.UIElements.MainContainer:Destroy()end)end end task.spawn(function()if i then d(i,g.Duration,{Size=UDim2.new(0,0,1,0)},Enum.EasingStyle.Linear,Enum.EasingDirection.InOut):Play()task.wait(g.Duration)g:Close()end end)if j then j.MouseButton1Click:Connect(function()g:Close()end)end return g end return e end function a.h()local b=a.load'f'local c,d=b.New,b.Tween return function(e)local f={Title=e.Title or'Element',Desc=e.Desc or nil,Hover=e.Hover,UIPadding=10,UIElements={}}f.UIElements.Main=c('TextButton',{Size=UDim2.new(1,0,0,0),AutomaticSize='Y',BackgroundTransparency=0.98,BackgroundColor3=Color3.fromHex(e.Theme.Text),ThemeTag={BackgroundColor3='Text'}},{c('UICorner',{CornerRadius=UDim.new(0,6)}),c('Frame',{Size=UDim2.new(0,0,0,0),AutomaticSize='XY',BackgroundTransparency=1,Name='Title'},{c('UIListLayout',{Padding=UDim.new(0,6)}),c('TextLabel',{Text=f.Title,TextColor3=Color3.fromHex(e.Theme.Text),ThemeTag={TextColor3='Text'},TextSize=15,TextWrapped=true,TextXAlignment='Left',Size=UDim2.new(1,-e.TextOffset,0,0),FontFace=Font.new(b.Font,Enum.FontWeight.Medium),BackgroundTransparency=1,AutomaticSize='Y'})}),c('Frame',{Size=UDim2.new(1,f.UIPadding*2,1,f.UIPadding*2+4),BackgroundColor3=Color3.fromHex(e.Theme.Text),ThemeTag={BackgroundColor3='Text'},Position=UDim2.new(0,-f.UIPadding,0,-f.UIPadding-2),BackgroundTransparency=1,Name='Highlight'},{c('UICorner',{CornerRadius=UDim.new(0,6)})}),c('UIPadding',{PaddingTop=UDim.new(0,f.UIPadding+2),PaddingLeft=UDim.new(0,f.UIPadding),PaddingRight=UDim.new(0,f.UIPadding),PaddingBottom=UDim.new(0,f.UIPadding+2)}),c('UIStroke',{Thickness=0.8,Color=Color3.fromHex(e.Theme.Text),ThemeTag={Color='Text'},Transparency=0.94,ApplyStrokeMode='Border'})})f.UIElements.MainContainer=c('Frame',{Size=UDim2.new(1,0,0,0),AutomaticSize='Y',BackgroundTransparency=1,Parent=e.Parent},{f.UIElements.Main,c('UIPadding',{PaddingTop=UDim.new(0,1),PaddingLeft=UDim.new(0,1),PaddingRight=UDim.new(0,1),PaddingBottom=UDim.new(0,1)})})if f.Desc then c('TextLabel',{Text=f.Desc,TextColor3=Color3.fromHex(e.Theme.Text),ThemeTag={TextColor3='Text'},TextTransparency=0.4,TextSize=15,TextWrapped=true,TextXAlignment='Left',Size=UDim2.new(1,-e.TextOffset,0,0),FontFace=Font.new(b.Font,Enum.FontWeight.Medium),BackgroundTransparency=1,AutomaticSize='Y',Parent=f.UIElements.Main.Title})else f.UIElements.Main.Title.AnchorPoint=Vector2.new(0,0.5)f.UIElements.Main.Title.Position=UDim2.new(0,0,0.5,0)end if f.Hover then f.UIElements.Main.MouseEnter:Connect(function()d(f.UIElements.Main.Highlight,0.08,{BackgroundTransparency=0.97}):Play()end)f.UIElements.Main.MouseLeave:Connect(function()d(f.UIElements.Main.Highlight,0.08,{BackgroundTransparency=1}):Play()end)end return f end end function a.i()local b=a.load'f'local c,d=b.New,{}function d.New(e,f)local g={__type='Button',Title=f.Title or'Button',Desc=f.Desc or nil,Callback=f.Callback or function()end,UIElements={}}g.ButtonFrame=a.load'h'{Title=g.Title,Desc=g.Desc,Parent=f.Parent,Theme=f.Theme,TextOffset=20,Hover=true}g.UIElements.ButtonIcon=c('ImageLabel',{Image=b.Icon'chevron-right',BackgroundTransparency=1,Parent=g.ButtonFrame.UIElements.Main,Size=UDim2.new(0,20,0,20),AnchorPoint=Vector2.new(1,0.5),Position=UDim2.new(1,0,0.5,0),ImageColor3=Color3.fromHex(f.Theme.Text),ThemeTag={ImageColor3='Text'}})g.ButtonFrame.UIElements.Main.MouseButton1Click:Connect(function()task.spawn(function()pcall(g.Callback)end)end)return g.__type,g end return d end function a.j()local b=a.load'f'local c,d,e=b.New,b.Tween,{}function e.New(f,g)local h={__type='Toggle',Title=g.Title or'Toggle',Desc=g.Desc or nil,Value=g.Value,Callback=g.Callback or function()end,UIElements={}}h.ToggleFrame=a.load'h'{Title=h.Title,Desc=h.Desc,Parent=g.Parent,Theme=g.Theme,TextOffset=44,Hover=true}if h.Value==nil then h.Value=false end h.UIElements.Toggle=c('Frame',{BackgroundTransparency=0.95,BackgroundColor3=Color3.fromHex(g.Theme.Text),ThemeTag={BackgroundColor3='Text'},Parent=h.ToggleFrame.UIElements.Main,Size=UDim2.new(0,44,0,24),AnchorPoint=Vector2.new(1,0.5),Position=UDim2.new(1,0,0.5,0)},{c('UICorner',{CornerRadius=UDim.new(1,0)}),c('UIStroke',{Color=Color3.fromHex(g.Theme.Text),ThemeTag={Color='Text'},Transparency=0.93,Thickness=1}),c('Frame',{Size=UDim2.new(0,18,0,18),Position=UDim2.new(0,3,0.5,0),AnchorPoint=Vector2.new(0,0.5),BackgroundTransparency=0.15,BackgroundColor3=Color3.fromHex(g.Theme.Text),ThemeTag={BackgroundColor3='Text'}},{c('UICorner',{CornerRadius=UDim.new(1,0)}),c('Frame',{Size=UDim2.new(1,0,1,0),BackgroundColor3=Color3.fromHex(g.Theme.Text2),BackgroundTransparency=1,ThemeTag={BackgroundColor3='Text2'}},{c('UICorner',{CornerRadius=UDim.new(1,0)})})})})function h.SetValue(i,j)if j then d(h.UIElements.Toggle.Frame,0.1,{Position=UDim2.new(1,-21,0.5,0),BackgroundTransparency=1}):Play()d(h.UIElements.Toggle.Frame.Frame,0.1,{BackgroundTransparency=0.15}):Play()d(h.UIElements.Toggle,0.1,{BackgroundTransparency=0.15}):Play()task.spawn(function()pcall(h.Callback,j)end)else d(h.UIElements.Toggle.Frame,0.1,{Position=UDim2.new(0,3,0.5,0),BackgroundTransparency=0.15}):Play()d(h.UIElements.Toggle.Frame.Frame,0.1,{BackgroundTransparency=1}):Play()d(h.UIElements.Toggle,0.1,{BackgroundTransparency=0.95}):Play()task.spawn(function()pcall(h.Callback,j)end)end end local i=g.Value h:SetValue(i)i=not i h.ToggleFrame.UIElements.Main.MouseButton1Click:Connect(function()h:SetValue(i)i=not i end)return h.__type,h end return e end function a.k()local b=a.load'f'local c,d,e=b.New,{},false function d.New(f,g)local h,i,j,k={__type='Slider',Title=g.Title or'Slider',Desc=g.Desc or nil,Value=g.Value or{},Step=g.Step or 1,Callback=g.Callback or function()end,UIElements={},IsFocusing=false}local n=h.Value.Default or h.Value.Min or 0 local o,p=n,(n-(h.Value.Min or 0))/((h.Value.Max or 100)-(h.Value.Min or 0))h.SliderFrame=a.load'h'{Title=h.Title,Desc=h.Desc,Parent=g.Parent,Theme=g.Theme,TextOffset=85,Hover=false}h.UIElements.SliderIcon=c('ImageLabel',{ImageTransparency=0.9,BackgroundTransparency=1,Image='rbxassetid://18747052224',ScaleType='Crop',Size=UDim2.new(0,126,0,3),Name='Frame',Position=UDim2.new(0.5,0,0.5,0),AnchorPoint=Vector2.new(0.5,0.5)},{c('UICorner',{CornerRadius=UDim.new(1,0)}),c('ImageLabel',{Name='Frame',Size=UDim2.new(p,0,1,0),Image='rbxassetid://18747052224',ScaleType='Crop',BackgroundTransparency=1,ImageTransparency=0.4},{c('UICorner',{CornerRadius=UDim.new(1,0)}),c('ImageLabel',{Size=UDim2.new(0,13,0,13),Position=UDim2.new(1,0,0.5,0),AnchorPoint=Vector2.new(0.5,0.5),Image='rbxassetid://18747052224',BackgroundTransparency=1,ThemeTag={ImageColor3='Text'}})})})h.UIElements.SliderContainer=c('Frame',{Size=UDim2.new(0,0,0,0),AutomaticSize='XY',AnchorPoint=Vector2.new(1,0.5),Position=UDim2.new(1,0,0.5,0),BackgroundTransparency=1,Parent=h.SliderFrame.UIElements.Main},{c('UIListLayout',{Padding=UDim.new(0,8),FillDirection='Horizontal',VerticalAlignment='Center'}),h.UIElements.SliderIcon,c('TextLabel',{Text=tostring(n),TextColor3=Color3.fromHex(g.Theme.Text),ThemeTag={TextColor3='Text'},TextTransparency=0.4,AutomaticSize='XY',TextSize=15,FontFace=Font.new(b.Font,Enum.FontWeight.Medium),BackgroundTransparency=1,LayoutOrder=-1})})h.UIElements.SliderContainer.InputBegan:Connect(function(q)if not h.IsFocusing and not e and(q.UserInputType==Enum.UserInputType.MouseButton1 or q.UserInputType==Enum.UserInputType.Touch)then i=(q.UserInputType==Enum.UserInputType.Touch)h.SliderFrame.UIElements.Main.Parent.Parent.ScrollingEnabled=false e=true j=game:GetService'RunService'.RenderStepped:Connect(function()local r if i then r=q.Position.X else r=game:GetService'UserInputService':GetMouseLocation().X end local s=math.clamp((r-h.UIElements.SliderIcon.AbsolutePosition.X)/h.UIElements.SliderIcon.Size.X.Offset,0,1)n=math.floor((h.Value.Min+s*(h.Value.Max-h.Value.Min))/h.Step+0.5)*h.Step if n~=o then h.UIElements.SliderIcon.Frame.Size=UDim2.new(s,0,1,0)h.UIElements.SliderContainer.TextLabel.Text=n o=n task.spawn(h.Callback,n)end end)k=game:GetService'UserInputService'.InputEnded:Connect(function(r)if(r.UserInputType==Enum.UserInputType.MouseButton1 or r.UserInputType==Enum.UserInputType.Touch)and q==r then j:Disconnect()k:Disconnect()e=false h.SliderFrame.UIElements.Main.Parent.Parent.ScrollingEnabled=true end end)end end)return h end return d end function a.l()local b,c=game:GetService'UserInputService',a.load'f'local d,e,f=c.New,c.Tween,{UICorner=6,UIPadding=8}function f.New(g,h)local i={__type='Keybind',Title=h.Title or'Keybind',Desc=h.Desc or nil,Value=h.Value or'F',Callback=h.Callback or function()end,CanChange=h.CanChange or true,Picking=false,UIElements={}}i.KeybindFrame=a.load'h'{Title=i.Title,Desc=i.Desc,Parent=h.Parent,Theme=h.Theme,TextOffset=44,Hover=i.CanChange}i.UIElements.Keybind=d('TextLabel',{BackgroundTransparency=0.95,BackgroundColor3=Color3.fromHex(h.Theme.Text),Text=i.Value,TextColor3=Color3.fromHex(h.Theme.Text),TextSize=15,TextXAlignment='Right',AutomaticSize='XY',FontFace=Font.new(c.Font),Parent=i.KeybindFrame.UIElements.Main,Size=UDim2.new(0,0,0,0),AnchorPoint=Vector2.new(1,0.5),Position=UDim2.new(1,0,0.5,0),ThemeTag={BackgroundColor3='Text',TextColor3='Text'},ZIndex=2},{d('UICorner',{CornerRadius=UDim.new(0,f.UICorner)}),d('UIStroke',{Color=Color3.fromHex(h.Theme.Text),ThemeTag={Color='Text'},Transparency=0.93,ApplyStrokeMode='Border',Thickness=1}),d('UIPadding',{PaddingTop=UDim.new(0,f.UIPadding),PaddingLeft=UDim.new(0,f.UIPadding),PaddingRight=UDim.new(0,f.UIPadding),PaddingBottom=UDim.new(0,f.UIPadding)})})i.KeybindFrame.UIElements.Main.MouseButton1Click:Connect(function()if i.CanChange then i.Picking=true i.UIElements.Keybind.Text='...'task.wait(0.2)local j j=b.InputBegan:Connect(function(k)local n if k.UserInputType==Enum.UserInputType.Keyboard then n=k.KeyCode.Name elseif k.UserInputType==Enum.UserInputType.MouseButton1 then n='MouseLeft'elseif k.UserInputType==Enum.UserInputType.MouseButton2 then n='MouseRight'end local o o=b.InputEnded:Connect(function(p)if p.KeyCode.Name==n or n=='MouseLeft'and p.UserInputType==Enum.UserInputType.MouseButton1 or n=='MouseRight'and p.UserInputType==Enum.UserInputType.MouseButton2 then i.Picking=false i.UIElements.Keybind.Text=n i.Value=n j:Disconnect()o:Disconnect()end end)end)end end)b.InputBegan:Connect(function(j)if j.KeyCode.Name==i.Value then pcall(i.Callback,j.KeyCode.Name)end end)return i.__type,i end return f end function a.m()local b=a.load'f'local c,d,e=b.New,b.Tween,{UICorner=6,UIPadding=8}function e.New(f,g)local h={__type='Input',Title=g.Title or'Input',Desc=g.Desc or nil,PlaceholderText=g.PlaceholderText or'Enter Text...',Value=g.Value or'',Callback=g.Callback or function()end,ClearTextOnFocus=g.ClearTextOnFocus or false,UIElements={}}h.InputFrame=a.load'h'{Title=h.Title,Desc=h.Desc,Parent=g.Parent,Theme=g.Theme,TextOffset=70,Hover=false}h.UIElements.Input=c('Frame',{BackgroundTransparency=0.95,BackgroundColor3=Color3.fromHex(g.Theme.Text),Parent=h.InputFrame.UIElements.Main,Size=UDim2.new(0,150,0,30),AnchorPoint=Vector2.new(1,0.5),Position=UDim2.new(1,0,0.5,0),ThemeTag={BackgroundColor3='Text'},ZIndex=2},{c('TextBox',{MultiLine=false,Size=UDim2.new(1,0,0,0),AutomaticSize='Y',BackgroundTransparency=1,Position=UDim2.new(0,0,0.5,0),AnchorPoint=Vector2.new(0,0.5),ClearTextOnFocus=h.ClearTextOnFocus,Text=h.Value,TextColor3=Color3.fromHex(g.Theme.Text),TextSize=15,ClipsDescendants=true,TextXAlignment='Left',FontFace=Font.new(b.Font),PlaceholderText=h.PlaceholderText,ThemeTag={TextColor3='Text',PlaceholderColor3='PlaceholderText'}}),c('UICorner',{CornerRadius=UDim.new(0,e.UICorner)}),c('UIStroke',{Color=Color3.fromHex(g.Theme.Text),ThemeTag={Color='Text'},Transparency=0.93,ApplyStrokeMode='Border',Thickness=1}),c('UIPadding',{PaddingTop=UDim.new(0,e.UIPadding),PaddingLeft=UDim.new(0,e.UIPadding),PaddingRight=UDim.new(0,e.UIPadding),PaddingBottom=UDim.new(0,e.UIPadding)})})h.UIElements.Input.TextBox.Focused:Connect(function()d(h.UIElements.Input.UIStroke,0.1,{Transparency=0.8}):Play()end)h.UIElements.Input.TextBox.FocusLost:Connect(function()d(h.UIElements.Input.UIStroke,0.1,{Transparency=0.93}):Play()pcall(h.Callback,h.UIElements.Input.TextBox.Text)end)return h.__type,h end return e end function a.n()local b,c,d,e=game:GetService'UserInputService',game:GetService'Players'.LocalPlayer:GetMouse(),game:GetService'Workspace'.CurrentCamera,a.load'f'local f,g,h=e.New,e.Tween,{UICorner=6,UIPadding=8,MenuCorner=9,MenuPadding=6,TabPadding=10}function h.New(i,j)local k={__type='Dropdown',Title=j.Title or'Dropdown',Desc=j.Desc or nil,Values=j.Values or{},Value=j.Value,AllowNone=j.AllowNone,Multi=j.Multi,Callback=j.Callback or function()end,UIElements={},Opened=false,Tabs={}}k.DropdownFrame=a.load'h'{Title=k.Title,Desc=k.Desc,Parent=j.Parent,Theme=j.Theme,TextOffset=70,Hover=false}k.UIElements.Dropdown=f('TextButton',{BackgroundTransparency=0.95,Text='',FontFace=Font.new(e.Font,Enum.FontWeight.Medium),TextSize=15,TextTransparency=0.4,TextXAlignment='Left',BackgroundColor3=Color3.fromHex(j.Theme.Text),Parent=k.DropdownFrame.UIElements.Main,Size=UDim2.new(0,150,0,30),AnchorPoint=Vector2.new(1,0.5),TextTruncate='AtEnd',Position=UDim2.new(1,0,0.5,0),ThemeTag={BackgroundColor3='Text',TextColor3='Text'},ZIndex=2},{f('UICorner',{CornerRadius=UDim.new(0,h.UICorner)}),f('UIStroke',{Color=Color3.fromHex(j.Theme.Text),ThemeTag={Color='Text'},Transparency=0.93,ApplyStrokeMode='Border',Thickness=1}),f('UIPadding',{PaddingTop=UDim.new(0,h.UIPadding),PaddingLeft=UDim.new(0,h.UIPadding),PaddingRight=UDim.new(0,h.UIPadding*2+18),PaddingBottom=UDim.new(0,h.UIPadding)}),f('ImageLabel',{Image=e.Icon'chevron-down',Size=UDim2.new(0,18,0,18),Position=UDim2.new(1,h.UIPadding+18,0.5,0),ThemeTag={ImageColor3='Text'},AnchorPoint=Vector2.new(1,0.5)})})k.UIElements.UIListLayout=f('UIListLayout',{Padding=UDim.new(0,h.MenuPadding/1.5),FillDirection='Vertical'})k.UIElements.Menu=f('Frame',{ThemeTag={BackgroundColor3='Accent'},BackgroundTransparency=0.15,Size=UDim2.new(1,0,1,0)},{f('UISizeConstraint',{MinSize=Vector2.new(170,0)}),f('ImageLabel',{BackgroundTransparency=1,Image='http://www.roblox.com/asset/?id=5554236805',ScaleType=Enum.ScaleType.Slice,SliceCenter=Rect.new(23,23,277,277),Size=UDim2.fromScale(1,1)+UDim2.fromOffset(30,30),Position=UDim2.fromOffset(-15,-15),ImageColor3=Color3.fromRGB(0,0,0),ImageTransparency=0.1,SliceScale=1.1}),f('UICorner',{CornerRadius=UDim.new(0,h.MenuCorner)}),f('UIStroke',{Thickness=1,Transparency=0.93,ThemeTag={Color='Text'}}),f('Frame',{BackgroundTransparency=1,Size=UDim2.new(1,0,1,0),Name='CanvasGroup',ClipsDescendants=true},{f('UIPadding',{PaddingTop=UDim.new(0,h.MenuPadding),PaddingLeft=UDim.new(0,h.MenuPadding),PaddingRight=UDim.new(0,h.MenuPadding),PaddingBottom=UDim.new(0,h.MenuPadding)}),f('ScrollingFrame',{Size=UDim2.new(1,0,1,0),ScrollBarThickness=0,ScrollingDirection='Y',AutomaticCanvasSize='Y',CanvasSize=UDim2.new(0,0,0,0),BackgroundTransparency=1},{k.UIElements.UIListLayout})})})k.UIElements.MenuCanvas=f('Frame',{Size=UDim2.new(0,170,0,300),BackgroundTransparency=1,Position=UDim2.new(-10,0,-10,0),Visible=false,Active=false,Parent=j.Window.SuperParent.Parent.Dropdowns},{k.UIElements.Menu})local n,o=function()k.UIElements.Menu.CanvasGroup.ScrollingFrame.CanvasSize=UDim2.fromOffset(0,k.UIElements.UIListLayout.AbsoluteContentSize.Y)end,function()if#k.Values>10 then k.UIElements.MenuCanvas.Size=UDim2.fromOffset(k.UIElements.UIListLayout.AbsoluteContentSize.X,392)else k.UIElements.MenuCanvas.Size=UDim2.fromOffset(k.UIElements.UIListLayout.AbsoluteContentSize.X,k.UIElements.UIListLayout.AbsoluteContentSize.Y+h.MenuPadding*2+1)end end function UpdatePosition()local p=-35 if d.ViewportSize.Y-k.UIElements.Dropdown.AbsolutePosition.Y+p<k.UIElements.MenuCanvas.AbsoluteSize.Y+10 then p=k.UIElements.MenuCanvas.AbsoluteSize.Y-(d.ViewportSize.Y-k.UIElements.Dropdown.AbsolutePosition.Y)+10 end k.UIElements.MenuCanvas.Position=UDim2.fromOffset(k.UIElements.Dropdown.AbsolutePosition.X-1,k.UIElements.Dropdown.AbsolutePosition.Y-p)end function k.Display(p)local q,r=k.Values,''if k.Multi then for s,t in next,q do if table.find(k.Value,t)then r=r..t..', 'end end r=r:sub(1,#r-2)else r=k.Value or''end k.UIElements.Dropdown.Text=(r==''and'--'or r)end function k.Refresh(p,q)for r,s in next,k.UIElements.Menu.CanvasGroup.ScrollingFrame:GetChildren()do if not s:IsA'UIListLayout'then s:Destroy()end end k.Tabs={}for t,u in next,q do local v={Name=u,Selected=false,UIElements={}}v.UIElements.TabItem=f('TextButton',{Size=UDim2.new(1,0,0,0),AutomaticSize='Y',BackgroundTransparency=1,Parent=k.UIElements.Menu.CanvasGroup.ScrollingFrame,Text=u,TextXAlignment='Left',FontFace=Font.new(e.Font),ThemeTag={TextColor3='Text',BackgroundColor3='Text'},TextSize=15},{f('UIPadding',{PaddingTop=UDim.new(0,h.TabPadding),PaddingLeft=UDim.new(0,h.TabPadding),PaddingRight=UDim.new(0,h.TabPadding),PaddingBottom=UDim.new(0,h.TabPadding)}),f('UICorner',{CornerRadius=UDim.new(0,h.MenuCorner-3)})})if k.Multi then v.Selected=table.find(k.Value,v.Name)else v.Selected=k.Value==v.Name end if v.Selected then v.UIElements.TabItem.BackgroundTransparency=0.93 end k.Tabs[t]=v local w=function()k:Display()task.spawn(function()pcall(k.Callback,k.Value)end)end v.UIElements.TabItem.MouseButton1Click:Connect(function()if k.Multi then if not v.Selected then v.Selected=true g(v.UIElements.TabItem,0.1,{BackgroundTransparency=0.93}):Play()table.insert(k.Value,v.Name)else if not k.AllowNone and#k.Value==1 then return end v.Selected=false g(v.UIElements.TabItem,0.1,{BackgroundTransparency=1}):Play()for x,y in ipairs(k.Value)do if y==v.Name then table.remove(k.Value,x)break end end end else for x,y in next,k.Tabs do g(y.UIElements.TabItem,0.1,{BackgroundTransparency=1}):Play()y.Selected=false end v.Selected=true g(v.UIElements.TabItem,0.1,{BackgroundTransparency=0.93}):Play()k.Value=v.Name end w()end)n()o()end end k:Refresh(k.Values)function k.Select(p,q)if q then k.Value=q end k:Refresh(k.Values)end k:Display()o()function k.Open(p)k.Opened=true k.UIElements.MenuCanvas.Visible=true k.UIElements.MenuCanvas.Active=true k.UIElements.Menu.Size=UDim2.new(1,0,0,0)g(k.UIElements.Menu,0.1,{Size=UDim2.new(1,0,1,0)},Enum.EasingStyle.Quart,Enum.EasingDirection.Out):Play()g(k.UIElements.Dropdown.ImageLabel,0.15,{Rotation=180}):Play()UpdatePosition()end function k.Close(p)k.Opened=false g(k.UIElements.Menu,0.1,{Size=UDim2.new(1,0,0,0)},Enum.EasingStyle.Quart,Enum.EasingDirection.Out):Play()g(k.UIElements.Dropdown.ImageLabel,0.15,{Rotation=0}):Play()task.wait(0.1)k.UIElements.MenuCanvas.Visible=false k.UIElements.MenuCanvas.Active=false end k.UIElements.Dropdown.MouseButton1Click:Connect(function()k:Open()end)b.InputBegan:Connect(function(p)if p.UserInputType==Enum.UserInputType.MouseButton1 or p.UserInputType==Enum.UserInputType.Touch then local q,r=k.UIElements.MenuCanvas.AbsolutePosition,k.UIElements.MenuCanvas.AbsoluteSize if c.X<q.X or c.X>q.X+r.X or c.Y<(q.Y-20-1)or c.Y>q.Y+r.Y then k:Close()end end end)k.UIElements.Dropdown:GetPropertyChangedSignal'AbsolutePosition':Connect(UpdatePosition)return k.__type,k end return h end function a.o()local b=a.load'f'local c,d,e=b.New,b.Tween,{}function e.New(f,g)local h={__type='Section',Title=g.Title or'Section',UIElements={}}h.UIElements.Main=c('TextLabel',{BackgroundTransparency=1,TextXAlignment='Left',AutomaticSize='Y',TextSize=17,ThemeTag={TextColor3='Text'},FontFace=Font.new(b.Font,Enum.FontWeight.Medium),Parent=g.Parent,Size=UDim2.new(1,0,0,0),Text=h.Title},{c('UIPadding',{PaddingTop=UDim.new(0,4),PaddingBottom=UDim.new(0,2)})})return h.__type,h end return e end function a.p()local b=a.load'f'local c,d,e=b.New,b.Tween,{Window=nil,Tabs={},Containers={},SelectedTab=nil,TabCount=0}function e.Init(f)e.Window=f return e end function e.New(f)local g,h={Title=f.Title or'Tab',Icon=f.Icon,Selected=false,Index=nil,UIElements={},Elements={}},e.Window e.TabCount=e.TabCount+1 local i=e.TabCount g.Index=i g.UIElements.Main=c('TextButton',{BackgroundTransparency=1,Size=UDim2.new(1,0,0,0),AutomaticSize='Y',Parent=f.Parent},{c('UIListLayout',{SortOrder='LayoutOrder',Padding=UDim.new(0,10),FillDirection='Horizontal',VerticalAlignment='Center'}),c('TextLabel',{Text=g.Title,TextColor3=Color3.fromHex(e.Window.Theme.Text),ThemeTag={TextColor3='Text'},TextTransparency=0.4,TextSize=15,Size=UDim2.new(1,0,0,0),FontFace=Font.new(b.Font,Enum.FontWeight.Medium),TextWrapped=true,AutomaticSize='Y',LayoutOrder=2,TextXAlignment='Left',BackgroundTransparency=1}),c('UIPadding',{PaddingTop=UDim.new(0,6),PaddingBottom=UDim.new(0,6)})})if g.Icon and b.Icon(g.Icon)then c('ImageLabel',{ImageTransparency=0.4,Image=b.Icon(g.Icon),Size=UDim2.new(0,20,0,20),LayoutOrder=1,ImageColor3=Color3.fromHex(e.Window.Theme.Text),ThemeTag={ImageColor3='Text'},BackgroundTransparency=1,Parent=g.UIElements.Main})g.UIElements.Main.TextLabel.Size=UDim2.new(1,-22,0,0)end g.UIElements.ContainerFrame=c('ScrollingFrame',{Size=UDim2.new(1,0,1,0),BackgroundTransparency=1,ScrollBarThickness=0,CanvasSize=UDim2.new(0,0,0,0),AutomaticCanvasSize='Y',Visible=false,ScrollingDirection='Y',Parent=h.UIElements.MainBar},{c('UIPadding',{PaddingTop=UDim.new(0,h.UIPadding),PaddingLeft=UDim.new(0,h.UIPadding),PaddingRight=UDim.new(0,h.UIPadding),PaddingBottom=UDim.new(0,h.UIPadding)}),c('UIListLayout',{SortOrder='LayoutOrder',Padding=UDim.new(0,6)})})e.Containers[i]=g.UIElements.ContainerFrame e.Tabs[i]=g g.UIElements.Main.MouseButton1Down:Connect(function()e:SelectTab(g)end)function g.Paragraph(j,k)local n=a.load'h'{Title=k.Title or'Paragraph',Desc=k.Desc,Parent=g.UIElements.ContainerFrame,Theme=e.Window.Theme,TextOffset=0,Hover=false}g.Elements.Paragraph=n return Content end function g.Button(j,k)local n,o=a.load'i':New{Title=k.Title,Desc=k.Desc,Callback=k.Callback,Theme=e.Window.Theme,Parent=g.UIElements.ContainerFrame}g.Elements[n]=o return o end function g.Toggle(j,k)local n,o=a.load'j':New{Title=k.Title,Desc=k.Desc,Value=k.Value,Callback=k.Callback,Theme=e.Window.Theme,Parent=g.UIElements.ContainerFrame}g.Elements[n]=o return o end function g.Slider(j,k)local n,o=a.load'k':New{Title=k.Title,Desc=k.Desc,Step=k.Step,Value=k.Value,Callback=k.Callback,Theme=e.Window.Theme,Parent=g.UIElements.ContainerFrame}g.Elements[n]=o return o end function g.Keybind(j,k)local n,o=a.load'l':New{Title=k.Title,Desc=k.Desc,Value=k.Value,Callback=k.Callback,Theme=e.Window.Theme,Parent=g.UIElements.ContainerFrame}g.Elements[n]=o return o end function g.Input(j,k)local n,o=a.load'm':New{Title=k.Title,Desc=k.Desc,Value=k.Value,PlaceholderText=k.PlaceholderText,ClearTextOnFocus=k.ClearTextOnFocus,Callback=k.Callback,Theme=e.Window.Theme,Parent=g.UIElements.ContainerFrame}g.Elements[n]=o return o end function g.Dropdown(j,k)local n,o=a.load'n':New{Title=k.Title,Desc=k.Desc,AllowNone=k.AllowNone,Value=k.Value,Values=k.Values,Multi=k.Multi,Callback=k.Callback,Theme=e.Window.Theme,Parent=g.UIElements.ContainerFrame,Window=h}g.Elements[n]=o return o end function g.Section(j,k)local n,o=a.load'o':New{Title=k.Title,Parent=g.UIElements.ContainerFrame}g.Elements[n]=o return o end task.spawn(function()local j=c('Frame',{BackgroundTransparency=1,Size=UDim2.new(1,0,1,-h.UIElements.Main.Main.Topbar.AbsoluteSize.Y),Parent=g.UIElements.ContainerFrame},{c('UIListLayout',{Padding=UDim.new(0,8),SortOrder='LayoutOrder',VerticalAlignment='Center',HorizontalAlignment='Center',FillDirection='Vertical'}),c('ImageLabel',{Size=UDim2.new(0,48,0,48),Image=b.Icon'frown',ThemeTag={ImageColor3='Text'},BackgroundTransparency=1,ImageTransparency=0.4}),c('TextLabel',{AutomaticSize='XY',Text='This tab is empty',TextColor3=Color3.fromHex(e.Window.Theme.Text),ThemeTag={TextColor3='Text'},TextSize=18,TextTransparency=0.4,BackgroundTransparency=1,FontFace=Font.new(b.Font,Enum.FontWeight.Medium)})})g.UIElements.ContainerFrame.ChildAdded:Connect(function()j.Visible=false end)end)return g end function e.SelectTab(f,g)local h=g.Index e.SelectedTab=h for i,j in next,e.Tabs do d(j.UIElements.Main.TextLabel,0.15,{TextTransparency=0.4}):Play()if j.Icon and b.Icon(j.Icon)then d(j.UIElements.Main.ImageLabel,0.15,{ImageTransparency=0.4}):Play()end j.Selected=false end d(e.Tabs[h].UIElements.Main.TextLabel,0.15,{TextTransparency=0}):Play()if g.Icon and b.Icon(g.Icon)then d(e.Tabs[h].UIElements.Main.ImageLabel,0.15,{ImageTransparency=0}):Play()end e.Tabs[h].Selected=true task.spawn(function()for k,n in next,e.Containers do n.AnchorPoint=Vector2.new(0,0.05)n.Visible=false end e.Containers[h].Visible=true d(e.Containers[h],0.15,{AnchorPoint=Vector2.new(0,0)},Enum.EasingStyle.Quart,Enum.EasingDirection.Out):Play()end)end return e end function a.q()local b,c=game:GetService'UserInputService',a.load'f'local d,e,f=c.New,c.Tween,false return function(g)local h={Title=g.Title or'UI Library',Author=g.Author,Icon=g.Icon,Folder=g.Folder,Size=g.Size or UDim2.fromOffset(560,460),Transparent=g.Transparent or false,Position=UDim2.new(0.5,0,0.5,0),UICorner=9,UIPadding=14,SideBarWidth=g.SideBarWidth or 200,UIElements={},Theme=g.Theme,SuperParent=g.Parent}if h.Folder then makefolder('WindUI/'..h.Folder)end local i,j,k,n=d('UICorner',{CornerRadius=UDim.new(0,h.UICorner)}),d('UIStroke',{Thickness=0.6,Color=Color3.fromHex(g.Theme.Outline),ThemeTag={Color='Outline'},Transparency=1}),d('Frame',{Size=UDim2.new(0,32,0,32),Position=UDim2.new(1,0,1,0),AnchorPoint=Vector2.new(0.5,0.5),BackgroundTransparency=1,ZIndex=99,Active=true}),d('Frame',{Size=UDim2.new(1,0,1,0),BackgroundTransparency=1,BackgroundColor3=Color3.new(0,0,0),ZIndex=98,Active=false},{d('ImageLabel',{Size=UDim2.new(0,70,0,70),Image=c.Icon'expand',BackgroundTransparency=1,Position=UDim2.new(0.5,0,0.5,0),AnchorPoint=Vector2.new(0.5,0.5),ImageTransparency=1}),d('UICorner',{CornerRadius=UDim.new(0,h.UICorner)})})h.UIElements.SideBar=d('ScrollingFrame',{Size=UDim2.new(0,h.SideBarWidth,1,-h.UIPadding*4),Position=UDim2.new(0,0,0,h.UIPadding*4),BackgroundTransparency=1,ScrollBarThickness=0,CanvasSize=UDim2.new(0,0,0,0),AutomaticCanvasSize='Y',ScrollingDirection='Y'},{d('UIPadding',{PaddingTop=UDim.new(0,0),PaddingLeft=UDim.new(0,h.UIPadding+4),PaddingRight=UDim.new(0,0),PaddingBottom=UDim.new(0,h.UIPadding+4)}),d('UIListLayout',{SortOrder='LayoutOrder',Padding=UDim.new(0,8)})})h.UIElements.MainBar=d('Frame',{Size=UDim2.new(1,-h.UIElements.SideBar.AbsoluteSize.X,1,-h.UIPadding*4),Position=UDim2.new(0,h.UIElements.SideBar.AbsoluteSize.X,0,h.UIPadding*4),BackgroundTransparency=1})local o,p,q,r,s=d('Frame',{Size=UDim2.new(1,0,1,0),BackgroundTransparency=h.Transparent and 0.15 or 0,ZIndex=3,Name='Gradient'},{d('UIGradient',{Color=ColorSequence.new(Color3.new(0,0,0),Color3.new(0,0,0)),Rotation=90,Transparency=NumberSequence.new{NumberSequenceKeypoint.new(0,1),NumberSequenceKeypoint.new(1,h.Transparent and 0.85 or 0.7)}}),d('UICorner',{CornerRadius=UDim.new(0,h.UICorner)})}),d('ImageLabel',{Image='rbxassetid://8992230677',ImageColor3=Color3.new(0,0,0),ImageTransparency=1,Size=UDim2.new(1,120,1,116),Position=UDim2.new(0,-60,0,-58),ScaleType='Slice',SliceCenter=Rect.new(99,99,99,99),BackgroundTransparency=1}),d('ImageButton',{Image=c.Icon'x',BackgroundTransparency=1,Size=UDim2.new(1,-6,1,-6),ThemeTag={ImageColor3='Text'},AnchorPoint=Vector2.new(0.5,0.5),Position=UDim2.new(0.5,0,0.5,0)}),d('ImageButton',{Image=c.Icon'minus',BackgroundTransparency=1,Size=UDim2.new(1,-6,1,-6),ThemeTag={ImageColor3='Text'},AnchorPoint=Vector2.new(0.5,0.5),Position=UDim2.new(0.5,0,0.5,0)}),d('TextButton',{Size=UDim2.new(0,50,0,50),Position=UDim2.new(0.5,0,0.5,0),AnchorPoint=Vector2.new(0.5,0.5),Parent=g.Parent,Visible=false,ThemeTag={BackgroundColor3='Accent'},BackgroundTransparency=0.15,ZIndex=99},{d('ImageLabel',{BackgroundTransparency=1,Image='http://www.roblox.com/asset/?id=5554236805',ScaleType=Enum.ScaleType.Slice,SliceCenter=Rect.new(23,23,277,277),Size=UDim2.fromScale(1,1)+UDim2.fromOffset(30,30),Position=UDim2.fromOffset(-15,-15),ImageColor3=Color3.fromRGB(0,0,0),ImageTransparency=0.1,SliceScale=1.1}),d('UICorner',{CornerRadius=UDim.new(0,h.UICorner)}),d('UIStroke',{Thickness=0.6,ThemeTag={Color='Outline'},Transparency=1}),d('ImageLabel',{Image='',Size=UDim2.new(1,-20,1,-20),Position=UDim2.new(0.5,0,0.5,0),AnchorPoint=Vector2.new(0.5,0.5),BackgroundTransparency=1,Name='Icon'})})h.UIElements.Main=d('Frame',{Size=UDim2.new(0,math.clamp(h.Size.X.Offset,400,700),0,math.clamp(h.Size.Y.Offset,350,520)),Position=h.Position,BackgroundTransparency=1,Parent=g.Parent,AnchorPoint=Vector2.new(0.5,0.5),Active=true},{p,o,d('Frame',{BackgroundColor3=Color3.fromHex(g.Theme.Accent),BackgroundTransparency=1,Size=UDim2.new(1,0,1,0),Name='Background',ThemeTag={BackgroundColor3='Accent'},ZIndex=2},{d('UICorner',{CornerRadius=UDim.new(0,h.UICorner)})}),j,i,k,n,d('UIScale',{Scale=0.9}),d('CanvasGroup',{Size=UDim2.new(1,0,1,0),BackgroundTransparency=1,Name='Main',GroupTransparency=1,ZIndex=97},{d('UICorner',{CornerRadius=UDim.new(0,h.UICorner)}),h.UIElements.SideBar,h.UIElements.MainBar,d('Frame',{Size=UDim2.new(1,0,0,h.UIPadding*4),BackgroundTransparency=1,Name='Topbar'},{d('Frame',{AutomaticSize='X',Size=UDim2.new(0,0,1,0),BackgroundTransparency=1,Name='Left'},{d('UIListLayout',{Padding=UDim.new(0,10),SortOrder='LayoutOrder',FillDirection='Horizontal',VerticalAlignment='Center'}),d('Frame',{AutomaticSize='XY',BackgroundTransparency=1,Name='Title',LayoutOrder=2},{d('UIListLayout',{Padding=UDim.new(0,0),SortOrder='LayoutOrder',FillDirection='Vertical',VerticalAlignment='Top'}),d('TextLabel',{Text=h.Title,FontFace=Font.new(c.Font,Enum.FontWeight.Medium),BackgroundTransparency=1,AutomaticSize='XY',TextXAlignment='Left',TextSize=16,TextColor3=Color3.fromHex(g.Theme.Text),ThemeTag={TextColor3='Text'}})}),d('UIPadding',{PaddingLeft=UDim.new(0,4)})}),d('Frame',{AutomaticSize='XY',BackgroundTransparency=1,Position=UDim2.new(1,0,0.5,0),AnchorPoint=Vector2.new(1,0.5)},{d('UIListLayout',{Padding=UDim.new(0,6),FillDirection='Horizontal',SortOrder='LayoutOrder'}),d('TextButton',{Size=UDim2.new(0,24,0,24),BackgroundTransparency=1,LayoutOrder=1},{q}),d('TextButton',{Size=UDim2.new(0,24,0,24),BackgroundTransparency=1},{r})}),d('UIPadding',{PaddingTop=UDim.new(0,h.UIPadding),PaddingLeft=UDim.new(0,h.UIPadding),PaddingRight=UDim.new(0,h.UIPadding),PaddingBottom=UDim.new(0,h.UIPadding)})})})})local t=false c.Drag(h.UIElements.Main)c.Drag(s,function(u)t=u end)if h.Author then d('TextLabel',{Text='by '..h.Author,FontFace=Font.new(c.Font,Enum.FontWeight.Medium),BackgroundTransparency=1,TextTransparency=0.4,AutomaticSize='XY',Parent=h.UIElements.Main.Main.Topbar.Left.Title,TextXAlignment='Left',TextSize=14,LayoutOrder=2,TextColor3=Color3.fromHex(g.Theme.Text),ThemeTag={TextColor3='Text'}})end task.spawn(function()if h.Icon then local u=d('ImageLabel',{Parent=h.UIElements.Main.Main.Topbar.Left,Size=UDim2.new(0,24,0,24),BackgroundTransparency=1,LayoutOrder=1,ThemeTag={ImageColor3='Text'}})if c.Icon(h.Icon)then u.Image=c.Icon(h.Icon)s.Icon.Image=c.Icon(h.Icon)end if string.find(h.Icon,'http')then if not isfile(h.Folder..'/Assets/Icon.png')then if not isfolder('WindUI'..h.Folder)then makefolder('WindUI'..h.Folder)end print'pisun'local v=request{Url=h.Icon,Method='GET'}.Body writefile('WindUI'..h.Folder..'/Assets/Icon.png',v)end u.Image=getcustomasset('WindUI'..h.Folder..'/Assets/Icon.png')s.Icon.Image=getcustomasset('WindUI'..h.Folder..'/Assets/Icon.png')elseif string.find(h.Icon,'rbxassetid')then u.Image=h.Icon s.Icon.Image=h.Icon end else s.Icon.Image=c.Icon'external-link'end end)function h.Open(u)e(h.UIElements.Main.Background,0.25,{BackgroundTransparency=h.Transparent and 0.15 or 0},Enum.EasingStyle.Exponential,Enum.EasingDirection.Out):Play()e(h.UIElements.Main.Main,0.25,{GroupTransparency=0},Enum.EasingStyle.Exponential,Enum.EasingDirection.Out):Play()e(h.UIElements.Main.UIScale,0.25,{Scale=1},Enum.EasingStyle.Exponential,Enum.EasingDirection.Out):Play()e(o,0.25,{BackgroundTransparency=0},Enum.EasingStyle.Exponential,Enum.EasingDirection.Out):Play()e(p,0.25,{ImageTransparency=0.7},Enum.EasingStyle.Exponential,Enum.EasingDirection.Out):Play()e(j,0.25,{Transparency=0.8},Enum.EasingStyle.Exponential,Enum.EasingDirection.Out):Play()h.UIElements.Main.Visible=true end function h.Close(u)local v={}e(h.UIElements.Main.Background,0.25,{BackgroundTransparency=1},Enum.EasingStyle.Exponential,Enum.EasingDirection.Out):Play()e(h.UIElements.Main.Main,0.25,{GroupTransparency=1},Enum.EasingStyle.Exponential,Enum.EasingDirection.Out):Play()e(h.UIElements.Main.UIScale,0.25,{Scale=0.9},Enum.EasingStyle.Exponential,Enum.EasingDirection.Out):Play()e(o,0.25,{BackgroundTransparency=1},Enum.EasingStyle.Exponential,Enum.EasingDirection.Out):Play()e(p,0.25,{ImageTransparency=1},Enum.EasingStyle.Exponential,Enum.EasingDirection.Out):Play()e(j,0.25,{Transparency=1},Enum.EasingStyle.Exponential,Enum.EasingDirection.Out):Play()task.spawn(function()task.wait(0.25)h.UIElements.Main.Visible=false end)function v.Destroy(w)task.wait(0.25)g.Parent.Parent:Destroy()end return v end q.MouseButton1Click:Connect(function()h:Close():Destroy()end)r.MouseButton1Click:Connect(function()h:Close()task.spawn(function()task.wait(0.3)s.Visible=true end)if not f then f=not f g.end end)s.MouseButton1Click:Connect(function()h:Open()s.Visible=false end)task.spawn(function()h:Open()end)function h.Tab(u,v)local w=a.load'p'.Init(h)return w.New{Title=v.Title,Icon=v.Icon,Parent=h.UIElements.SideBar}end local u=function(u)isResizing=true n.Active=true initialSize=h.UIElements.Main.Size initialInputPosition=u.Position e(n,0.2,{BackgroundTransparency=0.65}):Play()e(n.ImageLabel,0.2,{ImageTransparency=0}):Play()u.Changed:Connect(function()if u.UserInputState==Enum.UserInputState.End then isResizing=false n.Active=false e(n,0.2,{BackgroundTransparency=1}):Play()e(n.ImageLabel,0.2,{ImageTransparency=1}):Play()end end)end k.InputBegan:Connect(function(v)if v.UserInputType==Enum.UserInputType.MouseButton1 or v.UserInputType==Enum.UserInputType.Touch then u(v)end end)b.InputChanged:Connect(function(v)if isResizing then if v.UserInputType==Enum.UserInputType.MouseMovement or v.UserInputType==Enum.UserInputType.Touch then local w=v.Position-initialInputPosition local x=UDim2.new(0,initialSize.X.Offset+w.X*2,0,initialSize.Y.Offset+w.Y*2)e(h.UIElements.Main,0.06,{Size=UDim2.new(0,math.clamp(x.X.Offset,400,700),0,math.clamp(x.Y.Offset,350,520))}):Play()end end end)return h end end end local b,c,d,e={Window=nil,Theme=nil,Themes=nil,Transparent=false},game:GetService'RunService',a.load'd',a.load'f'local f=e.New b.Themes=d local g=protectgui or(syn and syn.protect_gui)or function()end b.ScreenGui=f('ScreenGui',{Name='WindUI',Parent=c:IsStudio()and LocalPlayer.PlayerGui or game:GetService'CoreGui',IgnoreGuiInset=true},{f('Folder',{Name='Window'}),f('Folder',{Name='Notifications'}),f('Folder',{Name='Dropdowns'})})g(b.ScreenGui)local h=a.load'g'local i=h.Init(b.ScreenGui.Notifications)function b.Notify(j,k)return h.New{Title=k.Title,Content=k.Content,Duration=k.Duration,CanClose=k.CanClose,Callback=k.Callback,Window=b.Window,Holder=i}end function b.CreateWindow(j,k)local n=a.load'q'if b.Window then print'You cannot create more than one window'return end local o=d[k.Theme or'Dark']b.Theme=o e.SetTheme(o)local p=n{Title=k.Title,Author=k.Author,Size=k.Size,Transparent=k.Transparent,Icon=k.Icon,Folder=k.Folder,Theme=o,WindUI=b,Parent=b.ScreenGui.Window,SideBarWidth=k.SideBarWidth}b.Transparent=k.Transparent b.Window=p function p.AddTheme(q,r)d[r.Name]=r return r end function p.SetTheme(q,r)if d[r]then b.Theme=d[r]e.SetTheme(d[r])e.UpdateTheme()return d[r]end return nil end function p.GetThemes(q)return d end function p.GetCurrentTheme(q)return b.Theme.Name end function p.GetTransparency(q)return b.Transparent or false end function p.GetWindowSize(q)return p.UIElements.Main.Size end function p.ToggleTransparency(q,r)b.Transparent=r p.UIElements.Main.Background.BackgroundTransparency=r and 0.15 or 0 p.UIElements.Main.Gradient.UIGradient.Transparency=NumberSequence.new{NumberSequenceKeypoint.new(0,1),NumberSequenceKeypoint.new(1,r and 0.85 or 0.7)}end return p end return b
+
+local RayfieldLibrary = {
+	Flags = {},
+	Theme = {
+		Default = {
+			TextFont = "Default", -- Default will use the various font faces used across Rayfield
+			TextColor = Color3.fromRGB(240, 240, 240),
+
+			Background = Color3.fromRGB(25, 25, 25),
+			Topbar = Color3.fromRGB(34, 34, 34),
+			Shadow = Color3.fromRGB(20, 20, 20),
+
+			NotificationBackground = Color3.fromRGB(20, 20, 20),
+			NotificationActionsBackground = Color3.fromRGB(230, 230, 230),
+
+			TabBackground = Color3.fromRGB(80, 80, 80),
+			TabStroke = Color3.fromRGB(85, 85, 85),
+			TabBackgroundSelected = Color3.fromRGB(210, 210, 210),
+			TabTextColor = Color3.fromRGB(240, 240, 240),
+			SelectedTabTextColor = Color3.fromRGB(50, 50, 50),
+
+			ElementBackground = Color3.fromRGB(35, 35, 35),
+			ElementBackgroundHover = Color3.fromRGB(40, 40, 40),
+			SecondaryElementBackground = Color3.fromRGB(25, 25, 25), -- For labels and paragraphs
+			ElementStroke = Color3.fromRGB(50, 50, 50),
+			SecondaryElementStroke = Color3.fromRGB(40, 40, 40), -- For labels and paragraphs
+
+			SliderBackground = Color3.fromRGB(43, 105, 159),
+			SliderProgress = Color3.fromRGB(43, 105, 159),
+			SliderStroke = Color3.fromRGB(48, 119, 177),
+
+			ToggleBackground = Color3.fromRGB(30, 30, 30),
+			ToggleEnabled = Color3.fromRGB(0, 146, 214),
+			ToggleDisabled = Color3.fromRGB(100, 100, 100),
+			ToggleEnabledStroke = Color3.fromRGB(0, 170, 255),
+			ToggleDisabledStroke = Color3.fromRGB(125, 125, 125),
+			ToggleEnabledOuterStroke = Color3.fromRGB(100, 100, 100),
+			ToggleDisabledOuterStroke = Color3.fromRGB(65, 65, 65),
+
+			InputBackground = Color3.fromRGB(30, 30, 30),
+			InputStroke = Color3.fromRGB(65, 65, 65),
+			PlaceholderColor = Color3.fromRGB(178, 178, 178)
+		},
+		Light = {
+			TextFont = "Gotham", -- Default will use the various font faces used across Rayfield
+			TextColor = Color3.fromRGB(50, 50, 50), -- i need to make all text 240, 240, 240 and base gray on transparency not color to do this
+
+			Background = Color3.fromRGB(255, 255, 255),
+			Topbar = Color3.fromRGB(217, 217, 217),
+			Shadow = Color3.fromRGB(223, 223, 223),
+
+			NotificationBackground = Color3.fromRGB(20, 20, 20),
+			NotificationActionsBackground = Color3.fromRGB(230, 230, 230),
+
+			TabBackground = Color3.fromRGB(220, 220, 220),
+			TabStroke = Color3.fromRGB(112, 112, 112),
+			TabBackgroundSelected = Color3.fromRGB(0, 142, 208),
+			TabTextColor = Color3.fromRGB(240, 240, 240),
+			SelectedTabTextColor = Color3.fromRGB(50, 50, 50),
+
+			ElementBackground = Color3.fromRGB(198, 198, 198),
+			ElementBackgroundHover = Color3.fromRGB(230, 230, 230),
+			SecondaryElementBackground = Color3.fromRGB(136, 136, 136), -- For labels and paragraphs
+			ElementStroke = Color3.fromRGB(180, 199, 97),
+			SecondaryElementStroke = Color3.fromRGB(40, 40, 40), -- For labels and paragraphs
+
+			SliderBackground = Color3.fromRGB(31, 159, 71),
+			SliderProgress = Color3.fromRGB(31, 159, 71),
+			SliderStroke = Color3.fromRGB(42, 216, 94),
+
+			ToggleBackground = Color3.fromRGB(170, 203, 60),
+			ToggleEnabled = Color3.fromRGB(32, 214, 29),
+			ToggleDisabled = Color3.fromRGB(100, 22, 23),
+			ToggleEnabledStroke = Color3.fromRGB(17, 255, 0),
+			ToggleDisabledStroke = Color3.fromRGB(65, 8, 8),
+			ToggleEnabledOuterStroke = Color3.fromRGB(0, 170, 0),
+			ToggleDisabledOuterStroke = Color3.fromRGB(170, 0, 0),
+
+			InputBackground = Color3.fromRGB(31, 159, 71),
+			InputStroke = Color3.fromRGB(19, 65, 31),
+			PlaceholderColor = Color3.fromRGB(178, 178, 178)
+		}
+	}
+}
+
+
+
+-- Services
+
+local UserInputService = game:GetService("UserInputService")
+local TweenService = game:GetService("TweenService")
+local HttpService = game:GetService("HttpService")
+local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+local CoreGui = game:GetService("CoreGui")
+
+-- Interface Management
+local Rayfield = game:GetObjects("rbxassetid://10804731440")[1]
+
+Rayfield.Enabled = false
+
+if gethui then
+	Rayfield.Parent = gethui()
+elseif syn.protect_gui then 
+	syn.protect_gui(Rayfield)
+	Rayfield.Parent = CoreGui
+elseif CoreGui:FindFirstChild("RobloxGui") then
+	Rayfield.Parent = CoreGui:FindFirstChild("RobloxGui")
+else
+	Rayfield.Parent = CoreGui
+end
+
+if gethui then
+	for _, Interface in ipairs(gethui():GetChildren()) do
+		if Interface.Name == Rayfield.Name and Interface ~= Rayfield then
+			Interface.Enabled = false
+			Interface.Name = "Rayfield-Old"
+		end
+	end
+else
+	for _, Interface in ipairs(CoreGui:GetChildren()) do
+		if Interface.Name == Rayfield.Name and Interface ~= Rayfield then
+			Interface.Enabled = false
+			Interface.Name = "Rayfield-Old"
+		end
+	end
+end
+
+local minSize = Vector2.new(1024, 768)
+local useMobileSizing
+
+if Rayfield.AbsoluteSize.X < minSize.X and Rayfield.AbsoluteSize.Y < minSize.Y then
+	useMobileSizing = true
+end
+
+-- Object Variables
+
+local Camera = workspace.CurrentCamera
+local Main = Rayfield.Main
+local Topbar = Main.Topbar
+local Elements = Main.Elements
+local LoadingFrame = Main.LoadingFrame
+local TabList = Main.TabList
+
+Rayfield.DisplayOrder = 100
+LoadingFrame.Version.Text = Release
+
+
+-- Variables
+
+local request = (syn and syn.request) or (http and http.request) or http_request
+local CFileName = nil
+local CEnabled = false
+local Minimised = false
+local Hidden = false
+local Debounce = false
+local Notifications = Rayfield.Notifications
+
+local SelectedTheme = RayfieldLibrary.Theme.Default
+
+function ChangeTheme(ThemeName)
+	SelectedTheme = RayfieldLibrary.Theme[ThemeName]
+	for _, obj in ipairs(Rayfield:GetDescendants()) do
+		if obj.ClassName == "TextLabel" or obj.ClassName == "TextBox" or obj.ClassName == "TextButton" then
+			if SelectedTheme.TextFont ~= "Default" then 
+				obj.TextColor3 = SelectedTheme.TextColor
+				obj.Font = SelectedTheme.TextFont
+			end
+		end
+	end
+
+	Rayfield.Main.BackgroundColor3 = SelectedTheme.Background
+	Rayfield.Main.Topbar.BackgroundColor3 = SelectedTheme.Topbar
+	Rayfield.Main.Topbar.CornerRepair.BackgroundColor3 = SelectedTheme.Topbar
+	Rayfield.Main.Shadow.Image.ImageColor3 = SelectedTheme.Shadow
+
+	Rayfield.Main.Topbar.ChangeSize.ImageColor3 = SelectedTheme.TextColor
+	Rayfield.Main.Topbar.Hide.ImageColor3 = SelectedTheme.TextColor
+	Rayfield.Main.Topbar.Theme.ImageColor3 = SelectedTheme.TextColor
+
+	for _, TabPage in ipairs(Elements:GetChildren()) do
+		for _, Element in ipairs(TabPage:GetChildren()) do
+			if Element.ClassName == "Frame" and Element.Name ~= "Placeholder" and Element.Name ~= "SectionSpacing" and Element.Name ~= "SectionTitle"  then
+				Element.BackgroundColor3 = SelectedTheme.ElementBackground
+				Element.UIStroke.Color = SelectedTheme.ElementStroke
+			end
+		end
+	end
+
+end
+
+local function AddDraggingFunctionality(DragPoint, Main)
+	pcall(function()
+		local Dragging, DragInput, MousePos, FramePos = false
+		DragPoint.InputBegan:Connect(function(Input)
+			if Input.UserInputType == Enum.UserInputType.MouseButton1 or Input.UserInputType == Enum.UserInputType.Touch then
+				Dragging = true
+				MousePos = Input.Position
+				FramePos = Main.Position
+
+				Input.Changed:Connect(function()
+					if Input.UserInputState == Enum.UserInputState.End then
+						Dragging = false
+					end
+				end)
+			end
+		end)
+		DragPoint.InputChanged:Connect(function(Input)
+			if Input.UserInputType == Enum.UserInputType.MouseMovement or Input.UserInputType == Enum.UserInputType.Touch then
+				DragInput = Input
+			end
+		end)
+		UserInputService.InputChanged:Connect(function(Input)
+			if Input == DragInput and Dragging then
+				local Delta = Input.Position - MousePos
+				TweenService:Create(Main, TweenInfo.new(0.45, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Position  = UDim2.new(FramePos.X.Scale,FramePos.X.Offset + Delta.X, FramePos.Y.Scale, FramePos.Y.Offset + Delta.Y)}):Play()
+			end
+		end)
+	end)
+end   
+
+local function PackColor(Color)
+	return {R = Color.R * 255, G = Color.G * 255, B = Color.B * 255}
+end    
+
+local function UnpackColor(Color)
+	return Color3.fromRGB(Color.R, Color.G, Color.B)
+end
+
+local function LoadConfiguration(Configuration)
+	local Data = HttpService:JSONDecode(Configuration)
+	for FlagName, FlagValue in next, Data do
+		if RayfieldLibrary.Flags[FlagName] then
+			spawn(function() 
+				if RayfieldLibrary.Flags[FlagName].Type == "ColorPicker" then
+					RayfieldLibrary.Flags[FlagName]:Set(UnpackColor(FlagValue))
+				else
+					if RayfieldLibrary.Flags[FlagName].CurrentValue or RayfieldLibrary.Flags[FlagName].CurrentKeybind or RayfieldLibrary.Flags[FlagName].CurrentOption or RayfieldLibrary.Flags[FlagName].Color ~= FlagValue then RayfieldLibrary.Flags[FlagName]:Set(FlagValue) end
+				end    
+			end)
+		else
+			RayfieldLibrary:Notify({Title = "Flag Error", Content = "Rayfield was unable to find '"..FlagName.. "'' in the current script. Check docs.sirius.menu for help."})
+		end
+	end
+end
+
+local function SaveConfiguration()
+	if not CEnabled then return end
+	local Data = {}
+	for i,v in pairs(RayfieldLibrary.Flags) do
+		if v.Type == "ColorPicker" then
+			Data[i] = PackColor(v.Color)
+		else
+			Data[i] = v.CurrentValue or v.CurrentKeybind or v.CurrentOption or v.Color
+		end
+	end	
+	writefile(ConfigurationFolder .. "/" .. CFileName .. ConfigurationExtension, tostring(HttpService:JSONEncode(Data)))
+end
+
+local neon = (function() -- Open sourced neon module
+	local module = {}
+
+	do
+		local function IsNotNaN(x)
+			return x == x
+		end
+		local continued = IsNotNaN(Camera:ScreenPointToRay(0,0).Origin.x)
+		while not continued do
+			RunService.RenderStepped:wait()
+			continued = IsNotNaN(Camera:ScreenPointToRay(0,0).Origin.x)
+		end
+	end
+	local RootParent = Camera
+	if getgenv().SecureMode == nil then
+		RootParent = Camera
+	else
+		if not getgenv().SecureMode then
+			RootParent = Camera
+		else 
+			RootParent = nil
+		end
+	end
+
+
+	local binds = {}
+	local root = Instance.new('Folder', RootParent)
+	root.Name = 'neon'
+
+
+	local GenUid; do
+		local id = 0
+		function GenUid()
+			id = id + 1
+			return 'neon::'..tostring(id)
+		end
+	end
+
+	local DrawQuad; do
+		local acos, max, pi, sqrt = math.acos, math.max, math.pi, math.sqrt
+		local sz = 0.2
+
+		local function DrawTriangle(v1, v2, v3, p0, p1)
+			local s1 = (v1 - v2).magnitude
+			local s2 = (v2 - v3).magnitude
+			local s3 = (v3 - v1).magnitude
+			local smax = max(s1, s2, s3)
+			local A, B, C
+			if s1 == smax then
+				A, B, C = v1, v2, v3
+			elseif s2 == smax then
+				A, B, C = v2, v3, v1
+			elseif s3 == smax then
+				A, B, C = v3, v1, v2
+			end
+
+			local para = ( (B-A).x*(C-A).x + (B-A).y*(C-A).y + (B-A).z*(C-A).z ) / (A-B).magnitude
+			local perp = sqrt((C-A).magnitude^2 - para*para)
+			local dif_para = (A - B).magnitude - para
+
+			local st = CFrame.new(B, A)
+			local za = CFrame.Angles(pi/2,0,0)
+
+			local cf0 = st
+
+			local Top_Look = (cf0 * za).lookVector
+			local Mid_Point = A + CFrame.new(A, B).LookVector * para
+			local Needed_Look = CFrame.new(Mid_Point, C).LookVector
+			local dot = Top_Look.x*Needed_Look.x + Top_Look.y*Needed_Look.y + Top_Look.z*Needed_Look.z
+
+			local ac = CFrame.Angles(0, 0, acos(dot))
+
+			cf0 = cf0 * ac
+			if ((cf0 * za).lookVector - Needed_Look).magnitude > 0.01 then
+				cf0 = cf0 * CFrame.Angles(0, 0, -2*acos(dot))
+			end
+			cf0 = cf0 * CFrame.new(0, perp/2, -(dif_para + para/2))
+
+			local cf1 = st * ac * CFrame.Angles(0, pi, 0)
+			if ((cf1 * za).lookVector - Needed_Look).magnitude > 0.01 then
+				cf1 = cf1 * CFrame.Angles(0, 0, 2*acos(dot))
+			end
+			cf1 = cf1 * CFrame.new(0, perp/2, dif_para/2)
+
+			if not p0 then
+				p0 = Instance.new('Part')
+				p0.FormFactor = 'Custom'
+				p0.TopSurface = 0
+				p0.BottomSurface = 0
+				p0.Anchored = true
+				p0.CanCollide = false
+				p0.Material = 'Glass'
+				p0.Size = Vector3.new(sz, sz, sz)
+				local mesh = Instance.new('SpecialMesh', p0)
+				mesh.MeshType = 2
+				mesh.Name = 'WedgeMesh'
+			end
+			p0.WedgeMesh.Scale = Vector3.new(0, perp/sz, para/sz)
+			p0.CFrame = cf0
+
+			if not p1 then
+				p1 = p0:clone()
+			end
+			p1.WedgeMesh.Scale = Vector3.new(0, perp/sz, dif_para/sz)
+			p1.CFrame = cf1
+
+			return p0, p1
+		end
+
+		function DrawQuad(v1, v2, v3, v4, parts)
+			parts[1], parts[2] = DrawTriangle(v1, v2, v3, parts[1], parts[2])
+			parts[3], parts[4] = DrawTriangle(v3, v2, v4, parts[3], parts[4])
+		end
+	end
+
+	function module:BindFrame(frame, properties)
+		if RootParent == nil then return end
+		if binds[frame] then
+			return binds[frame].parts
+		end
+
+		local uid = GenUid()
+		local parts = {}
+		local f = Instance.new('Folder', root)
+		f.Name = frame.Name
+
+		local parents = {}
+		do
+			local function add(child)
+				if child:IsA'GuiObject' then
+					parents[#parents + 1] = child
+					add(child.Parent)
+				end
+			end
+			add(frame)
+		end
+
+		local function UpdateOrientation(fetchProps)
+			local zIndex = 1 - 0.05*frame.ZIndex
+			local tl, br = frame.AbsolutePosition, frame.AbsolutePosition + frame.AbsoluteSize
+			local tr, bl = Vector2.new(br.x, tl.y), Vector2.new(tl.x, br.y)
+			do
+				local rot = 0;
+				for _, v in ipairs(parents) do
+					rot = rot + v.Rotation
+				end
+				if rot ~= 0 and rot%180 ~= 0 then
+					local mid = tl:lerp(br, 0.5)
+					local s, c = math.sin(math.rad(rot)), math.cos(math.rad(rot))
+					local vec = tl
+					tl = Vector2.new(c*(tl.x - mid.x) - s*(tl.y - mid.y), s*(tl.x - mid.x) + c*(tl.y - mid.y)) + mid
+					tr = Vector2.new(c*(tr.x - mid.x) - s*(tr.y - mid.y), s*(tr.x - mid.x) + c*(tr.y - mid.y)) + mid
+					bl = Vector2.new(c*(bl.x - mid.x) - s*(bl.y - mid.y), s*(bl.x - mid.x) + c*(bl.y - mid.y)) + mid
+					br = Vector2.new(c*(br.x - mid.x) - s*(br.y - mid.y), s*(br.x - mid.x) + c*(br.y - mid.y)) + mid
+				end
+			end
+			DrawQuad(
+				Camera:ScreenPointToRay(tl.x, tl.y, zIndex).Origin, 
+				Camera:ScreenPointToRay(tr.x, tr.y, zIndex).Origin, 
+				Camera:ScreenPointToRay(bl.x, bl.y, zIndex).Origin, 
+				Camera:ScreenPointToRay(br.x, br.y, zIndex).Origin, 
+				parts
+			)
+			if fetchProps then
+				for _, pt in pairs(parts) do
+					pt.Parent = f
+				end
+				for propName, propValue in pairs(properties) do
+					for _, pt in pairs(parts) do
+						pt[propName] = propValue
+					end
+				end
+			end
+		end
+
+		UpdateOrientation(true)
+		RunService:BindToRenderStep(uid, 2000, UpdateOrientation)
+
+		binds[frame] = {
+			uid = uid;
+			parts = parts;
+		}
+		return binds[frame].parts
+	end
+
+	function module:Modify(frame, properties)
+		local parts = module:GetBoundParts(frame)
+		if parts then
+			for propName, propValue in pairs(properties) do
+				for _, pt in pairs(parts) do
+					pt[propName] = propValue
+				end
+			end
+		end
+	end
+
+	function module:UnbindFrame(frame)
+		if RootParent == nil then return end
+		local cb = binds[frame]
+		if cb then
+			RunService:UnbindFromRenderStep(cb.uid)
+			for _, v in pairs(cb.parts) do
+				v:Destroy()
+			end
+			binds[frame] = nil
+		end
+	end
+
+	function module:HasBinding(frame)
+		return binds[frame] ~= nil
+	end
+
+	function module:GetBoundParts(frame)
+		return binds[frame] and binds[frame].parts
+	end
+
+
+	return module
+
+end)()
+
+function RayfieldLibrary:Notify(NotificationSettings)
+	spawn(function()
+		local ActionCompleted = true
+		local Notification = Notifications.Template:Clone()
+		Notification.Parent = Notifications
+		Notification.Name = NotificationSettings.Title or "Unknown Title"
+		Notification.Visible = true
+
+		local blurlight = nil
+		if not getgenv().SecureMode then
+			blurlight = Instance.new("DepthOfFieldEffect",game:GetService("Lighting"))
+			blurlight.Enabled = true
+			blurlight.FarIntensity = 0
+			blurlight.FocusDistance = 51.6
+			blurlight.InFocusRadius = 50
+			blurlight.NearIntensity = 1
+			game:GetService("Debris"):AddItem(script,0)
+		end
+
+		Notification.Actions.Template.Visible = false
+
+		if NotificationSettings.Actions then
+			for _, Action in pairs(NotificationSettings.Actions) do
+				ActionCompleted = false
+				local NewAction = Notification.Actions.Template:Clone()
+				NewAction.BackgroundColor3 = SelectedTheme.NotificationActionsBackground
+				if SelectedTheme ~= RayfieldLibrary.Theme.Default then
+					NewAction.TextColor3 = SelectedTheme.TextColor
+				end
+				NewAction.Name = Action.Name
+				NewAction.Visible = true
+				NewAction.Parent = Notification.Actions
+				NewAction.Text = Action.Name
+				NewAction.BackgroundTransparency = 1
+				NewAction.TextTransparency = 1
+				NewAction.Size = UDim2.new(0, NewAction.TextBounds.X + 27, 0, 36)
+
+				NewAction.MouseButton1Click:Connect(function()
+					local Success, Response = pcall(Action.Callback)
+					if not Success then
+						print("Rayfield | Action: "..Action.Name.." Callback Error " ..tostring(Response))
+						warn('Check docs.sirius.menu for help with Rayfield specific development.')
+					end
+					ActionCompleted = true
+				end)
+			end
+		end
+		Notification.BackgroundColor3 = SelectedTheme.Background
+		Notification.Title.Text = NotificationSettings.Title or "Unknown"
+		Notification.Title.TextTransparency = 1
+		Notification.Title.TextColor3 = SelectedTheme.TextColor
+		Notification.Description.Text = NotificationSettings.Content or "Unknown"
+		Notification.Description.TextTransparency = 1
+		Notification.Description.TextColor3 = SelectedTheme.TextColor
+		Notification.Icon.ImageColor3 = SelectedTheme.TextColor
+		if NotificationSettings.Image then
+			Notification.Icon.Image = "rbxassetid://"..tostring(NotificationSettings.Image) 
+		else
+			Notification.Icon.Image = "rbxassetid://3944680095"
+		end
+
+		Notification.Icon.ImageTransparency = 1
+
+		Notification.Parent = Notifications
+		Notification.Size = UDim2.new(0, 260, 0, 80)
+		Notification.BackgroundTransparency = 1
+
+		TweenService:Create(Notification, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 295, 0, 91)}):Play()
+		TweenService:Create(Notification, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {BackgroundTransparency = 0.1}):Play()
+		Notification:TweenPosition(UDim2.new(0.5,0,0.915,0),'Out','Quint',0.8,true)
+
+		task.wait(0.3)
+		TweenService:Create(Notification.Icon, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {ImageTransparency = 0}):Play()
+		TweenService:Create(Notification.Title, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
+		TweenService:Create(Notification.Description, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {TextTransparency = 0.2}):Play()
+		task.wait(0.2)
+
+
+
+		-- Requires Graphics Level 8-10
+		if getgenv().SecureMode == nil then
+			TweenService:Create(Notification, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundTransparency = 0.4}):Play()
+		else
+			if not getgenv().SecureMode then
+				TweenService:Create(Notification, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundTransparency = 0.4}):Play()
+			else 
+				TweenService:Create(Notification, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
+			end
+		end
+
+		if Rayfield.Name == "Rayfield" then
+			neon:BindFrame(Notification.BlurModule, {
+				Transparency = 0.98;
+				BrickColor = BrickColor.new("Institutional white");
+			})
+		end
+
+		if not NotificationSettings.Actions then
+			task.wait(NotificationSettings.Duration or NotificationDuration - 0.5)
+		else
+			task.wait(0.8)
+			TweenService:Create(Notification, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 295, 0, 132)}):Play()
+			task.wait(0.3)
+			for _, Action in ipairs(Notification.Actions:GetChildren()) do
+				if Action.ClassName == "TextButton" and Action.Name ~= "Template" then
+					TweenService:Create(Action, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {BackgroundTransparency = 0.2}):Play()
+					TweenService:Create(Action, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
+					task.wait(0.05)
+				end
+			end
+		end
+
+		repeat task.wait(0.001) until ActionCompleted
+
+		for _, Action in ipairs(Notification.Actions:GetChildren()) do
+			if Action.ClassName == "TextButton" and Action.Name ~= "Template" then
+				TweenService:Create(Action, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
+				TweenService:Create(Action, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+			end
+		end
+
+		TweenService:Create(Notification.Title, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Position = UDim2.new(0.47, 0,0.234, 0)}):Play()
+		TweenService:Create(Notification.Description, TweenInfo.new(0.8, Enum.EasingStyle.Quint), {Position = UDim2.new(0.528, 0,0.637, 0)}):Play()
+		TweenService:Create(Notification, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 280, 0, 83)}):Play()
+		TweenService:Create(Notification.Icon, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
+		TweenService:Create(Notification, TweenInfo.new(0.8, Enum.EasingStyle.Quint), {BackgroundTransparency = 0.6}):Play()
+
+		task.wait(0.3)
+		TweenService:Create(Notification.Title, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {TextTransparency = 0.4}):Play()
+		TweenService:Create(Notification.Description, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {TextTransparency = 0.5}):Play()
+		task.wait(0.4)
+		TweenService:Create(Notification, TweenInfo.new(0.9, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 260, 0, 0)}):Play()
+		TweenService:Create(Notification, TweenInfo.new(0.8, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
+		TweenService:Create(Notification.Title, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+		TweenService:Create(Notification.Description, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+		task.wait(0.2)
+		if not getgenv().SecureMode then
+			neon:UnbindFrame(Notification.BlurModule)
+			blurlight:Destroy()
+		end
+		task.wait(0.9)
+		Notification:Destroy()
+	end)
+end
+
+function Hide(notify: boolean?)
+	Debounce = true
+	if notify then
+		RayfieldLibrary:Notify({Title = "Interface Hidden", Content = "The interface has been hidden, you can unhide the interface by tapping M.", Duration = 7})
+	end
+	TweenService:Create(Main, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 470, 0, 0)}):Play()
+	TweenService:Create(Main.Topbar, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 470, 0, 45)}):Play()
+	TweenService:Create(Main, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
+	TweenService:Create(Main.Topbar, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
+	TweenService:Create(Main.Topbar.Divider, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
+	TweenService:Create(Main.Topbar.CornerRepair, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
+	TweenService:Create(Main.Topbar.Title, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+	TweenService:Create(Main.Shadow.Image, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
+	TweenService:Create(Topbar.UIStroke, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
+	for _, TopbarButton in ipairs(Topbar:GetChildren()) do
+		if TopbarButton.ClassName == "ImageButton" then
+			TweenService:Create(TopbarButton, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
+		end
+	end
+	for _, tabbtn in ipairs(TabList:GetChildren()) do
+		if tabbtn.ClassName == "Frame" and tabbtn.Name ~= "Placeholder" then
+			TweenService:Create(tabbtn, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
+			TweenService:Create(tabbtn.Title, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+			TweenService:Create(tabbtn.Image, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
+			TweenService:Create(tabbtn.Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
+			TweenService:Create(tabbtn.UIStroke, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
+		end
+	end
+	for _, tab in ipairs(Elements:GetChildren()) do
+		if tab.Name ~= "Template" and tab.ClassName == "ScrollingFrame" and tab.Name ~= "Placeholder" then
+			for _, element in ipairs(tab:GetChildren()) do
+				if element.ClassName == "Frame" then
+					if element.Name ~= "SectionSpacing" and element.Name ~= "Placeholder" then
+						if element.Name == "SectionTitle" then
+							TweenService:Create(element.Title, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+						else
+							TweenService:Create(element, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
+							TweenService:Create(element.UIStroke, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
+							TweenService:Create(element.Title, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+						end
+						for _, child in ipairs(element:GetChildren()) do
+							if child.ClassName == "Frame" or child.ClassName == "TextLabel" or child.ClassName == "TextBox" or child.ClassName == "ImageButton" or child.ClassName == "ImageLabel" then
+								child.Visible = false
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+	task.wait(0.5)
+	Main.Visible = false
+	Debounce = false
+end
+
+function Unhide()
+	Debounce = true
+	Main.Position = UDim2.new(0.5, 0, 0.5, 0)
+	Main.Visible = true
+	TweenService:Create(Main, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Size = useMobileSizing and UDim2.new(0, 500, 0, 360) or UDim2.new(0, 500, 0, 475)}):Play()
+	TweenService:Create(Main.Topbar, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 500, 0, 45)}):Play()
+	TweenService:Create(Main.Shadow.Image, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {ImageTransparency = 0.4}):Play()
+	TweenService:Create(Main, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
+	TweenService:Create(Main.Topbar, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
+	TweenService:Create(Main.Topbar.Divider, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
+	TweenService:Create(Main.Topbar.CornerRepair, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
+	TweenService:Create(Main.Topbar.Title, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
+	if Minimised then
+		spawn(Maximise)
+	end
+	for _, TopbarButton in ipairs(Topbar:GetChildren()) do
+		if TopbarButton.ClassName == "ImageButton" then
+			TweenService:Create(TopbarButton, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {ImageTransparency = 0.8}):Play()
+		end
+	end
+	for _, tabbtn in ipairs(TabList:GetChildren()) do
+		if tabbtn.ClassName == "Frame" and tabbtn.Name ~= "Placeholder" then
+			if tostring(Elements.UIPageLayout.CurrentPage) == tabbtn.Title.Text then
+				TweenService:Create(tabbtn, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
+				TweenService:Create(tabbtn.Title, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
+				TweenService:Create(tabbtn.Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 0.9}):Play()
+				TweenService:Create(tabbtn.Image, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 0}):Play()
+				TweenService:Create(tabbtn.UIStroke, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
+			else
+				TweenService:Create(tabbtn, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundTransparency = 0.7}):Play()
+				TweenService:Create(tabbtn.Image, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 0.2}):Play()
+				TweenService:Create(tabbtn.Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 0.7}):Play()
+				TweenService:Create(tabbtn.Title, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {TextTransparency = 0.2}):Play()
+				TweenService:Create(tabbtn.UIStroke, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
+			end
+
+		end
+	end
+	for _, tab in ipairs(Elements:GetChildren()) do
+		if tab.Name ~= "Template" and tab.ClassName == "ScrollingFrame" and tab.Name ~= "Placeholder" then
+			for _, element in ipairs(tab:GetChildren()) do
+				if element.ClassName == "Frame" then
+					if element.Name ~= "SectionSpacing" and element.Name ~= "Placeholder" then
+						if element.Name == "SectionTitle" then
+							TweenService:Create(element.Title, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
+						else
+							TweenService:Create(element, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
+							TweenService:Create(element.UIStroke, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
+							TweenService:Create(element.Title, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
+						end
+						for _, child in ipairs(element:GetChildren()) do
+							if child.ClassName == "Frame" or child.ClassName == "TextLabel" or child.ClassName == "TextBox" or child.ClassName == "ImageButton" or child.ClassName == "ImageLabel" then
+								child.Visible = true
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+	task.wait(0.5)
+	Minimised = false
+	Debounce = false
+end
+
+function Maximise()
+	Debounce = true
+	Topbar.ChangeSize.Image = "rbxassetid://"..10137941941
+
+
+	TweenService:Create(Topbar.UIStroke, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
+	TweenService:Create(Main.Shadow.Image, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {ImageTransparency = 0.4}):Play()
+	TweenService:Create(Topbar.CornerRepair, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
+	TweenService:Create(Topbar.Divider, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
+	TweenService:Create(Main, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Size = useMobileSizing and UDim2.new(0, 500, 0, 360) or UDim2.new(0, 500, 0, 475)}):Play()
+	TweenService:Create(Topbar, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 500, 0, 45)}):Play()
+	TabList.Visible = true
+	task.wait(0.2)
+
+	Elements.Visible = true
+
+	for _, tab in ipairs(Elements:GetChildren()) do
+		if tab.Name ~= "Template" and tab.ClassName == "ScrollingFrame" and tab.Name ~= "Placeholder" then
+			for _, element in ipairs(tab:GetChildren()) do
+				if element.ClassName == "Frame" then
+					if element.Name ~= "SectionSpacing" and element.Name ~= "Placeholder" then
+						if element.Name == "SectionTitle" then
+							TweenService:Create(element.Title, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
+						else
+							TweenService:Create(element, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
+							TweenService:Create(element.UIStroke, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
+							TweenService:Create(element.Title, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
+						end
+						for _, child in ipairs(element:GetChildren()) do
+							if child.ClassName == "Frame" or child.ClassName == "TextLabel" or child.ClassName == "TextBox" or child.ClassName == "ImageButton" or child.ClassName == "ImageLabel" then
+								child.Visible = true
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+
+
+	task.wait(0.1)
+
+	for _, tabbtn in ipairs(TabList:GetChildren()) do
+		if tabbtn.ClassName == "Frame" and tabbtn.Name ~= "Placeholder" then
+			if tostring(Elements.UIPageLayout.CurrentPage) == tabbtn.Title.Text then
+				TweenService:Create(tabbtn, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
+				TweenService:Create(tabbtn.Image, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 0}):Play()
+				TweenService:Create(tabbtn.Title, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
+				TweenService:Create(tabbtn.UIStroke, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
+				TweenService:Create(tabbtn.Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 0.9}):Play()
+			else
+				TweenService:Create(tabbtn, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundTransparency = 0.7}):Play()
+				TweenService:Create(tabbtn.Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 0.7}):Play()
+				TweenService:Create(tabbtn.Image, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 0.2}):Play()
+				TweenService:Create(tabbtn.Title, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {TextTransparency = 0.2}):Play()
+				TweenService:Create(tabbtn.UIStroke, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
+			end
+
+		end
+	end
+
+
+	task.wait(0.5)
+	Debounce = false
+end
+
+function Minimise()
+	Debounce = true
+	Topbar.ChangeSize.Image = "rbxassetid://"..11036884234
+
+	for _, tabbtn in ipairs(TabList:GetChildren()) do
+		if tabbtn.ClassName == "Frame" and tabbtn.Name ~= "Placeholder" then
+			TweenService:Create(tabbtn, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
+			TweenService:Create(tabbtn.Image, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
+			TweenService:Create(tabbtn.Title, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+			TweenService:Create(tabbtn.Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
+			TweenService:Create(tabbtn.UIStroke, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
+		end
+	end
+
+	for _, tab in ipairs(Elements:GetChildren()) do
+		if tab.Name ~= "Template" and tab.ClassName == "ScrollingFrame" and tab.Name ~= "Placeholder" then
+			for _, element in ipairs(tab:GetChildren()) do
+				if element.ClassName == "Frame" then
+					if element.Name ~= "SectionSpacing" and element.Name ~= "Placeholder" then
+						if element.Name == "SectionTitle" then
+							TweenService:Create(element.Title, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+						else
+							TweenService:Create(element, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
+							TweenService:Create(element.UIStroke, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
+							TweenService:Create(element.Title, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+						end
+						for _, child in ipairs(element:GetChildren()) do
+							if child.ClassName == "Frame" or child.ClassName == "TextLabel" or child.ClassName == "TextBox" or child.ClassName == "ImageButton" or child.ClassName == "ImageLabel" then
+								child.Visible = false
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+
+	TweenService:Create(Topbar.UIStroke, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
+	TweenService:Create(Main.Shadow.Image, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
+	TweenService:Create(Topbar.CornerRepair, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
+	TweenService:Create(Topbar.Divider, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
+	TweenService:Create(Main, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 495, 0, 45)}):Play()
+	TweenService:Create(Topbar, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 495, 0, 45)}):Play()
+
+	task.wait(0.3)
+
+	Elements.Visible = false
+	TabList.Visible = false
+
+	task.wait(0.2)
+	Debounce = false
+end
+
+function RayfieldLibrary:CreateWindow(Settings)
+	local Passthrough = false
+	Topbar.Title.Text = Settings.Name
+	Main.Size = UDim2.new(0, 450, 0, 260)
+	Main.Visible = true
+	Main.BackgroundTransparency = 1
+	LoadingFrame.Title.TextTransparency = 1
+	LoadingFrame.Subtitle.TextTransparency = 1
+	Main.Shadow.Image.ImageTransparency = 1
+	LoadingFrame.Version.TextTransparency = 1
+	LoadingFrame.Title.Text = Settings.LoadingTitle or "Rayfield Interface Suite"
+	LoadingFrame.Subtitle.Text = Settings.LoadingSubtitle or "by Sirius"
+	if Settings.LoadingTitle ~= "Rayfield Interface Suite" then
+		LoadingFrame.Version.Text = "Rayfield UI"
+	end
+	Topbar.Visible = false
+	Elements.Visible = false
+	LoadingFrame.Visible = true
+
+
+	pcall(function()
+		if not Settings.ConfigurationSaving.FileName then
+			Settings.ConfigurationSaving.FileName = tostring(game.PlaceId)
+		end
+		if not isfolder(RayfieldFolder.."/".."Configuration Folders") then
+
+		end
+		if Settings.ConfigurationSaving.Enabled == nil then
+			Settings.ConfigurationSaving.Enabled = false
+		end
+		CFileName = Settings.ConfigurationSaving.FileName
+		ConfigurationFolder = Settings.ConfigurationSaving.FolderName or ConfigurationFolder
+		CEnabled = Settings.ConfigurationSaving.Enabled
+
+		if Settings.ConfigurationSaving.Enabled then
+			if not isfolder(ConfigurationFolder) then
+				makefolder(ConfigurationFolder)
+			end	
+		end
+	end)
+
+	AddDraggingFunctionality(Topbar,Main)
+
+	for _, TabButton in ipairs(TabList:GetChildren()) do
+		if TabButton.ClassName == "Frame" and TabButton.Name ~= "Placeholder" then
+			TabButton.BackgroundTransparency = 1
+			TabButton.Title.TextTransparency = 1
+			TabButton.Shadow.ImageTransparency = 1
+			TabButton.Image.ImageTransparency = 1
+			TabButton.UIStroke.Transparency = 1
+		end
+	end
+
+	if Settings.Discord then
+		if not isfolder(RayfieldFolder.."/Discord Invites") then
+			makefolder(RayfieldFolder.."/Discord Invites")
+		end
+		if not isfile(RayfieldFolder.."/Discord Invites".."/"..Settings.Discord.Invite..ConfigurationExtension) then
+			if request then
+				request({
+					Url = 'http://127.0.0.1:6463/rpc?v=1',
+					Method = 'POST',
+					Headers = {
+						['Content-Type'] = 'application/json',
+						Origin = 'https://discord.com'
+					},
+					Body = HttpService:JSONEncode({
+						cmd = 'INVITE_BROWSER',
+						nonce = HttpService:GenerateGUID(false),
+						args = {code = Settings.Discord.Invite}
+					})
+				})
+			end
+
+			if Settings.Discord.RememberJoins then -- We do logic this way so if the developer changes this setting, the user still won't be prompted, only new users
+				writefile(RayfieldFolder.."/Discord Invites".."/"..Settings.Discord.Invite..ConfigurationExtension,"Rayfield RememberJoins is true for this invite, this invite will not ask you to join again")
+			end
+		else
+
+		end
+	end
+
+	if (Settings.KeySystem) then
+		if not Settings.KeySettings then
+			Passthrough = true
+			return
+		end
+
+		if not isfolder(RayfieldFolder.."/Key System") then
+			makefolder(RayfieldFolder.."/Key System")
+		end
+
+		if typeof(Settings.KeySettings.Key) == "string" then Settings.KeySettings.Key = {Settings.KeySettings.Key} end
+
+		if Settings.KeySettings.GrabKeyFromSite then
+			for i, Key in ipairs(Settings.KeySettings.Key) do
+				local Success, Response = pcall(function()
+					Settings.KeySettings.Key[i] = tostring(game:HttpGet(Key):gsub("[\n\r]", " "))
+					Settings.KeySettings.Key[i] = string.gsub(Settings.KeySettings.Key[i], " ", "")
+				end)
+				if not Success then
+					print("Rayfield | "..Key.." Error " ..tostring(Response))
+					warn('Check docs.sirius.menu for help with Rayfield specific development.')
+				end
+			end
+		end
+
+		if not Settings.KeySettings.FileName then
+			Settings.KeySettings.FileName = "No file name specified"
+		end
+
+		if isfile(RayfieldFolder.."/Key System".."/"..Settings.KeySettings.FileName..ConfigurationExtension) then
+			for _, MKey in ipairs(Settings.KeySettings.Key) do
+				if string.find(readfile(RayfieldFolder.."/Key System".."/"..Settings.KeySettings.FileName..ConfigurationExtension), MKey) then
+					Passthrough = true
+				end
+			end
+		end
+
+		if not Passthrough then
+			local AttemptsRemaining = math.random(2,6)
+			Rayfield.Enabled = false
+			local KeyUI = game:GetObjects("rbxassetid://11380036235")[1]
+
+			if gethui then
+				KeyUI.Parent = gethui()
+			elseif syn.protect_gui then
+				syn.protect_gui(Rayfield)
+				KeyUI.Parent = CoreGui
+			else
+				KeyUI.Parent = CoreGui
+			end
+
+			if gethui then
+				for _, Interface in ipairs(gethui():GetChildren()) do
+					if Interface.Name == KeyUI.Name and Interface ~= KeyUI then
+						Interface.Enabled = false
+						Interface.Name = "KeyUI-Old"
+					end
+				end
+			else
+				for _, Interface in ipairs(CoreGui:GetChildren()) do
+					if Interface.Name == KeyUI.Name and Interface ~= KeyUI then
+						Interface.Enabled = false
+						Interface.Name = "KeyUI-Old"
+					end
+				end
+			end
+
+			local KeyMain = KeyUI.Main
+			KeyMain.Title.Text = Settings.KeySettings.Title or Settings.Name
+			KeyMain.Subtitle.Text = Settings.KeySettings.Subtitle or "Key System"
+			KeyMain.NoteMessage.Text = Settings.KeySettings.Note or "No instructions"
+
+			KeyMain.Size = UDim2.new(0, 467, 0, 175)
+			KeyMain.BackgroundTransparency = 1
+			KeyMain.Shadow.Image.ImageTransparency = 1
+			KeyMain.Title.TextTransparency = 1
+			KeyMain.Subtitle.TextTransparency = 1
+			KeyMain.KeyNote.TextTransparency = 1
+			KeyMain.Input.BackgroundTransparency = 1
+			KeyMain.Input.UIStroke.Transparency = 1
+			KeyMain.Input.InputBox.TextTransparency = 1
+			KeyMain.NoteTitle.TextTransparency = 1
+			KeyMain.NoteMessage.TextTransparency = 1
+			KeyMain.Hide.ImageTransparency = 1
+
+			TweenService:Create(KeyMain, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
+			TweenService:Create(KeyMain, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 500, 0, 187)}):Play()
+			TweenService:Create(KeyMain.Shadow.Image, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {ImageTransparency = 0.5}):Play()
+			task.wait(0.05)
+			TweenService:Create(KeyMain.Title, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
+			TweenService:Create(KeyMain.Subtitle, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
+			task.wait(0.05)
+			TweenService:Create(KeyMain.KeyNote, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
+			TweenService:Create(KeyMain.Input, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
+			TweenService:Create(KeyMain.Input.UIStroke, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
+			TweenService:Create(KeyMain.Input.InputBox, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
+			task.wait(0.05)
+			TweenService:Create(KeyMain.NoteTitle, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
+			TweenService:Create(KeyMain.NoteMessage, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
+			task.wait(0.15)
+			TweenService:Create(KeyMain.Hide, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {ImageTransparency = 0.3}):Play()
+
+
+			KeyUI.Main.Input.InputBox.FocusLost:Connect(function()
+				if #KeyUI.Main.Input.InputBox.Text == 0 then return end
+				local KeyFound = false
+				local FoundKey = ''
+				for _, MKey in ipairs(Settings.KeySettings.Key) do
+					if string.find(KeyMain.Input.InputBox.Text, MKey) then
+						KeyFound = true
+						FoundKey = MKey
+					end
+				end
+				if KeyFound then 
+					TweenService:Create(KeyMain, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
+					TweenService:Create(KeyMain, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 467, 0, 175)}):Play()
+					TweenService:Create(KeyMain.Shadow.Image, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
+					TweenService:Create(KeyMain.Title, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+					TweenService:Create(KeyMain.Subtitle, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+					TweenService:Create(KeyMain.KeyNote, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+					TweenService:Create(KeyMain.Input, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
+					TweenService:Create(KeyMain.Input.UIStroke, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
+					TweenService:Create(KeyMain.Input.InputBox, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+					TweenService:Create(KeyMain.NoteTitle, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+					TweenService:Create(KeyMain.NoteMessage, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+					TweenService:Create(KeyMain.Hide, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
+					task.wait(0.51)
+					Passthrough = true
+					if Settings.KeySettings.SaveKey then
+						if writefile then
+							writefile(RayfieldFolder.."/Key System".."/"..Settings.KeySettings.FileName..ConfigurationExtension, FoundKey)
+						end
+						RayfieldLibrary:Notify({Title = "Key System", Content = "The key for this script has been saved successfully."})
+					end
+				else
+					if AttemptsRemaining == 0 then
+						TweenService:Create(KeyMain, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
+						TweenService:Create(KeyMain, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 467, 0, 175)}):Play()
+						TweenService:Create(KeyMain.Shadow.Image, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
+						TweenService:Create(KeyMain.Title, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+						TweenService:Create(KeyMain.Subtitle, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+						TweenService:Create(KeyMain.KeyNote, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+						TweenService:Create(KeyMain.Input, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
+						TweenService:Create(KeyMain.Input.UIStroke, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
+						TweenService:Create(KeyMain.Input.InputBox, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+						TweenService:Create(KeyMain.NoteTitle, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+						TweenService:Create(KeyMain.NoteMessage, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+						TweenService:Create(KeyMain.Hide, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
+						task.wait(0.45)
+						game.Players.LocalPlayer:Kick("No Attempts Remaining")
+						game:Shutdown()
+					end
+					KeyMain.Input.InputBox.Text = ""
+					AttemptsRemaining = AttemptsRemaining - 1
+					TweenService:Create(KeyMain, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 467, 0, 175)}):Play()
+					TweenService:Create(KeyMain, TweenInfo.new(0.4, Enum.EasingStyle.Elastic), {Position = UDim2.new(0.495,0,0.5,0)}):Play()
+					task.wait(0.1)
+					TweenService:Create(KeyMain, TweenInfo.new(0.4, Enum.EasingStyle.Elastic), {Position = UDim2.new(0.505,0,0.5,0)}):Play()
+					task.wait(0.1)
+					TweenService:Create(KeyMain, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {Position = UDim2.new(0.5,0,0.5,0)}):Play()
+					TweenService:Create(KeyMain, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 500, 0, 187)}):Play()
+				end
+			end)
+
+			KeyMain.Hide.MouseButton1Click:Connect(function()
+				TweenService:Create(KeyMain, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
+				TweenService:Create(KeyMain, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 467, 0, 175)}):Play()
+				TweenService:Create(KeyMain.Shadow.Image, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
+				TweenService:Create(KeyMain.Title, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+				TweenService:Create(KeyMain.Subtitle, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+				TweenService:Create(KeyMain.KeyNote, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+				TweenService:Create(KeyMain.Input, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
+				TweenService:Create(KeyMain.Input.UIStroke, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
+				TweenService:Create(KeyMain.Input.InputBox, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+				TweenService:Create(KeyMain.NoteTitle, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+				TweenService:Create(KeyMain.NoteMessage, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+				TweenService:Create(KeyMain.Hide, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
+				task.wait(0.51)
+				RayfieldLibrary:Destroy()
+				KeyUI:Destroy()
+			end)
+		else
+			Passthrough = true
+		end
+	end
+	if Settings.KeySystem then
+		repeat task.wait() until Passthrough
+	end
+
+	Notifications.Template.Visible = false
+	Notifications.Visible = true
+	Rayfield.Enabled = true
+	task.wait(0.5)
+	TweenService:Create(Main, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
+	TweenService:Create(Main.Shadow.Image, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {ImageTransparency = 0.55}):Play()
+	task.wait(0.1)
+	TweenService:Create(LoadingFrame.Title, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
+	task.wait(0.05)
+	TweenService:Create(LoadingFrame.Subtitle, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
+	task.wait(0.05)
+	TweenService:Create(LoadingFrame.Version, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
+
+	Elements.Template.LayoutOrder = 100000
+	Elements.Template.Visible = false
+
+	Elements.UIPageLayout.FillDirection = Enum.FillDirection.Horizontal
+	TabList.Template.Visible = false
+
+	-- Tab
+	local FirstTab = false
+	local Window = {}
+	function Window:CreateTab(Name,Image)
+		local SDone = false
+		local TabButton = TabList.Template:Clone()
+		TabButton.Name = Name
+		TabButton.Title.Text = Name
+		TabButton.Parent = TabList
+		TabButton.Title.TextWrapped = false
+		TabButton.Size = UDim2.new(0, TabButton.Title.TextBounds.X + 30, 0, 30)
+
+		if Image then
+			TabButton.Title.AnchorPoint = Vector2.new(0, 0.5)
+			TabButton.Title.Position = UDim2.new(0, 37, 0.5, 0)
+			TabButton.Image.Image = "rbxassetid://"..Image
+			TabButton.Image.Visible = true
+			TabButton.Title.TextXAlignment = Enum.TextXAlignment.Left
+			TabButton.Size = UDim2.new(0, TabButton.Title.TextBounds.X + 46, 0, 30)
+		end
+
+		TabButton.BackgroundTransparency = 1
+		TabButton.Title.TextTransparency = 1
+		TabButton.Shadow.ImageTransparency = 1
+		TabButton.Image.ImageTransparency = 1
+		TabButton.UIStroke.Transparency = 1
+
+		TabButton.Visible = true
+
+		-- Create Elements Page
+		local TabPage = Elements.Template:Clone()
+		TabPage.Name = Name
+		TabPage.Visible = true
+
+		TabPage.LayoutOrder = #Elements:GetChildren()
+
+		for _, TemplateElement in ipairs(TabPage:GetChildren()) do
+			if TemplateElement.ClassName == "Frame" and TemplateElement.Name ~= "Placeholder" then
+				TemplateElement:Destroy()
+			end
+		end
+
+		TabPage.Parent = Elements
+		if not FirstTab then
+			Elements.UIPageLayout.Animated = false
+			Elements.UIPageLayout:JumpTo(TabPage)
+			Elements.UIPageLayout.Animated = true
+		end
+
+		if SelectedTheme ~= RayfieldLibrary.Theme.Default then
+			TabButton.Shadow.Visible = false
+		end
+		TabButton.UIStroke.Color = SelectedTheme.TabStroke
+		-- Animate
+		task.wait(0.1)
+		if FirstTab then
+			TabButton.BackgroundColor3 = SelectedTheme.TabBackground
+			TabButton.Image.ImageColor3 = SelectedTheme.TabTextColor
+			TabButton.Title.TextColor3 = SelectedTheme.TabTextColor
+			TweenService:Create(TabButton, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {BackgroundTransparency = 0.7}):Play()
+			TweenService:Create(TabButton.Title, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {TextTransparency = 0.2}):Play()
+			TweenService:Create(TabButton.Image, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {ImageTransparency = 0.2}):Play()
+			TweenService:Create(TabButton.UIStroke, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
+
+			TweenService:Create(TabButton.Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 0.7}):Play()
+		else
+			FirstTab = Name
+			TabButton.BackgroundColor3 = SelectedTheme.TabBackgroundSelected
+			TabButton.Image.ImageColor3 = SelectedTheme.SelectedTabTextColor
+			TabButton.Title.TextColor3 = SelectedTheme.SelectedTabTextColor
+			TweenService:Create(TabButton.Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 0.9}):Play()
+			TweenService:Create(TabButton.Image, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {ImageTransparency = 0}):Play()
+			TweenService:Create(TabButton, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
+			TweenService:Create(TabButton.Title, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
+		end
+
+
+		TabButton.Interact.MouseButton1Click:Connect(function()
+			if Minimised then return end
+			TweenService:Create(TabButton, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
+			TweenService:Create(TabButton.UIStroke, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
+			TweenService:Create(TabButton.Title, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
+			TweenService:Create(TabButton.Image, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {ImageTransparency = 0}):Play()
+			TweenService:Create(TabButton, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.TabBackgroundSelected}):Play()
+			TweenService:Create(TabButton.Title, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {TextColor3 = SelectedTheme.SelectedTabTextColor}):Play()
+			TweenService:Create(TabButton.Image, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {ImageColor3 = SelectedTheme.SelectedTabTextColor}):Play()
+			TweenService:Create(TabButton.Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 0.9}):Play()
+
+			for _, OtherTabButton in ipairs(TabList:GetChildren()) do
+				if OtherTabButton.Name ~= "Template" and OtherTabButton.ClassName == "Frame" and OtherTabButton ~= TabButton and OtherTabButton.Name ~= "Placeholder" then
+					TweenService:Create(OtherTabButton, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.TabBackground}):Play()
+					TweenService:Create(OtherTabButton.Title, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {TextColor3 = SelectedTheme.TabTextColor}):Play()
+					TweenService:Create(OtherTabButton.Image, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {ImageColor3 = SelectedTheme.TabTextColor}):Play()
+					TweenService:Create(OtherTabButton, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {BackgroundTransparency = 0.7}):Play()
+					TweenService:Create(OtherTabButton.Title, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {TextTransparency = 0.2}):Play()
+					TweenService:Create(OtherTabButton.Image, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {ImageTransparency = 0.2}):Play()
+					TweenService:Create(OtherTabButton.Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 0.7}):Play()
+					TweenService:Create(OtherTabButton.UIStroke, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
+				end
+			end
+			if Elements.UIPageLayout.CurrentPage ~= TabPage then
+				TweenService:Create(Elements, TweenInfo.new(1, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 460, 1, -130)}):Play()
+				Elements.UIPageLayout:JumpTo(TabPage)
+				task.wait(0.2)
+				TweenService:Create(Elements, TweenInfo.new(0.8, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 475, 1, -100)}):Play()
+			end
+
+		end)
+
+		local Tab = {}
+
+		-- Button
+		function Tab:CreateButton(ButtonSettings)
+			local ButtonValue = {}
+
+			local Button = Elements.Template.Button:Clone()
+			Button.Name = ButtonSettings.Name
+			Button.Title.Text = ButtonSettings.Name
+			Button.Visible = true
+			Button.Parent = TabPage
+
+			Button.BackgroundTransparency = 1
+			Button.UIStroke.Transparency = 1
+			Button.Title.TextTransparency = 1
+
+			TweenService:Create(Button, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
+			TweenService:Create(Button.UIStroke, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
+			TweenService:Create(Button.Title, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()	
+
+
+			Button.Interact.MouseButton1Click:Connect(function()
+				local Success, Response = pcall(ButtonSettings.Callback)
+				if not Success then
+					TweenService:Create(Button, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = Color3.fromRGB(85, 0, 0)}):Play()
+					TweenService:Create(Button.ElementIndicator, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+					TweenService:Create(Button.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
+					Button.Title.Text = "Callback Error"
+					print("Rayfield | "..ButtonSettings.Name.." Callback Error " ..tostring(Response))
+					warn('Check docs.sirius.menu for help with Rayfield specific development.')
+					task.wait(0.5)
+					Button.Title.Text = ButtonSettings.Name
+					TweenService:Create(Button, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
+					TweenService:Create(Button.ElementIndicator, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {TextTransparency = 0.9}):Play()
+					TweenService:Create(Button.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
+				else
+					SaveConfiguration()
+					TweenService:Create(Button, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackgroundHover}):Play()
+					TweenService:Create(Button.ElementIndicator, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+					TweenService:Create(Button.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
+					task.wait(0.2)
+					TweenService:Create(Button, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
+					TweenService:Create(Button.ElementIndicator, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {TextTransparency = 0.9}):Play()
+					TweenService:Create(Button.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
+				end
+			end)
+
+			Button.MouseEnter:Connect(function()
+				TweenService:Create(Button, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackgroundHover}):Play()
+				TweenService:Create(Button.ElementIndicator, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {TextTransparency = 0.7}):Play()
+			end)
+
+			Button.MouseLeave:Connect(function()
+				TweenService:Create(Button, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
+				TweenService:Create(Button.ElementIndicator, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {TextTransparency = 0.9}):Play()
+			end)
+
+			function ButtonValue:Set(NewButton)
+				Button.Title.Text = NewButton
+				Button.Name = NewButton
+			end
+
+			return ButtonValue
+		end
+
+		-- ColorPicker
+		function Tab:CreateColorPicker(ColorPickerSettings) -- by Throit
+			ColorPickerSettings.Type = "ColorPicker"
+			local ColorPicker = Elements.Template.ColorPicker:Clone()
+			local Background = ColorPicker.CPBackground
+			local Display = Background.Display
+			local Main = Background.MainCP
+			local Slider = ColorPicker.ColorSlider
+			ColorPicker.ClipsDescendants = true
+			ColorPicker.Name = ColorPickerSettings.Name
+			ColorPicker.Title.Text = ColorPickerSettings.Name
+			ColorPicker.Visible = true
+			ColorPicker.Parent = TabPage
+			ColorPicker.Size = UDim2.new(1, -10, 0.028, 35)
+			Background.Size = UDim2.new(0, 39, 0, 22)
+			Display.BackgroundTransparency = 0
+			Main.MainPoint.ImageTransparency = 1
+			ColorPicker.Interact.Size = UDim2.new(1, 0, 1, 0)
+			ColorPicker.Interact.Position = UDim2.new(0.5, 0, 0.5, 0)
+			ColorPicker.RGB.Position = UDim2.new(0, 17, 0, 70)
+			ColorPicker.HexInput.Position = UDim2.new(0, 17, 0, 90)
+			Main.ImageTransparency = 1
+			Background.BackgroundTransparency = 1
+
+
+
+			local opened = false 
+			local mouse = game.Players.LocalPlayer:GetMouse()
+			Main.Image = "http://www.roblox.com/asset/?id=11415645739"
+			local mainDragging = false 
+			local sliderDragging = false 
+			ColorPicker.Interact.MouseButton1Down:Connect(function()
+				if not opened then
+					opened = true 
+					TweenService:Create(ColorPicker, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Size = UDim2.new(1, -10, 0.224, 40)}):Play()
+					TweenService:Create(Background, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 173, 0, 86)}):Play()
+					TweenService:Create(Display, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
+					TweenService:Create(ColorPicker.Interact, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Position = UDim2.new(0.289, 0, 0.5, 0)}):Play()
+					TweenService:Create(ColorPicker.RGB, TweenInfo.new(0.8, Enum.EasingStyle.Quint), {Position = UDim2.new(0, 17, 0, 40)}):Play()
+					TweenService:Create(ColorPicker.HexInput, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Position = UDim2.new(0, 17, 0, 73)}):Play()
+					TweenService:Create(ColorPicker.Interact, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Size = UDim2.new(0.574, 0, 1, 0)}):Play()
+					TweenService:Create(Main.MainPoint, TweenInfo.new(0.2, Enum.EasingStyle.Quint), {ImageTransparency = 0}):Play()
+					TweenService:Create(Main, TweenInfo.new(0.2, Enum.EasingStyle.Quint), {ImageTransparency = 0.1}):Play()
+					TweenService:Create(Background, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
+				else
+					opened = false
+					TweenService:Create(ColorPicker, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Size = UDim2.new(1, -10, 0.028, 35)}):Play()
+					TweenService:Create(Background, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 39, 0, 22)}):Play()
+					TweenService:Create(ColorPicker.Interact, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Size = UDim2.new(1, 0, 1, 0)}):Play()
+					TweenService:Create(ColorPicker.Interact, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Position = UDim2.new(0.5, 0, 0.5, 0)}):Play()
+					TweenService:Create(ColorPicker.RGB, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Position = UDim2.new(0, 17, 0, 70)}):Play()
+					TweenService:Create(ColorPicker.HexInput, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Position = UDim2.new(0, 17, 0, 90)}):Play()
+					TweenService:Create(Display, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
+					TweenService:Create(Main.MainPoint, TweenInfo.new(0.2, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
+					TweenService:Create(Main, TweenInfo.new(0.2, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
+					TweenService:Create(Background, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
+				end
+			end)
+
+			game:GetService("UserInputService").InputEnded:Connect(function(input, gameProcessed) if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then 
+					mainDragging = false
+					sliderDragging = false
+				end end)
+			Main.MouseButton1Down:Connect(function()
+				if opened then
+					mainDragging = true 
+				end
+			end)
+			Main.MainPoint.MouseButton1Down:Connect(function()
+				if opened then
+					mainDragging = true 
+				end
+			end)
+			Slider.MouseButton1Down:Connect(function()
+				sliderDragging = true 
+			end)
+			Slider.SliderPoint.MouseButton1Down:Connect(function()
+				sliderDragging = true 
+			end)
+			local h,s,v = ColorPickerSettings.Color:ToHSV()
+			local color = Color3.fromHSV(h,s,v) 
+			local hex = string.format("#%02X%02X%02X",color.R*0xFF,color.G*0xFF,color.B*0xFF)
+			ColorPicker.HexInput.InputBox.Text = hex
+			local function setDisplay()
+				--Main
+				Main.MainPoint.Position = UDim2.new(s,-Main.MainPoint.AbsoluteSize.X/2,1-v,-Main.MainPoint.AbsoluteSize.Y/2)
+				Main.MainPoint.ImageColor3 = Color3.fromHSV(h,s,v)
+				Background.BackgroundColor3 = Color3.fromHSV(h,1,1)
+				Display.BackgroundColor3 = Color3.fromHSV(h,s,v)
+				--Slider 
+				local x = h * Slider.AbsoluteSize.X
+				Slider.SliderPoint.Position = UDim2.new(0,x-Slider.SliderPoint.AbsoluteSize.X/2,0.5,0)
+				Slider.SliderPoint.ImageColor3 = Color3.fromHSV(h,1,1)
+				local color = Color3.fromHSV(h,s,v) 
+				local r,g,b = math.floor((color.R*255)+0.5),math.floor((color.G*255)+0.5),math.floor((color.B*255)+0.5)
+				ColorPicker.RGB.RInput.InputBox.Text = tostring(r)
+				ColorPicker.RGB.GInput.InputBox.Text = tostring(g)
+				ColorPicker.RGB.BInput.InputBox.Text = tostring(b)
+				hex = string.format("#%02X%02X%02X",color.R*0xFF,color.G*0xFF,color.B*0xFF)
+				ColorPicker.HexInput.InputBox.Text = hex
+			end
+			setDisplay()
+			ColorPicker.HexInput.InputBox.FocusLost:Connect(function()
+				if not pcall(function()
+						local r, g, b = string.match(ColorPicker.HexInput.InputBox.Text, "^#?(%w%w)(%w%w)(%w%w)$")
+						local rgbColor = Color3.fromRGB(tonumber(r, 16),tonumber(g, 16), tonumber(b, 16))
+						h,s,v = rgbColor:ToHSV()
+						hex = ColorPicker.HexInput.InputBox.Text
+						setDisplay()
+						ColorPickerSettings.Color = rgbColor
+					end) 
+				then 
+					ColorPicker.HexInput.InputBox.Text = hex 
+				end
+				pcall(function()ColorPickerSettings.Callback(Color3.fromHSV(h,s,v))end)
+				local r,g,b = math.floor((h*255)+0.5),math.floor((s*255)+0.5),math.floor((v*255)+0.5)
+				ColorPickerSettings.Color = Color3.fromRGB(r,g,b)
+				SaveConfiguration()
+			end)
+			--RGB
+			local function rgbBoxes(box,toChange)
+				local value = tonumber(box.Text) 
+				local color = Color3.fromHSV(h,s,v) 
+				local oldR,oldG,oldB = math.floor((color.R*255)+0.5),math.floor((color.G*255)+0.5),math.floor((color.B*255)+0.5)
+				local save 
+				if toChange == "R" then save = oldR;oldR = value elseif toChange == "G" then save = oldG;oldG = value else save = oldB;oldB = value end
+				if value then 
+					value = math.clamp(value,0,255)
+					h,s,v = Color3.fromRGB(oldR,oldG,oldB):ToHSV()
+
+					setDisplay()
+				else 
+					box.Text = tostring(save)
+				end
+				local r,g,b = math.floor((h*255)+0.5),math.floor((s*255)+0.5),math.floor((v*255)+0.5)
+				ColorPickerSettings.Color = Color3.fromRGB(r,g,b)
+				SaveConfiguration()
+			end
+			ColorPicker.RGB.RInput.InputBox.FocusLost:connect(function()
+				rgbBoxes(ColorPicker.RGB.RInput.InputBox,"R")
+				pcall(function()ColorPickerSettings.Callback(Color3.fromHSV(h,s,v))end)
+			end)
+			ColorPicker.RGB.GInput.InputBox.FocusLost:connect(function()
+				rgbBoxes(ColorPicker.RGB.GInput.InputBox,"G")
+				pcall(function()ColorPickerSettings.Callback(Color3.fromHSV(h,s,v))end)
+			end)
+			ColorPicker.RGB.BInput.InputBox.FocusLost:connect(function()
+				rgbBoxes(ColorPicker.RGB.BInput.InputBox,"B")
+				pcall(function()ColorPickerSettings.Callback(Color3.fromHSV(h,s,v))end)
+			end)
+
+			game:GetService("RunService").RenderStepped:connect(function()
+				if mainDragging then 
+					local localX = math.clamp(mouse.X-Main.AbsolutePosition.X,0,Main.AbsoluteSize.X)
+					local localY = math.clamp(mouse.Y-Main.AbsolutePosition.Y,0,Main.AbsoluteSize.Y)
+					Main.MainPoint.Position = UDim2.new(0,localX-Main.MainPoint.AbsoluteSize.X/2,0,localY-Main.MainPoint.AbsoluteSize.Y/2)
+					s = localX / Main.AbsoluteSize.X
+					v = 1 - (localY / Main.AbsoluteSize.Y)
+					Display.BackgroundColor3 = Color3.fromHSV(h,s,v)
+					Main.MainPoint.ImageColor3 = Color3.fromHSV(h,s,v)
+					Background.BackgroundColor3 = Color3.fromHSV(h,1,1)
+					local color = Color3.fromHSV(h,s,v) 
+					local r,g,b = math.floor((color.R*255)+0.5),math.floor((color.G*255)+0.5),math.floor((color.B*255)+0.5)
+					ColorPicker.RGB.RInput.InputBox.Text = tostring(r)
+					ColorPicker.RGB.GInput.InputBox.Text = tostring(g)
+					ColorPicker.RGB.BInput.InputBox.Text = tostring(b)
+					ColorPicker.HexInput.InputBox.Text = string.format("#%02X%02X%02X",color.R*0xFF,color.G*0xFF,color.B*0xFF)
+					pcall(function()ColorPickerSettings.Callback(Color3.fromHSV(h,s,v))end)
+					ColorPickerSettings.Color = Color3.fromRGB(r,g,b)
+					SaveConfiguration()
+				end
+				if sliderDragging then 
+					local localX = math.clamp(mouse.X-Slider.AbsolutePosition.X,0,Slider.AbsoluteSize.X)
+					h = localX / Slider.AbsoluteSize.X
+					Display.BackgroundColor3 = Color3.fromHSV(h,s,v)
+					Slider.SliderPoint.Position = UDim2.new(0,localX-Slider.SliderPoint.AbsoluteSize.X/2,0.5,0)
+					Slider.SliderPoint.ImageColor3 = Color3.fromHSV(h,1,1)
+					Background.BackgroundColor3 = Color3.fromHSV(h,1,1)
+					Main.MainPoint.ImageColor3 = Color3.fromHSV(h,s,v)
+					local color = Color3.fromHSV(h,s,v) 
+					local r,g,b = math.floor((color.R*255)+0.5),math.floor((color.G*255)+0.5),math.floor((color.B*255)+0.5)
+					ColorPicker.RGB.RInput.InputBox.Text = tostring(r)
+					ColorPicker.RGB.GInput.InputBox.Text = tostring(g)
+					ColorPicker.RGB.BInput.InputBox.Text = tostring(b)
+					ColorPicker.HexInput.InputBox.Text = string.format("#%02X%02X%02X",color.R*0xFF,color.G*0xFF,color.B*0xFF)
+					pcall(function()ColorPickerSettings.Callback(Color3.fromHSV(h,s,v))end)
+					ColorPickerSettings.Color = Color3.fromRGB(r,g,b)
+					SaveConfiguration()
+				end
+			end)
+
+			if Settings.ConfigurationSaving then
+				if Settings.ConfigurationSaving.Enabled and ColorPickerSettings.Flag then
+					RayfieldLibrary.Flags[ColorPickerSettings.Flag] = ColorPickerSettings
+				end
+			end
+
+			function ColorPickerSettings:Set(RGBColor)
+				ColorPickerSettings.Color = RGBColor
+				h,s,v = ColorPickerSettings.Color:ToHSV()
+				color = Color3.fromHSV(h,s,v)
+				setDisplay()
+			end
+
+			return ColorPickerSettings
+		end
+
+		-- Section
+		function Tab:CreateSection(SectionName)
+
+			local SectionValue = {}
+
+			if SDone then
+				local SectionSpace = Elements.Template.SectionSpacing:Clone()
+				SectionSpace.Visible = true
+				SectionSpace.Parent = TabPage
+			end
+
+			local Section = Elements.Template.SectionTitle:Clone()
+			Section.Title.Text = SectionName
+			Section.Visible = true
+			Section.Parent = TabPage
+
+			Section.Title.TextTransparency = 1
+			TweenService:Create(Section.Title, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
+
+			function SectionValue:Set(NewSection)
+				Section.Title.Text = NewSection
+			end
+
+			SDone = true
+
+			return SectionValue
+		end
+
+		-- Label
+		function Tab:CreateLabel(LabelText)
+			local LabelValue = {}
+
+			local Label = Elements.Template.Label:Clone()
+			Label.Title.Text = LabelText
+			Label.Visible = true
+			Label.Parent = TabPage
+
+			Label.BackgroundTransparency = 1
+			Label.UIStroke.Transparency = 1
+			Label.Title.TextTransparency = 1
+
+			Label.BackgroundColor3 = SelectedTheme.SecondaryElementBackground
+			Label.UIStroke.Color = SelectedTheme.SecondaryElementStroke
+
+			TweenService:Create(Label, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
+			TweenService:Create(Label.UIStroke, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
+			TweenService:Create(Label.Title, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()	
+
+			function LabelValue:Set(NewLabel)
+				Label.Title.Text = NewLabel
+			end
+
+			return LabelValue
+		end
+
+		-- Paragraph
+		function Tab:CreateParagraph(ParagraphSettings)
+			local ParagraphValue = {}
+
+			local Paragraph = Elements.Template.Paragraph:Clone()
+			Paragraph.Title.Text = ParagraphSettings.Title
+			Paragraph.Content.Text = ParagraphSettings.Content
+			Paragraph.Visible = true
+			Paragraph.Parent = TabPage
+
+			Paragraph.Content.Size = UDim2.new(0, 438, 0, Paragraph.Content.TextBounds.Y)
+			Paragraph.Content.Position = UDim2.new(1, -10, 0.650,0 )
+			Paragraph.Size = UDim2.new(1, -10, 0, Paragraph.Content.TextBounds.Y + 40)
+
+			Paragraph.BackgroundTransparency = 1
+			Paragraph.UIStroke.Transparency = 1
+			Paragraph.Title.TextTransparency = 1
+			Paragraph.Content.TextTransparency = 1
+
+			Paragraph.BackgroundColor3 = SelectedTheme.SecondaryElementBackground
+			Paragraph.UIStroke.Color = SelectedTheme.SecondaryElementStroke
+
+			TweenService:Create(Paragraph, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
+			TweenService:Create(Paragraph.UIStroke, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
+			TweenService:Create(Paragraph.Title, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()	
+			TweenService:Create(Paragraph.Content, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()	
+
+			function ParagraphValue:Set(NewParagraphSettings)
+				Paragraph.Content.Text = NewParagraphSettings
+			end
+
+			return ParagraphValue
+		end
+
+		-- Input
+		function Tab:CreateInput(InputSettings)
+			local Input = Elements.Template.Input:Clone()
+			Input.Name = InputSettings.Name
+			Input.Title.Text = InputSettings.Name
+			Input.Visible = true
+			Input.Parent = TabPage
+
+			Input.BackgroundTransparency = 1
+			Input.UIStroke.Transparency = 1
+			Input.Title.TextTransparency = 1
+
+			Input.InputFrame.BackgroundColor3 = SelectedTheme.InputBackground
+			Input.InputFrame.UIStroke.Color = SelectedTheme.InputStroke
+
+			TweenService:Create(Input, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
+			TweenService:Create(Input.UIStroke, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
+			TweenService:Create(Input.Title, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()	
+
+			Input.InputFrame.InputBox.PlaceholderText = InputSettings.PlaceholderText
+			Input.InputFrame.Size = UDim2.new(0, Input.InputFrame.InputBox.TextBounds.X + 24, 0, 30)
+
+			Input.InputFrame.InputBox.FocusLost:Connect(function()
+
+
+				local Success, Response = pcall(function()
+					InputSettings.Callback(Input.InputFrame.InputBox.Text)
+				end)
+				if not Success then
+					TweenService:Create(Input, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = Color3.fromRGB(85, 0, 0)}):Play()
+					TweenService:Create(Input.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
+					Input.Title.Text = "Callback Error"
+					print("Rayfield | "..InputSettings.Name.." Callback Error " ..tostring(Response))
+					warn('Check docs.sirius.menu for help with Rayfield specific development.')
+					task.wait(0.5)
+					Input.Title.Text = InputSettings.Name
+					TweenService:Create(Input, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
+					TweenService:Create(Input.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
+				end
+
+				if InputSettings.RemoveTextAfterFocusLost then
+					Input.InputFrame.InputBox.Text = ""
+				end
+				SaveConfiguration()
+			end)
+
+			Input.MouseEnter:Connect(function()
+				TweenService:Create(Input, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackgroundHover}):Play()
+			end)
+
+			Input.MouseLeave:Connect(function()
+				TweenService:Create(Input, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
+			end)
+
+			Input.InputFrame.InputBox:GetPropertyChangedSignal("Text"):Connect(function()
+				TweenService:Create(Input.InputFrame, TweenInfo.new(0.55, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Size = UDim2.new(0, Input.InputFrame.InputBox.TextBounds.X + 24, 0, 30)}):Play()
+			end)
+
+			local InputSettings = {}
+			function InputSettings:Set(text) --Doesnt fire the event
+				Input.InputFrame.InputBox.Text = text
+			end
+			return InputSettings
+		end
+
+		-- Dropdown
+		function Tab:CreateDropdown(DropdownSettings)
+			local Dropdown = Elements.Template.Dropdown:Clone()
+			if string.find(DropdownSettings.Name,"closed") then
+				Dropdown.Name = "Dropdown"
+			else
+				Dropdown.Name = DropdownSettings.Name
+			end
+			Dropdown.Title.Text = DropdownSettings.Name
+			Dropdown.Visible = true
+			Dropdown.Parent = TabPage
+
+			Dropdown.List.Visible = false
+			if DropdownSettings.CurrentOption then
+				if type(DropdownSettings.CurrentOption) == "string" then
+					DropdownSettings.CurrentOption = {DropdownSettings.CurrentOption}
+				end
+				if not DropdownSettings.MultipleOptions and type(DropdownSettings.CurrentOption) == "table" then
+					DropdownSettings.CurrentOption = {DropdownSettings.CurrentOption[1]}
+				end
+			else
+				DropdownSettings.CurrentOption = {}
+			end
+
+			if DropdownSettings.MultipleOptions then
+				if DropdownSettings.CurrentOption and type(DropdownSettings.CurrentOption) == "table" then
+					if #DropdownSettings.CurrentOption == 1 then
+						Dropdown.Selected.Text = DropdownSettings.CurrentOption[1]
+					elseif #DropdownSettings.CurrentOption == 0 then
+						Dropdown.Selected.Text = "None"
+					else
+						Dropdown.Selected.Text = "Various"
+					end
+				else
+					DropdownSettings.CurrentOption = {}
+					Dropdown.Selected.Text = "None"
+				end
+			else
+				Dropdown.Selected.Text = DropdownSettings.CurrentOption[1] or "None"
+			end
+
+
+			Dropdown.BackgroundTransparency = 1
+			Dropdown.UIStroke.Transparency = 1
+			Dropdown.Title.TextTransparency = 1
+
+			Dropdown.Size = UDim2.new(1, -10, 0, 45)
+
+			TweenService:Create(Dropdown, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
+			TweenService:Create(Dropdown.UIStroke, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
+			TweenService:Create(Dropdown.Title, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()	
+
+			for _, ununusedoption in ipairs(Dropdown.List:GetChildren()) do
+				if ununusedoption.ClassName == "Frame" and ununusedoption.Name ~= "Placeholder" then
+					ununusedoption:Destroy()
+				end
+			end
+
+			Dropdown.Toggle.Rotation = 180
+
+			Dropdown.Interact.MouseButton1Click:Connect(function()
+				TweenService:Create(Dropdown, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackgroundHover}):Play()
+				TweenService:Create(Dropdown.UIStroke, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
+				task.wait(0.1)
+				TweenService:Create(Dropdown, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
+				TweenService:Create(Dropdown.UIStroke, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
+				if Debounce then return end
+				if Dropdown.List.Visible then
+					Debounce = true
+					TweenService:Create(Dropdown, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Size = UDim2.new(1, -10, 0, 45)}):Play()
+					for _, DropdownOpt in ipairs(Dropdown.List:GetChildren()) do
+						if DropdownOpt.ClassName == "Frame" and DropdownOpt.Name ~= "Placeholder" then
+							TweenService:Create(DropdownOpt, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
+							TweenService:Create(DropdownOpt.UIStroke, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
+							TweenService:Create(DropdownOpt.Title, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+						end
+					end
+					TweenService:Create(Dropdown.List, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ScrollBarImageTransparency = 1}):Play()
+					TweenService:Create(Dropdown.Toggle, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {Rotation = 180}):Play()	
+					task.wait(0.35)
+					Dropdown.List.Visible = false
+					Debounce = false
+				else
+					TweenService:Create(Dropdown, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Size = UDim2.new(1, -10, 0, 180)}):Play()
+					Dropdown.List.Visible = true
+					TweenService:Create(Dropdown.List, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ScrollBarImageTransparency = 0.7}):Play()
+					TweenService:Create(Dropdown.Toggle, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {Rotation = 0}):Play()	
+					for _, DropdownOpt in ipairs(Dropdown.List:GetChildren()) do
+						if DropdownOpt.ClassName == "Frame" and DropdownOpt.Name ~= "Placeholder" then
+							TweenService:Create(DropdownOpt, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
+							TweenService:Create(DropdownOpt.UIStroke, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
+							TweenService:Create(DropdownOpt.Title, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
+						end
+					end
+				end
+			end)
+
+			Dropdown.MouseEnter:Connect(function()
+				if not Dropdown.List.Visible then
+					TweenService:Create(Dropdown, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackgroundHover}):Play()
+				end
+			end)
+
+			Dropdown.MouseLeave:Connect(function()
+				TweenService:Create(Dropdown, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
+			end)
+
+			local function SetDropdownOptions()
+				for _, Option in ipairs(DropdownSettings.Options) do
+					local DropdownOption = Elements.Template.Dropdown.List.Template:Clone()
+					DropdownOption.Name = Option
+					DropdownOption.Title.Text = Option
+					DropdownOption.Parent = Dropdown.List
+					DropdownOption.Visible = true
+
+					if DropdownSettings.CurrentOption == Option then
+						DropdownOption.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+					end
+
+					DropdownOption.BackgroundTransparency = 1
+					DropdownOption.UIStroke.Transparency = 1
+					DropdownOption.Title.TextTransparency = 1
+
+					--local Dropdown = Tab:CreateDropdown({
+					--	Name = "Dropdown Example",
+					--	Options = {"Option 1","Option 2"},
+					--	CurrentOption = {"Option 1"},
+					--  MultipleOptions = true,
+					--	Flag = "Dropdown1",
+					--	Callback = function(TableOfOptions)
+
+					--	end,
+					--})
+
+
+					DropdownOption.Interact.ZIndex = 50
+					DropdownOption.Interact.MouseButton1Click:Connect(function()
+						if not DropdownSettings.MultipleOptions and table.find(DropdownSettings.CurrentOption, Option) then 
+							return
+						end
+
+						if table.find(DropdownSettings.CurrentOption, Option) then
+							table.remove(DropdownSettings.CurrentOption, table.find(DropdownSettings.CurrentOption, Option))
+							if DropdownSettings.MultipleOptions then
+								if #DropdownSettings.CurrentOption == 1 then
+									Dropdown.Selected.Text = DropdownSettings.CurrentOption[1]
+								elseif #DropdownSettings.CurrentOption == 0 then
+									Dropdown.Selected.Text = "None"
+								else
+									Dropdown.Selected.Text = "Various"
+								end
+							else
+								Dropdown.Selected.Text = DropdownSettings.CurrentOption[1]
+							end
+						else
+							if not DropdownSettings.MultipleOptions then
+								table.clear(DropdownSettings.CurrentOption)
+							end
+							table.insert(DropdownSettings.CurrentOption, Option)
+							if DropdownSettings.MultipleOptions then
+								if #DropdownSettings.CurrentOption == 1 then
+									Dropdown.Selected.Text = DropdownSettings.CurrentOption[1]
+								elseif #DropdownSettings.CurrentOption == 0 then
+									Dropdown.Selected.Text = "None"
+								else
+									Dropdown.Selected.Text = "Various"
+								end
+							else
+								Dropdown.Selected.Text = DropdownSettings.CurrentOption[1]
+							end
+							TweenService:Create(DropdownOption.UIStroke, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
+							TweenService:Create(DropdownOption, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundColor3 = Color3.fromRGB(40, 40, 40)}):Play()
+							Debounce = true
+							task.wait(0.2)
+							TweenService:Create(DropdownOption.UIStroke, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
+						end
+
+
+						local Success, Response = pcall(function()
+							DropdownSettings.Callback(DropdownSettings.CurrentOption)
+						end)
+
+						if not Success then
+							TweenService:Create(Dropdown, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = Color3.fromRGB(85, 0, 0)}):Play()
+							TweenService:Create(Dropdown.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
+							Dropdown.Title.Text = "Callback Error"
+							print("Rayfield | "..DropdownSettings.Name.." Callback Error " ..tostring(Response))
+							warn('Check docs.sirius.menu for help with Rayfield specific development.')
+							task.wait(0.5)
+							Dropdown.Title.Text = DropdownSettings.Name
+							TweenService:Create(Dropdown, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
+							TweenService:Create(Dropdown.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
+						end
+
+						for _, droption in ipairs(Dropdown.List:GetChildren()) do
+							if droption.ClassName == "Frame" and droption.Name ~= "Placeholder" and not table.find(DropdownSettings.CurrentOption, droption.Name) then
+								TweenService:Create(droption, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundColor3 = Color3.fromRGB(30, 30, 30)}):Play()
+							end
+						end
+						if not DropdownSettings.MultipleOptions then
+							task.wait(0.1)
+							TweenService:Create(Dropdown, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Size = UDim2.new(1, -10, 0, 45)}):Play()
+							for _, DropdownOpt in ipairs(Dropdown.List:GetChildren()) do
+								if DropdownOpt.ClassName == "Frame" and DropdownOpt.Name ~= "Placeholder" then
+									TweenService:Create(DropdownOpt, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
+									TweenService:Create(DropdownOpt.UIStroke, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
+									TweenService:Create(DropdownOpt.Title, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+								end
+							end
+							TweenService:Create(Dropdown.List, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ScrollBarImageTransparency = 1}):Play()
+							TweenService:Create(Dropdown.Toggle, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {Rotation = 180}):Play()	
+							task.wait(0.35)
+							Dropdown.List.Visible = false
+						end
+						Debounce = false
+						SaveConfiguration()
+					end)
+				end
+			end
+			SetDropdownOptions()
+
+			for _, droption in ipairs(Dropdown.List:GetChildren()) do
+				if droption.ClassName == "Frame" and droption.Name ~= "Placeholder" then
+					if not table.find(DropdownSettings.CurrentOption, droption.Name) then
+						droption.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+					else
+						droption.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+					end
+				end
+			end
+
+			function DropdownSettings:Set(NewOption)
+				DropdownSettings.CurrentOption = NewOption
+
+				if typeof(DropdownSettings.CurrentOption) == "string" then
+					DropdownSettings.CurrentOption = {DropdownSettings.CurrentOption}
+				end
+
+				if not DropdownSettings.MultipleOptions then
+					DropdownSettings.CurrentOption = {DropdownSettings.CurrentOption[1]}
+				end
+
+				if DropdownSettings.MultipleOptions then
+					if #DropdownSettings.CurrentOption == 1 then
+						Dropdown.Selected.Text = DropdownSettings.CurrentOption[1]
+					elseif #DropdownSettings.CurrentOption == 0 then
+						Dropdown.Selected.Text = "None"
+					else
+						Dropdown.Selected.Text = "Various"
+					end
+				else
+					Dropdown.Selected.Text = DropdownSettings.CurrentOption[1]
+				end
+
+
+				local Success, Response = pcall(function()
+					DropdownSettings.Callback(NewOption)
+				end)
+				if not Success then
+					TweenService:Create(Dropdown, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = Color3.fromRGB(85, 0, 0)}):Play()
+					TweenService:Create(Dropdown.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
+					Dropdown.Title.Text = "Callback Error"
+					print("Rayfield | "..DropdownSettings.Name.." Callback Error " ..tostring(Response))
+					warn('Check docs.sirius.menu for help with Rayfield specific development.')
+					task.wait(0.5)
+					Dropdown.Title.Text = DropdownSettings.Name
+					TweenService:Create(Dropdown, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
+					TweenService:Create(Dropdown.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
+				end
+
+				for _, droption in ipairs(Dropdown.List:GetChildren()) do
+					if droption.ClassName == "Frame" and droption.Name ~= "Placeholder" then
+						if not table.find(DropdownSettings.CurrentOption, droption.Name) then
+							droption.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+						else
+							droption.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+						end
+					end
+				end
+				--SaveConfiguration()
+			end
+
+			function DropdownSettings:Refresh(optionsTable: table) -- updates a dropdown with new options from optionsTable
+				DropdownSettings.Options = optionsTable
+				for _, option in Dropdown.List:GetChildren() do
+					if option.ClassName == "Frame" and option.Name ~= "Placeholder" then
+						option:Destroy()
+					end
+				end
+				SetDropdownOptions()
+			end
+
+			if Settings.ConfigurationSaving then
+				if Settings.ConfigurationSaving.Enabled and DropdownSettings.Flag then
+					RayfieldLibrary.Flags[DropdownSettings.Flag] = DropdownSettings
+				end
+			end
+
+			return DropdownSettings
+		end
+
+		-- Keybind
+		function Tab:CreateKeybind(KeybindSettings)
+			local CheckingForKey = false
+			local Keybind = Elements.Template.Keybind:Clone()
+			Keybind.Name = KeybindSettings.Name
+			Keybind.Title.Text = KeybindSettings.Name
+			Keybind.Visible = true
+			Keybind.Parent = TabPage
+
+			Keybind.BackgroundTransparency = 1
+			Keybind.UIStroke.Transparency = 1
+			Keybind.Title.TextTransparency = 1
+
+			Keybind.KeybindFrame.BackgroundColor3 = SelectedTheme.InputBackground
+			Keybind.KeybindFrame.UIStroke.Color = SelectedTheme.InputStroke
+
+			TweenService:Create(Keybind, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
+			TweenService:Create(Keybind.UIStroke, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
+			TweenService:Create(Keybind.Title, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()	
+
+			Keybind.KeybindFrame.KeybindBox.Text = KeybindSettings.CurrentKeybind
+			Keybind.KeybindFrame.Size = UDim2.new(0, Keybind.KeybindFrame.KeybindBox.TextBounds.X + 24, 0, 30)
+
+			Keybind.KeybindFrame.KeybindBox.Focused:Connect(function()
+				CheckingForKey = true
+				Keybind.KeybindFrame.KeybindBox.Text = ""
+			end)
+			Keybind.KeybindFrame.KeybindBox.FocusLost:Connect(function()
+				CheckingForKey = false
+				if Keybind.KeybindFrame.KeybindBox.Text == nil or "" then
+					Keybind.KeybindFrame.KeybindBox.Text = KeybindSettings.CurrentKeybind
+					SaveConfiguration()
+				end
+			end)
+
+			Keybind.MouseEnter:Connect(function()
+				TweenService:Create(Keybind, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackgroundHover}):Play()
+			end)
+
+			Keybind.MouseLeave:Connect(function()
+				TweenService:Create(Keybind, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
+			end)
+
+			UserInputService.InputBegan:Connect(function(input, processed)
+
+				if CheckingForKey then
+					if input.KeyCode ~= Enum.KeyCode.Unknown and input.KeyCode ~= Enum.KeyCode.M then
+						local SplitMessage = string.split(tostring(input.KeyCode), ".")
+						local NewKeyNoEnum = SplitMessage[3]
+						Keybind.KeybindFrame.KeybindBox.Text = tostring(NewKeyNoEnum)
+						KeybindSettings.CurrentKeybind = tostring(NewKeyNoEnum)
+						Keybind.KeybindFrame.KeybindBox:ReleaseFocus()
+						SaveConfiguration()
+					end
+				elseif KeybindSettings.CurrentKeybind ~= nil and (input.KeyCode == Enum.KeyCode[KeybindSettings.CurrentKeybind] and not processed) then -- Test
+					local Held = true
+					local Connection
+					Connection = input.Changed:Connect(function(prop)
+						if prop == "UserInputState" then
+							Connection:Disconnect()
+							Held = false
+						end
+					end)
+
+					if not KeybindSettings.HoldToInteract then
+						local Success, Response = pcall(KeybindSettings.Callback)
+						if not Success then
+							TweenService:Create(Keybind, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = Color3.fromRGB(85, 0, 0)}):Play()
+							TweenService:Create(Keybind.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
+							Keybind.Title.Text = "Callback Error"
+							print("Rayfield | "..KeybindSettings.Name.." Callback Error " ..tostring(Response))
+							warn('Check docs.sirius.menu for help with Rayfield specific development.')
+							task.wait(0.5)
+							Keybind.Title.Text = KeybindSettings.Name
+							TweenService:Create(Keybind, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
+							TweenService:Create(Keybind.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
+						end
+					else
+						task.wait(0.25)
+						if Held then
+							local Loop; Loop = RunService.Stepped:Connect(function()
+								if not Held then
+									KeybindSettings.Callback(false) -- maybe pcall this
+									Loop:Disconnect()
+								else
+									KeybindSettings.Callback(true) -- maybe pcall this
+								end
+							end)
+						end
+					end
+				end
+			end)
+
+			Keybind.KeybindFrame.KeybindBox:GetPropertyChangedSignal("Text"):Connect(function()
+				TweenService:Create(Keybind.KeybindFrame, TweenInfo.new(0.55, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Size = UDim2.new(0, Keybind.KeybindFrame.KeybindBox.TextBounds.X + 24, 0, 30)}):Play()
+			end)
+
+			function KeybindSettings:Set(NewKeybind)
+				Keybind.KeybindFrame.KeybindBox.Text = tostring(NewKeybind)
+				KeybindSettings.CurrentKeybind = tostring(NewKeybind)
+				Keybind.KeybindFrame.KeybindBox:ReleaseFocus()
+				SaveConfiguration()
+			end
+			if Settings.ConfigurationSaving then
+				if Settings.ConfigurationSaving.Enabled and KeybindSettings.Flag then
+					RayfieldLibrary.Flags[KeybindSettings.Flag] = KeybindSettings
+				end
+			end
+			return KeybindSettings
+		end
+
+		-- Toggle
+		function Tab:CreateToggle(ToggleSettings)
+			local ToggleValue = {}
+
+			local Toggle = Elements.Template.Toggle:Clone()
+			Toggle.Name = ToggleSettings.Name
+			Toggle.Title.Text = ToggleSettings.Name
+			Toggle.Visible = true
+			Toggle.Parent = TabPage
+
+			Toggle.BackgroundTransparency = 1
+			Toggle.UIStroke.Transparency = 1
+			Toggle.Title.TextTransparency = 1
+			Toggle.Switch.BackgroundColor3 = SelectedTheme.ToggleBackground
+
+			if SelectedTheme ~= RayfieldLibrary.Theme.Default then
+				Toggle.Switch.Shadow.Visible = false
+			end
+
+			TweenService:Create(Toggle, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
+			TweenService:Create(Toggle.UIStroke, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
+			TweenService:Create(Toggle.Title, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()	
+
+			if not ToggleSettings.CurrentValue then
+				Toggle.Switch.Indicator.Position = UDim2.new(1, -40, 0.5, 0)
+				Toggle.Switch.Indicator.UIStroke.Color = SelectedTheme.ToggleDisabledStroke
+				Toggle.Switch.Indicator.BackgroundColor3 = SelectedTheme.ToggleDisabled
+				Toggle.Switch.UIStroke.Color = SelectedTheme.ToggleDisabledOuterStroke
+			else
+				Toggle.Switch.Indicator.Position = UDim2.new(1, -20, 0.5, 0)
+				Toggle.Switch.Indicator.UIStroke.Color = SelectedTheme.ToggleEnabledStroke
+				Toggle.Switch.Indicator.BackgroundColor3 = SelectedTheme.ToggleEnabled
+				Toggle.Switch.UIStroke.Color = SelectedTheme.ToggleEnabledOuterStroke
+			end
+
+			Toggle.MouseEnter:Connect(function()
+				TweenService:Create(Toggle, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackgroundHover}):Play()
+			end)
+
+			Toggle.MouseLeave:Connect(function()
+				TweenService:Create(Toggle, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
+			end)
+
+			Toggle.Interact.MouseButton1Click:Connect(function()
+				if ToggleSettings.CurrentValue then
+					ToggleSettings.CurrentValue = false
+					TweenService:Create(Toggle, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackgroundHover}):Play()
+					TweenService:Create(Toggle.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
+					TweenService:Create(Toggle.Switch.Indicator, TweenInfo.new(0.45, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Position = UDim2.new(1, -40, 0.5, 0)}):Play()
+					TweenService:Create(Toggle.Switch.Indicator, TweenInfo.new(0.4, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2.new(0,12,0,12)}):Play()
+					TweenService:Create(Toggle.Switch.Indicator.UIStroke, TweenInfo.new(0.55, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Color = SelectedTheme.ToggleDisabledStroke}):Play()
+					TweenService:Create(Toggle.Switch.Indicator, TweenInfo.new(0.8, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = SelectedTheme.ToggleDisabled}):Play()
+					TweenService:Create(Toggle.Switch.UIStroke, TweenInfo.new(0.55, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Color = SelectedTheme.ToggleDisabledOuterStroke}):Play()
+					task.wait(0.05)
+					TweenService:Create(Toggle.Switch.Indicator, TweenInfo.new(0.4, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2.new(0,17,0,17)}):Play()
+					task.wait(0.15)
+					TweenService:Create(Toggle, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
+					TweenService:Create(Toggle.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 0}):Play()	
+				else
+					ToggleSettings.CurrentValue = true
+					TweenService:Create(Toggle, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackgroundHover}):Play()
+					TweenService:Create(Toggle.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
+					TweenService:Create(Toggle.Switch.Indicator, TweenInfo.new(0.5, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Position = UDim2.new(1, -20, 0.5, 0)}):Play()
+					TweenService:Create(Toggle.Switch.Indicator, TweenInfo.new(0.4, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2.new(0,12,0,12)}):Play()
+					TweenService:Create(Toggle.Switch.Indicator.UIStroke, TweenInfo.new(0.55, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Color = SelectedTheme.ToggleEnabledStroke}):Play()
+					TweenService:Create(Toggle.Switch.Indicator, TweenInfo.new(0.8, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = SelectedTheme.ToggleEnabled}):Play()
+					TweenService:Create(Toggle.Switch.UIStroke, TweenInfo.new(0.55, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Color = SelectedTheme.ToggleEnabledOuterStroke}):Play()
+					task.wait(0.05)
+					TweenService:Create(Toggle.Switch.Indicator, TweenInfo.new(0.45, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2.new(0,17,0,17)}):Play()	
+					task.wait(0.15)
+					TweenService:Create(Toggle, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
+					TweenService:Create(Toggle.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 0}):Play()		
+				end
+
+				local Success, Response = pcall(function()
+					ToggleSettings.Callback(ToggleSettings.CurrentValue)
+				end)
+				if not Success then
+					TweenService:Create(Toggle, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = Color3.fromRGB(85, 0, 0)}):Play()
+					TweenService:Create(Toggle.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
+					Toggle.Title.Text = "Callback Error"
+					print("Rayfield | "..ToggleSettings.Name.." Callback Error " ..tostring(Response))
+					warn('Check docs.sirius.menu for help with Rayfield specific development.')
+					task.wait(0.5)
+					Toggle.Title.Text = ToggleSettings.Name
+					TweenService:Create(Toggle, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
+					TweenService:Create(Toggle.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
+				end
+
+
+				SaveConfiguration()
+			end)
+
+			function ToggleSettings:Set(NewToggleValue)
+				if NewToggleValue then
+					ToggleSettings.CurrentValue = true
+					TweenService:Create(Toggle, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackgroundHover}):Play()
+					TweenService:Create(Toggle.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
+					TweenService:Create(Toggle.Switch.Indicator, TweenInfo.new(0.5, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Position = UDim2.new(1, -20, 0.5, 0)}):Play()
+					TweenService:Create(Toggle.Switch.Indicator, TweenInfo.new(0.4, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2.new(0,12,0,12)}):Play()
+					TweenService:Create(Toggle.Switch.Indicator.UIStroke, TweenInfo.new(0.55, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Color = SelectedTheme.ToggleEnabledStroke}):Play()
+					TweenService:Create(Toggle.Switch.Indicator, TweenInfo.new(0.8, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = SelectedTheme.ToggleEnabled}):Play()
+					TweenService:Create(Toggle.Switch.UIStroke, TweenInfo.new(0.55, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Color = Color3.fromRGB(100,100,100)}):Play()
+					task.wait(0.05)
+					TweenService:Create(Toggle.Switch.Indicator, TweenInfo.new(0.45, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2.new(0,17,0,17)}):Play()	
+					task.wait(0.15)
+					TweenService:Create(Toggle, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
+					TweenService:Create(Toggle.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 0}):Play()	
+				else
+					ToggleSettings.CurrentValue = false
+					TweenService:Create(Toggle, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackgroundHover}):Play()
+					TweenService:Create(Toggle.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
+					TweenService:Create(Toggle.Switch.Indicator, TweenInfo.new(0.45, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Position = UDim2.new(1, -40, 0.5, 0)}):Play()
+					TweenService:Create(Toggle.Switch.Indicator, TweenInfo.new(0.4, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2.new(0,12,0,12)}):Play()
+					TweenService:Create(Toggle.Switch.Indicator.UIStroke, TweenInfo.new(0.55, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Color = SelectedTheme.ToggleDisabledStroke}):Play()
+					TweenService:Create(Toggle.Switch.Indicator, TweenInfo.new(0.8, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = SelectedTheme.ToggleDisabled}):Play()
+					TweenService:Create(Toggle.Switch.UIStroke, TweenInfo.new(0.55, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Color = Color3.fromRGB(65,65,65)}):Play()
+					task.wait(0.05)
+					TweenService:Create(Toggle.Switch.Indicator, TweenInfo.new(0.4, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2.new(0,17,0,17)}):Play()
+					task.wait(0.15)
+					TweenService:Create(Toggle, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
+					TweenService:Create(Toggle.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 0}):Play()	
+				end
+				local Success, Response = pcall(function()
+					ToggleSettings.Callback(ToggleSettings.CurrentValue)
+				end)
+				if not Success then
+					TweenService:Create(Toggle, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = Color3.fromRGB(85, 0, 0)}):Play()
+					TweenService:Create(Toggle.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
+					Toggle.Title.Text = "Callback Error"
+					print("Rayfield | "..ToggleSettings.Name.." Callback Error " ..tostring(Response))
+					warn('Check docs.sirius.menu for help with Rayfield specific development.')
+					task.wait(0.5)
+					Toggle.Title.Text = ToggleSettings.Name
+					TweenService:Create(Toggle, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
+					TweenService:Create(Toggle.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
+				end
+				SaveConfiguration()
+			end
+
+			if Settings.ConfigurationSaving then
+				if Settings.ConfigurationSaving.Enabled and ToggleSettings.Flag then
+					RayfieldLibrary.Flags[ToggleSettings.Flag] = ToggleSettings
+				end
+			end
+
+			return ToggleSettings
+		end
+
+		-- Slider
+		function Tab:CreateSlider(SliderSettings)
+			local Dragging = false
+			local Slider = Elements.Template.Slider:Clone()
+			Slider.Name = SliderSettings.Name
+			Slider.Title.Text = SliderSettings.Name
+			Slider.Visible = true
+			Slider.Parent = TabPage
+
+			Slider.BackgroundTransparency = 1
+			Slider.UIStroke.Transparency = 1
+			Slider.Title.TextTransparency = 1
+
+			if SelectedTheme ~= RayfieldLibrary.Theme.Default then
+				Slider.Main.Shadow.Visible = false
+			end
+
+			Slider.Main.BackgroundColor3 = SelectedTheme.SliderBackground
+			Slider.Main.UIStroke.Color = SelectedTheme.SliderStroke
+			Slider.Main.Progress.BackgroundColor3 = SelectedTheme.SliderProgress
+
+			TweenService:Create(Slider, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
+			TweenService:Create(Slider.UIStroke, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
+			TweenService:Create(Slider.Title, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()	
+
+			Slider.Main.Progress.Size =	UDim2.new(0, Slider.Main.AbsoluteSize.X * ((SliderSettings.CurrentValue + SliderSettings.Range[1]) / (SliderSettings.Range[2] - SliderSettings.Range[1])) > 5 and Slider.Main.AbsoluteSize.X * (SliderSettings.CurrentValue / (SliderSettings.Range[2] - SliderSettings.Range[1])) or 5, 1, 0)
+
+			if not SliderSettings.Suffix then
+				Slider.Main.Information.Text = tostring(SliderSettings.CurrentValue)
+			else
+				Slider.Main.Information.Text = tostring(SliderSettings.CurrentValue) .. " " .. SliderSettings.Suffix
+			end
+
+
+			Slider.MouseEnter:Connect(function()
+				TweenService:Create(Slider, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackgroundHover}):Play()
+			end)
+
+			Slider.MouseLeave:Connect(function()
+				TweenService:Create(Slider, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
+			end)
+
+			Slider.Main.Interact.InputBegan:Connect(function(Input)
+				if Input.UserInputType == Enum.UserInputType.MouseButton1 or Input.UserInputType == Enum.UserInputType.Touch then 
+					Dragging = true 
+				end 
+			end)
+			Slider.Main.Interact.InputEnded:Connect(function(Input) 
+				if Input.UserInputType == Enum.UserInputType.MouseButton1 or Input.UserInputType == Enum.UserInputType.Touch then 
+					Dragging = false 
+				end 
+			end)
+
+			Slider.Main.Interact.MouseButton1Down:Connect(function(X)
+				local Current = Slider.Main.Progress.AbsolutePosition.X + Slider.Main.Progress.AbsoluteSize.X
+				local Start = Current
+				local Location = X
+				local Loop; Loop = RunService.Stepped:Connect(function()
+					if Dragging then
+						Location = UserInputService:GetMouseLocation().X
+						Current = Current + 0.025 * (Location - Start)
+
+						if Location < Slider.Main.AbsolutePosition.X then
+							Location = Slider.Main.AbsolutePosition.X
+						elseif Location > Slider.Main.AbsolutePosition.X + Slider.Main.AbsoluteSize.X then
+							Location = Slider.Main.AbsolutePosition.X + Slider.Main.AbsoluteSize.X
+						end
+
+						if Current < Slider.Main.AbsolutePosition.X + 5 then
+							Current = Slider.Main.AbsolutePosition.X + 5
+						elseif Current > Slider.Main.AbsolutePosition.X + Slider.Main.AbsoluteSize.X then
+							Current = Slider.Main.AbsolutePosition.X + Slider.Main.AbsoluteSize.X
+						end
+
+						if Current <= Location and (Location - Start) < 0 then
+							Start = Location
+						elseif Current >= Location and (Location - Start) > 0 then
+							Start = Location
+						end
+						TweenService:Create(Slider.Main.Progress, TweenInfo.new(0.45, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Size = UDim2.new(0, Current - Slider.Main.AbsolutePosition.X, 1, 0)}):Play()
+						local NewValue = SliderSettings.Range[1] + (Location - Slider.Main.AbsolutePosition.X) / Slider.Main.AbsoluteSize.X * (SliderSettings.Range[2] - SliderSettings.Range[1])
+
+						NewValue = math.floor(NewValue / SliderSettings.Increment + 0.5) * (SliderSettings.Increment * 10000000) / 10000000
+						if not SliderSettings.Suffix then
+							Slider.Main.Information.Text = tostring(NewValue)
+						else
+							Slider.Main.Information.Text = tostring(NewValue) .. " " .. SliderSettings.Suffix
+						end
+
+						if SliderSettings.CurrentValue ~= NewValue then
+							local Success, Response = pcall(function()
+								SliderSettings.Callback(NewValue)
+							end)
+							if not Success then
+								TweenService:Create(Slider, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = Color3.fromRGB(85, 0, 0)}):Play()
+								TweenService:Create(Slider.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
+								Slider.Title.Text = "Callback Error"
+								print("Rayfield | "..SliderSettings.Name.." Callback Error " ..tostring(Response))
+								warn('Check docs.sirius.menu for help with Rayfield specific development.')
+								task.wait(0.5)
+								Slider.Title.Text = SliderSettings.Name
+								TweenService:Create(Slider, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
+								TweenService:Create(Slider.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
+							end
+
+							SliderSettings.CurrentValue = NewValue
+							SaveConfiguration()
+						end
+					else
+						TweenService:Create(Slider.Main.Progress, TweenInfo.new(0.3, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Size = UDim2.new(0, Location - Slider.Main.AbsolutePosition.X > 5 and Location - Slider.Main.AbsolutePosition.X or 5, 1, 0)}):Play()
+						Loop:Disconnect()
+					end
+				end)
+			end)
+
+			function SliderSettings:Set(NewVal)
+				TweenService:Create(Slider.Main.Progress, TweenInfo.new(0.45, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Size = UDim2.new(0, Slider.Main.AbsoluteSize.X * ((NewVal + SliderSettings.Range[1]) / (SliderSettings.Range[2] - SliderSettings.Range[1])) > 5 and Slider.Main.AbsoluteSize.X * (NewVal / (SliderSettings.Range[2] - SliderSettings.Range[1])) or 5, 1, 0)}):Play()
+				Slider.Main.Information.Text = tostring(NewVal) .. " " .. (SliderSettings.Suffix or "")
+				local Success, Response = pcall(function()
+					SliderSettings.Callback(NewVal)
+				end)
+				if not Success then
+					TweenService:Create(Slider, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = Color3.fromRGB(85, 0, 0)}):Play()
+					TweenService:Create(Slider.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
+					Slider.Title.Text = "Callback Error"
+					print("Rayfield | "..SliderSettings.Name.." Callback Error " ..tostring(Response))
+					warn('Check docs.sirius.menu for help with Rayfield specific development.')
+					task.wait(0.5)
+					Slider.Title.Text = SliderSettings.Name
+					TweenService:Create(Slider, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
+					TweenService:Create(Slider.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
+				end
+				SliderSettings.CurrentValue = NewVal
+				SaveConfiguration()
+			end
+			if Settings.ConfigurationSaving then
+				if Settings.ConfigurationSaving.Enabled and SliderSettings.Flag then
+					RayfieldLibrary.Flags[SliderSettings.Flag] = SliderSettings
+				end
+			end
+			return SliderSettings
+		end
+
+
+		return Tab
+	end
+
+	Elements.Visible = true
+
+	task.wait(0.7)
+	TweenService:Create(LoadingFrame.Title, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+	TweenService:Create(LoadingFrame.Subtitle, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+	TweenService:Create(LoadingFrame.Version, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+	task.wait(0.2)
+	TweenService:Create(Main, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {Size = useMobileSizing and UDim2.new(0, 500, 0, 360) or UDim2.new(0, 500, 0, 475)}):Play()
+	TweenService:Create(Main.Shadow.Image, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {ImageTransparency = 0.4}):Play()
+
+	Topbar.BackgroundTransparency = 1
+	Topbar.Divider.Size = UDim2.new(0, 0, 0, 1)
+	Topbar.CornerRepair.BackgroundTransparency = 1
+	Topbar.Title.TextTransparency = 1
+	Topbar.Theme.ImageTransparency = 1
+	Topbar.ChangeSize.ImageTransparency = 1
+	Topbar.Hide.ImageTransparency = 1
+
+	task.wait(0.5)
+	Topbar.Visible = true
+	TweenService:Create(Topbar, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
+	TweenService:Create(Topbar.CornerRepair, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
+	task.wait(0.1)
+	TweenService:Create(Topbar.Divider, TweenInfo.new(1, Enum.EasingStyle.Quint), {Size = UDim2.new(1, 0, 0, 1)}):Play()
+	task.wait(0.1)
+	TweenService:Create(Topbar.Title, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
+	task.wait(0.1)
+	TweenService:Create(Topbar.Theme, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {ImageTransparency = 0.8}):Play()
+	task.wait(0.1)
+	TweenService:Create(Topbar.ChangeSize, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {ImageTransparency = 0.8}):Play()
+	task.wait(0.1)
+	TweenService:Create(Topbar.Hide, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {ImageTransparency = 0.8}):Play()
+	task.wait(0.3)
+
+	return Window
+end
+
+local function setVisibility(visibility: boolean, notify: boolean?)
+	if Debounce then return end
+	if visibility then
+		Hidden = false
+		Unhide()
+	else
+		Hidden = true
+		Hide(notify)
+	end
+end
+
+function RayfieldLibrary:SetVisibility(visibility: boolean)
+	setVisibility(visibility, false)
+end
+
+function RayfieldLibrary:IsVisible(): boolean
+	return not Hidden
+end
+
+function RayfieldLibrary:Destroy()
+	Rayfield:Destroy()
+end
+
+Topbar.ChangeSize.MouseButton1Click:Connect(function()
+	if Debounce then return end
+	if Minimised then
+		Minimised = false
+		Maximise()
+	else
+		Minimised = true
+		Minimise()
+	end
+end)
+
+Topbar.Hide.MouseButton1Click:Connect(function()
+	setVisibility(Hidden, true)
+end)
+
+UserInputService.InputBegan:Connect(function(input, processed)
+	if (input.KeyCode == Enum.KeyCode.M and not processed) then
+		if Debounce then return end
+		if Hidden then
+			Hidden = false
+			Unhide()
+		else
+			Hidden = true
+			Hide()
+		end
+	end
+end)
+
+for _, TopbarButton in ipairs(Topbar:GetChildren()) do
+	if TopbarButton.ClassName == "ImageButton" then
+		TopbarButton.MouseEnter:Connect(function()
+			TweenService:Create(TopbarButton, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {ImageTransparency = 0}):Play()
+		end)
+
+		TopbarButton.MouseLeave:Connect(function()
+			TweenService:Create(TopbarButton, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {ImageTransparency = 0.8}):Play()
+		end)
+
+		TopbarButton.MouseButton1Click:Connect(function()
+			TweenService:Create(TopbarButton, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {ImageTransparency = 0.8}):Play()
+		end)
+	end
+end
+
+
+function RayfieldLibrary:LoadConfiguration()
+	if CEnabled then
+		pcall(function()
+			if isfile(ConfigurationFolder .. "/" .. CFileName .. ConfigurationExtension) then
+				LoadConfiguration(readfile(ConfigurationFolder .. "/" .. CFileName .. ConfigurationExtension))
+				RayfieldLibrary:Notify({Title = "Configuration Loaded", Content = "The configuration file for this script has been loaded from a previous session."})
+			end
+		end)
+	end
+end
+
+task.delay(3.5, RayfieldLibrary.LoadConfiguration, RayfieldLibrary)
+
+return RayfieldLibrary
