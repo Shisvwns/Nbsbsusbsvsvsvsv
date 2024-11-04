@@ -3925,6 +3925,7 @@ for i, v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
     end
 end
 
+--[[
 local CheckBossSpawn = Farm:AddParagraph("Status Boss")
 for i, BossName in ipairs(BossCheck) do
     spawn(function()
@@ -3940,6 +3941,7 @@ for i, BossName in ipairs(BossCheck) do
         end
     end)
 end
+]]
 
 local BossName = Farm:AddDropdown({
 	Name = "Select Farm Boss Mode",
