@@ -2409,7 +2409,7 @@ spawn(function()
                     if _G.FarmFast and StartBring then
                         if v.Name == "Shanda" and (v.HumanoidRootPart.Position - PosMon.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = PosMon
-                            local CframeTarget = LocalPlayer.Character.HumanoidRootPart.Cframe
+                            local CframeTarget = game:GetService("PLayers").LocalPlayer.Character.HumanoidRootPart.Cframe
                             local MoveTween = game:GetService("TweenService"):Create(Mob.HumanoiRootPart, TweenInfo.new(3), (Cframe = CframeTarget))
                             MoveTween:Play()
                             v.Humanoid:ChangeState(14)
@@ -2594,7 +2594,7 @@ spawn(function()
 				if child.Name == 'ErrorPrompt' and child:FindFirstChild('MessageArea') and child.MessageArea:FindFirstChild("ErrorFrame") then
 					game:GetService("TeleportService"):Teleport(game.PlaceId)
 				end
-			 end)
+			end)
 		end
 	end
 end)
@@ -2848,7 +2848,7 @@ spawn(function()
                 end
             end
             if _G.LevelMode == "Get Quest" and _G.FarmLevel then
-            local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
+                local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
                 if not string.find(QuestTitle, NameMon) then
                     StartMagnet = false
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
