@@ -1382,6 +1382,212 @@ function UpdateFlowerChams()
 	end
 end
 
+--= [ Equip Weapon & Un Equip Weapon ] =--
+
+function EquipWeapon(a)
+    if game.Players.LocalPlayer.Backpack:FindFirstChild(a) then
+        local a = game.Players.LocalPlayer.Backpack:FindFirstChild(a)
+        game.Players.LocalPlayer.Character.Humanoid:EquipTool(a)
+    end
+end
+
+function UnEquipWeapon(Weapon)
+    if game.Players.LocalPlayer.Character:FindFirstChild(Weapon) then
+        _G.NotAutoEquip = true
+        wait(0.3)
+        game.Players.LocalPlayer.Character:FindFirstChild(Weapon).Parent = game.Players.LocalPlayer.Backpack
+        wait(0.1)
+        _G.NotAutoEquip = false
+    end
+end
+
+--= [ Move ] =--
+
+local plrs = game.Players
+local lp = plrs.LocalPlayer
+local Workspace = game:GetService("Workspace")
+
+function GetDistance(target1, taget2)
+    if not taget2 then
+        taget2 = game.Players.LocalPlayer.Character.HumanoidRootPart
+    end
+    bbos, bbos2 = pcall(function()
+            a = target1.Position
+            a2 = taget2.Position
+    end)
+    if bbos then
+        a = target1.Position
+        a2 = taget2.Position
+        return (a - a2).Magnitude
+    end
+end
+
+NpcList = {}
+for i, v in pairs(Workspace.NPCs:GetChildren()) do 
+    if string.find(string.lower(v.Name), "home point") then
+        table.insert(NpcList, v:GetModelCFrame())
+    end
+end
+
+for i, v in pairs(getnilinstances()) do 
+    if string.find(string.lower(v.Name), "home point") then
+        table.insert(NpcList, v:GetModelCFrame())
+    end
+end
+
+local w = game.PlaceId
+if w == 2753915549 then
+    World1 = true
+    gQ = {
+        Vector3.new(-7894.6201171875, 5545.49169921875, -380.246346191406),
+        Vector3.new(-4607.82275390625, 872.5422973632812, -1667.556884765625),
+        Vector3.new(61163.8515625, 11.759522438049316, 1819.7841796875),
+        Vector3.new(3876.280517578125, 35.10614013671875, -1939.3201904296875)
+    }
+elseif w == 4442272183 then
+    World2 = true
+    gQ = {
+        Vector3.new(-288.46246337890625, 306.130615234375, 597.9988403320312),
+        Vector3.new(2284.912109375, 15.152046203613281, 905.48291015625),
+        Vector3.new(923.21252441406, 126.9760055542, 32852.83203125),
+        Vector3.new(-6508.5581054688, 89.034996032715, -132.83953857422)
+    }
+elseif w == 7449423635 then
+    World3 = true
+    gQ = {
+        Vector3.new(-5058.77490234375, 314.5155029296875, -3155.88330078125),
+        Vector3.new(5756.83740234375, 610.4240112304688, -253.9253692626953),
+        Vector3.new(-12463.8740234375, 374.9144592285156, -7523.77392578125),
+        Vector3.new(28282.5703125, 14896.8505859375, 105.1042709350586),
+        Vector3.new(-11993.580078125, 334.7812805175781, -8844.1826171875),
+        Vector3.new(5314.58203125, 25.419387817382812, -125.94227600097656)
+    }
+end
+
+function GetPortal(check2)
+    local check3 = check2.Position
+    local aM, aN = Vector3.new(0,0,0), math.huge
+    for _, aL in pairs(gQ) do
+        if (aL-check3).Magnitude < aN and aM ~= aL then
+            aM, aN = aL, (aL-check3).Magnitude
+        end
+    end
+    return aM
+end
+
+function BypassTeleport(is)
+    if lp.Character:FindFirstChild("PartTele") then
+        lp.Character.PartTele.CFrame = CFrame.new(lp.Character.PartTele.CFrame.X, lp.Character.PartTele.CFrame.Y, lp.Character.PartTele.CFrame.Z)
+        wait(0.5)
+        lp.Character.PartTele.CFrame = is
+        wait(0.1)
+        lp.Character.PrimaryPart.CFrame = is   
+        lp.Character:WaitForChild("Humanoid"):ChangeState(15)
+        wait(0.5)
+        repeat task.wait() until lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid.Health <= 0
+        repeat task.wait()
+            if lp.Character:FindFirstChild("PartTele") then
+                lp.Character.PartTele.CFrame = is  
+            end
+            if lp.Character:FindFirstChild("PrimaryPart") then
+                lp.Character.PrimaryPart.CFrame = is  
+            end
+        until lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid.Health > 0
+    end
+end
+
+function GetBypassPos(pos)
+    pos = Vector3.new(pos.X, pos.Y, pos.Z)
+    local lll, mmm = nil, math.huge
+    for i, v in pairs(NpcList) do
+        if (v.p - pos).Magnitude < mmm then
+            lll = v
+            mmm = (v.p - pos).Magnitude
+        end
+    end
+    return lll
+end
+
+function RequestEntrance(check1)
+    game.ReplicatedStorage.Remotes.CommF_:InvokeServer(unpack({"requestEntrance", check1}))
+    if lp.Character:FindFirstChild("PartTele") then
+        lp.Character.PartTele.CFrame = WaitHRP(lp).CFrame 
+    end
+    wait(0.01)
+end
+
+function WaitHRP(q0) 
+    if not q0 then return end
+    return q0.Character:WaitForChild("HumanoidRootPart", 9) 
+end
+
+function CalcDistance(I, II) 
+    if not II then 
+        II = lp.Character.PrimaryPart.CFrame 
+    end
+    return (Vector3.new(I.X, 0, I.Z)-Vector3.new(II.X, 0, II.Z)).Magnitude 
+end
+
+function topos(Pos)
+    if not Pos then
+        return
+    end 
+    if not lp.Character:FindFirstChild("PartTele") then
+        local PartTele = Instance.new("Part", lp.Character)
+        PartTele.Size = Vector3.new(0,0,0)
+        PartTele.Name = "PartTele"
+        PartTele.Anchored = true
+        PartTele.Transparency = 1
+        PartTele.CanCollide = false
+        PartTele.CFrame = WaitHRP(lp).CFrame
+        PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
+            task.wait(0.01)
+            WaitHRP(lp).CFrame = PartTele.CFrame
+        end)
+    end
+    Portal = GetPortal(Pos) 
+    Spawn = GetBypassPos(Pos) 
+    MyCFrame = WaitHRP(lp).CFrame
+    Distance = CalcDistance(MyCFrame, Pos)
+    if CalcDistance(Portal, Pos) < CalcDistance(Pos) and CalcDistance(Portal) > 500 then
+        return RequestEntrance(Portal)
+    end
+    if _G.BypassTeleport ==  then
+        if CalcDistance(Pos) - CalcDistance(Spawn, Pos) > 1000 and CalcDistance(Spawn) > 1000 then
+            return BypassTeleport(Spawn)
+        end
+    end
+    if lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid:FindFirstChild("Sit") and lp.Character.Humanoid.Sit == true then
+        lp.Character.Humanoid.Sit = false
+    end
+    _G.NoClip = true
+    Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / _G.FlySpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
+    Tween:Play()
+end
+
+spawn(function()
+    while task.wait() do
+        if lp.Character:FindFirstChild("Humanoid").Health <= 0 or not lp.Character:FindFirstChild("HumanoidRootPart") then
+            if lp.Character:FindFirstChild("TweenSmooth") then
+                lp.Character:FindFirstChild("TweenSmooth"):Destroy()
+            end
+        end
+        if (lp.Character.HumanoidRootPart.Position - lp.Character:FindFirstChild("PartTele").Position).Magnitude <= 100 then
+            if lp.Character:FindFirstChild("PartTele") then
+                lp.Character:FindFirstChild("PartTele"):Destroy()
+            end
+        end
+    end
+end)
+
+function StopTween(target)
+    if not target then
+        topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
+        _G.NoClip = false
+        _G.NoClip = false
+    end
+end
+
 --= [ Create Tab ] =--
 
 local Setting = Window:Tab({Title = "Setting", Icon = "settings"})
@@ -2047,6 +2253,20 @@ Farm:Button({
         RefeshBoss()
     end
 })
+
+function RefeshBoss()
+    BossName:Refresh(BossCheck,true)
+    local BossCheck = {}
+    for i, v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
+        if (v.Name == "rip_indra" or v.Name == "Ice Admiral")
+                or (v.Name == "Saber Expert" or v.Name == "The Saw" or v.Name == "Greybeard" or v.Name == "Mob Leader" or v.Name == "The Gorilla King" or v.Name == "Bobby" or v.Name == "Yeti" or v.Name == "Vice Admiral" or v.Name == "Warden" or v.Name == "Chief Warden" or v.Name == "Swan" or v.Name == "Magma Admiral" or v.Name == "Fishman Lord" or v.Name == "Wysper" or v.Name == "Thunder God" or v.Name == "Cyborg")
+                or (v.Name == "Don Swan" or v.Name == "Diamond" or v.Name == "Jeremy" or v.Name == "Fajita" or v.Name == "Smoke Admiral" or v.Name == "Awakened Ice Admiral" or v.Name == "Tide Keeper" or v.Name == "Order" or v.Name == "Darkbeard" or v.Name == "Cursed Captain")
+                or (v.Name == "Stone" or v.Name == "Island Empress" or v.Name == "Kilo Admiral" or v.Name == "Captain Elephant" or v.Name == "Beautiful Pirate" or v.Name == "Cake Queen" or v.Name == "rip_indra True Form" or v.Name == "Longma" or v.Name == "Soul Reaper" or v.Name == "Cake Prince" or v.Name == "Dough King") then
+            table.insert(BossCheck, v.Name)
+        end
+    end
+    BossName:Refresh(BossCheck)
+end
 
 Farm:Toggle({
     Title = "Auto Farm Boss",
