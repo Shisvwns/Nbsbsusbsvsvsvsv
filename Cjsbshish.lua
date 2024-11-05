@@ -20,8 +20,6 @@ elseif game.PlaceId == 4442272183 then
     World2 = true
 elseif game.PlaceId == 7449423635 then
     World3 = true
-else
-    game.Players.LocalPlayer:Kick("Script Only Support Blox Fruit")
 end
 
 --= [ Anti Kick & Anti Admin ] =--
@@ -1189,6 +1187,201 @@ function CheckBossQuest()
 	end
 end
 
+--= [ Esp ] =--
+
+function isnil(thing)
+    return (thing == nil)
+end
+local function round(n)
+    return math.floor(tonumber(n) + 0.5)
+end
+Number = math.random(1, 1000000)
+function UpdatePlayerChams()
+    for i, v in pairs(game:GetService("Players"):GetChildren()) do
+        pcall(function()
+            if not isnil(v.Character) then
+                if _G.EspPlayer then
+                    if not isnil(v.Character.Head) and not v.Character.Head:FindFirstChild("NameEsp"..Number) then
+                        local bill = Instance.new("BillboardGui", v.Character.Head)
+                        bill.Name = "NameEsp"..Number
+                        bill.ExtentsOffset = Vector3.new(0, 1, 0)
+                        bill.Size = UDim2.new(1, 200, 1, 30)
+                        bill.Adornee = v.Character.Head
+                        bill.AlwaysOnTop = true
+                        local name = Instance.new("TextLabel", bill)
+                        name.Font = Enum.Font.GothamSemibold
+                        name.FontSize = "Size12"
+                        name.TextWrapped = true
+                        name.Size = UDim2.new(1, 0, 1, 0)
+                        name.TextYAlignment = "Top"
+                        name.BackgroundTransparency = 1
+                        name.TextStrokeTransparency = 0.5
+                        name.TextColor3 = Color3.fromRGB(255, 105, 180)
+                    else
+                        v.Character.Head["NameEsp"..Number].TextLabel.Text = ("[ Player: "..v.Name.." ]\n[ Distance: "..round((game:GetService("Players").LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3).."m ]")
+                    end
+                else
+                    if v.Character.Head:FindFirstChild("NameEsp"..Number) then
+                        v.Character.Head:FindFirstChild("NameEsp"..Number):Destroy()
+                    end
+                end
+            end
+        end)
+    end
+end
+
+function UpdateIslandESP() 
+    for i, v in pairs(game:GetService("Workspace")["_WorldOrigin"].Locations:GetChildren()) do
+        pcall(function()
+            if _G.EspIsland then 
+                if v.Name ~= "Sea" then
+                    if not v:FindFirstChild("NameEsp") then
+                        local bill = Instance.new("BillboardGui", v)
+                        bill.Name = "NameEsp"
+                        bill.ExtentsOffset = Vector3.new(0, 1, 0)
+                        bill.Size = UDim2.new(1, 200, 1, 30)
+                        bill.Adornee = v
+                        bill.AlwaysOnTop = true
+                        local name = Instance.new("TextLabel", bill)
+                        name.Font = "GothamBold"
+                        name.FontSize = "Size12"
+                        name.TextWrapped = true
+                        name.Size = UDim2.new(1, 0, 1, 0)
+                        name.TextYAlignment = "Top"
+                        name.BackgroundTransparency = 1
+                        name.TextStrokeTransparency = 0.5
+                        name.TextColor3 = Color3.fromRGB(255, 165, 0)
+                    else
+                        v["NameEsp"].TextLabel.Text = ("[ Island: "..v.Name.." ]\n[ Distance: "..round((game:GetService("Players").LocalPlayer.Character.Head.Position - v.Position).Magnitude/3).."m ]")
+                    end
+                end
+            else
+                if v:FindFirstChild("NameEsp") then
+                    v:FindFirstChild("NameEsp"):Destroy()
+                end
+            end
+        end)
+    end
+end
+
+function UpdateChestChams() 
+	for i, v in pairs(game.Workspace:GetChildren()) do
+		pcall(function()
+			if string.find(v.Name, "Chest") then
+				if _G.EspChest then
+					if string.find(v.Name, "Chest") then
+						if not v:FindFirstChild("NameEsp"..Number) then
+							local bill = Instance.new("BillboardGui", v)
+							bill.Name = "NameEsp"..Number
+							bill.ExtentsOffset = Vector3.new(0, 1, 0)
+							bill.Size = UDim2.new(1, 200, 1, 30)
+							bill.Adornee = v
+							bill.AlwaysOnTop = true
+							local name = Instance.new("TextLabel", bill)
+							name.Font = Enum.Font.GothamSemibold
+							name.FontSize = "Size12"
+							name.TextWrapped = true
+							name.Size = UDim2.new(1, 0, 1, 0)
+							name.TextYAlignment = "Top"
+							name.BackgroundTransparency = 1
+							name.TextStrokeTransparency = 0.5
+							if v.Name == "Chest1" then
+								name.TextColor3 = Color3.fromRGB(128, 128, 128)
+							end
+							if v.Name == "Chest2" then
+								name.TextColor3 = Color3.fromRGB(255, 255, 0)
+							end
+							if v.Name == "Chest3" then
+								name.TextColor3 = Color3.fromRGB(0, 191, 255)
+							end
+						else
+		    			    v["NameEsp"..Number].TextLabel.Text = ("[ "..v.Name.." ]\n[ Distance: "..round((game:GetService("Players").LocalPlayer.Character.Head.Position - v.Position).Magnitude/3).."m ]")
+						end
+					end
+				else
+					if v:FindFirstChild("NameEsp"..Number) then
+						v:FindFirstChild("NameEsp"..Number):Destroy()
+					end
+				end
+			end
+		end)
+	end
+end
+
+function UpdateDevilChams() 
+	for i, v in pairs(game.Workspace:GetChildren()) do
+		pcall(function()
+			if _G.EspDevilFruit then
+				if string.find(v.Name, "Fruit") then   
+					if not v.Handle:FindFirstChild("NameEsp"..Number) then
+						local bill = Instance.new("BillboardGui", v.Handle)
+						bill.Name = "NameEsp"..Number
+						bill.ExtentsOffset = Vector3.new(0, 1, 0)
+						bill.Size = UDim2.new(1, 200, 1, 30)
+						bill.Adornee = v.Handle
+						bill.AlwaysOnTop = true
+						local name = Instance.new("TextLabel", bill)
+						name.Font = Enum.Font.GothamSemibold
+						name.FontSize = "Size12"
+						name.TextWrapped = true
+						name.Size = UDim2.new(1, 0, 1, 0)
+						name.TextYAlignment = "Top"
+						name.BackgroundTransparency = 1
+						name.TextStrokeTransparency = 0.5
+						name.TextColor3 = Color3.fromRGB(255, 255, 255)
+					else
+						v.Handle["NameEsp"..Number].TextLabel.Text = ("[ "..v.Name.." ]\n[ Distance: "..round((game:GetService("Players").LocalPlayer.Character.Head.Position - v.Handle.Position).Magnitude/3).."m ]")
+					end
+				end
+			else
+				if v.Handle:FindFirstChild("NameEsp"..Number) then
+					v.Handle:FindFirstChild("NameEsp"..Number):Destroy()
+				end
+			end
+		end)
+	end
+end
+
+function UpdateFlowerChams() 
+	for i, v in pairs(game.Workspace:GetChildren()) do
+		pcall(function()
+			if v.Name == "Flower2" or v.Name == "Flower1" then
+				if _G.EspFlower then 
+					if not v:FindFirstChild("NameEsp"..Number) then
+						local bill = Instance.new("BillboardGui", v)
+						bill.Name = "NameEsp"..Number
+						bill.ExtentsOffset = Vector3.new(0, 1, 0)
+						bill.Size = UDim2.new(1, 200, 1, 30)
+						bill.Adornee = v
+						bill.AlwaysOnTop = true
+						local name = Instance.new("TextLabel", bill)
+						name.Font = Enum.Font.GothamSemibold
+						name.FontSize = "Size12"
+						name.TextWrapped = true
+						name.Size = UDim2.new(1, 0, 1, 0)
+						name.TextYAlignment = "Top"
+						name.BackgroundTransparency = 1
+						name.TextStrokeTransparency = 0.5
+						name.TextColor3 = Color3.fromRGB(255, 0, 0)
+						if v.Name == "Flower1" then 
+							name.TextColor3 = Color3.fromRGB(0, 0, 255)
+						end
+						if v.Name == "Flower2" then
+							name.TextColor3 = Color3.fromRGB(255, 0, 0)
+						end
+                    else
+                        v["NameEsp"..Number].TextLabel.Text = ("[ "..v.Name.." ]\n[ Distance: "..round((game:GetService("Players").LocalPlayer.Character.Head.Position - v.Position).Magnitude/3).."m ]")
+					end
+				else
+					if v:FindFirstChild("NameEsp"..Number) then
+					v:FindFirstChild("NameEsp"..Number):Destroy()
+					end
+				end
+			end
+		end)
+	end
+end
+
 --= [ Create Tab ] =--
 
 local Setting = Window:Tab({Title = "Setting", Icon = "settings"})
@@ -1416,7 +1609,7 @@ Hold:Section({Title = "~ Use Skill & Hold Skill ~"})
 
 Hold:Paragraph({
     Title = "Setting Skill Devil Fruit",
-    Desc = "0.1 = 0.1s | 3 = 3s"
+    Desc = "Enter 0.1 = 0.1 Second | Enter 3 = 3 Second"
 })
 
 Hold:Dropdown({
@@ -1472,7 +1665,7 @@ Hold:Input({
 
 Hold:Paragraph({
     Title = "Setting Skill Melee",
-    Desc = "0.1 = 0.1s | 3 = 3s"
+    Desc = "Enter 0.1 = 0.1 Second | Enter 3 = 3 Second"
 })
 
 Hold:Dropdown({
@@ -1528,7 +1721,7 @@ Hold:Input({
 
 Hold:Paragraph({
     Title = "Setting Skill Sword",
-    Desc = "0.1 = 0.1s | 3 = 3s"
+    Desc = "Enter 0.1 = 0.1 Second | Enter 3 = 3 Second"
 })
 
 Hold:Dropdown({
@@ -1564,7 +1757,7 @@ Hold:Input({
 
 Hold:Paragraph({
     Title = "Setting Skill Gun",
-    Desc = "0.1 = 0.1s | 3 = 3s"
+    Desc = "Enter 0.1 = 0.1 Second | Enter 3 = 3 Second"
 })
 
 Hold:Dropdown({
@@ -1827,6 +2020,16 @@ Farm:Dropdown({
         _G.BossMode = Cac
     end
 })
+
+local BossCheck = {}
+for i, v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
+    if (v.Name == "rip_indra" or v.Name == "Ice Admiral")
+            or (v.Name == "Saber Expert" or v.Name == "The Saw" or v.Name == "Greybeard" or v.Name == "Mob Leader" or v.Name == "The Gorilla King" or v.Name == "Bobby" or v.Name == "Yeti" or v.Name == "Vice Admiral" or v.Name == "Warden" or v.Name == "Chief Warden" or v.Name == "Swan" or v.Name == "Magma Admiral" or v.Name == "Fishman Lord" or v.Name == "Wysper" or v.Name == "Thunder God" or v.Name == "Cyborg")
+            or (v.Name == "Don Swan" or v.Name == "Diamond" or v.Name == "Jeremy" or v.Name == "Fajita" or v.Name == "Smoke Admiral" or v.Name == "Awakened Ice Admiral" or v.Name == "Tide Keeper" or v.Name == "Order" or v.Name == "Darkbeard" or v.Name == "Cursed Captain")
+            or (v.Name == "Stone" or v.Name == "Island Empress" or v.Name == "Kilo Admiral" or v.Name == "Captain Elephant" or v.Name == "Beautiful Pirate" or v.Name == "Cake Queen" or v.Name == "rip_indra True Form" or v.Name == "Longma" or v.Name == "Soul Reaper" or v.Name == "Cake Prince" or v.Name == "Dough King") then
+        table.insert(BossCheck, v.Name)
+    end
+end
 
 local BossName = Farm:Dropdown({
     Title = "Select Boss",
