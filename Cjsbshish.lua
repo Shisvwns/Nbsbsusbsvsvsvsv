@@ -1552,7 +1552,7 @@ function topos(Pos)
     if CalcDistance(Portal, Pos) < CalcDistance(Pos) and CalcDistance(Portal) > 500 then
         return RequestEntrance(Portal)
     end
-    if _G.BypassTeleport ==  then
+    if _G.BypassTeleport then
         if CalcDistance(Pos) - CalcDistance(Spawn, Pos) > 1000 and CalcDistance(Spawn) > 1000 then
             return BypassTeleport(Spawn)
         end
@@ -1587,6 +1587,644 @@ function StopTween(target)
         _G.NoClip = false
     end
 end
+
+-- [ Pos Farm ]
+
+Type = 1
+spawn(function()
+    while wait() do
+        Type = 1
+        wait(0.5)
+        Type = 2
+        wait(0.5)
+        Type = 3
+        wait(0.5)
+        Type = 4
+        wait(0.5)
+    end
+end)
+
+spawn(function()
+    while task.wait() do
+        if Type == 1 then
+            Pos = CFrame.new(0,30,-20)
+            PosSea = CFrame.new(0,400,-60)
+            PosCaMap = CFrame.new(0,60,-30)
+        elseif Type == 2 then
+            Pos = CFrame.new(20,30,0)
+            PosSea = CFrame.new(60,400,0)
+            PosCaMap = CFrame.new(30,60,0)
+        elseif Type == 3 then
+            Pos = CFrame.new(0,30,20)
+            PosSea = CFrame.new(0,400,60)
+            PosCaMap = CFrame.new(0,60,30)	
+        elseif Type == 4 then
+            Pos = CFrame.new(-20,30,0)
+            PosSea = CFrame.new(-60,400,0)
+            PosCaMap = CFrame.new(-30,60,0)
+        end
+    end
+end)
+
+-- [ No Clip Farm ]
+
+spawn(function()
+    game:GetService("RunService").Stepped:Connect(function()
+        pcall(function()
+            if _G.NoClip then
+                if not game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyVelocity") then
+                    local NoClip = Instance.new("BodyVelocity")
+                    NoClip.Name = "BodyVelocity"
+                    NoClip.P = 9000
+                    NoClip.Parent = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart
+                    NoClip.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+                end
+                game:GetService("RunService").RenderStepped:Connect(function()
+                    local player = game:GetService("Players").LocalPlayer
+                    local humanoid = player.Character:FindFirstChild("Humanoid")
+                    local bodyVelocity = player.Character.HumanoidRootPart:FindFirstChild("BodyVelocity")
+                    if humanoid and bodyVelocity then
+                        bodyVelocity.Velocity = humanoid.MoveDirection * 60
+                    end
+                end)
+                for _, v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
+                    if v:IsA("BasePart") then
+                        v.CanCollide = false    
+                    end
+                end
+            else
+                game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyVelocity"):Destroy()
+            end
+        end)
+    end)
+end)
+
+-- [ Check Status ]
+
+spawn(function()
+	while task.wait() do
+		if setscriptable then
+			setscriptable(game.Players.LocalPlayer, "SimulationRadius", true)
+			game.Players.LocalPlayer.SimulationRadius = math.huge * math.huge, math.huge * math.huge * 0 / 0 * 0 / 0 * 0 / 0 * 0 / 0 * 0 / 0
+		end
+		if sethiddenproperty then
+			sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+		end
+	end
+end)
+
+function CheckMob(MobName)
+    for i, v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
+        if v.Name == MobName then
+            return v
+        end
+    end
+    for i, v in pairs(game.workspace.Enemies:GetChildren()) do
+        if v.Name == MobName then
+            return v
+        end
+    end
+end
+
+function CheckAncientOneStatus()
+    if not game.Players.LocalPlayer.Character:FindFirstChild("RaceTransformed") then
+        return "You Have Yet To Achieve Greatness"
+    end
+    local v227 = nil
+    local v228 = nil
+    local v229 = nil
+    v229, v228, v227 = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("UpgradeRace", "Check")
+    if v229 == 1 then
+        return "Required Train More"
+    elseif v229 == 2 or v229 == 4 or v229 == 7 then
+        return "Can Buy Gear With " .. v227 .. " Fragments"
+    elseif v229 == 3 then
+        return "Required Train More"
+    elseif v229 == 5 then
+        return "You Are Done Your Race."
+    elseif v229 == 6 then
+        return "Upgrades completed: " .. v228 - 2 .. "/3, Need Trains More"
+    end
+    if v229 ~= 8 then
+        if v229 == 0 then
+            return "Ready For Trial"
+        else
+            return "You Have Yet To Achieve Greatness"
+        end
+    end
+    return "Remaining " .. 10 - v228 .. " Training Sessions"
+end
+
+function CheckRace()
+    local a = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Wenlocktoad","1")
+    local b = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Alchemist","1")
+    if game.Players.LocalPlayer.Character:FindFirstChild("RaceTransformed") then
+        return game:GetService("Players").LocalPlayer.Data.Race.Value.." V4"
+    end
+    if a == -2 then
+        return game:GetService("Players").LocalPlayer.Data.Race.Value.." V3"
+    end
+    if b == -2 then
+        return game:GetService("Players").LocalPlayer.Data.Race.Value.." V2"
+    end
+    return game:GetService("Players").LocalPlayer.Data.Race.Value.." V1"
+end
+
+local PosTemplete = CFrame.new(28282.5703125, 14896.8505859375, 105.1042709350586)
+function Templeteleport()
+    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(28282.5703125, 14896.8505859375, 105.1042709350586))
+end
+function CheckAndTweenTemple()
+    if (PosTemplete.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 1200 then
+        Templeteleport()
+    end
+    if (PosTemplete.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 1200 then
+        Templeteleport()
+    end
+end
+
+function MoonTextureId()
+    if World1 then
+        return game:GetService("Lighting").FantasySky.MoonTextureId
+    elseif World2 then
+        return game:GetService("Lighting").FantasySky.MoonTextureId
+    elseif World3 then
+        return game:GetService("Lighting").Sky.MoonTextureId
+    end
+end
+function CheckMoon()
+    moon8 = "http://www.roblox.com/asset/?id=9709150401"
+    moon7 = "http://www.roblox.com/asset/?id=9709150086"
+    moon6 = "http://www.roblox.com/asset/?id=9709149680"
+    moon5 = "http://www.roblox.com/asset/?id=9709149431"
+    moon4 = "http://www.roblox.com/asset/?id=9709149052"
+    moon3 = "http://www.roblox.com/asset/?id=9709143733"
+    moon2 = "http://www.roblox.com/asset/?id=9709139597"
+    moon1 = "http://www.roblox.com/asset/?id=9709135895"
+    moonreal = MoonTextureId()
+    cofullmoonkothangbeo = "Bad Moon"
+    if moonreal == moon5 or moonreal == moon4 then
+        if moonreal == moon5 then
+            cofullmoonkothangbeo = "Full Moon"
+        elseif moonreal == moon4 then
+            cofullmoonkothangbeo = "Next Night"
+        end
+    end
+    return cofullmoonkothangbeo
+end
+function function7()
+    GameTime = "Error"
+    local c = game.Lighting
+    local ao = c.ClockTime
+    if ao >= 18 or ao < 5 then
+        GameTime = "Night"
+    else
+        GameTime = "Day"
+    end
+    return GameTime
+end
+function function6()
+    return math.floor(game.Lighting.ClockTime)
+end
+function getServerTime()
+    RealTime = tostring(math.floor(game.Lighting.ClockTime * 100) / 100)
+    RealTime = tostring(game.Lighting.ClockTime)
+    RealTimeTable = RealTime:split(".")
+    Minute, Second = RealTimeTable[1], tonumber(0 + tonumber(RealTimeTable[2] / 100)) * 60
+    return Minute, Second
+end
+function function8()
+    local c = game.Lighting
+    local ao = c.ClockTime
+    if CheckMoon() == "Full Moon" and ao <= 5 then
+        return tostring(function6()) .. " ( Will End Moon In " .. math.floor(5 - ao) .. " Minutes )"
+    elseif CheckMoon() == "Full Moon" and (ao > 5 and ao < 12) then
+        return tostring(function6()) .. " ( Fake Moon )"
+    elseif CheckMoon() == "Full Moon" and (ao > 12 and ao < 18) then
+        return tostring(function6()) .. " ( Will Full Moon In " .. math.floor(18 - ao) .. " Minutes )"
+    elseif CheckMoon() == "Full Moon" and (ao > 18 and ao <= 24) then
+        return tostring(function6()) .. " ( Will End Moon In " .. math.floor(24 + 6 - ao) .. " Minutes )"
+    end
+    if CheckMoon() == "Next Night" and ao < 12 then
+        return tostring(function6()) .. " ( Will Full Moon In " .. math.floor(18 - ao) .. " Minutes )"
+    elseif CheckMoon() == "Next Night" and ao > 12 then
+        return tostring(function6()) .. " ( Will Full Moon In " .. math.floor(18 + 12 - ao) .. " Minutes )"
+    end
+    return tostring(function6())
+end
+function FullMoobCheck()
+    return function8()
+end
+
+function CheckCakeSpawn()
+    if World3 then
+        if string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 88 then
+            return "Defeat: "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,41).."/500 Mobs"
+        elseif string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 87 then
+            return "Defeat: "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,40).."/500 Mobs"
+        elseif string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 86 then
+            return "Defeat: "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,39).."/500 Mobs"
+        elseif CheckMob("Cake Prince") then
+            return "Cake Prince Spawned :)"
+        elseif CheckMob("Dough King") then
+            return "Dough King Spawned :)"
+        end
+    elseif World1 or World2 then
+        return "Only Third Sea ( Sea 3 )"
+    end
+end
+
+function CheckElite()
+    if CheckMob("Diablo") then
+        return "Elite Diablo Spawned :)"
+    elseif CheckMob("Deandre") then
+        return "Elite Deandre Spawned :)"
+    elseif CheckMob("Urban") then
+        return "Elite Urban Spawned :)"
+    else
+        return "Elite Not Spawned :("
+    end
+end
+
+function CheckSword()
+    if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer", "1") then
+        return "Sword Name: Shisui"
+    elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer","2") then
+        return "Sword Name: Wando"
+    elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer","3") then
+        return "Sword Name: Saddi"
+    else
+        return "Not Found Legendary Sword Dealer :("
+    end
+end
+
+function CheckHaki()
+    if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer", "1") then
+        return "Haki Colors: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer", "1")
+    else
+        return "Not Found Haki Dealer :("
+    end
+end
+
+function CheckMirage()
+    if game.Workspace._WorldOrigin.Locations:FindFirstChild('Mirage Island') then
+        return "Mirage Island Spawned :)"
+    else
+        return "Mirage Island Not Spawned :("
+    end
+end
+
+function CheckKitsune()
+    if game:GetService("Workspace").Map:FindFirstChild('KitsuneIsland') then
+        return "Kitsune Island Spawned :)"
+    else
+        return "Kitsune Island Not Spawned :("
+    end
+end
+
+function CheckFrozen()
+    if game.Workspace._WorldOrigin.Locations:FindFirstChild('Frozen Dimension') then
+        return "Island Frozen Dimension Spawned :)"
+    else
+        return "Island Frozen Dimension Not Spawned :("
+    end
+end
+
+function CDarkness()
+    if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") then
+        return "Fist Of Darkness: Yes"
+    else
+        return "Fist Of Darkness: No"
+    end
+end
+function CheckRauDen()
+    if CheckMob("Darkbeard") then
+        return "Darkbeard Spawned :)"
+    else
+        return "Darkbeard Not Spawned :("
+    end
+end
+
+function GodChalice()
+    if game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
+        return "God's Chalice: Yes"
+    else
+        return "God's Chalice: No"
+    end
+end
+function CheckTrumAd()
+    if CheckMob("rip_indra True Form") then
+        return "Rip_Indra Spawned :)"
+    else
+        return "Rip_Indra Not Spawned :("
+    end
+end
+
+-- [ Aimbot Farm ]
+
+spawn(function()
+    game:GetService("RunService").RenderStepped:Connect(function()
+        pcall(function()
+            if UseSkill or UseGunSkill or SeaSkill then
+                for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.Notifications:GetChildren()) do
+                    for _, Notif in pairs(v:GetChildren()) do
+                        if string.find(Notif.Text,"Skill Locked!") then
+                            v:Destroy()
+                        end
+                    end
+                end
+            end
+        end)
+    end)
+end)
+
+local gg = getrawmetatable(game)
+local old = gg.__namecall
+setreadonly(gg,false)
+gg.__namecall = newcclosure(function(...)
+	local method = getnamecallmethod()
+	local args = {...}
+	if tostring(method) == "FireServer" then
+		if tostring(args[1]) == "RemoteEvent" then
+			if tostring(args[2]) ~= "true" and tostring(args[2]) ~= "false" then
+				if Skillaimbot or Skillaimbotpl then
+					args[2] = AimBotSkillPosition
+					return old(unpack(args))
+				end
+			end
+		end
+	end
+	return old(...)
+end)
+
+setreadonly(gg,false)
+gg.__namecall = newcclosure(function(...)
+    local args = {...}
+    if getnamecallmethod() == "InvokeServer" then 
+        if tostring(args[2]) == "TAP" then
+            if Skillaimbot or Skillaimbotpl then
+                args[3] = AimBotSkillPosition
+                return old(unpack(args))
+            end
+        end
+    end
+    return old(...)
+end)
+
+-- [ Effect ]
+
+pcall(function()
+    if game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit') then
+        game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit'):Destroy()
+    end
+    require(game.ReplicatedStorage.Util.CameraShaker):Stop()
+    game:GetService("ReplicatedStorage").Util.Sound.Storage.Swing:Destroy()
+    spawn(function()
+        for _, v in pairs(game:GetDescendants()) do
+            if v:IsA("Texture") then
+                v.Texture = ""
+            elseif v:IsA("BasePart") and v.Material == Enum.Material.Water then
+                v.Material = Enum.Material.SmoothPlastic
+            end
+        end
+        for _, v in pairs(r33_33arg.LocalPlayer.PlayerScripts:GetDescendants()) do
+            local v641_args = {"WaterBlur", "WaterEffect", "WaterColorCorrection", "WaterCFrame"}
+            if table.find(v641_args, v.Name) then
+                v:Destroy()
+            end
+        end
+    end)
+end)
+
+--= [ Super Fast Attack ] =--
+
+NoAttackAnimation = true
+local DmgAttack = game:GetService("ReplicatedStorage").Assets.GUI:WaitForChild("DamageCounter")
+local PC = require(game.Players.LocalPlayer.PlayerScripts.CombatFramework.Particle)
+local RL = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib)
+local oldRL = RL.wrapAttackAnimationAsync
+RL.wrapAttackAnimationAsync = function(a,b,c,d,func)
+	if not NoAttackAnimation then
+		return oldRL(a,b,c,60,func)
+	end
+	local Hits = {}
+	local Client = game.Players.LocalPlayer
+	local Characters = game:GetService("Workspace").Characters:GetChildren()
+	for i,v in pairs(Characters) do
+		local Human = v:FindFirstChildOfClass("Humanoid")
+		if v.Name ~= game.Players.LocalPlayer.Name and Human and Human.RootPart and Human.Health > 0 and Client:DistanceFromCharacter(Human.RootPart.Position) < 65 then
+			table.insert(Hits,Human.RootPart)
+		end
+	end
+	local Enemies = game:GetService("Workspace").Enemies:GetChildren()
+	for i,v in pairs(Enemies) do
+		local Human = v:FindFirstChildOfClass("Humanoid")
+		if Human and Human.RootPart and Human.Health > 0 and Client:DistanceFromCharacter(Human.RootPart.Position) < 65 then
+			table.insert(Hits,Human.RootPart)
+		end
+	end
+	a:Play(0.01,0.01,0.01)
+	pcall(func,Hits)
+end
+
+getAllBladeHits = LPH_NO_VIRTUALIZE(function(Sizes)
+	local Hits = {}
+	local Client = game.Players.LocalPlayer
+	local Enemies = game:GetService("Workspace").Enemies:GetChildren()
+	for i,v in pairs(Enemies) do
+		local Human = v:FindFirstChildOfClass("Humanoid")
+		if Human and Human.RootPart and Human.Health > 0 and Client:DistanceFromCharacter(Human.RootPart.Position) < Sizes+5 then
+			table.insert(Hits,Human.RootPart)
+		end
+	end
+	return Hits
+end)
+
+getAllBladeHitsPlayers = LPH_NO_VIRTUALIZE(function(Sizes)
+	local Hits = {}
+	local Client = game.Players.LocalPlayer
+	local Characters = game:GetService("Workspace").Characters:GetChildren()
+	for i,v in pairs(Characters) do
+		local Human = v:FindFirstChildOfClass("Humanoid")
+		if v.Name ~= game.Players.LocalPlayer.Name and Human and Human.RootPart and Human.Health > 0 and Client:DistanceFromCharacter(Human.RootPart.Position) < Sizes+5 then
+			table.insert(Hits,Human.RootPart)
+		end
+	end
+	return Hits
+end)
+
+local CombatFramework = require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework"))
+local CombatFrameworkR = getupvalues(CombatFramework)[2]
+local RigEven = game:GetService("ReplicatedStorage").RigControllerEvent
+local AttackAnim = Instance.new("Animation")
+local AttackCoolDown = 0
+local cooldowntickFire = 0
+local MaxFire = 1000
+local FastAttackDelay = 0.01
+local FireL = 0
+local bladehit = {}
+
+CancelCoolDown = LPH_JIT_MAX(function()
+	local ac = CombatFrameworkR.activeController
+	if ac and ac.equipped then
+		AttackCoolDown = tick() + (FastAttackDelay or 0.01) + ((FireL/MaxFire)*0.3)
+		RigEven.FireServer(RigEven,"weaponChange",ac.currentWeaponModel.Name)
+		FireL = FireL + 1
+		task.delay((FastAttackDelay or 0.01) + ((FireL+0.3/MaxFire)*0.3),function()
+			FireL = FireL - 1
+		end)
+	end
+end)
+
+AttackFunction = LPH_JIT_MAX(function(typef)
+	local ac = CombatFrameworkR.activeController
+	if ac and ac.equipped then
+		local bladehit = {}
+		if typef == 1 then
+			bladehit = getAllBladeHits(60)
+		elseif typef == 2 then
+			bladehit = getAllBladeHitsPlayers(65)
+		else
+			for i2,v2 in pairs(getAllBladeHits(55)) do
+				table.insert(bladehit,v2)
+			end
+			for i3,v3 in pairs(getAllBladeHitsPlayers(55)) do
+				table.insert(bladehit,v3)
+			end
+		end
+		if #bladehit > 0 then
+			pcall(task.spawn,ac.attack,ac)
+			if tick() > AttackCoolDown then
+				CancelCoolDown()
+			end
+			if tick() - cooldowntickFire > 0.1 then
+				ac.timeToNextAttack = 0
+				ac.hitboxMagnitude = 60
+				pcall(task.spawn,ac.attack,ac)
+				cooldowntickFire = tick()
+			end
+			local AMI3 = ac.anims.basic[3]
+			local AMI2 = ac.anims.basic[2]
+			local REALID = AMI3 or AMI2
+			AttackAnim.AnimationId = REALID
+			local StartP = ac.humanoid:LoadAnimation(AttackAnim)
+			StartP:Play(0.01,0.01,0.01)
+			RigEven.FireServer(RigEven,"hit",bladehit,AMI3 and 3 or 2,"")
+			task.delay(0.01,function()
+				StartP:Stop()
+			end)
+		end
+	end
+end)
+
+function CheckStun()
+	if game:GetService('Players').LocalPlayer.Character:FindFirstChild("Stun") then
+		return game:GetService('Players').LocalPlayer.Character.Stun.Value ~= 0
+	end
+	return false
+end
+
+LPH_JIT_MAX(function()
+	spawn(function()
+		while game:GetService("RunService").Stepped:Wait() do
+			local ac = CombatFrameworkR.activeController
+			if ac and ac.equipped and not CheckStun() then
+				if NeedAttacking and Fast_Attack then
+					task.spawn(function()
+						pcall(task.spawn,AttackFunction,1)
+					end)
+				elseif DamageAura then
+					task.spawn(function()
+						pcall(task.spawn,AttackFunction,3)
+					end)
+				elseif UsefastattackPlayers and Fast_Attack then
+					task.spawn(function()
+						pcall(task.spawn,AttackFunction,2)
+					end)
+				elseif NeedAttacking and Fast_Attack == false then
+					if ac.hitboxMagnitude ~= 55 then
+						ac.hitboxMagnitude = 55
+					end
+					pcall(task.spawn,ac.attack,ac)
+				end
+			end
+		end
+	end)
+end)()
+    
+game:GetService("Players").LocalPlayer.Idled:connect(function()
+    game:GetService("VirtualUser"):Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+    wait(1)
+    game:GetService("VirtualUser"):Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+end)
+    
+inmyselfss = LPH_JIT_MAX(function(name)
+	if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(name) then
+		return game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(name)
+	end
+	local OutValue
+	for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do 
+		if v:IsA("Tool") then
+			if v.Name == name then
+				OutValue = v
+				break
+			end
+		end
+	end
+	return OutValue or game:GetService("Players").LocalPlayer.Character:FindFirstChild(name)
+end)
+
+task.spawn(function() 
+    if hookfunction and not islclosure(hookfunction) then 
+        workspace._WorldOrigin.ChildAdded:Connect(function(v)
+            if v.Name =='DamageCounter' then 
+                v.Enabled  = false 
+            end
+        end)
+        hookfunction(require(game:GetService("ReplicatedStorage"):WaitForChild("GuideModule")).ChangeDisplayedNPC,function() end)
+        task.spawn(function()
+            local NGU,NGUVL
+            repeat 
+                NGU,NGUVL = pcall(function()
+                    for i,v in pairs(getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework))[2].activeController.data) do  
+                        if typeof(v) == 'function' then 
+                            hookfunction(v,function() end)
+                        end
+                    end
+                end)
+                task.wait(1.5)
+            until NGU 
+        end) 
+        abc = true
+        task.spawn(function()
+            local a = game.Players.LocalPlayer
+            local b = require(a.PlayerScripts.CombatFramework.Particle)
+            local c = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib)
+            if not shared.orl then
+                shared.orl = c.wrapAttackAnimationAsync
+            end
+            if not shared.cpc then
+                shared.cpc = b.play
+            end
+            if abc then
+                pcall(function()
+                    c.wrapAttackAnimationAsync = function(d, e, f, g, h)
+                        local i = c.getBladeHits(e, f, g)
+                        if i then
+                            b.play = function()
+                            end
+                            d:Play(0.1, 0.1, 0.1)
+                            h(i)
+                            b.play = shared.cpc
+                            wait(.5)
+                            d:Stop()
+                        end
+                    end
+                end)
+            end
+        end)
+    end
+end)
 
 --= [ Create Tab ] =--
 
