@@ -2258,6 +2258,22 @@ Setting:Dropdown({
     end
 })
 
+spawn(function()
+	while wait() do
+	    pcall(function()
+			if _G.SelectWeapons == _G.SelectWeapons then
+				for i, v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+					if v.ToolTip == _G.SelectWeapons then
+						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+							_G.SelectWeapon = v.Name
+						end
+					end
+				end
+			end
+		end)
+	end
+end)
+
 Setting:Dropdown({
     Title = "Select Attack Speed",
     Multi = false,
@@ -2303,6 +2319,15 @@ Setting:Toggle({
     end
 })
 
+spawn(function()
+    game:GetService("RunService").RenderStepped:Connect(function()
+        if _G.AutoClick then
+            game:GetService'VirtualUser':CaptureController()
+            game:GetService'VirtualUser':Button1Down(Vector2.new(0,1,0,1))
+        end
+    end)
+end)
+
 Setting:Dropdown({
     Title = "Select Range Bring Mob",
     Multi = false,
@@ -2332,6 +2357,69 @@ Setting:Toggle({
         _G.BringMobs = Cac
     end
 })
+
+spawn(function()
+    while wait() do
+        pcall(function()
+            if _G.BringMobs then
+                CheckQuest()
+                for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                    if _G.FarmLevel or _G.FruitsMastery or _G.GunMastery or _G.AutoSwordMastery then
+                        if StartMagnet and v.Name == Mon and (v.HumanoidRootPart.Position - PosFarm.Position).Magnitude <= BringRange then
+                            v.HumanoidRootPart.CFrame = PosFarm
+                            v.Humanoid:ChangeState(14)
+                        end
+                    end
+                    if MagnetNear then
+                        if not string.find(v.Name, "Boss") and (v.HumanoidRootPart.Position - PosNear.Position).Magnitude <= BringRange then
+                            v.HumanoidRootPart.CFrame = PosNear
+                            v.Humanoid:ChangeState(14)
+                        end
+                    end
+                    if _G.AutoMusketeerHat and StartMagnetMusketeerhat then
+                        if v.Name == "Forest Pirate" and (v.HumanoidRootPart.Position - MusketeerHatMon.Position).Magnitude <= BringRange then
+                            v.HumanoidRootPart.CFrame = MusketeerHatMon
+                            v.Humanoid:ChangeState(14)
+                        end
+                    end
+                    if _G.Auto_EvoRace and StartEvoMagnet then
+                        if v.Name == "Zombie" and (v.HumanoidRootPart.Position - PosMonEvo.Position).Magnitude <= BringRange then
+                            v.HumanoidRootPart.CFrame = PosMonEvo
+                            v.Humanoid:ChangeState(14)
+                        end
+                    end
+                    if _G.FarmMaterial and BringMonMaterial then
+                        if (v.Name == MMon or v.Name == MMon1) and (v.HumanoidRootPart.Position - MaterialPos.Position).Magnitude <= BringRange then
+                            v.HumanoidRootPart.CFrame = MaterialPos
+                            v.Humanoid:ChangeState(14)
+                        end
+                    end
+                    if _G.FarmMob and SelectMag then
+                        if v.Name == _G.SelectMob and (v.HumanoidRootPart.Position - PosMonFarm.Position).Magnitude <= BringRange then
+                            v.HumanoidRootPart.CFrame = PosMonFarm
+                            v.Humanoid:ChangeState(14)
+                        end
+                    end
+                    if _G.AutoBartilo and AutoBartiloBring then
+                        if v.Name == "Swan Pirate" and (v.HumanoidRootPart.Position - PosMonBarto.Position).Magnitude <= BringRange then
+                            v.HumanoidRootPart.CFrame = PosMonBarto
+                            v.Humanoid:ChangeState(14)
+                        end
+                    end
+                    if _G.FarmFast and StartBring then
+                        if v.Name == "Shanda" and (v.HumanoidRootPart.Position - PosMon.Position).Magnitude <= BringRange then
+                            v.HumanoidRootPart.CFrame = PosMon
+                            local CframeTarget = LocalPlayer.Character.HumanoidRootPart.Cframe
+                            local MoveTween = game:GetService("TweenService"):Create(Mob.HumanoiRootPart, TweenInfo.new(3), (Cframe = CframeTarget))
+                            MoveTween:Play()
+                            v.Humanoid:ChangeState(14)
+                        end
+                    end
+                end
+            end
+        end)
+    end
+end)
 
 Setting:Section({Title = "~ Move ~"})
 
@@ -2383,6 +2471,23 @@ Setting:Toggle({
 	end
 })
 
+spawn(function()
+	while wait() do
+	    pcall(function()
+			if _G.DisabledNotify then
+				game.Players.LocalPlayer.PlayerGui.Notifications.Enabled = false
+			else
+				game.Players.LocalPlayer.PlayerGui.Notifications.Enabled = true
+			end
+			if _G.DisabledDamage then
+				game:GetService("ReplicatedStorage").Assets.GUI.DamageCounter.Enabled = false
+			else
+				game:GetService("ReplicatedStorage").Assets.GUI.DamageCounter.Enabled = true
+			end
+		end)
+	end
+end)
+
 Setting:Button({
     Title = "Remove Fog",
     Callback = function()
@@ -2395,15 +2500,15 @@ Setting:Button({
     Title = "Remove Lava",
     Callback = function()
         for i,v in pairs(game.Workspace:GetDescendants()) do
-			if v.Name == "Lava" then   
-				v:Destroy()
-			end
-		end
-		for i,v in pairs(game.ReplicatedStorage:GetDescendants()) do
-			if v.Name == "Lava" then   
-				v:Destroy()
-			end
-		end
+    		if v.Name == "Lava" then   
+    			v:Destroy()
+    		end
+    	end
+    	for i,v in pairs(game.ReplicatedStorage:GetDescendants()) do
+    		if v.Name == "Lava" then   
+	    		v:Destroy()
+    		end
+    	end
     end
 })
 
@@ -2413,6 +2518,48 @@ Setting:Button({
         FpsBooster()
     end
 })
+
+function FpsBooster()
+    local decalsyeeted = true
+    local g = game
+    local w = g.Workspace
+    local l = g.Lighting
+    local t = w.Terrain
+    sethiddenproperty(l,"Technology",2)
+    sethiddenproperty(t,"Decoration",false)
+    t.WaterWaveSize = 0
+    t.WaterWaveSpeed = 0
+    t.WaterReflectance = 0
+    t.WaterTransparency = 0
+    l.GlobalShadows = false
+    l.FogEnd = 9e9
+    l.Brightness = 0
+    settings().Rendering.QualityLevel = "Level01"
+    for i, v in pairs(g:GetDescendants()) do
+        if v:IsA("Part") or v:IsA("Union") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
+            v.Material = "Plastic"
+            v.Reflectance = 0
+        elseif v:IsA("Decal") or v:IsA("Texture") and decalsyeeted then
+            v.Transparency = 1
+        elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
+            v.Lifetime = NumberRange.new(0)
+        elseif v:IsA("Explosion") then
+            v.BlastPressure = 1
+            v.BlastRadius = 1
+        elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") or v:IsA("Sparkles") then
+            v.Enabled = false
+        elseif v:IsA("MeshPart") then
+            v.Material = "Plastic"
+            v.Reflectance = 0
+            v.TextureID = 10385902758728957
+        end
+    end
+    for i, e in pairs(l:GetChildren()) do
+        if e:IsA("BlurEffect") or e:IsA("SunRaysEffect") or e:IsA("ColorCorrectionEffect") or e:IsA("BloomEffect") or e:IsA("DepthOfFieldEffect") then
+            e.Enabled = false
+        end
+    end
+end
 
 Setting:Slider({
     Title = "Brightness",
@@ -2439,6 +2586,18 @@ Setting:Toggle({
 		_G.AutoRejoin = Cac
 	end
 })
+
+spawn(function()
+	while wait() do
+		if _G.AutoRejoin then
+			getgenv().rejoin = game:GetService("CoreGui").RobloxPromptGui.promptOverlay.ChildAdded:Connect(function(child)
+				if child.Name == 'ErrorPrompt' and child:FindFirstChild('MessageArea') and child.MessageArea:FindFirstChild("ErrorFrame") then
+					game:GetService("TeleportService"):Teleport(game.PlaceId)
+				end
+			 end)
+		end
+	end
+end)
 
 Setting:Button({
 	Title = "Reset Character",
@@ -2639,7 +2798,7 @@ Hold:Input({
 
 Farm:Section({Title = "~ Level ~"})
 
-Farm:Paragraph({
+local YourLevel = Farm:Paragraph({
     Title = "Your Level",
     Desc = "Wait Loading..."
 })
@@ -2662,6 +2821,75 @@ Farm:Toggle({
         StopTween(_G.FarmLevel)
     end
 })
+
+spawn(function()
+    while wait() do
+        pcall(function()
+            if _G.LevelMode == "No Quest" and _G.FarmLevel then
+                CheckQuest()
+                if game:GetService("Workspace").Enemies:FindFirstChild(Mon) then
+                    for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                            if v.Name == Mon then
+                                repeat wait()
+                                    EquipWeapon(_G.SelectWeapon)
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
+                                    PosFarm = v.HumanoidRootPart.CFrame
+                                    StartMagnet = true
+                                until not _G.FarmLevel or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0
+                                StartMagnet = false
+                            end
+                        end
+                    end
+                else
+                    topos(CFrameMon)
+                    UnEquipWeapon(_G.SelectWeapon)
+                    StartMagnet = false
+                end
+            end
+            if _G.LevelMode == "Get Quest" and _G.FarmLevel then
+            local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
+                if not string.find(QuestTitle, NameMon) then
+                    StartMagnet = false
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+                end
+                if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
+                    StartMagnet = false
+                    CheckQuest()
+	    			topos(CFrameQuest)
+		    		if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQuest.Position).Magnitude <= 5 then
+	    				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest",NameQuest,LevelQuest)
+                    end
+                elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
+                    CheckQuest()
+                    if game:GetService("Workspace").Enemies:FindFirstChild(Mon) then
+                        for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                            if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                                if v.Name == Mon then
+                                    if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
+                                        repeat wait()
+                                            EquipWeapon(_G.SelectWeapon)
+                                            topos(v.HumanoidRootPart.CFrame * Pos)
+                                            PosFarm = v.HumanoidRootPart.CFrame
+                                            StartMagnet = true
+                                        until not _G.FarmLevel or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
+                                    else
+                                        StartMagnet = false
+                                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+                                    end
+                                end
+                            end
+                        end
+                    else
+                        topos(CFrameMon)
+                        UnEquipWeapon(_G.SelectWeapon)
+                        StartMagnet = false
+                    end
+                end
+            end
+        end)
+    end
+end)
 
 Farm:Toggle({
     Title = "Auto Farm Fast [ Lv. 1 -> Lv. 250 ]",
