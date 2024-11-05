@@ -2409,9 +2409,6 @@ spawn(function()
                     if _G.FarmFast and StartBring then
                         if v.Name == "Shanda" and (v.HumanoidRootPart.Position - PosMon.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = PosMon
-                            local CframeTarget = game:GetService("PLayers").LocalPlayer.Character.HumanoidRootPart.Cframe
-                            local MoveTween = game:GetService("TweenService"):Create(Mob.HumanoiRootPart, TweenInfo.new(3), (Cframe = CframeTarget))
-                            MoveTween:Play()
                             v.Humanoid:ChangeState(14)
                         end
                     end
