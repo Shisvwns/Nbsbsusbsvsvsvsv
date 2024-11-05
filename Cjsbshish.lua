@@ -1529,9 +1529,7 @@ function CalcDistance(I, II)
 end
 
 function topos(Pos)
-    if not Pos then
-        return
-    end 
+    if not Pos then return end 
     if not lp.Character:FindFirstChild("PartTele") then
         local PartTele = Instance.new("Part", lp.Character)
         PartTele.Size = Vector3.new(0,0,0)
@@ -1644,7 +1642,7 @@ spawn(function()
                     local humanoid = player.Character:FindFirstChild("Humanoid")
                     local bodyVelocity = player.Character.HumanoidRootPart:FindFirstChild("BodyVelocity")
                     if humanoid and bodyVelocity then
-                        bodyVelocity.Velocity = humanoid.MoveDirection * 60
+                        bodyVelocity.Velocity = humanoid.MoveDirection * 50
                     end
                 end)
                 for _, v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
@@ -1984,27 +1982,25 @@ end)
 
 -- [ Effect ]
 
-pcall(function()
-    if game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit') then
-        game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit'):Destroy()
+if game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit') then
+    game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit'):Destroy()
+end
+require(game.ReplicatedStorage.Util.CameraShaker):Stop()
+game:GetService("ReplicatedStorage").Util.Sound.Storage.Swing:Destroy()
+spawn(function()
+    for _, v in pairs(game:GetDescendants()) do
+        if v:IsA("Texture") then
+            v.Texture = ""
+        elseif v:IsA("BasePart") and v.Material == Enum.Material.Water then
+            v.Material = Enum.Material.SmoothPlastic
+        end
     end
-    require(game.ReplicatedStorage.Util.CameraShaker):Stop()
-    game:GetService("ReplicatedStorage").Util.Sound.Storage.Swing:Destroy()
-    spawn(function()
-        for _, v in pairs(game:GetDescendants()) do
-            if v:IsA("Texture") then
-                v.Texture = ""
-            elseif v:IsA("BasePart") and v.Material == Enum.Material.Water then
-                v.Material = Enum.Material.SmoothPlastic
-            end
+    for _, v in pairs(r33_33arg.LocalPlayer.PlayerScripts:GetDescendants()) do
+        local v641_args = {"WaterBlur", "WaterEffect", "WaterColorCorrection", "WaterCFrame"}
+        if table.find(v641_args, v.Name) then
+            v:Destroy()
         end
-        for _, v in pairs(r33_33arg.LocalPlayer.PlayerScripts:GetDescendants()) do
-            local v641_args = {"WaterBlur", "WaterEffect", "WaterColorCorrection", "WaterCFrame"}
-            if table.find(v641_args, v.Name) then
-                v:Destroy()
-            end
-        end
-    end)
+    end
 end)
 
 --= [ Super Fast Attack ] =--
@@ -2832,7 +2828,6 @@ Farm:Toggle({
 
 spawn(function()
     while wait() do
-        pcall(function()
             if _G.LevelMode == "No Quest" and _G.FarmLevel then
                 CheckQuest()
                 if game:GetService("Workspace").Enemies:FindFirstChild(Mon) then
@@ -2895,7 +2890,7 @@ spawn(function()
                     end
                 end
             end
-        end)
+
     end
 end)
 
