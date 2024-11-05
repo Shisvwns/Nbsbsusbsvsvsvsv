@@ -1663,13 +1663,15 @@ end)
 
 spawn(function()
 	while task.wait() do
-		if setscriptable then
-			setscriptable(game.Players.LocalPlayer, "SimulationRadius", true)
-			game.Players.LocalPlayer.SimulationRadius = math.huge * math.huge, math.huge * math.huge * 0 / 0 * 0 / 0 * 0 / 0 * 0 / 0 * 0 / 0
-		end
-		if sethiddenproperty then
-			sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-		end
+	    pcall(function()
+	    	if setscriptable then
+	    		setscriptable(game.Players.LocalPlayer, "SimulationRadius", true)
+	    		game.Players.LocalPlayer.SimulationRadius = math.huge * math.huge, math.huge * math.huge * 0 / 0 * 0 / 0 * 0 / 0 * 0 / 0 * 0 / 0
+    		end
+    		if sethiddenproperty then
+    			sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+    		end
+        end)
 	end
 end)
 
