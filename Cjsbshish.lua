@@ -1661,18 +1661,27 @@ end)
 
 -- [ Check Status ]
 
-spawn(function()
-	while task.wait() do
-	    pcall(function()
-	    	if setscriptable then
-	    		setscriptable(game.Players.LocalPlayer, "SimulationRadius", true)
-	    		game.Players.LocalPlayer.SimulationRadius = math.huge * math.huge, math.huge * math.huge * 0 / 0 * 0 / 0 * 0 / 0 * 0 / 0 * 0 / 0
-    		end
-    		if sethiddenproperty then
-    			sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-    		end
-        end)
+task.spawn(function()
+	while true do wait()
+		if setscriptable then
+			setscriptable(game.Players.LocalPlayer, "SimulationRadius", true)
+		end
+		if sethiddenproperty then
+			sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+		end
 	end
+end)
+
+spawn(function()
+    while wait() do
+        if sethiddenproperty then
+            sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",100)
+        end
+        if setscriptable then
+            setscriptable(game.Players.LocalPlayer, "SimulationRadius", true)
+            game.Players.LocalPlayer.SimulationRadius = math.huge * math.huge, math.huge * math.huge * 0 / 0 * 0 / 0 * 0 / 0 * 0 / 0 * 0 / 0
+        end
+    end
 end)
 
 function CheckMob(MobName)
