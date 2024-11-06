@@ -1,27 +1,3 @@
---= [ Create Menu ] =--
-
-local WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Footagesus/WindUI/refs/heads/main/dist/main.lua"))()
-local Window = WindUI:CreateWindow({
-    Title = "Tinh Linh Hub",
-    Icon = "rbxassetid://16730867128",
-    Author = "obievn",
-    Folder = "Tinh Linh Hub",
-    Size = UDim2.fromOffset(590, 340),
-    Transparent = true,
-    Theme = "Dark",
-    SideBarWidth = 145
-})
-
---= [ World Check ] =--
-
-if game.PlaceId == 2753915549 then
-    World1 = true
-elseif game.PlaceId == 4442272183 then
-    World2 = true
-elseif game.PlaceId == 7449423635 then
-    World3 = true
-end
-
 --= [ Anti Kick & Anti Admin ] =--
 
 local GC = getconnections or get_signal_cons
@@ -96,6 +72,16 @@ task.spawn(function()
         end
     end
 end)
+
+--= [ World Check ] =--
+
+if game.PlaceId == 2753915549 then
+    World1 = true
+elseif game.PlaceId == 4442272183 then
+    World2 = true
+elseif game.PlaceId == 7449423635 then
+    World3 = true
+end
 
 --= [ Check Quest, Check Mob, Check Material ] =--
 
@@ -2233,6 +2219,20 @@ task.spawn(function()
     end
 end)
 
+--= [ Create Menu ] =--
+
+local WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Footagesus/WindUI/refs/heads/main/dist/main.lua"))()
+local Window = WindUI:CreateWindow({
+    Title = "Tinh Linh Hub",
+    Icon = "rbxassetid://16730867128",
+    Author = "obievn",
+    Folder = "Tinh Linh Hub",
+    Size = UDim2.fromOffset(590, 340),
+    Transparent = true,
+    Theme = "Dark",
+    SideBarWidth = 145
+})
+
 --= [ Create Tab ] =--
 
 local Setting = Window:Tab({Title = "Setting", Icon = "settings"})
@@ -2828,8 +2828,8 @@ Farm:Toggle({
 
 spawn(function()
     while wait() do
-        if _G.LevelMode == "No Quest" and _G.FarmLevel then
-            pcall(function()
+        pcall(function()
+            if _G.LevelMode == "No Quest" and _G.FarmLevel then
                 CheckQuest()
                 if game:GetService("Workspace").Enemies:FindFirstChild(Mon) then
                     for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
@@ -2850,15 +2850,8 @@ spawn(function()
                     UnEquipWeapon(_G.SelectWeapon)
                     StartMagnet = false
                 end
-            end)
-        end
-    end
-end)
-
-spawn(function()
-    while wait() do
-        if _G.LevelMode == "Get Quest" and _G.FarmLevel then
-            pcall(function()
+            end
+            if _G.LevelMode == "Get Quest" and _G.FarmLevel then
                 local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
                 if not string.find(QuestTitle, NameMon) then
                     StartMagnet = false
@@ -2897,8 +2890,8 @@ spawn(function()
                         StartMagnet = false
                     end
                 end
-            end)
-        end
+            end
+        end)
     end
 end)
 
