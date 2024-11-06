@@ -1642,7 +1642,7 @@ spawn(function()
                     local humanoid = player.Character:FindFirstChild("Humanoid")
                     local bodyVelocity = player.Character.HumanoidRootPart:FindFirstChild("BodyVelocity")
                     if humanoid and bodyVelocity then
-                        bodyVelocity.Velocity = humanoid.MoveDirection * 50
+                        bodyVelocity.Velocity = humanoid.MoveDirection * 50 + Vector3.new(0, 0, 0)
                     end
                 end)
                 for _, v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
