@@ -13,6 +13,12 @@ local Window = WindUI:CreateWindow({
     HasOutline = true
 })
 
+WindUI:Notify({
+    Title = "Tinh Linh Hub",
+    Content = "Loading Script...\nThis May Cause Lag.",
+    Duration = 5
+})
+
 --= [ ??? ] =--
 
 local GC = getconnections or get_signal_cons
@@ -2752,29 +2758,7 @@ Farm:Toggle({
 spawn(function()
     while wait() do
         pcall(function()
-            if _G.LevelMode == "No Quest" and _G.FarmLevel == true then
-                CheckQuest()
-                if game:GetService("Workspace").Enemies:FindFirstChild(Mon) then
-                    for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                        if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
-                            if v.Name == Mon then
-                                repeat wait()
-                                    EquipWeapon(_G.SelectWeapon)
-                                    topos(v.HumanoidRootPart.CFrame * Pos)
-                                    PosFarm = v.HumanoidRootPart.CFrame
-                                    StartMagnet = true
-                                until not _G.FarmLevel or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0
-                                StartMagnet = false
-                            end
-                        end
-                    end
-                else
-                    topos(CFrameMon)
-                    UnEquipWeapon(_G.SelectWeapon)
-                    StartMagnet = false
-                end
-            end
-            if _G.LevelMode == "Get Quest" and _G.FarmLevel == true then
+            if _G.FarmLevel then
                 local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
                 if not string.find(QuestTitle, NameMon) then
                     StartMagnet = false
@@ -3163,4 +3147,10 @@ Farm:Toggle({
         _G.FarmMaterial = Cac
         StopTween(_G.FarmMaterial)
     end
+})
+
+WindUI:Notify({
+    Title = "Tinh Linh Hub",
+    Content = "Load Script Successfully !",
+    Duration = 5
 })
