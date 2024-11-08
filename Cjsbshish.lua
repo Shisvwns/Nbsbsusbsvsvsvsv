@@ -2751,7 +2751,6 @@ Farm:Toggle({
     Value = false,
     Callback = function(Cac)
         _G.FarmLevel = Cac
-        StopTween(_G.FarmLevel)
     end
 })
 
