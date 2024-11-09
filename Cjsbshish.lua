@@ -1,3154 +1,5829 @@
---= [ Create Menu ] =--
+local Lighting = game:GetService("Lighting")
+local RunService = game:GetService("RunService")
+local LocalPlayer = game:GetService("Players").LocalPlayer
+local UserInputService = game:GetService("UserInputService")
+local TweenService = game:GetService("TweenService")
+local Camera = game:GetService("Workspace").CurrentCamera
+local Mouse = LocalPlayer:GetMouse()
+local httpService = game:GetService("HttpService")
 
-local WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Footagesus/WindUI/refs/heads/main/dist/main.lua"))()
-local Window = WindUI:CreateWindow({
-    Title = "Tinh Linh Hub",
-    Icon = "rbxassetid://16730867128",
-    Author = "obievn",
-    Folder = "Tinh Linh Hub",
-    Size = UDim2.fromOffset(590, 340),
-    Transparent = true,
-    Theme = "Dark",
-    SideBarWidth = 155,
-    HasOutline = true
-})
+local RenderStepped = RunService.RenderStepped
 
-WindUI:Notify({
-    Title = "Tinh Linh Hub",
-    Content = "Loading Script...\nThis May Cause Lag.",
-    Duration = 5
-})
+local ProtectGui = protectgui or (syn and syn.protect_gui) or function() end
 
---= [ ??? ] =--
+local Themes = {
+	Names = {
+		"Dark",
+		"Darker",
+		"Light",
+		"Aqua",
+		"Amethyst",
+		"Rose",
+		"Sakura"
+	},
+	Dark = {
+		Name = "Dark",
+		Accent = Color3.fromRGB(96, 205, 255),
 
-local GC = getconnections or get_signal_cons
-if GC then
-    for i,v in pairs(GC(game.Players.LocalPlayer.Idled)) do
-        if v["Disable"] then
-            v["Disable"](v)
-        elseif v["Disconnect"] then
-            v["Disconnect"](v)
-        end
-    end
-else
-    local vu = game:GetService("VirtualUser")
-    game:GetService("Players").LocalPlayer.Idled:connect(function()
-        vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-        wait(1)
-        vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-    end)
-end
+		AcrylicMain = Color3.fromRGB(60, 60, 60),
+		AcrylicBorder = Color3.fromRGB(90, 90, 90),
+		AcrylicGradient = ColorSequence.new(Color3.fromRGB(40, 40, 40), Color3.fromRGB(40, 40, 40)),
+		AcrylicNoise = 0.9,
 
-_G.AntiFlagReset = true
-spawn(function()
-    while wait(2000) do
-         if _G.AntiFlagReset then
-            game:GetService("TeleportService"):Teleport(game.PlaceId, game:GetService("Players").LocalPlayer)
-        end
-    end
-end)
+		TitleBarLine = Color3.fromRGB(75, 75, 75),
+		Tab = Color3.fromRGB(120, 120, 120),
 
-if game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseTeam") then
-	repeat wait()
-		if game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Main").ChooseTeam.Visible == true then
-			if _G.Team == "Pirates" then
-				for i, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.TextButton.Activated)) do                                                                                                
-					v.Function()
-				end
-			elseif _G.Team == "Marines" then
-				for i, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Marines.Frame.TextButton.Activated)) do                                                                                                
-					v.Function()
-				end
-			end
-		end
-	until game.Players.LocalPlayer.Team ~= nil and game:IsLoaded()
-end
+		Element = Color3.fromRGB(120, 120, 120),
+		ElementBorder = Color3.fromRGB(35, 35, 35),
+		InElementBorder = Color3.fromRGB(90, 90, 90),
+		ElementTransparency = 0.87,
 
-if not LPH_OBFUSCATED then
-	LPH_JIT_MAX = (function(...) return ... end)
-	LPH_NO_VIRTUALIZE = (function(...) return ... end)
-	LPH_NO_UPVALUES = (function(...) return ... end)
-end
+		ToggleSlider = Color3.fromRGB(120, 120, 120),
+		ToggleToggled = Color3.fromRGB(0, 0, 0),
 
-local function TeleportToServer(JobId)
-    local Succ, Err = pcall(function()
-        game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, JobId, game.Players.LocalPlayer)
-    end)
-    if not Succ then print(Err) end
-end
-local CheckAdmin = {"rip_indra","wenlocktoad","toilamvidamme","Uzoth","Azarth","Hingoi","Axiore","Death_King","Polkster","Lunoven","TheGreateAced","rip_fud","drip_mama","oofficialnoobie","Daigrock","layandikit12","red_game43","arlthmetic",}
-task.spawn(function()
-    while wait() do
-        for _, User in ipairs(game.Players:GetPlayers()) do
-            if table.find(CheckAdmin, User.Name) then
-                local PlaceID = game.PlaceId
-                local API = "https://games.roblox.com/v1/games/"
-                local Limit = "/servers/Public?sortOrder=Asc&limit=100"
-                local Serv = HttpService:JSONDecode(game:HttpGet(API .. PlaceID .. Limit))
-                if Serv and Serv.data and #Serv.data > 0 then
-                    TeleportToServer(Serv.data[1].id)
-                end
-            end
-        end
-    end
-end)
+		SliderRail = Color3.fromRGB(120, 120, 120),
 
--- [ World Check ]
+		DropdownFrame = Color3.fromRGB(160, 160, 160),
+		DropdownHolder = Color3.fromRGB(45, 45, 45),
+		DropdownBorder = Color3.fromRGB(35, 35, 35),
+		DropdownOption = Color3.fromRGB(120, 120, 120),
 
-if game.PlaceId == 2753915549 then
-    World1 = true
-elseif game.PlaceId == 4442272183 then
-    World2 = true
-elseif game.PlaceId == 7449423635 then
-    World3 = true
-else
-    game.Players.LocalPlayer:Kick("Script Only Support Blox Fruit")
-end
+		Keybind = Color3.fromRGB(120, 120, 120),
 
--- [ Check Monster & Material & Boss & Quest & Pos ]
+		Input = Color3.fromRGB(160, 160, 160),
+		InputFocused = Color3.fromRGB(10, 10, 10),
+		InputIndicator = Color3.fromRGB(150, 150, 150),
 
-function CheckQuest()
-    MyLevel = game:GetService("Players").LocalPlayer.Data.Level.Value
-    if World1 then
-        if MyLevel == 1 or MyLevel <= 9 then
-            Mon = "Bandit"
-            LevelQuest = 1
-            NameQuest = "BanditQuest1"
-            NameMon = "Bandit"
-            CFrameQuest = CFrame.new(1059.37195, 15.4495068, 1550.4231, 0.939700544, -0, -0.341998369, 0, 1, -0, 0.341998369, 0, 0.939700544)
-            CFrameMon = CFrame.new(1045.962646484375, 27.00250816345215, 1560.8203125)
-        elseif MyLevel == 10 or MyLevel <= 14 then
-            Mon = "Monkey"
-            LevelQuest = 1
-            NameQuest = "JungleQuest"
-            NameMon = "Monkey"
-            CFrameQuest = CFrame.new(-1598.08911, 35.5501175, 153.377838, 0, 0, 1, 0, 1, -0, -1, 0, 0)
-            CFrameMon = CFrame.new(-1448.51806640625, 67.85301208496094, 11.46579647064209)
-        elseif MyLevel == 15 or MyLevel <= 29 then
-            Mon = "Gorilla"
-            LevelQuest = 2
-            NameQuest = "JungleQuest"
-            NameMon = "Gorilla"
-            CFrameQuest = CFrame.new(-1598.08911, 35.5501175, 153.377838, 0, 0, 1, 0, 1, -0, -1, 0, 0)
-            CFrameMon = CFrame.new(-1129.8836669921875, 40.46354675292969, -525.4237060546875)
-        elseif MyLevel == 30 or MyLevel <= 39 then
-            Mon = "Pirate"
-            LevelQuest = 1
-            NameQuest = "BuggyQuest1"
-            NameMon = "Pirate"
-            CFrameQuest = CFrame.new(-1141.07483, 4.10001802, 3831.5498, 0.965929627, -0, -0.258804798, 0, 1, -0, 0.258804798, 0, 0.965929627)
-            CFrameMon = CFrame.new(-1103.513427734375, 13.752052307128906, 3896.091064453125)
-        elseif MyLevel == 40 or MyLevel <= 59 then
-            Mon = "Brute"
-            LevelQuest = 2
-            NameQuest = "BuggyQuest1"
-            NameMon = "Brute"
-            CFrameQuest = CFrame.new(-1141.07483, 4.10001802, 3831.5498, 0.965929627, -0, -0.258804798, 0, 1, -0, 0.258804798, 0, 0.965929627)
-            CFrameMon = CFrame.new(-1140.083740234375, 14.809885025024414, 4322.92138671875)
-        elseif MyLevel == 60 or MyLevel <= 74 then
-            Mon = "Desert Bandit"
-            LevelQuest = 1
-            NameQuest = "DesertQuest"
-            NameMon = "Desert Bandit"
-            CFrameQuest = CFrame.new(894.488647, 5.14000702, 4392.43359, 0.819155693, -0, -0.573571265, 0, 1, -0, 0.573571265, 0, 0.819155693)
-            CFrameMon = CFrame.new(924.7998046875, 6.44867467880249, 4481.5859375)
-        elseif MyLevel == 75 or MyLevel <= 89 then
-            Mon = "Desert Officer"
-            LevelQuest = 2
-            NameQuest = "DesertQuest"
-            NameMon = "Desert Officer"
-            CFrameQuest = CFrame.new(894.488647, 5.14000702, 4392.43359, 0.819155693, -0, -0.573571265, 0, 1, -0, 0.573571265, 0, 0.819155693)
-            CFrameMon = CFrame.new(1608.2822265625, 8.614224433898926, 4371.00732421875)
-        elseif MyLevel == 90 or MyLevel <= 99 then
-            Mon = "Snow Bandit"
-            LevelQuest = 1
-            NameQuest = "SnowQuest"
-            NameMon = "Snow Bandit"
-            CFrameQuest = CFrame.new(1389.74451, 88.1519318, -1298.90796, -0.342042685, 0, 0.939684391, 0, 1, 0, -0.939684391, 0, -0.342042685)
-            CFrameMon = CFrame.new(1354.347900390625, 87.27277374267578, -1393.946533203125)
-        elseif MyLevel == 100 or MyLevel <= 119 then
-            Mon = "Snowman"
-            LevelQuest = 2
-            NameQuest = "SnowQuest"
-            NameMon = "Snowman"
-            CFrameQuest = CFrame.new(1389.74451, 88.1519318, -1298.90796, -0.342042685, 0, 0.939684391, 0, 1, 0, -0.939684391, 0, -0.342042685)
-            CFrameMon = CFrame.new(1201.6412353515625, 144.57958984375, -1550.0670166015625)
-        elseif MyLevel == 120 or MyLevel <= 149 then
-            Mon = "Chief Petty Officer"
-            LevelQuest = 1
-            NameQuest = "MarineQuest2"
-            NameMon = "Chief Petty Officer"
-            CFrameQuest = CFrame.new(-5039.58643, 27.3500385, 4324.68018, 0, 0, -1, 0, 1, 0, 1, 0, 0)
-            CFrameMon = CFrame.new(-4881.23095703125, 22.65204429626465, 4273.75244140625)
-        elseif MyLevel == 150 or MyLevel <= 174 then
-            Mon = "Sky Bandit"
-            LevelQuest = 1
-            NameQuest = "SkyQuest"
-            NameMon = "Sky Bandit"
-            CFrameQuest = CFrame.new(-4839.53027, 716.368591, -2619.44165, 0.866007268, 0, 0.500031412, 0, 1, 0, -0.500031412, 0, 0.866007268)
-            CFrameMon = CFrame.new(-4953.20703125, 295.74420166015625, -2899.22900390625)
-        elseif MyLevel == 175 or MyLevel <= 189 then
-            Mon = "Dark Master"
-            LevelQuest = 2
-            NameQuest = "SkyQuest"
-            NameMon = "Dark Master"
-            CFrameQuest = CFrame.new(-4839.53027, 716.368591, -2619.44165, 0.866007268, 0, 0.500031412, 0, 1, 0, -0.500031412, 0, 0.866007268)
-            CFrameMon = CFrame.new(-5259.8447265625, 391.3976745605469, -2229.035400390625)
-        elseif MyLevel == 190 or MyLevel <= 209 then
-            Mon = "Prisoner"
-            LevelQuest = 1
-            NameQuest = "PrisonerQuest"
-            NameMon = "Prisoner"
-            CFrameQuest = CFrame.new(5308.93115, 1.65517521, 475.120514, -0.0894274712, -5.00292918e-09, -0.995993316, 1.60817859e-09, 1, -5.16744869e-09, 0.995993316, -2.06384709e-09, -0.0894274712)
-            CFrameMon = CFrame.new(5098.9736328125, -0.3204058110713959, 474.2373352050781)
-        elseif MyLevel == 210 or MyLevel <= 249 then
-            Mon = "Dangerous Prisoner"
-            LevelQuest = 2
-            NameQuest = "PrisonerQuest"
-            NameMon = "Dangerous Prisoner"
-            CFrameQuest = CFrame.new(5308.93115, 1.65517521, 475.120514, -0.0894274712, -5.00292918e-09, -0.995993316, 1.60817859e-09, 1, -5.16744869e-09, 0.995993316, -2.06384709e-09, -0.0894274712)
-            CFrameMon = CFrame.new(5654.5634765625, 15.633401870727539, 866.2991943359375)
-        elseif MyLevel == 250 or MyLevel <= 274 then
-            Mon = "Toga Warrior"
-            LevelQuest = 1
-            NameQuest = "ColosseumQuest"
-            NameMon = "Toga Warrior"
-            CFrameQuest = CFrame.new(-1580.04663, 6.35000277, -2986.47534, -0.515037298, 0, -0.857167721, 0, 1, 0, 0.857167721, 0, -0.515037298)
-            CFrameMon = CFrame.new(-1820.21484375, 51.68385696411133, -2740.6650390625)
-        elseif MyLevel == 275 or MyLevel <= 299 then
-            Mon = "Gladiator"
-            LevelQuest = 2
-            NameQuest = "ColosseumQuest"
-            NameMon = "Gladiator"
-            CFrameQuest = CFrame.new(-1580.04663, 6.35000277, -2986.47534, -0.515037298, 0, -0.857167721, 0, 1, 0, 0.857167721, 0, -0.515037298)
-            CFrameMon = CFrame.new(-1292.838134765625, 56.380882263183594, -3339.031494140625)
-        elseif MyLevel == 300 or MyLevel <= 324 then
-            Mon = "Military Soldier"
-            LevelQuest = 1
-            NameQuest = "MagmaQuest"
-            NameMon = "Military Soldier"
-            CFrameQuest = CFrame.new(-5313.37012, 10.9500084, 8515.29395, -0.499959469, 0, 0.866048813, 0, 1, 0, -0.866048813, 0, -0.499959469)
-            CFrameMon = CFrame.new(-5411.16455078125, 11.081554412841797, 8454.29296875)
-        elseif MyLevel == 325 or MyLevel <= 374 then
-            Mon = "Military Spy"
-            LevelQuest = 2
-            NameQuest = "MagmaQuest"
-            NameMon = "Military Spy"
-            CFrameQuest = CFrame.new(-5313.37012, 10.9500084, 8515.29395, -0.499959469, 0, 0.866048813, 0, 1, 0, -0.866048813, 0, -0.499959469)
-            CFrameMon = CFrame.new(-5802.8681640625, 86.26241302490234, 8828.859375)
-        elseif MyLevel == 375 or MyLevel <= 399 then
-            Mon = "Fishman Warrior"
-            LevelQuest = 1
-            NameQuest = "FishmanQuest"
-            NameMon = "Fishman Warrior"
-            CFrameQuest = CFrame.new(61122.65234375, 18.497442245483, 1569.3997802734)
-            CFrameMon = CFrame.new(60878.30078125, 18.482830047607422, 1543.7574462890625)
-        elseif MyLevel == 400 or MyLevel <= 449 then
-            Mon = "Fishman Commando"
-            LevelQuest = 2
-            NameQuest = "FishmanQuest"
-            NameMon = "Fishman Commando"
-            CFrameQuest = CFrame.new(61122.65234375, 18.497442245483, 1569.3997802734)
-            CFrameMon = CFrame.new(61922.6328125, 18.482830047607422, 1493.934326171875)
-        elseif MyLevel == 450 or MyLevel <= 474 then
-            Mon = "God's Guard"
-            LevelQuest = 1
-            NameQuest = "SkyExp1Quest"
-            NameMon = "God's Guard"
-            CFrameQuest = CFrame.new(-4721.88867, 843.874695, -1949.96643, 0.996191859, -0, -0.0871884301, 0, 1, -0, 0.0871884301, 0, 0.996191859)
-            CFrameMon = CFrame.new(-4710.04296875, 845.2769775390625, -1927.3079833984375)
-        elseif MyLevel == 475 or MyLevel <= 524 then
-            Mon = "Shanda"
-            LevelQuest = 2
-            NameQuest = "SkyExp1Quest"
-            NameMon = "Shanda"
-            CFrameQuest = CFrame.new(-7859.09814, 5544.19043, -381.476196, -0.422592998, 0, 0.906319618, 0, 1, 0, -0.906319618, 0, -0.422592998)
-            CFrameMon = CFrame.new(-7678.48974609375, 5566.40380859375, -497.2156066894531)
-        elseif MyLevel == 525 or MyLevel <= 549 then
-            Mon = "Royal Squad"
-            LevelQuest = 1
-            NameQuest = "SkyExp2Quest"
-            NameMon = "Royal Squad"
-            CFrameQuest = CFrame.new(-7906.81592, 5634.6626, -1411.99194, 0, 0, -1, 0, 1, 0, 1, 0, 0)
-            CFrameMon = CFrame.new(-7624.25244140625, 5658.13330078125, -1467.354248046875)
-        elseif MyLevel == 550 or MyLevel <= 624 then
-            Mon = "Royal Soldier"
-            LevelQuest = 2
-            NameQuest = "SkyExp2Quest"
-            NameMon = "Royal Soldier"
-            CFrameQuest = CFrame.new(-7906.81592, 5634.6626, -1411.99194, 0, 0, -1, 0, 1, 0, 1, 0, 0)
-            CFrameMon = CFrame.new(-7836.75341796875, 5645.6640625, -1790.6236572265625)
-        elseif MyLevel == 625 or MyLevel <= 649 then
-            Mon = "Galley Pirate"
-            LevelQuest = 1
-            NameQuest = "FountainQuest"
-            NameMon = "Galley Pirate"
-            CFrameQuest = CFrame.new(5259.81982, 37.3500175, 4050.0293, 0.087131381, 0, 0.996196866, 0, 1, 0, -0.996196866, 0, 0.087131381)
-            CFrameMon = CFrame.new(5551.02197265625, 78.90135192871094, 3930.412841796875)
-        elseif MyLevel >= 650 then
-            Mon = "Galley Captain"
-            LevelQuest = 2
-            NameQuest = "FountainQuest"
-            NameMon = "Galley Captain"
-            CFrameQuest = CFrame.new(5259.81982, 37.3500175, 4050.0293, 0.087131381, 0, 0.996196866, 0, 1, 0, -0.996196866, 0, 0.087131381)
-            CFrameMon = CFrame.new(5441.95166015625, 42.50205993652344, 4950.09375)
-        end
-    elseif World2 then
-        if MyLevel == 700 or MyLevel <= 724 then
-            Mon = "Raider"
-            LevelQuest = 1
-            NameQuest = "Area1Quest"
-            NameMon = "Raider"
-            CFrameQuest = CFrame.new(-429.543518, 71.7699966, 1836.18188, -0.22495985, 0, -0.974368095, 0, 1, 0, 0.974368095, 0, -0.22495985)
-            CFrameMon = CFrame.new(-728.3267211914062, 52.779319763183594, 2345.7705078125)
-        elseif MyLevel == 725 or MyLevel <= 774 then
-            Mon = "Mercenary"
-            LevelQuest = 2
-            NameQuest = "Area1Quest"
-            NameMon = "Mercenary"
-            CFrameQuest = CFrame.new(-429.543518, 71.7699966, 1836.18188, -0.22495985, 0, -0.974368095, 0, 1, 0, 0.974368095, 0, -0.22495985)
-            CFrameMon = CFrame.new(-1004.3244018554688, 80.15886688232422, 1424.619384765625)
-        elseif MyLevel == 775 or MyLevel <= 799 then
-            Mon = "Swan Pirate"
-            LevelQuest = 1
-            NameQuest = "Area2Quest"
-            NameMon = "Swan Pirate"
-            CFrameQuest = CFrame.new(638.43811, 71.769989, 918.282898, 0.139203906, 0, 0.99026376, 0, 1, 0, -0.99026376, 0, 0.139203906)
-            CFrameMon = CFrame.new(1068.664306640625, 137.61428833007812, 1322.1060791015625)
-        elseif MyLevel == 800 or MyLevel <= 874 then
-            Mon = "Factory Staff"
-            NameQuest = "Area2Quest"
-            LevelQuest = 2
-            NameMon = "Factory Staff"
-            CFrameQuest = CFrame.new(632.698608, 73.1055908, 918.666321, -0.0319722369, 8.96074881e-10, -0.999488771, 1.36326533e-10, 1, 8.92172336e-10, 0.999488771, -1.07732087e-10, -0.0319722369)
-            CFrameMon = CFrame.new(73.07867431640625, 81.86344146728516, -27.470672607421875)
-        elseif MyLevel == 875 or MyLevel <= 899 then
-            Mon = "Marine Lieutenant"
-            LevelQuest = 1
-            NameQuest = "MarineQuest3"
-            NameMon = "Marine Lieutenant"
-            CFrameQuest = CFrame.new(-2440.79639, 71.7140732, -3216.06812, 0.866007268, 0, 0.500031412, 0, 1, 0, -0.500031412, 0, 0.866007268)
-            CFrameMon = CFrame.new(-2821.372314453125, 75.89727783203125, -3070.089111328125)
-        elseif MyLevel == 900 or MyLevel <= 949 then
-            Mon = "Marine Captain"
-            LevelQuest = 2
-            NameQuest = "MarineQuest3"
-            NameMon = "Marine Captain"
-            CFrameQuest = CFrame.new(-2440.79639, 71.7140732, -3216.06812, 0.866007268, 0, 0.500031412, 0, 1, 0, -0.500031412, 0, 0.866007268)
-            CFrameMon = CFrame.new(-1861.2310791015625, 80.17658233642578, -3254.697509765625)
-        elseif MyLevel == 950 or MyLevel <= 974 then
-            Mon = "Zombie"
-            LevelQuest = 1
-            NameQuest = "ZombieQuest"
-            NameMon = "Zombie"
-            CFrameQuest = CFrame.new(-5497.06152, 47.5923004, -795.237061, -0.29242146, 0, -0.95628953, 0, 1, 0, 0.95628953, 0, -0.29242146)
-            CFrameMon = CFrame.new(-5657.77685546875, 78.96973419189453, -928.68701171875)
-        elseif MyLevel == 975 or MyLevel <= 999 then
-            Mon = "Vampire"
-            LevelQuest = 2
-            NameQuest = "ZombieQuest"
-            NameMon = "Vampire"
-            CFrameQuest = CFrame.new(-5497.06152, 47.5923004, -795.237061, -0.29242146, 0, -0.95628953, 0, 1, 0, 0.95628953, 0, -0.29242146)
-            CFrameMon = CFrame.new(-6037.66796875, 32.18463897705078, -1340.6597900390625)
-        elseif MyLevel == 1000 or MyLevel <= 1049 then
-            Mon = "Snow Trooper"
-            LevelQuest = 1
-            NameQuest = "SnowMountainQuest"
-            NameMon = "Snow Trooper"
-            CFrameQuest = CFrame.new(609.858826, 400.119904, -5372.25928, -0.374604106, 0, 0.92718488, 0, 1, 0, -0.92718488, 0, -0.374604106)
-            CFrameMon = CFrame.new(549.1473388671875, 427.3870544433594, -5563.69873046875)
-        elseif MyLevel == 1050 or MyLevel <= 1099 then
-            Mon = "Winter Warrior"
-            LevelQuest = 2
-            NameQuest = "SnowMountainQuest"
-            NameMon = "Winter Warrior"
-            CFrameQuest = CFrame.new(609.858826, 400.119904, -5372.25928, -0.374604106, 0, 0.92718488, 0, 1, 0, -0.92718488, 0, -0.374604106)
-            CFrameMon = CFrame.new(1142.7451171875, 475.6398010253906, -5199.41650390625)
-        elseif MyLevel == 1100 or MyLevel <= 1124 then
-            Mon = "Lab Subordinate"
-            LevelQuest = 1
-            NameQuest = "IceSideQuest"
-            NameMon = "Lab Subordinate"
-            CFrameQuest = CFrame.new(-6064.06885, 15.2422857, -4902.97852, 0.453972578, -0, -0.891015649, 0, 1, -0, 0.891015649, 0, 0.453972578)
-            CFrameMon = CFrame.new(-5707.4716796875, 15.951709747314453, -4513.39208984375)
-        elseif MyLevel == 1125 or MyLevel <= 1174 then
-            Mon = "Horned Warrior"
-            LevelQuest = 2
-            NameQuest = "IceSideQuest"
-            NameMon = "Horned Warrior"
-            CFrameQuest = CFrame.new(-6064.06885, 15.2422857, -4902.97852, 0.453972578, -0, -0.891015649, 0, 1, -0, 0.891015649, 0, 0.453972578)
-            CFrameMon = CFrame.new(-6341.36669921875, 15.951770782470703, -5723.162109375)
-        elseif MyLevel == 1175 or MyLevel <= 1199 then
-            Mon = "Magma Ninja"
-            LevelQuest = 1
-            NameQuest = "FireSideQuest"
-            NameMon = "Magma Ninja"
-            CFrameQuest = CFrame.new(-5428.03174, 15.0622921, -5299.43457, -0.882952213, 0, 0.469463557, 0, 1, 0, -0.469463557, 0, -0.882952213)
-            CFrameMon = CFrame.new(-5449.6728515625, 76.65874481201172, -5808.20068359375)
-        elseif MyLevel == 1200 or MyLevel <= 1249 then
-            Mon = "Lava Pirate"
-            LevelQuest = 2
-            NameQuest = "FireSideQuest"
-            NameMon = "Lava Pirate"
-            CFrameQuest = CFrame.new(-5428.03174, 15.0622921, -5299.43457, -0.882952213, 0, 0.469463557, 0, 1, 0, -0.469463557, 0, -0.882952213)
-            CFrameMon = CFrame.new(-5213.33154296875, 49.73788070678711, -4701.451171875)
-        elseif MyLevel == 1250 or MyLevel <= 1274 then
-            Mon = "Ship Deckhand"
-            LevelQuest = 1
-            NameQuest = "ShipQuest1"
-            NameMon = "Ship Deckhand"
-            CFrameQuest = CFrame.new(1037.80127, 125.092171, 32911.6016)         
-            CFrameMon = CFrame.new(1212.0111083984375, 150.79205322265625, 33059.24609375)
-        elseif MyLevel == 1275 or MyLevel <= 1299 then
-            Mon = "Ship Engineer"
-            LevelQuest = 2
-            NameQuest = "ShipQuest1"
-            NameMon = "Ship Engineer"
-            CFrameQuest = CFrame.new(1037.80127, 125.092171, 32911.6016)   
-            CFrameMon = CFrame.new(919.4786376953125, 43.54401397705078, 32779.96875)   
-        elseif MyLevel == 1300 or MyLevel <= 1324 then
-            Mon = "Ship Steward"
-            LevelQuest = 1
-            NameQuest = "ShipQuest2"
-            NameMon = "Ship Steward"
-            CFrameQuest = CFrame.new(968.80957, 125.092171, 33244.125)         
-            CFrameMon = CFrame.new(919.4385375976562, 129.55599975585938, 33436.03515625)
-        elseif MyLevel == 1325 or MyLevel <= 1349 then
-            Mon = "Ship Officer"
-            LevelQuest = 2
-            NameQuest = "ShipQuest2"
-            NameMon = "Ship Officer"
-            CFrameQuest = CFrame.new(968.80957, 125.092171, 33244.125)
-            CFrameMon = CFrame.new(1036.0179443359375, 181.4390411376953, 33315.7265625)
-        elseif MyLevel == 1350 or MyLevel <= 1374 then
-            Mon = "Arctic Warrior"
-            LevelQuest = 1
-            NameQuest = "FrostQuest"
-            NameMon = "Arctic Warrior"
-            CFrameQuest = CFrame.new(5667.6582, 26.7997818, -6486.08984, -0.933587909, 0, -0.358349502, 0, 1, 0, 0.358349502, 0, -0.933587909)
-            CFrameMon = CFrame.new(5966.24609375, 62.97002029418945, -6179.3828125)
-        elseif MyLevel == 1375 or MyLevel <= 1424 then
-            Mon = "Snow Lurker"
-            LevelQuest = 2
-            NameQuest = "FrostQuest"
-            NameMon = "Snow Lurker"
-            CFrameQuest = CFrame.new(5667.6582, 26.7997818, -6486.08984, -0.933587909, 0, -0.358349502, 0, 1, 0, 0.358349502, 0, -0.933587909)
-            CFrameMon = CFrame.new(5407.07373046875, 69.19437408447266, -6880.88037109375)
-        elseif MyLevel == 1425 or MyLevel <= 1449 then
-            Mon = "Sea Soldier"
-            LevelQuest = 1
-            NameQuest = "ForgottenQuest"
-            NameMon = "Sea Soldier"
-            CFrameQuest = CFrame.new(-3054.44458, 235.544281, -10142.8193, 0.990270376, -0, -0.13915664, 0, 1, -0, 0.13915664, 0, 0.990270376)
-            CFrameMon = CFrame.new(-3028.2236328125, 64.67451477050781, -9775.4267578125)
-        elseif MyLevel >= 1450 then
-            Mon = "Water Fighter"
-            LevelQuest = 2
-            NameQuest = "ForgottenQuest"
-            NameMon = "Water Fighter"
-            CFrameQuest = CFrame.new(-3054.44458, 235.544281, -10142.8193, 0.990270376, -0, -0.13915664, 0, 1, -0, 0.13915664, 0, 0.990270376)
-            CFrameMon = CFrame.new(-3352.9013671875, 285.01556396484375, -10534.841796875)
-        end
-    elseif World3 then
-        if MyLevel == 1500 or MyLevel <= 1524 then
-            Mon = "Pirate Millionaire"
-            LevelQuest = 1
-            NameQuest = "PiratePortQuest"
-            NameMon = "Pirate Millionaire"
-            CFrameQuest = CFrame.new(-290.074677, 42.9034653, 5581.58984, 0.965929627, -0, -0.258804798, 0, 1, -0, 0.258804798, 0, 0.965929627)
-            CFrameMon = CFrame.new(-245.9963836669922, 47.30615234375, 5584.1005859375)
-        elseif MyLevel == 1525 or MyLevel <= 1574 then
-            Mon = "Pistol Billionaire"
-            LevelQuest = 2
-            NameQuest = "PiratePortQuest"
-            NameMon = "Pistol Billionaire"
-            CFrameQuest = CFrame.new(-290.074677, 42.9034653, 5581.58984, 0.965929627, -0, -0.258804798, 0, 1, -0, 0.258804798, 0, 0.965929627)
-            CFrameMon = CFrame.new(-187.3301544189453, 86.23987579345703, 6013.513671875)
-        elseif MyLevel == 1575 or MyLevel <= 1599 then
-            Mon = "Dragon Crew Warrior"
-            LevelQuest = 1
-            NameQuest = "AmazonQuest"
-            NameMon = "Dragon Crew Warrior"
-            CFrameQuest = CFrame.new(5832.83594, 51.6806107, -1101.51563, 0.898790359, -0, -0.438378751, 0, 1, -0, 0.438378751, 0, 0.898790359)
-            CFrameMon = CFrame.new(6141.140625, 51.35136413574219, -1340.738525390625)
-        elseif MyLevel == 1600 or MyLevel <= 1624 then 
-            Mon = "Dragon Crew Archer [Lv. 1600]"
-            NameQuest = "AmazonQuest"
-            LevelQuest = 2
-            NameMon = "Dragon Crew Archer"
-            CFrameQuest = CFrame.new(5833.1147460938, 51.60498046875, -1103.0693359375)
-            CFrameMon = CFrame.new(6616.41748046875, 441.7670593261719, 446.0469970703125)
-        elseif MyLevel == 1625 or MyLevel <= 1649 then
-            Mon = "Female Islander"
-            NameQuest = "AmazonQuest2"
-            LevelQuest = 1
-            NameMon = "Female Islander"
-            CFrameQuest = CFrame.new(5446.8793945313, 601.62945556641, 749.45672607422)
-            CFrameMon = CFrame.new(4685.25830078125, 735.8078002929688, 815.3425903320312)
-        elseif MyLevel == 1650 or MyLevel <= 1699 then 
-            Mon = "Giant Islander [Lv. 1650]"
-            NameQuest = "AmazonQuest2"
-            LevelQuest = 2
-            NameMon = "Giant Islander"
-            CFrameQuest = CFrame.new(5446.8793945313, 601.62945556641, 749.45672607422)
-            CFrameMon = CFrame.new(4729.09423828125, 590.436767578125, -36.97627639770508)
-        elseif MyLevel == 1700 or MyLevel <= 1724 then
-            Mon = "Marine Commodore"
-            LevelQuest = 1
-            NameQuest = "MarineTreeIsland"
-            NameMon = "Marine Commodore"
-            CFrameQuest = CFrame.new(2180.54126, 27.8156815, -6741.5498, -0.965929747, 0, 0.258804798, 0, 1, 0, -0.258804798, 0, -0.965929747)
-            CFrameMon = CFrame.new(2286.0078125, 73.13391876220703, -7159.80908203125)
-        elseif MyLevel == 1725 or MyLevel <= 1774 then
-            Mon = "Marine Rear Admiral [Lv. 1725]"
-            NameMon = "Marine Rear Admiral"
-            NameQuest = "MarineTreeIsland"
-            LevelQuest = 2
-            CFrameQuest = CFrame.new(2179.98828125, 28.731239318848, -6740.0551757813)
-            CFrameMon = CFrame.new(3656.773681640625, 160.52406311035156, -7001.5986328125)
-        elseif MyLevel == 1775 or MyLevel <= 1799 then
-            Mon = "Fishman Raider"
-            LevelQuest = 1
-            NameQuest = "DeepForestIsland3"
-            NameMon = "Fishman Raider"
-            CFrameQuest = CFrame.new(-10581.6563, 330.872955, -8761.18652, -0.882952213, 0, 0.469463557, 0, 1, 0, -0.469463557, 0, -0.882952213)   
-            CFrameMon = CFrame.new(-10407.5263671875, 331.76263427734375, -8368.5166015625)
-        elseif MyLevel == 1800 or MyLevel <= 1824 then
-            Mon = "Fishman Captain"
-            LevelQuest = 2
-            NameQuest = "DeepForestIsland3"
-            NameMon = "Fishman Captain"
-            CFrameQuest = CFrame.new(-10581.6563, 330.872955, -8761.18652, -0.882952213, 0, 0.469463557, 0, 1, 0, -0.469463557, 0, -0.882952213)   
-            CFrameMon = CFrame.new(-10994.701171875, 352.38140869140625, -9002.1103515625) 
-        elseif MyLevel == 1825 or MyLevel <= 1849 then
-            Mon = "Forest Pirate"
-            LevelQuest = 1
-            NameQuest = "DeepForestIsland"
-            NameMon = "Forest Pirate"
-            CFrameQuest = CFrame.new(-13234.04, 331.488495, -7625.40137, 0.707134247, -0, -0.707079291, 0, 1, -0, 0.707079291, 0, 0.707134247)
-            CFrameMon = CFrame.new(-13274.478515625, 332.3781433105469, -7769.58056640625)
-        elseif MyLevel == 1850 or MyLevel <= 1899 then
-            Mon = "Mythological Pirate"
-            LevelQuest = 2
-            NameQuest = "DeepForestIsland"
-            NameMon = "Mythological Pirate"
-            CFrameQuest = CFrame.new(-13234.04, 331.488495, -7625.40137, 0.707134247, -0, -0.707079291, 0, 1, -0, 0.707079291, 0, 0.707134247)   
-            CFrameMon = CFrame.new(-13680.607421875, 501.08154296875, -6991.189453125)
-        elseif MyLevel == 1900 or MyLevel <= 1924 then
-            Mon = "Jungle Pirate"
-            LevelQuest = 1
-            NameQuest = "DeepForestIsland2"
-            NameMon = "Jungle Pirate"
-            CFrameQuest = CFrame.new(-12680.3818, 389.971039, -9902.01953, -0.0871315002, 0, 0.996196866, 0, 1, 0, -0.996196866, 0, -0.0871315002)
-            CFrameMon = CFrame.new(-12256.16015625, 331.73828125, -10485.8369140625)
-        elseif MyLevel == 1925 or MyLevel <= 1974 then
-            Mon = "Musketeer Pirate"
-            LevelQuest = 2
-            NameQuest = "DeepForestIsland2"
-            NameMon = "Musketeer Pirate"
-            CFrameQuest = CFrame.new(-12680.3818, 389.971039, -9902.01953, -0.0871315002, 0, 0.996196866, 0, 1, 0, -0.996196866, 0, -0.0871315002)
-            CFrameMon = CFrame.new(-13457.904296875, 391.545654296875, -9859.177734375)
-        elseif MyLevel == 1975 or MyLevel <= 1999 then
-            Mon = "Reborn Skeleton"
-            LevelQuest = 1
-            NameQuest = "HauntedQuest1"
-            NameMon = "Reborn Skeleton"
-            CFrameQuest = CFrame.new(-9479.2168, 141.215088, 5566.09277, 0, 0, 1, 0, 1, -0, -1, 0, 0)
-            CFrameMon = CFrame.new(-8763.7236328125, 165.72299194335938, 6159.86181640625)
-        elseif MyLevel == 2000 or MyLevel <= 2024 then
-            Mon = "Living Zombie"
-            LevelQuest = 2
-            NameQuest = "HauntedQuest1"
-            NameMon = "Living Zombie"
-            CFrameQuest = CFrame.new(-9479.2168, 141.215088, 5566.09277, 0, 0, 1, 0, 1, -0, -1, 0, 0)
-            CFrameMon = CFrame.new(-10144.1318359375, 138.62667846679688, 5838.0888671875)
-        elseif MyLevel == 2025 or MyLevel <= 2049 then
-            Mon = "Demonic Soul"
-            LevelQuest = 1
-            NameQuest = "HauntedQuest2"
-            NameMon = "Demonic Soul"
-            CFrameQuest = CFrame.new(-9516.99316, 172.017181, 6078.46533, 0, 0, -1, 0, 1, 0, 1, 0, 0) 
-            CFrameMon = CFrame.new(-9505.8720703125, 172.10482788085938, 6158.9931640625)
-        elseif MyLevel == 2050 or MyLevel <= 2074 then
-            Mon = "Posessed Mummy"
-            LevelQuest = 2
-            NameQuest = "HauntedQuest2"
-            NameMon = "Posessed Mummy"
-            CFrameQuest = CFrame.new(-9516.99316, 172.017181, 6078.46533, 0, 0, -1, 0, 1, 0, 1, 0, 0)
-            CFrameMon = CFrame.new(-9582.0224609375, 6.251527309417725, 6205.478515625)
-        elseif MyLevel == 2075 or MyLevel <= 2099 then
-            Mon = "Peanut Scout"
-            LevelQuest = 1
-            NameQuest = "NutsIslandQuest"
-            NameMon = "Peanut Scout"
-            CFrameQuest = CFrame.new(-2104.3908691406, 38.104167938232, -10194.21875, 0, 0, -1, 0, 1, 0, 1, 0, 0)
-            CFrameMon = CFrame.new(-2143.241943359375, 47.72198486328125, -10029.9951171875)
-        elseif MyLevel == 2100 or MyLevel <= 2124 then
-            Mon = "Peanut President"
-            LevelQuest = 2
-            NameQuest = "NutsIslandQuest"
-            NameMon = "Peanut President"
-            CFrameQuest = CFrame.new(-2104.3908691406, 38.104167938232, -10194.21875, 0, 0, -1, 0, 1, 0, 1, 0, 0)
-            CFrameMon = CFrame.new(-1859.35400390625, 38.10316848754883, -10422.4296875)
-        elseif MyLevel == 2125 or MyLevel <= 2149 then
-            Mon = "Ice Cream Chef"
-            LevelQuest = 1
-            NameQuest = "IceCreamIslandQuest"
-            NameMon = "Ice Cream Chef"
-            CFrameQuest = CFrame.new(-820.64825439453, 65.819526672363, -10965.795898438, 0, 0, -1, 0, 1, 0, 1, 0, 0)
-            CFrameMon = CFrame.new(-872.24658203125, 65.81957244873047, -10919.95703125)
-        elseif MyLevel == 2150 or MyLevel <= 2199 then
-            Mon = "Ice Cream Commander"
-            LevelQuest = 2
-            NameQuest = "IceCreamIslandQuest"
-            NameMon = "Ice Cream Commander"
-            CFrameQuest = CFrame.new(-820.64825439453, 65.819526672363, -10965.795898438, 0, 0, -1, 0, 1, 0, 1, 0, 0)
-            CFrameMon = CFrame.new(-558.06103515625, 112.04895782470703, -11290.7744140625)
-        elseif MyLevel == 2200 or MyLevel <= 2224 then
-            Mon = "Cookie Crafter"
-            LevelQuest = 1
-            NameQuest = "CakeQuest1"
-            NameMon = "Cookie Crafter"
-            CFrameQuest = CFrame.new(-2021.32007, 37.7982254, -12028.7295, 0.957576931, -8.80302053e-08, 0.288177818, 6.9301187e-08, 1, 7.51931211e-08, -0.288177818, -5.2032135e-08, 0.957576931)
-            CFrameMon = CFrame.new(-2374.13671875, 37.79826354980469, -12125.30859375)
-        elseif MyLevel == 2225 or MyLevel <= 2249 then
-            Mon = "Cake Guard"
-            LevelQuest = 2
-            NameQuest = "CakeQuest1"
-            NameMon = "Cake Guard"
-            CFrameQuest = CFrame.new(-2021.32007, 37.7982254, -12028.7295, 0.957576931, -8.80302053e-08, 0.288177818, 6.9301187e-08, 1, 7.51931211e-08, -0.288177818, -5.2032135e-08, 0.957576931)
-            CFrameMon = CFrame.new(-1598.3070068359375, 43.773197174072266, -12244.5810546875)
-        elseif MyLevel == 2250 or MyLevel <= 2274 then
-            Mon = "Baking Staff"
-            LevelQuest = 1
-            NameQuest = "CakeQuest2"
-            NameMon = "Baking Staff"
-            CFrameQuest = CFrame.new(-1927.91602, 37.7981339, -12842.5391, -0.96804446, 4.22142143e-08, 0.250778586, 4.74911062e-08, 1, 1.49904711e-08, -0.250778586, 2.64211941e-08, -0.96804446)
-            CFrameMon = CFrame.new(-1887.8099365234375, 77.6185073852539, -12998.3505859375)
-        elseif MyLevel == 2275 or MyLevel <= 2299 then
-            Mon = "Head Baker"
-            LevelQuest = 2
-            NameQuest = "CakeQuest2"
-            NameMon = "Head Baker"
-            CFrameQuest = CFrame.new(-1927.91602, 37.7981339, -12842.5391, -0.96804446, 4.22142143e-08, 0.250778586, 4.74911062e-08, 1, 1.49904711e-08, -0.250778586, 2.64211941e-08, -0.96804446)
-            CFrameMon = CFrame.new(-2216.188232421875, 82.884521484375, -12869.2939453125)
-        elseif MyLevel == 2300 or MyLevel <= 2324 then
-            Mon = "Cocoa Warrior"
-            LevelQuest = 1
-            NameQuest = "ChocQuest1"
-            NameMon = "Cocoa Warrior"
-            CFrameQuest = CFrame.new(233.22836303710938, 29.876001358032227, -12201.2333984375)
-            CFrameMon = CFrame.new(-21.55328369140625, 80.57499694824219, -12352.3876953125)
-        elseif MyLevel == 2325 or MyLevel <= 2349 then
-            Mon = "Chocolate Bar Battler"
-            LevelQuest = 2
-            NameQuest = "ChocQuest1"
-            NameMon = "Chocolate Bar Battler"
-            CFrameQuest = CFrame.new(233.22836303710938, 29.876001358032227, -12201.2333984375)
-            CFrameMon = CFrame.new(582.590576171875, 77.18809509277344, -12463.162109375)
-        elseif MyLevel == 2350 or MyLevel <= 2374 then
-            Mon = "Sweet Thief"
-            LevelQuest = 1
-            NameQuest = "ChocQuest2"
-            NameMon = "Sweet Thief"
-            CFrameQuest = CFrame.new(150.5066375732422, 30.693693161010742, -12774.5029296875)
-            CFrameMon = CFrame.new(165.1884765625, 76.05885314941406, -12600.8369140625)
-        elseif MyLevel == 2375 or MyLevel <= 2399 then
-            Mon = "Candy Rebel"
-            LevelQuest = 2
-            NameQuest = "ChocQuest2"
-            NameMon = "Candy Rebel"
-            CFrameQuest = CFrame.new(150.5066375732422, 30.693693161010742, -12774.5029296875)
-            CFrameMon = CFrame.new(134.86563110351562, 77.2476806640625, -12876.5478515625)
-        elseif MyLevel == 2400 or MyLevel <= 2424 then
-            Mon = "Candy Pirate"
-            LevelQuest = 1
-            NameQuest = "CandyQuest1"
-            NameMon = "Candy Pirate"
-            CFrameQuest = CFrame.new(-1150.0400390625, 20.378934860229492, -14446.3349609375)
-            CFrameMon = CFrame.new(-1310.5003662109375, 26.016523361206055, -14562.404296875)
-        elseif MyLevel == 2425 or MyLevel <= 2449 then
-            Mon = "Snow Demon"
-            LevelQuest = 2
-            NameQuest = "CandyQuest1"
-            NameMon = "Snow Demon"
-            CFrameQuest = CFrame.new(-1150.0400390625, 20.378934860229492, -14446.3349609375)
-            CFrameMon = CFrame.new(-880.2006225585938, 71.24776458740234, -14538.609375)
-        elseif MyLevel == 2450 or MyLevel <= 2474 then
-            Mon = "Isle Outlaw"
-            LevelQuest = 1
-            NameQuest = "TikiQuest1"
-            NameMon = "Isle Outlaw"
-            CFrameQuest = CFrame.new(-16547.748046875, 61.13533401489258, -173.41360473632812)
-            CFrameMon = CFrame.new(-16442.814453125, 116.13899993896484, -264.4637756347656)
-        elseif MyLevel == 2475 or MyLevel <= 2499 then
-            Mon = "Island Boy"
-            LevelQuest = 2
-            NameQuest = "TikiQuest1"
-            NameMon = "Island Boy"
-            CFrameQuest = CFrame.new(-16547.748046875, 61.13533401489258, -173.41360473632812)
-            CFrameMon = CFrame.new(-16901.26171875, 84.06756591796875, -192.88906860351562)
-        elseif MyLevel == 2500 or MyLevel <= 2524 then
-            Mon = "Sun-kissed Warrior"
-            LevelQuest = 1
-            NameQuest = "TikiQuest2"
-            NameMon = "Sun-kissed Warrior"
-            CFrameQuest = CFrame.new(-16539.078125, 55.68632888793945, 1051.5738525390625)
-            CFrameMon = CFrame.new(-16349.8779296875, 92.0808334350586, 1123.4169921875)
-        elseif MyLevel == 2525 or MyLevel <= 2550 then
-            Mon = "Isle Champion"
-            LevelQuest = 2
-            NameQuest = "TikiQuest2"
-            NameMon = "Isle Champion"
-            CFrameQuest = CFrame.new(-16539.078125, 55.68632888793945, 1051.5738525390625)
-            CFrameMon = CFrame.new(-16933.2129, 93.3503036, 999.450989)
-        end
-    end
-end
+		Dialog = Color3.fromRGB(45, 45, 45),
+		DialogHolder = Color3.fromRGB(35, 35, 35),
+		DialogHolderLine = Color3.fromRGB(30, 30, 30),
+		DialogButton = Color3.fromRGB(45, 45, 45),
+		DialogButtonBorder = Color3.fromRGB(80, 80, 80),
+		DialogBorder = Color3.fromRGB(70, 70, 70),
+		DialogInput = Color3.fromRGB(55, 55, 55),
+		DialogInputLine = Color3.fromRGB(160, 160, 160),
 
-function MaterialMon()
-    if World1 then
-        if _G.SelectMaterial == "Magma Ore" then
-            MMon = "Military Soldier"
-            MPos = CFrame.new(-5411.16455078125, 11.081554412841797, 8454.29296875)
-            MMon1 = "Military Spy"
-            MPos1 = CFrame.new(-5815, 84, 8820)
-        elseif _G.SelectMaterial == "Leather" or _G.SelectMaterial == "Scrap Metal" then
-            MMon = "Brute"
-            MPos = CFrame.new(-1145, 15, 4350)
-            MMon1 = "Pirate"
-            MPos1 = CFrame.new(-1140.083740234375, 14.809885025024414, 4322.92138671875)
-        elseif _G.SelectMaterial == "Angel Wings" then
-            MMon = "God's Guard"
-            MPos = CFrame.new(-4698, 845, -1912)
-            MMon1 = "God's Guard"
-            MPos1 = CFrame.new(-4698, 845, -1912)
-        elseif _G.SelectMaterial == "Fish Tail" then
-            MMon = "Fishman Warrior"
-            MPos = CFrame.new(60878.30078125, 18.482830047607422, 1543.7574462890625)
-            MMon1 = "Fishman Commando"
-            MPos1 = CFrame.new(61922.6328125, 18.482830047607422, 1493.934326171875)
-        end
-    end
-    if World2 then
-        if _G.SelectMaterial == "Magma Ore" then
-            MMon = "Magma Ninja"
-            MPos = CFrame.new(-5428, 78, -5959)
-            MMon1 = "Lava Pirate"
-            MPos1 = CFrame.new(-5213.33154296875, 49.73788070678711, -4701.451171875)
-        elseif _G.SelectMaterial == "Leather" or _G.SelectMaterial == "Scrap Metal" then
-            MMon = "Marine Captain"
-            MPos = CFrame.new(-2010, 73, -3326)
-            MMon1 = "Marine Captain"
-            MPos1 = CFrame.new(-2010, 73, -3326)
-        elseif _G.SelectMaterial == "Radioactive Material" then
-            MMon = "Factory Staff"
-            MPos = CFrame.new(295, 73, -56)
-            MMon1 = "Factory Staff"
-            MPos1 = CFrame.new(295, 73, -56)
-        elseif _G.SelectMaterial == "Vampire Fang" then
-            MMon = "Vampire"
-            MPos = CFrame.new(-6033, 7, -1317)
-            MMon1 = "Vampire"
-            MPos1 = CFrame.new(-6033, 7, -1317)
-        elseif _G.SelectMaterial == "Mystic Droplet" then
-            MMon = "Water Fighter"
-            MPos = CFrame.new(-3352.9013671875, 285.01556396484375, -10534.841796875)
-            MMon1 = "Sea Soldier"
-            MPos1 = CFrame.new(-3028.2236328125, 64.67451477050781, -9775.4267578125)
-        end
-    end
-    if World3 then
-        if _G.SelectMaterial == "Mini Tusk" then
-            MMon = "Mythological Pirate"
-            MPos = CFrame.new(-13545, 470, -6917)
-            MMon1 = "Mythological Pirate"
-            MPos1 = CFrame.new(-13545, 470, -6917)
-        elseif _G.SelectMaterial == "Fish Tail" then
-            MMon = "Fishman Raider"
-            MPos = CFrame.new(-10407.5263671875, 331.76263427734375, -8368.5166015625)
-            MMon1 = "Fishman Captain"
-            MPos1 = CFrame.new(-10994.701171875, 352.38140869140625, -9002.1103515625) 
-        elseif _G.SelectMaterial == "Leather" or _G.SelectMaterial == "Scrap Metal" then
-            MMon = "Jungle Pirate"
-            MPos = CFrame.new(-12107, 332, -10549)
-            MMon1 = "Jungle Pirate"
-            MPos1 = CFrame.new(-12107, 332, -10549)
-        elseif _G.SelectMaterial == "Dragon Scale" then
-            MMon = "Dragon Crew Warrior"
-            MPos = CFrame.new(6141.140625, 51.35136413574219, -1340.738525390625)
-            MMon1 = "Dragon Crew Warrior"
-            MPos1 = CFrame.new(6141.140625, 51.35136413574219, -1340.738525390625)
-        elseif _G.SelectMaterial == "Conjured Cocoa" then
-            MMon = "Cocoa Warrior"
-            MPos = CFrame.new(-21.55328369140625, 80.57499694824219, -12352.3876953125)
-            MMon1 = "Chocolate Bar Battler"
-            MPos1 = CFrame.new(582.590576171875, 77.18809509277344, -12463.162109375)
-        elseif _G.SelectMaterial == "Demonic Wisp" then
-            MMon = "Demonic Soul"
-            MPos = CFrame.new(-9507, 172, 6158)
-            MMon1 = "Demonic Soul"
-            MPos1 = CFrame.new(-9507, 172, 6158)
-        elseif _G.SelectMaterial == "Gunpowder" then
-            MMon = "Pistol Billionaire"
-            MPos = CFrame.new(-469, 74, 5904)
-            MMon1 = "Pistol Billionaire"
-            MPos1 = CFrame.new(-469, 74, 5904)
-        end
-    end
-end
+		Text = Color3.fromRGB(240, 240, 240),
+		SubText = Color3.fromRGB(170, 170, 170),
+		Hover = Color3.fromRGB(120, 120, 120),
+		HoverChange = 0.07,
+	},
+	Darker = {
+		Name = "Darker",
+		Accent = Color3.fromRGB(72, 138, 182),
 
-function CheckMonFarm()
-    if World1 then
-        if _G.SelectMob == "Bandit" then
-            PosMonster = CFrame.new(1045.962646484375, 27.00250816345215, 1560.8203125)
-        elseif _G.SelectMob == "Monkey" then
-            PosMonster = CFrame.new(-1448.51806640625, 67.85301208496094, 11.46579647064209)
-        elseif _G.SelectMob == "Gorilla" then
-            PosMonster = CFrame.new(-1129.8836669921875, 40.46354675292969, -525.4237060546875)
-        elseif _G.SelectMob == "Pirate" then
-            PosMonster = CFrame.new(-1103.513427734375, 13.752052307128906, 3896.091064453125)
-        elseif _G.SelectMob == "Brute" then
-            PosMonster = CFrame.new(-1140.083740234375, 14.809885025024414, 4322.92138671875)
-        elseif _G.SelectMob == "Desert Bandit" then
-            PosMonster = CFrame.new(924.7998046875, 6.44867467880249, 4481.5859375)
-        elseif _G.SelectMob == "Desert Officer" then
-            PosMonster = CFrame.new(1608.2822265625, 8.614224433898926, 4371.00732421875)
-        elseif _G.SelectMob == "Snow Bandit" then
-            PosMonster = CFrame.new(1354.347900390625, 87.27277374267578, -1393.946533203125)
-        elseif _G.SelectMob == "Snowman" then
-            PosMonster = CFrame.new(1201.6412353515625, 144.57958984375, -1550.0670166015625)
-        elseif _G.SelectMob == "Chief Petty Officer" then
-            PosMonster = CFrame.new(-4881.23095703125, 22.65204429626465, 4273.75244140625)
-        elseif _G.SelectMob == "Sky Bandit" then
-            PosMonster = CFrame.new(-4953.20703125, 295.74420166015625, -2899.22900390625)
-        elseif _G.SelectMob == "Dark Master" then
-            PosMonster = CFrame.new(-5259.8447265625, 391.3976745605469, -2229.035400390625)
-        elseif _G.SelectMob == "Prisoner" then
-            PosMonster = CFrame.new(5098.9736328125, -0.3204058110713959, 474.2373352050781)
-        elseif _G.SelectMob == "Dangerous Prisoner" then
-            PosMonster = CFrame.new(5654.5634765625, 15.633401870727539, 866.2991943359375)
-        elseif _G.SelectMob == "Toga Warrior" then
-            PosMonster = CFrame.new(-1820.21484375, 51.68385696411133, -2740.6650390625)
-        elseif _G.SelectMob == "Gladiator" then
-            PosMonster = CFrame.new(-1292.838134765625, 56.380882263183594, -3339.031494140625)
-        elseif _G.SelectMob == "Military Soldier" then
-            PosMonster = CFrame.new(-5411.16455078125, 11.081554412841797, 8454.29296875)
-        elseif _G.SelectMob == "Military Spy" then
-            PosMonster = CFrame.new(-5802.8681640625, 86.26241302490234, 8828.859375)
-        elseif _G.SelectMob == "Fishman Warrior" then
-            PosMonster = CFrame.new(60878.30078125, 18.482830047607422, 1543.7574462890625)
-        elseif _G.SelectMob == "Fishman Commando" then
-            PosMonster = CFrame.new(61922.6328125, 18.482830047607422, 1493.934326171875)
-        elseif _G.SelectMob == "God's Guard" then
-            PosMonster = CFrame.new(-4710.04296875, 845.2769775390625, -1927.3079833984375)
-        elseif _G.SelectMob == "Shanda" then
-            PosMonster = CFrame.new(-7678.48974609375, 5566.40380859375, -497.2156066894531)
-        elseif _G.SelectMob == "Royal Squad" then
-            PosMonster = CFrame.new(-7624.25244140625, 5658.13330078125, -1467.354248046875)
-        elseif _G.SelectMob == "Royal Soldier" then
-            PosMonster = CFrame.new(-7836.75341796875, 5645.6640625, -1790.6236572265625)
-        elseif _G.SelectMob == "Galley Pirate" then
-            PosMonster = CFrame.new(5551.02197265625, 78.90135192871094, 3930.412841796875)
-        elseif _G.SelectMob == "Galley Captain" then
-            PosMonster = CFrame.new(5441.95166015625, 42.50205993652344, 4950.09375)
-        end
-    elseif World2 then
-        if _G.SelectMob == "Raider" then
-            PosMonster = CFrame.new(-728.3267211914062, 52.779319763183594, 2345.7705078125)
-        elseif _G.SelectMob == "Mercenary" then
-            PosMonster = CFrame.new(-1004.3244018554688, 80.15886688232422, 1424.619384765625)
-        elseif _G.SelectMob == "Swan Pirate" then
-            PosMonster = CFrame.new(1068.664306640625, 137.61428833007812, 1322.1060791015625)
-        elseif _G.SelectMob == "Factory Staff" then
-            PosMonster = CFrame.new(73.07867431640625, 81.86344146728516, -27.470672607421875)
-        elseif _G.SelectMob == "Marine Lieutenant" then
-            PosMonster = CFrame.new(-2821.372314453125, 75.89727783203125, -3070.089111328125)
-        elseif _G.SelectMob == "Marine Captain" then
-            PosMonster = CFrame.new(-1861.2310791015625, 80.17658233642578, -3254.697509765625)
-        elseif _G.SelectMob == "Zombie" then
-            PosMonster = CFrame.new(-5657.77685546875, 78.96973419189453, -928.68701171875)
-        elseif _G.SelectMob == "Vampire" then
-            PosMonster = CFrame.new(-6037.66796875, 32.18463897705078, -1340.6597900390625)
-        elseif _G.SelectMob == "Snow Trooper" then
-            PosMonster = CFrame.new(549.1473388671875, 427.3870544433594, -5563.69873046875)
-        elseif _G.SelectMob == "Winter Warrior" then
-            PosMonster = CFrame.new(1142.7451171875, 475.6398010253906, -5199.41650390625)
-        elseif _G.SelectMob == "Lab Subordinate" then
-            PosMonster = CFrame.new(-5707.4716796875, 15.951709747314453, -4513.39208984375)
-        elseif _G.SelectMob == "Horned Warrior" then
-            PosMonster = CFrame.new(-6341.36669921875, 15.951770782470703, -5723.162109375)
-        elseif _G.SelectMob == "Magma Ninja" then
-            PosMonster = CFrame.new(-5449.6728515625, 76.65874481201172, -5808.20068359375)
-        elseif _G.SelectMob == "Lava Pirate" then
-            PosMonster = CFrame.new(-5213.33154296875, 49.73788070678711, -4701.451171875)
-        elseif _G.SelectMob == "Ship Deckhand" then
-            PosMonster = CFrame.new(1212.0111083984375, 150.79205322265625, 33059.24609375)
-        elseif _G.SelectMob == "Ship Engineer" then
-            PosMonster = CFrame.new(919.4786376953125, 43.54401397705078, 32779.96875)   
-        elseif _G.SelectMob == "Ship Steward" then
-            PosMonster = CFrame.new(919.4385375976562, 129.55599975585938, 33436.03515625)
-        elseif _G.SelectMob == "Ship Officer" then
-            PosMonster = CFrame.new(1036.0179443359375, 181.4390411376953, 33315.7265625)
-        elseif _G.SelectMob == "Arctic Warrior" then
-            PosMonster = CFrame.new(5966.24609375, 62.97002029418945, -6179.3828125)
-        elseif _G.SelectMob == "Snow Lurker" then
-            PosMonster = CFrame.new(5407.07373046875, 69.19437408447266, -6880.88037109375)
-        elseif _G.SelectMob == "Sea Soldier" then
-            PosMonster = CFrame.new(-3028.2236328125, 64.67451477050781, -9775.4267578125)
-        elseif _G.SelectMob == "Water Fighter" then
-            PosMonster = CFrame.new(-3352.9013671875, 285.01556396484375, -10534.841796875)
-        end
-    elseif World3 then
-        if _G.SelectMob == "Pirate Millionaire" then
-            PosMonster = CFrame.new(-245.9963836669922, 47.30615234375, 5584.1005859375)
-        elseif _G.SelectMob == "Pistol Billionaire" then
-            PosMonster = CFrame.new(-187.3301544189453, 86.23987579345703, 6013.513671875)
-        elseif _G.SelectMob == "Dragon Crew Warrior" then
-            PosMonster = CFrame.new(6141.140625, 51.35136413574219, -1340.738525390625)
-        elseif _G.SelectMob == "Dragon Crew Archer" then 
-            PosMonster = CFrame.new(6616.41748046875, 441.7670593261719, 446.0469970703125)
-        elseif _G.SelectMob == "Female Islander" then
-            PosMonster = CFrame.new(4685.25830078125, 735.8078002929688, 815.3425903320312)
-        elseif _G.SelectMob == "Giant Islander" then 
-            PosMonster = CFrame.new(4729.09423828125, 590.436767578125, -36.97627639770508)
-        elseif _G.SelectMob == "Marine Commodore" then
-            PosMonster = CFrame.new(2286.0078125, 73.13391876220703, -7159.80908203125)
-        elseif _G.SelectMob == "Marine Rear Admiral" then
-            PosMonster = CFrame.new(3656.773681640625, 160.52406311035156, -7001.5986328125)
-        elseif _G.SelectMob == "Fishman Raider" then
-            PosMonster = CFrame.new(-10407.5263671875, 331.76263427734375, -8368.5166015625)
-        elseif _G.SelectMob == "Fishman Captain" then
-            PosMonster = CFrame.new(-10994.701171875, 352.38140869140625, -9002.1103515625) 
-        elseif _G.SelectMob == "Forest Pirate" then
-            PosMonster = CFrame.new(-13274.478515625, 332.3781433105469, -7769.58056640625)
-        elseif _G.SelectMob == "Mythological Pirate" then
-            PosMonster = CFrame.new(-13680.607421875, 501.08154296875, -6991.189453125)
-        elseif _G.SelectMob == "Jungle Pirate" then
-            PosMonster = CFrame.new(-12256.16015625, 331.73828125, -10485.8369140625)
-        elseif _G.SelectMob == "Musketeer Pirate" then
-            PosMonster = CFrame.new(-13457.904296875, 391.545654296875, -9859.177734375)
-        elseif _G.SelectMob == "Reborn Skeleton" then
-            PosMonster = CFrame.new(-8763.7236328125, 165.72299194335938, 6159.86181640625)
-        elseif _G.SelectMob == "Living Zombie" then
-            PosMonster = CFrame.new(-10144.1318359375, 138.62667846679688, 5838.0888671875)
-        elseif _G.SelectMob == "Demonic Soul" then
-            PosMonster = CFrame.new(-9505.8720703125, 172.10482788085938, 6158.9931640625)
-        elseif _G.SelectMob == "Posessed Mummy" then
-            PosMonster = CFrame.new(-9582.0224609375, 6.251527309417725, 6205.478515625)
-        elseif _G.SelectMob == "Peanut Scout" then
-            PosMonster = CFrame.new(-2143.241943359375, 47.72198486328125, -10029.9951171875)
-        elseif _G.SelectMob == "Peanut President" then
-            PosMonster = CFrame.new(-1859.35400390625, 38.10316848754883, -10422.4296875)
-        elseif _G.SelectMob == "Ice Cream Chef" then
-            PosMonster = CFrame.new(-872.24658203125, 65.81957244873047, -10919.95703125)
-        elseif _G.SelectMob == "Ice Cream Commander" then
-            PosMonster = CFrame.new(-558.06103515625, 112.04895782470703, -11290.7744140625)
-        elseif _G.SelectMob == "Cookie Crafter" then
-            PosMonster = CFrame.new(-2374.13671875, 37.79826354980469, -12125.30859375)
-        elseif _G.SelectMob == "Cake Guard" then
-            PosMonster = CFrame.new(-1598.3070068359375, 43.773197174072266, -12244.5810546875)
-        elseif _G.SelectMob == "Baking Staff" then
-            PosMonster = CFrame.new(-1887.8099365234375, 77.6185073852539, -12998.3505859375)
-        elseif _G.SelectMob == "Head Baker" then
-            PosMonster = CFrame.new(-2216.188232421875, 82.884521484375, -12869.2939453125)
-        elseif _G.SelectMob == "Cocoa Warrior" then
-            PosMonster = CFrame.new(-21.55328369140625, 80.57499694824219, -12352.3876953125)
-        elseif _G.SelectMob == "Chocolate Bar Battler" then
-            PosMonster = CFrame.new(582.590576171875, 77.18809509277344, -12463.162109375)
-        elseif _G.SelectMob == "Sweet Thief" then
-            PosMonster = CFrame.new(165.1884765625, 76.05885314941406, -12600.8369140625)
-        elseif _G.SelectMob == "Candy Rebel" then
-            PosMonster = CFrame.new(134.86563110351562, 77.2476806640625, -12876.5478515625)
-        elseif _G.SelectMob == "Candy Pirate" then
-            PosMonster = CFrame.new(-1310.5003662109375, 26.016523361206055, -14562.404296875)
-        elseif _G.SelectMob == "Snow Demon" then
-            PosMonster = CFrame.new(-880.2006225585938, 71.24776458740234, -14538.609375)
-        elseif _G.SelectMob == "Isle Outlaw" then
-            PosMonster = CFrame.new(-16442.814453125, 116.13899993896484, -264.4637756347656)
-        elseif _G.SelectMob == "Island Boy" then
-            PosMonster = CFrame.new(-16901.26171875, 84.06756591796875, -192.88906860351562)
-        elseif _G.SelectMob == "Sun-kissed Warrior" then
-            PosMonster = CFrame.new(-16349.8779296875, 92.0808334350586, 1123.4169921875)
-        elseif _G.SelectMob == "Isle Champion" then
-            PosMonster = CFrame.new(-16347.4150390625, 92.09503936767578, 1122.335205078125)
-        end
-    end
-end
+		AcrylicMain = Color3.fromRGB(30, 30, 30),
+		AcrylicBorder = Color3.fromRGB(60, 60, 60),
+		AcrylicGradient = ColorSequence.new(Color3.fromRGB(25, 25, 25), Color3.fromRGB(15, 15, 15)),
+		AcrylicNoise = 0.94,
 
-function CheckBossQuest()
-	if _G.SelectBoss == "Saber Expert" then 
-		MsBoss = "Saber Expert"
-		NameBoss = "Saber Expert"
-		CFrameBoss = CFrame.new(-1458.89502, 29.8870335, -50.633564, 0.858821094, 1.13848939e-08, 0.512275636, -4.85649254e-09, 1, -1.40823326e-08, -0.512275636, 9.6063415e-09, 0.858821094)
-	elseif _G.SelectBoss == "The Saw" then 
-		MsBoss = "The Saw"
-		NameBoss = "The Saw"
-		CFrameBoss = CFrame.new(-683.519897, 13.8534927, 1610.87854, -0.290192783, 6.88365773e-08, 0.956968188, 6.98413629e-08, 1, -5.07531119e-08, -0.956968188, 5.21077759e-08, -0.290192783)
-	elseif _G.SelectBoss == "Greybeard" then
-		MsBoss = "Greybeard"
-		NameBoss = "Greybeard"
-		CFrameBoss = CFrame.new(-4955.72949, 80.8163834, 4305.82666, -0.433646321, -1.03394289e-08, 0.901083171, -3.0443168e-08, 1, -3.17633075e-09, -0.901083171, -2.88092288e-08, -0.433646321)
-	elseif _G.SelectBoss == "The Gorilla King" then
-		MsBoss = "The Gorilla King"
-		NameBoss = "The Gorilla King"
-		NameQuestBoss = "JungleQuest"
-		LevelQuestBoss = 3
-		CFrameQuestBoss = CFrame.new(-1604.12012, 36.8521118, 154.23732, 0.0648873374, -4.70858913e-06, -0.997892559, 1.41431883e-07, 1, -4.70933674e-06, 0.997892559, 1.64442184e-07, 0.0648873374)
-		CFrameBoss = CFrame.new(-1223.52808, 6.27936459, -502.292664, 0.310949147, -5.66602516e-08, 0.950426519, -3.37275488e-08, 1, 7.06501808e-08, -0.950426519, -5.40241736e-08, 0.310949147)
-	elseif _G.SelectBoss == "Bobby" then
-		MsBoss = "Bobby"
-		NameBoss = "Bobby"
-		NameQuestBoss = "BuggyQuest1"
-		LevelQuestBoss = 3
-		CFrameQuestBoss = CFrame.new(-1139.59717, 4.75205183, 3825.16211, -0.959730506, -7.5857054e-09, 0.280922383, -4.06310328e-08, 1, -1.11807175e-07, -0.280922383, -1.18718916e-07, -0.959730506)
-		CFrameBoss = CFrame.new(-1147.65173, 32.5966301, 4156.02588, 0.956680477, -1.77109952e-10, -0.29113996, 5.16530874e-10, 1, 1.08897802e-09, 0.29113996, -1.19218679e-09, 0.956680477)
-	elseif _G.SelectBoss == "Yeti" then
-		MsBoss = "Yeti"
-		NameBoss = "Yeti"
-		NameQuestBoss = "SnowQuest"
-		LevelQuestBoss = 3
-		CFrameQuestBoss = CFrame.new(1384.90247, 87.3078308, -1296.6825, 0.280209213, 2.72035177e-08, -0.959938943, -6.75690828e-08, 1, 8.6151708e-09, 0.959938943, 6.24481444e-08, 0.280209213)
-		CFrameBoss = CFrame.new(1221.7356, 138.046906, -1488.84082, 0.349343032, -9.49245944e-08, 0.936994851, 6.29478194e-08, 1, 7.7838429e-08, -0.936994851, 3.17894653e-08, 0.349343032)
-	elseif _G.SelectBoss == "Mob Leader" then
-		MsBoss = "Mob Leader"
-		NameBoss = "Mob Leader"
-		CFrameBoss = CFrame.new(-2848.59399, 7.4272871, 5342.44043, -0.928248107, -8.7248246e-08, 0.371961564, -7.61816636e-08, 1, 4.44474857e-08, -0.371961564, 1.29216433e-08, -0.92824)
-	elseif _G.SelectBoss == "Vice Admiral" then
-		MsBoss = "Vice Admiral"
-		NameBoss = "Vice Admiral"
-		NameQuestBoss = "MarineQuest2"
-		LevelQuestBoss = 2
-		CFrameQuestBoss = CFrame.new(-5035.42285, 28.6520386, 4324.50293, -0.0611100644, -8.08395768e-08, 0.998130739, -1.57416586e-08, 1, 8.00271849e-08, -0.998130739, -1.08217701e-08, -0.0611100644)
-		CFrameBoss = CFrame.new(-5078.45898, 99.6520691, 4402.1665, -0.555574954, -9.88630566e-11, 0.831466436, -6.35508286e-08, 1, -4.23449258e-08, -0.831466436, -7.63661632e-08, -0.555574954)
-	elseif _G.SelectBoss == "Warden" then
-		MsBoss = "Warden"
-		NameBoss = "Warden"
-		NameQuestBoss = "ImpelQuest"
-		LevelQuestBoss = 1
-		CFrameQuestBoss = CFrame.new(4851.35059, 5.68744135, 743.251282, -0.538484037, -6.68303741e-08, -0.842635691, 1.38001752e-08, 1, -8.81300792e-08, 0.842635691, -5.90851599e-08, -0.538484037)
-		CFrameBoss = CFrame.new(5232.5625, 5.26856995, 747.506897, 0.943829298, -4.5439414e-08, 0.330433697, 3.47818627e-08, 1, 3.81658154e-08, -0.330433697, -2.45289105e-08, 0.943829298)
-	elseif _G.SelectBoss == "Chief Warden" then
-		MsBoss = "Chief Warden"
-		NameBoss = "Chief Warden"
-		NameQuestBoss = "ImpelQuest"
-		LevelQuestBoss = 2
-		CFrameQuestBoss = CFrame.new(4851.35059, 5.68744135, 743.251282, -0.538484037, -6.68303741e-08, -0.842635691, 1.38001752e-08, 1, -8.81300792e-08, 0.842635691, -5.90851599e-08, -0.538484037)
-		CFrameBoss = CFrame.new(5232.5625, 5.26856995, 747.506897, 0.943829298, -4.5439414e-08, 0.330433697, 3.47818627e-08, 1, 3.81658154e-08, -0.330433697, -2.45289105e-08, 0.943829298)
-	elseif _G.SelectBoss == "Swan" then
-		MsBoss = "Swan"
-		NameBoss = "Swan"
-		NameQuestBoss = "ImpelQuest"
-		LevelQuestBoss = 3
-		CFrameQuestBoss = CFrame.new(4851.35059, 5.68744135, 743.251282, -0.538484037, -6.68303741e-08, -0.842635691, 1.38001752e-08, 1, -8.81300792e-08, 0.842635691, -5.90851599e-08, -0.538484037)
-		CFrameBoss = CFrame.new(5232.5625, 5.26856995, 747.506897, 0.943829298, -4.5439414e-08, 0.330433697, 3.47818627e-08, 1, 3.81658154e-08, -0.330433697, -2.45289105e-08, 0.943829298)
-	elseif _G.SelectBoss == "Magma Admiral" then
-		MsBoss = "Magma Admiral"
-		NameBoss = "Magma Admiral"
-		NameQuestBoss = "MagmaQuest"
-		LevelQuestBoss = 3
-		CFrameQuestBoss = CFrame.new(-5317.07666, 12.2721891, 8517.41699, 0.51175487, -2.65508806e-08, -0.859131515, -3.91131572e-08, 1, -5.42026761e-08, 0.859131515, 6.13418294e-08, 0.51175487)
-		CFrameBoss = CFrame.new(-5530.12646, 22.8769703, 8859.91309, 0.857838571, 2.23414389e-08, 0.513919294, 1.53689133e-08, 1, -6.91265853e-08, -0.513919294, 6.71978384e-08, 0.857838571)
-	elseif _G.SelectBoss == "Fishman Lord" then
-		MsBoss = "Fishman Lord"
-		NameBoss = "Fishman Lord"
-		NameQuestBoss = "FishmanQuest"
-		LevelQuestBoss = 3
-		CFrameQuestBoss = CFrame.new(61123.0859, 18.5066795, 1570.18018, 0.927145958, 1.0624845e-07, 0.374700129, -6.98219367e-08, 1, -1.10790765e-07, -0.374700129, 7.65569368e-08, 0.927145958)
-		CFrameBoss = CFrame.new(61351.7773, 31.0306778, 1113.31409, 0.999974668, 0, -0.00714713801, 0, 1.00000012, 0, 0.00714714266, 0, 0.999974549)
-	elseif _G.SelectBoss == "Wysper" then
-		MsBoss = "Wysper"
-		NameBoss = "Wysper"
-		NameQuestBoss = "SkyExp1Quest"
-		LevelQuestBoss = 3
-		CFrameQuestBoss = CFrame.new(-7862.94629, 5545.52832, -379.833954, 0.462944925, 1.45838088e-08, -0.886386991, 1.0534996e-08, 1, 2.19553424e-08, 0.886386991, -1.95022007e-08, 0.462944925)
-		CFrameBoss = CFrame.new(-7925.48389, 5550.76074, -636.178345, 0.716468513, -1.22915289e-09, 0.697619379, 3.37381434e-09, 1, -1.70304748e-09, -0.697619379, 3.57381835e-09, 0.716468513)
-	elseif _G.SelectBoss == "Thunder God" then
-		MsBoss = "Thunder God"
-		NameBoss = "Thunder God"
-		NameQuestBoss = "SkyExp2Quest"
-		LevelQuestBoss = 3
-		CFrameQuestBoss = CFrame.new(-7902.78613, 5635.99902, -1411.98706, -0.0361216255, -1.16895912e-07, 0.999347389, 1.44533963e-09, 1, 1.17024491e-07, -0.999347389, 5.6715117e-09, -0.0361216255)
-		CFrameBoss = CFrame.new(-7917.53613, 5616.61377, -2277.78564, 0.965189934, 4.80563429e-08, -0.261550069, -6.73089886e-08, 1, -6.46515304e-08, 0.261550069, 8.00056768e-08, 0.965189934)
-	elseif _G.SelectBoss == "Cyborg" then
-		MsBoss = "Cyborg"
-		NameBoss = "Cyborg"
-		NameQuestBoss = "FountainQuest"
-		LevelQuestBoss = 3
-		CFrameQuestBoss = CFrame.new(5253.54834, 38.5361786, 4050.45166, -0.0112687312, -9.93677887e-08, -0.999936521, 2.55291371e-10, 1, -9.93769547e-08, 0.999936521, -1.37512213e-09, -0.0112687312)
-		CFrameBoss = CFrame.new(6041.82813, 52.7112198, 3907.45142, -0.563162148, 1.73805248e-09, -0.826346457, -5.94632716e-08, 1, 4.26280238e-08, 0.826346457, 7.31437524e-08, -0.563162148)
-		-- New World
-	elseif _G.SelectBoss == "Diamond" then
-		MsBoss = "Diamond"
-		NameBoss = "Diamond"
-		NameQuestBoss = "Area1Quest"
-		LevelQuestBoss = 3
-		CFrameQuestBoss = CFrame.new(-424.080078, 73.0055847, 1836.91589, 0.253544956, -1.42165932e-08, 0.967323601, -6.00147771e-08, 1, 3.04272909e-08, -0.967323601, -6.5768397e-08, 0.253544956)
-		CFrameBoss = CFrame.new(-1736.26587, 198.627731, -236.412857, -0.997808516, 0, -0.0661673471, 0, 1, 0, 0.0661673471, 0, -0.997808516)
-	elseif _G.SelectBoss == "Jeremy" then
-		MsBoss = "Jeremy"
-		NameBoss = "Jeremy"
-		NameQuestBoss = "Area2Quest"
-		LevelQuestBoss = 3
-		CFrameQuestBoss = CFrame.new(632.698608, 73.1055908, 918.666321, -0.0319722369, 8.96074881e-10, -0.999488771, 1.36326533e-10, 1, 8.92172336e-10, 0.999488771, -1.07732087e-10, -0.0319722369)
-		CFrameBoss = CFrame.new(2203.76953, 448.966034, 752.731079, -0.0217453763, 0, -0.999763548, 0, 1, 0, 0.999763548, 0, -0.0217453763)
-	elseif _G.SelectBoss == "Fajita" then
-		MsBoss = "Fajita"
-		NameBoss = "Fajita"
-		NameQuestBoss = "MarineQuest3"
-		LevelQuestBoss = 3
-		CFrameQuestBoss = CFrame.new(-2442.65015, 73.0511475, -3219.11523, -0.873540044, 4.2329841e-08, -0.486752301, 5.64383384e-08, 1, -1.43220786e-08, 0.486752301, -3.99823996e-08, -0.873540044)
-		CFrameBoss = CFrame.new(-2297.40332, 115.449463, -3946.53833, 0.961227536, -1.46645796e-09, -0.275756449, -2.3212845e-09, 1, -1.34094433e-08, 0.275756449, 1.35296352e-08, 0.961227536)
-	elseif _G.SelectBoss == "Don Swan" then
-		MsBoss = "Don Swan"
-		NameBoss = "Don Swan"
-		CFrameBoss = CFrame.new(2288.802, 15.1870775, 863.034607, 0.99974072, -8.41247214e-08, -0.0227668174, 8.4774733e-08, 1, 2.75850098e-08, 0.0227668174, -2.95079072e-08, 0.99974072)
-	elseif _G.SelectBoss == "Smoke Admiral" then
-		MsBoss = "Smoke Admiral"
-		NameBoss = "Smoke Admiral"
-		NameQuestBoss = "IceSideQuest"
-		LevelQuestBoss = 3
-		CFrameQuestBoss = CFrame.new(-6059.96191, 15.9868021, -4904.7373, -0.444992423, -3.0874483e-09, 0.895534337, -3.64098796e-08, 1, -1.4644522e-08, -0.895534337, -3.91229982e-08, -0.444992423)
-		CFrameBoss = CFrame.new(-5115.72754, 23.7664986, -5338.2207, 0.251453817, 1.48345061e-08, -0.967869282, 4.02796978e-08, 1, 2.57916977e-08, 0.967869282, -4.54708946e-08, 0.251453817)
-	elseif _G.SelectBoss == "Cursed Captain" then
-		MsBoss = "Cursed Captain"
-		NameBoss = "Cursed Captain"
-		CFrameBoss = CFrame.new(916.928589, 181.092773, 33422, -0.999505103, 9.26310495e-09, 0.0314563364, 8.42916226e-09, 1, -2.6643713e-08, -0.0314563364, -2.63653774e-08, -0.999505103)
-	elseif _G.SelectBoss == "Darkbeard" then
-		MsBoss = "Darkbeard"
-		NameBoss = "Darkbeard"
-		CFrameBoss = CFrame.new(3876.00366, 24.6882591, -3820.21777, -0.976951957, 4.97356325e-08, 0.213458836, 4.57335361e-08, 1, -2.36868622e-08, -0.213458836, -1.33787044e-08, -0.976951957)
-	elseif _G.SelectBoss == "Order" then
-		MsBoss = "Order"
-		NameBoss = "Order"
-		CFrameBoss = CFrame.new(-6221.15039, 16.2351036, -5045.23584, -0.380726993, 7.41463495e-08, 0.924687505, 5.85604774e-08, 1, -5.60738549e-08, -0.924687505, 3.28013137e-08, -0.380726993)
-	elseif _G.SelectBoss == "Awakened Ice Admiral" then
-		MsBoss = "Awakened Ice Admiral"
-		NameBoss = "Awakened Ice Admiral"
-		NameQuestBoss = "FrostQuest"
-		LevelQuestBoss = 3
-		CFrameQuestBoss = CFrame.new(5669.33203, 28.2118053, -6481.55908, 0.921275556, -1.25320829e-08, 0.388910472, 4.72230788e-08, 1, -7.96414241e-08, -0.388910472, 9.17372489e-08, 0.921275556)
-		CFrameBoss = CFrame.new(6407.33936, 340.223785, -6892.521, 0.49051559, -5.25310213e-08, -0.871432424, -2.76146022e-08, 1, -7.58250565e-08, 0.871432424, 6.12576301e-08, 0.49051559)
-	elseif _G.SelectBoss == "Tide Keeper" then
-		MsBoss = "Tide Keeper"
-		NameBoss = "Tide Keeper"
-		NameQuestBoss = "ForgottenQuest"             
-		LevelQuestBoss = 3
-		CFrameQuestBoss = CFrame.new(-3053.89648, 236.881363, -10148.2324, -0.985987961, -3.58504737e-09, 0.16681771, -3.07832915e-09, 1, 3.29612559e-09, -0.16681771, 2.73641976e-09, -0.985987961)
-		CFrameBoss = CFrame.new(-3570.18652, 123.328949, -11555.9072, 0.465199202, -1.3857326e-08, 0.885206044, 4.0332897e-09, 1, 1.35347511e-08, -0.885206044, -2.72606271e-09, 0.465199202)
-		-- Third World
-	elseif _G.SelectBoss == "Stone" then
-		MsBoss = "Stone"
-		NameBoss = "Stone"
-		NameQuestBoss = "PiratePortQuest"             
-		LevelQuestBoss = 3
-		CFrameQuestBoss = CFrame.new(-290, 44, 5577)
-		CFrameBoss = CFrame.new(-1085, 40, 6779)
-	elseif _G.SelectBoss == "Island Empress" then
-		MsBoss = "Island Empress"
-		NameBoss = "Island Empress"
-		NameQuestBoss = "AmazonQuest2"             
-		LevelQuestBoss = 3
-		CFrameQuestBoss = CFrame.new(5443, 602, 752)
-		CFrameBoss = CFrame.new(5659, 602, 244)
-	elseif _G.SelectBoss == "Kilo Admiral" then
-		MsBoss = "Kilo Admiral"
-		NameBoss = "Kilo Admiral"
-		NameQuestBoss = "MarineTreeIsland"             
-		LevelQuestBoss = 3
-		CFrameQuestBoss = CFrame.new(2178, 29, -6737)
-		CFrameBoss =CFrame.new(2846, 433, -7100)
-	elseif _G.SelectBoss == "Captain Elephant" then
-		MsBoss = "Captain Elephant"
-		NameBoss = "Captain Elephant"
-		NameQuestBoss = "DeepForestIsland"             
-		LevelQuestBoss = 3
-		CFrameQuestBoss = CFrame.new(-13232, 333, -7631)
-		CFrameBoss = CFrame.new(-13221, 325, -8405)
-	elseif _G.SelectBoss == "Beautiful Pirate" then
-		MsBoss = "Beautiful Pirate"
-		NameBoss = "Beautiful Pirate"
-		NameQuestBoss = "DeepForestIsland2"             
-		LevelQuestBoss = 3
-		CFrameQuestBoss = CFrame.new(-12686, 391, -9902)
-		CFrameBoss = CFrame.new(5182, 23, -20)
-	elseif _G.SelectBoss == "Cake Queen" then
-		MsBoss = "Cake Queen"
-		NameBoss = "Cake Queen"
-		NameQuestBoss = "IceCreamIslandQuest"             
-		LevelQuestBoss = 3
-		CFrameQuestBoss = CFrame.new(-716, 382, -11010)
-		CFrameBoss = CFrame.new(-821, 66, -10965)
-	elseif _G.SelectBoss == "rip_indra True Form" then
-		MsBoss = "rip_indra True Form"
-		NameBoss = "rip_indra True Form"
-		CFrameBoss = CFrame.new(-5359, 424, -2735)
-	elseif _G.SelectBoss == "Longma" then
-		MsBoss = "Longma"
-		NameBoss = "Longma"
-		CFrameBoss = CFrame.new(-10248.3936, 353.79129, -9306.34473)
-	elseif _G.SelectBoss == "Soul Reaper" then
-		MsBoss = "Soul Reaper"
-		NameBoss = "Soul Reaper"
-		CFrameBoss = CFrame.new(-9515.62109, 315.925537, 6691.12012)
+		TitleBarLine = Color3.fromRGB(65, 65, 65),
+		Tab = Color3.fromRGB(100, 100, 100),
+
+		Element = Color3.fromRGB(70, 70, 70),
+		ElementBorder = Color3.fromRGB(25, 25, 25),
+		InElementBorder = Color3.fromRGB(55, 55, 55),
+		ElementTransparency = 0.82,
+
+		DropdownFrame = Color3.fromRGB(120, 120, 120),
+		DropdownHolder = Color3.fromRGB(35, 35, 35),
+		DropdownBorder = Color3.fromRGB(25, 25, 25),
+
+		Dialog = Color3.fromRGB(35, 35, 35),
+		DialogHolder = Color3.fromRGB(25, 25, 25),
+		DialogHolderLine = Color3.fromRGB(20, 20, 20),
+		DialogButton = Color3.fromRGB(35, 35, 35),
+		DialogButtonBorder = Color3.fromRGB(55, 55, 55),
+		DialogBorder = Color3.fromRGB(50, 50, 50),
+		DialogInput = Color3.fromRGB(45, 45, 45),
+		DialogInputLine = Color3.fromRGB(120, 120, 120),
+	},
+	Light = {
+		Name = "Light",
+		Accent = Color3.fromRGB(0, 103, 192),
+
+		AcrylicMain = Color3.fromRGB(200, 200, 200),
+		AcrylicBorder = Color3.fromRGB(120, 120, 120),
+		AcrylicGradient = ColorSequence.new(Color3.fromRGB(255, 255, 255), Color3.fromRGB(255, 255, 255)),
+		AcrylicNoise = 0.96,
+
+		TitleBarLine = Color3.fromRGB(160, 160, 160),
+		Tab = Color3.fromRGB(90, 90, 90),
+
+		Element = Color3.fromRGB(255, 255, 255),
+		ElementBorder = Color3.fromRGB(180, 180, 180),
+		InElementBorder = Color3.fromRGB(150, 150, 150),
+		ElementTransparency = 0.65,
+
+		ToggleSlider = Color3.fromRGB(40, 40, 40),
+		ToggleToggled = Color3.fromRGB(255, 255, 255),
+
+		SliderRail = Color3.fromRGB(40, 40, 40),
+
+		DropdownFrame = Color3.fromRGB(200, 200, 200),
+		DropdownHolder = Color3.fromRGB(240, 240, 240),
+		DropdownBorder = Color3.fromRGB(200, 200, 200),
+		DropdownOption = Color3.fromRGB(150, 150, 150),
+
+		Keybind = Color3.fromRGB(120, 120, 120),
+
+		Input = Color3.fromRGB(200, 200, 200),
+		InputFocused = Color3.fromRGB(100, 100, 100),
+		InputIndicator = Color3.fromRGB(80, 80, 80),
+		InputIndicatorFocus = Color3.fromRGB(0, 103, 192),
+
+		Dialog = Color3.fromRGB(255, 255, 255),
+		DialogHolder = Color3.fromRGB(240, 240, 240),
+		DialogHolderLine = Color3.fromRGB(228, 228, 228),
+		DialogButton = Color3.fromRGB(255, 255, 255),
+		DialogButtonBorder = Color3.fromRGB(190, 190, 190),
+		DialogBorder = Color3.fromRGB(140, 140, 140),
+		DialogInput = Color3.fromRGB(250, 250, 250),
+		DialogInputLine = Color3.fromRGB(160, 160, 160),
+
+		Text = Color3.fromRGB(0, 0, 0),
+		SubText = Color3.fromRGB(40, 40, 40),
+		Hover = Color3.fromRGB(50, 50, 50),
+		HoverChange = 0.16,
+	},
+	Aqua = {
+		Name = "Aqua",
+		Accent = Color3.fromRGB(60, 165, 165),
+
+		AcrylicMain = Color3.fromRGB(20, 20, 20),
+		AcrylicBorder = Color3.fromRGB(50, 100, 100),
+		AcrylicGradient = ColorSequence.new(Color3.fromRGB(60, 140, 140), Color3.fromRGB(40, 80, 80)),
+		AcrylicNoise = 0.92,
+
+		TitleBarLine = Color3.fromRGB(60, 120, 120),
+		Tab = Color3.fromRGB(140, 180, 180),
+
+		Element = Color3.fromRGB(110, 160, 160),
+		ElementBorder = Color3.fromRGB(40, 70, 70),
+		InElementBorder = Color3.fromRGB(80, 110, 110),
+		ElementTransparency = 0.84,
+
+		ToggleSlider = Color3.fromRGB(110, 160, 160),
+		ToggleToggled = Color3.fromRGB(0, 0, 0),
+
+		SliderRail = Color3.fromRGB(110, 160, 160),
+
+		DropdownFrame = Color3.fromRGB(160, 200, 200),
+		DropdownHolder = Color3.fromRGB(40, 80, 80),
+		DropdownBorder = Color3.fromRGB(40, 65, 65),
+		DropdownOption = Color3.fromRGB(110, 160, 160),
+
+		Keybind = Color3.fromRGB(110, 160, 160),
+
+		Input = Color3.fromRGB(110, 160, 160),
+		InputFocused = Color3.fromRGB(20, 10, 30),
+		InputIndicator = Color3.fromRGB(130, 170, 170),
+		InputIndicatorFocus = Color3.fromRGB(60, 165, 165),
+
+		Dialog = Color3.fromRGB(40, 80, 80),
+		DialogHolder = Color3.fromRGB(30, 60, 60),
+		DialogHolderLine = Color3.fromRGB(25, 50, 50),
+		DialogButton = Color3.fromRGB(40, 80, 80),
+		DialogButtonBorder = Color3.fromRGB(80, 110, 110),
+		DialogBorder = Color3.fromRGB(50, 100, 100),
+		DialogInput = Color3.fromRGB(45, 90, 90),
+		DialogInputLine = Color3.fromRGB(130, 170, 170),
+
+		Text = Color3.fromRGB(240, 240, 240),
+		SubText = Color3.fromRGB(170, 170, 170),
+		Hover = Color3.fromRGB(110, 160, 160),
+		HoverChange = 0.04,
+	},
+	Amethyst = {
+		Name = "Amethyst",
+		Accent = Color3.fromRGB(97, 62, 167),
+
+		AcrylicMain = Color3.fromRGB(20, 20, 20),
+		AcrylicBorder = Color3.fromRGB(110, 90, 130),
+		AcrylicGradient = ColorSequence.new(Color3.fromRGB(85, 57, 139), Color3.fromRGB(40, 25, 65)),
+		AcrylicNoise = 0.92,
+
+		TitleBarLine = Color3.fromRGB(95, 75, 110),
+		Tab = Color3.fromRGB(160, 140, 180),
+
+		Element = Color3.fromRGB(140, 120, 160),
+		ElementBorder = Color3.fromRGB(60, 50, 70),
+		InElementBorder = Color3.fromRGB(100, 90, 110),
+		ElementTransparency = 0.87,
+
+		ToggleSlider = Color3.fromRGB(140, 120, 160),
+		ToggleToggled = Color3.fromRGB(0, 0, 0),
+
+		SliderRail = Color3.fromRGB(140, 120, 160),
+
+		DropdownFrame = Color3.fromRGB(170, 160, 200),
+		DropdownHolder = Color3.fromRGB(60, 45, 80),
+		DropdownBorder = Color3.fromRGB(50, 40, 65),
+		DropdownOption = Color3.fromRGB(140, 120, 160),
+
+		Keybind = Color3.fromRGB(140, 120, 160),
+
+		Input = Color3.fromRGB(140, 120, 160),
+		InputFocused = Color3.fromRGB(20, 10, 30),
+		InputIndicator = Color3.fromRGB(170, 150, 190),
+		InputIndicatorFocus = Color3.fromRGB(97, 62, 167),
+
+		Dialog = Color3.fromRGB(60, 45, 80),
+		DialogHolder = Color3.fromRGB(45, 30, 65),
+		DialogHolderLine = Color3.fromRGB(40, 25, 60),
+		DialogButton = Color3.fromRGB(60, 45, 80),
+		DialogButtonBorder = Color3.fromRGB(95, 80, 110),
+		DialogBorder = Color3.fromRGB(85, 70, 100),
+		DialogInput = Color3.fromRGB(70, 55, 85),
+		DialogInputLine = Color3.fromRGB(175, 160, 190),
+
+		Text = Color3.fromRGB(240, 240, 240),
+		SubText = Color3.fromRGB(170, 170, 170),
+		Hover = Color3.fromRGB(140, 120, 160),
+		HoverChange = 0.04,
+	},
+	Rose = {
+		Name = "Rose",
+		Accent = Color3.fromRGB(180, 55, 90),
+
+		AcrylicMain = Color3.fromRGB(40, 40, 40),
+		AcrylicBorder = Color3.fromRGB(130, 90, 110),
+		AcrylicGradient = ColorSequence.new(Color3.fromRGB(190, 60, 135), Color3.fromRGB(165, 50, 70)),
+		AcrylicNoise = 0.92,
+
+		TitleBarLine = Color3.fromRGB(140, 85, 105),
+		Tab = Color3.fromRGB(180, 140, 160),
+
+		Element = Color3.fromRGB(200, 120, 170),
+		ElementBorder = Color3.fromRGB(110, 70, 85),
+		InElementBorder = Color3.fromRGB(120, 90, 90),
+		ElementTransparency = 0.86,
+
+		ToggleSlider = Color3.fromRGB(200, 120, 170),
+		ToggleToggled = Color3.fromRGB(0, 0, 0),
+
+		SliderRail = Color3.fromRGB(200, 120, 170),
+
+		DropdownFrame = Color3.fromRGB(200, 160, 180),
+		DropdownHolder = Color3.fromRGB(120, 50, 75),
+		DropdownBorder = Color3.fromRGB(90, 40, 55),
+		DropdownOption = Color3.fromRGB(200, 120, 170),
+
+		Keybind = Color3.fromRGB(200, 120, 170),
+
+		Input = Color3.fromRGB(200, 120, 170),
+		InputFocused = Color3.fromRGB(20, 10, 30),
+		InputIndicator = Color3.fromRGB(170, 150, 190),
+		InputIndicatorFocus = Color3.fromRGB(180, 55, 90),
+
+		Dialog = Color3.fromRGB(120, 50, 75),
+		DialogHolder = Color3.fromRGB(95, 40, 60),
+		DialogHolderLine = Color3.fromRGB(90, 35, 55),
+		DialogButton = Color3.fromRGB(120, 50, 75),
+		DialogButtonBorder = Color3.fromRGB(155, 90, 115),
+		DialogBorder = Color3.fromRGB(100, 70, 90),
+		DialogInput = Color3.fromRGB(135, 55, 80),
+		DialogInputLine = Color3.fromRGB(190, 160, 180),
+
+		Text = Color3.fromRGB(240, 240, 240),
+		SubText = Color3.fromRGB(170, 170, 170),
+		Hover = Color3.fromRGB(200, 120, 170),
+		HoverChange = 0.04,
+	},
+	Sakura = {
+		Name = "Sakura",
+		Accent = Color3.fromRGB(252, 209, 215),
+
+		AcrylicMain = Color3.fromRGB(40, 40, 40),
+		AcrylicBorder = Color3.fromRGB(130, 90, 110),
+		AcrylicGradient = ColorSequence.new{
+			ColorSequenceKeypoint.new(0, Color3.fromRGB(252, 209, 215)),
+			ColorSequenceKeypoint.new(0.25, Color3.fromRGB(255, 231, 222)),
+			ColorSequenceKeypoint.new(0.50, Color3.fromRGB(233, 177, 205)),
+			ColorSequenceKeypoint.new(0.75, Color3.fromRGB(195, 130, 158)),
+			ColorSequenceKeypoint.new(1, Color3.fromRGB(86, 33, 53)),
+		},
+		AcrylicNoise = 0.92,
+
+		TitleBarLine = Color3.fromRGB(140, 85, 105),
+		Tab = Color3.fromRGB(132, 89, 95),
+
+		Element = Color3.fromRGB(220, 140, 190),
+		ElementBorder = Color3.fromRGB(110, 70, 85),
+		InElementBorder = Color3.fromRGB(120, 90, 90),
+		ElementTransparency = 0.86,
+
+		ToggleSlider = Color3.fromRGB(252, 209, 215),
+		ToggleToggled = Color3.fromRGB(252, 209, 215),
+		TransparenToggle = 0.5,
+
+		SliderRail = Color3.fromRGB(252, 209, 215),
+
+		DropdownFrame = Color3.fromRGB(252, 209, 215),
+		DropdownHolder = Color3.fromRGB(156, 103, 123),
+		DropdownBorder = Color3.fromRGB(90, 40, 55),
+		DropdownOption = Color3.fromRGB(252, 209, 215),
+
+		Keybind = Color3.fromRGB(200, 120, 170),
+
+		Input = Color3.fromRGB(200, 120, 170),
+		InputFocused = Color3.fromRGB(200, 200, 200),
+		InputIndicator = Color3.fromRGB(170, 150, 190),
+		InputIndicatorFocus = Color3.fromRGB(252,209,215),
+
+		Dialog = Color3.fromRGB(120, 50, 75),
+		DialogHolder = Color3.fromRGB(95, 40, 60),
+		DialogHolderLine = Color3.fromRGB(90, 35, 55),
+		DialogButton = Color3.fromRGB(120, 50, 75),
+		DialogButtonBorder = Color3.fromRGB(155, 90, 115),
+		DialogBorder = Color3.fromRGB(100, 70, 90),
+		DialogInput = Color3.fromRGB(135, 55, 80),
+		DialogInputLine = Color3.fromRGB(190, 160, 180),
+
+		Text = Color3.fromRGB(240, 240, 240),
+		SubText = Color3.fromRGB(220, 220, 220),
+		Hover = Color3.fromRGB(200, 120, 170),
+		HoverChange = 0.04,
+	}
+}
+
+local Library = {
+	Version = "1.1.0",
+
+	OpenFrames = {},
+	Options = {},
+	Themes = Themes.Names,
+
+	Window = nil,
+	WindowFrame = nil,
+	Unloaded = false,
+
+	Creator = nil,
+
+	DialogOpen = false,
+	UseAcrylic = false,
+	Acrylic = false,
+	Transparency = true,
+	MinimizeKeybind = nil,
+	MinimizeKey = Enum.KeyCode.LeftControl,
+}
+
+local function isMotor(value)
+	local motorType = tostring(value):match("^Motor%((.+)%)$")
+
+	if motorType then
+		return true, motorType
+	else
+		return false
 	end
 end
 
--- [ Esp ]
+local Connection = {}
 
-function isnil(thing)
-    return (thing == nil)
-end
-local function round(n)
-    return math.floor(tonumber(n) + 0.5)
-end
-Number = math.random(1, 1000000)
-function UpdatePlayerChams()
-    for i,v in pairs(game:GetService("Players"):GetChildren()) do
-        pcall(function()
-            if not isnil(v.Character) then
-                if _G.EspPlayer then
-                    if not isnil(v.Character.Head) and not v.Character.Head:FindFirstChild('NameEsp'..Number) then
-                        local bill = Instance.new('BillboardGui',v.Character.Head)
-                        bill.Name = "NameEsp"..Number
-                        bill.ExtentsOffset = Vector3.new(0, 1, 0)
-                        bill.Size = UDim2.new(1,200,1,30)
-                        bill.Adornee = v.Character.Head
-                        bill.AlwaysOnTop = true
-                        local name = Instance.new('TextLabel',bill)
-                        name.Font = Enum.Font.GothamSemibold
-                        name.FontSize = "Size12"
-                        name.TextWrapped = true
-                        name.Size = UDim2.new(1,0,1,0)
-                        name.TextYAlignment = 'Top'
-                        name.BackgroundTransparency = 1
-                        name.TextStrokeTransparency = 0.5
-                        name.TextColor3 = Color3.fromRGB(255, 105, 180)
-                    else
-                        v.Character.Head['NameEsp'..Number].TextLabel.Text = ('[ Player: '..v.Name..' ]\n[ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3)..'m ]')
-                    end
-                else
-                    if v.Character.Head:FindFirstChild('NameEsp'..Number) then
-                        v.Character.Head:FindFirstChild('NameEsp'..Number):Destroy()
-                    end
-                end
-            end
-        end)
-    end
+Connection.__index = Connection
+
+function Connection.new(signal, handler)
+	return setmetatable({
+		signal = signal,
+		connected = true,
+		_handler = handler,
+	}, Connection)
 end
 
-function UpdateIslandESP() 
-    for i,v in pairs(game:GetService("Workspace")["_WorldOrigin"].Locations:GetChildren()) do
-        pcall(function()
-            if _G.EspIsland then 
-                if v.Name ~= "Sea" then
-                    if not v:FindFirstChild('NameEsp') then
-                        local bill = Instance.new('BillboardGui',v)
-                        bill.Name = 'NameEsp'
-                        bill.ExtentsOffset = Vector3.new(0, 1, 0)
-                        bill.Size = UDim2.new(1,200,1,30)
-                        bill.Adornee = v
-                        bill.AlwaysOnTop = true
-                        local name = Instance.new('TextLabel',bill)
-                        name.Font = "GothamBold"
-                        name.FontSize = "Size12"
-                        name.TextWrapped = true
-                        name.Size = UDim2.new(1,0,1,0)
-                        name.TextYAlignment = 'Top'
-                        name.BackgroundTransparency = 1
-                        name.TextStrokeTransparency = 0.5
-                        name.TextColor3 = Color3.fromRGB(255, 165, 0)
-                    else
-                        v['NameEsp'].TextLabel.Text = ('[ Island: '.. v.Name ..' ]\n[ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Position).Magnitude/3)..'m ]')
-                    end
-                end
-            else
-                if v:FindFirstChild('NameEsp') then
-                    v:FindFirstChild('NameEsp'):Destroy()
-                end
-            end
-        end)
-    end
-end
+function Connection:disconnect()
+	if self.connected then
+		self.connected = false
 
-function UpdateChestChams() 
-	for i,v in pairs(game.Workspace:GetChildren()) do
-		pcall(function()
-			if string.find(v.Name,"Chest") then
-				if _G.EspChest then
-					if string.find(v.Name,"Chest") then
-						if not v:FindFirstChild('NameEsp'..Number) then
-							local bill = Instance.new('BillboardGui',v)
-							bill.Name = 'NameEsp'..Number
-							bill.ExtentsOffset = Vector3.new(0, 1, 0)
-							bill.Size = UDim2.new(1,200,1,30)
-							bill.Adornee = v
-							bill.AlwaysOnTop = true
-							local name = Instance.new('TextLabel',bill)
-							name.Font = Enum.Font.GothamSemibold
-							name.FontSize = "Size12"
-							name.TextWrapped = true
-							name.Size = UDim2.new(1,0,1,0)
-							name.TextYAlignment = 'Top'
-							name.BackgroundTransparency = 1
-							name.TextStrokeTransparency = 0.5
-							if v.Name == "Chest1" then
-								name.TextColor3 = Color3.fromRGB(128, 128, 128)
-							end
-							if v.Name == "Chest2" then
-								name.TextColor3 = Color3.fromRGB(255, 255, 0)
-							end
-							if v.Name == "Chest3" then
-								name.TextColor3 = Color3.fromRGB(0, 191, 255)
-							end
-						else
-		    			    v['NameEsp'..Number].TextLabel.Text = ('[ '..v.Name..' ]\n[ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Position).Magnitude/3)..'m ]')
-						end
-					end
-				else
-					if v:FindFirstChild('NameEsp'..Number) then
-						v:FindFirstChild('NameEsp'..Number):Destroy()
-					end
-				end
-			end
-		end)
-	end
-end
-
-function UpdateDevilChams() 
-	for i,v in pairs(game.Workspace:GetChildren()) do
-		pcall(function()
-			if _G.EspDevilFruit then
-				if string.find(v.Name, "Fruit") then   
-					if not v.Handle:FindFirstChild('NameEsp'..Number) then
-						local bill = Instance.new('BillboardGui',v.Handle)
-						bill.Name = 'NameEsp'..Number
-						bill.ExtentsOffset = Vector3.new(0, 1, 0)
-						bill.Size = UDim2.new(1,200,1,30)
-						bill.Adornee = v.Handle
-						bill.AlwaysOnTop = true
-						local name = Instance.new('TextLabel',bill)
-						name.Font = Enum.Font.GothamSemibold
-						name.FontSize = "Size12"
-						name.TextWrapped = true
-						name.Size = UDim2.new(1,0,1,0)
-						name.TextYAlignment = 'Top'
-						name.BackgroundTransparency = 1
-						name.TextStrokeTransparency = 0.5
-						name.TextColor3 = Color3.fromRGB(255, 255, 255)
-					else
-						v.Handle['NameEsp'..Number].TextLabel.Text = ('[ '..v.Name..' ]\n[ Distance: '..round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Handle.Position).Magnitude/3)..'m ]')
-					end
-				end
-			else
-				if v.Handle:FindFirstChild('NameEsp'..Number) then
-					v.Handle:FindFirstChild('NameEsp'..Number):Destroy()
-				end
-			end
-		end)
-	end
-end
-
-function UpdateFlowerChams() 
-	for i,v in pairs(game.Workspace:GetChildren()) do
-		pcall(function()
-			if v.Name == "Flower2" or v.Name == "Flower1" then
-				if _G.EspFlower then 
-					if not v:FindFirstChild('NameEsp'..Number) then
-						local bill = Instance.new('BillboardGui',v)
-						bill.Name = 'NameEsp'..Number
-						bill.ExtentsOffset = Vector3.new(0, 1, 0)
-						bill.Size = UDim2.new(1,200,1,30)
-						bill.Adornee = v
-						bill.AlwaysOnTop = true
-						local name = Instance.new('TextLabel',bill)
-						name.Font = Enum.Font.GothamSemibold
-						name.FontSize = "Size12"
-						name.TextWrapped = true
-						name.Size = UDim2.new(1,0,1,0)
-						name.TextYAlignment = 'Top'
-						name.BackgroundTransparency = 1
-						name.TextStrokeTransparency = 0.5
-						name.TextColor3 = Color3.fromRGB(255, 0, 0)
-						if v.Name == "Flower1" then 
-							name.TextColor3 = Color3.fromRGB(0, 0, 255)
-						end
-						if v.Name == "Flower2" then
-							name.TextColor3 = Color3.fromRGB(255, 0, 0)
-						end
-                    else
-                        v['NameEsp'..Number].TextLabel.Text = ('[ '..v.Name ..' ]\n[ Distance: '.. round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Position).Magnitude/3) ..'m ]')
-					end
-				else
-					if v:FindFirstChild('NameEsp'..Number) then
-					v:FindFirstChild('NameEsp'..Number):Destroy()
-					end
-				end
-			end
-		end)
-	end
-end
-
--- [ Equip Weapon ]
-
-function UnEquipWeapon(Weapon)
-    if game.Players.LocalPlayer.Character:FindFirstChild(Weapon) then
-        _G.NotAutoEquip = true
-        wait(.5)
-        game.Players.LocalPlayer.Character:FindFirstChild(Weapon).Parent = game.Players.LocalPlayer.Backpack
-        wait(.1)
-        _G.NotAutoEquip = false
-    end
-end
-
-function EquipWeapon(a)
-    if game.Players.LocalPlayer.Backpack:FindFirstChild(a) then
-        local a = game.Players.LocalPlayer.Backpack:FindFirstChild(a)
-        game.Players.LocalPlayer.Character.Humanoid:EquipTool(a)
-    end
-end
-
--- [ Tween ]
-
-function GetDistance(target1, taget2)
-    if not taget2 then
-        taget2 = game.Players.LocalPlayer.Character.HumanoidRootPart
-    end
-    bbos, bbos2 = pcall(function()
-            a = target1.Position
-            a2 = taget2.Position
-    end)
-    if bbos then
-        a = target1.Position
-        a2 = taget2.Position
-        return (a - a2).Magnitude
-    end
-end
-
-local plrs = game.Players
-local lp = plrs.LocalPlayer
-local Workspace = game:GetService("Workspace")
-NpcList = {}
-for i, v in pairs(Workspace.NPCs:GetChildren()) do 
-    if string.find(string.lower(v.Name), "home point") then
-        table.insert(NpcList, v:GetModelCFrame())
-    end
-end
-for i, v in pairs(getnilinstances()) do 
-    if string.find(string.lower(v.Name), "home point") then
-        table.insert(NpcList, v:GetModelCFrame())
-    end
-end
-local w = game.PlaceId
-if w == 2753915549 then
-    World1 = true
-    gQ = {
-        Vector3.new(-7894.6201171875, 5545.49169921875, -380.246346191406),
-        Vector3.new(-4607.82275390625, 872.5422973632812, -1667.556884765625),
-        Vector3.new(61163.8515625, 11.759522438049316, 1819.7841796875),
-        Vector3.new(3876.280517578125, 35.10614013671875, -1939.3201904296875)
-    }
-elseif w == 4442272183 then
-    World2 = true
-    gQ = {
-        Vector3.new(-288.46246337890625, 306.130615234375, 597.9988403320312),
-        Vector3.new(2284.912109375, 15.152046203613281, 905.48291015625),
-        Vector3.new(923.21252441406, 126.9760055542, 32852.83203125),
-        Vector3.new(-6508.5581054688, 89.034996032715, -132.83953857422)
-    }
-elseif w == 7449423635 then
-    World3 = true
-    gQ = {
-        Vector3.new(-5058.77490234375, 314.5155029296875, -3155.88330078125),
-        Vector3.new(5756.83740234375, 610.4240112304688, -253.9253692626953),
-        Vector3.new(-12463.8740234375, 374.9144592285156, -7523.77392578125),
-        Vector3.new(28282.5703125, 14896.8505859375, 105.1042709350586),
-        Vector3.new(-11993.580078125, 334.7812805175781, -8844.1826171875),
-        Vector3.new(5314.58203125, 25.419387817382812, -125.94227600097656)
-    }
-end
-function GetPortal(check2)
-    local check3 = check2.Position
-    local aM, aN = Vector3.new(0,0,0), math.huge
-    for _, aL in pairs(gQ) do
-        if (aL-check3).Magnitude < aN and aM ~= aL then
-            aM, aN = aL, (aL-check3).Magnitude
-        end
-    end
-    return aM
-end
-function BypassTeleport(is)
-    if lp.Character:FindFirstChild("PartTele") then
-        lp.Character.PartTele.CFrame = CFrame.new(lp.Character.PartTele.CFrame.X, lp.Character.PartTele.CFrame.Y, lp.Character.PartTele.CFrame.Z)
-        wait(0.5)
-        lp.Character.PartTele.CFrame = is
-        wait(0.1)
-        lp.Character.PrimaryPart.CFrame = is   
-        lp.Character:WaitForChild("Humanoid"):ChangeState(15)
-        wait(0.5)
-        repeat task.wait() until lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid.Health <= 0
-        repeat task.wait()
-            if lp.Character:FindFirstChild("PartTele") then
-                lp.Character.PartTele.CFrame = is  
-            end
-            if lp.Character:FindFirstChild("PrimaryPart") then
-                lp.Character.PrimaryPart.CFrame = is  
-            end
-        until lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid.Health > 0
-    end
-end
-function GetBypassPos(pos)
-    pos = Vector3.new(pos.X, pos.Y, pos.Z)
-    local lll, mmm = nil, math.huge
-    for i, v in pairs(NpcList) do
-        if (v.p - pos).Magnitude < mmm then
-            lll = v
-            mmm = (v.p - pos).Magnitude
-        end
-    end
-    return lll
-end
-function RequestEntrance(check1)
-    game.ReplicatedStorage.Remotes.CommF_:InvokeServer(unpack({"requestEntrance", check1}))
-    if lp.Character:FindFirstChild("PartTele") then
-        lp.Character.PartTele.CFrame = WaitHRP(lp).CFrame 
-    end
-    wait(0.01)
-end
-function WaitHRP(q0) 
-    if not q0 then return end
-    return q0.Character:WaitForChild("HumanoidRootPart", 9) 
-end
-function CalcDistance(I, II) 
-    if not II then 
-        II = lp.Character.PrimaryPart.CFrame 
-    end
-    return (Vector3.new(I.X, 0, I.Z)-Vector3.new(II.X, 0, II.Z)).Magnitude 
-end
-
-function topos(Pos)
-    if not Pos then
-        return
-    end 
-    if not lp.Character:FindFirstChild("PartTele") then
-        local PartTele = Instance.new("Part", lp.Character)
-        PartTele.Size = Vector3.new(0,0,0)
-        PartTele.Name = "PartTele"
-        PartTele.Anchored = true
-        PartTele.Transparency = 1
-        PartTele.CanCollide = false
-        PartTele.CFrame = WaitHRP(lp).CFrame
-        PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
-            task.wait(0.01)
-            WaitHRP(lp).CFrame = PartTele.CFrame
-        end)
-    end
-    Portal = GetPortal(Pos) 
-    Spawn = GetBypassPos(Pos) 
-    MyCFrame = WaitHRP(lp).CFrame
-    Distance = CalcDistance(MyCFrame, Pos)
-    if CalcDistance(Portal, Pos) < CalcDistance(Pos) and CalcDistance(Portal) > 500 then
-        return RequestEntrance(Portal)
-    end
-    if _G.BypassTeleport then
-        if CalcDistance(Pos) - CalcDistance(Spawn, Pos) > 1000 and CalcDistance(Spawn) > 1000 then
-            return BypassTeleport(Spawn)
-        end
-    end
-    if lp.Character:FindFirstChild("Humanoid") and lp.Character.Humanoid:FindFirstChild("Sit") and lp.Character.Humanoid.Sit == true then
-        lp.Character.Humanoid.Sit = false
-    end
-    _G.NoClip = true
-    Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / _G.FlySpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
-    Tween:Play()
-end
-
-spawn(function()
-    while task.wait() do
-        if lp.Character:FindFirstChild("Humanoid").Health <= 0 or not lp.Character:FindFirstChild("HumanoidRootPart") then
-            if lp.Character:FindFirstChild("TweenSmooth") then
-                lp.Character:FindFirstChild("TweenSmooth"):Destroy()
-            end
-        end
-        if (lp.Character.HumanoidRootPart.Position - lp.Character:FindFirstChild("PartTele").Position).Magnitude <= 100 then
-            if lp.Character:FindFirstChild("PartTele") then
-                lp.Character:FindFirstChild("PartTele"):Destroy()
-            end
-        end
-    end
-end)
-
-function StopTween(target)
-    if not target then
-        topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
-        _G.NoClip = false
-        _G.NoClip = false
-    end
-end
-
--- [ Pos Farm ]
-
-Type = 1
-spawn(function()
-    while wait() do
-        Type = 1
-        wait(0.5)
-        Type = 2
-        wait(0.5)
-        Type = 3
-        wait(0.5)
-        Type = 4
-        wait(0.5)
-    end
-end)
-
-spawn(function()
-    while task.wait() do
-        if Type == 1 then
-            Pos = CFrame.new(0,30,-20)
-            PosSea = CFrame.new(0,400,-60)
-            PosCaMap = CFrame.new(0,60,-30)
-        elseif Type == 2 then
-            Pos = CFrame.new(20,30,0)
-            PosSea = CFrame.new(60,400,0)
-            PosCaMap = CFrame.new(30,60,0)
-        elseif Type == 3 then
-            Pos = CFrame.new(0,30,20)
-            PosSea = CFrame.new(0,400,60)
-            PosCaMap = CFrame.new(0,60,30)	
-        elseif Type == 4 then
-            Pos = CFrame.new(-20,30,0)
-            PosSea = CFrame.new(-60,400,0)
-            PosCaMap = CFrame.new(-30,60,0)
-        end
-    end
-end)
-
--- [ No Clip Farm ]
-
-spawn(function()
-    game:GetService("RunService").Stepped:Connect(function()
-        pcall(function()
-            if _G.NoClip then
-                if not game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyVelocity") then
-                    local NoClip = Instance.new("BodyVelocity")
-                    NoClip.Name = "BodyVelocity"
-                    NoClip.P = 9000
-                    NoClip.Parent = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart
-                    NoClip.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
-                end
-                game:GetService("RunService").RenderStepped:Connect(function()
-                    local player = game:GetService("Players").LocalPlayer
-                    local humanoid = player.Character:FindFirstChild("Humanoid")
-                    local bodyVelocity = player.Character.HumanoidRootPart:FindFirstChild("BodyVelocity")
-                    if humanoid and bodyVelocity then
-                        bodyVelocity.Velocity = humanoid.MoveDirection * 60
-                    end
-                end)
-                for _, v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
-                    if v:IsA("BasePart") then
-                        v.CanCollide = false    
-                    end
-                end
-            else
-                game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyVelocity"):Destroy()
-            end
-        end)
-    end)
-end)
-
--- [ Check Status ]
-
-spawn(function()
-	while true do wait()
-		if setscriptable then
-			setscriptable(game.Players.LocalPlayer, "SimulationRadius", true)
-		end
-		if sethiddenproperty then
-			sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-		end
-	end
-end)
-
-spawn(function()
-    while wait() do
-        if sethiddenproperty then
-            sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",100)
-        end
-        if setscriptable then
-            setscriptable(game.Players.LocalPlayer, "SimulationRadius", true)
-            game.Players.LocalPlayer.SimulationRadius = math.huge * math.huge, math.huge * math.huge * 0 / 0 * 0 / 0 * 0 / 0 * 0 / 0 * 0 / 0
-        end
-    end
-end)
-
-function CheckMob(MobName)
-    for i, v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
-        if v.Name == MobName then
-            return v
-        end
-    end
-    for i, v in pairs(game.workspace.Enemies:GetChildren()) do
-        if v.Name == MobName then
-            return v
-        end
-    end
-end
-
-function CheckAncientOneStatus()
-    if not game.Players.LocalPlayer.Character:FindFirstChild("RaceTransformed") then
-        return "You Have Yet To Achieve Greatness"
-    end
-    local v227 = nil
-    local v228 = nil
-    local v229 = nil
-    v229, v228, v227 = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("UpgradeRace", "Check")
-    if v229 == 1 then
-        return "Required Train More"
-    elseif v229 == 2 or v229 == 4 or v229 == 7 then
-        return "Can Buy Gear With " .. v227 .. " Fragments"
-    elseif v229 == 3 then
-        return "Required Train More"
-    elseif v229 == 5 then
-        return "You Are Done Your Race."
-    elseif v229 == 6 then
-        return "Upgrades completed: " .. v228 - 2 .. "/3, Need Trains More"
-    end
-    if v229 ~= 8 then
-        if v229 == 0 then
-            return "Ready For Trial"
-        else
-            return "You Have Yet To Achieve Greatness"
-        end
-    end
-    return "Remaining " .. 10 - v228 .. " Training Sessions"
-end
-
-function CheckRace()
-    local a = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Wenlocktoad","1")
-    local b = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Alchemist","1")
-    if game.Players.LocalPlayer.Character:FindFirstChild("RaceTransformed") then
-        return game:GetService("Players").LocalPlayer.Data.Race.Value.." V4"
-    end
-    if a == -2 then
-        return game:GetService("Players").LocalPlayer.Data.Race.Value.." V3"
-    end
-    if b == -2 then
-        return game:GetService("Players").LocalPlayer.Data.Race.Value.." V2"
-    end
-    return game:GetService("Players").LocalPlayer.Data.Race.Value.." V1"
-end
-
-local PosTemplete = CFrame.new(28282.5703125, 14896.8505859375, 105.1042709350586)
-function Templeteleport()
-    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(28282.5703125, 14896.8505859375, 105.1042709350586))
-end
-function CheckAndTweenTemple()
-    if (PosTemplete.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 1200 then
-        Templeteleport()
-    end
-    if (PosTemplete.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 1200 then
-        Templeteleport()
-    end
-end
-
-function MoonTextureId()
-    if World1 then
-        return game:GetService("Lighting").FantasySky.MoonTextureId
-    elseif World2 then
-        return game:GetService("Lighting").FantasySky.MoonTextureId
-    elseif World3 then
-        return game:GetService("Lighting").Sky.MoonTextureId
-    end
-end
-function CheckMoon()
-    moon8 = "http://www.roblox.com/asset/?id=9709150401"
-    moon7 = "http://www.roblox.com/asset/?id=9709150086"
-    moon6 = "http://www.roblox.com/asset/?id=9709149680"
-    moon5 = "http://www.roblox.com/asset/?id=9709149431"
-    moon4 = "http://www.roblox.com/asset/?id=9709149052"
-    moon3 = "http://www.roblox.com/asset/?id=9709143733"
-    moon2 = "http://www.roblox.com/asset/?id=9709139597"
-    moon1 = "http://www.roblox.com/asset/?id=9709135895"
-    moonreal = MoonTextureId()
-    cofullmoonkothangbeo = "Bad Moon"
-    if moonreal == moon5 or moonreal == moon4 then
-        if moonreal == moon5 then
-            cofullmoonkothangbeo = "Full Moon"
-        elseif moonreal == moon4 then
-            cofullmoonkothangbeo = "Next Night"
-        end
-    end
-    return cofullmoonkothangbeo
-end
-function function7()
-    GameTime = "Error"
-    local c = game.Lighting
-    local ao = c.ClockTime
-    if ao >= 18 or ao < 5 then
-        GameTime = "Night"
-    else
-        GameTime = "Day"
-    end
-    return GameTime
-end
-function function6()
-    return math.floor(game.Lighting.ClockTime)
-end
-function getServerTime()
-    RealTime = tostring(math.floor(game.Lighting.ClockTime * 100) / 100)
-    RealTime = tostring(game.Lighting.ClockTime)
-    RealTimeTable = RealTime:split(".")
-    Minute, Second = RealTimeTable[1], tonumber(0 + tonumber(RealTimeTable[2] / 100)) * 60
-    return Minute, Second
-end
-function function8()
-    local c = game.Lighting
-    local ao = c.ClockTime
-    if CheckMoon() == "Full Moon" and ao <= 5 then
-        return tostring(function6()) .. " ( Will End Moon In " .. math.floor(5 - ao) .. " Minutes )"
-    elseif CheckMoon() == "Full Moon" and (ao > 5 and ao < 12) then
-        return tostring(function6()) .. " ( Fake Moon )"
-    elseif CheckMoon() == "Full Moon" and (ao > 12 and ao < 18) then
-        return tostring(function6()) .. " ( Will Full Moon In " .. math.floor(18 - ao) .. " Minutes )"
-    elseif CheckMoon() == "Full Moon" and (ao > 18 and ao <= 24) then
-        return tostring(function6()) .. " ( Will End Moon In " .. math.floor(24 + 6 - ao) .. " Minutes )"
-    end
-    if CheckMoon() == "Next Night" and ao < 12 then
-        return tostring(function6()) .. " ( Will Full Moon In " .. math.floor(18 - ao) .. " Minutes )"
-    elseif CheckMoon() == "Next Night" and ao > 12 then
-        return tostring(function6()) .. " ( Will Full Moon In " .. math.floor(18 + 12 - ao) .. " Minutes )"
-    end
-    return tostring(function6())
-end
-function FullMoobCheck()
-    return function8()
-end
-
-function CheckCakeSpawn()
-    if World3 then
-        if string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 88 then
-            return "Defeat: "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,41).."/500 Mobs"
-        elseif string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 87 then
-            return "Defeat: "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,40).."/500 Mobs"
-        elseif string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 86 then
-            return "Defeat: "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,39).."/500 Mobs"
-        elseif CheckMob("Cake Prince") then
-            return "Cake Prince Spawned :)"
-        elseif CheckMob("Dough King") then
-            return "Dough King Spawned :)"
-        end
-    elseif World1 or World2 then
-        return "Only Third Sea ( Sea 3 )"
-    end
-end
-
-function CheckElite()
-    if CheckMob("Diablo") then
-        return "Elite Diablo Spawned :)"
-    elseif CheckMob("Deandre") then
-        return "Elite Deandre Spawned :)"
-    elseif CheckMob("Urban") then
-        return "Elite Urban Spawned :)"
-    else
-        return "Elite Not Spawned :("
-    end
-end
-
-function CheckSword()
-    if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer", "1") then
-        return "Sword Name: Shisui"
-    elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer","2") then
-        return "Sword Name: Wando"
-    elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer","3") then
-        return "Sword Name: Saddi"
-    else
-        return "Not Found Legendary Sword Dealer :("
-    end
-end
-
-function CheckHaki()
-    if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer", "1") then
-        return "Haki Colors: "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer", "1")
-    else
-        return "Not Found Haki Dealer :("
-    end
-end
-
-function CheckMirage()
-    if game.Workspace._WorldOrigin.Locations:FindFirstChild('Mirage Island') then
-        return "Mirage Island Spawned :)"
-    else
-        return "Mirage Island Not Spawned :("
-    end
-end
-
-function CheckKitsune()
-    if game:GetService("Workspace").Map:FindFirstChild('KitsuneIsland') then
-        return "Kitsune Island Spawned :)"
-    else
-        return "Kitsune Island Not Spawned :("
-    end
-end
-
-function CheckFrozen()
-    if game.Workspace._WorldOrigin.Locations:FindFirstChild('Frozen Dimension') then
-        return "Island Frozen Dimension Spawned :)"
-    else
-        return "Island Frozen Dimension Not Spawned :("
-    end
-end
-
-function CDarkness()
-    if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") then
-        return "Fist Of Darkness: Yes"
-    else
-        return "Fist Of Darkness: No"
-    end
-end
-function CheckRauDen()
-    if CheckMob("Darkbeard") then
-        return "Darkbeard Spawned :)"
-    else
-        return "Darkbeard Not Spawned :("
-    end
-end
-
-function GodChalice()
-    if game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
-        return "God's Chalice: Yes"
-    else
-        return "God's Chalice: No"
-    end
-end
-function CheckTrumAd()
-    if CheckMob("rip_indra True Form") then
-        return "Rip_Indra Spawned :)"
-    else
-        return "Rip_Indra Not Spawned :("
-    end
-end
-
--- [ Aimbot Farm ]
-
-spawn(function()
-    game:GetService("RunService").RenderStepped:Connect(function()
-        pcall(function()
-            if UseSkill or UseGunSkill or SeaSkill then
-                for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.Notifications:GetChildren()) do
-                    for _, Notif in pairs(v:GetChildren()) do
-                        if string.find(Notif.Text,"Skill Locked!") then
-                            v:Destroy()
-                        end
-                    end
-                end
-            end
-        end)
-    end)
-end)
-
-local gg = getrawmetatable(game)
-local old = gg.__namecall
-setreadonly(gg,false)
-gg.__namecall = newcclosure(function(...)
-	local method = getnamecallmethod()
-	local args = {...}
-	if tostring(method) == "FireServer" then
-		if tostring(args[1]) == "RemoteEvent" then
-			if tostring(args[2]) ~= "true" and tostring(args[2]) ~= "false" then
-				if Skillaimbot or Skillaimbotpl then
-					args[2] = AimBotSkillPosition
-					return old(unpack(args))
-				end
+		for index, connection in pairs(self.signal._connections) do
+			if connection == self then
+				table.remove(self.signal._connections, index)
+				return
 			end
 		end
 	end
-	return old(...)
-end)
-
-setreadonly(gg,false)
-gg.__namecall = newcclosure(function(...)
-    local args = {...}
-    if getnamecallmethod() == "InvokeServer" then 
-        if tostring(args[2]) == "TAP" then
-            if Skillaimbot or Skillaimbotpl then
-                args[3] = AimBotSkillPosition
-                return old(unpack(args))
-            end
-        end
-    end
-    return old(...)
-end)
-
--- [ Effect ]
-
-if game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit') then
-    game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit'):Destroy()
-end
-require(game.ReplicatedStorage.Util.CameraShaker):Stop()
-game:GetService("ReplicatedStorage").Util.Sound.Storage.Swing:Destroy()
-spawn(function()
-    for _, v in pairs(game:GetDescendants()) do
-        if v:IsA("Texture") then
-            v.Texture = ""
-        elseif v:IsA("BasePart") and v.Material == Enum.Material.Water then
-            v.Material = Enum.Material.SmoothPlastic
-        end
-    end
-    for _, v in pairs(r33_33arg.LocalPlayer.PlayerScripts:GetDescendants()) do
-        local v641_args = {"WaterBlur", "WaterEffect", "WaterColorCorrection", "WaterCFrame"}
-        if table.find(v641_args, v.Name) then
-            v:Destroy()
-        end
-    end
-end)
-
--- [ Super Fast Attack ]
-
-NoAttackAnimation = true
-local DmgAttack = game:GetService("ReplicatedStorage").Assets.GUI:WaitForChild("DamageCounter")
-local PC = require(game.Players.LocalPlayer.PlayerScripts.CombatFramework.Particle)
-local RL = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib)
-local oldRL = RL.wrapAttackAnimationAsync
-RL.wrapAttackAnimationAsync = function(a,b,c,d,func)
-	if not NoAttackAnimation then
-		return oldRL(a,b,c,60,func)
-	end
-
-	local Hits = {}
-	local Client = game.Players.LocalPlayer
-	local Characters = game:GetService("Workspace").Characters:GetChildren()
-	for i,v in pairs(Characters) do
-		local Human = v:FindFirstChildOfClass("Humanoid")
-		if v.Name ~= game.Players.LocalPlayer.Name and Human and Human.RootPart and Human.Health > 0 and Client:DistanceFromCharacter(Human.RootPart.Position) < 65 then
-			table.insert(Hits,Human.RootPart)
-		end
-	end
-	local Enemies = game:GetService("Workspace").Enemies:GetChildren()
-	for i,v in pairs(Enemies) do
-		local Human = v:FindFirstChildOfClass("Humanoid")
-		if Human and Human.RootPart and Human.Health > 0 and Client:DistanceFromCharacter(Human.RootPart.Position) < 65 then
-			table.insert(Hits,Human.RootPart)
-		end
-	end
-	a:Play(0.01,0.01,0.01)
-	pcall(func,Hits)
 end
 
-getAllBladeHits = LPH_NO_VIRTUALIZE(function(Sizes)
-	local Hits = {}
-	local Client = game.Players.LocalPlayer
-	local Enemies = game:GetService("Workspace").Enemies:GetChildren()
-	for i,v in pairs(Enemies) do
-		local Human = v:FindFirstChildOfClass("Humanoid")
-		if Human and Human.RootPart and Human.Health > 0 and Client:DistanceFromCharacter(Human.RootPart.Position) < Sizes+5 then
-			table.insert(Hits,Human.RootPart)
-		end
+local Signal = {}
+Signal.__index = Signal
+
+function Signal.new()
+	return setmetatable({
+		_connections = {},
+		_threads = {},
+	}, Signal)
+end
+
+function Signal:fire(...)
+	for _, connection in pairs(self._connections) do
+		connection._handler(...)
 	end
-	return Hits
-end)
 
-getAllBladeHitsPlayers = LPH_NO_VIRTUALIZE(function(Sizes)
-	local Hits = {}
-	local Client = game.Players.LocalPlayer
-	local Characters = game:GetService("Workspace").Characters:GetChildren()
-	for i,v in pairs(Characters) do
-		local Human = v:FindFirstChildOfClass("Humanoid")
-		if v.Name ~= game.Players.LocalPlayer.Name and Human and Human.RootPart and Human.Health > 0 and Client:DistanceFromCharacter(Human.RootPart.Position) < Sizes+5 then
-			table.insert(Hits,Human.RootPart)
-		end
+	for _, thread in pairs(self._threads) do
+		coroutine.resume(thread, ...)
 	end
-	return Hits
-end)
 
-local CombatFramework = require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework"))
-local CombatFrameworkR = getupvalues(CombatFramework)[2]
-local RigEven = game:GetService("ReplicatedStorage").RigControllerEvent
-local AttackAnim = Instance.new("Animation")
-local AttackCoolDown = 0
-local cooldowntickFire = 0
-local MaxFire = 1000
-local FastAttackDelay = 0.01
-local FireL = 0
-local bladehit = {}
+	self._threads = {}
+end
 
-CancelCoolDown = LPH_JIT_MAX(function()
-	local ac = CombatFrameworkR.activeController
-	if ac and ac.equipped then
-		AttackCoolDown = tick() + (FastAttackDelay or 0.01) + ((FireL/MaxFire)*0.3)
-		RigEven.FireServer(RigEven,"weaponChange",ac.currentWeaponModel.Name)
-		FireL = FireL + 1
-		task.delay((FastAttackDelay or 0.01) + ((FireL+0.3/MaxFire)*0.3),function()
-			FireL = FireL - 1
-		end)
+function Signal:connect(handler)
+	local connection = Connection.new(self, handler)
+	table.insert(self._connections, connection)
+	return connection
+end
+
+function Signal:wait()
+	table.insert(self._threads, coroutine.running())
+	return coroutine.yield()
+end
+
+local Linear = {}
+Linear.__index = Linear
+
+function Linear.new(targetValue, options)
+	assert(targetValue, "Missing argument #1: targetValue")
+
+	options = options or {}
+
+	return setmetatable({
+		_targetValue = targetValue,
+		_velocity = options.velocity or 1,
+	}, Linear)
+end
+
+function Linear:step(state, dt)
+	local position = state.value
+	local velocity = self._velocity -- Linear motion ignores the state's velocity
+	local goal = self._targetValue
+
+	local dPos = dt * velocity
+
+	local complete = dPos >= math.abs(goal - position)
+	position = position + dPos * (goal > position and 1 or -1)
+	if complete then
+		position = self._targetValue
+		velocity = 0
 	end
-end)
 
-AttackFunction = LPH_JIT_MAX(function(typef)
-	local ac = CombatFrameworkR.activeController
-	if ac and ac.equipped then
-		local bladehit = {}
-		if typef == 1 then
-			bladehit = getAllBladeHits(60)
-		elseif typef == 2 then
-			bladehit = getAllBladeHitsPlayers(65)
+	return {
+		complete = complete,
+		value = position,
+		velocity = velocity,
+	}
+end
+
+local Instant = {}
+Instant.__index = Instant
+
+function Instant.new(targetValue)
+	return setmetatable({
+		_targetValue = targetValue,
+	}, Instant)
+end
+
+function Instant:step()
+	return {
+		complete = true,
+		value = self._targetValue,
+	}
+end
+
+local VELOCITY_THRESHOLD = 0.001
+local POSITION_THRESHOLD = 0.001
+
+local EPS = 0.0001
+
+local Spring = {}
+Spring.__index = Spring
+
+function Spring.new(targetValue, options)
+	assert(targetValue, "Missing argument #1: targetValue")
+	options = options or {}
+
+	return setmetatable({
+		_targetValue = targetValue,
+		_frequency = options.frequency or 4,
+		_dampingRatio = options.dampingRatio or 1,
+	}, Spring)
+end
+
+function Spring:step(state, dt)
+	-- Copyright 2018 Parker Stebbins (parker@fractality.io)
+	-- github.com/Fraktality/Spring
+	-- Distributed under the MIT license
+
+	local d = self._dampingRatio
+	local f = self._frequency * 2 * math.pi
+	local g = self._targetValue
+	local p0 = state.value
+	local v0 = state.velocity or 0
+
+	local offset = p0 - g
+	local decay = math.exp(-d * f * dt)
+
+	local p1, v1
+
+	if d == 1 then -- Critically damped
+		p1 = (offset * (1 + f * dt) + v0 * dt) * decay + g
+		v1 = (v0 * (1 - f * dt) - offset * (f * f * dt)) * decay
+	elseif d < 1 then -- Underdamped
+		local c = math.sqrt(1 - d * d)
+
+		local i = math.cos(f * c * dt)
+		local j = math.sin(f * c * dt)
+
+		-- Damping ratios approaching 1 can cause division by small numbers.
+		-- To fix that, group terms around z=j/c and find an approximation for z.
+		-- Start with the definition of z:
+		--    z = sin(dt*f*c)/c
+		-- Substitute a=dt*f:
+		--    z = sin(a*c)/c
+		-- Take the Maclaurin expansion of z with respect to c:
+		--    z = a - (a^3*c^2)/6 + (a^5*c^4)/120 + O(c^6)
+		--    z ≈ a - (a^3*c^2)/6 + (a^5*c^4)/120
+		-- Rewrite in Horner form:
+		--    z ≈ a + ((a*a)*(c*c)*(c*c)/20 - c*c)*(a*a*a)/6
+
+		local z
+		if c > EPS then
+			z = j / c
 		else
-			for i2,v2 in pairs(getAllBladeHits(55)) do
-				table.insert(bladehit,v2)
-			end
-			for i3,v3 in pairs(getAllBladeHitsPlayers(55)) do
-				table.insert(bladehit,v3)
+			local a = dt * f
+			z = a + ((a * a) * (c * c) * (c * c) / 20 - c * c) * (a * a * a) / 6
+		end
+
+		-- Frequencies approaching 0 present a similar problem.
+		-- We want an approximation for y as f approaches 0, where:
+		--    y = sin(dt*f*c)/(f*c)
+		-- Substitute b=dt*c:
+		--    y = sin(b*c)/b
+		-- Now reapply the process from z.
+
+		local y
+		if f * c > EPS then
+			y = j / (f * c)
+		else
+			local b = f * c
+			y = dt + ((dt * dt) * (b * b) * (b * b) / 20 - b * b) * (dt * dt * dt) / 6
+		end
+
+		p1 = (offset * (i + d * z) + v0 * y) * decay + g
+		v1 = (v0 * (i - z * d) - offset * (z * f)) * decay
+	else -- Overdamped
+		local c = math.sqrt(d * d - 1)
+
+		local r1 = -f * (d - c)
+		local r2 = -f * (d + c)
+
+		local co2 = (v0 - offset * r1) / (2 * f * c)
+		local co1 = offset - co2
+
+		local e1 = co1 * math.exp(r1 * dt)
+		local e2 = co2 * math.exp(r2 * dt)
+
+		p1 = e1 + e2 + g
+		v1 = e1 * r1 + e2 * r2
+	end
+
+	local complete = math.abs(v1) < VELOCITY_THRESHOLD and math.abs(p1 - g) < POSITION_THRESHOLD
+
+	return {
+		complete = complete,
+		value = complete and g or p1,
+		velocity = v1,
+	}
+end
+
+local noop = function() end
+
+local BaseMotor = {}
+BaseMotor.__index = BaseMotor
+
+function BaseMotor.new()
+	return setmetatable({
+		_onStep = Signal.new(),
+		_onStart = Signal.new(),
+		_onComplete = Signal.new(),
+	}, BaseMotor)
+end
+
+function BaseMotor:onStep(handler)
+	return self._onStep:connect(handler)
+end
+
+function BaseMotor:onStart(handler)
+	return self._onStart:connect(handler)
+end
+
+function BaseMotor:onComplete(handler)
+	return self._onComplete:connect(handler)
+end
+
+function BaseMotor:start()
+	if not self._connection then
+		self._connection = RunService.RenderStepped:Connect(function(deltaTime)
+			self:step(deltaTime)
+		end)
+	end
+end
+
+function BaseMotor:stop()
+	if self._connection then
+		self._connection:Disconnect()
+		self._connection = nil
+	end
+end
+
+BaseMotor.destroy = BaseMotor.stop
+
+BaseMotor.step = noop
+BaseMotor.getValue = noop
+BaseMotor.setGoal = noop
+
+function BaseMotor:__tostring()
+	return "Motor"
+end
+
+local SingleMotor = setmetatable({}, BaseMotor)
+SingleMotor.__index = SingleMotor
+
+function SingleMotor.new(initialValue, useImplicitConnections)
+	assert(initialValue, "Missing argument #1: initialValue")
+	assert(typeof(initialValue) == "number", "initialValue must be a number!")
+
+	local self = setmetatable(BaseMotor.new(), SingleMotor)
+
+	if useImplicitConnections ~= nil then
+		self._useImplicitConnections = useImplicitConnections
+	else
+		self._useImplicitConnections = true
+	end
+
+	self._goal = nil
+	self._state = {
+		complete = true,
+		value = initialValue,
+	}
+
+	return self
+end
+
+function SingleMotor:step(deltaTime)
+	if self._state.complete then
+		return true
+	end
+
+	local newState = self._goal:step(self._state, deltaTime)
+
+	self._state = newState
+	self._onStep:fire(newState.value)
+
+	if newState.complete then
+		if self._useImplicitConnections then
+			self:stop()
+		end
+
+		self._onComplete:fire()
+	end
+
+	return newState.complete
+end
+
+function SingleMotor:getValue()
+	return self._state.value
+end
+
+function SingleMotor:setGoal(goal)
+	self._state.complete = false
+	self._goal = goal
+
+	self._onStart:fire()
+
+	if self._useImplicitConnections then
+		self:start()
+	end
+end
+
+function SingleMotor:__tostring()
+	return "Motor(Single)"
+end
+
+local GroupMotor = setmetatable({}, BaseMotor)
+GroupMotor.__index = GroupMotor
+
+local function toMotor(value)
+	if isMotor(value) then
+		return value
+	end
+
+	local valueType = typeof(value)
+
+	if valueType == "number" then
+		return SingleMotor.new(value, false)
+	elseif valueType == "table" then
+		return GroupMotor.new(value, false)
+	end
+
+	error(("Unable to convert %q to motor; type %s is unsupported"):format(value, valueType), 2)
+end
+
+function GroupMotor.new(initialValues, useImplicitConnections)
+	assert(initialValues, "Missing argument #1: initialValues")
+	assert(typeof(initialValues) == "table", "initialValues must be a table!")
+	assert(
+		not initialValues.step,
+		'initialValues contains disallowed property "step". Did you mean to put a table of values here?'
+	)
+
+	local self = setmetatable(BaseMotor.new(), GroupMotor)
+
+	if useImplicitConnections ~= nil then
+		self._useImplicitConnections = useImplicitConnections
+	else
+		self._useImplicitConnections = true
+	end
+
+	self._complete = true
+	self._motors = {}
+
+	for key, value in pairs(initialValues) do
+		self._motors[key] = toMotor(value)
+	end
+
+	return self
+end
+
+function GroupMotor:step(deltaTime)
+	if self._complete then
+		return true
+	end
+
+	local allMotorsComplete = true
+
+	for _, motor in pairs(self._motors) do
+		local complete = motor:step(deltaTime)
+		if not complete then
+			-- If any of the sub-motors are incomplete, the group motor will not be complete either
+			allMotorsComplete = false
+		end
+	end
+
+	self._onStep:fire(self:getValue())
+
+	if allMotorsComplete then
+		if self._useImplicitConnections then
+			self:stop()
+		end
+
+		self._complete = true
+		self._onComplete:fire()
+	end
+
+	return allMotorsComplete
+end
+
+function GroupMotor:setGoal(goals)
+	assert(not goals.step, 'goals contains disallowed property "step". Did you mean to put a table of goals here?')
+
+	self._complete = false
+	self._onStart:fire()
+
+	for key, goal in pairs(goals) do
+		local motor = assert(self._motors[key], ("Unknown motor for key %s"):format(key))
+		motor:setGoal(goal)
+	end
+
+	if self._useImplicitConnections then
+		self:start()
+	end
+end
+
+function GroupMotor:getValue()
+	local values = {}
+
+	for key, motor in pairs(self._motors) do
+		values[key] = motor:getValue()
+	end
+
+	return values
+end
+
+function GroupMotor:__tostring()
+	return "Motor(Group)"
+end
+
+local Flipper = {
+	SingleMotor = SingleMotor,
+	GroupMotor = GroupMotor,
+
+	Instant = Instant,
+	Linear = Linear,
+	Spring = Spring,
+
+	isMotor = isMotor,
+}
+
+local Creator = {
+	Registry = {},
+	Signals = {},
+	TransparencyMotors = {},
+	DefaultProperties = {
+		ScreenGui = {
+			ResetOnSpawn = false,
+			ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
+		},
+		Frame = {
+			BackgroundColor3 = Color3.new(1, 1, 1),
+			BorderColor3 = Color3.new(0, 0, 0),
+			BorderSizePixel = 0,
+		},
+		ScrollingFrame = {
+			BackgroundColor3 = Color3.new(1, 1, 1),
+			BorderColor3 = Color3.new(0, 0, 0),
+			ScrollBarImageColor3 = Color3.new(0, 0, 0),
+		},
+		TextLabel = {
+			BackgroundColor3 = Color3.new(1, 1, 1),
+			BorderColor3 = Color3.new(0, 0, 0),
+			Font = Enum.Font.SourceSans,
+			Text = "",
+			TextColor3 = Color3.new(0, 0, 0),
+			BackgroundTransparency = 1,
+			TextSize = 14,
+		},
+		TextButton = {
+			BackgroundColor3 = Color3.new(1, 1, 1),
+			BorderColor3 = Color3.new(0, 0, 0),
+			AutoButtonColor = false,
+			Font = Enum.Font.SourceSans,
+			Text = "",
+			TextColor3 = Color3.new(0, 0, 0),
+			TextSize = 14,
+		},
+		TextBox = {
+			BackgroundColor3 = Color3.new(1, 1, 1),
+			BorderColor3 = Color3.new(0, 0, 0),
+			ClearTextOnFocus = false,
+			Font = Enum.Font.SourceSans,
+			Text = "",
+			TextColor3 = Color3.new(0, 0, 0),
+			TextSize = 14,
+		},
+		ImageLabel = {
+			BackgroundTransparency = 1,
+			BackgroundColor3 = Color3.new(1, 1, 1),
+			BorderColor3 = Color3.new(0, 0, 0),
+			BorderSizePixel = 0,
+		},
+		ImageButton = {
+			BackgroundColor3 = Color3.new(1, 1, 1),
+			BorderColor3 = Color3.new(0, 0, 0),
+			AutoButtonColor = false,
+		},
+		CanvasGroup = {
+			BackgroundColor3 = Color3.new(1, 1, 1),
+			BorderColor3 = Color3.new(0, 0, 0),
+			BorderSizePixel = 0,
+		},
+	},
+}
+
+local function ApplyCustomProps(Object, Props)
+	if Props.ThemeTag then
+		Creator.AddThemeObject(Object, Props.ThemeTag)
+	end
+end
+
+function Creator.AddSignal(Signal, Function)
+	local Connected = Signal:Connect(Function)
+	table.insert(Creator.Signals, Connected)
+	return Connected
+end
+
+function Creator.Disconnect()
+	for Idx = #Creator.Signals, 1, -1 do
+		local Connection = table.remove(Creator.Signals, Idx)
+		if Connection.Disconnect then
+			Connection:Disconnect()
+		end
+	end
+end
+
+function Creator.UpdateTheme()
+	for Instance, Object in next, Creator.Registry do
+		for Property, ColorIdx in next, Object.Properties do
+			Instance[Property] = Creator.GetThemeProperty(ColorIdx)
+		end
+	end
+
+	for _, Motor in next, Creator.TransparencyMotors do
+		Motor:setGoal(Flipper.Instant.new(Creator.GetThemeProperty("ElementTransparency")))
+	end
+end
+
+function Creator.AddThemeObject(Object, Properties)
+	local Idx = #Creator.Registry + 1
+	local Data = {
+		Object = Object,
+		Properties = Properties,
+		Idx = Idx,
+	}
+
+	Creator.Registry[Object] = Data
+	Creator.UpdateTheme()
+	return Object
+end
+
+function Creator.OverrideTag(Object, Properties)
+	Creator.Registry[Object].Properties = Properties
+	Creator.UpdateTheme()
+end
+
+function Creator.GetThemeProperty(Property)
+	if Themes[Library.Theme][Property] then
+		return Themes[Library.Theme][Property]
+	end
+	return Themes["Dark"][Property]
+end
+
+function Creator.New(Name, Properties, Children)
+	local Object = Instance.new(Name)
+
+	-- Default properties
+	for Name, Value in next, Creator.DefaultProperties[Name] or {} do
+		Object[Name] = Value
+	end
+
+	-- Properties
+	for Name, Value in next, Properties or {} do
+		if Name ~= "ThemeTag" then
+			Object[Name] = Value
+		end
+	end
+
+	-- Children
+	for _, Child in next, Children or {} do
+		Child.Parent = Object
+	end
+
+	ApplyCustomProps(Object, Properties)
+	return Object
+end
+
+function Creator.SpringMotor(Initial, Instance, Prop, IgnoreDialogCheck, ResetOnThemeChange)
+	IgnoreDialogCheck = IgnoreDialogCheck or false
+	ResetOnThemeChange = ResetOnThemeChange or false
+	local Motor = Flipper.SingleMotor.new(Initial)
+	Motor:onStep(function(value)
+		Instance[Prop] = value
+	end)
+
+	if ResetOnThemeChange then
+		table.insert(Creator.TransparencyMotors, Motor)
+	end
+
+	local function SetValue(Value, Ignore)
+		Ignore = Ignore or false
+		if not IgnoreDialogCheck then
+			if not Ignore then
+				if Prop == "BackgroundTransparency" and Library.DialogOpen then
+					return
+				end
 			end
 		end
-		if #bladehit > 0 then
-			pcall(task.spawn,ac.attack,ac)
-			if tick() > AttackCoolDown then
-				CancelCoolDown()
+		Motor:setGoal(Flipper.Spring.new(Value, { frequency = 8 }))
+	end
+
+	return Motor, SetValue
+end
+
+Library.Creator = Creator
+
+local New = Creator.New
+
+local GUI = New("ScreenGui", {
+	Parent = RunService:IsStudio() and LocalPlayer.PlayerGui or game:GetService("CoreGui"),
+})
+Library.GUI = GUI
+ProtectGui(GUI)
+
+function Library:SafeCallback(Function, ...)
+	if not Function then
+		return
+	end
+
+	local Success, Event = pcall(Function, ...)
+	if not Success then
+		local _, i = Event:find(":%d+: ")
+
+		if not i then
+			return Library:Notify({
+				Title = "Interface",
+				Content = "Callback error",
+				SubContent = Event,
+				Duration = 5,
+			})
+		end
+
+		return Library:Notify({
+			Title = "Interface",
+			Content = "Callback error",
+			SubContent = Event:sub(i + 1),
+			Duration = 5,
+		})
+	end
+end
+
+function Library:Round(Number, Factor)
+	if Factor == 0 then
+		return math.floor(Number)
+	end
+	Number = tostring(Number)
+	return Number:find("%.") and tonumber(Number:sub(1, Number:find("%.") + Factor)) or Number
+end
+
+local function map(value, inMin, inMax, outMin, outMax)
+	return (value - inMin) * (outMax - outMin) / (inMax - inMin) + outMin
+end
+
+local function viewportPointToWorld(location, distance)
+	local unitRay = game:GetService("Workspace").CurrentCamera:ScreenPointToRay(location.X, location.Y)
+	return unitRay.Origin + unitRay.Direction * distance
+end
+
+local function getOffset()
+	local viewportSizeY = game:GetService("Workspace").CurrentCamera.ViewportSize.Y
+	return map(viewportSizeY, 0, 2560, 8, 56)
+end
+
+local viewportPointToWorld, getOffset = unpack({ viewportPointToWorld, getOffset })
+
+local BlurFolder = Instance.new("Folder", game:GetService("Workspace").CurrentCamera)
+
+local function createAcrylic()
+	local Part = Creator.New("Part", {
+		Name = "Body",
+		Color = Color3.new(0, 0, 0),
+		Material = Enum.Material.Glass,
+		Size = Vector3.new(1, 1, 0),
+		Anchored = true,
+		CanCollide = false,
+		Locked = true,
+		CastShadow = false,
+		Transparency = 0.98,
+	}, {
+		Creator.New("SpecialMesh", {
+			MeshType = Enum.MeshType.Brick,
+			Offset = Vector3.new(0, 0, -0.000001),
+		}),
+	})
+
+	return Part
+end
+
+function AcrylicBlur()
+	local function createAcrylicBlur(distance)
+		local cleanups = {}
+
+		distance = distance or 0.001
+		local positions = {
+			topLeft = Vector2.new(),
+			topRight = Vector2.new(),
+			bottomRight = Vector2.new(),
+		}
+		local model = createAcrylic()
+		model.Parent = BlurFolder
+
+		local function updatePositions(size, position)
+			positions.topLeft = position
+			positions.topRight = position + Vector2.new(size.X, 0)
+			positions.bottomRight = position + size
+		end
+
+		local function render()
+			local res = game:GetService("Workspace").CurrentCamera
+			if res then
+				res = res.CFrame
 			end
-			if tick() - cooldowntickFire > 0.1 then
-				ac.timeToNextAttack = 0
-				ac.hitboxMagnitude = 60
-				pcall(task.spawn,ac.attack,ac)
-				cooldowntickFire = tick()
+			local cond = res
+			if not cond then
+				cond = CFrame.new()
 			end
-			local AMI3 = ac.anims.basic[3]
-			local AMI2 = ac.anims.basic[2]
-			local REALID = AMI3 or AMI2
-			AttackAnim.AnimationId = REALID
-			local StartP = ac.humanoid:LoadAnimation(AttackAnim)
-			StartP:Play(0.01,0.01,0.01)
-			RigEven.FireServer(RigEven,"hit",bladehit,AMI3 and 3 or 2,"")
-			task.delay(0.01,function()
-				StartP:Stop()
+
+			local camera = cond
+			local topLeft = positions.topLeft
+			local topRight = positions.topRight
+			local bottomRight = positions.bottomRight
+
+			local topLeft3D = viewportPointToWorld(topLeft, distance)
+			local topRight3D = viewportPointToWorld(topRight, distance)
+			local bottomRight3D = viewportPointToWorld(bottomRight, distance)
+
+			local width = (topRight3D - topLeft3D).Magnitude
+			local height = (topRight3D - bottomRight3D).Magnitude
+
+			model.CFrame =
+				CFrame.fromMatrix((topLeft3D + bottomRight3D) / 2, camera.XVector, camera.YVector, camera.ZVector)
+			model.Mesh.Scale = Vector3.new(width, height, 0)
+		end
+
+		local function onChange(rbx)
+			local offset = getOffset()
+			local size = rbx.AbsoluteSize - Vector2.new(offset, offset)
+			local position = rbx.AbsolutePosition + Vector2.new(offset / 2, offset / 2)
+
+			updatePositions(size, position)
+			task.spawn(render)
+		end
+
+		local function renderOnChange()
+			local camera = game:GetService("Workspace").CurrentCamera
+			if not camera then
+				return
+			end
+
+			table.insert(cleanups, camera:GetPropertyChangedSignal("CFrame"):Connect(render))
+			table.insert(cleanups, camera:GetPropertyChangedSignal("ViewportSize"):Connect(render))
+			table.insert(cleanups, camera:GetPropertyChangedSignal("FieldOfView"):Connect(render))
+			task.spawn(render)
+		end
+
+		model.Destroying:Connect(function()
+			for _, item in cleanups do
+				pcall(function()
+					item:Disconnect()
+				end)
+			end
+		end)
+
+		renderOnChange()
+
+		return onChange, model
+	end
+
+	return function(distance)
+		local Blur = {}
+		local onChange, model = createAcrylicBlur(distance)
+
+		local comp = Creator.New("Frame", {
+			BackgroundTransparency = 1,
+			Size = UDim2.fromScale(1, 1),
+		})
+
+		Creator.AddSignal(comp:GetPropertyChangedSignal("AbsolutePosition"), function()
+			onChange(comp)
+		end)
+
+		Creator.AddSignal(comp:GetPropertyChangedSignal("AbsoluteSize"), function()
+			onChange(comp)
+		end)
+
+		Blur.AddParent = function(Parent)
+			Creator.AddSignal(Parent:GetPropertyChangedSignal("Visible"), function()
+				Blur.SetVisibility(Parent.Visible)
 			end)
 		end
-	end
-end)
 
-function CheckStun()
-	if game:GetService('Players').LocalPlayer.Character:FindFirstChild("Stun") then
-		return game:GetService('Players').LocalPlayer.Character.Stun.Value ~= 0
+		Blur.SetVisibility = function(Value)
+			model.Transparency = Value and 0.98 or 1
+		end
+
+		Blur.Frame = comp
+		Blur.Model = model
+
+		return Blur
 	end
-	return false
 end
 
-LPH_JIT_MAX(function()
-	spawn(function()
-		while game:GetService("RunService").Stepped:Wait() do
-			local ac = CombatFrameworkR.activeController
-			if ac and ac.equipped and not CheckStun() then
-				if NeedAttacking and Fast_Attack then
-					task.spawn(function()
-						pcall(task.spawn,AttackFunction,1)
-					end)
-				elseif DamageAura then
-					task.spawn(function()
-						pcall(task.spawn,AttackFunction,3)
-					end)
-				elseif UsefastattackPlayers and Fast_Attack then
-					task.spawn(function()
-						pcall(task.spawn,AttackFunction,2)
-					end)
-				elseif NeedAttacking and Fast_Attack == false then
-					if ac.hitboxMagnitude ~= 55 then
-						ac.hitboxMagnitude = 55
+function AcrylicPaint()
+	local New = Creator.New
+	local AcrylicBlur = AcrylicBlur()
+
+	return function(props)
+		local AcrylicPaint = {}
+
+		AcrylicPaint.Frame = New("Frame", {
+			Size = UDim2.fromScale(1, 1),
+			BackgroundTransparency = 0.9,
+			BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+			BorderSizePixel = 0,
+		}, {
+			New("ImageLabel", {
+				Image = "rbxassetid://8992230677",
+				ScaleType = "Slice",
+				SliceCenter = Rect.new(Vector2.new(99, 99), Vector2.new(99, 99)),
+				AnchorPoint = Vector2.new(0.5, 0.5),
+				Size = UDim2.new(1, 120, 1, 116),
+				Position = UDim2.new(0.5, 0, 0.5, 0),
+				BackgroundTransparency = 1,
+				ImageColor3 = Color3.fromRGB(0, 0, 0),
+				ImageTransparency = 0.7,
+			}),
+
+			New("UICorner", {
+				CornerRadius = UDim.new(0, 8),
+			}),
+
+			New("Frame", {
+				BackgroundTransparency = 0.45,
+				Size = UDim2.fromScale(1, 1),
+				Name = "Background",
+				ThemeTag = {
+					BackgroundColor3 = "AcrylicMain",
+				},
+			}, {
+				New("UICorner", {
+					CornerRadius = UDim.new(0, 8),
+				}),
+			}),
+
+			New("Frame", {
+				BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+				BackgroundTransparency = 0.4,
+				Size = UDim2.fromScale(1, 1),
+			}, {
+				New("UICorner", {
+					CornerRadius = UDim.new(0, 8),
+				}),
+
+				New("UIGradient", {
+					Rotation = 90,
+					ThemeTag = {
+						Color = "AcrylicGradient",
+					},
+				}),
+			}),
+
+			New("ImageLabel", {
+				Image = "rbxassetid://9968344105",
+				ImageTransparency = 0.98,
+				ScaleType = Enum.ScaleType.Tile,
+				TileSize = UDim2.new(0, 128, 0, 128),
+				Size = UDim2.fromScale(1, 1),
+				BackgroundTransparency = 1,
+			}, {
+				New("UICorner", {
+					CornerRadius = UDim.new(0, 8),
+				}),
+			}),
+
+			New("ImageLabel", {
+				Image = "rbxassetid://9968344227",
+				ImageTransparency = 0.9,
+				ScaleType = Enum.ScaleType.Tile,
+				TileSize = UDim2.new(0, 128, 0, 128),
+				Size = UDim2.fromScale(1, 1),
+				BackgroundTransparency = 1,
+				ThemeTag = {
+					ImageTransparency = "AcrylicNoise",
+				},
+			}, {
+				New("UICorner", {
+					CornerRadius = UDim.new(0, 8),
+				}),
+			}),
+
+			New("Frame", {
+				BackgroundTransparency = 1,
+				Size = UDim2.fromScale(1, 1),
+				ZIndex = 2,
+			}, {
+				New("UICorner", {
+					CornerRadius = UDim.new(0, 8),
+				}),
+				New("UIStroke", {
+					Transparency = 0.5,
+					Thickness = 1,
+					ThemeTag = {
+						Color = "AcrylicBorder",
+					},
+				}),
+			}),
+		})
+
+		local Blur
+
+		if Library.UseAcrylic then
+			Blur = AcrylicBlur()
+			Blur.Frame.Parent = AcrylicPaint.Frame
+			AcrylicPaint.Model = Blur.Model
+			AcrylicPaint.AddParent = Blur.AddParent
+			AcrylicPaint.SetVisibility = Blur.SetVisibility
+		end
+
+		return AcrylicPaint
+	end
+end
+
+local Acrylic = {
+	AcrylicBlur = AcrylicBlur(),
+	CreateAcrylic = createAcrylic,
+	AcrylicPaint = AcrylicPaint(),
+}
+
+function Acrylic.init()
+	local baseEffect = Instance.new("DepthOfFieldEffect")
+	baseEffect.FarIntensity = 0
+	baseEffect.InFocusRadius = 0.1
+	baseEffect.NearIntensity = 1
+
+	local depthOfFieldDefaults = {}
+
+	function Acrylic.Enable()
+		for _, effect in pairs(depthOfFieldDefaults) do
+			effect.Enabled = false
+		end
+		baseEffect.Parent = game:GetService("Lighting")
+	end
+
+	function Acrylic.Disable()
+		for _, effect in pairs(depthOfFieldDefaults) do
+			effect.Enabled = effect.enabled
+		end
+		baseEffect.Parent = nil
+	end
+
+	local function registerDefaults()
+		local function register(object)
+			if object:IsA("DepthOfFieldEffect") then
+				depthOfFieldDefaults[object] = { enabled = object.Enabled }
+			end
+		end
+
+		for _, child in pairs(game:GetService("Lighting"):GetChildren()) do
+			register(child)
+		end
+
+		if game:GetService("Workspace").CurrentCamera then
+			for _, child in pairs(game:GetService("Workspace").CurrentCamera:GetChildren()) do
+				register(child)
+			end
+		end
+	end
+
+	registerDefaults()
+	Acrylic.Enable()
+end
+
+local Components = {
+	Assets = {
+		Close = "rbxassetid://9886659671",
+		Min = "rbxassetid://9886659276",
+		Max = "rbxassetid://9886659406",
+		Restore = "rbxassetid://9886659001",
+	},
+}
+
+Components.Element = (function()
+	local New = Creator.New
+
+	local Spring = Flipper.Spring.new
+
+	return function(Title, Desc, Parent, Hover, Options)
+		local Element = {}
+		local Options = Options or {}
+
+		Element.TitleLabel = New("TextLabel", {
+			FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json", Enum.FontWeight.Medium, Enum.FontStyle.Normal),
+			Text = Title,
+			TextColor3 = Color3.fromRGB(240, 240, 240),
+			TextSize = 13,
+			TextXAlignment = Enum.TextXAlignment.Left,
+			Size = UDim2.new(1, 0, 0, 14),
+			BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+			BackgroundTransparency = 1,
+			ThemeTag = {
+				TextColor3 = "Text",
+			},
+		})
+
+		Element.DescLabel = New("TextLabel", {
+			FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json"),
+			Text = Desc,
+			TextColor3 = Color3.fromRGB(200, 200, 200),
+			TextSize = 12,
+			TextWrapped = true,
+			TextXAlignment = Enum.TextXAlignment.Left,
+			BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+			AutomaticSize = Enum.AutomaticSize.Y,
+			BackgroundTransparency = 1,
+			Size = UDim2.new(1, 0, 0, 14),
+			ThemeTag = {
+				TextColor3 = "SubText",
+			},
+		})
+
+		Element.LabelHolder = New("Frame", {
+			AutomaticSize = Enum.AutomaticSize.Y,
+			BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+			BackgroundTransparency = 1,
+			Position = UDim2.fromOffset(10, 0),
+			Size = UDim2.new(1, -28, 0, 0),
+		}, {
+			New("UIListLayout", {
+				SortOrder = Enum.SortOrder.LayoutOrder,
+				VerticalAlignment = Enum.VerticalAlignment.Center,
+			}),
+			New("UIPadding", {
+				PaddingBottom = UDim.new(0, 13),
+				PaddingTop = UDim.new(0, 13),
+			}),
+			Element.TitleLabel,
+			Element.DescLabel,
+		})
+
+		Element.Border = New("UIStroke", {
+			Transparency = 0.5,
+			ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
+			Color = Color3.fromRGB(0, 0, 0),
+			ThemeTag = {
+				Color = "ElementBorder",
+			},
+		})
+
+		Element.Frame = New("TextButton", {
+			Visible = Options.Visible and Options.Visible or true,
+			Size = UDim2.new(1, 0, 0, 0),
+			BackgroundTransparency = 0.89,
+			BackgroundColor3 = Color3.fromRGB(130, 130, 130),
+			Parent = Parent,
+			AutomaticSize = Enum.AutomaticSize.Y,
+			Text = "",
+			LayoutOrder = 7,
+			ThemeTag = {
+				BackgroundColor3 = "Element",
+				BackgroundTransparency = "ElementTransparency",
+			},
+		}, {
+			New("UICorner", {
+				CornerRadius = UDim.new(0, 4),
+			}),
+			Element.Border,
+			Element.LabelHolder,
+		})
+
+		function Element:SetTitle(Set)
+			Element.TitleLabel.Text = Set
+		end
+
+		function Element:Visible(Bool)
+			Element.Frame.Visible = Bool
+		end
+
+		function Element:SetDesc(Set)
+			if Set == nil then
+				Set = ""
+			end
+			if Set == "" then
+				Element.DescLabel.Visible = false
+			else
+				Element.DescLabel.Visible = true
+			end
+			Element.DescLabel.Text = Set
+		end
+
+		function Element:GetTitle()
+			return Element.TitleLabel.Text
+		end
+
+		function Element:GetDesc()
+			return Element.DescLabel.Text
+		end
+
+		function Element:Destroy()
+			Element.Frame:Destroy()
+		end
+
+		Element:SetTitle(Title)
+		Element:SetDesc(Desc)
+
+		if Hover then
+			local Themes = Library.Themes
+			local Motor, SetTransparency = Creator.SpringMotor(
+				Creator.GetThemeProperty("ElementTransparency"),
+				Element.Frame,
+				"BackgroundTransparency",
+				false,
+				true
+			)
+
+			Creator.AddSignal(Element.Frame.MouseEnter, function()
+				SetTransparency(Creator.GetThemeProperty("ElementTransparency") - Creator.GetThemeProperty("HoverChange"))
+			end)
+			Creator.AddSignal(Element.Frame.MouseLeave, function()
+				SetTransparency(Creator.GetThemeProperty("ElementTransparency"))
+			end)
+			Creator.AddSignal(Element.Frame.MouseButton1Down, function()
+				SetTransparency(Creator.GetThemeProperty("ElementTransparency") + Creator.GetThemeProperty("HoverChange"))
+			end)
+			Creator.AddSignal(Element.Frame.MouseButton1Up, function()
+				SetTransparency(Creator.GetThemeProperty("ElementTransparency") - Creator.GetThemeProperty("HoverChange"))
+			end)
+		end
+
+		return Element
+	end
+end)()
+Components.Section = (function()
+	local New = Creator.New
+
+	return function(Title, Parent)
+		local Section = {}
+
+		Section.Layout = New("UIListLayout", {
+			Padding = UDim.new(0, 5),
+		})
+
+		Section.Container = New("Frame", {
+			Size = UDim2.new(1, 0, 0, 26),
+			Position = UDim2.fromOffset(0, 24),
+			BackgroundTransparency = 1,
+		}, {
+			Section.Layout,
+		})
+
+		Section.Root = New("Frame", {
+			BackgroundTransparency = 1,
+			Size = UDim2.new(1, 0, 0, 26),
+			LayoutOrder = 7,
+			Parent = Parent,
+		}, {
+			New("TextLabel", {
+				RichText = true,
+				Text = Title,
+				TextTransparency = 0,
+				FontFace = Font.new("rbxassetid://12187365364", Enum.FontWeight.SemiBold, Enum.FontStyle.Normal),
+				TextSize = 18,
+				TextXAlignment = "Left",
+				TextYAlignment = "Center",
+				Size = UDim2.new(1, -16, 0, 18),
+				Position = UDim2.fromOffset(0, 2),
+				ThemeTag = {
+					TextColor3 = "Text",
+				},
+			}),
+			Section.Container,
+		})
+
+		Creator.AddSignal(Section.Layout:GetPropertyChangedSignal("AbsoluteContentSize"), function()
+			Section.Container.Size = UDim2.new(1, 0, 0, Section.Layout.AbsoluteContentSize.Y)
+			Section.Root.Size = UDim2.new(1, 0, 0, Section.Layout.AbsoluteContentSize.Y + 25)
+		end)
+		return Section
+	end
+end)()
+Components.Tab = (function()
+	local New = Creator.New
+	local Spring = Flipper.Spring.new
+	local Instant = Flipper.Instant.new
+	local Components = Components
+
+	local TabModule = {
+		Window = nil,
+		Tabs = {},
+		Containers = {},
+		SelectedTab = 0,
+		TabCount = 0,
+	}
+
+	function TabModule:Init(Window)
+		TabModule.Window = Window
+		return TabModule
+	end
+
+	function TabModule:GetCurrentTabPos()
+		local TabHolderPos = TabModule.Window.TabHolder.AbsolutePosition.Y
+		local TabPos = TabModule.Tabs[TabModule.SelectedTab].Frame.AbsolutePosition.Y
+
+		return TabPos - TabHolderPos
+	end
+
+	function TabModule:New(Title, Icon, Parent)
+		local Window = TabModule.Window
+		local Elements = Library.Elements
+
+		TabModule.TabCount = TabModule.TabCount + 1
+		local TabIndex = TabModule.TabCount
+
+		local Tab = {
+			Selected = false,
+			Name = Title,
+			Type = "Tab",
+		}
+
+		if Library:GetIcon(Icon) then
+			Icon = Library:GetIcon(Icon)
+		end
+
+		if Icon == "" or nil then
+			Icon = nil
+		end
+
+		Tab.Frame = New("TextButton", {
+			Size = UDim2.new(1, 0, 0, 34),
+			BackgroundTransparency = 1,
+			Parent = Parent,
+			ThemeTag = {
+				BackgroundColor3 = "Tab",
+			},
+		}, {
+			New("UICorner", {
+				CornerRadius = UDim.new(0, 6),
+			}),
+			New("TextLabel", {
+				AnchorPoint = Vector2.new(0, 0.5),
+				Position = Icon and UDim2.new(0, 30, 0.5, 0) or UDim2.new(0, 12, 0.5, 0),
+				Text = Title,
+				RichText = true,
+				TextColor3 = Color3.fromRGB(255, 255, 255),
+				TextTransparency = 0,
+				FontFace = Font.new(
+					"rbxasset://fonts/families/GothamSSm.json",
+					Enum.FontWeight.Regular,
+					Enum.FontStyle.Normal
+				),
+				TextSize = 12,
+				TextXAlignment = "Left",
+				TextYAlignment = "Center",
+				Size = UDim2.new(1, -12, 1, 0),
+				BackgroundTransparency = 1,
+				ThemeTag = {
+					TextColor3 = "Text",
+				},
+			}),
+			New("ImageLabel", {
+				AnchorPoint = Vector2.new(0, 0.5),
+				Size = UDim2.fromOffset(16, 16),
+				Position = UDim2.new(0, 8, 0.5, 0),
+				BackgroundTransparency = 1,
+				Image = Icon and Icon or nil,
+				ThemeTag = {
+					ImageColor3 = "Text",
+				},
+			}),
+		})
+
+		local ContainerLayout = New("UIListLayout", {
+			Padding = UDim.new(0, 5),
+			SortOrder = Enum.SortOrder.LayoutOrder,
+		})
+
+		Tab.ContainerFrame = New("ScrollingFrame", {
+			Size = UDim2.fromScale(1, 1),
+			BackgroundTransparency = 1,
+			Parent = Window.ContainerHolder,
+			Visible = false,
+			BottomImage = "rbxassetid://6889812791",
+			MidImage = "rbxassetid://6889812721",
+			TopImage = "rbxassetid://6276641225",
+			ScrollBarImageColor3 = Color3.fromRGB(255, 255, 255),
+			ScrollBarImageTransparency = 0.95,
+			ScrollBarThickness = 3,
+			BorderSizePixel = 0,
+			CanvasSize = UDim2.fromScale(0, 0),
+			ScrollingDirection = Enum.ScrollingDirection.Y,
+		}, {
+			ContainerLayout,
+			New("UIPadding", {
+				PaddingRight = UDim.new(0, 10),
+				PaddingLeft = UDim.new(0, 1),
+				PaddingTop = UDim.new(0, 1),
+				PaddingBottom = UDim.new(0, 1),
+			}),
+		})
+
+		Creator.AddSignal(ContainerLayout:GetPropertyChangedSignal("AbsoluteContentSize"), function()
+			Tab.ContainerFrame.CanvasSize = UDim2.new(0, 0, 0, ContainerLayout.AbsoluteContentSize.Y + 2)
+		end)
+
+		Tab.Motor, Tab.SetTransparency = Creator.SpringMotor(1, Tab.Frame, "BackgroundTransparency")
+
+		Creator.AddSignal(Tab.Frame.MouseEnter, function()
+			Tab.SetTransparency(Tab.Selected and 0.85 or 0.89)
+		end)
+		Creator.AddSignal(Tab.Frame.MouseLeave, function()
+			Tab.SetTransparency(Tab.Selected and 0.89 or 1)
+		end)
+		Creator.AddSignal(Tab.Frame.MouseButton1Down, function()
+			Tab.SetTransparency(0.92)
+		end)
+		Creator.AddSignal(Tab.Frame.MouseButton1Up, function()
+			Tab.SetTransparency(Tab.Selected and 0.85 or 0.89)
+		end)
+		Creator.AddSignal(Tab.Frame.MouseButton1Click, function()
+			TabModule:SelectTab(TabIndex)
+		end)
+
+		TabModule.Containers[TabIndex] = Tab.ContainerFrame
+		TabModule.Tabs[TabIndex] = Tab
+
+		Tab.Container = Tab.ContainerFrame
+		Tab.ScrollFrame = Tab.Container
+
+		function Tab:AddSection(SectionTitle)
+			local Section = { Type = "Section" }
+
+			local SectionFrame = Components.Section(SectionTitle, Tab.Container)
+			Section.Container = SectionFrame.Container
+			Section.ScrollFrame = Tab.Container
+
+			setmetatable(Section, Elements)
+			return Section
+		end
+
+		setmetatable(Tab, Elements)
+		return Tab
+	end
+
+	function TabModule:SelectTab(Tab)
+		local Window = TabModule.Window
+
+		TabModule.SelectedTab = Tab
+
+		for _, TabObject in next, TabModule.Tabs do
+			TabObject.SetTransparency(1)
+			TabObject.Selected = false
+		end
+		TabModule.Tabs[Tab].SetTransparency(0.89)
+		TabModule.Tabs[Tab].Selected = true
+
+		Window.TabDisplay.Text = TabModule.Tabs[Tab].Name
+		Window.SelectorPosMotor:setGoal(Spring(TabModule:GetCurrentTabPos(), { frequency = 6 }))
+
+		task.spawn(function()
+			Window.ContainerHolder.Parent = Window.ContainerAnim
+
+			Window.ContainerPosMotor:setGoal(Spring(15, { frequency = 10 }))
+			Window.ContainerBackMotor:setGoal(Spring(1, { frequency = 10 }))
+			task.wait(0.12)
+			for _, Container in next, TabModule.Containers do
+				Container.Visible = false
+			end
+			TabModule.Containers[Tab].Visible = true
+			Window.ContainerPosMotor:setGoal(Spring(0, { frequency = 5 }))
+			Window.ContainerBackMotor:setGoal(Spring(0, { frequency = 8 }))
+			task.wait(0.12)
+			Window.ContainerHolder.Parent = Window.ContainerCanvas
+		end)
+	end
+
+	return TabModule
+end)()
+Components.Button = (function()
+	local New = Creator.New
+
+	local Spring = Flipper.Spring.new
+
+	return function(Theme, Parent, DialogCheck)
+		DialogCheck = DialogCheck or false
+		local Button = {}
+
+		Button.Title = New("TextLabel", {
+			FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json"),
+			TextColor3 = Color3.fromRGB(200, 200, 200),
+			TextSize = 14,
+			TextWrapped = true,
+			TextXAlignment = Enum.TextXAlignment.Center,
+			TextYAlignment = Enum.TextYAlignment.Center,
+			BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+			AutomaticSize = Enum.AutomaticSize.Y,
+			BackgroundTransparency = 1,
+			Size = UDim2.fromScale(1, 1),
+			ThemeTag = {
+				TextColor3 = "Text",
+			},
+		})
+
+		Button.HoverFrame = New("Frame", {
+			Size = UDim2.fromScale(1, 1),
+			BackgroundTransparency = 1,
+			ThemeTag = {
+				BackgroundColor3 = "Hover",
+			},
+		}, {
+			New("UICorner", {
+				CornerRadius = UDim.new(0, 4),
+			}),
+		})
+
+		Button.Frame = New("TextButton", {
+			Size = UDim2.new(0, 0, 0, 32),
+			Parent = Parent,
+			ThemeTag = {
+				BackgroundColor3 = "DialogButton",
+			},
+		}, {
+			New("UICorner", {
+				CornerRadius = UDim.new(0, 4),
+			}),
+			New("UIStroke", {
+				ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
+				Transparency = 0.65,
+				ThemeTag = {
+					Color = "DialogButtonBorder",
+				},
+			}),
+			Button.HoverFrame,
+			Button.Title,
+		})
+
+		local Motor, SetTransparency = Creator.SpringMotor(1, Button.HoverFrame, "BackgroundTransparency", DialogCheck)
+		Creator.AddSignal(Button.Frame.MouseEnter, function()
+			SetTransparency(0.97)
+		end)
+		Creator.AddSignal(Button.Frame.MouseLeave, function()
+			SetTransparency(1)
+		end)
+		Creator.AddSignal(Button.Frame.MouseButton1Down, function()
+			SetTransparency(1)
+		end)
+		Creator.AddSignal(Button.Frame.MouseButton1Up, function()
+			SetTransparency(0.97)
+		end)
+
+		return Button
+	end
+end)()
+Components.Dialog = (function()
+	local Spring = Flipper.Spring.new
+	local Instant = Flipper.Instant.new
+	local New = Creator.New
+
+	local Dialog = {
+		Window = nil,
+	}
+
+	function Dialog:Init(Window)
+		Dialog.Window = Window
+		return Dialog
+	end
+
+	function Dialog:Create()
+		local NewDialog = {
+			Buttons = 0,
+		}
+
+		NewDialog.TintFrame = New("TextButton", {
+			Text = "",
+			Size = UDim2.fromScale(1, 1),
+			BackgroundColor3 = Color3.fromRGB(0, 0, 0),
+			BackgroundTransparency = 1,
+			Parent = Dialog.Window.Root,
+		}, {
+			New("UICorner", {
+				CornerRadius = UDim.new(0, 8),
+			}),
+		})
+
+		local TintMotor, TintTransparency = Creator.SpringMotor(1, NewDialog.TintFrame, "BackgroundTransparency", true)
+
+		NewDialog.ButtonHolder = New("Frame", {
+			Size = UDim2.new(1, -40, 1, -40),
+			AnchorPoint = Vector2.new(0.5, 0.5),
+			Position = UDim2.fromScale(0.5, 0.5),
+			BackgroundTransparency = 1,
+		}, {
+			New("UIListLayout", {
+				Padding = UDim.new(0, 10),
+				FillDirection = Enum.FillDirection.Horizontal,
+				HorizontalAlignment = Enum.HorizontalAlignment.Center,
+				SortOrder = Enum.SortOrder.LayoutOrder,
+			}),
+		})
+
+		NewDialog.ButtonHolderFrame = New("Frame", {
+			Size = UDim2.new(1, 0, 0, 70),
+			Position = UDim2.new(0, 0, 1, -70),
+			ThemeTag = {
+				BackgroundColor3 = "DialogHolder",
+			},
+		}, {
+			New("Frame", {
+				Size = UDim2.new(1, 0, 0, 1),
+				ThemeTag = {
+					BackgroundColor3 = "DialogHolderLine",
+				},
+			}),
+			NewDialog.ButtonHolder,
+		})
+
+		NewDialog.Title = New("TextLabel", {
+			FontFace = Font.new(
+				"rbxasset://fonts/families/GothamSSm.json",
+				Enum.FontWeight.SemiBold,
+				Enum.FontStyle.Normal
+			),
+			Text = "Dialog",
+			TextColor3 = Color3.fromRGB(240, 240, 240),
+			TextSize = 22,
+			TextXAlignment = Enum.TextXAlignment.Left,
+			Size = UDim2.new(1, 0, 0, 22),
+			Position = UDim2.fromOffset(20, 25),
+			BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+			BackgroundTransparency = 1,
+			ThemeTag = {
+				TextColor3 = "Text",
+			},
+		})
+
+		NewDialog.Scale = New("UIScale", {
+			Scale = 1,
+		})
+
+		local ScaleMotor, Scale = Creator.SpringMotor(1.1, NewDialog.Scale, "Scale")
+
+		NewDialog.Root = New("CanvasGroup", {
+			Size = UDim2.fromOffset(300, 165),
+			AnchorPoint = Vector2.new(0.5, 0.5),
+			Position = UDim2.fromScale(0.5, 0.5),
+			GroupTransparency = 1,
+			Parent = NewDialog.TintFrame,
+			ThemeTag = {
+				BackgroundColor3 = "Dialog",
+			},
+		}, {
+			New("UICorner", {
+				CornerRadius = UDim.new(0, 8),
+			}),
+			New("UIStroke", {
+				Transparency = 0.5,
+				ThemeTag = {
+					Color = "DialogBorder",
+				},
+			}),
+			NewDialog.Scale,
+			NewDialog.Title,
+			NewDialog.ButtonHolderFrame,
+		})
+
+		local RootMotor, RootTransparency = Creator.SpringMotor(1, NewDialog.Root, "GroupTransparency")
+
+		function NewDialog:Open()
+			Library.DialogOpen = true
+			NewDialog.Scale.Scale = 1.1
+			TintTransparency(0.75)
+			RootTransparency(0)
+			Scale(1)
+		end
+
+		function NewDialog:Close()
+			Library.DialogOpen = false
+			TintTransparency(1)
+			RootTransparency(1)
+			Scale(1.1)
+			NewDialog.Root.UIStroke:Destroy()
+			task.wait(0.15)
+			NewDialog.TintFrame:Destroy()
+		end
+
+		function NewDialog:Button(Title, Callback)
+			NewDialog.Buttons = NewDialog.Buttons + 1
+			Title = Title or "Button"
+			Callback = Callback or function() end
+
+			local Button = Components.Button("", NewDialog.ButtonHolder, true)
+			Button.Title.Text = Title
+
+			for _, Btn in next, NewDialog.ButtonHolder:GetChildren() do
+				if Btn:IsA("TextButton") then
+					Btn.Size =
+						UDim2.new(1 / NewDialog.Buttons, -(((NewDialog.Buttons - 1) * 10) / NewDialog.Buttons), 0, 32)
+				end
+			end
+
+			Creator.AddSignal(Button.Frame.MouseButton1Click, function()
+				Library:SafeCallback(Callback)
+				pcall(function()
+					NewDialog:Close()
+				end)
+			end)
+
+			return Button
+		end
+
+		return NewDialog
+	end
+
+	return Dialog
+end)()
+Components.Notification = (function()
+	local Spring = Flipper.Spring.new
+	local Instant = Flipper.Instant.new
+	local New = Creator.New
+
+	local Notification = {}
+
+	function Notification:Init(GUI)
+		Notification.Holder = New("Frame", {
+			Position = UDim2.new(1, -30, 1, -30),
+			Size = UDim2.new(0, 310, 1, -30),
+			AnchorPoint = Vector2.new(1, 1),
+			BackgroundTransparency = 1,
+			Parent = GUI,
+		}, {
+			New("UIListLayout", {
+				HorizontalAlignment = Enum.HorizontalAlignment.Center,
+				SortOrder = Enum.SortOrder.LayoutOrder,
+				VerticalAlignment = Enum.VerticalAlignment.Bottom,
+				Padding = UDim.new(0, 20),
+			}),
+		})
+	end
+
+	function Notification:New(Config)
+		Config.Title = Config.Title or "Title"
+		Config.Content = Config.Content or "Content"
+		Config.SubContent = Config.SubContent or ""
+		Config.Duration = Config.Duration or nil
+		Config.Buttons = Config.Buttons or {}
+		local NewNotification = {
+			Closed = false,
+		}
+
+		NewNotification.AcrylicPaint = Acrylic.AcrylicPaint()
+
+		NewNotification.Title = New("TextLabel", {
+			Position = UDim2.new(0, 14, 0, 17),
+			Text = Config.Title,
+			RichText = true,
+			TextColor3 = Color3.fromRGB(255, 255, 255),
+			TextTransparency = 0,
+			FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json"),
+			TextSize = 13,
+			TextXAlignment = "Left",
+			TextYAlignment = "Center",
+			Size = UDim2.new(1, -12, 0, 12),
+			TextWrapped = true,
+			BackgroundTransparency = 1,
+			ThemeTag = {
+				TextColor3 = "Text",
+			},
+		})
+
+		NewNotification.ContentLabel = New("TextLabel", {
+			FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json"),
+			Text = Config.Content,
+			TextColor3 = Color3.fromRGB(240, 240, 240),
+			TextSize = 14,
+			TextXAlignment = Enum.TextXAlignment.Left,
+			AutomaticSize = Enum.AutomaticSize.Y,
+			Size = UDim2.new(1, 0, 0, 14),
+			BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+			BackgroundTransparency = 1,
+			TextWrapped = true,
+			ThemeTag = {
+				TextColor3 = "Text",
+			},
+		})
+
+		NewNotification.SubContentLabel = New("TextLabel", {
+			FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json"),
+			Text = Config.SubContent,
+			TextColor3 = Color3.fromRGB(240, 240, 240),
+			TextSize = 14,
+			TextXAlignment = Enum.TextXAlignment.Left,
+			AutomaticSize = Enum.AutomaticSize.Y,
+			Size = UDim2.new(1, 0, 0, 14),
+			BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+			BackgroundTransparency = 1,
+			TextWrapped = true,
+			ThemeTag = {
+				TextColor3 = "SubText",
+			},
+		})
+
+		NewNotification.LabelHolder = New("Frame", {
+			AutomaticSize = Enum.AutomaticSize.Y,
+			BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+			BackgroundTransparency = 1,
+			Position = UDim2.fromOffset(14, 40),
+			Size = UDim2.new(1, -28, 0, 0),
+		}, {
+			New("UIListLayout", {
+				SortOrder = Enum.SortOrder.LayoutOrder,
+				VerticalAlignment = Enum.VerticalAlignment.Center,
+				Padding = UDim.new(0, 3),
+			}),
+			NewNotification.ContentLabel,
+			NewNotification.SubContentLabel,
+		})
+
+		NewNotification.CloseButton = New("TextButton", {
+			Text = "",
+			Position = UDim2.new(1, -14, 0, 13),
+			Size = UDim2.fromOffset(20, 20),
+			AnchorPoint = Vector2.new(1, 0),
+			BackgroundTransparency = 1,
+		}, {
+			New("ImageLabel", {
+				Image = Components.Close,
+				Size = UDim2.fromOffset(16, 16),
+				Position = UDim2.fromScale(0.5, 0.5),
+				AnchorPoint = Vector2.new(0.5, 0.5),
+				BackgroundTransparency = 1,
+				ThemeTag = {
+					ImageColor3 = "Text",
+				},
+			}),
+		})
+
+		NewNotification.Root = New("Frame", {
+			BackgroundTransparency = 1,
+			Size = UDim2.new(1, 0, 1, 0),
+			Position = UDim2.fromScale(1, 0),
+		}, {
+			NewNotification.AcrylicPaint.Frame,
+			NewNotification.Title,
+			NewNotification.CloseButton,
+			NewNotification.LabelHolder,
+		})
+
+		if Config.Content == "" then
+			NewNotification.ContentLabel.Visible = false
+		end
+
+		if Config.SubContent == "" then
+			NewNotification.SubContentLabel.Visible = false
+		end
+
+		NewNotification.Holder = New("Frame", {
+			BackgroundTransparency = 1,
+			Size = UDim2.new(1, 0, 0, 200),
+			Parent = Notification.Holder,
+		}, {
+			NewNotification.Root,
+		})
+
+		local RootMotor = Flipper.GroupMotor.new({
+			Scale = 1,
+			Offset = 60,
+		})
+
+		RootMotor:onStep(function(Values)
+			NewNotification.Root.Position = UDim2.new(Values.Scale, Values.Offset, 0, 0)
+		end)
+
+		Creator.AddSignal(NewNotification.CloseButton.MouseButton1Click, function()
+			NewNotification:Close()
+		end)
+
+		function NewNotification:Open()
+			local ContentSize = NewNotification.LabelHolder.AbsoluteSize.Y
+			NewNotification.Holder.Size = UDim2.new(1, 0, 0, 58 + ContentSize)
+
+			RootMotor:setGoal({
+				Scale = Spring(0, { frequency = 5 }),
+				Offset = Spring(0, { frequency = 5 }),
+			})
+		end
+
+		function NewNotification:Close()
+			if not NewNotification.Closed then
+				NewNotification.Closed = true
+				task.spawn(function()
+					RootMotor:setGoal({
+						Scale = Spring(1, { frequency = 5 }),
+						Offset = Spring(60, { frequency = 5 }),
+					})
+					task.wait(0.4)
+					if Library.UseAcrylic then
+						NewNotification.AcrylicPaint.Model:Destroy()
 					end
-					pcall(task.spawn,ac.attack,ac)
+					NewNotification.Holder:Destroy()
+				end)
+			end
+		end
+
+		NewNotification:Open()
+		if Config.Duration then
+			task.delay(Config.Duration, function()
+				NewNotification:Close()
+			end)
+		end
+		return NewNotification
+	end
+
+	return Notification
+end)()
+Components.Textbox = (function()
+	local New = Creator.New
+
+	return function(Parent, Acrylic)
+		Acrylic = Acrylic or false
+		local Textbox = {}
+
+		Textbox.Input = New("TextBox", {
+			FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json"),
+			TextColor3 = Color3.fromRGB(200, 200, 200),
+			TextSize = 14,
+			TextXAlignment = Enum.TextXAlignment.Left,
+			TextYAlignment = Enum.TextYAlignment.Center,
+			BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+			AutomaticSize = Enum.AutomaticSize.Y,
+			BackgroundTransparency = 1,
+			Size = UDim2.fromScale(1, 1),
+			Position = UDim2.fromOffset(10, 0),
+			ThemeTag = {
+				TextColor3 = "Text",
+				PlaceholderColor3 = "SubText",
+			},
+		})
+
+		Textbox.Container = New("Frame", {
+			BackgroundTransparency = 1,
+			ClipsDescendants = true,
+			Position = UDim2.new(0, 6, 0, 0),
+			Size = UDim2.new(1, -12, 1, 0),
+		}, {
+			Textbox.Input,
+		})
+
+		Textbox.Indicator = New("Frame", {
+			Size = UDim2.new(1, -4, 0, 1),
+			Position = UDim2.new(0, 2, 1, 0),
+			AnchorPoint = Vector2.new(0, 1),
+			BackgroundTransparency = Acrylic and 0.5 or 0,
+			ThemeTag = {
+				BackgroundColor3 = Acrylic and "InputIndicator" or "DialogInputLine",
+			},
+		})
+
+		Textbox.Frame = New("Frame", {
+			Size = UDim2.new(0, 0, 0, 30),
+			BackgroundTransparency = Acrylic and 0.9 or 0,
+			Parent = Parent,
+			ThemeTag = {
+				BackgroundColor3 = Acrylic and "Input" or "DialogInput",
+			},
+		}, {
+			New("UICorner", {
+				CornerRadius = UDim.new(0, 4),
+			}),
+			New("UIStroke", {
+				ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
+				Transparency = Acrylic and 0.5 or 0.65,
+				ThemeTag = {
+					Color = Acrylic and "InElementBorder" or "DialogButtonBorder",
+				},
+			}),
+			Textbox.Indicator,
+			Textbox.Container,
+		})
+
+		local function Update()
+			local PADDING = 2
+			local Reveal = Textbox.Container.AbsoluteSize.X
+
+			if not Textbox.Input:IsFocused() or Textbox.Input.TextBounds.X <= Reveal - 2 * PADDING then
+				Textbox.Input.Position = UDim2.new(0, PADDING, 0, 0)
+			else
+				local Cursor = Textbox.Input.CursorPosition
+				if Cursor ~= -1 then
+					local subtext = string.sub(Textbox.Input.Text, 1, Cursor - 1)
+					local width = TextService:GetTextSize(
+						subtext,
+						Textbox.Input.TextSize,
+						Textbox.Input.Font,
+						Vector2.new(math.huge, math.huge)
+					).X
+
+					local CurrentCursorPos = Textbox.Input.Position.X.Offset + width
+					if CurrentCursorPos < PADDING then
+						Textbox.Input.Position = UDim2.fromOffset(PADDING - width, 0)
+					elseif CurrentCursorPos > Reveal - PADDING - 1 then
+						Textbox.Input.Position = UDim2.fromOffset(Reveal - width - PADDING - 1, 0)
+					end
 				end
 			end
 		end
-	end)
-end)()
-    
-game:GetService("Players").LocalPlayer.Idled:connect(function()
-    game:GetService("VirtualUser"):Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-    wait(1)
-    game:GetService("VirtualUser"):Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-end)
-    
-inmyselfss = LPH_JIT_MAX(function(name)
-	if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(name) then
-		return game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(name)
+
+		task.spawn(Update)
+
+		Creator.AddSignal(Textbox.Input:GetPropertyChangedSignal("Text"), Update)
+		Creator.AddSignal(Textbox.Input:GetPropertyChangedSignal("CursorPosition"), Update)
+
+		Creator.AddSignal(Textbox.Input.Focused, function()
+			Update()
+			Textbox.Indicator.Size = UDim2.new(1, -2, 0, 2)
+			Textbox.Indicator.Position = UDim2.new(0, 1, 1, 0)
+			Textbox.Indicator.BackgroundTransparency = 0
+			Creator.OverrideTag(Textbox.Frame, { BackgroundColor3 = Acrylic and "InputFocused" or "DialogHolder" })
+			Creator.OverrideTag(Textbox.Indicator, { BackgroundColor3 = "InputIndicatorFocus" })
+		end)
+
+		Creator.AddSignal(Textbox.Input.FocusLost, function()
+			Update()
+			Textbox.Indicator.Size = UDim2.new(1, -4, 0, 1)
+			Textbox.Indicator.Position = UDim2.new(0, 2, 1, 0)
+			Textbox.Indicator.BackgroundTransparency = 0.5
+			Creator.OverrideTag(Textbox.Frame, { BackgroundColor3 = Acrylic and "Input" or "DialogInput" })
+			Creator.OverrideTag(Textbox.Indicator, { BackgroundColor3 = Acrylic and "InputIndicator" or "DialogInputLine" })
+		end)
+
+		return Textbox
 	end
-	local OutValue
-	for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do 
-		if v:IsA("Tool") then
-			if v.Name == name then
-				OutValue = v
-				break
+end)()
+Components.TitleBar = (function()
+	local New = Creator.New
+	local AddSignal = Creator.AddSignal
+
+	return function(Config)
+		local TitleBar = {}
+
+		local function BarButton(Icon, Pos, Parent, Callback)
+			local Button = {
+				Callback = Callback or function() end,
+			}
+
+			Button.Frame = New("TextButton", {
+				Size = UDim2.new(0, 34, 1, -8),
+				AnchorPoint = Vector2.new(1, 0),
+				BackgroundTransparency = 1,
+				Parent = Parent,
+				Position = Pos,
+				Text = "",
+				ThemeTag = {
+					BackgroundColor3 = "Text",
+				},
+			}, {
+				New("UICorner", {
+					CornerRadius = UDim.new(0, 7),
+				}),
+				New("ImageLabel", {
+					Image = Icon,
+					Size = UDim2.fromOffset(16, 16),
+					Position = UDim2.fromScale(0.5, 0.5),
+					AnchorPoint = Vector2.new(0.5, 0.5),
+					BackgroundTransparency = 1,
+					Name = "Icon",
+					ThemeTag = {
+						ImageColor3 = "Text",
+					},
+				}),
+			})
+
+			local Motor, SetTransparency = Creator.SpringMotor(1, Button.Frame, "BackgroundTransparency")
+
+			AddSignal(Button.Frame.MouseEnter, function()
+				SetTransparency(0.94)
+			end)
+			AddSignal(Button.Frame.MouseLeave, function()
+				SetTransparency(1, true)
+			end)
+			AddSignal(Button.Frame.MouseButton1Down, function()
+				SetTransparency(0.96)
+			end)
+			AddSignal(Button.Frame.MouseButton1Up, function()
+				SetTransparency(0.94)
+			end)
+			AddSignal(Button.Frame.MouseButton1Click, Button.Callback)
+
+			Button.SetCallback = function(Func)
+				Button.Callback = Func
+			end
+
+			return Button
+		end
+
+		TitleBar.Frame = New("Frame", {
+			Size = UDim2.new(1, 0, 0, 42),
+			BackgroundTransparency = 1,
+			Parent = Config.Parent,
+		}, {
+			New("Frame", {
+				Size = UDim2.new(1, -16, 1, 0),
+				Position = UDim2.new(0, 16, 0, 0),
+				BackgroundTransparency = 1,
+			}, {
+				New("UIListLayout", {
+					Padding = UDim.new(0, 5),
+					FillDirection = Enum.FillDirection.Horizontal,
+					SortOrder = Enum.SortOrder.LayoutOrder,
+				}),
+				New("TextLabel", {
+					RichText = true,
+					Text = Config.Title,
+					FontFace = Font.new(
+						"rbxasset://fonts/families/GothamSSm.json",
+						Enum.FontWeight.Regular,
+						Enum.FontStyle.Normal
+					),
+					TextSize = 12,
+					TextXAlignment = "Left",
+					TextYAlignment = "Center",
+					Size = UDim2.fromScale(0, 1),
+					AutomaticSize = Enum.AutomaticSize.X,
+					BackgroundTransparency = 1,
+					ThemeTag = {
+						TextColor3 = "Text",
+					},
+				}),
+				New("TextLabel", {
+					RichText = true,
+					Text = Config.SubTitle,
+					TextTransparency = 0.4,
+					FontFace = Font.new(
+						"rbxasset://fonts/families/GothamSSm.json",
+						Enum.FontWeight.Regular,
+						Enum.FontStyle.Normal
+					),
+					TextSize = 12,
+					TextXAlignment = "Left",
+					TextYAlignment = "Center",
+					Size = UDim2.fromScale(0, 1),
+					AutomaticSize = Enum.AutomaticSize.X,
+					BackgroundTransparency = 1,
+					ThemeTag = {
+						TextColor3 = "Text",
+					},
+				}),
+			}),
+			New("Frame", {
+				BackgroundTransparency = 0.5,
+				Size = UDim2.new(1, 0, 0, 1),
+				Position = UDim2.new(0, 0, 1, 0),
+				ThemeTag = {
+					BackgroundColor3 = "TitleBarLine",
+				},
+			}),
+		})
+
+		TitleBar.CloseButton = BarButton(Components.Assets.Close, UDim2.new(1, -4, 0, 4), TitleBar.Frame, function()
+			Library.Window:Dialog({
+				Title = "Close",
+				Content = "Are you sure you want to unload the interface?",
+				Buttons = {
+					{
+						Title = "Yes",
+						Callback = function()
+							Library:Destroy()
+						end,
+					},
+					{
+						Title = "No",
+					},
+				},
+			})
+		end)
+		TitleBar.MaxButton = BarButton(Components.Assets.Max, UDim2.new(1, -40, 0, 4), TitleBar.Frame, function()
+			Config.Window.Maximize(not Config.Window.Maximized)
+		end)
+		TitleBar.MinButton = BarButton(Components.Assets.Min, UDim2.new(1, -80, 0, 4), TitleBar.Frame, function()
+			Library.Window:Minimize()
+		end)
+
+		return TitleBar
+	end
+end)()
+Components.Window = (function()
+	local Spring = Flipper.Spring.new
+	local Instant = Flipper.Instant.new
+	local New = Creator.New
+
+	return function(Config)
+		local Window = {
+			Minimized = false,
+			Maximized = false,
+			Size = Config.Size,
+			CurrentPos = 0,
+			TabWidth = 0,
+			Position = UDim2.fromOffset(
+				Camera.ViewportSize.X / 2 - Config.Size.X.Offset / 2,
+				Camera.ViewportSize.Y / 2 - Config.Size.Y.Offset / 2
+			),
+		}
+
+		local Dragging, DragInput, MousePos, StartPos = false
+		local Resizing, ResizePos = false
+		local MinimizeNotif = false
+
+		Window.AcrylicPaint = Acrylic.AcrylicPaint()
+		Window.TabWidth = Config.TabWidth
+
+		local Selector = New("Frame", {
+			Size = UDim2.fromOffset(4, 0),
+			BackgroundColor3 = Color3.fromRGB(76, 194, 255),
+			Position = UDim2.fromOffset(0, 17),
+			AnchorPoint = Vector2.new(0, 0.5),
+			ThemeTag = {
+				BackgroundColor3 = "Accent",
+			},
+		}, {
+			New("UICorner", {
+				CornerRadius = UDim.new(0, 2),
+			}),
+		})
+
+		local ResizeStartFrame = New("Frame", {
+			Size = UDim2.fromOffset(20, 20),
+			BackgroundTransparency = 1,
+			Position = UDim2.new(1, -20, 1, -20),
+		})
+
+		Window.TabHolder = New("ScrollingFrame", {
+			Size = UDim2.fromScale(1, 1),
+			BackgroundTransparency = 1,
+			ScrollBarImageTransparency = 1,
+			ScrollBarThickness = 0,
+			BorderSizePixel = 0,
+			CanvasSize = UDim2.fromScale(0, 0),
+			ScrollingDirection = Enum.ScrollingDirection.Y,
+		}, {
+			New("UIListLayout", {
+				Padding = UDim.new(0, 4),
+			}),
+		})
+
+		local TabFrame = New("Frame", {
+			Size = UDim2.new(0, Window.TabWidth, 1, -66),
+			Position = UDim2.new(0, 12, 0, 54),
+			BackgroundTransparency = 1,
+			ClipsDescendants = true,
+		}, {
+			Window.TabHolder,
+			Selector,
+		})
+
+		Window.TabDisplay = New("TextLabel", {
+			RichText = true,
+			Text = "Tab",
+			TextTransparency = 0,
+			FontFace = Font.new("rbxassetid://12187365364", Enum.FontWeight.SemiBold, Enum.FontStyle.Normal),
+			TextSize = 28,
+			TextXAlignment = "Left",
+			TextYAlignment = "Center",
+			Size = UDim2.new(1, -16, 0, 28),
+			Position = UDim2.fromOffset(Window.TabWidth + 26, 56),
+			BackgroundTransparency = 1,
+			ThemeTag = {
+				TextColor3 = "Text",
+			},
+		})
+
+		Window.ContainerHolder = New("Frame", {
+			Size = UDim2.fromScale(1, 1),
+			BackgroundTransparency = 1,
+		})
+
+		Window.ContainerAnim = New("CanvasGroup", {
+			Size = UDim2.fromScale(1, 1),
+			BackgroundTransparency = 1,
+		})
+
+		Window.ContainerCanvas = New("Frame", {
+			Size = UDim2.new(1, -Window.TabWidth - 32, 1, -102),
+			Position = UDim2.fromOffset(Window.TabWidth + 26, 90),
+			BackgroundTransparency = 1,
+		}, {
+			Window.ContainerAnim,
+			Window.ContainerHolder
+		})
+
+		Window.Root = New("Frame", {
+			BackgroundTransparency = 1,
+			Size = Window.Size,
+			Position = Window.Position,
+			Parent = Config.Parent,
+		}, {
+			Window.AcrylicPaint.Frame,
+			Window.TabDisplay,
+			Window.ContainerCanvas,
+			TabFrame,
+			ResizeStartFrame,
+		})
+
+		Window.TitleBar = Components.TitleBar({
+			Title = Config.Title,
+			SubTitle = Config.SubTitle,
+			Parent = Window.Root,
+			Window = Window,
+		})
+
+		if Library.UseAcrylic then
+			Window.AcrylicPaint.AddParent(Window.Root)
+		end
+
+		local SizeMotor = Flipper.GroupMotor.new({
+			X = Window.Size.X.Offset,
+			Y = Window.Size.Y.Offset,
+		})
+
+		local PosMotor = Flipper.GroupMotor.new({
+			X = Window.Position.X.Offset,
+			Y = Window.Position.Y.Offset,
+		})
+
+		Window.SelectorPosMotor = Flipper.SingleMotor.new(17)
+		Window.SelectorSizeMotor = Flipper.SingleMotor.new(0)
+		Window.ContainerBackMotor = Flipper.SingleMotor.new(0)
+		Window.ContainerPosMotor = Flipper.SingleMotor.new(94)
+
+		SizeMotor:onStep(function(values)
+			Window.Root.Size = UDim2.new(0, values.X, 0, values.Y)
+		end)
+
+		PosMotor:onStep(function(values)
+			Window.Root.Position = UDim2.new(0, values.X, 0, values.Y)
+		end)
+
+		local LastValue = 0
+		local LastTime = 0
+		Window.SelectorPosMotor:onStep(function(Value)
+			Selector.Position = UDim2.new(0, 0, 0, Value + 17)
+			local Now = tick()
+			local DeltaTime = Now - LastTime
+
+			if LastValue ~= nil then
+				Window.SelectorSizeMotor:setGoal(Spring((math.abs(Value - LastValue) / (DeltaTime * 60)) + 16))
+				LastValue = Value
+			end
+			LastTime = Now
+		end)
+
+		Window.SelectorSizeMotor:onStep(function(Value)
+			Selector.Size = UDim2.new(0, 4, 0, Value)
+		end)
+
+		Window.ContainerBackMotor:onStep(function(Value)
+			Window.ContainerAnim.GroupTransparency = Value
+		end)
+
+		Window.ContainerPosMotor:onStep(function(Value)
+			Window.ContainerAnim.Position = UDim2.fromOffset(0, Value)
+		end)
+
+		local OldSizeX
+		local OldSizeY
+		Window.Maximize = function(Value, NoPos, Instant)
+			Window.Maximized = Value
+			Window.TitleBar.MaxButton.Frame.Icon.Image = Value and Components.Assets.Restore or Components.Assets.Max
+
+			if Value then
+				OldSizeX = Window.Size.X.Offset
+				OldSizeY = Window.Size.Y.Offset
+			end
+			local SizeX = Value and Camera.ViewportSize.X or OldSizeX
+			local SizeY = Value and Camera.ViewportSize.Y or OldSizeY
+			SizeMotor:setGoal({
+				X = Flipper[Instant and "Instant" or "Spring"].new(SizeX, { frequency = 6 }),
+				Y = Flipper[Instant and "Instant" or "Spring"].new(SizeY, { frequency = 6 }),
+			})
+			Window.Size = UDim2.fromOffset(SizeX, SizeY)
+
+			if not NoPos then
+				PosMotor:setGoal({
+					X = Spring(Value and 0 or Window.Position.X.Offset, { frequency = 6 }),
+					Y = Spring(Value and 0 or Window.Position.Y.Offset, { frequency = 6 }),
+				})
+			end
+		end
+
+		Creator.AddSignal(Window.TitleBar.Frame.InputBegan, function(Input)
+			if
+				Input.UserInputType == Enum.UserInputType.MouseButton1
+				or Input.UserInputType == Enum.UserInputType.Touch
+			then
+				Dragging = true
+				MousePos = Input.Position
+				StartPos = Window.Root.Position
+
+				if Window.Maximized then
+					StartPos = UDim2.fromOffset(
+						Mouse.X - (Mouse.X * ((OldSizeX - 100) / Window.Root.AbsoluteSize.X)),
+						Mouse.Y - (Mouse.Y * (OldSizeY / Window.Root.AbsoluteSize.Y))
+					)
+				end
+
+				Input.Changed:Connect(function()
+					if Input.UserInputState == Enum.UserInputState.End then
+						Dragging = false
+					end
+				end)
+			end
+		end)
+
+		Creator.AddSignal(Window.TitleBar.Frame.InputChanged, function(Input)
+			if
+				Input.UserInputType == Enum.UserInputType.MouseMovement
+				or Input.UserInputType == Enum.UserInputType.Touch
+			then
+				DragInput = Input
+			end
+		end)
+
+		Creator.AddSignal(ResizeStartFrame.InputBegan, function(Input)
+			if
+				Input.UserInputType == Enum.UserInputType.MouseButton1
+				or Input.UserInputType == Enum.UserInputType.Touch
+			then
+				Resizing = true
+				ResizePos = Input.Position
+			end
+		end)
+
+		Creator.AddSignal(UserInputService.InputChanged, function(Input)
+			if Input == DragInput and Dragging then
+				local Delta = Input.Position - MousePos
+				Window.Position = UDim2.fromOffset(StartPos.X.Offset + Delta.X, StartPos.Y.Offset + Delta.Y)
+				PosMotor:setGoal({
+					X = Instant(Window.Position.X.Offset),
+					Y = Instant(Window.Position.Y.Offset),
+				})
+
+				if Window.Maximized then
+					Window.Maximize(false, true, true)
+				end
+			end
+
+			if
+				(Input.UserInputType == Enum.UserInputType.MouseMovement or Input.UserInputType == Enum.UserInputType.Touch)
+				and Resizing
+			then
+				local Delta = Input.Position - ResizePos
+				local StartSize = Window.Size
+
+				local TargetSize = Vector3.new(StartSize.X.Offset, StartSize.Y.Offset, 0) + Vector3.new(1, 1, 0) * Delta
+				local TargetSizeClamped =
+					Vector2.new(math.clamp(TargetSize.X, 470, 2048), math.clamp(TargetSize.Y, 380, 2048))
+
+				SizeMotor:setGoal({
+					X = Flipper.Instant.new(TargetSizeClamped.X),
+					Y = Flipper.Instant.new(TargetSizeClamped.Y),
+				})
+			end
+		end)
+
+		Creator.AddSignal(UserInputService.InputEnded, function(Input)
+			if Resizing == true or Input.UserInputType == Enum.UserInputType.Touch then
+				Resizing = false
+				Window.Size = UDim2.fromOffset(SizeMotor:getValue().X, SizeMotor:getValue().Y)
+			end
+		end)
+
+		Creator.AddSignal(Window.TabHolder.UIListLayout:GetPropertyChangedSignal("AbsoluteContentSize"), function()
+			Window.TabHolder.CanvasSize = UDim2.new(0, 0, 0, Window.TabHolder.UIListLayout.AbsoluteContentSize.Y)
+		end)
+
+		Creator.AddSignal(UserInputService.InputBegan, function(Input)
+			if
+				type(Library.MinimizeKeybind) == "table"
+				and Library.MinimizeKeybind.Type == "Keybind"
+				and not UserInputService:GetFocusedTextBox()
+			then
+				if Input.KeyCode.Name == Library.MinimizeKeybind.Value then
+					Window:Minimize()
+				end
+			elseif Input.KeyCode == Library.MinimizeKey and not UserInputService:GetFocusedTextBox() then
+				Window:Minimize()
+			end
+		end)
+
+		function Window:Minimize()
+			Window.Minimized = not Window.Minimized
+			Window.Root.Visible = not Window.Minimized
+			if not MinimizeNotif then
+				MinimizeNotif = true
+				local Key = Library.MinimizeKeybind and Library.MinimizeKeybind.Value or Library.MinimizeKey.Name
+				Library:Notify({
+					Title = "Interface",
+					Content = "Press " .. Key .. " to toggle the interface.",
+					Duration = 6
+				})
+			end
+			pcall(SwapIco)
+		end
+
+		function Window:Destroy()
+			if Library.UseAcrylic then
+				Window.AcrylicPaint.Model:Destroy()
+			end
+			Window.Root:Destroy()
+		end
+
+		local DialogModule = Components.Dialog:Init(Window)
+		function Window:Dialog(Config)
+			local Dialog = DialogModule:Create()
+			Dialog.Title.Text = Config.Title
+
+			local Content = New("TextLabel", {
+				FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json"),
+				Text = Config.Content,
+				TextColor3 = Color3.fromRGB(240, 240, 240),
+				TextSize = 14,
+				TextXAlignment = Enum.TextXAlignment.Left,
+				TextYAlignment = Enum.TextYAlignment.Top,
+				Size = UDim2.new(1, -40, 1, 0),
+				Position = UDim2.fromOffset(20, 60),
+				BackgroundTransparency = 1,
+				Parent = Dialog.Root,
+				ClipsDescendants = false,
+				ThemeTag = {
+					TextColor3 = "Text",
+				},
+			})
+
+			New("UISizeConstraint", {
+				MinSize = Vector2.new(300, 165),
+				MaxSize = Vector2.new(620, math.huge),
+				Parent = Dialog.Root,
+			})
+
+			Dialog.Root.Size = UDim2.fromOffset(Content.TextBounds.X + 40, 165)
+			if Content.TextBounds.X + 40 > Window.Size.X.Offset - 120 then
+				Dialog.Root.Size = UDim2.fromOffset(Window.Size.X.Offset - 120, 165)
+				Content.TextWrapped = true
+				Dialog.Root.Size = UDim2.fromOffset(Window.Size.X.Offset - 120, Content.TextBounds.Y + 150)
+			end
+
+			for _, Button in next, Config.Buttons do
+				Dialog:Button(Button.Title, Button.Callback)
+			end
+
+			Dialog:Open()
+		end
+
+		local TabModule = Components.Tab:Init(Window)
+		function Window:AddTab(TabConfig)
+			return TabModule:New(TabConfig.Title, TabConfig.Icon, Window.TabHolder)
+		end
+
+		function Window:SelectTab(Tab)
+			TabModule:SelectTab(Tab)
+		end
+
+		Creator.AddSignal(Window.TabHolder:GetPropertyChangedSignal("CanvasPosition"), function()
+			LastValue = TabModule:GetCurrentTabPos() + 16
+			LastTime = 0
+			Window.SelectorPosMotor:setGoal(Instant(TabModule:GetCurrentTabPos()))
+		end)
+
+		return Window
+	end
+end)()
+
+local ElementsTable = {}
+local AddSignal = Creator.AddSignal
+
+ElementsTable.Button = (function()
+	local Element = {}
+	Element.__index = Element
+	Element.__type = "Button"
+
+	function Element:New(Config)
+		assert(Config.Title, "Button - Missing Title")
+		Config.Callback = Config.Callback or function() end
+
+		local ButtonFrame = Components.Element(Config.Title, Config.Description, self.Container, true, Config)
+
+		local ButtonIco = New("ImageLabel", {
+			Image = "rbxassetid://10709791437",
+			Size = UDim2.fromOffset(16, 16),
+			AnchorPoint = Vector2.new(1, 0.5),
+			Position = UDim2.new(1, -10, 0.5, 0),
+			BackgroundTransparency = 1,
+			Parent = ButtonFrame.Frame,
+			ThemeTag = {
+				ImageColor3 = "Text",
+			},
+		})
+
+		Creator.AddSignal(ButtonFrame.Frame.MouseButton1Click, function()
+			Library:SafeCallback(Config.Callback)
+		end)
+
+		return ButtonFrame
+	end
+
+	return Element
+end)()
+ElementsTable.Toggle = (function()
+	local Element = {}
+	Element.__index = Element
+	Element.__type = "Toggle"
+
+	function Element:New(Idx, Config)
+		assert(Config.Title, "Toggle - Missing Title")
+
+		local Toggle = {
+			Value = Config.Default or false,
+			Callback = Config.Callback or function(Value) end,
+			Type = "Toggle",
+		}
+
+		local ToggleFrame = Components.Element(Config.Title, Config.Description, self.Container, true, Config)
+		ToggleFrame.DescLabel.Size = UDim2.new(1, -54, 0, 14)
+
+		Toggle.SetTitle = ToggleFrame.SetTitle
+		Toggle.SetDesc = ToggleFrame.SetDesc
+		Toggle.Visible = ToggleFrame.Visible
+		Toggle.Elements = ToggleFrame
+
+		local ToggleCircle = New("ImageLabel", {
+			AnchorPoint = Vector2.new(0, 0.5),
+			Size = UDim2.fromOffset(14, 14),
+			Position = UDim2.new(0, 2, 0.5, 0),
+			Image = "http://www.roblox.com/asset/?id=12266946128",
+			ImageTransparency = 0.5,
+			ThemeTag = {
+				ImageColor3 = "ToggleSlider",
+			},
+		})
+
+		local ToggleBorder = New("UIStroke", {
+			Transparency = 0.5,
+			ThemeTag = {
+				Color = "ToggleSlider",
+			},
+		})
+
+		local ToggleSlider = New("Frame", {
+			Size = UDim2.fromOffset(36, 18),
+			AnchorPoint = Vector2.new(1, 0.5),
+			Position = UDim2.new(1, -10, 0.5, 0),
+			Parent = ToggleFrame.Frame,
+			BackgroundTransparency = 1,
+			ThemeTag = {
+				BackgroundColor3 = "Accent",
+			},
+		}, {
+			New("UICorner", {
+				CornerRadius = UDim.new(0, 9),
+			}),
+			ToggleBorder,
+			ToggleCircle,
+		})
+
+		function Toggle:OnChanged(Func)
+			Toggle.Changed = Func
+			Func(Toggle.Value)
+		end
+
+		function Toggle:SetValue(Value)
+			Value = not not Value
+			Toggle.Value = Value
+
+			Creator.OverrideTag(ToggleBorder, { Color = Toggle.Value and "Accent" or "ToggleSlider" })
+			Creator.OverrideTag(ToggleCircle, { ImageColor3 = Toggle.Value and "ToggleToggled" or "ToggleSlider" })
+			TweenService:Create(
+				ToggleCircle,
+				TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out),
+				{ Position = UDim2.new(0, Toggle.Value and 19 or 2, 0.5, 0) }
+			):Play()
+			TweenService:Create(
+				ToggleSlider,
+				TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out),
+				{ BackgroundTransparency = Toggle.Value and 0.45 or 1 }
+			):Play()
+			ToggleCircle.ImageTransparency = Toggle.Value and 0 or 0.5
+
+			Library:SafeCallback(Toggle.Callback, Toggle.Value)
+			Library:SafeCallback(Toggle.Changed, Toggle.Value)
+		end
+
+		function Toggle:Destroy()
+			ToggleFrame:Destroy()
+			Library.Options[Idx] = nil
+		end
+
+		Creator.AddSignal(ToggleFrame.Frame.MouseButton1Click, function()
+			Toggle:SetValue(not Toggle.Value)
+		end)
+
+		Toggle:SetValue(Toggle.Value)
+
+		Library.Options[Idx] = Toggle
+		return Toggle
+	end
+
+	return Element
+end)()
+ElementsTable.Dropdown = (function()
+	local Element = {}
+	Element.__index = Element
+	Element.__type = "Dropdown"
+
+	function Element:New(Idx, Config)
+
+		local Dropdown = {
+			Values = Config.Values,
+			Value = Config.Default,
+			Multi = Config.Multi,
+			Buttons = {},
+			Opened = false,
+			Type = "Dropdown",
+			Callback = Config.Callback or function() end,
+		}
+
+		if Dropdown.Multi and Config.AllowNull then
+			Dropdown.Value = {}
+		end
+
+		local DropdownFrame = Components.Element(Config.Title, Config.Description, self.Container, false, Config)
+		DropdownFrame.DescLabel.Size = UDim2.new(1, -170, 0, 14)
+
+		Dropdown.SetTitle = DropdownFrame.SetTitle
+		Dropdown.SetDesc = DropdownFrame.SetDesc
+		Dropdown.Visible = DropdownFrame.Visible
+		Dropdown.Elements = DropdownFrame
+
+		local DropdownDisplay = New("TextLabel", {
+			FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal),
+			Text = "Value",
+			TextColor3 = Color3.fromRGB(240, 240, 240),
+			TextSize = 13,
+			TextXAlignment = Enum.TextXAlignment.Left,
+			Size = UDim2.new(1, -30, 0, 14),
+			Position = UDim2.new(0, 8, 0.5, 0),
+			AnchorPoint = Vector2.new(0, 0.5),
+			BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+			BackgroundTransparency = 1,
+			TextTruncate = Enum.TextTruncate.AtEnd,
+			ThemeTag = {
+				TextColor3 = "Text",
+			},
+		})
+
+		local DropdownIco = New("ImageLabel", {
+			Image = "rbxassetid://10709790948",
+			Size = UDim2.fromOffset(16, 16),
+			AnchorPoint = Vector2.new(1, 0.5),
+			Position = UDim2.new(1, -8, 0.5, 0),
+			BackgroundTransparency = 1,
+			ThemeTag = {
+				ImageColor3 = "SubText",
+			},
+		})
+
+		local DropdownInner = New("TextButton", {
+			Size = UDim2.fromOffset(160, 30),
+			Position = UDim2.new(1, -10, 0.5, 0),
+			AnchorPoint = Vector2.new(1, 0.5),
+			BackgroundTransparency = 0.9,
+			Parent = DropdownFrame.Frame,
+			ThemeTag = {
+				BackgroundColor3 = "DropdownFrame",
+			},
+		}, {
+			New("UICorner", {
+				CornerRadius = UDim.new(0, 5),
+			}),
+			New("UIStroke", {
+				Transparency = 0.5,
+				ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
+				ThemeTag = {
+					Color = "InElementBorder",
+				},
+			}),
+			DropdownIco,
+			DropdownDisplay,
+		})
+
+		local DropdownListLayout = New("UIListLayout", {
+			Padding = UDim.new(0, 3),
+		})
+
+		local DropdownScrollFrame = New("ScrollingFrame", {
+			Size = UDim2.new(1, -5, 1, -10),
+			Position = UDim2.fromOffset(5, 5),
+			BackgroundTransparency = 1,
+			BottomImage = "rbxassetid://6889812791",
+			MidImage = "rbxassetid://6889812721",
+			TopImage = "rbxassetid://6276641225",
+			ScrollBarImageColor3 = Color3.fromRGB(255, 255, 255),
+			ScrollBarImageTransparency = 0.75,
+			ScrollBarThickness = 5,
+			BorderSizePixel = 0,
+			CanvasSize = UDim2.fromScale(0, 0),
+			ScrollingDirection = Enum.ScrollingDirection.Y,
+		}, {
+			DropdownListLayout,
+		})
+
+		local DropdownHolderFrame = New("Frame", {
+			Size = UDim2.fromScale(1, 0.6),
+			ThemeTag = {
+				BackgroundColor3 = "DropdownHolder",
+			},
+		}, {
+			DropdownScrollFrame,
+			New("UICorner", {
+				CornerRadius = UDim.new(0, 7),
+			}),
+			New("UIStroke", {
+				ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
+				ThemeTag = {
+					Color = "DropdownBorder",
+				},
+			}),
+			New("ImageLabel", {
+				BackgroundTransparency = 1,
+				Image = "http://www.roblox.com/asset/?id=5554236805",
+				ScaleType = Enum.ScaleType.Slice,
+				SliceCenter = Rect.new(23, 23, 277, 277),
+				Size = UDim2.fromScale(1, 1) + UDim2.fromOffset(30, 30),
+				Position = UDim2.fromOffset(-15, -15),
+				ImageColor3 = Color3.fromRGB(0, 0, 0),
+				ImageTransparency = 0.1,
+			}),
+		})
+
+		local DropdownHolderCanvas = New("Frame", {
+			BackgroundTransparency = 1,
+			Size = UDim2.fromOffset(170, 300),
+			Parent = Library.GUI,
+			Visible = false,
+		}, {
+			DropdownHolderFrame,
+			New("UISizeConstraint", {
+				MinSize = Vector2.new(170, 0),
+			}),
+		})
+		table.insert(Library.OpenFrames, DropdownHolderCanvas)
+
+		local function RecalculateListPosition()
+			local Add = 0
+			if Camera.ViewportSize.Y - DropdownInner.AbsolutePosition.Y < DropdownHolderCanvas.AbsoluteSize.Y - 5 then
+				Add = DropdownHolderCanvas.AbsoluteSize.Y
+				- 5
+				- (Camera.ViewportSize.Y - DropdownInner.AbsolutePosition.Y)
+					+ 40
+			end
+			DropdownHolderCanvas.Position =
+				UDim2.fromOffset(DropdownInner.AbsolutePosition.X - 1, DropdownInner.AbsolutePosition.Y - 5 - Add)
+		end
+
+		local ListSizeX = 0
+		local function RecalculateListSize()
+			if #Dropdown.Values > 10 then
+				DropdownHolderCanvas.Size = UDim2.fromOffset(ListSizeX, 392)
+			else
+				DropdownHolderCanvas.Size = UDim2.fromOffset(ListSizeX, DropdownListLayout.AbsoluteContentSize.Y + 10)
+			end
+		end
+
+		local function RecalculateCanvasSize()
+			DropdownScrollFrame.CanvasSize = UDim2.fromOffset(0, DropdownListLayout.AbsoluteContentSize.Y)
+		end
+
+		RecalculateListPosition()
+		RecalculateListSize()
+
+		Creator.AddSignal(DropdownInner:GetPropertyChangedSignal("AbsolutePosition"), RecalculateListPosition)
+
+		Creator.AddSignal(DropdownInner.MouseButton1Click, function()
+			Dropdown:Open()
+		end)
+
+		Creator.AddSignal(UserInputService.InputBegan, function(Input)
+			if
+				Input.UserInputType == Enum.UserInputType.MouseButton1
+				or Input.UserInputType == Enum.UserInputType.Touch
+			then
+				local AbsPos, AbsSize = DropdownHolderFrame.AbsolutePosition, DropdownHolderFrame.AbsoluteSize
+				if
+					Mouse.X < AbsPos.X
+					or Mouse.X > AbsPos.X + AbsSize.X
+					or Mouse.Y < (AbsPos.Y - 20 - 1)
+					or Mouse.Y > AbsPos.Y + AbsSize.Y
+				then
+					Dropdown:Close()
+				end
+			end
+		end)
+
+		local ScrollFrame = self.ScrollFrame
+		function Dropdown:Open()
+			Dropdown.Opened = true
+			ScrollFrame.ScrollingEnabled = false
+			DropdownHolderCanvas.Visible = true
+			TweenService:Create(
+				DropdownHolderFrame,
+				TweenInfo.new(0.3, Enum.EasingStyle.Quart, Enum.EasingDirection.Out),
+				{ Size = UDim2.fromScale(1, 1) }
+			):Play()
+		end
+
+		function Dropdown:Close()
+			Dropdown.Opened = false
+			ScrollFrame.ScrollingEnabled = true
+			DropdownHolderFrame.Size = UDim2.fromScale(1, 0.6)
+			DropdownHolderCanvas.Visible = false
+		end
+
+		function Dropdown:Display()
+			local Values = Dropdown.Values
+			local Str = ""
+
+			if Config.Multi then
+				for Idx, Value in next, Values do
+					if Dropdown.Value[Value] then
+						Str = Str .. Value .. ", "
+					end
+				end
+				Str = Str:sub(1, #Str - 2)
+			else
+				Str = Dropdown.Value or ""
+			end
+
+			DropdownDisplay.Text = (Str == "" and "--" or Str)
+		end
+
+		function Dropdown:GetActiveValues()
+			if Config.Multi then
+				local T = {}
+
+				for Value, Bool in next, Dropdown.Value do
+					table.insert(T, Value)
+				end
+
+				return T
+			else
+				return Dropdown.Value and 1 or 0
+			end
+		end
+
+		function Dropdown:BuildDropdownList()
+			local Values = Dropdown.Values
+			local Buttons = {}
+
+			for _, Element in next, DropdownScrollFrame:GetChildren() do
+				if not Element:IsA("UIListLayout") then
+					Element:Destroy()
+				end
+			end
+
+			local Count = 0
+
+			for Idx, Value in next, Values do
+				local Table = {}
+
+				Count = Count + 1
+
+				local ButtonSelector = New("Frame", {
+					Size = UDim2.fromOffset(4, 14),
+					BackgroundColor3 = Color3.fromRGB(76, 194, 255),
+					Position = UDim2.fromOffset(-1, 16),
+					AnchorPoint = Vector2.new(0, 0.5),
+					ThemeTag = {
+						BackgroundColor3 = "Accent",
+					},
+				}, {
+					New("UICorner", {
+						CornerRadius = UDim.new(0, 2),
+					}),
+				})
+
+				local ButtonLabel = New("TextLabel", {
+					FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json"),
+					Text = Value,
+					TextColor3 = Color3.fromRGB(200, 200, 200),
+					TextSize = 13,
+					TextXAlignment = Enum.TextXAlignment.Left,
+					BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+					AutomaticSize = Enum.AutomaticSize.Y,
+					BackgroundTransparency = 1,
+					Size = UDim2.fromScale(1, 1),
+					Position = UDim2.fromOffset(10, 0),
+					Name = "ButtonLabel",
+					ThemeTag = {
+						TextColor3 = "Text",
+					},
+				})
+
+				local Button = New("TextButton", {
+					Size = UDim2.new(1, -5, 0, 32),
+					BackgroundTransparency = 1,
+					ZIndex = 23,
+					Text = "",
+					Parent = DropdownScrollFrame,
+					ThemeTag = {
+						BackgroundColor3 = "DropdownOption",
+					},
+				}, {
+					ButtonSelector,
+					ButtonLabel,
+					New("UICorner", {
+						CornerRadius = UDim.new(0, 6),
+					}),
+				})
+
+				local Selected
+
+				if Config.Multi then
+					Selected = Dropdown.Value[Value]
+				else
+					Selected = Dropdown.Value == Value
+				end
+
+				local BackMotor, SetBackTransparency = Creator.SpringMotor(1, Button, "BackgroundTransparency")
+				local SelMotor, SetSelTransparency = Creator.SpringMotor(1, ButtonSelector, "BackgroundTransparency")
+				local SelectorSizeMotor = Flipper.SingleMotor.new(6)
+
+				SelectorSizeMotor:onStep(function(value)
+					ButtonSelector.Size = UDim2.new(0, 4, 0, value)
+				end)
+
+				Creator.AddSignal(Button.MouseEnter, function()
+					SetBackTransparency(Selected and 0.85 or 0.89)
+				end)
+				Creator.AddSignal(Button.MouseLeave, function()
+					SetBackTransparency(Selected and 0.89 or 1)
+				end)
+				Creator.AddSignal(Button.MouseButton1Down, function()
+					SetBackTransparency(0.92)
+				end)
+				Creator.AddSignal(Button.MouseButton1Up, function()
+					SetBackTransparency(Selected and 0.85 or 0.89)
+				end)
+
+				function Table:UpdateButton()
+					if Config.Multi then
+						Selected = Dropdown.Value[Value]
+						if Selected then
+							SetBackTransparency(0.89)
+						end
+					else
+						Selected = Dropdown.Value == Value
+						SetBackTransparency(Selected and 0.89 or 1)
+					end
+
+					SelectorSizeMotor:setGoal(Flipper.Spring.new(Selected and 14 or 6, { frequency = 6 }))
+					SetSelTransparency(Selected and 0 or 1)
+				end
+
+				ButtonLabel.InputBegan:Connect(function(Input)
+					if
+						Input.UserInputType == Enum.UserInputType.MouseButton1
+						or Input.UserInputType == Enum.UserInputType.Touch
+					then
+						local Try = not Selected
+
+						if Dropdown:GetActiveValues() == 1 and not Try and not Config.AllowNull then
+						else
+							if Config.Multi then
+								Selected = Try
+								Dropdown.Value[Value] = Selected and true or nil
+							else
+								Selected = Try
+								Dropdown.Value = Selected and Value or nil
+
+								for _, OtherButton in next, Buttons do
+									OtherButton:UpdateButton()
+								end
+							end
+
+							Table:UpdateButton()
+							Dropdown:Display()
+
+							Library:SafeCallback(Dropdown.Callback, Dropdown.Value)
+							Library:SafeCallback(Dropdown.Changed, Dropdown.Value)
+						end
+					end
+				end)
+
+				Table:UpdateButton()
+				Dropdown:Display()
+
+				Buttons[Button] = Table
+			end
+
+			ListSizeX = 0
+			for Button, Table in next, Buttons do
+				if Button.ButtonLabel then
+					if Button.ButtonLabel.TextBounds.X > ListSizeX then
+						ListSizeX = Button.ButtonLabel.TextBounds.X
+					end
+				end
+			end
+			ListSizeX = ListSizeX + 30
+
+			RecalculateCanvasSize()
+			RecalculateListSize()
+		end
+
+		function Dropdown:SetValues(NewValues)
+			if NewValues then
+				Dropdown.Values = NewValues
+			end
+
+			Dropdown:BuildDropdownList()
+		end
+
+		function Dropdown:OnChanged(Func)
+			Dropdown.Changed = Func
+			Func(Dropdown.Value)
+		end
+
+		function Dropdown:SetValue(Val)
+			if Dropdown.Multi then
+				local nTable = {}
+
+				for Value, Bool in next, Val do
+					if table.find(Dropdown.Values, Value) then
+						nTable[Value] = true
+					end
+				end
+
+				Dropdown.Value = nTable
+			else
+				if not Val then
+					Dropdown.Value = nil
+				elseif table.find(Dropdown.Values, Val) then
+					Dropdown.Value = Val
+				end
+			end
+
+			Dropdown:BuildDropdownList()
+
+			Library:SafeCallback(Dropdown.Callback, Dropdown.Value)
+			Library:SafeCallback(Dropdown.Changed, Dropdown.Value)
+		end
+
+		function Dropdown:Destroy()
+			DropdownFrame:Destroy()
+			Library.Options[Idx] = nil
+		end
+
+		Dropdown:BuildDropdownList()
+		Dropdown:Display()
+
+		local Defaults = {}
+
+		if type(Config.Default) == "string" then
+			local Idx = table.find(Dropdown.Values, Config.Default)
+			if Idx then
+				table.insert(Defaults, Idx)
+			end
+		elseif type(Config.Default) == "table" then
+			for _, Value in next, Config.Default do
+				local Idx = table.find(Dropdown.Values, Value)
+				if Idx then
+					table.insert(Defaults, Idx)
+				end
+			end
+		elseif type(Config.Default) == "number" and Dropdown.Values[Config.Default] ~= nil then
+			table.insert(Defaults, Config.Default)
+		end
+
+		if next(Defaults) then
+			for i = 1, #Defaults do
+				local Index = Defaults[i]
+				if Config.Multi then
+					Dropdown.Value[Dropdown.Values[Index]] = true
+				else
+					Dropdown.Value = Dropdown.Values[Index]
+				end
+
+				if not Config.Multi then
+					break
+				end
+			end
+
+			Dropdown:BuildDropdownList()
+			Dropdown:Display()
+		end
+
+		Library.Options[Idx] = Dropdown
+		return Dropdown
+	end
+
+	return Element
+end)()
+ElementsTable.Paragraph = (function()
+	local Paragraph = {}
+	Paragraph.__index = Paragraph
+	Paragraph.__type = "Paragraph"
+
+	function Paragraph:New(Config)
+		assert(Config.Title, "Paragraph - Missing Title")
+		Config.Content = Config.Content or ""
+
+		local Paragraph = Components.Element(Config.Title, Config.Content, Paragraph.Container, false, Config)
+		Paragraph.Frame.BackgroundTransparency = 0.92
+		Paragraph.Border.Transparency = 0.6
+
+		Paragraph.SetTitle = Paragraph.SetTitle
+		Paragraph.SetDesc = Paragraph.SetDesc
+		Paragraph.Visible = Paragraph.Visible
+		Paragraph.Elements = Paragraph
+
+		return Paragraph
+	end
+
+	return Paragraph
+end)()
+ElementsTable.Slider = (function()
+	local Element = {}
+	Element.__index = Element
+	Element.__type = "Slider"
+
+	function Element:New(Idx, Config)
+		assert(Config.Title, "Slider - Missing Title.")
+		assert(Config.Default, "Slider - Missing default value.")
+		assert(Config.Min, "Slider - Missing minimum value.")
+		assert(Config.Max, "Slider - Missing maximum value.")
+		assert(Config.Rounding, "Slider - Missing rounding value.")
+
+		local Slider = {
+			Value = nil,
+			Min = Config.Min,
+			Max = Config.Max,
+			Rounding = Config.Rounding,
+			Callback = Config.Callback or function(Value) end,
+			Type = "Slider",
+		}
+
+		local Dragging = false
+
+		local SliderFrame = Components.Element(Config.Title, Config.Description, self.Container, false, Config)
+		SliderFrame.DescLabel.Size = UDim2.new(1, -170, 0, 14)
+
+		Slider.Elements = SliderFrame
+		Slider.SetTitle = SliderFrame.SetTitle
+		Slider.SetDesc = SliderFrame.SetDesc
+		Slider.Visible = SliderFrame.Visible
+
+		local SliderDot = New("ImageLabel", {
+			AnchorPoint = Vector2.new(0, 0.5),
+			Position = UDim2.new(0, -7, 0.5, 0),
+			Size = UDim2.fromOffset(14, 14),
+			Image = "http://www.roblox.com/asset/?id=12266946128",
+			ThemeTag = {
+				ImageColor3 = "Accent",
+			},
+		})
+
+		local SliderRail = New("Frame", {
+			BackgroundTransparency = 1,
+			Position = UDim2.fromOffset(7, 0),
+			Size = UDim2.new(1, -14, 1, 0),
+		}, {
+			SliderDot,
+		})
+
+		local SliderFill = New("Frame", {
+			Size = UDim2.new(0, 0, 1, 0),
+			ThemeTag = {
+				BackgroundColor3 = "Accent",
+			},
+		}, {
+			New("UICorner", {
+				CornerRadius = UDim.new(1, 0),
+			}),
+		})
+
+		local SliderDisplay = New("TextLabel", {
+			FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json"),
+			Text = "Value",
+			TextSize = 12,
+			TextWrapped = true,
+			TextXAlignment = Enum.TextXAlignment.Right,
+			BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+			BackgroundTransparency = 1,
+			Size = UDim2.new(0, 100, 0, 14),
+			Position = UDim2.new(0, -4, 0.5, 0),
+			AnchorPoint = Vector2.new(1, 0.5),
+			ThemeTag = {
+				TextColor3 = "SubText",
+			},
+		})
+
+		local SliderInner = New("Frame", {
+			Size = UDim2.new(1, 0, 0, 4),
+			AnchorPoint = Vector2.new(1, 0.5),
+			Position = UDim2.new(1, -10, 0.5, 0),
+			BackgroundTransparency = 0.4,
+			Parent = SliderFrame.Frame,
+			ThemeTag = {
+				BackgroundColor3 = "SliderRail",
+			},
+		}, {
+			New("UICorner", {
+				CornerRadius = UDim.new(1, 0),
+			}),
+			New("UISizeConstraint", {
+				MaxSize = Vector2.new(150, math.huge),
+			}),
+			SliderDisplay,
+			SliderFill,
+			SliderRail,
+		})
+
+		Creator.AddSignal(SliderDot.InputBegan, function(Input)
+			if
+				Input.UserInputType == Enum.UserInputType.MouseButton1
+				or Input.UserInputType == Enum.UserInputType.Touch
+			then
+				Dragging = true
+			end
+		end)
+
+		Creator.AddSignal(SliderDot.InputEnded, function(Input)
+			if
+				Input.UserInputType == Enum.UserInputType.MouseButton1
+				or Input.UserInputType == Enum.UserInputType.Touch
+			then
+				Dragging = false
+			end
+		end)
+
+		Creator.AddSignal(UserInputService.InputChanged, function(Input)
+			if
+				Dragging
+				and (
+					Input.UserInputType == Enum.UserInputType.MouseMovement
+						or Input.UserInputType == Enum.UserInputType.Touch
+				)
+			then
+				local SizeScale =
+					math.clamp((Input.Position.X - SliderRail.AbsolutePosition.X) / SliderRail.AbsoluteSize.X, 0, 1)
+				Slider:SetValue(Slider.Min + ((Slider.Max - Slider.Min) * SizeScale))
+			end
+		end)
+
+		function Slider:OnChanged(Func)
+			Slider.Changed = Func
+			Func(Slider.Value)
+		end
+
+		function Slider:SetValue(Value)
+			self.Value = Library:Round(math.clamp(Value, Slider.Min, Slider.Max), Slider.Rounding)
+			SliderDot.Position = UDim2.new((self.Value - Slider.Min) / (Slider.Max - Slider.Min), -7, 0.5, 0)
+			SliderFill.Size = UDim2.fromScale((self.Value - Slider.Min) / (Slider.Max - Slider.Min), 1)
+			SliderDisplay.Text = tostring(self.Value)
+
+			Library:SafeCallback(Slider.Callback, self.Value)
+			Library:SafeCallback(Slider.Changed, self.Value)
+		end
+
+		function Slider:Destroy()
+			SliderFrame:Destroy()
+			Library.Options[Idx] = nil
+		end
+
+		Slider:SetValue(Config.Default)
+
+		Library.Options[Idx] = Slider
+		return Slider
+	end
+
+	return Element
+end)()
+ElementsTable.Keybind = (function()
+	local Element = {}
+	Element.__index = Element
+	Element.__type = "Keybind"
+
+	function Element:New(Idx, Config)
+		assert(Config.Title, "KeyBind - Missing Title")
+		assert(Config.Default, "KeyBind - Missing default value.")
+
+		local Keybind = {
+			Value = Config.Default,
+			Toggled = false,
+			Mode = Config.Mode or "Toggle",
+			Type = "Keybind",
+			Callback = Config.Callback or function(Value) end,
+			ChangedCallback = Config.ChangedCallback or function(New) end,
+		}
+
+		local Picking = false
+
+		local KeybindFrame = Components.Element(Config.Title, Config.Description, self.Container, true)
+
+		Keybind.SetTitle = KeybindFrame.SetTitle
+		Keybind.SetDesc = KeybindFrame.SetDesc
+		Keybind.Visible = KeybindFrame.Visible
+		Keybind.Elements = KeybindFrame
+
+		local KeybindDisplayLabel = New("TextLabel", {
+			FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal),
+			Text = Config.Default,
+			TextColor3 = Color3.fromRGB(240, 240, 240),
+			TextSize = 13,
+			TextXAlignment = Enum.TextXAlignment.Center,
+			Size = UDim2.new(0, 0, 0, 14),
+			Position = UDim2.new(0, 0, 0.5, 0),
+			AnchorPoint = Vector2.new(0, 0.5),
+			BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+			AutomaticSize = Enum.AutomaticSize.X,
+			BackgroundTransparency = 1,
+			ThemeTag = {
+				TextColor3 = "Text",
+			},
+		})
+
+		local KeybindDisplayFrame = New("TextButton", {
+			Size = UDim2.fromOffset(0, 30),
+			Position = UDim2.new(1, -10, 0.5, 0),
+			AnchorPoint = Vector2.new(1, 0.5),
+			BackgroundTransparency = 0.9,
+			Parent = KeybindFrame.Frame,
+			AutomaticSize = Enum.AutomaticSize.X,
+			ThemeTag = {
+				BackgroundColor3 = "Keybind",
+			},
+		}, {
+			New("UICorner", {
+				CornerRadius = UDim.new(0, 5),
+			}),
+			New("UIPadding", {
+				PaddingLeft = UDim.new(0, 8),
+				PaddingRight = UDim.new(0, 8),
+			}),
+			New("UIStroke", {
+				Transparency = 0.5,
+				ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
+				ThemeTag = {
+					Color = "InElementBorder",
+				},
+			}),
+			KeybindDisplayLabel,
+		})
+
+		function Keybind:GetState()
+			if UserInputService:GetFocusedTextBox() and Keybind.Mode ~= "Always" then
+				return false
+			end
+
+			if Keybind.Mode == "Always" then
+				return true
+			elseif Keybind.Mode == "Hold" then
+				if Keybind.Value == "None" then
+					return false
+				end
+
+				local Key = Keybind.Value
+
+				if Key == "MouseLeft" or Key == "MouseRight" then
+					return Key == "MouseLeft" and UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1)
+						or Key == "MouseRight"
+						and UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton2)
+				else
+					return UserInputService:IsKeyDown(Enum.KeyCode[Keybind.Value])
+				end
+			else
+				return Keybind.Toggled
+			end
+		end
+
+		function Keybind:SetValue(Key, Mode)
+			Key = Key or Keybind.Key
+			Mode = Mode or Keybind.Mode
+
+			KeybindDisplayLabel.Text = Key
+			Keybind.Value = Key
+			Keybind.Mode = Mode
+		end
+
+		function Keybind:OnClick(Callback)
+			Keybind.Clicked = Callback
+		end
+
+		function Keybind:OnChanged(Callback)
+			Keybind.Changed = Callback
+			Callback(Keybind.Value)
+		end
+
+		function Keybind:DoClick()
+			Library:SafeCallback(Keybind.Callback, Keybind.Toggled)
+			Library:SafeCallback(Keybind.Clicked, Keybind.Toggled)
+		end
+
+		function Keybind:Destroy()
+			KeybindFrame:Destroy()
+			Library.Options[Idx] = nil
+		end
+
+		Creator.AddSignal(KeybindDisplayFrame.InputBegan, function(Input)
+			if
+				Input.UserInputType == Enum.UserInputType.MouseButton1
+				or Input.UserInputType == Enum.UserInputType.Touch
+			then
+				Picking = true
+				KeybindDisplayLabel.Text = "..."
+
+				wait(0.2)
+
+				local Event
+				Event = UserInputService.InputBegan:Connect(function(Input)
+					local Key
+
+					if Input.UserInputType == Enum.UserInputType.Keyboard then
+						Key = Input.KeyCode.Name
+					elseif Input.UserInputType == Enum.UserInputType.MouseButton1 then
+						Key = "MouseLeft"
+					elseif Input.UserInputType == Enum.UserInputType.MouseButton2 then
+						Key = "MouseRight"
+					end
+
+					local EndedEvent
+					EndedEvent = UserInputService.InputEnded:Connect(function(Input)
+						if
+							Input.KeyCode.Name == Key
+							or Key == "MouseLeft" and Input.UserInputType == Enum.UserInputType.MouseButton1
+							or Key == "MouseRight" and Input.UserInputType == Enum.UserInputType.MouseButton2
+						then
+							Picking = false
+
+							KeybindDisplayLabel.Text = Key
+							Keybind.Value = Key
+
+							Library:SafeCallback(Keybind.ChangedCallback, Input.KeyCode or Input.UserInputType)
+							Library:SafeCallback(Keybind.Changed, Input.KeyCode or Input.UserInputType)
+
+							Event:Disconnect()
+							EndedEvent:Disconnect()
+						end
+					end)
+				end)
+			end
+		end)
+
+		Creator.AddSignal(UserInputService.InputBegan, function(Input)
+			if not Picking and not UserInputService:GetFocusedTextBox() then
+				if Keybind.Mode == "Toggle" then
+					local Key = Keybind.Value
+
+					if Key == "MouseLeft" or Key == "MouseRight" then
+						if
+							Key == "MouseLeft" and Input.UserInputType == Enum.UserInputType.MouseButton1
+							or Key == "MouseRight" and Input.UserInputType == Enum.UserInputType.MouseButton2
+						then
+							Keybind.Toggled = not Keybind.Toggled
+							Keybind:DoClick()
+						end
+					elseif Input.UserInputType == Enum.UserInputType.Keyboard then
+						if Input.KeyCode.Name == Key then
+							Keybind.Toggled = not Keybind.Toggled
+							Keybind:DoClick()
+						end
+					end
+				end
+			end
+		end)
+
+		Library.Options[Idx] = Keybind
+		return Keybind
+	end
+
+	return Element
+end)()
+ElementsTable.Colorpicker = (function()
+	local Element = {}
+	Element.__index = Element
+	Element.__type = "Colorpicker"
+
+	function Element:New(Idx, Config)
+		assert(Config.Title, "Colorpicker - Missing Title")
+		assert(Config.Default, "AddColorPicker: Missing default value.")
+
+		local Colorpicker = {
+			Value = Config.Default,
+			Transparency = Config.Transparency or 0,
+			Type = "Colorpicker",
+			Title = type(Config.Title) == "string" and Config.Title or "Colorpicker",
+			Callback = Config.Callback or function(Color) end,
+		}
+
+		function Colorpicker:SetHSVFromRGB(Color)
+			local H, S, V = Color3.toHSV(Color)
+			Colorpicker.Hue = H
+			Colorpicker.Sat = S
+			Colorpicker.Vib = V
+		end
+
+		Colorpicker:SetHSVFromRGB(Colorpicker.Value)
+
+		local ColorpickerFrame = Components.Element(Config.Title, Config.Description, self.Container, true)
+
+		Colorpicker.SetTitle = ColorpickerFrame.SetTitle
+		Colorpicker.SetDesc = ColorpickerFrame.SetDesc
+		Colorpicker.Visible = ColorpickerFrame.Visible
+		Colorpicker.Elements = ColorpickerFrame
+
+		local DisplayFrameColor = New("Frame", {
+			Size = UDim2.fromScale(1, 1),
+			BackgroundColor3 = Colorpicker.Value,
+			Parent = ColorpickerFrame.Frame,
+		}, {
+			New("UICorner", {
+				CornerRadius = UDim.new(0, 4),
+			}),
+		})
+
+		local DisplayFrame = New("ImageLabel", {
+			Size = UDim2.fromOffset(26, 26),
+			Position = UDim2.new(1, -10, 0.5, 0),
+			AnchorPoint = Vector2.new(1, 0.5),
+			Parent = ColorpickerFrame.Frame,
+			Image = "http://www.roblox.com/asset/?id=14204231522",
+			ImageTransparency = 0.45,
+			ScaleType = Enum.ScaleType.Tile,
+			TileSize = UDim2.fromOffset(40, 40),
+		}, {
+			New("UICorner", {
+				CornerRadius = UDim.new(0, 4),
+			}),
+			DisplayFrameColor,
+		})
+
+		local function CreateColorDialog()
+			local Dialog = Components.Dialog:Create()
+			Dialog.Title.Text = Colorpicker.Title
+			Dialog.Root.Size = UDim2.fromOffset(430, 330)
+
+			local Hue, Sat, Vib = Colorpicker.Hue, Colorpicker.Sat, Colorpicker.Vib
+			local Transparency = Colorpicker.Transparency
+
+			local function CreateInput()
+				local Box = Components.Textbox()
+				Box.Frame.Parent = Dialog.Root
+				Box.Frame.Size = UDim2.new(0, 90, 0, 32)
+
+				return Box
+			end
+
+			local function CreateInputLabel(Text, Pos)
+				return New("TextLabel", {
+					FontFace = Font.new(
+						"rbxasset://fonts/families/GothamSSm.json",
+						Enum.FontWeight.Medium,
+						Enum.FontStyle.Normal
+					),
+					Text = Text,
+					TextColor3 = Color3.fromRGB(240, 240, 240),
+					TextSize = 13,
+					TextXAlignment = Enum.TextXAlignment.Left,
+					Size = UDim2.new(1, 0, 0, 32),
+					Position = Pos,
+					BackgroundTransparency = 1,
+					Parent = Dialog.Root,
+					ThemeTag = {
+						TextColor3 = "Text",
+					},
+				})
+			end
+
+			local function GetRGB()
+				local Value = Color3.fromHSV(Hue, Sat, Vib)
+				return { R = math.floor(Value.r * 255), G = math.floor(Value.g * 255), B = math.floor(Value.b * 255) }
+			end
+
+			local SatCursor = New("ImageLabel", {
+				Size = UDim2.new(0, 18, 0, 18),
+				ScaleType = Enum.ScaleType.Fit,
+				AnchorPoint = Vector2.new(0.5, 0.5),
+				BackgroundTransparency = 1,
+				Image = "http://www.roblox.com/asset/?id=4805639000",
+			})
+
+			local SatVibMap = New("ImageLabel", {
+				Size = UDim2.fromOffset(180, 160),
+				Position = UDim2.fromOffset(20, 55),
+				Image = "rbxassetid://4155801252",
+				BackgroundColor3 = Colorpicker.Value,
+				BackgroundTransparency = 0,
+				Parent = Dialog.Root,
+			}, {
+				New("UICorner", {
+					CornerRadius = UDim.new(0, 4),
+				}),
+				SatCursor,
+			})
+
+			local OldColorFrame = New("Frame", {
+				BackgroundColor3 = Colorpicker.Value,
+				Size = UDim2.fromScale(1, 1),
+				BackgroundTransparency = Colorpicker.Transparency,
+			}, {
+				New("UICorner", {
+					CornerRadius = UDim.new(0, 4),
+				}),
+			})
+
+			local OldColorFrameChecker = New("ImageLabel", {
+				Image = "http://www.roblox.com/asset/?id=14204231522",
+				ImageTransparency = 0.45,
+				ScaleType = Enum.ScaleType.Tile,
+				TileSize = UDim2.fromOffset(40, 40),
+				BackgroundTransparency = 1,
+				Position = UDim2.fromOffset(112, 220),
+				Size = UDim2.fromOffset(88, 24),
+				Parent = Dialog.Root,
+			}, {
+				New("UICorner", {
+					CornerRadius = UDim.new(0, 4),
+				}),
+				New("UIStroke", {
+					Thickness = 2,
+					Transparency = 0.75,
+				}),
+				OldColorFrame,
+			})
+
+			local DialogDisplayFrame = New("Frame", {
+				BackgroundColor3 = Colorpicker.Value,
+				Size = UDim2.fromScale(1, 1),
+				BackgroundTransparency = 0,
+			}, {
+				New("UICorner", {
+					CornerRadius = UDim.new(0, 4),
+				}),
+			})
+
+			local DialogDisplayFrameChecker = New("ImageLabel", {
+				Image = "http://www.roblox.com/asset/?id=14204231522",
+				ImageTransparency = 0.45,
+				ScaleType = Enum.ScaleType.Tile,
+				TileSize = UDim2.fromOffset(40, 40),
+				BackgroundTransparency = 1,
+				Position = UDim2.fromOffset(20, 220),
+				Size = UDim2.fromOffset(88, 24),
+				Parent = Dialog.Root,
+			}, {
+				New("UICorner", {
+					CornerRadius = UDim.new(0, 4),
+				}),
+				New("UIStroke", {
+					Thickness = 2,
+					Transparency = 0.75,
+				}),
+				DialogDisplayFrame,
+			})
+
+			local SequenceTable = {}
+
+			for Color = 0, 1, 0.1 do
+				table.insert(SequenceTable, ColorSequenceKeypoint.new(Color, Color3.fromHSV(Color, 1, 1)))
+			end
+
+			local HueSliderGradient = New("UIGradient", {
+				Color = ColorSequence.new(SequenceTable),
+				Rotation = 90,
+			})
+
+			local HueDragHolder = New("Frame", {
+				Size = UDim2.new(1, 0, 1, -10),
+				Position = UDim2.fromOffset(0, 5),
+				BackgroundTransparency = 1,
+			})
+
+			local HueDrag = New("ImageLabel", {
+				Size = UDim2.fromOffset(14, 14),
+				Image = "http://www.roblox.com/asset/?id=12266946128",
+				Parent = HueDragHolder,
+				ThemeTag = {
+					ImageColor3 = "DialogInput",
+				},
+			})
+
+			local HueSlider = New("Frame", {
+				Size = UDim2.fromOffset(12, 190),
+				Position = UDim2.fromOffset(210, 55),
+				Parent = Dialog.Root,
+			}, {
+				New("UICorner", {
+					CornerRadius = UDim.new(1, 0),
+				}),
+				HueSliderGradient,
+				HueDragHolder,
+			})
+
+			local HexInput = CreateInput()
+			HexInput.Frame.Position = UDim2.fromOffset(Config.Transparency and 260 or 240, 55)
+			CreateInputLabel("Hex", UDim2.fromOffset(Config.Transparency and 360 or 340, 55))
+
+			local RedInput = CreateInput()
+			RedInput.Frame.Position = UDim2.fromOffset(Config.Transparency and 260 or 240, 95)
+			CreateInputLabel("Red", UDim2.fromOffset(Config.Transparency and 360 or 340, 95))
+
+			local GreenInput = CreateInput()
+			GreenInput.Frame.Position = UDim2.fromOffset(Config.Transparency and 260 or 240, 135)
+			CreateInputLabel("Green", UDim2.fromOffset(Config.Transparency and 360 or 340, 135))
+
+			local BlueInput = CreateInput()
+			BlueInput.Frame.Position = UDim2.fromOffset(Config.Transparency and 260 or 240, 175)
+			CreateInputLabel("Blue", UDim2.fromOffset(Config.Transparency and 360 or 340, 175))
+
+			local AlphaInput
+			if Config.Transparency then
+				AlphaInput = CreateInput()
+				AlphaInput.Frame.Position = UDim2.fromOffset(260, 215)
+				CreateInputLabel("Alpha", UDim2.fromOffset(360, 215))
+			end
+
+			local TransparencySlider, TransparencyDrag, TransparencyColor
+			if Config.Transparency then
+				local TransparencyDragHolder = New("Frame", {
+					Size = UDim2.new(1, 0, 1, -10),
+					Position = UDim2.fromOffset(0, 5),
+					BackgroundTransparency = 1,
+				})
+
+				TransparencyDrag = New("ImageLabel", {
+					Size = UDim2.fromOffset(14, 14),
+					Image = "http://www.roblox.com/asset/?id=12266946128",
+					Parent = TransparencyDragHolder,
+					ThemeTag = {
+						ImageColor3 = "DialogInput",
+					},
+				})
+
+				TransparencyColor = New("Frame", {
+					Size = UDim2.fromScale(1, 1),
+				}, {
+					New("UIGradient", {
+						Transparency = NumberSequence.new({
+							NumberSequenceKeypoint.new(0, 0),
+							NumberSequenceKeypoint.new(1, 1),
+						}),
+						Rotation = 270,
+					}),
+					New("UICorner", {
+						CornerRadius = UDim.new(1, 0),
+					}),
+				})
+
+				TransparencySlider = New("Frame", {
+					Size = UDim2.fromOffset(12, 190),
+					Position = UDim2.fromOffset(230, 55),
+					Parent = Dialog.Root,
+					BackgroundTransparency = 1,
+				}, {
+					New("UICorner", {
+						CornerRadius = UDim.new(1, 0),
+					}),
+					New("ImageLabel", {
+						Image = "http://www.roblox.com/asset/?id=14204231522",
+						ImageTransparency = 0.45,
+						ScaleType = Enum.ScaleType.Tile,
+						TileSize = UDim2.fromOffset(40, 40),
+						BackgroundTransparency = 1,
+						Size = UDim2.fromScale(1, 1),
+						Parent = Dialog.Root,
+					}, {
+						New("UICorner", {
+							CornerRadius = UDim.new(1, 0),
+						}),
+					}),
+					TransparencyColor,
+					TransparencyDragHolder,
+				})
+			end
+
+			local function Display()
+				SatVibMap.BackgroundColor3 = Color3.fromHSV(Hue, 1, 1)
+				HueDrag.Position = UDim2.new(0, -1, Hue, -6)
+				SatCursor.Position = UDim2.new(Sat, 0, 1 - Vib, 0)
+				DialogDisplayFrame.BackgroundColor3 = Color3.fromHSV(Hue, Sat, Vib)
+
+				HexInput.Input.Text = "#" .. Color3.fromHSV(Hue, Sat, Vib):ToHex()
+				RedInput.Input.Text = GetRGB()["R"]
+				GreenInput.Input.Text = GetRGB()["G"]
+				BlueInput.Input.Text = GetRGB()["B"]
+
+				if Config.Transparency then
+					TransparencyColor.BackgroundColor3 = Color3.fromHSV(Hue, Sat, Vib)
+					DialogDisplayFrame.BackgroundTransparency = Transparency
+					TransparencyDrag.Position = UDim2.new(0, -1, 1 - Transparency, -6)
+					AlphaInput.Input.Text = Library:Round((1 - Transparency) * 100, 0) .. "%"
+				end
+			end
+
+			Creator.AddSignal(HexInput.Input.FocusLost, function(Enter)
+				if Enter then
+					local Success, Result = pcall(Color3.fromHex, HexInput.Input.Text)
+					if Success and typeof(Result) == "Color3" then
+						Hue, Sat, Vib = Color3.toHSV(Result)
+					end
+				end
+				Display()
+			end)
+
+			Creator.AddSignal(RedInput.Input.FocusLost, function(Enter)
+				if Enter then
+					local CurrentColor = GetRGB()
+					local Success, Result = pcall(Color3.fromRGB, RedInput.Input.Text, CurrentColor["G"], CurrentColor["B"])
+					if Success and typeof(Result) == "Color3" then
+						if tonumber(RedInput.Input.Text) <= 255 then
+							Hue, Sat, Vib = Color3.toHSV(Result)
+						end
+					end
+				end
+				Display()
+			end)
+
+			Creator.AddSignal(GreenInput.Input.FocusLost, function(Enter)
+				if Enter then
+					local CurrentColor = GetRGB()
+					local Success, Result =
+						pcall(Color3.fromRGB, CurrentColor["R"], GreenInput.Input.Text, CurrentColor["B"])
+					if Success and typeof(Result) == "Color3" then
+						if tonumber(GreenInput.Input.Text) <= 255 then
+							Hue, Sat, Vib = Color3.toHSV(Result)
+						end
+					end
+				end
+				Display()
+			end)
+
+			Creator.AddSignal(BlueInput.Input.FocusLost, function(Enter)
+				if Enter then
+					local CurrentColor = GetRGB()
+					local Success, Result =
+						pcall(Color3.fromRGB, CurrentColor["R"], CurrentColor["G"], BlueInput.Input.Text)
+					if Success and typeof(Result) == "Color3" then
+						if tonumber(BlueInput.Input.Text) <= 255 then
+							Hue, Sat, Vib = Color3.toHSV(Result)
+						end
+					end
+				end
+				Display()
+			end)
+
+			if Config.Transparency then
+				Creator.AddSignal(AlphaInput.Input.FocusLost, function(Enter)
+					if Enter then
+						pcall(function()
+							local Value = tonumber(AlphaInput.Input.Text)
+							if Value >= 0 and Value <= 100 then
+								Transparency = 1 - Value * 0.01
+							end
+						end)
+					end
+					Display()
+				end)
+			end
+
+			Creator.AddSignal(SatVibMap.InputBegan, function(Input)
+				if
+					Input.UserInputType == Enum.UserInputType.MouseButton1
+					or Input.UserInputType == Enum.UserInputType.Touch
+				then
+					while UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) do
+						local MinX = SatVibMap.AbsolutePosition.X
+						local MaxX = MinX + SatVibMap.AbsoluteSize.X
+						local MouseX = math.clamp(Mouse.X, MinX, MaxX)
+
+						local MinY = SatVibMap.AbsolutePosition.Y
+						local MaxY = MinY + SatVibMap.AbsoluteSize.Y
+						local MouseY = math.clamp(Mouse.Y, MinY, MaxY)
+
+						Sat = (MouseX - MinX) / (MaxX - MinX)
+						Vib = 1 - ((MouseY - MinY) / (MaxY - MinY))
+						Display()
+
+						RenderStepped:Wait()
+					end
+				end
+			end)
+
+			Creator.AddSignal(HueSlider.InputBegan, function(Input)
+				if
+					Input.UserInputType == Enum.UserInputType.MouseButton1
+					or Input.UserInputType == Enum.UserInputType.Touch
+				then
+					while UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) do
+						local MinY = HueSlider.AbsolutePosition.Y
+						local MaxY = MinY + HueSlider.AbsoluteSize.Y
+						local MouseY = math.clamp(Mouse.Y, MinY, MaxY)
+
+						Hue = ((MouseY - MinY) / (MaxY - MinY))
+						Display()
+
+						RenderStepped:Wait()
+					end
+				end
+			end)
+
+			if Config.Transparency then
+				Creator.AddSignal(TransparencySlider.InputBegan, function(Input)
+					if Input.UserInputType == Enum.UserInputType.MouseButton1 then
+						while UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) do
+							local MinY = TransparencySlider.AbsolutePosition.Y
+							local MaxY = MinY + TransparencySlider.AbsoluteSize.Y
+							local MouseY = math.clamp(Mouse.Y, MinY, MaxY)
+
+							Transparency = 1 - ((MouseY - MinY) / (MaxY - MinY))
+							Display()
+
+							RenderStepped:Wait()
+						end
+					end
+				end)
+			end
+
+			Display()
+
+			Dialog:Button("Done", function()
+				Colorpicker:SetValue({ Hue, Sat, Vib }, Transparency)
+			end)
+			Dialog:Button("Cancel")
+			Dialog:Open()
+		end
+
+		function Colorpicker:Display()
+			Colorpicker.Value = Color3.fromHSV(Colorpicker.Hue, Colorpicker.Sat, Colorpicker.Vib)
+
+			DisplayFrameColor.BackgroundColor3 = Colorpicker.Value
+			DisplayFrameColor.BackgroundTransparency = Colorpicker.Transparency
+
+			Element.Library:SafeCallback(Colorpicker.Callback, Colorpicker.Value)
+			Element.Library:SafeCallback(Colorpicker.Changed, Colorpicker.Value)
+		end
+
+		function Colorpicker:SetValue(HSV, Transparency)
+			local Color = Color3.fromHSV(HSV[1], HSV[2], HSV[3])
+
+			Colorpicker.Transparency = Transparency or 0
+			Colorpicker:SetHSVFromRGB(Color)
+			Colorpicker:Display()
+		end
+
+		function Colorpicker:SetValueRGB(Color, Transparency)
+			Colorpicker.Transparency = Transparency or 0
+			Colorpicker:SetHSVFromRGB(Color)
+			Colorpicker:Display()
+		end
+
+		function Colorpicker:OnChanged(Func)
+			Colorpicker.Changed = Func
+			Func(Colorpicker.Value)
+		end
+
+		function Colorpicker:Destroy()
+			ColorpickerFrame:Destroy()
+			Library.Options[Idx] = nil
+		end
+
+		Creator.AddSignal(ColorpickerFrame.Frame.MouseButton1Click, function()
+			CreateColorDialog()
+		end)
+
+		Colorpicker:Display()
+
+		Library.Options[Idx] = Colorpicker
+		return Colorpicker
+	end
+
+	return Element
+end)()
+ElementsTable.Input = (function()
+	local Element = {}
+	Element.__index = Element
+	Element.__type = "Input"
+
+	function Element:New(Idx, Config)
+		assert(Config.Title, "Input - Missing Title")
+		Config.Callback = Config.Callback or function() end
+
+		local Input = {
+			Value = Config.Default or "",
+			Numeric = Config.Numeric or false,
+			Finished = Config.Finished or false,
+			Callback = Config.Callback or function(Value) end,
+			Type = "Input",
+		}
+
+		local InputFrame = Components.Element(Config.Title, Config.Description, self.Container, false)
+
+		Input.SetTitle = InputFrame.SetTitle
+		Input.SetDesc = InputFrame.SetDesc
+		Input.Visible = InputFrame.Visible
+		Input.Elements = InputFrame
+
+		local Textbox = Components.Textbox(InputFrame.Frame, true)
+		Textbox.Frame.Position = UDim2.new(1, -10, 0.5, 0)
+		Textbox.Frame.AnchorPoint = Vector2.new(1, 0.5)
+		Textbox.Frame.Size = UDim2.fromOffset(160, 30)
+		Textbox.Input.Text = Config.Default or ""
+		Textbox.Input.PlaceholderText = Config.Placeholder or ""
+
+		local Box = Textbox.Input
+
+		function Input:SetValue(Text)
+			if Config.MaxLength and #Text > Config.MaxLength then
+				Text = Text:sub(1, Config.MaxLength)
+			end
+
+			if Input.Numeric then
+				if (not tonumber(Text)) and Text:len() > 0 then
+					Text = Input.Value
+				end
+			end
+
+			Input.Value = Text
+			Box.Text = Text
+
+			Library:SafeCallback(Input.Callback, Input.Value)
+			Library:SafeCallback(Input.Changed, Input.Value)
+		end
+
+		if Input.Finished then
+			AddSignal(Box.FocusLost, function(enter)
+				if not enter then
+					return
+				end
+				Input:SetValue(Box.Text)
+			end)
+		else
+			AddSignal(Box:GetPropertyChangedSignal("Text"), function()
+				Input:SetValue(Box.Text)
+			end)
+		end
+
+		function Input:OnChanged(Func)
+			Input.Changed = Func
+			Func(Input.Value)
+		end
+
+		function Input:Destroy()
+			InputFrame:Destroy()
+			Library.Options[Idx] = nil
+		end
+
+		Library.Options[Idx] = Input
+		return Input
+	end
+
+	return Element
+end)()
+
+local NotificationModule = Components.Notification
+NotificationModule:Init(GUI)
+
+local New = Creator.New
+
+local Icons = {
+	["lucide-accessibility"] = "rbxassetid://10709751939",
+	["lucide-activity"] = "rbxassetid://10709752035",
+	["lucide-air-vent"] = "rbxassetid://10709752131",
+	["lucide-airplay"] = "rbxassetid://10709752254",
+	["lucide-alarm-check"] = "rbxassetid://10709752405",
+	["lucide-alarm-clock"] = "rbxassetid://10709752630",
+	["lucide-alarm-clock-off"] = "rbxassetid://10709752508",
+	["lucide-alarm-minus"] = "rbxassetid://10709752732",
+	["lucide-alarm-plus"] = "rbxassetid://10709752825",
+	["lucide-album"] = "rbxassetid://10709752906",
+	["lucide-alert-circle"] = "rbxassetid://10709752996",
+	["lucide-alert-octagon"] = "rbxassetid://10709753064",
+	["lucide-alert-triangle"] = "rbxassetid://10709753149",
+	["lucide-align-center"] = "rbxassetid://10709753570",
+	["lucide-align-center-horizontal"] = "rbxassetid://10709753272",
+	["lucide-align-center-vertical"] = "rbxassetid://10709753421",
+	["lucide-align-end-horizontal"] = "rbxassetid://10709753692",
+	["lucide-align-end-vertical"] = "rbxassetid://10709753808",
+	["lucide-align-horizontal-distribute-center"] = "rbxassetid://10747779791",
+	["lucide-align-horizontal-distribute-end"] = "rbxassetid://10747784534",
+	["lucide-align-horizontal-distribute-start"] = "rbxassetid://10709754118",
+	["lucide-align-horizontal-justify-center"] = "rbxassetid://10709754204",
+	["lucide-align-horizontal-justify-end"] = "rbxassetid://10709754317",
+	["lucide-align-horizontal-justify-start"] = "rbxassetid://10709754436",
+	["lucide-align-horizontal-space-around"] = "rbxassetid://10709754590",
+	["lucide-align-horizontal-space-between"] = "rbxassetid://10709754749",
+	["lucide-align-justify"] = "rbxassetid://10709759610",
+	["lucide-align-left"] = "rbxassetid://10709759764",
+	["lucide-align-right"] = "rbxassetid://10709759895",
+	["lucide-align-start-horizontal"] = "rbxassetid://10709760051",
+	["lucide-align-start-vertical"] = "rbxassetid://10709760244",
+	["lucide-align-vertical-distribute-center"] = "rbxassetid://10709760351",
+	["lucide-align-vertical-distribute-end"] = "rbxassetid://10709760434",
+	["lucide-align-vertical-distribute-start"] = "rbxassetid://10709760612",
+	["lucide-align-vertical-justify-center"] = "rbxassetid://10709760814",
+	["lucide-align-vertical-justify-end"] = "rbxassetid://10709761003",
+	["lucide-align-vertical-justify-start"] = "rbxassetid://10709761176",
+	["lucide-align-vertical-space-around"] = "rbxassetid://10709761324",
+	["lucide-align-vertical-space-between"] = "rbxassetid://10709761434",
+	["lucide-anchor"] = "rbxassetid://10709761530",
+	["lucide-angry"] = "rbxassetid://10709761629",
+	["lucide-annoyed"] = "rbxassetid://10709761722",
+	["lucide-aperture"] = "rbxassetid://10709761813",
+	["lucide-apple"] = "rbxassetid://10709761889",
+	["lucide-archive"] = "rbxassetid://10709762233",
+	["lucide-archive-restore"] = "rbxassetid://10709762058",
+	["lucide-armchair"] = "rbxassetid://10709762327",
+	["lucide-arrow-big-down"] = "rbxassetid://10747796644",
+	["lucide-arrow-big-left"] = "rbxassetid://10709762574",
+	["lucide-arrow-big-right"] = "rbxassetid://10709762727",
+	["lucide-arrow-big-up"] = "rbxassetid://10709762879",
+	["lucide-arrow-down"] = "rbxassetid://10709767827",
+	["lucide-arrow-down-circle"] = "rbxassetid://10709763034",
+	["lucide-arrow-down-left"] = "rbxassetid://10709767656",
+	["lucide-arrow-down-right"] = "rbxassetid://10709767750",
+	["lucide-arrow-left"] = "rbxassetid://10709768114",
+	["lucide-arrow-left-circle"] = "rbxassetid://10709767936",
+	["lucide-arrow-left-right"] = "rbxassetid://10709768019",
+	["lucide-arrow-right"] = "rbxassetid://10709768347",
+	["lucide-arrow-right-circle"] = "rbxassetid://10709768226",
+	["lucide-arrow-up"] = "rbxassetid://10709768939",
+	["lucide-arrow-up-circle"] = "rbxassetid://10709768432",
+	["lucide-arrow-up-down"] = "rbxassetid://10709768538",
+	["lucide-arrow-up-left"] = "rbxassetid://10709768661",
+	["lucide-arrow-up-right"] = "rbxassetid://10709768787",
+	["lucide-asterisk"] = "rbxassetid://10709769095",
+	["lucide-at-sign"] = "rbxassetid://10709769286",
+	["lucide-award"] = "rbxassetid://10709769406",
+	["lucide-axe"] = "rbxassetid://10709769508",
+	["lucide-axis-3d"] = "rbxassetid://10709769598",
+	["lucide-baby"] = "rbxassetid://10709769732",
+	["lucide-backpack"] = "rbxassetid://10709769841",
+	["lucide-baggage-claim"] = "rbxassetid://10709769935",
+	["lucide-banana"] = "rbxassetid://10709770005",
+	["lucide-banknote"] = "rbxassetid://10709770178",
+	["lucide-bar-chart"] = "rbxassetid://10709773755",
+	["lucide-bar-chart-2"] = "rbxassetid://10709770317",
+	["lucide-bar-chart-3"] = "rbxassetid://10709770431",
+	["lucide-bar-chart-4"] = "rbxassetid://10709770560",
+	["lucide-bar-chart-horizontal"] = "rbxassetid://10709773669",
+	["lucide-barcode"] = "rbxassetid://10747360675",
+	["lucide-baseline"] = "rbxassetid://10709773863",
+	["lucide-bath"] = "rbxassetid://10709773963",
+	["lucide-battery"] = "rbxassetid://10709774640",
+	["lucide-battery-charging"] = "rbxassetid://10709774068",
+	["lucide-battery-full"] = "rbxassetid://10709774206",
+	["lucide-battery-low"] = "rbxassetid://10709774370",
+	["lucide-battery-medium"] = "rbxassetid://10709774513",
+	["lucide-beaker"] = "rbxassetid://10709774756",
+	["lucide-bed"] = "rbxassetid://10709775036",
+	["lucide-bed-double"] = "rbxassetid://10709774864",
+	["lucide-bed-single"] = "rbxassetid://10709774968",
+	["lucide-beer"] = "rbxassetid://10709775167",
+	["lucide-bell"] = "rbxassetid://10709775704",
+	["lucide-bell-minus"] = "rbxassetid://10709775241",
+	["lucide-bell-off"] = "rbxassetid://10709775320",
+	["lucide-bell-plus"] = "rbxassetid://10709775448",
+	["lucide-bell-ring"] = "rbxassetid://10709775560",
+	["lucide-bike"] = "rbxassetid://10709775894",
+	["lucide-binary"] = "rbxassetid://10709776050",
+	["lucide-bitcoin"] = "rbxassetid://10709776126",
+	["lucide-bluetooth"] = "rbxassetid://10709776655",
+	["lucide-bluetooth-connected"] = "rbxassetid://10709776240",
+	["lucide-bluetooth-off"] = "rbxassetid://10709776344",
+	["lucide-bluetooth-searching"] = "rbxassetid://10709776501",
+	["lucide-bold"] = "rbxassetid://10747813908",
+	["lucide-bomb"] = "rbxassetid://10709781460",
+	["lucide-bone"] = "rbxassetid://10709781605",
+	["lucide-book"] = "rbxassetid://10709781824",
+	["lucide-book-open"] = "rbxassetid://10709781717",
+	["lucide-bookmark"] = "rbxassetid://10709782154",
+	["lucide-bookmark-minus"] = "rbxassetid://10709781919",
+	["lucide-bookmark-plus"] = "rbxassetid://10709782044",
+	["lucide-bot"] = "rbxassetid://10709782230",
+	["lucide-box"] = "rbxassetid://10709782497",
+	["lucide-box-select"] = "rbxassetid://10709782342",
+	["lucide-boxes"] = "rbxassetid://10709782582",
+	["lucide-briefcase"] = "rbxassetid://10709782662",
+	["lucide-brush"] = "rbxassetid://10709782758",
+	["lucide-bug"] = "rbxassetid://10709782845",
+	["lucide-building"] = "rbxassetid://10709783051",
+	["lucide-building-2"] = "rbxassetid://10709782939",
+	["lucide-bus"] = "rbxassetid://10709783137",
+	["lucide-cake"] = "rbxassetid://10709783217",
+	["lucide-calculator"] = "rbxassetid://10709783311",
+	["lucide-calendar"] = "rbxassetid://10709789505",
+	["lucide-calendar-check"] = "rbxassetid://10709783474",
+	["lucide-calendar-check-2"] = "rbxassetid://10709783392",
+	["lucide-calendar-clock"] = "rbxassetid://10709783577",
+	["lucide-calendar-days"] = "rbxassetid://10709783673",
+	["lucide-calendar-heart"] = "rbxassetid://10709783835",
+	["lucide-calendar-minus"] = "rbxassetid://10709783959",
+	["lucide-calendar-off"] = "rbxassetid://10709788784",
+	["lucide-calendar-plus"] = "rbxassetid://10709788937",
+	["lucide-calendar-range"] = "rbxassetid://10709789053",
+	["lucide-calendar-search"] = "rbxassetid://10709789200",
+	["lucide-calendar-x"] = "rbxassetid://10709789407",
+	["lucide-calendar-x-2"] = "rbxassetid://10709789329",
+	["lucide-camera"] = "rbxassetid://10709789686",
+	["lucide-camera-off"] = "rbxassetid://10747822677",
+	["lucide-car"] = "rbxassetid://10709789810",
+	["lucide-carrot"] = "rbxassetid://10709789960",
+	["lucide-cast"] = "rbxassetid://10709790097",
+	["lucide-charge"] = "rbxassetid://10709790202",
+	["lucide-check"] = "rbxassetid://10709790644",
+	["lucide-check-circle"] = "rbxassetid://10709790387",
+	["lucide-check-circle-2"] = "rbxassetid://10709790298",
+	["lucide-check-square"] = "rbxassetid://10709790537",
+	["lucide-chef-hat"] = "rbxassetid://10709790757",
+	["lucide-cherry"] = "rbxassetid://10709790875",
+	["lucide-chevron-down"] = "rbxassetid://10709790948",
+	["lucide-chevron-first"] = "rbxassetid://10709791015",
+	["lucide-chevron-last"] = "rbxassetid://10709791130",
+	["lucide-chevron-left"] = "rbxassetid://10709791281",
+	["lucide-chevron-right"] = "rbxassetid://10709791437",
+	["lucide-chevron-up"] = "rbxassetid://10709791523",
+	["lucide-chevrons-down"] = "rbxassetid://10709796864",
+	["lucide-chevrons-down-up"] = "rbxassetid://10709791632",
+	["lucide-chevrons-left"] = "rbxassetid://10709797151",
+	["lucide-chevrons-left-right"] = "rbxassetid://10709797006",
+	["lucide-chevrons-right"] = "rbxassetid://10709797382",
+	["lucide-chevrons-right-left"] = "rbxassetid://10709797274",
+	["lucide-chevrons-up"] = "rbxassetid://10709797622",
+	["lucide-chevrons-up-down"] = "rbxassetid://10709797508",
+	["lucide-chrome"] = "rbxassetid://10709797725",
+	["lucide-circle"] = "rbxassetid://10709798174",
+	["lucide-circle-dot"] = "rbxassetid://10709797837",
+	["lucide-circle-ellipsis"] = "rbxassetid://10709797985",
+	["lucide-circle-slashed"] = "rbxassetid://10709798100",
+	["lucide-citrus"] = "rbxassetid://10709798276",
+	["lucide-clapperboard"] = "rbxassetid://10709798350",
+	["lucide-clipboard"] = "rbxassetid://10709799288",
+	["lucide-clipboard-check"] = "rbxassetid://10709798443",
+	["lucide-clipboard-copy"] = "rbxassetid://10709798574",
+	["lucide-clipboard-edit"] = "rbxassetid://10709798682",
+	["lucide-clipboard-list"] = "rbxassetid://10709798792",
+	["lucide-clipboard-signature"] = "rbxassetid://10709798890",
+	["lucide-clipboard-type"] = "rbxassetid://10709798999",
+	["lucide-clipboard-x"] = "rbxassetid://10709799124",
+	["lucide-clock"] = "rbxassetid://10709805144",
+	["lucide-clock-1"] = "rbxassetid://10709799535",
+	["lucide-clock-10"] = "rbxassetid://10709799718",
+	["lucide-clock-11"] = "rbxassetid://10709799818",
+	["lucide-clock-12"] = "rbxassetid://10709799962",
+	["lucide-clock-2"] = "rbxassetid://10709803876",
+	["lucide-clock-3"] = "rbxassetid://10709803989",
+	["lucide-clock-4"] = "rbxassetid://10709804164",
+	["lucide-clock-5"] = "rbxassetid://10709804291",
+	["lucide-clock-6"] = "rbxassetid://10709804435",
+	["lucide-clock-7"] = "rbxassetid://10709804599",
+	["lucide-clock-8"] = "rbxassetid://10709804784",
+	["lucide-clock-9"] = "rbxassetid://10709804996",
+	["lucide-cloud"] = "rbxassetid://10709806740",
+	["lucide-cloud-cog"] = "rbxassetid://10709805262",
+	["lucide-cloud-drizzle"] = "rbxassetid://10709805371",
+	["lucide-cloud-fog"] = "rbxassetid://10709805477",
+	["lucide-cloud-hail"] = "rbxassetid://10709805596",
+	["lucide-cloud-lightning"] = "rbxassetid://10709805727",
+	["lucide-cloud-moon"] = "rbxassetid://10709805942",
+	["lucide-cloud-moon-rain"] = "rbxassetid://10709805838",
+	["lucide-cloud-off"] = "rbxassetid://10709806060",
+	["lucide-cloud-rain"] = "rbxassetid://10709806277",
+	["lucide-cloud-rain-wind"] = "rbxassetid://10709806166",
+	["lucide-cloud-snow"] = "rbxassetid://10709806374",
+	["lucide-cloud-sun"] = "rbxassetid://10709806631",
+	["lucide-cloud-sun-rain"] = "rbxassetid://10709806475",
+	["lucide-cloudy"] = "rbxassetid://10709806859",
+	["lucide-clover"] = "rbxassetid://10709806995",
+	["lucide-code"] = "rbxassetid://10709810463",
+	["lucide-code-2"] = "rbxassetid://10709807111",
+	["lucide-codepen"] = "rbxassetid://10709810534",
+	["lucide-codesandbox"] = "rbxassetid://10709810676",
+	["lucide-coffee"] = "rbxassetid://10709810814",
+	["lucide-cog"] = "rbxassetid://10709810948",
+	["lucide-coins"] = "rbxassetid://10709811110",
+	["lucide-columns"] = "rbxassetid://10709811261",
+	["lucide-command"] = "rbxassetid://10709811365",
+	["lucide-compass"] = "rbxassetid://10709811445",
+	["lucide-component"] = "rbxassetid://10709811595",
+	["lucide-concierge-bell"] = "rbxassetid://10709811706",
+	["lucide-connection"] = "rbxassetid://10747361219",
+	["lucide-contact"] = "rbxassetid://10709811834",
+	["lucide-contrast"] = "rbxassetid://10709811939",
+	["lucide-cookie"] = "rbxassetid://10709812067",
+	["lucide-copy"] = "rbxassetid://10709812159",
+	["lucide-copyleft"] = "rbxassetid://10709812251",
+	["lucide-copyright"] = "rbxassetid://10709812311",
+	["lucide-corner-down-left"] = "rbxassetid://10709812396",
+	["lucide-corner-down-right"] = "rbxassetid://10709812485",
+	["lucide-corner-left-down"] = "rbxassetid://10709812632",
+	["lucide-corner-left-up"] = "rbxassetid://10709812784",
+	["lucide-corner-right-down"] = "rbxassetid://10709812939",
+	["lucide-corner-right-up"] = "rbxassetid://10709813094",
+	["lucide-corner-up-left"] = "rbxassetid://10709813185",
+	["lucide-corner-up-right"] = "rbxassetid://10709813281",
+	["lucide-cpu"] = "rbxassetid://10709813383",
+	["lucide-croissant"] = "rbxassetid://10709818125",
+	["lucide-crop"] = "rbxassetid://10709818245",
+	["lucide-cross"] = "rbxassetid://10709818399",
+	["lucide-crosshair"] = "rbxassetid://10709818534",
+	["lucide-crown"] = "rbxassetid://10709818626",
+	["lucide-cup-soda"] = "rbxassetid://10709818763",
+	["lucide-curly-braces"] = "rbxassetid://10709818847",
+	["lucide-currency"] = "rbxassetid://10709818931",
+	["lucide-container"] = "rbxassetid://17466205552",
+	["lucide-database"] = "rbxassetid://10709818996",
+	["lucide-delete"] = "rbxassetid://10709819059",
+	["lucide-diamond"] = "rbxassetid://10709819149",
+	["lucide-dice-1"] = "rbxassetid://10709819266",
+	["lucide-dice-2"] = "rbxassetid://10709819361",
+	["lucide-dice-3"] = "rbxassetid://10709819508",
+	["lucide-dice-4"] = "rbxassetid://10709819670",
+	["lucide-dice-5"] = "rbxassetid://10709819801",
+	["lucide-dice-6"] = "rbxassetid://10709819896",
+	["lucide-dices"] = "rbxassetid://10723343321",
+	["lucide-diff"] = "rbxassetid://10723343416",
+	["lucide-disc"] = "rbxassetid://10723343537",
+	["lucide-divide"] = "rbxassetid://10723343805",
+	["lucide-divide-circle"] = "rbxassetid://10723343636",
+	["lucide-divide-square"] = "rbxassetid://10723343737",
+	["lucide-dollar-sign"] = "rbxassetid://10723343958",
+	["lucide-download"] = "rbxassetid://10723344270",
+	["lucide-download-cloud"] = "rbxassetid://10723344088",
+	["lucide-droplet"] = "rbxassetid://10723344432",
+	["lucide-droplets"] = "rbxassetid://10734883356",
+	["lucide-drumstick"] = "rbxassetid://10723344737",
+	["lucide-edit"] = "rbxassetid://10734883598",
+	["lucide-edit-2"] = "rbxassetid://10723344885",
+	["lucide-edit-3"] = "rbxassetid://10723345088",
+	["lucide-egg"] = "rbxassetid://10723345518",
+	["lucide-egg-fried"] = "rbxassetid://10723345347",
+	["lucide-electricity"] = "rbxassetid://10723345749",
+	["lucide-electricity-off"] = "rbxassetid://10723345643",
+	["lucide-equal"] = "rbxassetid://10723345990",
+	["lucide-equal-not"] = "rbxassetid://10723345866",
+	["lucide-eraser"] = "rbxassetid://10723346158",
+	["lucide-euro"] = "rbxassetid://10723346372",
+	["lucide-expand"] = "rbxassetid://10723346553",
+	["lucide-external-link"] = "rbxassetid://10723346684",
+	["lucide-eye"] = "rbxassetid://10723346959",
+	["lucide-eye-off"] = "rbxassetid://10723346871",
+	["lucide-factory"] = "rbxassetid://10723347051",
+	["lucide-fan"] = "rbxassetid://10723354359",
+	["lucide-fast-forward"] = "rbxassetid://10723354521",
+	["lucide-feather"] = "rbxassetid://10723354671",
+	["lucide-figma"] = "rbxassetid://10723354801",
+	["lucide-file"] = "rbxassetid://10723374641",
+	["lucide-file-archive"] = "rbxassetid://10723354921",
+	["lucide-file-audio"] = "rbxassetid://10723355148",
+	["lucide-file-audio-2"] = "rbxassetid://10723355026",
+	["lucide-file-axis-3d"] = "rbxassetid://10723355272",
+	["lucide-file-badge"] = "rbxassetid://10723355622",
+	["lucide-file-badge-2"] = "rbxassetid://10723355451",
+	["lucide-file-bar-chart"] = "rbxassetid://10723355887",
+	["lucide-file-bar-chart-2"] = "rbxassetid://10723355746",
+	["lucide-file-box"] = "rbxassetid://10723355989",
+	["lucide-file-check"] = "rbxassetid://10723356210",
+	["lucide-file-check-2"] = "rbxassetid://10723356100",
+	["lucide-file-clock"] = "rbxassetid://10723356329",
+	["lucide-file-code"] = "rbxassetid://10723356507",
+	["lucide-file-cog"] = "rbxassetid://10723356830",
+	["lucide-file-cog-2"] = "rbxassetid://10723356676",
+	["lucide-file-diff"] = "rbxassetid://10723357039",
+	["lucide-file-digit"] = "rbxassetid://10723357151",
+	["lucide-file-down"] = "rbxassetid://10723357322",
+	["lucide-file-edit"] = "rbxassetid://10723357495",
+	["lucide-file-heart"] = "rbxassetid://10723357637",
+	["lucide-file-image"] = "rbxassetid://10723357790",
+	["lucide-file-input"] = "rbxassetid://10723357933",
+	["lucide-file-json"] = "rbxassetid://10723364435",
+	["lucide-file-json-2"] = "rbxassetid://10723364361",
+	["lucide-file-key"] = "rbxassetid://10723364605",
+	["lucide-file-key-2"] = "rbxassetid://10723364515",
+	["lucide-file-line-chart"] = "rbxassetid://10723364725",
+	["lucide-file-lock"] = "rbxassetid://10723364957",
+	["lucide-file-lock-2"] = "rbxassetid://10723364861",
+	["lucide-file-minus"] = "rbxassetid://10723365254",
+	["lucide-file-minus-2"] = "rbxassetid://10723365086",
+	["lucide-file-output"] = "rbxassetid://10723365457",
+	["lucide-file-pie-chart"] = "rbxassetid://10723365598",
+	["lucide-file-plus"] = "rbxassetid://10723365877",
+	["lucide-file-plus-2"] = "rbxassetid://10723365766",
+	["lucide-file-question"] = "rbxassetid://10723365987",
+	["lucide-file-scan"] = "rbxassetid://10723366167",
+	["lucide-file-search"] = "rbxassetid://10723366550",
+	["lucide-file-search-2"] = "rbxassetid://10723366340",
+	["lucide-file-signature"] = "rbxassetid://10723366741",
+	["lucide-file-spreadsheet"] = "rbxassetid://10723366962",
+	["lucide-file-symlink"] = "rbxassetid://10723367098",
+	["lucide-file-terminal"] = "rbxassetid://10723367244",
+	["lucide-file-text"] = "rbxassetid://10723367380",
+	["lucide-file-type"] = "rbxassetid://10723367606",
+	["lucide-file-type-2"] = "rbxassetid://10723367509",
+	["lucide-file-up"] = "rbxassetid://10723367734",
+	["lucide-file-video"] = "rbxassetid://10723373884",
+	["lucide-file-video-2"] = "rbxassetid://10723367834",
+	["lucide-file-volume"] = "rbxassetid://10723374172",
+	["lucide-file-volume-2"] = "rbxassetid://10723374030",
+	["lucide-file-warning"] = "rbxassetid://10723374276",
+	["lucide-file-x"] = "rbxassetid://10723374544",
+	["lucide-file-x-2"] = "rbxassetid://10723374378",
+	["lucide-files"] = "rbxassetid://10723374759",
+	["lucide-film"] = "rbxassetid://10723374981",
+	["lucide-filter"] = "rbxassetid://10723375128",
+	["lucide-fingerprint"] = "rbxassetid://10723375250",
+	["lucide-flag"] = "rbxassetid://10723375890",
+	["lucide-flag-off"] = "rbxassetid://10723375443",
+	["lucide-flag-triangle-left"] = "rbxassetid://10723375608",
+	["lucide-flag-triangle-right"] = "rbxassetid://10723375727",
+	["lucide-flame"] = "rbxassetid://10723376114",
+	["lucide-flashlight"] = "rbxassetid://10723376471",
+	["lucide-flashlight-off"] = "rbxassetid://10723376365",
+	["lucide-flask-conical"] = "rbxassetid://10734883986",
+	["lucide-flask-round"] = "rbxassetid://10723376614",
+	["lucide-flip-horizontal"] = "rbxassetid://10723376884",
+	["lucide-flip-horizontal-2"] = "rbxassetid://10723376745",
+	["lucide-flip-vertical"] = "rbxassetid://10723377138",
+	["lucide-flip-vertical-2"] = "rbxassetid://10723377026",
+	["lucide-flower"] = "rbxassetid://10747830374",
+	["lucide-flower-2"] = "rbxassetid://10723377305",
+	["lucide-focus"] = "rbxassetid://10723377537",
+	["lucide-folder"] = "rbxassetid://10723387563",
+	["lucide-folder-archive"] = "rbxassetid://10723384478",
+	["lucide-folder-check"] = "rbxassetid://10723384605",
+	["lucide-folder-clock"] = "rbxassetid://10723384731",
+	["lucide-folder-closed"] = "rbxassetid://10723384893",
+	["lucide-folder-cog"] = "rbxassetid://10723385213",
+	["lucide-folder-cog-2"] = "rbxassetid://10723385036",
+	["lucide-folder-down"] = "rbxassetid://10723385338",
+	["lucide-folder-edit"] = "rbxassetid://10723385445",
+	["lucide-folder-heart"] = "rbxassetid://10723385545",
+	["lucide-folder-input"] = "rbxassetid://10723385721",
+	["lucide-folder-key"] = "rbxassetid://10723385848",
+	["lucide-folder-lock"] = "rbxassetid://10723386005",
+	["lucide-folder-minus"] = "rbxassetid://10723386127",
+	["lucide-folder-open"] = "rbxassetid://10723386277",
+	["lucide-folder-output"] = "rbxassetid://10723386386",
+	["lucide-folder-plus"] = "rbxassetid://10723386531",
+	["lucide-folder-search"] = "rbxassetid://10723386787",
+	["lucide-folder-search-2"] = "rbxassetid://10723386674",
+	["lucide-folder-symlink"] = "rbxassetid://10723386930",
+	["lucide-folder-tree"] = "rbxassetid://10723387085",
+	["lucide-folder-up"] = "rbxassetid://10723387265",
+	["lucide-folder-x"] = "rbxassetid://10723387448",
+	["lucide-folders"] = "rbxassetid://10723387721",
+	["lucide-form-input"] = "rbxassetid://10723387841",
+	["lucide-forward"] = "rbxassetid://10723388016",
+	["lucide-frame"] = "rbxassetid://10723394389",
+	["lucide-framer"] = "rbxassetid://10723394565",
+	["lucide-frown"] = "rbxassetid://10723394681",
+	["lucide-fuel"] = "rbxassetid://10723394846",
+	["lucide-function-square"] = "rbxassetid://10723395041",
+	["lucide-gamepad"] = "rbxassetid://10723395457",
+	["lucide-gamepad-2"] = "rbxassetid://10723395215",
+	["lucide-gauge"] = "rbxassetid://10723395708",
+	["lucide-gavel"] = "rbxassetid://10723395896",
+	["lucide-gem"] = "rbxassetid://10723396000",
+	["lucide-ghost"] = "rbxassetid://10723396107",
+	["lucide-gift"] = "rbxassetid://10723396402",
+	["lucide-gift-card"] = "rbxassetid://10723396225",
+	["lucide-git-branch"] = "rbxassetid://10723396676",
+	["lucide-git-branch-plus"] = "rbxassetid://10723396542",
+	["lucide-git-commit"] = "rbxassetid://10723396812",
+	["lucide-git-compare"] = "rbxassetid://10723396954",
+	["lucide-git-fork"] = "rbxassetid://10723397049",
+	["lucide-git-merge"] = "rbxassetid://10723397165",
+	["lucide-git-pull-request"] = "rbxassetid://10723397431",
+	["lucide-git-pull-request-closed"] = "rbxassetid://10723397268",
+	["lucide-git-pull-request-draft"] = "rbxassetid://10734884302",
+	["lucide-glass"] = "rbxassetid://10723397788",
+	["lucide-glass-2"] = "rbxassetid://10723397529",
+	["lucide-glass-water"] = "rbxassetid://10723397678",
+	["lucide-glasses"] = "rbxassetid://10723397895",
+	["lucide-globe"] = "rbxassetid://10723404337",
+	["lucide-globe-2"] = "rbxassetid://10723398002",
+	["lucide-grab"] = "rbxassetid://10723404472",
+	["lucide-graduation-cap"] = "rbxassetid://10723404691",
+	["lucide-grape"] = "rbxassetid://10723404822",
+	["lucide-grid"] = "rbxassetid://10723404936",
+	["lucide-grip-horizontal"] = "rbxassetid://10723405089",
+	["lucide-grip-vertical"] = "rbxassetid://10723405236",
+	["lucide-hammer"] = "rbxassetid://10723405360",
+	["lucide-hand"] = "rbxassetid://10723405649",
+	["lucide-hand-metal"] = "rbxassetid://10723405508",
+	["lucide-hard-drive"] = "rbxassetid://10723405749",
+	["lucide-hard-hat"] = "rbxassetid://10723405859",
+	["lucide-hash"] = "rbxassetid://10723405975",
+	["lucide-haze"] = "rbxassetid://10723406078",
+	["lucide-headphones"] = "rbxassetid://10723406165",
+	["lucide-heart"] = "rbxassetid://10723406885",
+	["lucide-heart-crack"] = "rbxassetid://10723406299",
+	["lucide-heart-handshake"] = "rbxassetid://10723406480",
+	["lucide-heart-off"] = "rbxassetid://10723406662",
+	["lucide-heart-pulse"] = "rbxassetid://10723406795",
+	["lucide-help-circle"] = "rbxassetid://10723406988",
+	["lucide-hexagon"] = "rbxassetid://10723407092",
+	["lucide-highlighter"] = "rbxassetid://10723407192",
+	["lucide-history"] = "rbxassetid://10723407335",
+	["lucide-home"] = "rbxassetid://10723407389",
+	["lucide-hourglass"] = "rbxassetid://10723407498",
+	["lucide-ice-cream"] = "rbxassetid://10723414308",
+	["lucide-image"] = "rbxassetid://10723415040",
+	["lucide-image-minus"] = "rbxassetid://10723414487",
+	["lucide-image-off"] = "rbxassetid://10723414677",
+	["lucide-image-plus"] = "rbxassetid://10723414827",
+	["lucide-import"] = "rbxassetid://10723415205",
+	["lucide-inbox"] = "rbxassetid://10723415335",
+	["lucide-indent"] = "rbxassetid://10723415494",
+	["lucide-indian-rupee"] = "rbxassetid://10723415642",
+	["lucide-infinity"] = "rbxassetid://10723415766",
+	["lucide-info"] = "rbxassetid://10723415903",
+	["lucide-inspect"] = "rbxassetid://10723416057",
+	["lucide-italic"] = "rbxassetid://10723416195",
+	["lucide-japanese-yen"] = "rbxassetid://10723416363",
+	["lucide-joystick"] = "rbxassetid://10723416527",
+	["lucide-key"] = "rbxassetid://10723416652",
+	["lucide-keyboard"] = "rbxassetid://10723416765",
+	["lucide-lamp"] = "rbxassetid://10723417513",
+	["lucide-lamp-ceiling"] = "rbxassetid://10723416922",
+	["lucide-lamp-desk"] = "rbxassetid://10723417016",
+	["lucide-lamp-floor"] = "rbxassetid://10723417131",
+	["lucide-lamp-wall-down"] = "rbxassetid://10723417240",
+	["lucide-lamp-wall-up"] = "rbxassetid://10723417356",
+	["lucide-landmark"] = "rbxassetid://10723417608",
+	["lucide-languages"] = "rbxassetid://10723417703",
+	["lucide-laptop"] = "rbxassetid://10723423881",
+	["lucide-laptop-2"] = "rbxassetid://10723417797",
+	["lucide-lasso"] = "rbxassetid://10723424235",
+	["lucide-lasso-select"] = "rbxassetid://10723424058",
+	["lucide-laugh"] = "rbxassetid://10723424372",
+	["lucide-layers"] = "rbxassetid://10723424505",
+	["lucide-layout"] = "rbxassetid://10723425376",
+	["lucide-layout-dashboard"] = "rbxassetid://10723424646",
+	["lucide-layout-grid"] = "rbxassetid://10723424838",
+	["lucide-layout-list"] = "rbxassetid://10723424963",
+	["lucide-layout-template"] = "rbxassetid://10723425187",
+	["lucide-leaf"] = "rbxassetid://10723425539",
+	["lucide-library"] = "rbxassetid://10723425615",
+	["lucide-life-buoy"] = "rbxassetid://10723425685",
+	["lucide-lightbulb"] = "rbxassetid://10723425852",
+	["lucide-lightbulb-off"] = "rbxassetid://10723425762",
+	["lucide-line-chart"] = "rbxassetid://10723426393",
+	["lucide-link"] = "rbxassetid://10723426722",
+	["lucide-link-2"] = "rbxassetid://10723426595",
+	["lucide-link-2-off"] = "rbxassetid://10723426513",
+	["lucide-list"] = "rbxassetid://10723433811",
+	["lucide-list-checks"] = "rbxassetid://10734884548",
+	["lucide-list-end"] = "rbxassetid://10723426886",
+	["lucide-list-minus"] = "rbxassetid://10723426986",
+	["lucide-list-music"] = "rbxassetid://10723427081",
+	["lucide-list-ordered"] = "rbxassetid://10723427199",
+	["lucide-list-plus"] = "rbxassetid://10723427334",
+	["lucide-list-start"] = "rbxassetid://10723427494",
+	["lucide-list-video"] = "rbxassetid://10723427619",
+	["lucide-list-todo"] = "rbxassetid://17376008003",
+	["lucide-list-x"] = "rbxassetid://10723433655",
+	["lucide-loader"] = "rbxassetid://10723434070",
+	["lucide-loader-2"] = "rbxassetid://10723433935",
+	["lucide-locate"] = "rbxassetid://10723434557",
+	["lucide-locate-fixed"] = "rbxassetid://10723434236",
+	["lucide-locate-off"] = "rbxassetid://10723434379",
+	["lucide-lock"] = "rbxassetid://10723434711",
+	["lucide-log-in"] = "rbxassetid://10723434830",
+	["lucide-log-out"] = "rbxassetid://10723434906",
+	["lucide-luggage"] = "rbxassetid://10723434993",
+	["lucide-magnet"] = "rbxassetid://10723435069",
+	["lucide-mail"] = "rbxassetid://10734885430",
+	["lucide-mail-check"] = "rbxassetid://10723435182",
+	["lucide-mail-minus"] = "rbxassetid://10723435261",
+	["lucide-mail-open"] = "rbxassetid://10723435342",
+	["lucide-mail-plus"] = "rbxassetid://10723435443",
+	["lucide-mail-question"] = "rbxassetid://10723435515",
+	["lucide-mail-search"] = "rbxassetid://10734884739",
+	["lucide-mail-warning"] = "rbxassetid://10734885015",
+	["lucide-mail-x"] = "rbxassetid://10734885247",
+	["lucide-mails"] = "rbxassetid://10734885614",
+	["lucide-map"] = "rbxassetid://10734886202",
+	["lucide-map-pin"] = "rbxassetid://10734886004",
+	["lucide-map-pin-off"] = "rbxassetid://10734885803",
+	["lucide-maximize"] = "rbxassetid://10734886735",
+	["lucide-maximize-2"] = "rbxassetid://10734886496",
+	["lucide-medal"] = "rbxassetid://10734887072",
+	["lucide-megaphone"] = "rbxassetid://10734887454",
+	["lucide-megaphone-off"] = "rbxassetid://10734887311",
+	["lucide-meh"] = "rbxassetid://10734887603",
+	["lucide-menu"] = "rbxassetid://10734887784",
+	["lucide-message-circle"] = "rbxassetid://10734888000",
+	["lucide-message-square"] = "rbxassetid://10734888228",
+	["lucide-mic"] = "rbxassetid://10734888864",
+	["lucide-mic-2"] = "rbxassetid://10734888430",
+	["lucide-mic-off"] = "rbxassetid://10734888646",
+	["lucide-microscope"] = "rbxassetid://10734889106",
+	["lucide-microwave"] = "rbxassetid://10734895076",
+	["lucide-milestone"] = "rbxassetid://10734895310",
+	["lucide-minimize"] = "rbxassetid://10734895698",
+	["lucide-minimize-2"] = "rbxassetid://10734895530",
+	["lucide-minus"] = "rbxassetid://10734896206",
+	["lucide-minus-circle"] = "rbxassetid://10734895856",
+	["lucide-minus-square"] = "rbxassetid://10734896029",
+	["lucide-monitor"] = "rbxassetid://10734896881",
+	["lucide-monitor-off"] = "rbxassetid://10734896360",
+	["lucide-monitor-speaker"] = "rbxassetid://10734896512",
+	["lucide-moon"] = "rbxassetid://10734897102",
+	["lucide-more-horizontal"] = "rbxassetid://10734897250",
+	["lucide-more-vertical"] = "rbxassetid://10734897387",
+	["lucide-mountain"] = "rbxassetid://10734897956",
+	["lucide-mountain-snow"] = "rbxassetid://10734897665",
+	["lucide-mouse"] = "rbxassetid://10734898592",
+	["lucide-mouse-pointer"] = "rbxassetid://10734898476",
+	["lucide-mouse-pointer-2"] = "rbxassetid://10734898194",
+	["lucide-mouse-pointer-click"] = "rbxassetid://10734898355",
+	["lucide-move"] = "rbxassetid://10734900011",
+	["lucide-move-3d"] = "rbxassetid://10734898756",
+	["lucide-move-diagonal"] = "rbxassetid://10734899164",
+	["lucide-move-diagonal-2"] = "rbxassetid://10734898934",
+	["lucide-move-horizontal"] = "rbxassetid://10734899414",
+	["lucide-move-vertical"] = "rbxassetid://10734899821",
+	["lucide-music"] = "rbxassetid://10734905958",
+	["lucide-music-2"] = "rbxassetid://10734900215",
+	["lucide-music-3"] = "rbxassetid://10734905665",
+	["lucide-music-4"] = "rbxassetid://10734905823",
+	["lucide-navigation"] = "rbxassetid://10734906744",
+	["lucide-navigation-2"] = "rbxassetid://10734906332",
+	["lucide-navigation-2-off"] = "rbxassetid://10734906144",
+	["lucide-navigation-off"] = "rbxassetid://10734906580",
+	["lucide-network"] = "rbxassetid://10734906975",
+	["lucide-newspaper"] = "rbxassetid://10734907168",
+	["lucide-octagon"] = "rbxassetid://10734907361",
+	["lucide-option"] = "rbxassetid://10734907649",
+	["lucide-outdent"] = "rbxassetid://10734907933",
+	["lucide-package"] = "rbxassetid://10734909540",
+	["lucide-package-2"] = "rbxassetid://10734908151",
+	["lucide-package-check"] = "rbxassetid://10734908384",
+	["lucide-package-minus"] = "rbxassetid://10734908626",
+	["lucide-package-open"] = "rbxassetid://10734908793",
+	["lucide-package-plus"] = "rbxassetid://10734909016",
+	["lucide-package-search"] = "rbxassetid://10734909196",
+	["lucide-package-x"] = "rbxassetid://10734909375",
+	["lucide-paint-bucket"] = "rbxassetid://10734909847",
+	["lucide-paintbrush"] = "rbxassetid://10734910187",
+	["lucide-paintbrush-2"] = "rbxassetid://10734910030",
+	["lucide-palette"] = "rbxassetid://10734910430",
+	["lucide-palmtree"] = "rbxassetid://10734910680",
+	["lucide-paperclip"] = "rbxassetid://10734910927",
+	["lucide-party-popper"] = "rbxassetid://10734918735",
+	["lucide-pause"] = "rbxassetid://10734919336",
+	["lucide-pause-circle"] = "rbxassetid://10735024209",
+	["lucide-pause-octagon"] = "rbxassetid://10734919143",
+	["lucide-pen-tool"] = "rbxassetid://10734919503",
+	["lucide-pencil"] = "rbxassetid://10734919691",
+	["lucide-percent"] = "rbxassetid://10734919919",
+	["lucide-person-standing"] = "rbxassetid://10734920149",
+	["lucide-phone"] = "rbxassetid://10734921524",
+	["lucide-phone-call"] = "rbxassetid://10734920305",
+	["lucide-phone-forwarded"] = "rbxassetid://10734920508",
+	["lucide-phone-incoming"] = "rbxassetid://10734920694",
+	["lucide-phone-missed"] = "rbxassetid://10734920845",
+	["lucide-phone-off"] = "rbxassetid://10734921077",
+	["lucide-phone-outgoing"] = "rbxassetid://10734921288",
+	["lucide-pie-chart"] = "rbxassetid://10734921727",
+	["lucide-piggy-bank"] = "rbxassetid://10734921935",
+	["lucide-pin"] = "rbxassetid://10734922324",
+	["lucide-pin-off"] = "rbxassetid://10734922180",
+	["lucide-pipette"] = "rbxassetid://10734922497",
+	["lucide-pizza"] = "rbxassetid://10734922774",
+	["lucide-plane"] = "rbxassetid://10734922971",
+	["lucide-plane-landing"] = "rbxassetid://17376029914",
+	["lucide-play"] = "rbxassetid://10734923549",
+	["lucide-play-circle"] = "rbxassetid://10734923214",
+	["lucide-plus"] = "rbxassetid://10734924532",
+	["lucide-plus-circle"] = "rbxassetid://10734923868",
+	["lucide-plus-square"] = "rbxassetid://10734924219",
+	["lucide-podcast"] = "rbxassetid://10734929553",
+	["lucide-pointer"] = "rbxassetid://10734929723",
+	["lucide-pound-sterling"] = "rbxassetid://10734929981",
+	["lucide-power"] = "rbxassetid://10734930466",
+	["lucide-power-off"] = "rbxassetid://10734930257",
+	["lucide-printer"] = "rbxassetid://10734930632",
+	["lucide-puzzle"] = "rbxassetid://10734930886",
+	["lucide-quote"] = "rbxassetid://10734931234",
+	["lucide-radio"] = "rbxassetid://10734931596",
+	["lucide-radio-receiver"] = "rbxassetid://10734931402",
+	["lucide-rectangle-horizontal"] = "rbxassetid://10734931777",
+	["lucide-rectangle-vertical"] = "rbxassetid://10734932081",
+	["lucide-recycle"] = "rbxassetid://10734932295",
+	["lucide-redo"] = "rbxassetid://10734932822",
+	["lucide-redo-2"] = "rbxassetid://10734932586",
+	["lucide-refresh-ccw"] = "rbxassetid://10734933056",
+	["lucide-refresh-cw"] = "rbxassetid://10734933222",
+	["lucide-refrigerator"] = "rbxassetid://10734933465",
+	["lucide-regex"] = "rbxassetid://10734933655",
+	["lucide-repeat"] = "rbxassetid://10734933966",
+	["lucide-repeat-1"] = "rbxassetid://10734933826",
+	["lucide-reply"] = "rbxassetid://10734934252",
+	["lucide-reply-all"] = "rbxassetid://10734934132",
+	["lucide-rewind"] = "rbxassetid://10734934347",
+	["lucide-rocket"] = "rbxassetid://10734934585",
+	["lucide-rocking-chair"] = "rbxassetid://10734939942",
+	["lucide-rotate-3d"] = "rbxassetid://10734940107",
+	["lucide-rotate-ccw"] = "rbxassetid://10734940376",
+	["lucide-rotate-cw"] = "rbxassetid://10734940654",
+	["lucide-rss"] = "rbxassetid://10734940825",
+	["lucide-ruler"] = "rbxassetid://10734941018",
+	["lucide-russian-ruble"] = "rbxassetid://10734941199",
+	["lucide-sailboat"] = "rbxassetid://10734941354",
+	["lucide-save"] = "rbxassetid://10734941499",
+	["lucide-scale"] = "rbxassetid://10734941912",
+	["lucide-scale-3d"] = "rbxassetid://10734941739",
+	["lucide-scaling"] = "rbxassetid://10734942072",
+	["lucide-scan"] = "rbxassetid://10734942565",
+	["lucide-scan-face"] = "rbxassetid://10734942198",
+	["lucide-scan-line"] = "rbxassetid://10734942351",
+	["lucide-scissors"] = "rbxassetid://10734942778",
+	["lucide-screen-share"] = "rbxassetid://10734943193",
+	["lucide-screen-share-off"] = "rbxassetid://10734942967",
+	["lucide-scroll"] = "rbxassetid://10734943448",
+	["lucide-search"] = "rbxassetid://10734943674",
+	["lucide-send"] = "rbxassetid://10734943902",
+	["lucide-separator-horizontal"] = "rbxassetid://10734944115",
+	["lucide-separator-vertical"] = "rbxassetid://10734944326",
+	["lucide-server"] = "rbxassetid://10734949856",
+	["lucide-server-cog"] = "rbxassetid://10734944444",
+	["lucide-server-crash"] = "rbxassetid://10734944554",
+	["lucide-server-off"] = "rbxassetid://10734944668",
+	["lucide-settings"] = "rbxassetid://10734950309",
+	["lucide-settings-2"] = "rbxassetid://10734950020",
+	["lucide-share"] = "rbxassetid://10734950813",
+	["lucide-share-2"] = "rbxassetid://10734950553",
+	["lucide-sheet"] = "rbxassetid://10734951038",
+	["lucide-shield"] = "rbxassetid://10734951847",
+	["lucide-shield-alert"] = "rbxassetid://10734951173",
+	["lucide-shield-check"] = "rbxassetid://10734951367",
+	["lucide-shield-close"] = "rbxassetid://10734951535",
+	["lucide-shield-off"] = "rbxassetid://10734951684",
+	["lucide-shirt"] = "rbxassetid://10734952036",
+	["lucide-shopping-bag"] = "rbxassetid://10734952273",
+	["lucide-shopping-cart"] = "rbxassetid://10734952479",
+	["lucide-shovel"] = "rbxassetid://10734952773",
+	["lucide-shower-head"] = "rbxassetid://10734952942",
+	["lucide-shrink"] = "rbxassetid://10734953073",
+	["lucide-shrub"] = "rbxassetid://10734953241",
+	["lucide-shuffle"] = "rbxassetid://10734953451",
+	["lucide-sidebar"] = "rbxassetid://10734954301",
+	["lucide-sidebar-close"] = "rbxassetid://10734953715",
+	["lucide-sidebar-open"] = "rbxassetid://10734954000",
+	["lucide-sigma"] = "rbxassetid://10734954538",
+	["lucide-signal"] = "rbxassetid://10734961133",
+	["lucide-signal-high"] = "rbxassetid://10734954807",
+	["lucide-signal-low"] = "rbxassetid://10734955080",
+	["lucide-signal-medium"] = "rbxassetid://10734955336",
+	["lucide-signal-zero"] = "rbxassetid://10734960878",
+	["lucide-siren"] = "rbxassetid://10734961284",
+	["lucide-skip-back"] = "rbxassetid://10734961526",
+	["lucide-skip-forward"] = "rbxassetid://10734961809",
+	["lucide-skull"] = "rbxassetid://10734962068",
+	["lucide-slack"] = "rbxassetid://10734962339",
+	["lucide-slash"] = "rbxassetid://10734962600",
+	["lucide-slice"] = "rbxassetid://10734963024",
+	["lucide-sliders"] = "rbxassetid://10734963400",
+	["lucide-sliders-horizontal"] = "rbxassetid://10734963191",
+	["lucide-smartphone"] = "rbxassetid://10734963940",
+	["lucide-smartphone-charging"] = "rbxassetid://10734963671",
+	["lucide-smile"] = "rbxassetid://10734964441",
+	["lucide-smile-plus"] = "rbxassetid://10734964188",
+	["lucide-snowflake"] = "rbxassetid://10734964600",
+	["lucide-sofa"] = "rbxassetid://10734964852",
+	["lucide-sort-asc"] = "rbxassetid://10734965115",
+	["lucide-sort-desc"] = "rbxassetid://10734965287",
+	["lucide-speaker"] = "rbxassetid://10734965419",
+	["lucide-sprout"] = "rbxassetid://10734965572",
+	["lucide-square"] = "rbxassetid://10734965702",
+	["lucide-star"] = "rbxassetid://10734966248",
+	["lucide-star-half"] = "rbxassetid://10734965897",
+	["lucide-star-off"] = "rbxassetid://10734966097",
+	["lucide-stethoscope"] = "rbxassetid://10734966384",
+	["lucide-sticker"] = "rbxassetid://10734972234",
+	["lucide-sticky-note"] = "rbxassetid://10734972463",
+	["lucide-stop-circle"] = "rbxassetid://10734972621",
+	["lucide-stretch-horizontal"] = "rbxassetid://10734972862",
+	["lucide-stretch-vertical"] = "rbxassetid://10734973130",
+	["lucide-strikethrough"] = "rbxassetid://10734973290",
+	["lucide-subscript"] = "rbxassetid://10734973457",
+	["lucide-sun"] = "rbxassetid://10734974297",
+	["lucide-sun-dim"] = "rbxassetid://10734973645",
+	["lucide-sun-medium"] = "rbxassetid://10734973778",
+	["lucide-sun-moon"] = "rbxassetid://10734973999",
+	["lucide-sun-snow"] = "rbxassetid://10734974130",
+	["lucide-sunrise"] = "rbxassetid://10734974522",
+	["lucide-sunset"] = "rbxassetid://10734974689",
+	["lucide-superscript"] = "rbxassetid://10734974850",
+	["lucide-swiss-franc"] = "rbxassetid://10734975024",
+	["lucide-switch-camera"] = "rbxassetid://10734975214",
+	["lucide-sword"] = "rbxassetid://10734975486",
+	["lucide-swords"] = "rbxassetid://10734975692",
+	["lucide-syringe"] = "rbxassetid://10734975932",
+	["lucide-table"] = "rbxassetid://10734976230",
+	["lucide-table-2"] = "rbxassetid://10734976097",
+	["lucide-tablet"] = "rbxassetid://10734976394",
+	["lucide-tag"] = "rbxassetid://10734976528",
+	["lucide-tags"] = "rbxassetid://10734976739",
+	["lucide-target"] = "rbxassetid://10734977012",
+	["lucide-tent"] = "rbxassetid://10734981750",
+	["lucide-terminal"] = "rbxassetid://10734982144",
+	["lucide-terminal-square"] = "rbxassetid://10734981995",
+	["lucide-text-cursor"] = "rbxassetid://10734982395",
+	["lucide-text-cursor-input"] = "rbxassetid://10734982297",
+	["lucide-thermometer"] = "rbxassetid://10734983134",
+	["lucide-thermometer-snowflake"] = "rbxassetid://10734982571",
+	["lucide-thermometer-sun"] = "rbxassetid://10734982771",
+	["lucide-thumbs-down"] = "rbxassetid://10734983359",
+	["lucide-thumbs-up"] = "rbxassetid://10734983629",
+	["lucide-ticket"] = "rbxassetid://10734983868",
+	["lucide-timer"] = "rbxassetid://10734984606",
+	["lucide-timer-off"] = "rbxassetid://10734984138",
+	["lucide-timer-reset"] = "rbxassetid://10734984355",
+	["lucide-toggle-left"] = "rbxassetid://10734984834",
+	["lucide-toggle-right"] = "rbxassetid://10734985040",
+	["lucide-tornado"] = "rbxassetid://10734985247",
+	["lucide-toy-brick"] = "rbxassetid://10747361919",
+	["lucide-train"] = "rbxassetid://10747362105",
+	["lucide-trash"] = "rbxassetid://10747362393",
+	["lucide-trash-2"] = "rbxassetid://10747362241",
+	["lucide-tree-deciduous"] = "rbxassetid://10747362534",
+	["lucide-tree-pine"] = "rbxassetid://10747362748",
+	["lucide-trees"] = "rbxassetid://10747363016",
+	["lucide-trending-down"] = "rbxassetid://10747363205",
+	["lucide-trending-up"] = "rbxassetid://10747363465",
+	["lucide-triangle"] = "rbxassetid://10747363621",
+	["lucide-trophy"] = "rbxassetid://10747363809",
+	["lucide-truck"] = "rbxassetid://10747364031",
+	["lucide-tv"] = "rbxassetid://10747364593",
+	["lucide-tv-2"] = "rbxassetid://10747364302",
+	["lucide-type"] = "rbxassetid://10747364761",
+	["lucide-umbrella"] = "rbxassetid://10747364971",
+	["lucide-underline"] = "rbxassetid://10747365191",
+	["lucide-undo"] = "rbxassetid://10747365484",
+	["lucide-undo-2"] = "rbxassetid://10747365359",
+	["lucide-unlink"] = "rbxassetid://10747365771",
+	["lucide-unlink-2"] = "rbxassetid://10747397871",
+	["lucide-unlock"] = "rbxassetid://10747366027",
+	["lucide-upload"] = "rbxassetid://10747366434",
+	["lucide-upload-cloud"] = "rbxassetid://10747366266",
+	["lucide-usb"] = "rbxassetid://10747366606",
+	["lucide-user"] = "rbxassetid://10747373176",
+	["lucide-user-check"] = "rbxassetid://10747371901",
+	["lucide-user-cog"] = "rbxassetid://10747372167",
+	["lucide-user-minus"] = "rbxassetid://10747372346",
+	["lucide-user-plus"] = "rbxassetid://10747372702",
+	["lucide-user-x"] = "rbxassetid://10747372992",
+	["lucide-users"] = "rbxassetid://10747373426",
+	["lucide-utensils"] = "rbxassetid://10747373821",
+	["lucide-utensils-crossed"] = "rbxassetid://10747373629",
+	["lucide-venetian-mask"] = "rbxassetid://10747374003",
+	["lucide-verified"] = "rbxassetid://10747374131",
+	["lucide-vibrate"] = "rbxassetid://10747374489",
+	["lucide-vibrate-off"] = "rbxassetid://10747374269",
+	["lucide-video"] = "rbxassetid://10747374938",
+	["lucide-video-off"] = "rbxassetid://10747374721",
+	["lucide-view"] = "rbxassetid://10747375132",
+	["lucide-voicemail"] = "rbxassetid://10747375281",
+	["lucide-volume"] = "rbxassetid://10747376008",
+	["lucide-volume-1"] = "rbxassetid://10747375450",
+	["lucide-volume-2"] = "rbxassetid://10747375679",
+	["lucide-volume-x"] = "rbxassetid://10747375880",
+	["lucide-wallet"] = "rbxassetid://10747376205",
+	["lucide-wand"] = "rbxassetid://10747376565",
+	["lucide-wand-2"] = "rbxassetid://10747376349",
+	["lucide-watch"] = "rbxassetid://10747376722",
+	["lucide-waves"] = "rbxassetid://10747376931",
+	["lucide-webcam"] = "rbxassetid://10747381992",
+	["lucide-wifi"] = "rbxassetid://10747382504",
+	["lucide-wifi-off"] = "rbxassetid://10747382268",
+	["lucide-wind"] = "rbxassetid://10747382750",
+	["lucide-wrap-text"] = "rbxassetid://10747383065",
+	["lucide-wrench"] = "rbxassetid://10747383470",
+	["lucide-x"] = "rbxassetid://10747384394",
+	["lucide-x-circle"] = "rbxassetid://10747383819",
+	["lucide-x-octagon"] = "rbxassetid://10747384037",
+	["lucide-x-square"] = "rbxassetid://10747384217",
+	["lucide-zoom-in"] = "rbxassetid://10747384552",
+	["lucide-zoom-out"] = "rbxassetid://10747384679",
+	["lucide-cat"] = "rbxassetid://16935650691",
+	["lucide-message-circle-question"] = "rbxassetid://16970049192",
+	["lucide-webhook"] = "rbxassetid://17320556264",
+}
+function Library:GetIcon(Name)
+	if Name ~= nil and Icons["lucide-" .. Name] then
+		return Icons["lucide-" .. Name]
+	end
+	return nil
+end
+
+local Elements = {}
+Elements.__index = Elements
+Elements.__namecall = function(Table, Key, ...)
+	return Elements[Key](...)
+end
+
+for _, ElementComponent in pairs(ElementsTable) do
+	Elements["Add" .. ElementComponent.__type] = function(self, Idx, Config)
+		ElementComponent.Container = self.Container
+		ElementComponent.Type = self.Type
+		ElementComponent.ScrollFrame = self.ScrollFrame
+		ElementComponent.Library = Library
+
+		return ElementComponent:New(Idx, Config)
+	end
+end
+
+Library.Elements = Elements
+
+if RunService:IsStudio() then
+	makefolder = function(...) return ... end;
+	makefile = function(...) return ... end;
+	isfile = function(...) return ... end;
+	isfolder = function(...) return ... end;
+	readfile = function(...) return ... end;
+	writefile = function(...) return ... end;
+	listfiles = function (...) return {...} end;
+end
+
+local SaveManager = {} do
+	SaveManager.Folder = "FluentSettings"
+	SaveManager.Ignore = {}
+	SaveManager.Parser = {
+		Toggle = {
+			Save = function(idx, object) 
+				return { type = "Toggle", idx = idx, value = object.Value } 
+			end,
+			Load = function(idx, data)
+				if SaveManager.Options[idx] then 
+					SaveManager.Options[idx]:SetValue(data.value)
+				end
+			end,
+		},
+		Slider = {
+			Save = function(idx, object)
+				return { type = "Slider", idx = idx, value = tostring(object.Value) }
+			end,
+			Load = function(idx, data)
+				if SaveManager.Options[idx] then 
+					SaveManager.Options[idx]:SetValue(data.value)
+				end
+			end,
+		},
+		Dropdown = {
+			Save = function(idx, object)
+				return { type = "Dropdown", idx = idx, value = object.Value, mutli = object.Multi }
+			end,
+			Load = function(idx, data)
+				if SaveManager.Options[idx] then 
+					SaveManager.Options[idx]:SetValue(data.value)
+				end
+			end,
+		},
+		Colorpicker = {
+			Save = function(idx, object)
+				return { type = "Colorpicker", idx = idx, value = object.Value:ToHex(), transparency = object.Transparency }
+			end,
+			Load = function(idx, data)
+				if SaveManager.Options[idx] then 
+					SaveManager.Options[idx]:SetValueRGB(Color3.fromHex(data.value), data.transparency)
+				end
+			end,
+		},
+		Keybind = {
+			Save = function(idx, object)
+				return { type = "Keybind", idx = idx, mode = object.Mode, key = object.Value }
+			end,
+			Load = function(idx, data)
+				if SaveManager.Options[idx] then 
+					SaveManager.Options[idx]:SetValue(data.key, data.mode)
+				end
+			end,
+		},
+
+		Input = {
+			Save = function(idx, object)
+				return { type = "Input", idx = idx, text = object.Value }
+			end,
+			Load = function(idx, data)
+				if SaveManager.Options[idx] and type(data.text) == "string" then
+					SaveManager.Options[idx]:SetValue(data.text)
+				end
+			end,
+		},
+	}
+
+	function SaveManager:SetIgnoreIndexes(list)
+		for _, key in next, list do
+			self.Ignore[key] = true
+		end
+	end
+
+	function SaveManager:SetFolder(folder)
+		self.Folder = folder;
+		self:BuildFolderTree()
+	end
+
+	function SaveManager:Save(name)
+		if (not name) then
+			return false, "no config file is selected"
+		end
+
+		local fullPath = self.Folder .. "/" .. name .. ".json"
+
+		local data = {
+			objects = {}
+		}
+
+		for idx, option in next, SaveManager.Options do
+			if not self.Parser[option.Type] then continue end
+			if self.Ignore[idx] then continue end
+
+			table.insert(data.objects, self.Parser[option.Type].Save(idx, option))
+		end	
+
+		local success, encoded = pcall(httpService.JSONEncode, httpService, data)
+		if not success then
+			return false, "failed to encode data"
+		end
+
+		writefile(fullPath, encoded)
+		return true
+	end
+
+	function SaveManager:Load(name)
+		if (not name) then
+			return false, "no config file is selected"
+		end
+
+		local file = self.Folder .. "/" .. name .. ".json"
+		if not isfile(file) then return false, "Create Config Save File" end
+
+		local success, decoded = pcall(httpService.JSONDecode, httpService, readfile(file))
+		if not success then return false, "decode error" end
+
+		for _, option in next, decoded.objects do
+			if self.Parser[option.type] and not self.Ignore[option.idx] then
+				task.spawn(function() self.Parser[option.type].Load(option.idx, option) end) -- task.spawn() so the config loading wont get stuck.
+			end
+		end
+
+		return true
+	end
+
+	function SaveManager:IgnoreThemeSettings()
+		self:SetIgnoreIndexes({ 
+			"InterfaceTheme", "AcrylicToggle", "TransparentToggle", "MenuKeybind"
+		})
+	end
+
+	function SaveManager:BuildFolderTree()
+		local paths = {
+			self.Folder,
+			self.Folder .. "/"
+		}
+
+		for i = 1, #paths do
+			local str = paths[i]
+			if not isfolder(str) then
+				makefolder(str)
 			end
 		end
 	end
-	return OutValue or game:GetService("Players").LocalPlayer.Character:FindFirstChild(name)
-end)
 
-task.spawn(function() 
-    if hookfunction and not islclosure(hookfunction) then 
-        workspace._WorldOrigin.ChildAdded:Connect(function(v)
-            if v.Name =='DamageCounter' then 
-                v.Enabled  = false 
-            end
-        end)
-        hookfunction(require(game:GetService("ReplicatedStorage"):WaitForChild("GuideModule")).ChangeDisplayedNPC,function() end)
-        task.spawn(function()
-            local NGU,NGUVL
-            repeat 
-                NGU,NGUVL = pcall(function()
-                    for i,v in pairs(getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework))[2].activeController.data) do  
-                        if typeof(v) == 'function' then 
-                            hookfunction(v,function() end)
-                        end
-                    end
-                end)
-                task.wait(1.5)
-            until NGU 
-        end) 
-        abc = true
-        task.spawn(function()
-            local a = game.Players.LocalPlayer
-            local b = require(a.PlayerScripts.CombatFramework.Particle)
-            local c = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib)
-            if not shared.orl then
-                shared.orl = c.wrapAttackAnimationAsync
-            end
-            if not shared.cpc then
-                shared.cpc = b.play
-            end
-            if abc then
-                pcall(function()
-                    c.wrapAttackAnimationAsync = function(d, e, f, g, h)
-                        local i = c.getBladeHits(e, f, g)
-                        if i then
-                            b.play = function()
-                            end
-                            d:Play(0.1, 0.1, 0.1)
-                            h(i)
-                            b.play = shared.cpc
-                            wait(.5)
-                            d:Stop()
-                        end
-                    end
-                end)
-            end
-        end)
-    end
-end)
+	function SaveManager:RefreshConfigList()
+		local list = listfiles(self.Folder .. "/")
 
---= [ Create Tab ] =--
+		local out = {}
+		for i = 1, #list do
+			local file = list[i]
+			if file:sub(-5) == ".json" then
+				local pos = file:find(".json", 1, true)
+				local start = pos
 
-local Setting = Window:Tab({Title = "Setting", Icon = "settings"})
-local Hold = Window:Tab({Title = "Hold & Use Skill", Icon = "alarm-clock"})
-local Farm = Window:Tab({Title = "Farm", Icon = "sword"})
-local FruitRaid = Window:Tab({Title = "Fruits & Raid", Icon = "banana"})
-local Other = Window:Tab({Title = "Miscellaneous", Icon = "boxes"})
-local ItemQuest = Window:Tab({Title = "Item & Quest", Icon = "axe"})
-local Player = Window:Tab({Title = "Local Player", Icon = "person-standing"})
-local PvP = Window:Tab({Title = "PvP", Icon = "swords"})
-local Sea = Window:Tab({Title = "Sea Event", Icon = "anchor"})
-local Race = Window:Tab({Title = "Upgrade Race", Icon = "user-cog"})
-local StatsEsp = Window:Tab({Title = "Stats & Esp", Icon = "arrow-big-up"})
-local Teleport = Window:Tab({Title = "Teleport", Icon = "map-pin"})
-local StatusServer = Window:Tab({Title = "Status & Server", Icon = "server"})
-local Shop = Window:Tab({Title = "Shop", Icon = "shopping-bag"})
+				local char = file:sub(pos, pos)
+				while char ~= "/" and char ~= "\\" and char ~= "" do
+					pos = pos - 1
+					char = file:sub(pos, pos)
+				end
 
---= [ Tab Setting ] =--
+				if char == "/" or char == "\\" then
+					local name = file:sub(pos + 1, start - 1)
+					if name ~= "options" then
+						table.insert(out, name)
+					end
+				end
+			end
+		end
 
-Setting:Section({ 
-    Title = "-= [ Setting Farm ] =-",
-    TextXAlignment = "Center",
-    TextSize = 20
-})
-
-Setting:Dropdown({
-    Title = "Select Weapon",
-    Multi = false,
-    Value = "Melee",
-    AllowNone = true,
-    Values = {"Melee","Sword","Gun","Blox Fruit"},
-    Callback = function(Cac)
-        _G.SelectWeapons = Cac
-    end
-})
-
-Setting:Dropdown({
-    Title = "Select Attack Speed",
-    Multi = false,
-    Value = "Fast [ 0.1s ]",
-    AllowNone = true,
-    Values = {"No Delay [ 0.0s ]","Super Fast [ 0.05s ]","Fast [ 0.1s ]","Moderate [ 0.3s ]","Default [ 0.5s ]","Medium [ 0.8s ]","Slow [ 1.0s ]"},
-    Callback = function(Cac)
-        _G.AttackSpeed = Cac
-        if _G.AttackSpeed == "No Delay [ 0.0s ]" then
-           FastAttackDelay = 0
-        elseif _G.AttackSpeed == "Super Fast [ 0.05s ]" then
-           FastAttackDelay = 0.05
-        elseif _G.AttackSpeed == "Fast [ 0.1s ]" then
-           FastAttackDelay = 0.1
-        elseif _G.AttackSpeed == "Moderate [ 0.3s ]" then
-           FastAttackDelay = 0.3
-        elseif _G.AttackSpeed == "Default [ 0.5s ]" then
-           FastAttackDelay = 0.5
-        elseif _G.AttackSpeed == "Medium [ 0.8s ]" then
-           FastAttackDelay = 0.8
-        elseif _G.AttackSpeed == "Slow [ 1.0s ]" then
-           FastAttackDelay = 1
-        end
-    end
-})
-
-Setting:Toggle({
-    Title = "Fast Attack",
-    Value = true,
-    Callback = function(Cac)
-        Fast_Attack = Cac
-		DamageAura = Cac
-		ClickNoCooldown = Cac
-		DmgAttack.Enabled = not Cac
-    end
-})
-
-Setting:Toggle({
-    Title = "Auto Click [ 75% Kick System ]",
-    Value = false,
-    Callback = function(Cac)
-        _G.AutoClick = Cac
-    end
-})
-
-Setting:Dropdown({
-    Title = "Select Range Bring Mob",
-    Multi = false,
-    Value = "Slightly Far [ 300m ]",
-    AllowNone = true,
-    Values = {"Really Far [ 350m ]","Distant [ 325m ]","Slightly Far [ 300m ]","Near The [ 275m ]","Very Close [ 250m ]"},
-    Callback = function(Cac)
-        _G.BringMob = Cac
-        if _G.BringMob == "Really Far [ 350m ]" then
-           BringRange = 350
-        elseif _G.BringMob == "Distant [ 325m ]" then
-           BringRange = 325
-        elseif _G.BringMob == "Slightly Far [ 300m ]" then
-           BringRange = 300
-        elseif _G.BringMob == "Near The [ 275m ]" then
-           BringRange = 275
-        elseif _G.BringMob == "Very Close [ 250m ]" then
-           BringRange = 250
-        end
-    end
-})
-
-Setting:Toggle({
-    Title = "Bring Mob",
-    Value = true,
-    Callback = function(Cac)
-        _G.BringMobs = Cac
-    end
-})
-
-spawn(function()
-    while wait() do
-        if _G.BringMobs then
-            pcall(function()
-                CheckQuest()
-                for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                    if _G.FarmLevel or _G.FruitsMastery or _G.GunMastery or _G.AutoSwordMastery then
-                        if StartMagnet and v.Name == Mon and (v.HumanoidRootPart.Position - PosFarm.Position).Magnitude <= BringRange then
-                            v.HumanoidRootPart.CFrame = PosFarm
-                            v.Humanoid:ChangeState(14)
-                        end
-                    end
-                    if MagnetNear then
-                        if not string.find(v.Name, "Boss") and (v.HumanoidRootPart.Position - PosNear.Position).Magnitude <= BringRange then
-                            v.HumanoidRootPart.CFrame = PosNear
-                            v.Humanoid:ChangeState(14)
-                        end
-                    end
-                    if _G.AutoMusketeerHat and StartMagnetMusketeerhat then
-                        if v.Name == "Forest Pirate" and (v.HumanoidRootPart.Position - MusketeerHatMon.Position).Magnitude <= BringRange then
-                            v.HumanoidRootPart.CFrame = MusketeerHatMon
-                            v.Humanoid:ChangeState(14)
-                        end
-                    end
-                    if _G.Auto_EvoRace and StartEvoMagnet then
-                        if v.Name == "Zombie" and (v.HumanoidRootPart.Position - PosMonEvo.Position).Magnitude <= BringRange then
-                            v.HumanoidRootPart.CFrame = PosMonEvo
-                            v.Humanoid:ChangeState(14)
-                        end
-                    end
-                    if _G.FarmMaterial and BringMonMaterial then
-                        if (v.Name == MMon or v.Name == MMon1) and (v.HumanoidRootPart.Position - MaterialPos.Position).Magnitude <= BringRange then
-                            v.HumanoidRootPart.CFrame = MaterialPos
-                            v.Humanoid:ChangeState(14)
-                        end
-                    end
-                    if _G.FarmMob and SelectMag then
-                        if v.Name == _G.SelectMob and (v.HumanoidRootPart.Position - PosMonFarm.Position).Magnitude <= BringRange then
-                            v.HumanoidRootPart.CFrame = PosMonFarm
-                            v.Humanoid:ChangeState(14)
-                        end
-                    end
-                    if _G.AutoBartilo and AutoBartiloBring then
-                        if v.Name == "Swan Pirate" and (v.HumanoidRootPart.Position - PosMonBarto.Position).Magnitude <= BringRange then
-                            v.HumanoidRootPart.CFrame = PosMonBarto
-                            v.Humanoid:ChangeState(14)
-                        end
-                    end
-                    if _G.FarmFast and StartBring then
-                        if v.Name == "Shanda" and (v.HumanoidRootPart.Position - PosMon.Position).Magnitude <= BringRange then
-                            v.HumanoidRootPart.CFrame = PosMon
-                            v.Humanoid:ChangeState(14)
-                        end
-                    end
-                end
-            end)
-        end
-    end
-end)
-
-Setting:Section({ 
-    Title = "-= [ Move ] =-",
-    TextXAlignment = "Center",
-    TextSize = 20
-})
-
-Setting:Slider({
-    Title = "Fly Speed",
-    Step = 1,
-    Value = {Min = 1, Max = 400, Default = 350},
-    Callback = function(Cac)
-        _G.FlySpeed = Cac
-    end
-})
-
-Setting:Toggle({
-    Title = "Bypass Move Or Fly",
-    Value = false,
-    Callback = function(Cac)
-        _G.BypassTeleport = Cac
-    end
-})
-
-Setting:Section({ 
-    Title = "-= [ Graphic & Reduce Lag ] =-",
-    TextXAlignment = "Center",
-    TextSize = 20
-})
-
-Setting:Toggle({
-    Title = "White Screen",
-    Value = false,
-    Callback = function(Cac)
-        _G.WhiteScreen = Cac
-        if _G.WhiteScreen == true then
-   	     game:GetService("RunService"):Set3dRenderingEnabled(false)
-	    elseif _G.WhiteScreen == false then
- 	       game:GetService("RunService"):Set3dRenderingEnabled(true)
-	    end
-    end
-})
-
-Setting:Toggle({
-	Title = "Disabled Notifications Text",
-    Value = false,
-	Callback = function(Cac)
-		_G.DisabledNotify = Cac
+		return out
 	end
-})
 
-Setting:Toggle({
-	Title = "Disabled Damage Counter",
-    Value = true,
-	Callback = function(Cac)
-		_G.DisabledDamage = Cac
+	function SaveManager:SetLibrary(library)
+		self.Library = library
+		self.Options = library.Options
 	end
-})
 
-Setting:Button({
-    Title = "Remove Fog",
-    Callback = function()
-        game:GetService("Lighting").LightingLayers:Destroy()
-    	game:GetService("Lighting").Sky:Destroy()
-    end
-})
+	function SaveManager:LoadAutoloadConfig()
+		if isfile(self.Folder .. "/autoload.txt") then
+			local name = readfile(self.Folder .. "/autoload.txt")
 
-Setting:Button({
-    Title = "Remove Lava",
-    Callback = function()
-        for i,v in pairs(game.Workspace:GetDescendants()) do
-    		if v.Name == "Lava" then
-    			v:Destroy()
-    		end
-    	end
-    	for i,v in pairs(game.ReplicatedStorage:GetDescendants()) do
-    		if v.Name == "Lava" then
-	    		v:Destroy()
-    		end
-    	end
-    end
-})
+			local success, err = self:Load(name)
+			if not success then
+				return self.Library:Notify({
+					Title = "Interface",
+					Content = "Config loader",
+					SubContent = "Failed to load autoload config: " .. err,
+					Duration = 7
+				})
+			end
 
-Setting:Button({
-    Title = "Fps Booster",
-    Callback = function()
-        FpsBooster()
-    end
-})
-
-Setting:Slider({
-    Title = "Brightness",
-    Step = 1,
-    Value = {Min = 1, Max = 100, Default = 20},
-    Callback = function(Cac)
-        _G.Brightness = Cac
-    end
-})
-
-Setting:Button({
-    Title = "Set Brightness",
-    Callback = function()
-        game:GetService("Lighting").Brightness = _G.Brightness
-    end
-})
-
-Setting:Section({ 
-    Title = "-= [ Other ] =-",
-    TextXAlignment = "Center",
-    TextSize = 20
-})
-
-Setting:Toggle({
-	Title = "Auto Rejoin When Disconnect",
-    Value = true,
-	Callback = function(Cac)
-		_G.AutoRejoin = Cac
+			self.Library:Notify({
+				Title = "Interface",
+				Content = "Config loader",
+				SubContent = string.format("Auto loaded config %q", name),
+				Duration = 7
+			})
+		end
 	end
-})
 
-Setting:Button({
-	Title = "Reset Character",
-	Callback = function()
-    	game:GetService("Players").LocalPlayer.Character.Humanoid.Health = 0
+	function SaveManager:BuildConfigSection(tab)
+		assert(self.Library, "Must set SaveManager.Library")
+
+		local section = tab:AddSection("Configuration")
+
+		section:AddInput("SaveManager_ConfigName",    { Title = "Config name" })
+		section:AddDropdown("SaveManager_ConfigList", { Title = "Config list", Values = self:RefreshConfigList(), AllowNull = true })
+
+		section:AddButton({
+			Title = "Create config",
+			Callback = function()
+				local name = SaveManager.Options.SaveManager_ConfigName.Value
+
+				if name:gsub(" ", "") == "" then 
+					return self.Library:Notify({
+						Title = "Interface",
+						Content = "Config loader",
+						SubContent = "Invalid config name (empty)",
+						Duration = 7
+					})
+				end
+
+				local success, err = self:Save(name)
+				if not success then
+					return self.Library:Notify({
+						Title = "Interface",
+						Content = "Config loader",
+						SubContent = "Failed to save config: " .. err,
+						Duration = 7
+					})
+				end
+
+				self.Library:Notify({
+					Title = "Interface",
+					Content = "Config loader",
+					SubContent = string.format("Created config %q", name),
+					Duration = 7
+				})
+
+				SaveManager.Options.SaveManager_ConfigList:SetValues(self:RefreshConfigList())
+				SaveManager.Options.SaveManager_ConfigList:SetValue(nil)
+			end
+		})
+
+		section:AddButton({Title = "Load config", Callback = function()
+			local name = SaveManager.Options.SaveManager_ConfigList.Value
+
+			local success, err = self:Load(name)
+			if not success then
+				return self.Library:Notify({
+					Title = "Interface",
+					Content = "Config loader",
+					SubContent = "Failed to load config: " .. err,
+					Duration = 7
+				})
+			end
+
+			self.Library:Notify({
+				Title = "Interface",
+				Content = "Config loader",
+				SubContent = string.format("Loaded config %q", name),
+				Duration = 7
+			})
+		end})
+
+		section:AddButton({Title = "Save config", Callback = function()
+			local name = SaveManager.Options.SaveManager_ConfigList.Value
+
+			local success, err = self:Save(name)
+			if not success then
+				return self.Library:Notify({
+					Title = "Interface",
+					Content = "Config loader",
+					SubContent = "Failed to overwrite config: " .. err,
+					Duration = 7
+				})
+			end
+
+			self.Library:Notify({
+				Title = "Interface",
+				Content = "Config loader",
+				SubContent = string.format("Overwrote config %q", name),
+				Duration = 7
+			})
+		end})
+
+		section:AddButton({Title = "Refresh list", Callback = function()
+			SaveManager.Options.SaveManager_ConfigList:SetValues(self:RefreshConfigList())
+			SaveManager.Options.SaveManager_ConfigList:SetValue(nil)
+		end})
+
+		local AutoloadButton
+		AutoloadButton = section:AddButton({Title = "Set as autoload", Description = "Current autoload config: none", Callback = function()
+			local name = SaveManager.Options.SaveManager_ConfigList.Value
+			writefile(self.Folder .. "/autoload.txt", name)
+			AutoloadButton:SetDesc("Current autoload config: " .. name)
+			self.Library:Notify({
+				Title = "Interface",
+				Content = "Config loader",
+				SubContent = string.format("Set %q to auto load", name),
+				Duration = 7
+			})
+		end})
+
+		if isfile(self.Folder .. "/autoload.txt") then
+			local name = readfile(self.Folder .. "/autoload.txt")
+			AutoloadButton:SetDesc("Current autoload config: " .. name)
+		end
+
+		SaveManager:SetIgnoreIndexes({ "SaveManager_ConfigList", "SaveManager_ConfigName" })
 	end
-})
 
---= [ Tab Hold & Use Skill ] =--
-
-Hold:Section({ 
-    Title = "-= [ Hold & Use Skill ] =-",
-    TextXAlignment = "Center",
-    TextSize = 20
-})
-
-Hold:Paragraph({
-    Title = "Setting Skill Devil Fruit",
-    Desc = "Enter 0.1 = 0.1 Second | Enter 3 = 3 Second"
-})
-
-Hold:Dropdown({
-    Title = "Use Skill Devil Fruits",
-    Multi = true,
-    Value = {"Z","X","C","V"},
-    AllowNone = true,
-    Values = {"Z","X","C","V"},
-    Callback = function(Cac)
-        _G.SkillFruit = Cac
-    end
-})
-
-Hold:Input({
-    Title = "Hold Skill Z",
-    Value = "0",
-    PlaceholderText = "Enter Hold Time",
-    ClearTextOnFocus = false,
-    Callback = function(Cac)
-        _G.HoldSkillFruitSeaZ = Cac
-    end
-})
-
-Hold:Input({
-    Title = "Hold Skill X",
-    Value = "0",
-    PlaceholderText = "Enter Hold Time",
-    ClearTextOnFocus = false,
-    Callback = function(Cac)
-        _G.HoldSkillFruitSeaX = Cac
-    end
-})
-
-Hold:Input({
-    Title = "Hold Skill C",
-    Value = "0",
-    PlaceholderText = "Enter Hold Time",
-    ClearTextOnFocus = false,
-    Callback = function(Cac)
-        _G.HoldSkillFruitSeaC = Cac
-    end
-})
-
-Hold:Input({
-    Title = "Hold Skill V",
-    Value = "0",
-    PlaceholderText = "Enter Hold Time",
-    ClearTextOnFocus = false,
-    Callback = function(Cac)
-        _G.HoldSkillFruitSeaV = Cac
-    end
-})
-
-Hold:Paragraph({
-    Title = "Setting Skill Melee",
-    Desc = "Enter 0.1 = 0.1 Second | Enter 3 = 3 Second"
-})
-
-Hold:Dropdown({
-    Title = "Use Skill Melee",
-    Multi = true,
-    Value = {"Z","X","C","V"},
-    AllowNone = true,
-    Values = {"Z","X","C","V"},
-    Callback = function(Cac)
-        _G.SkillMelee = Cac
-    end
-})
-
-Hold:Input({
-    Title = "Hold Skill Z",
-    Value = "0",
-    PlaceholderText = "Enter Hold Time",
-    ClearTextOnFocus = false,
-    Callback = function(Cac)
-        _G.HoldSkillMeleeSeaZ = Cac
-    end
-})
-
-Hold:Input({
-    Title = "Hold Skill X",
-    Value = "0",
-    PlaceholderText = "Enter Hold Time",
-    ClearTextOnFocus = false,
-    Callback = function(Cac)
-        _G.HoldSkillMeleeSeaX = Cac
-    end
-})
-
-Hold:Input({
-    Title = "Hold Skill C",
-    Value = "0",
-    PlaceholderText = "Enter Hold Time",
-    ClearTextOnFocus = false,
-    Callback = function(Cac)
-        _G.HoldSkillMeleeSeaC = Cac
-    end
-})
-
-Hold:Input({
-    Title = "Hold Skill V",
-    Value = "0",
-    PlaceholderText = "Enter Hold Time",
-    ClearTextOnFocus = false,
-    Callback = function(Cac)
-        _G.HoldSkillMeleeSeaV = Cac
-    end
-})
-
-Hold:Paragraph({
-    Title = "Setting Skill Sword",
-    Desc = "Enter 0.1 = 0.1 Second | Enter 3 = 3 Second"
-})
-
-Hold:Dropdown({
-    Title = "Use Skill Sword",
-    Multi = true,
-    Value = {"Z","X"},
-    AllowNone = true,
-    Values = {"Z","X"},
-    Callback = function(Cac)
-        _G.SkillSword = Cac
-    end
-})
-
-Hold:Input({
-    Title = "Hold Skill Z",
-    Value = "0",
-    PlaceholderText = "Enter Hold Time",
-    ClearTextOnFocus = false,
-    Callback = function(Cac)
-        _G.HoldSkillSwordSeaZ = Cac
-    end
-})
-
-Hold:Input({
-    Title = "Hold Skill X",
-    Value = "0",
-    PlaceholderText = "Enter Hold Time",
-    ClearTextOnFocus = false,
-    Callback = function(Cac)
-        _G.HoldSkillSwordSeaX = Cac
-    end
-})
-
-Hold:Paragraph({
-    Title = "Setting Skill Gun",
-    Desc = "Enter 0.1 = 0.1 Second | Enter 3 = 3 Second"
-})
-
-Hold:Dropdown({
-    Title = "Use Skill Gun",
-    Multi = true,
-    Value = {"Z","X"},
-    AllowNone = true,
-    Values = {"Z","X"},
-    Callback = function(Cac)
-        _G.SkillGun = Cac
-    end
-})
-
-Hold:Input({
-    Title = "Hold Skill Z",
-    Value = "0",
-    PlaceholderText = "Enter Hold Time",
-    ClearTextOnFocus = false,
-    Callback = function(Cac)
-        _G.HoldSkillGunSeaZ = Cac
-    end
-})
-
-Hold:Input({
-    Title = "Hold Skill X",
-    Value = "0",
-    PlaceholderText = "Enter Hold Time",
-    ClearTextOnFocus = false,
-    Callback = function(Cac)
-        _G.HoldSkillGunSeaX = Cac
-    end
-})
-
---= [ Tab Farm ] =--
-
-Farm:Section({ 
-    Title = "-= [ Level ] =-",
-    TextXAlignment = "Center",
-    TextSize = 20
-})
-
-local YourLevel = Farm:Paragraph({
-    Title = "Your Level",
-    Desc = "Wait Loading..."
-})
-
-Farm:Dropdown({
-    Title = "Select Farm Level Mode",
-    Multi = false,
-    Value = "Get Quest",
-    Values = {"No Quest","Get Quest"},
-    Callback = function(Cac)
-        _G.LevelMode = Cac
-    end
-})
-
-Farm:Toggle({
-    Title = "Auto Farm Level",
-    Value = false,
-    Callback = function(Cac)
-        _G.FarmLevel = Cac
-    end
-})
-
-spawn(function()
-    while wait() do
-        pcall(function()
-            if _G.FarmLevel then
-                local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
-                if not string.find(QuestTitle, NameMon) then
-                    StartMagnet = false
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
-                end
-                if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
-                    StartMagnet = false
-                    CheckQuest()
-	    			topos(CFrameQuest)
-		    		if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQuest.Position).Magnitude <= 5 then
-	    				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest",NameQuest,LevelQuest)
-                    end
-                elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
-                    CheckQuest()
-                    if game:GetService("Workspace").Enemies:FindFirstChild(Mon) then
-                        for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                            if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
-                                if v.Name == Mon then
-                                    if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
-                                        repeat wait()
-                                            topos(v.HumanoidRootPart.CFrame * Pos)
-                                            PosFarm = v.HumanoidRootPart.CFrame
-                                            StartMagnet = true
-                                        until not _G.FarmLevel or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
-                                    else
-                                        StartMagnet = false
-                                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
-                                    end
-                                end
-                            end
-                        end
-                    else
-                        topos(CFrameMon)
-                        UnEquipWeapon(_G.SelectWeapon)
-                        StartMagnet = false
-                    end
-                end
-            end
-        end)
-    end
-end)
-
-Farm:Toggle({
-    Title = "Auto Farm Fast [ Lv. 1 -> Lv. 250 ]",
-    Value = false,
-    Callback = function(Cac)
-        _G.FarmSkip = Cac
-        StopTween(_G.FarmSkip)
-    end
-})
-
-Farm:Toggle({
-    Title = "Auto Farm Nearest",
-    Value = false,
-    Callback = function(Cac)
-        _G.FarmNearest = Cac
-        StopTween(_G.FarmNearest)
-    end
-})
-
-Farm:Section({ 
-    Title = "-= [ Katakuri ] =-",
-    TextXAlignment = "Center",
-    TextSize = 20
-})
-
-Farm:Paragraph({
-    Title = "Defeat Cake Prince",
-    Desc = "Wait Loading..."
-})
-
-Farm:Dropdown({
-    Title = "Select Farm Katakuri Mode",
-    Multi = false,
-    Value = "Get Quest",
-    Values = {"No Quest","Get Quest"},
-    Callback = function(Cac)
-        _G.KatakuriMode = Cac
-    end
-})
-
-Farm:Toggle({
-    Title = "Auto Farm Katakuri",
-    Value = false,
-    Callback = function(Cac)
-        _G.FarmKatakuri = Cac
-        StopTween(_G.FarmKatakuri)
-    end
-})
-
-Farm:Toggle({
-    Title = "Auto Spawn Katakuri",
-    Value = true,
-    Callback = function(Cac)
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner",Cac)
-    end
-})
-
-Farm:Section({ 
-    Title = "-= [ Bone ] =-",
-    TextXAlignment = "Center",
-    TextSize = 20
-})
-
-Farm:Paragraph({
-    Title = "Your Bone",
-    Desc = "Wait Loading..."
-})
-
-Farm:Dropdown({
-    Title = "Select Farm Bone Mode",
-    Multi = false,
-    Value = "Get Quest",
-    Values = {"No Quest","Get Quest"},
-    Callback = function(Cac)
-        _G.BoneMode = Cac
-    end
-})
-
-Farm:Toggle({
-    Title = "Auto Farm Bone",
-    Value = false,
-    Callback = function(Cac)
-        _G.FarmBone = Cac
-        StopTween(_G.FarmBone)
-    end
-})
-
-Farm:Toggle({
-    Title = "Auto Random Bone",
-    Value = false,
-    Callback = function(Cac)
-        _G.RandomBone = Cac
-    end
-})
-
-Farm:Toggle({
-    Title = "Auto Spawn & Kill Soul Reaper",
-    Value = false,
-    Callback = function(Cac)
-        _G.SoulReaper = Cac
-        StopTween(_G.SoulReaper)
-    end
-})
-
-Farm:Section({ 
-    Title = "-= [ Devil Fruit & Gun Mastery ] =-",
-    TextXAlignment = "Center",
-    TextSize = 20
-})
-
-Farm:Toggle({
-    Title = "Auto Farm Devil Fruit Mastery",
-    Value = false,
-    Callback = function(Cac)
-        _G.FruitsMastery = Cac
-        StopTween(_G.FruitsMastery)
-    end
-})
-
-Farm:Toggle({
-    Title = "Auto Farm Gun Mastery",
-    Value = false,
-    Callback = function(Cac)
-        _G.GunMastery = Cac
-        StopTween(_G.GunMastery)
-    end
-})
-
-Farm:Paragraph({
-    Title = "Mob Health & Use Skill Devil Fruit + Gun",
-})
-
-Farm:Slider({
-    Title = "Kill Mob At % Health",
-    Step = 1,
-    Value = {Min = 1, Max = 100, Default = 20},
-    Callback = function(Cac)
-        _G.MobHealth = Cac
-    end
-})
-
-Farm:Toggle({
-    Title = "Use Skill Z",
-    Value = true,
-    Callback = function(Cac)
-        _G.SkillZ = Cac
-    end
-})
-
-Farm:Toggle({
-    Title = "Use Skill X",
-    Value = true,
-    Callback = function(Cac)
-        _G.SkillX = Cac
-    end
-})
-
-Farm:Toggle({
-    Title = "Use Skill C",
-    Value = true,
-    Callback = function(Cac)
-        _G.SkillC = Cac
-    end
-})
-
-Farm:Toggle({
-    Title = "Use Skill V",
-    Value = true,
-    Callback = function(Cac)
-        _G.SkillV = Cac
-    end
-})
-
-Farm:Section({ 
-    Title = "-= [ Melee & Sword Mastery ] =-",
-    TextXAlignment = "Center",
-    TextSize = 20
-})
-
-Farm:Dropdown({
-    Title = "Select Mastery",
-    Multi = false,
-    Value = "300",
-    Values = {"100","200","300","400","500","600"},
-    Callback = function(Cac)
-        _G.SelectMastery = Cac
-    end
-})
-
-Farm:Toggle({
-    Title = "Auto Farm All Melee Mastery",
-    Value = false,
-    Callback = function(Cac)
-        _G.FarmAllMelee = Cac
-        StopTween(_G.FarmAllMelee)
-    end
-})
-
-Farm:Toggle({
-    Title = "Auto Farm All Sword Mastery",
-    Value = false,
-    Callback = function(Cac)
-        _G.FarmAllSword = Cac
-        StopTween(_G.FarmAllSword)
-    end
-})
-
-Farm:Section({ 
-    Title = "-= [ Boss ] =-",
-    TextXAlignment = "Center",
-    TextSize = 20
-})
-
-Farm:Dropdown({
-    Title = "Select Farm Boss Mode",
-    Multi = false,
-    Value = "No Quest",
-    Values = {"No Quest","Get Quest"},
-    Callback = function(Cac)
-        _G.BossMode = Cac
-    end
-})
-
----local BossCheck = {}
----for i, v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
----    if (v.Name == "rip_indra" or v.Name == "Ice Admiral")
----            or (v.Name == "Saber Expert" or v.Name == "The Saw" or v.Name == "Greybeard" or v.Name == "Mob Leader" or v.Name == "The Gorilla King" or v.Name == "Bobby" or v.Name == "Yeti" or v.Name == "Vice Admiral" or v.Name == "Warden" or v.Name == "Chief Warden" or v.Name == "Swan" or v.Name == "Magma Admiral" or v.Name == "Fishman Lord" or v.Name == "Wysper" or v.Name == "Thunder God" or v.Name == "Cyborg")
----            or (v.Name == "Don Swan" or v.Name == "Diamond" or v.Name == "Jeremy" or v.Name == "Fajita" or v.Name == "Smoke Admiral" or v.Name == "Awakened Ice Admiral" or v.Name == "Tide Keeper" or v.Name == "Order" or v.Name == "Darkbeard" or v.Name == "Cursed Captain")
----            or (v.Name == "Stone" or v.Name == "Island Empress" or v.Name == "Kilo Admiral" or v.Name == "Captain Elephant" or v.Name == "Beautiful Pirate" or v.Name == "Cake Queen" or v.Name == "rip_indra True Form" or v.Name == "Longma" or v.Name == "Soul Reaper" or v.Name == "Cake Prince" or v.Name == "Dough King") then
----        table.insert(BossCheck, v.Name)
----    end
----end
-
-local BossName = Farm:Dropdown({
-    Title = "Select Boss",
-    Multi = false,
-    Value = "",
-    Values = BossCheck,
-    Callback = function(Cac)
-        _G.SelectBoss = Cac
-    end
-})
-
-Farm:Button({
-    Title = "Refesh Boss List",
-    Callback = function()
-        RefeshBoss()
-    end
-})
-
-function RefeshBoss()
-    BossName:Refresh(BossCheck,true)
-    local BossCheck = {}
-    for i, v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
-        if (v.Name == "rip_indra" or v.Name == "Ice Admiral")
-                or (v.Name == "Saber Expert" or v.Name == "The Saw" or v.Name == "Greybeard" or v.Name == "Mob Leader" or v.Name == "The Gorilla King" or v.Name == "Bobby" or v.Name == "Yeti" or v.Name == "Vice Admiral" or v.Name == "Warden" or v.Name == "Chief Warden" or v.Name == "Swan" or v.Name == "Magma Admiral" or v.Name == "Fishman Lord" or v.Name == "Wysper" or v.Name == "Thunder God" or v.Name == "Cyborg")
-                or (v.Name == "Don Swan" or v.Name == "Diamond" or v.Name == "Jeremy" or v.Name == "Fajita" or v.Name == "Smoke Admiral" or v.Name == "Awakened Ice Admiral" or v.Name == "Tide Keeper" or v.Name == "Order" or v.Name == "Darkbeard" or v.Name == "Cursed Captain")
-                or (v.Name == "Stone" or v.Name == "Island Empress" or v.Name == "Kilo Admiral" or v.Name == "Captain Elephant" or v.Name == "Beautiful Pirate" or v.Name == "Cake Queen" or v.Name == "rip_indra True Form" or v.Name == "Longma" or v.Name == "Soul Reaper" or v.Name == "Cake Prince" or v.Name == "Dough King") then
-            table.insert(BossCheck, v.Name)
-        end
-    end
-    BossName:Refresh(BossCheck)
+	-- SaveManager:BuildFolderTree()
 end
 
-Farm:Toggle({
-    Title = "Auto Farm Boss",
-    Value = false,
-    Callback = function(Cac)
-        _G.FarmBoss = Cac
-        StopTween(_G.FarmBoss)
-    end
-})
+local InterfaceManager = {} do
+	InterfaceManager.Folder = "FluentSettings"
+	InterfaceManager.Settings = {
+		Acrylic = true,
+		Transparency = true,
+		MenuKeybind = "M"
+	}
 
-Farm:Toggle({
-    Title = "Auto Farm All Boss",
-    Value = false,
-    Callback = function(Cac)
-        _G.FarmAllBoss = Cac
-        StopTween(_G.FarmAllBoss)
-    end
-})
+	function InterfaceManager:SetTheme(name)
+		InterfaceManager.Settings.Theme = name
+	end
 
-Farm:Section({ 
-    Title = "-= [ Mob ] =-",
-    TextXAlignment = "Center",
-    TextSize = 20
-})
+	function InterfaceManager:SetFolder(folder)
+		self.Folder = folder;
+		self:BuildFolderTree()
+	end
 
----if World1 then
----	MobList = {"Bandit","Monkey","Gorilla","Pirate","Brute","Desert Bandit","Desert Officer","Snow Bandit","Snowman","Chief Petty Officer","Sky Bandit","Dark Master","Toga Warrior","Gladiator","Military Soldier","Military Spy","Fishman Warrior","Fishman Commando","God's Guard","Shanda","Royal Squad","Royal Soldier","Galley Pirate","Galley Captain"}
----elseif World2 then
----	MobList = {"Raider","Mercenary","Swan Pirate","Factory Staff","Marine Lieutenant","Marine Captain","Zombie","Vampire","Snow Trooper","Winter Warrior","Lab Subordinate","Horned Warrior","Magma Ninja","Lava Pirate","Ship Deckhand","Ship Engineer","Ship Steward","Ship Officer","Arctic Warrior","Snow Lurker","Sea Soldier","Water Fighter"}
----elseif World3 then
-	MobList = {"Pirate Millionaire","Dragon Crew Warrior","Dragon Crew Archer","Female Islander","Giant Islander","Marine Commodore","Marine Rear Admiral","Fishman Raider","Fishman Captain","Forest Pirate","Mythological Pirate","Jungle Pirate","Musketeer Pirate","Reborn Skeleton","Living Zombie","Demonic Soul","Posessed Mummy","Peanut Scout","Peanut President","Ice Cream Chef","Ice Cream Commander","Cookie Crafter","Cake Guard","Baking Staff","Head Baker","Cocoa Warrior","Chocolate Bar Battler","Sweet Thief","Candy Rebel","Candy Pirate","Snow Demon","Isle Outlaw","Island Boy","Sun-kissed Warrior","Isle Champion"}
----end
+	function InterfaceManager:SetLibrary(library)
+		self.Library = library
+	end
 
-Farm:Dropdown({
-    Title = "Select Mob",
-    Multi = false,
-    Value = "",
-    Values = MobList,
-    Callback = function(Cac)
-        _G.SelectMob = Cac
-    end
-})
+	function InterfaceManager:BuildFolderTree()
+		local paths = {}
 
-Farm:Toggle({
-    Title = "Auto Farm Mob",
-    Value = false,
-    Callback = function(Cac)
-        _G.FarmMob = Cac
-        StopTween(_G.FarmMob)
-    end
-})
+		local parts = self.Folder:split("/")
+		for idx = 1, #parts do
+			paths[#paths + 1] = table.concat(parts, "/", 1, idx)
+		end
 
-Farm:Section({ 
-    Title = "-= [ Material ] =-",
-    TextXAlignment = "Center",
-    TextSize = 20
-})
+		table.insert(paths, self.Folder)
+		table.insert(paths, self.Folder .. "/")
 
----if World1 then
----    MaterialList = {"Scrap Metal","Leather","Angel Wings","Magma Ore","Fish Tail"}
----elseif World2 then
----    MaterialList = {"Scrap Metal","Leather","Radioactive Material","Ectoplasm","Mystic Droplet","Magma Ore","Vampire Fang"}
----elseif World3 then
-    MaterialList = {"Scrap Metal","Leather","Demonic Wisp","Conjured Cocoa","Dragon Scale","Gunpowder","Fish Tail","Mini Tusk"}
----end
+		for i = 1, #paths do
+			local str = paths[i]
+			if not isfolder(str) then
+				makefolder(str)
+			end
+		end
+	end
 
-Farm:Dropdown({
-    Title = "Select Material",
-    Multi = false,
-    Value = "",
-    Values = MaterialList,
-    Callback = function(Cac)
-        _G.SelectMaterial = Cac
-    end
-})
+	function InterfaceManager:SaveSettings()
+		writefile(self.Folder .. "/options.json", httpService:JSONEncode(InterfaceManager.Settings))
+	end
 
-Farm:Toggle({
-    Title = "Auto Farm Material",
-    Value = false,
-    Callback = function(Cac)
-        _G.FarmMaterial = Cac
-        StopTween(_G.FarmMaterial)
-    end
-})
+	function InterfaceManager:LoadSettings()
+		local path = self.Folder .. "/options.json"
+		if isfile(path) then
+			local data = readfile(path)
+			local success, decoded = pcall(httpService.JSONDecode, httpService, data)
 
-WindUI:Notify({
-    Title = "Tinh Linh Hub",
-    Content = "Load Script Successfully !",
-    Duration = 5
-})
+			if success then
+				for i, v in next, decoded do
+					InterfaceManager.Settings[i] = v
+				end
+			end
+		end
+	end
+
+	function InterfaceManager:BuildInterfaceSection(tab)
+		assert(self.Library, "Must set InterfaceManager.Library")
+		local Library = self.Library
+		local Settings = InterfaceManager.Settings
+
+		InterfaceManager:LoadSettings()
+
+		local section = tab:AddSection("Interface")
+		local InterfaceTheme = section:AddDropdown("InterfaceTheme", {
+			Title = "Theme",
+			Description = "Changes the interface theme.",
+			Values = Library.Themes,
+			Default = self.Library.Theme,
+			Callback = function(Value)
+				Library:SetTheme(Value)
+				Settings.Theme = Value
+				InterfaceManager:SaveSettings()
+			end
+		})
+
+		InterfaceTheme:SetValue(Settings.Theme)
+
+		if Library.UseAcrylic then
+			section:AddToggle("AcrylicToggle", {
+				Title = "Acrylic",
+				Description = "The blurred background requires graphic quality 8+",
+				Default = Settings.Acrylic,
+				Callback = function(Value)
+					Library:ToggleAcrylic(Value)
+					Settings.Acrylic = Value
+					InterfaceManager:SaveSettings()
+				end
+			})
+		end
+
+		section:AddToggle("TransparentToggle", {
+			Title = "Transparency",
+			Description = "Makes the interface transparent.",
+			Default = Settings.Transparency,
+			Callback = function(Value)
+				Library:ToggleTransparency(Value)
+				Settings.Transparency = Value
+				InterfaceManager:SaveSettings()
+			end
+		})
+
+		local MenuKeybind = section:AddKeybind("MenuKeybind", { Title = "Minimize Bind", Default = Library.MinimizeKey.Name or Settings.MenuKeybind })
+		MenuKeybind:OnChanged(function()
+			Settings.MenuKeybind = MenuKeybind.Value
+			InterfaceManager:SaveSettings()
+		end)
+		Library.MinimizeKeybind = MenuKeybind
+	end
+end
+
+function Library:CreateWindow(Config)
+	assert(Config.Title, "Window - Missing Title")
+
+	if Library.Window then
+		print("You cannot create more than one window.")
+		return
+	end
+
+	Library.MinimizeKey = Config.MinimizeKey or Enum.KeyCode.LeftControl
+	Library.UseAcrylic = Config.Acrylic or false
+	Library.Acrylic = Config.Acrylic or false
+	Library.Theme = Config.Theme or "Dark"
+	if Config.Acrylic then
+		Acrylic.init()
+	end
+
+	local Window = Components.Window({
+		Parent = GUI,
+		Size = Config.Size,
+		Title = Config.Title,
+		SubTitle = Config.SubTitle,
+		TabWidth = Config.TabWidth,
+	})
+
+	Library.Window = Window
+	InterfaceManager:SetTheme(Config.Theme)
+	Library:SetTheme(Config.Theme)
+
+	return Window
+end
+
+function Library:SetTheme(Value)
+	if Library.Window and table.find(Library.Themes, Value) then
+		Library.Theme = Value
+		Creator.UpdateTheme()
+	end
+end
+
+function Library:Destroy()
+	if Library.Window then
+		Library.Unloaded = true
+		if Library.UseAcrylic then
+			Library.Window.AcrylicPaint.Model:Destroy()
+		end
+		Creator.Disconnect()
+		Library.GUI:Destroy()
+	end
+end
+
+function Library:ToggleAcrylic(Value)
+	if Library.Window then
+		if Library.UseAcrylic then
+			Library.Acrylic = Value
+			Library.Window.AcrylicPaint.Model.Transparency = Value and 0.98 or 1
+			if Value then
+				Acrylic.Enable()
+			else
+				Acrylic.Disable()
+			end
+		end
+	end
+end
+
+function Library:ToggleTransparency(Value)
+	if Library.Window then
+		Library.Window.AcrylicPaint.Frame.Background.BackgroundTransparency = Value and 0.35 or 0
+	end
+end
+
+function Library:Notify(Config)
+	return NotificationModule:New(Config)
+end
+
+if getgenv then
+	getgenv().Fluent = Library
+else
+	Fluent = Library
+end
+
+return Library, SaveManager, InterfaceManager
+
+--Lots of Love Prime Andy....
