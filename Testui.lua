@@ -1637,8 +1637,9 @@ function OrionLib:MakeWindow(WindowConfig)
 			}), {
 				AddThemeObject(SetProps(MakeElement("Label", SectionConfig.Name, 14), {
 					Size = UDim2.new(1, -12, 0, 16),
-					Position = UDim2.new(0, 0, 0, 0),
-					Font = Enum.Font.FredokaOne
+					Position = UDim2.new(0, 0, 0, 3),
+					Font = Enum.Font.FredokaOne,
+					TextYAlignment = Enum.TextYAlignment.Center
 				}), "TextDark"),
 				SetChildren(SetProps(MakeElement("TFrame"), {
 					AnchorPoint = Vector2.new(0, 0),
