@@ -1639,6 +1639,7 @@ function OrionLib:MakeWindow(WindowConfig)
                     local label = MakeElement("Label", SectionConfig.Name, 17)
                     SetProps(label, {
                         Size = UDim2.new(1, -12, 0, 16),
+                        Position = UDim2.new(0, 0, 0, 3),
                         Font = Enum.Font.FredokaOne
                     })
                     label.TextYAlignment = Enum.TextYAlignment.Center
