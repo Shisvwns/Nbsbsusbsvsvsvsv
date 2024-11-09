@@ -1628,48 +1628,45 @@ function OrionLib:MakeWindow(WindowConfig)
 
 		local ElementFunction = {}
 
-function ElementFunction:AddSection(SectionConfig)
-    SectionConfig.Name = SectionConfig.Name or "Section"
+        function ElementFunction:AddSection(SectionConfig)
+            SectionConfig.Name = SectionConfig.Name or "Section"
 
-    local SectionFrame = SetChildren(SetProps(MakeElement("TFrame"), {
-        Size = UDim2.new(1, 0, 0, 26),
-        Parent = Container
-    }), {
-        -- Tạo phần tử Label và gán các thuộc tính căn chỉnh sau khi tạo
-        AddThemeObject((function()
-            local label = MakeElement("Label", SectionConfig.Name, 14)
-            SetProps(label, {
-                Size = UDim2.new(1, -12, 0, 16),
-                Position = UDim2.new(0, 0, 0, 3),
-                Font = Enum.Font.FredokaOne
-            })
-            -- Đặt các thuộc tính căn chỉnh
-            label.TextYAlignment = Enum.TextYAlignment.Center
-            label.TextXAlignment = Enum.TextXAlignment.Center
-            return label
-        end)(), "TextDark"),
+            local SectionFrame = SetChildren(SetProps(MakeElement("TFrame"), {
+                Size = UDim2.new(1, 0, 0, 26),
+                Parent = Container
+            }), {
+                AddThemeObject((function()
+                    local label = MakeElement("Label", SectionConfig.Name, 17)
+                    SetProps(label, {
+                        Size = UDim2.new(1, -12, 0, 16),
+                        Font = Enum.Font.FredokaOne
+                    })
+                    label.TextYAlignment = Enum.TextYAlignment.Center
+                    label.TextXAlignment = Enum.TextXAlignment.Center
+                    return label
+                end)(), "TextDark"),
         
-        SetChildren(SetProps(MakeElement("TFrame"), {
-            AnchorPoint = Vector2.new(0, 0),
-            Size = UDim2.new(1, 0, 1, -24),
-            Position = UDim2.new(0, 0, 0, 23),
-            Name = "Holder"
-        }), {
-            MakeElement("List", 0, 6)
-        }),
-    })
+                SetChildren(SetProps(MakeElement("TFrame"), {
+                    AnchorPoint = Vector2.new(0, 0),
+                    Size = UDim2.new(1, 0, 1, -24),
+                    Position = UDim2.new(0, 0, 0, 23),
+                    Name = "Holder"
+                }), {
+                    MakeElement("List", 0, 6)
+                }),
+            })
 
-    AddConnection(SectionFrame.Holder.UIListLayout:GetPropertyChangedSignal("AbsoluteContentSize"), function()
-        SectionFrame.Size = UDim2.new(1, 0, 0, SectionFrame.Holder.UIListLayout.AbsoluteContentSize.Y + 31)
-        SectionFrame.Holder.Size = UDim2.new(1, 0, 0, SectionFrame.Holder.UIListLayout.AbsoluteContentSize.Y)
-    end)
+            AddConnection(SectionFrame.Holder.UIListLayout:GetPropertyChangedSignal("AbsoluteContentSize"), function()
+                SectionFrame.Size = UDim2.new(1, 0, 0, SectionFrame.Holder.UIListLayout.AbsoluteContentSize.Y + 31)
+                SectionFrame.Holder.Size = UDim2.new(1, 0, 0, SectionFrame.Holder.UIListLayout.AbsoluteContentSize.Y)
+            end)
 
-    local SectionFunction = {}
-    for i, v in next, GetElements(SectionFrame.Holder) do
-        SectionFunction[i] = v
-    end
-    return SectionFunction
-end
+            local SectionFunction = {}
+            for i, v in next, GetElements(SectionFrame.Holder) do
+                SectionFunction[i] = v
+            end
+            return SectionFunction
+        end
 
 		for i, v in next, GetElements(Container) do
 			ElementFunction[i] = v
