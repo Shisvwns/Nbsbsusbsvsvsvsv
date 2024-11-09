@@ -1408,7 +1408,7 @@ function OrionLib:MakeWindow(WindowConfig)
 				}), "Second")
 
 				AddConnection(TextboxActual:GetPropertyChangedSignal("Text"), function()
-					TextContainer.Size = UDim2.new(0, TextboxActual.TextBounds.X + 16, 0, 24)
+					--TextContainer.Size = UDim2.new(0, TextboxActual.TextBounds.X + 16, 0, 24)
 					TweenService:Create(TextContainer, TweenInfo.new(0.45, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Size = UDim2.new(0, TextboxActual.TextBounds.X + 16, 0, 24)}):Play()
 				end)
 
@@ -1628,39 +1628,42 @@ function OrionLib:MakeWindow(WindowConfig)
 
 		local ElementFunction = {}
 
-		function ElementFunction:AddSection(SectionConfig)
-			SectionConfig.Name = SectionConfig.Name or "Section"
+function ElementFunction:AddSection(SectionConfig)
+    SectionConfig.Name = SectionConfig.Name or "Section"
 
-			local SectionFrame = SetChildren(SetProps(MakeElement("TFrame"), {
-				Size = UDim2.new(1, 0, 0, 26),
-				Parent = Container
-			}), {
-				AddThemeObject(SetProps(MakeElement("Label", SectionConfig.Name, 14), {
-					Size = UDim2.new(1, -12, 0, 16),
-					Position = UDim2.new(0, 0, 0, 3),
-					Font = Enum.Font.FredokaOne
-				}), "TextDark"),
-				SetChildren(SetProps(MakeElement("TFrame"), {
-					AnchorPoint = Vector2.new(0, 0),
-					Size = UDim2.new(1, 0, 1, -24),
-					Position = UDim2.new(0, 0, 0, 23),
-					Name = "Holder"
-				}), {
-					MakeElement("List", 0, 6)
-				}),
-			})
+    local SectionFrame = SetChildren(SetProps(MakeElement("TFrame"), {
+        Size = UDim2.new(1, 0, 0, 26),
+        Position = UDim2.new(0.5, 0, 0.5, 0), -- Đặt vị trí giữa trục X và Y
+        AnchorPoint = Vector2.new(0.5, 0.5), -- Thiết lập điểm neo để căn giữa
+        Parent = Container
+    }), {
+        AddThemeObject(SetProps(MakeElement("Label", SectionConfig.Name, 14), {
+            Size = UDim2.new(1, -12, 0, 16),
+            Position = UDim2.new(0.5, 0, 0, 3), -- Căn giữa theo trục X
+            AnchorPoint = Vector2.new(0.5, 0), -- Neo giữa theo trục X
+            Font = Enum.Font.FredokaOne
+        }), "TextDark"),
+        SetChildren(SetProps(MakeElement("TFrame"), {
+            AnchorPoint = Vector2.new(0.5, 0), -- Neo giữa theo trục X
+            Size = UDim2.new(1, 0, 1, -24),
+            Position = UDim2.new(0.5, 0, 0, 23), -- Căn giữa theo trục X
+            Name = "Holder"
+        }), {
+            MakeElement("List", 0, 6)
+        }),
+    })
 
-			AddConnection(SectionFrame.Holder.UIListLayout:GetPropertyChangedSignal("AbsoluteContentSize"), function()
-				SectionFrame.Size = UDim2.new(1, 0, 0, SectionFrame.Holder.UIListLayout.AbsoluteContentSize.Y + 31)
-				SectionFrame.Holder.Size = UDim2.new(1, 0, 0, SectionFrame.Holder.UIListLayout.AbsoluteContentSize.Y)
-			end)
+    AddConnection(SectionFrame.Holder.UIListLayout:GetPropertyChangedSignal("AbsoluteContentSize"), function()
+        SectionFrame.Size = UDim2.new(1, 0, 0, SectionFrame.Holder.UIListLayout.AbsoluteContentSize.Y + 31)
+        SectionFrame.Holder.Size = UDim2.new(1, 0, 0, SectionFrame.Holder.UIListLayout.AbsoluteContentSize.Y)
+    end)
 
-			local SectionFunction = {}
-			for i, v in next, GetElements(SectionFrame.Holder) do
-				SectionFunction[i] = v
-			end
-			return SectionFunction
-		end
+    local SectionFunction = {}
+    for i, v in next, GetElements(SectionFrame.Holder) do
+        SectionFunction[i] = v
+    end
+    return SectionFunction
+end
 
 		for i, v in next, GetElements(Container) do
 			ElementFunction[i] = v
