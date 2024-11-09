@@ -1637,13 +1637,13 @@ function OrionLib:MakeWindow(WindowConfig)
 			}), {
 				AddThemeObject(SetProps(MakeElement("Label", SectionConfig.Name, 14), {
 					Size = UDim2.new(1, -12, 0, 16),
-					Position = UDim2.new(0.5, 0, 0, 3),
+					Position = UDim2.new(0, 0, 0, 3),
 					Font = Enum.Font.FredokaOne
 				}), "TextDark"),
 				SetChildren(SetProps(MakeElement("TFrame"), {
-					AnchorPoint = Vector2.new(0, 0),
+					AnchorPoint = Vector2.new(0.5, 0.5),
 					Size = UDim2.new(1, 0, 1, -24),
-					Position = UDim2.new(0, 0, 0, 23),
+					Position = UDim2.new(0.5, 0, 0.5, 23),
 					Name = "Holder"
 				}), {
 					MakeElement("List", 0, 6)
