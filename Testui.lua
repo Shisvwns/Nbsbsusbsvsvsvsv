@@ -818,7 +818,7 @@ function ElementFunction:AddParagraph(Text, Content)
     Text = Text or "Text"
     Content = Content or "Content"
 
-    -- Tạo đối tượng ParagraphFrame với các thuộc tính hợp lệ
+    -- Tạo đối tượng ParagraphFrame
     local ParagraphFrame = AddThemeObject(SetChildren(SetProps(MakeElement("RoundFrame", Color3.fromRGB(255, 255, 255), 0, 5), {
         Size = UDim2.new(1, 0, 0, 30),
         BackgroundTransparency = 0.7,
@@ -840,20 +840,25 @@ function ElementFunction:AddParagraph(Text, Content)
         AddThemeObject(MakeElement("Stroke"), "Stroke")
     }), "Second")
 
-    -- Kiểm tra TextBounds trước khi cập nhật
+    -- Kết nối sự kiện thay đổi thuộc tính Text với kiểm tra bổ sung
     AddConnection(ParagraphFrame.Content:GetPropertyChangedSignal("Text"), function()
-        if ParagraphFrame.Content.TextBounds then
+        if ParagraphFrame.Content.TextBounds and ParagraphFrame.Content.TextBounds.Y > 0 then
             ParagraphFrame.Content.Size = UDim2.new(1, -24, 0, ParagraphFrame.Content.TextBounds.Y)
             ParagraphFrame.Size = UDim2.new(1, 0, 0, ParagraphFrame.Content.TextBounds.Y + 35)
+        else
+            warn("TextBounds không có giá trị hợp lệ.")
         end
     end)
 
+    -- Gán nội dung cho phần Content
     ParagraphFrame.Content.Text = Content
 
+    -- Hàm để thay đổi nội dung
     local ParagraphFunction = {}
     function ParagraphFunction:Set(ToChange)
         ParagraphFrame.Content.Text = ToChange
     end
+
     return ParagraphFunction
 end
 			function ElementFunction:AddButton(ButtonConfig)
