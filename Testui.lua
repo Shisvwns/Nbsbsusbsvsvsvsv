@@ -1643,7 +1643,7 @@ function OrionLib:MakeWindow(WindowConfig)
 				SetChildren(SetProps(MakeElement("TFrame"), {
 					AnchorPoint = Vector2.new(0, 0),
 					Size = UDim2.new(1, 0, 1, -24),
-					Position = UDim2.new(0, 0, 0, 0),
+					Position = UDim2.new(0, 0, 3, 0),
 					Name = "Holder"
 				}), {
 					MakeElement("List", 0, 6)
