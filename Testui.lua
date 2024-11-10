@@ -663,7 +663,7 @@ function OrionLib:MakeWindow(WindowConfig)
 
 	AddConnection(MinimizeBtn.MouseButton1Up, function()
 		if Minimized then
-			TweenService:Create(MainWindow, TweenInfo.new(0.5, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Size = UDim2.new(0, 615, 0, 344)})
+			TweenService:Create(MainWindow, TweenInfo.new(0, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Size = UDim2.new(0, 615, 0, 344)}):Play()
 			MinimizeBtn.Ico.Image = "rbxassetid://7072719338"
 			wait(.02)
 			MainWindow.ClipsDescendants = false
@@ -674,7 +674,7 @@ function OrionLib:MakeWindow(WindowConfig)
 			WindowTopBarLine.Visible = false
 			MinimizeBtn.Ico.Image = "rbxassetid://7072720870"
 
-			TweenService:Create(MainWindow, TweenInfo.new(0.5, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Size = UDim2.new(0, WindowName.TextBounds.X + 140, 0, 50)})
+			TweenService:Create(MainWindow, TweenInfo.new(0, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Size = UDim2.new(0, WindowName.TextBounds.X + 140, 0, 50)}):Play()
 			wait(0.1)
 			WindowStuff.Visible = false
 		end
