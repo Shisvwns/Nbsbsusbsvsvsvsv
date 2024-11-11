@@ -706,15 +706,14 @@ function OrionLib:MakeWindow(WindowConfig)
 	}), "Main")
 	
 	local function Open()
-        TweenService:Create(UIScale, TweenInfo.new(0.1), {Scale=1}):Play()
-        TweenService:Create(MainWindow, TweenInfo.new(0.1), {GroupTransparency = 0}):Play()
+        TweenService:Create(UIScale, TweenInfo.new(0), {Scale=1}):Play()
+        TweenService:Create(MainWindow, TweenInfo.new(0), {GroupTransparency = 0}):Play()
         MainWindow.Visible = true
         DragFrame.Visible = false
 	end
 	local function Close()
-        TweenService:Create(UIScale, TweenInfo.new(0.1), {Scale=.9}):Play()
-        TweenService:Create(MainWindow, TweenInfo.new(0.1), {GroupTransparency = 1}):Play()
-        task.wait(.1)
+        TweenService:Create(UIScale, TweenInfo.new(0), {Scale=.9}):Play()
+        TweenService:Create(MainWindow, TweenInfo.new(0), {GroupTransparency = 1}):Play()
         MainWindow.Visible = false
         DragFrame.Visible = true
 	end
@@ -1449,8 +1448,8 @@ function OrionLib:MakeWindow(WindowConfig)
 
 				local TextboxActual = AddThemeObject(Create("TextBox", {
 					Size = UDim2.new(1, 0, 1, 0),
-					Position = UDim2.new(0.5, 0, 0, 0),
-					AnchorPoint = Vector2.new(0.5, 0),
+					Position = UDim2.new(0.1, 0, 0, 0),
+					AnchorPoint = Vector2.new(0.1, 0),
 					BackgroundTransparency = 1,
 					TextColor3 = Color3.fromRGB(255, 255, 255),
 					PlaceholderColor3 = Color3.fromRGB(210,210,210),
