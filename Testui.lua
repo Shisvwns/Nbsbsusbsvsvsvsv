@@ -46,6 +46,7 @@ end
 
 local Orion = Instance.new("ScreenGui")
 Orion.Name = "Orion"
+Orion.ZIndexBehavior = "Sibling"
 if syn then
 	syn.protect_gui(Orion)
 	Orion.Parent = game.CoreGui
@@ -168,7 +169,7 @@ local function Round(Number, Factor)
 end
 
 local function ReturnProperty(Object)
-	if Object:IsA("Frame") or Object:IsA("TextButton") then
+	if Object:IsA("Frame") or Object:IsA("TextButton") or Object:IsA("CanvasGroup") then
 		return "BackgroundColor3"
 	end
 	if Object:IsA("ScrollingFrame") then
@@ -312,6 +313,18 @@ CreateElement("RoundFrame", function(Color, Scale, Offset)
 	return Frame
 end)
 
+CreateElement("RoundCanvasFrame", function(Color, Scale, Offset)
+	local Frame = Create("CanvasGroup", {
+		BackgroundColor3 = Color or Color3.fromRGB(255, 255, 255),
+		BorderSizePixel = 0
+	}, {
+		Create("UICorner", {
+			CornerRadius = UDim.new(Scale, Offset)
+		})
+	})
+	return Frame
+end)
+
 CreateElement("Button", function()
 	local Button = Create("TextButton", {
 		Text = "",
@@ -355,6 +368,13 @@ CreateElement("ImageButton", function(ImageID)
 		BackgroundTransparency = 1
 	})
 	return Image
+end)
+
+CreateElement("UIScale", function(scale)
+	local UIScale = Create("UIScale", {
+		Scale = scale
+	})
+	return UIScale
 end)
 
 CreateElement("Label", function(Text, TextSize, Transparency)
@@ -500,23 +520,24 @@ function OrionLib:MakeWindow(WindowConfig)
 		TabHolder.CanvasSize = UDim2.new(0, 0, 0, TabHolder.UIListLayout.AbsoluteContentSize.Y + 16)
 	end)
 
-	local CloseBtn = SetChildren(SetProps(MakeElement("Button"), {
-		Size = UDim2.new(0.5, 0, 1, 0),
-		Position = UDim2.new(0.5, 0, 0, 0),
+--	local CloseBtn = SetChildren(SetProps(MakeElement("Button"), {
+--		Size = UDim2.new(0.5, 0, 1, 0),
+--		Position = UDim2.new(0.5, 0, 0, 0),
+--		BackgroundTransparency = 1
+--	}), {
+--		AddThemeObject(SetProps(MakeElement("Image", "rbxassetid://7072725342"), {
+--			Position = UDim2.new(0, 9, 0, 6),
+--			Size = UDim2.new(0, 18, 0, 18)
+--		}), "Text")
+--	})
+
+	local MinimizeBtn = SetChildren(SetProps(MakeElement("Button"), {
+		Size = UDim2.new(0, 30, 0, 30),
 		BackgroundTransparency = 1
 	}), {
 		AddThemeObject(SetProps(MakeElement("Image", "rbxassetid://7072725342"), {
-			Position = UDim2.new(0, 9, 0, 6),
-			Size = UDim2.new(0, 18, 0, 18)
-		}), "Text")
-	})
-
-	local MinimizeBtn = SetChildren(SetProps(MakeElement("Button"), {
-		Size = UDim2.new(0.5, 0, 1, 0),
-		BackgroundTransparency = 1
-	}), {
-		AddThemeObject(SetProps(MakeElement("Image", "rbxassetid://7072719338"), {
-			Position = UDim2.new(0, 9, 0, 6),
+			Position = UDim2.new(0.5, 0, 0.5, 0),
+			AnchorPoint = Vector2.new(0.5,0.5),
 			Size = UDim2.new(0, 18, 0, 18),
 			Name = "Ico"
 		}), "Text")
@@ -597,10 +618,17 @@ function OrionLib:MakeWindow(WindowConfig)
 		Position = UDim2.new(0, 0, 1, -1)
 	}), "Stroke")
 
-	local MainWindow = AddThemeObject(SetChildren(SetProps(MakeElement("RoundFrame", Color3.fromRGB(255, 255, 255), 0, 10), {
+    local UIScale = SetProps(MakeElement("UIScale"), {
+	    Scale = .9, -- 1
+	})
+
+	local MainWindow = AddThemeObject(SetChildren(SetProps(MakeElement("RoundCanvasFrame", Color3.fromRGB(255, 255, 255), 0, 10), {
 		Parent = Orion,
-		Position = UDim2.new(0.5, -307, 0.5, -172),
+		Position = UDim2.new(0.5, 0, 0.5, 0),
 		Size = UDim2.new(0, 615, 0, 344),
+		AnchorPoint = Vector2.new(0.5,0.5),
+		GroupTransparency = 1, -- 0
+		Active = true,
 		ClipsDescendants = true
 	}), {
 		--SetProps(MakeElement("Image", "rbxassetid://3523728077"), {
@@ -610,6 +638,7 @@ function OrionLib:MakeWindow(WindowConfig)
 		--	ImageColor3 = Color3.fromRGB(33, 33, 33),
 		--	ImageTransparency = 0.7
 		--}),
+		UIScale,
 		SetChildren(SetProps(MakeElement("TFrame"), {
 			Size = UDim2.new(1, 0, 0, 50),
 			Name = "TopBar"
@@ -617,21 +646,82 @@ function OrionLib:MakeWindow(WindowConfig)
 			WindowName,
 			WindowTopBarLine,
 			AddThemeObject(SetChildren(SetProps(MakeElement("RoundFrame", Color3.fromRGB(255, 255, 255), 0, 7), {
-				Size = UDim2.new(0, 70, 0, 30),
-				Position = UDim2.new(1, -90, 0, 10)
+				Size = UDim2.new(0, 30, 0, 30),
+				Position = UDim2.new(1, -20, 0, 10),
+				AnchorPoint = Vector2.new(1,0),
 			}), {
 				AddThemeObject(MakeElement("Stroke"), "Stroke"),
-				AddThemeObject(SetProps(MakeElement("Frame"), {
-					Size = UDim2.new(0, 1, 1, 0),
-					Position = UDim2.new(0.5, 0, 0, 0)
-				}), "Stroke"),
-				CloseBtn,
+				-- AddThemeObject(SetProps(MakeElement("Frame"), {
+				--	Size = UDim2.new(0, 1, 1, 0),
+				--	Position = UDim2.new(0.5, 0, 0, 0)
+				-- }), "Stroke"),
+				--CloseBtn,
 				MinimizeBtn
 			}), "Second"),
 		}),
 		DragPoint,
 		WindowStuff
 	}), "Main")
+	
+	local DragFrame = AddThemeObject(SetChildren(SetProps(MakeElement("RoundFrame", Color3.new(1,1,1), 0, 10), {
+	    AutomaticSize = "XY",
+	    Parent = Orion,
+	    Active = true,
+	    Visible = false
+	}), {
+	    Create("UIPadding", {
+	        PaddingTop = UDim.new(0,17),
+	        PaddingLeft = UDim.new(0,25),
+	        PaddingRight = UDim.new(0,25),
+	        PaddingBottom = UDim.new(0,17),
+	    }),
+	    AddThemeObject(SetProps(MakeElement("Image", "rbxassetid://16730867128"), {
+	        Size = UDim2.new(0,24,0,24),
+	        BackgroundTransparency = 1,
+	    }), "Text"),
+	    AddThemeObject(SetProps(MakeElement("Frame"), {
+	        Size = UDim2.new(0,1,0,24),
+	        BackgroundTransparency = .65,
+	        BorderSizePixel = 0,
+	    }), "Text"),
+	    SetChildren(SetProps(MakeElement("Button"), {
+            Size = UDim2.new(0,0,0,0),
+            AutomaticSize = "XY",
+            Text = "",
+            Position = UDim2.new(0, 0, 0, 0),
+        }), {
+            AddThemeObject(SetProps(MakeElement("Label", WindowConfig.Name, 20), {
+                AutomaticSize = "XY",
+                Font = Enum.Font.GothamBlack,
+                TextSize = 20,
+                BackgroundTransparency = 1,
+            }), "Text")
+        }),
+        SetProps(MakeElement("List"), {
+            SortOrder = "LayoutOrder",
+            Padding = UDim.new(0,10),
+            VerticalAlignment = "Center",
+            FillDirection = "Horizontal",
+        })
+	}), "Main")
+	
+	local function Open()
+        TweenService:Create(UIScale, TweenInfo.new(0.1), {Scale=1}):Play()
+        TweenService:Create(MainWindow, TweenInfo.new(0.1), {GroupTransparency = 0}):Play()
+        MainWindow.Visible = true
+        DragFrame.Visible = false
+	end
+	local function Close()
+        TweenService:Create(UIScale, TweenInfo.new(0.1), {Scale=.9}):Play()
+        TweenService:Create(MainWindow, TweenInfo.new(0.1), {GroupTransparency = 1}):Play()
+        task.wait(.1)
+        MainWindow.Visible = false
+        DragFrame.Visible = true
+	end
+	
+	AddConnection(DragFrame.TextButton.MouseButton1Up, function()
+	    Open()
+	end)
 
 	if WindowConfig.ShowIcon then
 		WindowName.Position = UDim2.new(0, 50, 0, -24)
@@ -643,42 +733,28 @@ function OrionLib:MakeWindow(WindowConfig)
 	end
 
 	AddDraggingFunctionality(DragPoint, MainWindow)
+	AddDraggingFunctionality(DragFrame.ImageLabel, DragFrame)
 
-	AddConnection(CloseBtn.MouseButton1Up, function()
-		MainWindow.Visible = false
-		UIHidden = true
-		OrionLib:MakeNotification({
-			Name = "Interface Hidden",
-			Content = "Tap RightShift to reopen the interface",
-			Time = 5
-		})
-		WindowConfig.CloseCallback()
-	end)
+--	AddConnection(CloseBtn.MouseButton1Up, function()
+--		Close()
+--		UIHidden = true
+--		OrionLib:MakeNotification({
+--			Name = "Interface Hidden",
+--			Content = "Tap RightShift to reopen the interface",
+--			Time = 5
+--		})
+--		WindowConfig.CloseCallback()
+--	end)
 
 	AddConnection(UserInputService.InputBegan, function(Input)
 		if Input.KeyCode == Enum.KeyCode.RightShift and UIHidden then
-			MainWindow.Visible = true
+			Open()
+			UIHidden = false
 		end
 	end)
 
 	AddConnection(MinimizeBtn.MouseButton1Up, function()
-		if Minimized then
-			TweenService:Create(MainWindow, TweenInfo.new(0.5, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Size = UDim2.new(0, 615, 0, 344)}):Play()
-			MinimizeBtn.Ico.Image = "rbxassetid://7072719338"
-			wait(.02)
-			MainWindow.ClipsDescendants = false
-			WindowStuff.Visible = true
-			WindowTopBarLine.Visible = true
-		else
-			MainWindow.ClipsDescendants = true
-			WindowTopBarLine.Visible = false
-			MinimizeBtn.Ico.Image = "rbxassetid://7072720870"
-
-			TweenService:Create(MainWindow, TweenInfo.new(0.5, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Size = UDim2.new(0, WindowName.TextBounds.X + 140, 0, 50)}):Play()
-			wait(0.1)
-			WindowStuff.Visible = false
-		end
-		Minimized = not Minimized
+		Close()
 	end)
 
 	local function LoadSequence()
@@ -709,7 +785,7 @@ function OrionLib:MakeWindow(WindowConfig)
 		TweenService:Create(LoadSequenceText, TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextTransparency = 0}):Play()
 		wait(2)
 		TweenService:Create(LoadSequenceText, TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextTransparency = 1}):Play()
-		MainWindow.Visible = true
+		Open()
 		LoadSequenceLogo:Destroy()
 		LoadSequenceText:Destroy()
 	end
@@ -1378,13 +1454,13 @@ function OrionLib:MakeWindow(WindowConfig)
 					PlaceholderColor3 = Color3.fromRGB(210,210,210),
 					PlaceholderText = "Input",
 					Font = Enum.Font.FredokaOne,
-					TextXAlignment = Enum.TextXAlignment.Center,
+					TextXAlignment = Enum.TextXAlignment.Left,
 					TextSize = 14,
 					ClearTextOnFocus = false
 				}), "Text")
 
 				local TextContainer = AddThemeObject(SetChildren(SetProps(MakeElement("RoundFrame", Color3.fromRGB(255, 255, 255), 0, 4), {
-					Size = UDim2.new(0, 24, 0, 24),
+					Size = UDim2.new(0, 24*3.9, 0, 24),
 					Position = UDim2.new(1, -12, 0.5, 0),
 					AnchorPoint = Vector2.new(1, 0.5)
 				}), {
@@ -1407,10 +1483,10 @@ function OrionLib:MakeWindow(WindowConfig)
 					Click
 				}), "Second")
 
-				AddConnection(TextboxActual:GetPropertyChangedSignal("Text"), function()
-					--TextContainer.Size = UDim2.new(0, TextboxActual.TextBounds.X + 16, 0, 24)
-					TweenService:Create(TextContainer, TweenInfo.new(0.45, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Size = UDim2.new(0, TextboxActual.TextBounds.X + 16, 0, 24)}):Play()
-				end)
+				-- AddConnection(TextboxActual:GetPropertyChangedSignal("Text"), function()
+				--	  TextContainer.Size = UDim2.new(0, TextboxActual.TextBounds.X + 16, 0, 24)
+				--	  TweenService:Create(TextContainer, TweenInfo.new(0.45, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Size = UDim2.new(0, TextboxActual.TextBounds.X + 16, 0, 24)}):Play()
+				-- end)
 
 				AddConnection(TextboxActual.FocusLost, function()
 					TextboxConfig.Callback(TextboxActual.Text)
