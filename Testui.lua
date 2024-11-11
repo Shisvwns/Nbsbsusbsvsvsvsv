@@ -1456,6 +1456,7 @@ function OrionLib:MakeWindow(WindowConfig)
 					PlaceholderColor3 = Color3.fromRGB(210,210,210),
 					PlaceholderText = "Input",
 					Font = Enum.Font.FredokaOne,
+					TextXAlignment = Enum.TextXAlignment.Left,
 					TextSize = 14,
 					ClearTextOnFocus = false
 				}), "Text")
