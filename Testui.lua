@@ -594,7 +594,7 @@ function OrionLib:MakeWindow(WindowConfig)
 			}),
 			AddThemeObject(SetProps(MakeElement("Label", LocalPlayer.DisplayName, WindowConfig.HidePremium and 14), {
 				Size = UDim2.new(1, -60, 0, 13),
-				Position = WindowConfig.HidePremium and UDim2.new(0, 50, 0, 19),
+				Position = WindowConfig.HidePremium and UDim2.new(0, 50, 1, 19),
 				Font = Enum.Font.FredokaOne,
 				ClipsDescendants = true
 			}), "Text"),
