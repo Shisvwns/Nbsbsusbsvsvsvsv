@@ -592,9 +592,9 @@ function OrionLib:MakeWindow(WindowConfig)
 				AddThemeObject(MakeElement("Stroke"), "Stroke"),
 				MakeElement("Corner", 1)
 			}),
-			AddThemeObject(SetProps(MakeElement("Label", LocalPlayer.DisplayName, WindowConfig.HidePremium and 14 or 13), {
+			AddThemeObject(SetProps(MakeElement("Label", LocalPlayer.DisplayName, WindowConfig.HidePremium and 14), {
 				Size = UDim2.new(1, -60, 0, 13),
-				Position = WindowConfig.HidePremium and UDim2.new(0, 50, 1, 19),
+				Position = WindowConfig.HidePremium and UDim2.new(0, 50, 0, 19),
 				Font = Enum.Font.FredokaOne,
 				ClipsDescendants = true
 			}), "Text"),
@@ -706,14 +706,15 @@ function OrionLib:MakeWindow(WindowConfig)
 	}), "Main")
 	
 	local function Open()
-        TweenService:Create(UIScale, TweenInfo.new(0), {Scale=1}):Play()
-        TweenService:Create(MainWindow, TweenInfo.new(0), {GroupTransparency = 0}):Play()
+        TweenService:Create(UIScale, TweenInfo.new(0.1), {Scale=1}):Play()
+        TweenService:Create(MainWindow, TweenInfo.new(0.1), {GroupTransparency = 0}):Play()
         MainWindow.Visible = true
         DragFrame.Visible = false
 	end
 	local function Close()
-        TweenService:Create(UIScale, TweenInfo.new(0), {Scale=.9}):Play()
-        TweenService:Create(MainWindow, TweenInfo.new(0), {GroupTransparency = 1}):Play()
+        TweenService:Create(UIScale, TweenInfo.new(0.1), {Scale=.9}):Play()
+        TweenService:Create(MainWindow, TweenInfo.new(0.1), {GroupTransparency = 1}):Play()
+        task.wait(.1)
         MainWindow.Visible = false
         DragFrame.Visible = true
 	end
