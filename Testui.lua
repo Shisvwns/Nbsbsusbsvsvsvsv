@@ -1449,7 +1449,7 @@ function OrionLib:MakeWindow(WindowConfig)
 
 				local TextboxActual = AddThemeObject(Create("TextBox", {
 					Size = UDim2.new(1, 0, 1, 0),
-					Position = UDim2.new(0.5, 0, 0.5, 0),
+					Position = UDim2.new(1, 0, 0.5, 0),
 					AnchorPoint = Vector2.new(0.5, 0.5),
 					BackgroundTransparency = 1,
 					TextColor3 = Color3.fromRGB(255, 255, 255),
