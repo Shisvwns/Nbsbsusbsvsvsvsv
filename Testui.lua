@@ -1474,7 +1474,7 @@ function OrionLib:MakeWindow(WindowConfig)
 				}), {
 					AddThemeObject(SetProps(MakeElement("Label", TextboxConfig.Name, 15), {
 						Size = UDim2.new(1, -12, 1, 0),
-						Position = UDim2.new(0, 12, 0, 0),
+						Position = UDim2.new(0.5, 12, 0, 0),
 						Font = Enum.Font.FredokaOne,
 						Name = "Content"
 					}), "Text"),
