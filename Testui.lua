@@ -675,6 +675,10 @@ function OrionLib:MakeWindow(WindowConfig)
 	        PaddingRight = UDim.new(0,25),
 	        PaddingBottom = UDim.new(0,17),
 	    }),
+	    AddThemeObject(SetProps(MakeElement("Image", "rbxassetid://16730867128"), {
+	        Size = UDim2.new(0,24,0,24),
+	        BackgroundTransparency = 1,
+	    }), "Text"),
 	    AddThemeObject(SetProps(MakeElement("Frame"), {
 	        Size = UDim2.new(0,1,0,24),
 	        BackgroundTransparency = .65,
