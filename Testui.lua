@@ -687,8 +687,7 @@ function OrionLib:MakeWindow(WindowConfig)
             Size = UDim2.new(0,35,0,35),
             Text = ":)",
             Active = false,
-            Position = UDim2.new(0.5, 0, 0.5, 0),
-            AnchorPoint = Vector2.new(0.5, 0.5)
+            Position = UDim2.new(0, 0, 0, 0),
         }), {
             AddThemeObject(SetProps(MakeElement("Label", "", 20), {
                 Font = Enum.Font.GothamBlack,
