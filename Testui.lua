@@ -609,7 +609,7 @@ function OrionLib:MakeWindow(WindowConfig)
 	local WindowName = AddThemeObject(SetProps(MakeElement("Label", WindowConfig.Name, 14), {
 		Size = UDim2.new(1, -30, 2, 0),
 		Position = UDim2.new(0, 25, 0, -24),
-		Font = Enum.Font.GothamBlack,
+		Font = Enum.Font.PermanentMarker,
 		TextSize = 20
 	}), "Text")
 
@@ -664,6 +664,7 @@ function OrionLib:MakeWindow(WindowConfig)
 	}), "Main")
 	
 	local DragFrame = AddThemeObject(SetChildren(SetProps(MakeElement("RoundFrame", Color3.new(1,1,1), 0, 10), {
+	    AutomaticSize = "XY",
 	    Parent = Orion,
 	    Active = true,
 	    Visible = false
@@ -684,13 +685,15 @@ function OrionLib:MakeWindow(WindowConfig)
 	   --     BorderSizePixel = 0,
 	   -- }), "Text"),
 	    SetChildren(SetProps(MakeElement("Button"), {
-            Size = UDim2.new(0,35,0,35),
-            Text = ":)",
+            Size = UDim2.new(0,0,0,0),
+            AutomaticSize = "XY",
+            Text = "",
             Active = false,
             Position = UDim2.new(0, 0, 0, 0),
         }), {
-            AddThemeObject(SetProps(MakeElement("Label", "", 20), {
-                Font = Enum.Font.GothamBlack,
+            AddThemeObject(SetProps(MakeElement("Label", "Open", 20), {
+                AutomaticSize = "XY",
+                Font = Enum.Font.PermanentMarker,
                 Active = false,
                 TextSize = 20,
                 BackgroundTransparency = 1,
