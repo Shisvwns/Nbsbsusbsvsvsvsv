@@ -706,15 +706,14 @@ function OrionLib:MakeWindow(WindowConfig)
 	}), "Main")
 	
 	local function Open()
-        TweenService:Create(UIScale, TweenInfo.new(0.1), {Scale=1}):Play()
-        TweenService:Create(MainWindow, TweenInfo.new(0.1), {GroupTransparency = 0}):Play()
+        TweenService:Create(UIScale, TweenInfo.new(0), {Scale=1}):Play()
+        TweenService:Create(MainWindow, TweenInfo.new(0), {GroupTransparency = 0}):Play()
         MainWindow.Visible = true
         DragFrame.Visible = false
 	end
 	local function Close()
-        TweenService:Create(UIScale, TweenInfo.new(0.1), {Scale=.9}):Play()
-        TweenService:Create(MainWindow, TweenInfo.new(0.1), {GroupTransparency = 1}):Play()
-        task.wait(.1)
+        TweenService:Create(UIScale, TweenInfo.new(0), {Scale=.9}):Play()
+        TweenService:Create(MainWindow, TweenInfo.new(0), {GroupTransparency = 1}):Play()
         MainWindow.Visible = false
         DragFrame.Visible = true
 	end
