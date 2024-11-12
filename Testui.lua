@@ -663,45 +663,36 @@ function OrionLib:MakeWindow(WindowConfig)
 		WindowStuff
 	}), "Main")
 	
-	local DragFrame = AddThemeObject(SetChildren(SetProps(MakeElement("RoundFrame", Color3.new(1,1,1), 0, 10), {
-        AutomaticSize = "XY",
-	    Parent = Orion,
-	    Active = true,
-	    Visible = false
-	}), {
-	    Create("UIPadding", {
-	        PaddingTop = UDim.new(0,17),
-	        PaddingLeft = UDim.new(0,25),
-	        PaddingRight = UDim.new(0,25),
-	        PaddingBottom = UDim.new(0,17),
-	    }),
-	   -- AddThemeObject(SetProps(MakeElement("Image", "rbxassetid://16730867128"), {
-	   --     Size = UDim2.new(0,24,0,24),
-	   --     BackgroundTransparency = 1,
-	   -- }), "Text"),
-	   -- AddThemeObject(SetProps(MakeElement("Frame"), {
-	   --     Size = UDim2.new(0,1,0,24),
-	   --     BackgroundTransparency = .65,
-	   --     BorderSizePixel = 0,
-	   -- }), "Text"),
-	    SetChildren(SetProps(MakeElement("Button"), {
-            Size = UDim2.new(0, 0, 0, 0),
-            AutomaticSize = "XY",
-            Position = UDim2.new(0, 0, 0, 0),
-        }), {
-            AddThemeObject(SetProps(MakeElement("Label", "Open", 26), {
-            	AutomaticSize = "XY",
-                Font = Enum.Font.Bangers,
-                BackgroundTransparency = 1,
-            }), "Text")
-        }),
-        SetProps(MakeElement("List"), {
-            SortOrder = "LayoutOrder",
-            Padding = UDim.new(0,10),
-            VerticalAlignment = "Center",
-            FillDirection = "Horizontal",
-        })
-	}), "Main")
+	local DragFrame = AddThemeObject(SetChildren(SetProps(MakeElement("RoundFrame", Color3.new(1, 1, 1), 0, 10), {
+    -- Bỏ AutomaticSize và thiết lập kích thước cố định nếu cần
+    Size = UDim2.new(0, 30, 0, 30), -- Ví dụ kích thước cố định
+    Parent = Orion,
+    Active = true,
+    Visible = false
+}), {
+    -- Đã xóa UIPadding
+
+    -- Button được thêm vào frame
+    SetChildren(SetProps(MakeElement("Button"), {
+        Size = UDim2.new(0, 30, 0, 30), -- Kích thước cố định cho nút
+        Position = UDim2.new(0, 0, 0, 0),
+    }), {
+        -- Nhãn trên nút
+        AddThemeObject(SetProps(MakeElement("Label", "Open", 26), {
+            Font = Enum.Font.Bangers,
+            BackgroundTransparency = 1,
+            Size = UDim2.new(0, 20, 0, 20), -- Kích thước cố định cho nhãn
+        }), "Text")
+    }),
+
+    -- Cấu hình layout cho danh sách
+    SetProps(MakeElement("List"), {
+        SortOrder = Enum.SortOrder.LayoutOrder,
+        Padding = UDim.new(0, 10),
+        VerticalAlignment = Enum.VerticalAlignment.Center,
+        FillDirection = Enum.FillDirection.Horizontal,
+    })
+}), "Main")
 	
 	local function Open()
         TweenService:Create(UIScale, TweenInfo.new(0), {Scale=1}):Play()
