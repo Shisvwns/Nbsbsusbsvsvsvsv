@@ -609,7 +609,7 @@ function OrionLib:MakeWindow(WindowConfig)
 	local WindowName = AddThemeObject(SetProps(MakeElement("Label", WindowConfig.Name, 14), {
 		Size = UDim2.new(1, -30, 2, 0),
 		Position = UDim2.new(0, 25, 0, -24),
-		Font = Enum.Font.PermanentMarker,
+		Font = Enum.Font.Bangers,
 		TextSize = 20
 	}), "Text")
 
@@ -664,16 +664,15 @@ function OrionLib:MakeWindow(WindowConfig)
 	}), "Main")
 	
 	local DragFrame = AddThemeObject(SetChildren(SetProps(MakeElement("RoundFrame", Color3.new(1,1,1), 0, 10), {
-	    AutomaticSize = "XY",
 	    Parent = Orion,
 	    Active = true,
 	    Visible = false
 	}), {
 	    Create("UIPadding", {
-	        PaddingTop = UDim.new(0,17),
-	        PaddingLeft = UDim.new(0,25),
-	        PaddingRight = UDim.new(0,25),
-	        PaddingBottom = UDim.new(0,17),
+	        PaddingTop = UDim.new(0,15),
+	        PaddingLeft = UDim.new(0,23),
+	        PaddingRight = UDim.new(0,23),
+	        PaddingBottom = UDim.new(0,15),
 	    }),
 	   -- AddThemeObject(SetProps(MakeElement("Image", "rbxassetid://16730867128"), {
 	   --     Size = UDim2.new(0,24,0,24),
@@ -686,16 +685,13 @@ function OrionLib:MakeWindow(WindowConfig)
 	   -- }), "Text"),
 	    SetChildren(SetProps(MakeElement("Button"), {
             Size = UDim2.new(0,0,0,0),
-            AutomaticSize = "XY",
             Text = "",
             Active = false,
             Position = UDim2.new(0, 0, 0, 0),
         }), {
-            AddThemeObject(SetProps(MakeElement("Label", "Open", 20), {
-                AutomaticSize = "XY",
-                Font = Enum.Font.PermanentMarker,
+            AddThemeObject(SetProps(MakeElement("Label", "Open", 23), {
+                Font = Enum.Font.Bangers,
                 Active = false,
-                TextSize = 20,
                 BackgroundTransparency = 1,
             }), "Text")
         }),
