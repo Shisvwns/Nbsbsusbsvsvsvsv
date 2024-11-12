@@ -664,16 +664,15 @@ function OrionLib:MakeWindow(WindowConfig)
 	}), "Main")
 	
 	local DragFrame = AddThemeObject(SetChildren(SetProps(MakeElement("RoundFrame", Color3.new(1,1,1), 0, 10), {
-	    AutomaticSize = "XY",
 	    Parent = Orion,
 	    Active = true,
 	    Visible = false
 	}), {
 	    Create("UIPadding", {
-	        PaddingTop = UDim.new(0,15),
-	        PaddingLeft = UDim.new(0,30),
-	        PaddingRight = UDim.new(0,30),
-	        PaddingBottom = UDim.new(0,15),
+	        PaddingTop = UDim.new(0,17),
+	        PaddingLeft = UDim.new(0,25),
+	        PaddingRight = UDim.new(0,25),
+	        PaddingBottom = UDim.new(0,17),
 	    }),
 	   -- AddThemeObject(SetProps(MakeElement("Image", "rbxassetid://16730867128"), {
 	   --     Size = UDim2.new(0,24,0,24),
@@ -685,13 +684,13 @@ function OrionLib:MakeWindow(WindowConfig)
 	   --     BorderSizePixel = 0,
 	   -- }), "Text"),
 	    SetChildren(SetProps(MakeElement("Button"), {
-            Size = UDim2.new(0,0,0,0),
-            Text = "",
+            Size = UDim2.new(0,35,0,35),
+            Text = ":)",
             Active = false,
             Position = UDim2.new(0.5, 0, 0.5, 0),
             AnchorPoint = Vector2.new(0.5, 0.5)
         }), {
-            AddThemeObject(SetProps(MakeElement("Label", WindowConfig.Name, 20), {
+            AddThemeObject(SetProps(MakeElement("Label", "", 20), {
                 Font = Enum.Font.GothamBlack,
                 Active = false,
                 TextSize = 20,
@@ -700,7 +699,7 @@ function OrionLib:MakeWindow(WindowConfig)
         }),
         SetProps(MakeElement("List"), {
             SortOrder = "LayoutOrder",
-            Padding = UDim.new(30,15),
+            Padding = UDim.new(0,10),
             VerticalAlignment = "Center",
             FillDirection = "Horizontal",
         })
