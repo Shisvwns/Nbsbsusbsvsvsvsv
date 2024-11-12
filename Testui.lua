@@ -664,34 +664,31 @@ function OrionLib:MakeWindow(WindowConfig)
 	}), "Main")
 	
 	local DragFrame = AddThemeObject(SetChildren(SetProps(MakeElement("RoundFrame", Color3.new(1, 1, 1), 0, 10), {
-    -- Bỏ AutomaticSize và thiết lập kích thước cố định nếu cần
-    Size = UDim2.new(0, 55, 0, 55), -- Ví dụ kích thước cố định
-    Parent = Orion,
-    Active = true,
-    Visible = false
-}), {
-    -- Đã xóa UIPadding
-
-    -- Button được thêm vào frame
-    SetChildren(SetProps(MakeElement("Button"), {
-        Size = UDim2.new(0, 55, 0, 55), -- Kích thước cố định cho nút
-        Position = UDim2.new(0, 0, 0, 0),
+        Size = UDim2.new(0, 55, 0, 55),
+        Parent = Orion,
+        Active = true,
+        Visible = false
     }), {
-        -- Nhãn trên nút
-        AddThemeObject(SetProps(MakeElement("Label", "Open", 24), {
-            Font = Enum.Font.Bangers,
-            BackgroundTransparency = 1,
-            Size = UDim2.new(0, 55, 0, 55), -- Kích thước cố định cho nhãn
-        }), "Text")
-    }),
-
-    -- Cấu hình layout cho danh sách
-    SetProps(MakeElement("List"), {
-        SortOrder = Enum.SortOrder.LayoutOrder,
-        VerticalAlignment = Enum.VerticalAlignment.Center,
-        FillDirection = Enum.FillDirection.Horizontal,
-    })
-}), "Main")
+        SetChildren(SetProps(MakeElement("Button"), {
+            Size = UDim2.new(0, 55, 0, 55),
+            Position = UDim2.new(0, 0, 0, 0),
+        }), {
+            AddThemeObject(SetProps(MakeElement("Label", "Open", 24), {
+                Font = Enum.Font.Bangers,
+                BackgroundTransparency = 1,
+                Size = UDim2.new(0, 55, 0, 55),
+                TextXAlignment = Enum.TextXAlignment.Center,
+                TextYAlignment = Enum.TextYAlignment.Center,
+                AnchorPoint = Vector2.new(0.5, 0.5),
+                Position = UDim2.new(0.5, 0, 0.5, 0),
+            }), "Text")
+        }),
+        SetProps(MakeElement("List"), {
+            SortOrder = Enum.SortOrder.LayoutOrder,
+            VerticalAlignment = Enum.VerticalAlignment.Center,
+            FillDirection = Enum.FillDirection.Horizontal,
+        })
+    }), "Main")
 	
 	local function Open()
         TweenService:Create(UIScale, TweenInfo.new(0), {Scale=1}):Play()
