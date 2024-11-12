@@ -670,10 +670,10 @@ function OrionLib:MakeWindow(WindowConfig)
 	    Visible = false
 	}), {
 	    Create("UIPadding", {
-	        PaddingTop = UDim.new(0,15),
-	        PaddingLeft = UDim.new(0,23),
-	        PaddingRight = UDim.new(0,23),
-	        PaddingBottom = UDim.new(0,15),
+	        PaddingTop = UDim.new(0,13),
+	        PaddingLeft = UDim.new(0,21),
+	        PaddingRight = UDim.new(0,21),
+	        PaddingBottom = UDim.new(0,13),
 	    }),
 	   -- AddThemeObject(SetProps(MakeElement("Image", "rbxassetid://16730867128"), {
 	   --     Size = UDim2.new(0,24,0,24),
@@ -687,19 +687,17 @@ function OrionLib:MakeWindow(WindowConfig)
 	    SetChildren(SetProps(MakeElement("Button"), {
             Size = UDim2.new(0,0,0,0),
             AutomaticSize = "XY",
-            Active = false,
             Position = UDim2.new(0, 0, 0, 0),
         }), {
-            AddThemeObject(SetProps(MakeElement("Label", "Open", 23), {
+            AddThemeObject(SetProps(MakeElement("Label", "Open", 26), {
                 AutomaticSize = "XY",
                 Font = Enum.Font.Bangers,
-                Active = false,
                 BackgroundTransparency = 1,
             }), "Text")
         }),
         SetProps(MakeElement("List"), {
             SortOrder = "LayoutOrder",
-            Padding = UDim.new(0,10),
+            Padding = UDim.new(21,13),
             VerticalAlignment = "Center",
             FillDirection = "Horizontal",
         })
@@ -782,7 +780,7 @@ function OrionLib:MakeWindow(WindowConfig)
 		TweenService:Create(LoadSequenceLogo, TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(0.5, -(LoadSequenceText.TextBounds.X/2), 0.5, 0)}):Play()
 		wait(0.3)
 		TweenService:Create(LoadSequenceText, TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextTransparency = 0}):Play()
-		wait(1)
+		wait(0.8)
 		TweenService:Create(LoadSequenceText, TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextTransparency = 1}):Play()
 		Open()
 		LoadSequenceLogo:Destroy()
