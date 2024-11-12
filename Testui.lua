@@ -665,7 +665,7 @@ function OrionLib:MakeWindow(WindowConfig)
 	
 	local DragFrame = AddThemeObject(SetChildren(SetProps(MakeElement("RoundFrame", Color3.new(1, 1, 1), 0, 10), {
     -- Bỏ AutomaticSize và thiết lập kích thước cố định nếu cần
-    Size = UDim2.new(0, 30, 0, 30), -- Ví dụ kích thước cố định
+    Size = UDim2.new(0, 40, 0, 40), -- Ví dụ kích thước cố định
     Parent = Orion,
     Active = true,
     Visible = false
@@ -674,21 +674,20 @@ function OrionLib:MakeWindow(WindowConfig)
 
     -- Button được thêm vào frame
     SetChildren(SetProps(MakeElement("Button"), {
-        Size = UDim2.new(0, 30, 0, 30), -- Kích thước cố định cho nút
+        Size = UDim2.new(0, 40, 0, 40), -- Kích thước cố định cho nút
         Position = UDim2.new(0, 0, 0, 0),
     }), {
         -- Nhãn trên nút
         AddThemeObject(SetProps(MakeElement("Label", "Open", 26), {
             Font = Enum.Font.Bangers,
             BackgroundTransparency = 1,
-            Size = UDim2.new(0, 20, 0, 20), -- Kích thước cố định cho nhãn
+            Size = UDim2.new(0, 40, 0, 40), -- Kích thước cố định cho nhãn
         }), "Text")
     }),
 
     -- Cấu hình layout cho danh sách
     SetProps(MakeElement("List"), {
         SortOrder = Enum.SortOrder.LayoutOrder,
-        Padding = UDim.new(0, 10),
         VerticalAlignment = Enum.VerticalAlignment.Center,
         FillDirection = Enum.FillDirection.Horizontal,
     })
