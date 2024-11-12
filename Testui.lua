@@ -669,17 +669,11 @@ function OrionLib:MakeWindow(WindowConfig)
         Active = true,
         Visible = false
     }), {
-        Create("UIPadding", {
-	        PaddingTop = UDim.new(0,20),
-	        PaddingLeft = UDim.new(0,20),
-	        PaddingRight = UDim.new(0,20),
-	        PaddingBottom = UDim.new(0,20),
-	    }),
         SetChildren(SetProps(MakeElement("Button"), {
             Size = UDim2.new(0, 52, 0, 52),
             Position = UDim2.new(0, 0, 0, 0),
         }), {
-            AddThemeObject(SetProps(MakeElement("Label", "Open", 24), {
+            AddThemeObject(SetProps(MakeElement("Label", "Open", 21), {
                 Font = Enum.Font.Bangers,
                 BackgroundTransparency = 1,
                 Size = UDim2.new(0, 52, 0, 52),
@@ -691,7 +685,6 @@ function OrionLib:MakeWindow(WindowConfig)
         }),
         SetProps(MakeElement("List"), {
             SortOrder = Enum.SortOrder.LayoutOrder,
-            Padding = UDim.new(0,20),
             VerticalAlignment = Enum.VerticalAlignment.Center,
             FillDirection = Enum.FillDirection.Horizontal,
         })
