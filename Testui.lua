@@ -691,9 +691,11 @@ function OrionLib:MakeWindow(WindowConfig)
             Active = false,
             Position = UDim2.new(0, 0, 0, 0),
         }), {
-            AddThemeObject(SetProps(MakeElement("Image", "rbxassetid://16730867128"), {
+            AddThemeObject(SetProps(MakeElement("Label", WindowConfig.Name, 20), {
                 AutomaticSize = "XY",
+                Font = Enum.Font.GothamBlack,
                 Active = false,
+                TextSize = 20,
                 BackgroundTransparency = 1,
             }), "Text")
         }),
