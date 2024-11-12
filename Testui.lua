@@ -701,7 +701,7 @@ function OrionLib:MakeWindow(WindowConfig)
         }),
         SetProps(MakeElement("List"), {
             SortOrder = "LayoutOrder",
-            Padding = UDim.new(0,10),
+            Padding = UDim.new(0,20),
             VerticalAlignment = "Center",
             FillDirection = "Horizontal",
         })
