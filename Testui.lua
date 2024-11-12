@@ -536,8 +536,8 @@ function OrionLib:MakeWindow(WindowConfig)
 		BackgroundTransparency = 1
 	}), {
 		AddThemeObject(SetProps(MakeElement("Image", "rbxassetid://7072725342"), {
-			Position = UDim2.new(0.51, 0, 0.5, 0),
-			AnchorPoint = Vector2.new(0.51,0.5),
+			Position = UDim2.new(0.5, 0, 0.5, 0),
+			AnchorPoint = Vector2.new(0.5,0.5),
 			Size = UDim2.new(0, 18, 0, 18),
 			Name = "Ico"
 		}), "Text")
@@ -640,7 +640,7 @@ function OrionLib:MakeWindow(WindowConfig)
 		--}),
 		UIScale,
 		SetChildren(SetProps(MakeElement("TFrame"), {
-			Size = UDim2.new(1.02, 0, 0, 50),
+			Size = UDim2.new(1, 0, 0, 50),
 			Name = "TopBar"
 		}), {
 			WindowName,
