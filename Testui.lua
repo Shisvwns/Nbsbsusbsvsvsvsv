@@ -669,24 +669,40 @@ function OrionLib:MakeWindow(WindowConfig)
 	    Active = true,
 	    Visible = false
 	}), {
-	    AddThemeObject(SetProps(MakeElement("Frame"), {
-	        Size = UDim2.new(0,1,0,24),
-	        BackgroundTransparency = .65,
-	        BorderSizePixel = 0,
-	    }), "Text"),
+	    Create("UIPadding", {
+	        PaddingTop = UDim.new(0,17),
+	        PaddingLeft = UDim.new(0,25),
+	        PaddingRight = UDim.new(0,25),
+	        PaddingBottom = UDim.new(0,17),
+	    }),
+	   -- AddThemeObject(SetProps(MakeElement("Image", "rbxassetid://16730867128"), {
+	   --     Size = UDim2.new(0,24,0,24),
+	   --     BackgroundTransparency = 1,
+	   -- }), "Text"),
+	   -- AddThemeObject(SetProps(MakeElement("Frame"), {
+	   --     Size = UDim2.new(0,1,0,24),
+	   --     BackgroundTransparency = .65,
+	   --     BorderSizePixel = 0,
+	   -- }), "Text"),
 	    SetChildren(SetProps(MakeElement("Button"), {
             Size = UDim2.new(0,0,0,0),
             AutomaticSize = "XY",
             Text = "",
+            Active = false,
             Position = UDim2.new(0, 0, 0, 0),
         }), {
-            AddThemeObject(SetProps(MakeElement("Label", WindowConfig.Name, 20), {
+            AddThemeObject(SetProps(MakeElement("Image", "rbxassetid://16730867128"), {
                 AutomaticSize = "XY",
-                Font = Enum.Font.GothamBlack,
-                TextSize = 20,
+                Active = false,
                 BackgroundTransparency = 1,
             }), "Text")
         }),
+        SetProps(MakeElement("List"), {
+            SortOrder = "LayoutOrder",
+            Padding = UDim.new(0,10),
+            VerticalAlignment = "Center",
+            FillDirection = "Horizontal",
+        })
 	}), "Main")
 	
 	local function Open()
@@ -716,7 +732,7 @@ function OrionLib:MakeWindow(WindowConfig)
 	end
 
 	AddDraggingFunctionality(DragPoint, MainWindow)
-	AddDraggingFunctionality(DragFrame.ImageLabel, DragFrame)
+	AddDraggingFunctionality(DragFrame, DragFrame)
 
 --	AddConnection(CloseBtn.MouseButton1Up, function()
 --		Close()
