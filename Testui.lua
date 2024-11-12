@@ -520,17 +520,6 @@ function OrionLib:MakeWindow(WindowConfig)
 		TabHolder.CanvasSize = UDim2.new(0, 0, 0, TabHolder.UIListLayout.AbsoluteContentSize.Y + 16)
 	end)
 
---	local CloseBtn = SetChildren(SetProps(MakeElement("Button"), {
---		Size = UDim2.new(0.5, 0, 1, 0),
---		Position = UDim2.new(0.5, 0, 0, 0),
---		BackgroundTransparency = 1
---	}), {
---		AddThemeObject(SetProps(MakeElement("Image", "rbxassetid://7072725342"), {
---			Position = UDim2.new(0, 9, 0, 6),
---			Size = UDim2.new(0, 18, 0, 18)
---		}), "Text")
---	})
-
 	local MinimizeBtn = SetChildren(SetProps(MakeElement("Button"), {
 		Size = UDim2.new(0, 30, 0, 30),
 		BackgroundTransparency = 1
@@ -619,7 +608,7 @@ function OrionLib:MakeWindow(WindowConfig)
 	}), "Stroke")
 
     local UIScale = SetProps(MakeElement("UIScale"), {
-	    Scale = .9, -- 1
+	    Scale = .9,
 	})
 
 	local MainWindow = AddThemeObject(SetChildren(SetProps(MakeElement("RoundCanvasFrame", Color3.fromRGB(255, 255, 255), 0, 10), {
@@ -627,17 +616,10 @@ function OrionLib:MakeWindow(WindowConfig)
 		Position = UDim2.new(0.5, 0, 0.5, 0),
 		Size = UDim2.new(0, 615, 0, 344),
 		AnchorPoint = Vector2.new(0.5,0.5),
-		GroupTransparency = 1, -- 0
+		GroupTransparency = 1,
 		Active = true,
 		ClipsDescendants = true
 	}), {
-		--SetProps(MakeElement("Image", "rbxassetid://3523728077"), {
-		--	AnchorPoint = Vector2.new(0.5, 0.5),
-		--	Position = UDim2.new(0.5, 0, 0.5, 0),
-		--	Size = UDim2.new(1, 80, 1, 320),
-		--	ImageColor3 = Color3.fromRGB(33, 33, 33),
-		--	ImageTransparency = 0.7
-		--}),
 		UIScale,
 		SetChildren(SetProps(MakeElement("TFrame"), {
 			Size = UDim2.new(1, 0, 0, 50),
@@ -651,11 +633,6 @@ function OrionLib:MakeWindow(WindowConfig)
 				AnchorPoint = Vector2.new(1.02,0),
 			}), {
 				AddThemeObject(MakeElement("Stroke"), "Stroke"),
-				-- AddThemeObject(SetProps(MakeElement("Frame"), {
-				--	Size = UDim2.new(0, 1, 1, 0),
-				--	Position = UDim2.new(0.5, 0, 0, 0)
-				-- }), "Stroke"),
-				--CloseBtn,
 				MinimizeBtn
 			}), "Second"),
 		}),
@@ -718,17 +695,6 @@ function OrionLib:MakeWindow(WindowConfig)
 
 	AddDraggingFunctionality(DragPoint, MainWindow)
 	AddDraggingFunctionality(DragFrame, DragFrame)
-
---	AddConnection(CloseBtn.MouseButton1Up, function()
---		Close()
---		UIHidden = true
---		OrionLib:MakeNotification({
---			Name = "Interface Hidden",
---			Content = "Tap RightShift to reopen the interface",
---			Time = 5
---		})
---		WindowConfig.CloseCallback()
---	end)
 
 	AddConnection(UserInputService.InputBegan, function(Input)
 		if Input.KeyCode == Enum.KeyCode.RightShift and UIHidden then
@@ -1466,11 +1432,6 @@ function OrionLib:MakeWindow(WindowConfig)
 					TextContainer,
 					Click
 				}), "Second")
-
-				-- AddConnection(TextboxActual:GetPropertyChangedSignal("Text"), function()
-				--	  TextContainer.Size = UDim2.new(0, TextboxActual.TextBounds.X + 16, 0, 24)
-				--	  TweenService:Create(TextContainer, TweenInfo.new(0.45, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Size = UDim2.new(0, TextboxActual.TextBounds.X + 16, 0, 24)}):Play()
-				-- end)
 
 				AddConnection(TextboxActual.FocusLost, function()
 					TextboxConfig.Callback(TextboxActual.Text)
