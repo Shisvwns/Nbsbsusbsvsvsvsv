@@ -669,16 +669,6 @@ function OrionLib:MakeWindow(WindowConfig)
 	    Active = true,
 	    Visible = false
 	}), {
-	    Create("UIPadding", {
-	        PaddingTop = UDim.new(0,17),
-	        PaddingLeft = UDim.new(0,25),
-	        PaddingRight = UDim.new(0,25),
-	        PaddingBottom = UDim.new(0,17),
-	    }),
-	    AddThemeObject(SetProps(MakeElement("Image", "rbxassetid://16730867128"), {
-	        Size = UDim2.new(0,24,0,24),
-	        BackgroundTransparency = 1,
-	    }), "Text"),
 	    AddThemeObject(SetProps(MakeElement("Frame"), {
 	        Size = UDim2.new(0,1,0,24),
 	        BackgroundTransparency = .65,
@@ -697,12 +687,6 @@ function OrionLib:MakeWindow(WindowConfig)
                 BackgroundTransparency = 1,
             }), "Text")
         }),
-        SetProps(MakeElement("List"), {
-            SortOrder = "LayoutOrder",
-            Padding = UDim.new(0,10),
-            VerticalAlignment = "Center",
-            FillDirection = "Horizontal",
-        })
 	}), "Main")
 	
 	local function Open()
