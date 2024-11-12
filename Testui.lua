@@ -663,7 +663,7 @@ function OrionLib:MakeWindow(WindowConfig)
 		WindowStuff
 	}), "Main")
 	
-	local DragFrame = AddThemeObject(SetChildren(SetProps(MakeElement("RoundFrame", Color3.new(1,1,1), 0, 15), {
+	local DragFrame = AddThemeObject(SetChildren(SetProps(MakeElement("RoundFrame", Color3.new(1,1,1), 0, 10), {
         AutomaticSize = "XY",
 	    Parent = Orion,
 	    Active = true,
@@ -697,7 +697,7 @@ function OrionLib:MakeWindow(WindowConfig)
         }),
         SetProps(MakeElement("List"), {
             SortOrder = "LayoutOrder",
-            Padding = UDim.new(0,15),
+            Padding = UDim.new(0,10),
             VerticalAlignment = "Center",
             FillDirection = "Horizontal",
         })
