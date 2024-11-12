@@ -671,8 +671,8 @@ function OrionLib:MakeWindow(WindowConfig)
 	}), {
 	    Create("UIPadding", {
 	        PaddingTop = UDim.new(0,7.5),
-	        PaddingLeft = UDim.new(0,17.5),
-	        PaddingRight = UDim.new(0,17.5),
+	        PaddingLeft = UDim.new(0,20),
+	        PaddingRight = UDim.new(0,20),
 	        PaddingBottom = UDim.new(0,7.5),
 	    }),
 	   -- AddThemeObject(SetProps(MakeElement("Image", "rbxassetid://16730867128"), {
