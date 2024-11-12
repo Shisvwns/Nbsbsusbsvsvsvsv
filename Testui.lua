@@ -685,14 +685,12 @@ function OrionLib:MakeWindow(WindowConfig)
 	   --     BorderSizePixel = 0,
 	   -- }), "Text"),
 	    SetChildren(SetProps(MakeElement("Button"), {
-            Size = UDim2.new(0,0,0,0),
-            AutomaticSize = "XY",
+            Size = UDim2.new(0,30,0,30),
             Text = "",
             Active = false,
             Position = UDim2.new(0, 0, 0, 0),
         }), {
             AddThemeObject(SetProps(MakeElement("Label", WindowConfig.Name, 20), {
-                AutomaticSize = "XY",
                 Font = Enum.Font.GothamBlack,
                 Active = false,
                 TextSize = 20,
