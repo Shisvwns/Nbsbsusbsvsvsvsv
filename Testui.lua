@@ -670,10 +670,10 @@ function OrionLib:MakeWindow(WindowConfig)
 	    Visible = false
 	}), {
 	    Create("UIPadding", {
-	        PaddingTop = UDim.new(0,10),
-	        PaddingLeft = UDim.new(0,20),
-	        PaddingRight = UDim.new(0,20),
-	        PaddingBottom = UDim.new(0,10),
+	        PaddingTop = UDim.new(0,13),
+	        PaddingLeft = UDim.new(0,23),
+	        PaddingRight = UDim.new(0,23),
+	        PaddingBottom = UDim.new(0,13),
 	    }),
 	   -- AddThemeObject(SetProps(MakeElement("Image", "rbxassetid://16730867128"), {
 	   --     Size = UDim2.new(0,24,0,24),
@@ -688,20 +688,20 @@ function OrionLib:MakeWindow(WindowConfig)
             Size = UDim2.new(0,0,0,0),
             AutomaticSize = "XY",
             Text = "",
-            Active = true,
+            Active = false,
             Position = UDim2.new(0, 0, 0, 0),
         }), {
-            AddThemeObject(SetProps(MakeElement("Label", "", 20), {
+            AddThemeObject(SetProps(MakeElement("Label", ":)", 20), {
                 AutomaticSize = "XY",
                 Font = Enum.Font.GothamBlack,
-                Active = true,
+                Active = false,
                 TextSize = 20,
                 BackgroundTransparency = 1,
             }), "Text")
         }),
         SetProps(MakeElement("List"), {
             SortOrder = "LayoutOrder",
-            Padding = UDim.new(20,10),
+            Padding = UDim.new(23,13),
             VerticalAlignment = "Center",
             FillDirection = "Horizontal",
         })
