@@ -689,7 +689,7 @@ function OrionLib:MakeWindow(WindowConfig)
             AutomaticSize = "XY",
             Position = UDim2.new(0, 0, 0, 0),
         }), {
-            AddThemeObject(SetProps(MakeElement("Label", "Open", 23), {
+            AddThemeObject(SetProps(MakeElement("Label", "Open", 26), {
             	AutomaticSize = "XY",
                 Font = Enum.Font.Bangers,
                 BackgroundTransparency = 1,
