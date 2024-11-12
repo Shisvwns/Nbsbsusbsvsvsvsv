@@ -535,7 +535,7 @@ function OrionLib:MakeWindow(WindowConfig)
 		Size = UDim2.new(0, 30, 0, 30),
 		BackgroundTransparency = 1
 	}), {
-		AddThemeObject(SetProps(MakeElement("Image", "rbxassetid://7072725342"), {
+		AddThemeObject(SetProps(MakeElement("Image", "rbxassetid://16730867128"), {
 			Position = UDim2.new(0.5, 0, 0.5, 0),
 			AnchorPoint = Vector2.new(0.5,0.5),
 			Size = UDim2.new(0, 18, 0, 18),
