@@ -648,7 +648,7 @@ function OrionLib:MakeWindow(WindowConfig)
 			AddThemeObject(SetChildren(SetProps(MakeElement("RoundFrame", Color3.fromRGB(255, 255, 255), 0, 7), {
 				Size = UDim2.new(0, 30, 0, 30),
 				Position = UDim2.new(1.02, -20, 0, 10),
-				AnchorPoint = Vector2.new(1,0),
+				AnchorPoint = Vector2.new(1.02,0),
 			}), {
 				AddThemeObject(MakeElement("Stroke"), "Stroke"),
 				-- AddThemeObject(SetProps(MakeElement("Frame"), {
@@ -675,15 +675,6 @@ function OrionLib:MakeWindow(WindowConfig)
 	        PaddingRight = UDim.new(0,25),
 	        PaddingBottom = UDim.new(0,17),
 	    }),
-	    AddThemeObject(SetProps(MakeElement("Image", "rbxassetid://16730867128"), {
-	        Size = UDim2.new(0,24,0,24),
-	        BackgroundTransparency = 1,
-	    }), "Text"),
-	    AddThemeObject(SetProps(MakeElement("Frame"), {
-	        Size = UDim2.new(0,1,0,24),
-	        BackgroundTransparency = .65,
-	        BorderSizePixel = 0,
-	    }), "Text"),
 	    SetChildren(SetProps(MakeElement("Button"), {
             Size = UDim2.new(0,0,0,0),
             AutomaticSize = "XY",
