@@ -688,13 +688,13 @@ function OrionLib:MakeWindow(WindowConfig)
             Size = UDim2.new(0,0,0,0),
             AutomaticSize = "XY",
             Text = "",
-            Active = false,
+            Active = true,
             Position = UDim2.new(0, 0, 0, 0),
         }), {
             AddThemeObject(SetProps(MakeElement("Label", "", 20), {
                 AutomaticSize = "XY",
                 Font = Enum.Font.GothamBlack,
-                Active = false,
+                Active = true,
                 TextSize = 20,
                 BackgroundTransparency = 1,
             }), "Text")
