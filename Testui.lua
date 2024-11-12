@@ -686,16 +686,18 @@ function OrionLib:MakeWindow(WindowConfig)
 	   -- }), "Text"),
 	    SetChildren(SetProps(MakeElement("Button"), {
             Size = UDim2.new(0, 0, 0, 0),
+            AutomaticSize = "XY",
             Position = UDim2.new(0, 0, 0, 0),
         }), {
             AddThemeObject(SetProps(MakeElement("Label", "Open", 23), {
+            	AutomaticSize = "XY",
                 Font = Enum.Font.Bangers,
                 BackgroundTransparency = 1,
             }), "Text")
         }),
         SetProps(MakeElement("List"), {
             SortOrder = "LayoutOrder",
-            Padding = UDim.new(0,5),
+            Padding = UDim.new(0,15),
             VerticalAlignment = "Center",
             FillDirection = "Horizontal",
         })
