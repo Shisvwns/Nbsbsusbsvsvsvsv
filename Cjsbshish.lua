@@ -72,31 +72,6 @@ task.spawn(function()
     end
 end)
 
--- Anti Htpp Spy --
-
-local oldwrite = hookfunction(writefile, function(file, content)
-    if(string.find(string.lower(content), "https://") or string.find(string.lower(content), "//")) then
-        return
-    end
-    return oldwrite(file, content)
-end)
-
-local oldappend
-oldappend = hookfunction(appendfile, function(file, content)
-    if(string.find(string.lower(content), "https://") or string.find(string.lower(content), "//")) then
-        return
-    end
-    return oldappend(file, content)
-end)
-
-game.DescendantAdded:Connect(function(c)
-    if c and c:IsA("TextLabel") or c:IsA("TextButton") or c:IsA("Message") then
-        if string.find(string.lower(c.Text), "https://") then
-            c:Destroy()
-        end
-    end
-end)
-
 -- Check World --
 
 if game.PlaceId == 2753915549 then
