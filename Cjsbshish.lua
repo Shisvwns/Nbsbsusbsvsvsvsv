@@ -2213,8 +2213,8 @@ task.spawn(function()
 end)
 
 function SendKey(Name)
-    game:service("VirtualInputManager"):SendKeyEvent(true, Name, false, game)
-    game:service("VirtualInputManager"):SendKeyEvent(false, Name, false, game)
+    game:GetService("VirtualInputManager"):SendKeyEvent(true, Name, false, game)
+    game:GetService("VirtualInputManager"):SendKeyEvent(false, Name, false, game)
 end
 
 -- Create Menu & Tab --
@@ -2733,7 +2733,7 @@ Farm:AddToggle({
 	end
 })
 
-local CombatFramework = require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitFogame.ReplicatedStoragehild("CombatFramework"))
+local CombatFramework = require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework"))
 local CombatFrameworkR = getupvalues(CombatFramework)[2]
 
 function CurrentWeapon()
