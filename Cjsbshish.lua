@@ -2821,7 +2821,11 @@ spawn(function()
                     CayLevel:Set(true)
                 end
                 if game:GetService("Players").LocalPlayer.Data.Points.Value >= 1 then
-                    local args = { [1] = "AddPoint", [2] = "Melee", [3] = 5 }
+                    local args = {
+                        [1] = "AddPoint",
+                        [2] = "Melee",
+                        [3] = 5
+                    }
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
                 end
             end
@@ -2896,7 +2900,7 @@ spawn(function()
             elseif string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 86 then
                 KillMob = (tonumber(string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),41,41)) - 500)
             end
-            if _G.KatakuriMode == "No Quest" and _G.FarmKatakuri then
+            if _G.KatakuriMode == "No Quest" and _G.FarmKatakuri and World3 then
                 if game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince") then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == "Cake Prince" or v.Name == "Dough King" then
@@ -2937,7 +2941,7 @@ spawn(function()
                     end
                 end
             end
-            if _G.KatakuriMode == "Get Quest" and _G.FarmKatakuri then
+            if _G.KatakuriMode == "Get Quest" and _G.FarmKatakuri and World3 then
                 if game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince") then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == "Cake Prince" or v.Name == "Dough King" then
@@ -2986,6 +2990,168 @@ spawn(function()
                             UnEquipWeapon(_G.SelectWeapon)
                         end
                     end
+                end
+            end
+        end)
+    end
+end)
+
+Farm:AddToggle({
+	Name = "Auto Spawn Katakuri",
+	Default = true,
+	Callback = function(Value)
+		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner",Value)
+	end
+})
+
+local Section = Farm:AddSection({
+    Name = "~ Bone ~"
+})
+
+local YourBone = Farm:AddParagraph("Your Bone")
+
+Farm:AddDropdown({
+	Name = "Select Farm Bone Mode",
+	Default = "Get Quest",
+	Options = {"No Quest","Get Quest"},
+	Callback = function(Value)
+		_G.BoneMode = Value
+	end
+})
+
+Farm:AddToggle({
+	Name = "Auto Farm Bone",
+	Default = false,
+	Callback = function(Value)
+		_G.FarmBone = Value
+		StopTween(_G.FarmBone)
+	end
+})
+
+local BonePos = CFrame.new(-9506.234375, 172.130615234375, 6117.0771484375)
+local BoneQuestPos = CFrame.new(-9516.99316, 172.017181, 6078.46533, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+spawn(function()
+    while wait() do 
+        pcall(function()
+            if _G.BoneMode == "No Quest" and _G.FarmBone and World3 then
+                if game:GetService("Workspace").Enemies:FindFirstChild("Reborn Skeleton") or game:GetService("Workspace").Enemies:FindFirstChild("Living Zombie") or game:GetService("Workspace").Enemies:FindFirstChild("Demonic Soul") or game:GetService("Workspace").Enemies:FindFirstChild("Posessed Mummy") then
+                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        if v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy" then
+                           if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                               repeat wait()
+                                    EquipWeapon(_G.SelectWeapon)
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
+                                    PosNear = v.HumanoidRootPart.CFrame
+                                    MagnetNear = true
+                                until not _G.FarmBone or not v.Parent or v.Humanoid.Health <= 0
+                            end
+                        end
+                    end
+                else
+                    topos(BonePos)
+                    UnEquipWeapon(_G.SelectWeapon)
+                    MagnetNear = false
+                end
+            end
+            if _G.BoneMode == "Get Quest" and _G.FarmBone and World3 then
+                local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
+                if not string.find(QuestTitle, "Demonic Soul") then
+                    MagnetNear = false
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+                end
+                if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
+                    MagnetNear = false
+                    topos(BoneQuestPos)
+                    if (BoneQuestPos.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3 then    
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest","HauntedQuest2",1)
+                    end
+                elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
+                    if game:GetService("Workspace").Enemies:FindFirstChild("Reborn Skeleton") or game:GetService("Workspace").Enemies:FindFirstChild("Living Zombie") or game:GetService("Workspace").Enemies:FindFirstChild("Demonic Soul") or game:GetService("Workspace").Enemies:FindFirstChild("Posessed Mummy") then
+                        for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                            if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                                if v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy" then
+                                    if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, "Demonic Soul") then
+                                        repeat wait()
+                                            EquipWeapon(_G.SelectWeapon)
+                                            topos(v.HumanoidRootPart.CFrame * Pos)
+                                            PosNear = v.HumanoidRootPart.CFrame
+                                            MagnetNear = true
+                                        until not _G.FarmBone or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
+                                    else
+                                        MagnetNear = false
+                                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+                                    end
+                                end
+                            end
+                        end
+                    else
+                        topos(BonePos)
+                        UnEquipWeapon(_G.SelectWeapon)
+                        MagnetNear = false
+                    end
+                end
+            end
+        end)
+    end
+end)
+
+Farm:AddToggle({
+	Name = "Auto Random Bone",
+	Default = false,
+	Callback = function(Value)
+		_G.RandomBone = Value
+	end
+})
+
+spawn(function()
+    while task.wait() do
+        pcall(function()
+            if _G.RandomBone then    
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Bones","Buy",1,1)
+            end
+        end)
+    end
+end)
+
+Farm:AddToggle({
+	Name = "Auto Spawn & Kill Soul Reaper",
+	Default = false,
+	Callback = function(Value)
+		_G.SoulReaper = Value
+		StopTween(_G.SoulReaper)
+	end
+})
+
+spawn(function()
+    while wait() do
+        pcall(function()
+            if _G.SoulReaper then
+                if game.Players.LocalPlayer.Backpack:FindFirstChild("Hallow Essence") then
+                     EquipWeapon("Hallow Essence")
+                     topos(CFrame.new(-8932.83789, 144.098709, 6059.34229, -0.999290943, 7.95623478e-09, -0.0376505218, 4.4684243e-09, 1, 9.27205832e-08, 0.0376505218, 9.24866086e-08, -0.999290943))
+                elseif game:GetService("Workspace").Enemies:FindFirstChild("Soul Reaper") then
+                    if game.Workspace.Enemies:FindFirstChild ("Soul Reaper") then
+                        for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                            if v.Name == "Soul Reaper"  then
+                                if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                                    repeat wait()
+                                        EquipWeapon(_G.SelectWeapon)
+                                        topos(v.HumanoidRootPart.CFrame * Pos)
+                                    until not _G.SoulReaper or not v.Parent or v.Humanoid.Health <= 0
+                                end
+                            end
+                        end
+                    end
+                else
+                    topos(BonePos)
+                    UnEquipWeapon(_G.SelectWeapon)
+                    local args = {
+                        [1] = "Bones",
+                        [2] = "Buy",
+                        [3] = 1,
+                        [4] = 1
+                    }
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
                 end
             end
         end)
