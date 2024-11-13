@@ -2244,7 +2244,7 @@ local Window = OrionLib:MakeWindow({
     IntroText = "Welcome To Tinh Linh Hub Script",
     IntroIcon = "rbxassetid://16730867128",
     HidePremium = false,
-    SaveConfig = false,
+    SaveConfig = true,
     ConfigFolder = "Tinh Linh Hub"
 })
 
