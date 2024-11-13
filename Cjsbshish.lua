@@ -1576,7 +1576,7 @@ end)
 
 function StopTween(target)
     if not target then
-        return topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
+        topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
         _G.NoClip = false
         _G.NoClip = false
     end
