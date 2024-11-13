@@ -2238,15 +2238,7 @@ end)
 --= [ Create Menu & Tab ] =--
 
 local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Shisvwns/Nbsbsusbsvsvsvsv/refs/heads/main/Testui.lua"))()
-local Window = OrionLib:MakeWindow({
-    Name = "Tinh Linh Hub",
-    IntroEnabled = true,
-    IntroText = "Welcome To Tinh Linh Hub Script",
-    IntroIcon = "rbxassetid://16730867128",
-    HidePremium = false,
-    SaveConfig = true,
-    ConfigFolder = "TinhLinhHub"
-})
+local Window =OrionLib:MakeWindow({Name = ":)", IntroEnabled = true, IntroText = "Tinh Linh Hub Script", IntroIcon = "rbxassetid://16730867128", HidePremium = false, SaveConfig = true, ConfigFolder = "TinhLinhHub"})
 
 OrionLib:MakeNotification({
     Name = "Tinh Linh Hub",
