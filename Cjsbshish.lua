@@ -2212,11 +2212,6 @@ task.spawn(function()
     end
 end)
 
-function SendKey(Name)
-    game:GetService("VirtualInputManager"):SendKeyEvent(true, Name, false, game)
-    game:GetService("VirtualInputManager"):SendKeyEvent(false, Name, false, game)
-end
-
 -- Create Menu & Tab --
 
 local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Shisvwns/Nbsbsusbsvsvsvsv/refs/heads/main/Testui.lua"))()
@@ -2733,84 +2728,6 @@ Farm:AddToggle({
 	end
 })
 
-local CombatFramework = require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework"))
-local CombatFrameworkR = getupvalues(CombatFramework)[2]
-
-function CurrentWeapon()
-    local ac = CombatFrameworkR.activeController
-    local ret = ac.blades[1]
-    if not ret then
-        return game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Name
-    end
-    pcall(
-        function()
-            while ret.Parent ~= game.Players.LocalPlayer.Character do
-                ret = ret.Parent
-            end
-        end
-    )
-    if not ret then
-        return game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Name
-    end
-    return ret
-end
-function Attack2()
-    if game.Players.LocalPlayer.Character.Stun.Value ~= 0 then
-        return nil
-    end
-    local ac = CombatFrameworkR.activeController
-    ac.hitboxMagnitude = 55
-    if ac and ac.equipped then
-        for indexincrement = 1, 1 do
-            local bladehit = require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(
-            game.Players.LocalPlayer.Character,
-            { game.Players.LocalPlayer.Character.HumanoidRootPart },
-            60
-        )
-            if #bladehit > 0 then
-                local AcAttack8 = debug.getupvalue(ac.attack, 5)
-                local AcAttack9 = debug.getupvalue(ac.attack, 6)
-                local AcAttack7 = debug.getupvalue(ac.attack, 4)
-                local AcAttack10 = debug.getupvalue(ac.attack, 7)
-                local NumberAc12 = (AcAttack8 * 798405 + AcAttack7 * 727595) % AcAttack9
-                local NumberAc13 = AcAttack7 * 798405
-                (function()
-                    NumberAc12 = (NumberAc12 * AcAttack9 + NumberAc13) % 1099511627776
-                    AcAttack8 = math.floor(NumberAc12 / AcAttack9)
-                    AcAttack7 = NumberAc12 - AcAttack8 * AcAttack9
-                end)()
-                AcAttack10 = AcAttack10 + 1
-                debug.setupvalue(ac.attack, 5, AcAttack8)
-                debug.setupvalue(ac.attack, 6, AcAttack9)
-                debug.setupvalue(ac.attack, 4, AcAttack7)
-                debug.setupvalue(ac.attack, 7, AcAttack10)
-                for k, v in pairs(ac.animator.anims.basic) do
-                    v:Play()
-                end
-                if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") and ac.blades and ac.blades[1] then
-                    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange", tostring(CurrentWeapon()))
-                    game.ReplicatedStorage.Remotes.Validator:FireServer(math.floor(NumberAc12 / 1099511627776 * 16777215), AcAttack10)
-                    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, 2, "")
-                end
-            end
-        end
-    end
-end
-
-function DoAttack()
-    pcall(function()
-        Attack2()
-    end)
-end
-
-spawn(function()
-    while task.wait() do
-        if UsefastattackPlayers then
-            DoAttack()
-        end
-    end
-end)
-
 spawn(function()
     while wait() do
         pcall(function()
@@ -2855,15 +2772,17 @@ spawn(function()
                                             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EnablePvp")
                                         end
                                         EquipWeapon(_G.SelectWeapon)
-                                        topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,5))
+                                        topos(v.Character.HumanoidRootPart.CFrame * CFrame.new(0,2,5))
                                         v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
                                        UsefastattackPlayers = true
                                         if (v.Character.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 30 then
                                             Skillaimbot = true
                                             AimBotSkillPosition = v.Character.HumanoidRootPart.CFrame.Position
-                                            SendKey("X")
+                                            game:GetService("VirtualInputManager"):SendKeyEvent(true, "X", false, game)
+                                            game:GetService("VirtualInputManager"):SendKeyEvent(false, "X", false, game)
                                             wait()
-                                            SendKey("Z")
+                                            game:GetService("VirtualInputManager"):SendKeyEvent(true, "Z", false, game)
+                                            game:GetService("VirtualInputManager"):SendKeyEvent(false, "Z", false, game)
                                         end
                                     until not _G.FarmFast or not v:FindFirstChild("HumanoidRootPart") or v.Character.Humanoid.Health <= 0
                                     Skillaimbot = false
@@ -2958,6 +2877,19 @@ Farm:AddToggle({
 	end
 })
 
+function DapBoMeNo()
+    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+        if v.Name == "Cake Prince" or v.Name == "Dough King" then
+            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                repeat wait()
+                    EquipWeapon(_G.SelectWeapon)
+                    topos(v.HumanoidRootPart.CFrame * Pos)
+                until not _G.FarmKatakuri or not v.Parent or v.Humanoid.Health <= 0
+            end
+        end
+    end
+end
+
 local CakeQuestPos = CFrame.new(-2021.32007, 37.7982254, -12028.7295, 0.957576931, -8.80302053e-08, 0.288177818, 6.9301187e-08, 1, 7.51931211e-08, -0.288177818, -5.2032135e-08, 0.957576931)
 local CakePos = CFrame.new(-2091.911865234375, 70.00884246826172, -12142.8359375)
 spawn(function()
@@ -2971,17 +2903,8 @@ spawn(function()
                 KillMob = (tonumber(string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),41,41)) - 500)
             end
             if _G.KatakuriMode == "No Quest" and _G.FarmKatakuri and World3 then
-                if game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince") then
-                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                        if v.Name == "Cake Prince" or v.Name == "Dough King" then
-                            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                repeat wait()
-                                    EquipWeapon(_G.SelectWeapon)
-                                    topos(v.HumanoidRootPart.CFrame * Pos)
-                                until not _G.FarmKatakuri or not v.Parent or v.Humanoid.Health <= 0
-                            end
-                        end
-                    end
+                if game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince") or game:GetService("Workspace").Enemies:FindFirstChild("Dough King") then
+                    DapBoMeNo()
                 else
                     if game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince") then
                         topos(game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince").HumanoidRootPart.CFrame * Pos)
@@ -3012,17 +2935,8 @@ spawn(function()
                 end
             end
             if _G.KatakuriMode == "Get Quest" and _G.FarmKatakuri and World3 then
-                if game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince") then
-                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                        if v.Name == "Cake Prince" or v.Name == "Dough King" then
-                            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                repeat wait()
-                                    EquipWeapon(_G.SelectWeapon)
-                                    topos(v.HumanoidRootPart.CFrame * Pos)
-                                until not _G.FarmKatakuri or not v.Parent or v.Humanoid.Health <= 0
-                            end
-                        end
-                    end
+                if game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince") or game:GetService("Workspace").Enemies:FindFirstChild("Dough King")then
+                    DapBoMeNo()
                 else
                     local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
                     if not string.find(QuestTitle, "Cookie Crafter") then
