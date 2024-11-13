@@ -2922,11 +2922,11 @@ spawn(function()
                                         until not _G.FarmKatakuri or not v.Parent or v.Humanoid.Health <= 0 or game:GetService("Workspace").Map.CakeLoaf.BigMirror.Other.Transparency == 0 or game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince") or game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince") or KillMob == 0
                                     end
                                 end
-                            else
-                                topos(CakePos)
-                                MagnetNear = false
-                                UnEquipWeapon(_G.SelectWeapon)
                             end
+                        else
+                            topos(CakePos)
+                            MagnetNear = false
+                            UnEquipWeapon(_G.SelectWeapon)
                         end
                     end
                 end
