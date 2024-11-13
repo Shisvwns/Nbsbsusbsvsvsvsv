@@ -598,7 +598,7 @@ function OrionLib:MakeWindow(WindowConfig)
 	local WindowName = AddThemeObject(SetProps(MakeElement("Label", WindowConfig.Name, 14), {
 		Size = UDim2.new(1, -30, 2, 0),
 		Position = UDim2.new(0, 25, 0, -24),
-		Font = Enum.Font.Bangers,
+		Font = Enum.Font.BuilderSansExtraBold,
 		TextSize = 20
 	}), "Text")
 
@@ -651,7 +651,7 @@ function OrionLib:MakeWindow(WindowConfig)
             Position = UDim2.new(0, 0, 0, 0),
         }), {
             AddThemeObject(SetProps(MakeElement("Label", "Open", 21), {
-                Font = Enum.Font.Bangers,
+                Font = Enum.Font.BuilderSansExtraBold,
                 BackgroundTransparency = 1,
                 Size = UDim2.new(0, 52, 0, 52),
                 TextXAlignment = Enum.TextXAlignment.Center,
