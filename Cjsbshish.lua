@@ -2364,7 +2364,6 @@ spawn(function()
                             v.HumanoidRootPart.CFrame = PosFarm
                             v.Humanoid:ChangeState(14)
                             sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-                            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                         end
                     end
                     if MagnetNear then
@@ -2405,13 +2404,6 @@ spawn(function()
                     if _G.AutoBartilo and AutoBartiloBring then
                         if v.Name == "Swan Pirate" and (v.HumanoidRootPart.Position - PosMonBarto.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = PosMonBarto
-                            v.Humanoid:ChangeState(14)
-                            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-                        end
-                    end
-                    if _G.FarmFast and StartBring then
-                        if v.Name == "Shanda" and (v.HumanoidRootPart.Position - PosMon.Position).Magnitude <= BringRange then
-                            v.HumanoidRootPart.CFrame = PosMon
                             v.Humanoid:ChangeState(14)
                             sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                         end
@@ -2741,6 +2733,84 @@ Farm:AddToggle({
 	end
 })
 
+local CombatFramework = require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitFogame.ReplicatedStoragehild("CombatFramework"))
+local CombatFrameworkR = getupvalues(CombatFramework)[2]
+
+function CurrentWeapon()
+    local ac = CombatFrameworkR.activeController
+    local ret = ac.blades[1]
+    if not ret then
+        return game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Name
+    end
+    pcall(
+        function()
+            while ret.Parent ~= game.Players.LocalPlayer.Character do
+                ret = ret.Parent
+            end
+        end
+    )
+    if not ret then
+        return game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Name
+    end
+    return ret
+end
+function Attack2()
+    if game.Players.LocalPlayer.Character.Stun.Value ~= 0 then
+        return nil
+    end
+    local ac = CombatFrameworkR.activeController
+    ac.hitboxMagnitude = 55
+    if ac and ac.equipped then
+        for indexincrement = 1, 1 do
+            local bladehit = require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(
+            game.Players.LocalPlayer.Character,
+            { game.Players.LocalPlayer.Character.HumanoidRootPart },
+            60
+        )
+            if #bladehit > 0 then
+                local AcAttack8 = debug.getupvalue(ac.attack, 5)
+                local AcAttack9 = debug.getupvalue(ac.attack, 6)
+                local AcAttack7 = debug.getupvalue(ac.attack, 4)
+                local AcAttack10 = debug.getupvalue(ac.attack, 7)
+                local NumberAc12 = (AcAttack8 * 798405 + AcAttack7 * 727595) % AcAttack9
+                local NumberAc13 = AcAttack7 * 798405
+                (function()
+                    NumberAc12 = (NumberAc12 * AcAttack9 + NumberAc13) % 1099511627776
+                    AcAttack8 = math.floor(NumberAc12 / AcAttack9)
+                    AcAttack7 = NumberAc12 - AcAttack8 * AcAttack9
+                end)()
+                AcAttack10 = AcAttack10 + 1
+                debug.setupvalue(ac.attack, 5, AcAttack8)
+                debug.setupvalue(ac.attack, 6, AcAttack9)
+                debug.setupvalue(ac.attack, 4, AcAttack7)
+                debug.setupvalue(ac.attack, 7, AcAttack10)
+                for k, v in pairs(ac.animator.anims.basic) do
+                    v:Play()
+                end
+                if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") and ac.blades and ac.blades[1] then
+                    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange", tostring(CurrentWeapon()))
+                    game.ReplicatedStorage.Remotes.Validator:FireServer(math.floor(NumberAc12 / 1099511627776 * 16777215), AcAttack10)
+                    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, 2, "")
+                end
+            end
+        end
+    end
+end
+
+function DoAttack()
+    pcall(function()
+        Attack2()
+    end)
+end
+
+spawn(function()
+    while task.wait() do
+        if UsefastattackPlayers then
+            DoAttack()
+        end
+    end
+end)
+
 spawn(function()
     while wait() do
         pcall(function()
@@ -2756,10 +2826,10 @@ spawn(function()
                                 repeat wait()
                                     EquipWeapon(_G.SelectWeapon)
                                     topos(v.HumanoidRootPart.CFrame * Pos)
-                                    PosMon = v.HumanoidRootPart.CFrame
-                                    StartBring = true
+                                    PosNear = v.HumanoidRootPart.CFrame
+                                    MagnetNear = true
                                 until not _G.FarmFast or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0
-                                StartBring = false
+                                MagnetNear = false
                             end
                         end
                     end
