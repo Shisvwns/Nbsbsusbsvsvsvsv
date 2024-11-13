@@ -2245,7 +2245,7 @@ local Window = OrionLib:MakeWindow({
     IntroIcon = "rbxassetid://16730867128",
     HidePremium = false,
     SaveConfig = true,
-    ConfigFolder = "Tinh Linh Hub"
+    ConfigFolder = "TinhLinhHub"
 })
 
 OrionLib:MakeNotification({
