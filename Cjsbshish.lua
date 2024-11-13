@@ -2159,6 +2159,7 @@ inmyselfss = LPH_JIT_MAX(function(name)
 end)
 
 task.spawn(function() 
+pcall(function()
     if hookfunction and not islclosure(hookfunction) then 
         workspace._WorldOrigin.ChildAdded:Connect(function(v)
             if v.Name =='DamageCounter' then 
@@ -2208,6 +2209,7 @@ task.spawn(function()
             end
         end)
     end
+end)
 end)
 
 -- Create Menu & Tab --
