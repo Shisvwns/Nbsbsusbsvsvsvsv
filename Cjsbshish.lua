@@ -2359,59 +2359,64 @@ Setting:AddToggle({
 	end
 })
 
+function ChinhMob()
+    v.Humanoid.JumpPower = 0
+    v.Humanoid.WalkSpeed = 0
+    v.HumanoidRootPart.CanCollide = false
+    v.Head.CanCollide = false
+    if v.Humanoid:FindFirstChild("Animator") then
+        v.Humanoid.Animator:Destroy()
+    end
+    v.Humanoid:ChangeState(11)
+    sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+end
+
 spawn(function()
     while wait() do
         pcall(function()
             if _G.BringMobs then
                 CheckQuest()
                 for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                    if _G.FarmLevel or _G.FruitsMastery or _G.GunMastery or _G.AutoSwordMastery then
+                    if _G.FarmLevel or _G.FruitsMastery or _G.GunMastery or _G.FarmAllMelee or _G.FarmAllSword then
                         if StartMagnet and v.Name == Mon and (v.HumanoidRootPart.Position - PosFarm.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = PosFarm
-                            v.Humanoid:ChangeState(14)
-                            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                            ChinhMob()
                         end
                     end
                     if MagnetNear then
                         if not string.find(v.Name, "Boss") and (v.HumanoidRootPart.Position - PosNear.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = PosNear
-                            v.Humanoid:ChangeState(14)
-                            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                            ChinhMob()
                         end
                     end
                     if _G.AutoMusketeerHat and StartMagnetMusketeerhat then
                         if v.Name == "Forest Pirate" and (v.HumanoidRootPart.Position - MusketeerHatMon.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = MusketeerHatMon
-                            v.Humanoid:ChangeState(14)
-                            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                            ChinhMob()
                         end
                     end
                     if _G.Auto_EvoRace and StartEvoMagnet then
                         if v.Name == "Zombie" and (v.HumanoidRootPart.Position - PosMonEvo.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = PosMonEvo
-                            v.Humanoid:ChangeState(14)
-                            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                            ChinhMob()
                         end
                     end
                     if _G.FarmMaterial and BringMonMaterial then
                         if (v.Name == MMon or v.Name == MMon1) and (v.HumanoidRootPart.Position - MaterialPos.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = MaterialPos
-                            v.Humanoid:ChangeState(14)
-                            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                            ChinhMob()
                         end
                     end
                     if _G.FarmMob and SelectMag then
                         if v.Name == _G.SelectMob and (v.HumanoidRootPart.Position - PosMonFarm.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = PosMonFarm
-                            v.Humanoid:ChangeState(14)
-                            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                            ChinhMob()
                         end
                     end
                     if _G.AutoBartilo and AutoBartiloBring then
                         if v.Name == "Swan Pirate" and (v.HumanoidRootPart.Position - PosMonBarto.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = PosMonBarto
-                            v.Humanoid:ChangeState(14)
-                            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                            ChinhMob()
                         end
                     end
                 end
@@ -3449,7 +3454,7 @@ spawn(function()
     			end
     		elseif _G.FarmAllSword then
     			for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-	    		if v.ToolTip == "Sword" then
+	        		if v.ToolTip == "Sword" then
 	    				if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
 		 	   			SelectAllSword = v.Name
 			            end
