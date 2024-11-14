@@ -2368,6 +2368,8 @@ spawn(function()
                     if _G.FarmLevel or _G.FruitsMastery or _G.GunMastery or _G.FarmAllMelee or _G.FarmAllSword then
                         if StartMagnet and v.Name == Mon and (v.HumanoidRootPart.Position - PosFarm.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = PosFarm
+                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)   
+                            v.Humanoid:ChangeState(11)
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
                             v.HumanoidRootPart.CanCollide = false
@@ -2375,13 +2377,14 @@ spawn(function()
                             if v.Humanoid:FindFirstChild("Animator") then
                                 v.Humanoid.Animator:Destroy()
                             end
-                            v.Humanoid:ChangeState(11)
                             sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                         end
                     end
                     if MagnetNear then
                         if not string.find(v.Name, "Boss") and (v.HumanoidRootPart.Position - PosNear.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = PosNear
+                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)   
+                            v.Humanoid:ChangeState(11)
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
                             v.HumanoidRootPart.CanCollide = false
@@ -2389,13 +2392,14 @@ spawn(function()
                             if v.Humanoid:FindFirstChild("Animator") then
                                 v.Humanoid.Animator:Destroy()
                             end
-                            v.Humanoid:ChangeState(11)
                             sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                         end
                     end
                     if _G.AutoMusketeerHat and StartMagnetMusketeerhat then
                         if v.Name == "Forest Pirate" and (v.HumanoidRootPart.Position - MusketeerHatMon.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = MusketeerHatMon
+                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)   
+                            v.Humanoid:ChangeState(11)
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
                             v.HumanoidRootPart.CanCollide = false
@@ -2403,13 +2407,14 @@ spawn(function()
                             if v.Humanoid:FindFirstChild("Animator") then
                                 v.Humanoid.Animator:Destroy()
                             end
-                            v.Humanoid:ChangeState(11)
                             sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                         end
                     end
                     if _G.Auto_EvoRace and StartEvoMagnet then
                         if v.Name == "Zombie" and (v.HumanoidRootPart.Position - PosMonEvo.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = PosMonEvo
+                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)   
+                            v.Humanoid:ChangeState(11)
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
                             v.HumanoidRootPart.CanCollide = false
@@ -2417,13 +2422,14 @@ spawn(function()
                             if v.Humanoid:FindFirstChild("Animator") then
                                 v.Humanoid.Animator:Destroy()
                             end
-                            v.Humanoid:ChangeState(11)
                             sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                         end
                     end
                     if _G.FarmMaterial and BringMonMaterial then
                         if (v.Name == MMon or v.Name == MMon1) and (v.HumanoidRootPart.Position - MaterialPos.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = MaterialPos
+                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)   
+                            v.Humanoid:ChangeState(11)
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
                             v.HumanoidRootPart.CanCollide = false
@@ -2431,13 +2437,14 @@ spawn(function()
                             if v.Humanoid:FindFirstChild("Animator") then
                                 v.Humanoid.Animator:Destroy()
                             end
-                            v.Humanoid:ChangeState(11)
                             sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                         end
                     end
                     if _G.FarmMob and SelectMag then
                         if v.Name == _G.SelectMob and (v.HumanoidRootPart.Position - PosMonFarm.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = PosMonFarm
+                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)   
+                            v.Humanoid:ChangeState(11)
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
                             v.HumanoidRootPart.CanCollide = false
@@ -2445,13 +2452,14 @@ spawn(function()
                             if v.Humanoid:FindFirstChild("Animator") then
                                 v.Humanoid.Animator:Destroy()
                             end
-                            v.Humanoid:ChangeState(11)
                             sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                         end
                     end
                     if _G.AutoBartilo and AutoBartiloBring then
                         if v.Name == "Swan Pirate" and (v.HumanoidRootPart.Position - PosMonBarto.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = PosMonBarto
+                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)   
+                            v.Humanoid:ChangeState(11)
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
                             v.HumanoidRootPart.CanCollide = false
@@ -2459,7 +2467,6 @@ spawn(function()
                             if v.Humanoid:FindFirstChild("Animator") then
                                 v.Humanoid.Animator:Destroy()
                             end
-                            v.Humanoid:ChangeState(11)
                             sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                         end
                     end
@@ -3461,9 +3468,7 @@ spawn(function()
                     for i,v in pairs(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventory")) do
                         if type(v) == "table" then
                             if v.Type == "Melee" and v.Mastery >= _G.SelectMastery then
-                                if not (game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(v.Name) or game:GetService("Players").LocalPlayer.Character:FindFirstChild(v.Name)) then
-                                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LoadItem",v.Name)
-                                end
+                                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LoadItem",v.Name)
                             end
                         end
                     end
@@ -3473,9 +3478,7 @@ spawn(function()
                     for i,v in pairs(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventory")) do
                         if type(v) == "table" then
                             if v.Type == "Sword" and v.Mastery >= _G.SelectMastery then
-                                if not (game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(v.Name) or game:GetService("Players").LocalPlayer.Character:FindFirstChild(v.Name)) then
-                                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LoadItem",v.Name)
-                                end
+                                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LoadItem",v.Name)
                             end
                         end
                     end
