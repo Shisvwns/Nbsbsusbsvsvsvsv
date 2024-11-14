@@ -2368,7 +2368,7 @@ spawn(function()
                     if _G.FarmLevel or _G.FruitsMastery or _G.GunMastery or _G.FarmAllMelee or _G.FarmAllSword then
                         if StartMagnet and v.Name == Mon and (v.HumanoidRootPart.Position - PosFarm.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = PosFarm
-                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)   
+                            v.HumanoidRootPart.Size = Vector3.new(60,60,60)   
                             v.Humanoid:ChangeState(11)
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
@@ -2383,7 +2383,7 @@ spawn(function()
                     if MagnetNear then
                         if not string.find(v.Name, "Boss") and (v.HumanoidRootPart.Position - PosNear.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = PosNear
-                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)   
+                            v.HumanoidRootPart.Size = Vector3.new(60,60,60)   
                             v.Humanoid:ChangeState(11)
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
@@ -2398,7 +2398,7 @@ spawn(function()
                     if _G.AutoMusketeerHat and StartMagnetMusketeerhat then
                         if v.Name == "Forest Pirate" and (v.HumanoidRootPart.Position - MusketeerHatMon.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = MusketeerHatMon
-                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)   
+                            v.HumanoidRootPart.Size = Vector3.new(60,60,60)   
                             v.Humanoid:ChangeState(11)
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
@@ -2413,7 +2413,7 @@ spawn(function()
                     if _G.Auto_EvoRace and StartEvoMagnet then
                         if v.Name == "Zombie" and (v.HumanoidRootPart.Position - PosMonEvo.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = PosMonEvo
-                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)   
+                            v.HumanoidRootPart.Size = Vector3.new(60,60,60)   
                             v.Humanoid:ChangeState(11)
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
@@ -2428,7 +2428,7 @@ spawn(function()
                     if _G.FarmMaterial and BringMonMaterial then
                         if (v.Name == MMon or v.Name == MMon1) and (v.HumanoidRootPart.Position - MaterialPos.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = MaterialPos
-                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)   
+                            v.HumanoidRootPart.Size = Vector3.new(60,60,60)   
                             v.Humanoid:ChangeState(11)
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
@@ -2443,7 +2443,7 @@ spawn(function()
                     if _G.FarmMob and SelectMag then
                         if v.Name == _G.SelectMob and (v.HumanoidRootPart.Position - PosMonFarm.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = PosMonFarm
-                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)   
+                            v.HumanoidRootPart.Size = Vector3.new(60,60,60)   
                             v.Humanoid:ChangeState(11)
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
@@ -2458,7 +2458,7 @@ spawn(function()
                     if _G.AutoBartilo and AutoBartiloBring then
                         if v.Name == "Swan Pirate" and (v.HumanoidRootPart.Position - PosMonBarto.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = PosMonBarto
-                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)   
+                            v.HumanoidRootPart.Size = Vector3.new(60,60,60)   
                             v.Humanoid:ChangeState(11)
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
@@ -2949,13 +2949,6 @@ local CakePos = CFrame.new(-2091.911865234375, 70.00884246826172, -12142.8359375
 spawn(function()
     while wait() do
         pcall(function()
-            if string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 88 then
-                KillMob = (tonumber(string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,41)) - 500)
-            elseif string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 87 then
-                KillMob = (tonumber(string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),40,41)) - 500)
-            elseif string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 86 then
-                KillMob = (tonumber(string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),41,41)) - 500)
-            end
             if _G.KatakuriMode == "No Quest" and _G.FarmKatakuri and World3 then
                 if game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince") or game:GetService("Workspace").Enemies:FindFirstChild("Dough King") then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
@@ -2979,7 +2972,7 @@ spawn(function()
                                             topos(v.HumanoidRootPart.CFrame * Pos)
                                             PosNear = v.HumanoidRootPart.CFrame
                                             MagnetNear = true
-                                        until not _G.FarmKatakuri or not v.Parent or v.Humanoid.Health <= 0 or game:GetService("Workspace").Map.CakeLoaf.BigMirror.Other.Transparency == 0 or game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince") or game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince") or KillMob == 0
+                                        until not _G.FarmKatakuri or not v.Parent or v.Humanoid.Health <= 0 or game:GetService("Workspace").Map.CakeLoaf.BigMirror.Other.Transparency == 0 or game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince") or game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince")
                                     end
                                 end
                             end
@@ -3026,7 +3019,7 @@ spawn(function()
                                                 topos(v.HumanoidRootPart.CFrame * Pos)
                                                 PosNear = v.HumanoidRootPart.CFrame
                                                 MagnetNear = true
-                                            until not _G.FarmKatakuri or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false or v.Humanoid.Health <= 0 or game:GetService("Workspace").Map.CakeLoaf.BigMirror.Other.Transparency == 0 or game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince") or game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince") or KillMob == 0
+                                            until not _G.FarmKatakuri or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false or v.Humanoid.Health <= 0 or game:GetService("Workspace").Map.CakeLoaf.BigMirror.Other.Transparency == 0 or game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince") or game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince")
                                         else
                                             MagnetNear = false
                                             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
@@ -3315,6 +3308,8 @@ spawn(function()
                                                 topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 20, 0))
                                                 v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
                                                 game:GetService("Players").LocalPlayer.Character.Humanoid:FindFirstChild(""):InvokeServer("TAP", Vector3.new(ShootPosition.Position))
+                                                game:service('VirtualInputManager'):SendMouseButtonEvent(x, y, 0, true, game, 0)
+                                                game:service('VirtualInputManager'):SendMouseButtonEvent(x, y, 0, false, game, 0)
                                                 UseGunSkill = true
                                                 Skillaimbot = true
                                             else
