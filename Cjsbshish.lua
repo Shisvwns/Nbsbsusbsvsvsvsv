@@ -1950,9 +1950,9 @@ spawn(function()
             local v641_args = {"WaterBlur", "WaterEffect", "WaterColorCorrection", "WaterCFrame"}
             if table.find(v641_args, v.Name) then
                 v:Destroy()
-                if game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit') then
-                    game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit'):Destroy()
-                end
+                game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit'):Destroy()
+                game:GetService("ReplicatedStorage").Effect.Container.Respawn:Destroy()
+                game:GetService("ReplicatedStorage").Effect.Container.Death:Destroy()
                 game:GetService("ReplicatedStorage").Util.Sound.Storage.Swing:Destroy()
             end
         end
