@@ -1521,11 +1521,11 @@ function topos(Pos)
     Spawn = GetBypassPos(Pos) 
     MyCFrame = WaitHRP(lp).CFrame
     Distance = CalcDistance(MyCFrame, Pos)
-    if CalcDistance(Portal, Pos) < CalcDistance(Pos) and CalcDistance(Portal) > 500 then
+    if CalcDistance(Portal, Pos) < CalcDistance(Pos) and CalcDistance(Portal) > 700 then
         return RequestEntrance(Portal)
     end
     if _G.BypassTeleport then
-        if CalcDistance(Pos) - CalcDistance(Spawn, Pos) > 1000 and CalcDistance(Spawn) > 1000 then
+        if CalcDistance(Pos) - CalcDistance(Spawn, Pos) > 1200 and CalcDistance(Spawn) > 1200 then
             return BypassTeleport(Spawn)
         end
     end
@@ -2941,6 +2941,7 @@ spawn(function()
                                 repeat wait()
                                     EquipWeapon(_G.SelectWeapon)
                                     topos(CFrame.new(-2120, 70.00884246826172, -12405))
+                                    wait(2)
                                     if game:GetService("Workspace")["_WorldOrigin"]:FindFirstChild("Ring") or game:GetService("Workspace")["_WorldOrigin"]:FindFirstChild("Fist") then
                                         topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 100, 0))
                                     else
@@ -2950,7 +2951,7 @@ spawn(function()
                             end
                         end
                     end
-                else
+                elseif not game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince") or not game:GetService("Workspace").Enemies:FindFirstChild("Dough King")then
                     if game:GetService("Workspace").Map.CakeLoaf.BigMirror.Other.Transparency == 1 then
                         if game:GetService("Workspace").Enemies:FindFirstChild("Cookie Crafter") or game:GetService("Workspace").Enemies:FindFirstChild("Cake Guard") or game:GetService("Workspace").Enemies:FindFirstChild("Baking Staff") or game:GetService("Workspace").Enemies:FindFirstChild("Head Baker") then
                             for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
@@ -2981,6 +2982,7 @@ spawn(function()
                                 repeat wait()
                                     EquipWeapon(_G.SelectWeapon)
                                     topos(CFrame.new(-2120, 70.00884246826172, -12405))
+                                    wait(2)
                                     if game:GetService("Workspace")["_WorldOrigin"]:FindFirstChild("Ring") or game:GetService("Workspace")["_WorldOrigin"]:FindFirstChild("Fist") then
                                         topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 100, 0))
                                     else
@@ -2990,7 +2992,7 @@ spawn(function()
                             end
                         end
                     end
-                else
+                elseif not game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince") or not game:GetService("Workspace").Enemies:FindFirstChild("Dough King")then
                     local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
                     if not string.find(QuestTitle, "Cookie Crafter") then
                         MagnetNear = false
