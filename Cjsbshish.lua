@@ -1951,8 +1951,6 @@ spawn(function()
             if table.find(v641_args, v.Name) then
                 v:Destroy()
                 game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit'):Destroy()
-                game:GetService("ReplicatedStorage").Effect.Container.Respawn:Destroy()
-                game:GetService("ReplicatedStorage").Effect.Container.Death:Destroy()
                 game:GetService("ReplicatedStorage").Util.Sound.Storage.Swing:Destroy()
             end
         end
@@ -2355,7 +2353,6 @@ spawn(function()
                         if StartMagnet and v.Name == Mon and (v.HumanoidRootPart.Position - PosFarm.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = PosFarm
                             v.HumanoidRootPart.Size = Vector3.new(60,60,60)   
-                            v.Humanoid:ChangeState(11)
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
                             v.HumanoidRootPart.CanCollide = false
@@ -2370,7 +2367,6 @@ spawn(function()
                         if not string.find(v.Name, "Boss") and (v.HumanoidRootPart.Position - PosNear.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = PosNear
                             v.HumanoidRootPart.Size = Vector3.new(60,60,60)   
-                            v.Humanoid:ChangeState(11)
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
                             v.HumanoidRootPart.CanCollide = false
@@ -2385,7 +2381,6 @@ spawn(function()
                         if v.Name == "Forest Pirate" and (v.HumanoidRootPart.Position - MusketeerHatMon.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = MusketeerHatMon
                             v.HumanoidRootPart.Size = Vector3.new(60,60,60)   
-                            v.Humanoid:ChangeState(11)
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
                             v.HumanoidRootPart.CanCollide = false
@@ -2400,7 +2395,6 @@ spawn(function()
                         if v.Name == "Zombie" and (v.HumanoidRootPart.Position - PosMonEvo.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = PosMonEvo
                             v.HumanoidRootPart.Size = Vector3.new(60,60,60)   
-                            v.Humanoid:ChangeState(11)
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
                             v.HumanoidRootPart.CanCollide = false
@@ -2415,7 +2409,6 @@ spawn(function()
                         if (v.Name == MMon or v.Name == MMon1) and (v.HumanoidRootPart.Position - MaterialPos.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = MaterialPos
                             v.HumanoidRootPart.Size = Vector3.new(60,60,60)   
-                            v.Humanoid:ChangeState(11)
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
                             v.HumanoidRootPart.CanCollide = false
@@ -2430,7 +2423,6 @@ spawn(function()
                         if v.Name == _G.SelectMob and (v.HumanoidRootPart.Position - PosMonFarm.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = PosMonFarm
                             v.HumanoidRootPart.Size = Vector3.new(60,60,60)   
-                            v.Humanoid:ChangeState(11)
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
                             v.HumanoidRootPart.CanCollide = false
@@ -2445,7 +2437,6 @@ spawn(function()
                         if v.Name == "Swan Pirate" and (v.HumanoidRootPart.Position - PosMonBarto.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = PosMonBarto
                             v.HumanoidRootPart.Size = Vector3.new(60,60,60)   
-                            v.Humanoid:ChangeState(11)
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
                             v.HumanoidRootPart.CanCollide = false
