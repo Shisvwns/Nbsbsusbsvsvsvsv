@@ -2284,6 +2284,7 @@ Setting:AddToggle({
 		Fast_Attack =Value
 		DamageAura =Value
 		ClickNoCooldown = Value
+		NeedAttacking = Value
 		DmgAttack.Enabled = not Value
 	end
 })
