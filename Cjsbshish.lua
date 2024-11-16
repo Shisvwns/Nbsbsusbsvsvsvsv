@@ -2940,6 +2940,7 @@ spawn(function()
                             if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                                 repeat wait()
                                     EquipWeapon(_G.SelectWeapon)
+                                    topos(CFrame.new(-2120, 70.00884246826172, -12405))
                                     if game:GetService("Workspace")["_WorldOrigin"]:FindFirstChild("Ring") or game:GetService("Workspace")["_WorldOrigin"]:FindFirstChild("Fist") then
                                         topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 100, 0))
                                     else
@@ -2979,6 +2980,7 @@ spawn(function()
                             if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                                 repeat wait()
                                     EquipWeapon(_G.SelectWeapon)
+                                    topos(CFrame.new(-2120, 70.00884246826172, -12405))
                                     if game:GetService("Workspace")["_WorldOrigin"]:FindFirstChild("Ring") or game:GetService("Workspace")["_WorldOrigin"]:FindFirstChild("Fist") then
                                         topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 100, 0))
                                     else
