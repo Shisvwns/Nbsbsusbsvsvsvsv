@@ -43,6 +43,12 @@ if game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseT
 	until game.Players.LocalPlayer.Team ~= nil and game:IsLoaded()
 end
 
+if not LPH_OBFUSCATED then
+	LPH_JIT_MAX = (function(...) return ... end)
+	LPH_NO_VIRTUALIZE = (function(...) return ... end)
+	LPH_NO_UPVALUES = (function(...) return ... end)
+end
+
 local function TeleportToServer(JobId)
     local Succ, Err = pcall(function()
         game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, JobId, game.Players.LocalPlayer)
@@ -1990,7 +1996,7 @@ RL.wrapAttackAnimationAsync = function(a,b,c,d,func)
 	pcall(func,Hits)
 end
 
-getAllBladeHits = spawn(function(Sizes)
+getAllBladeHits = LPH_NO_VIRTUALIZE(function(Sizes)
 	local Hits = {}
 	local Client = game.Players.LocalPlayer
 	local Enemies = game:GetService("Workspace").Enemies:GetChildren()
@@ -2003,7 +2009,7 @@ getAllBladeHits = spawn(function(Sizes)
 	return Hits
 end)
 
-getAllBladeHitsPlayers = spawn(function(Sizes)
+getAllBladeHitsPlayers = LPH_NO_VIRTUALIZE(function(Sizes)
 	local Hits = {}
 	local Client = game.Players.LocalPlayer
 	local Characters = game:GetService("Workspace").Characters:GetChildren()
@@ -2027,7 +2033,7 @@ local FastAttackDelay = 0.01
 local FireL = 0
 local bladehit = {}
 
-CancelCoolDown = spawn(function()
+CancelCoolDown = LPH_JIT_MAX(function()
 	local ac = CombatFrameworkR.activeController
 	if ac and ac.equipped then
 		AttackCoolDown = tick() + (FastAttackDelay or 0.01) + ((FireL/MaxFire)*0.3)
@@ -2039,7 +2045,7 @@ CancelCoolDown = spawn(function()
 	end
 end)
 
-AttackFunction = spawn(function(typef)
+AttackFunction = LPH_JIT_MAX(function(typef)
 	local ac = CombatFrameworkR.activeController
 	if ac and ac.equipped then
 		local bladehit = {}
@@ -2087,33 +2093,35 @@ function CheckStun()
 	return false
 end
 
-spawn(function()
-	while game:GetService("RunService").Stepped:Wait() do
-		local ac = CombatFrameworkR.activeController
-		if ac and ac.equipped and not CheckStun() then
-			if NeedAttacking and Fast_Attack then
-				task.spawn(function()
-					pcall(task.spawn,AttackFunction,1)
-				end)
-			elseif DamageAura then
-				task.spawn(function()
-					pcall(task.spawn,AttackFunction,3)
-				end)
-			elseif UsefastattackPlayers and Fast_Attack then
-				task.spawn(function()
-					pcall(task.spawn,AttackFunction,2)
-				end)
-			elseif NeedAttacking and Fast_Attack == false then
-				if ac.hitboxMagnitude ~= 55 then
-					ac.hitboxMagnitude = 55
+LPH_JIT_MAX(function()
+	spawn(function()
+		while game:GetService("RunService").Stepped:Wait() do
+			local ac = CombatFrameworkR.activeController
+			if ac and ac.equipped and not CheckStun() then
+				if NeedAttacking and Fast_Attack then
+					task.spawn(function()
+						pcall(task.spawn,AttackFunction,1)
+					end)
+				elseif DamageAura then
+					task.spawn(function()
+						pcall(task.spawn,AttackFunction,3)
+					end)
+				elseif UsefastattackPlayers and Fast_Attack then
+					task.spawn(function()
+						pcall(task.spawn,AttackFunction,2)
+					end)
+				elseif NeedAttacking and Fast_Attack == false then
+					if ac.hitboxMagnitude ~= 55 then
+						ac.hitboxMagnitude = 55
+					end
+					pcall(task.spawn,ac.attack,ac)
 				end
-				pcall(task.spawn,ac.attack,ac)
 			end
 		end
-	end
-end)
-    
-inmyselfss = spawn(function(name)
+	end)
+end)()
+
+inmyselfss = LPH_JIT_MAX(function(name)
 	if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(name) then
 		return game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(name)
 	end
@@ -2132,7 +2140,7 @@ end)
 task.spawn(function() 
     if hookfunction and not islclosure(hookfunction) then 
         workspace._WorldOrigin.ChildAdded:Connect(function(v)
-            if v.Name =='DamageCounter' then 
+            if v.Name == 'DamageCounter' then 
                 v.Enabled  = false 
             end
         end)
@@ -2281,7 +2289,7 @@ Setting:AddToggle({
 	Default = true,
 	Callback = function(Value)
 		Fast_Attack =Value
-		DamageAura =Value
+		DamageAura = Value
 		ClickNoCooldown = Value
 		NeedAttacking = Value
 		UsefastattackPlayers = Value
@@ -2335,7 +2343,7 @@ Setting:AddToggle({
 })
 
 spawn(function()
-	while true do wait()
+	while task.wait() do
 		if setscriptable then
 			setscriptable(game.Players.LocalPlayer, "SimulationRadius", true)
 		end
