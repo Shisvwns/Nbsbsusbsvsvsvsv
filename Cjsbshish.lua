@@ -1953,6 +1953,12 @@ spawn(function()
                 if game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit') then
                     game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit'):Destroy()
                 end
+                if game:GetService("ReplicatedStorage").Effect.Container:FindFirstChild("Death") then
+	                game:GetService("ReplicatedStorage").Effect.Container.Death:Destroy()
+                end
+                if game:GetService("ReplicatedStorage").Effect.Container:FindFirstChild("Respawn") then
+                	game:GetService("ReplicatedStorage").Effect.Container.Respawn:Destroy()
+                end
                 game:GetService("ReplicatedStorage").Util.Sound.Storage.Swing:Destroy()
             end
         end
@@ -2087,7 +2093,7 @@ function CheckStun()
 	return false
 end
 
-spawn(function()
+task.spawn(function()
 	while game:GetService("RunService").Stepped:Wait() do
 		local ac = CombatFrameworkR.activeController
 		if ac and ac.equipped and not CheckStun() then
