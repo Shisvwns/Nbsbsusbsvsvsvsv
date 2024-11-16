@@ -2353,6 +2353,7 @@ spawn(function()
                         if StartMagnet and v.Name == Mon and (v.HumanoidRootPart.Position - PosFarm.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = PosFarm
                             v.HumanoidRootPart.Size = Vector3.new(60,60,60)   
+                            v.Humanoid:ChangeState(11)
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
                             v.HumanoidRootPart.CanCollide = false
@@ -2367,6 +2368,7 @@ spawn(function()
                         if not string.find(v.Name, "Boss") and (v.HumanoidRootPart.Position - PosNear.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = PosNear
                             v.HumanoidRootPart.Size = Vector3.new(60,60,60)   
+                            v.Humanoid:ChangeState(11)
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
                             v.HumanoidRootPart.CanCollide = false
@@ -2381,6 +2383,7 @@ spawn(function()
                         if v.Name == "Forest Pirate" and (v.HumanoidRootPart.Position - MusketeerHatMon.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = MusketeerHatMon
                             v.HumanoidRootPart.Size = Vector3.new(60,60,60)   
+                            v.Humanoid:ChangeState(11)
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
                             v.HumanoidRootPart.CanCollide = false
@@ -2395,6 +2398,7 @@ spawn(function()
                         if v.Name == "Zombie" and (v.HumanoidRootPart.Position - PosMonEvo.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = PosMonEvo
                             v.HumanoidRootPart.Size = Vector3.new(60,60,60)   
+                            v.Humanoid:ChangeState(11)
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
                             v.HumanoidRootPart.CanCollide = false
@@ -2409,6 +2413,7 @@ spawn(function()
                         if (v.Name == MMon or v.Name == MMon1) and (v.HumanoidRootPart.Position - MaterialPos.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = MaterialPos
                             v.HumanoidRootPart.Size = Vector3.new(60,60,60)   
+                            v.Humanoid:ChangeState(11)
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
                             v.HumanoidRootPart.CanCollide = false
@@ -2423,6 +2428,7 @@ spawn(function()
                         if v.Name == _G.SelectMob and (v.HumanoidRootPart.Position - PosMonFarm.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = PosMonFarm
                             v.HumanoidRootPart.Size = Vector3.new(60,60,60)   
+                            v.Humanoid:ChangeState(11)
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
                             v.HumanoidRootPart.CanCollide = false
@@ -2437,6 +2443,7 @@ spawn(function()
                         if v.Name == "Swan Pirate" and (v.HumanoidRootPart.Position - PosMonBarto.Position).Magnitude <= BringRange then
                             v.HumanoidRootPart.CFrame = PosMonBarto
                             v.HumanoidRootPart.Size = Vector3.new(60,60,60)   
+                            v.Humanoid:ChangeState(11)
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
                             v.HumanoidRootPart.CanCollide = false
@@ -2933,7 +2940,11 @@ spawn(function()
                             if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                                 repeat wait()
                                     EquipWeapon(_G.SelectWeapon)
-                                    topos(v.HumanoidRootPart.CFrame * Pos)
+                                    if game:GetService("Workspace")["_WorldOrigin"]:FindFirstChild("Ring") or game:GetService("Workspace")["_WorldOrigin"]:FindFirstChild("Fist") then
+                                        topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 100, 0))
+                                    else
+                                        topos(v.HumanoidRootPart.CFrame * Pos)
+                                    end
                                 until not _G.FarmKatakuri or not v.Parent or v.Humanoid.Health <= 0
                             end
                         end
@@ -2968,7 +2979,11 @@ spawn(function()
                             if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                                 repeat wait()
                                     EquipWeapon(_G.SelectWeapon)
-                                    topos(v.HumanoidRootPart.CFrame * Pos)
+                                    if game:GetService("Workspace")["_WorldOrigin"]:FindFirstChild("Ring") or game:GetService("Workspace")["_WorldOrigin"]:FindFirstChild("Fist") then
+                                        topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 100, 0))
+                                    else
+                                        topos(v.HumanoidRootPart.CFrame * Pos)
+                                    end
                                 until not _G.FarmKatakuri or not v.Parent or v.Humanoid.Health <= 0
                             end
                         end
@@ -3398,159 +3413,6 @@ spawn(function()
                             game:service('VirtualInputManager'):SendKeyEvent(true, "X", false, game)
                             game:service('VirtualInputManager'):SendKeyEvent(false, "X", false, game)
                         end
-                    end
-                end
-            end
-        end)
-    end
-end)
-
-local Section = Farm:AddSection({
-    Name = "~ Melee & Sword Mastery ~"
-})
-
-local Paragraph = Farm:AddParagraph("Note", "Up Stats In Melee If You Farm Mastery Melee, Farm Mastery Sword Also Do The Same.")
-
-Farm:AddSlider({
-	Name = "Select Mastery ",
-	Min = 1,
-	Max = 600,
-	Default = 300,
-	Color = Color3.fromRGB(255,255,255),
-	Increment = 1,
-	ValueName = "Mastery",
-	Callback = function(Value)
-		_G.SelectMastery = Value
-	end
-})
-
-function CheckMasSelect(Weapon)
-    for i,v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
-        if v.ToolTip == Weapon then
-            return v.Level.Value
-        end
-    end
-end
-
-local AllSwordInInventroy = {}
-spawn(function()
-    while wait() do
-        pcall(function()
-            if _G.FarmAllMelee then
-                if CheckMasSelect("Melee") == _G.SelectMastery then
-                    for i,v in pairs(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventory")) do
-                        if type(v) == "table" then
-                            if v.Type == "Melee" and v.Mastery >= _G.SelectMastery then
-                                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LoadItem",v.Name)
-                            end
-                        end
-                    end
-                end
-            elseif _G.FarmAllSword then
-                if CheckMasSelect("Sword") == _G.SelectMastery then
-                    for i,v in pairs(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventory")) do
-                        if type(v) == "table" then
-                            if v.Type == "Sword" and v.Mastery >= _G.SelectMastery then
-                                table.insert(AllSwordInInventroy, v.Name)
-                            end
-                        end
-                    end
-                end
-            end
-        end)
-    end
-end)
-
-spawn(function()
-	while wait() do
-	    pcall(function()
-		    if _G.FarmAllMelee then
-    			for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-		    		if v.ToolTip == "Melee" then
-	    				if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-						    SelectAllMelee = v.Name
-	    				end
-	    			end
-    			end
-    		elseif _G.FarmAllSword then
-    			for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-	        		if v.ToolTip == "Sword" then
-	    				if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-		 	   			SelectAllSword = v.Name
-			            end
-					end
-				end
-			end
-		end)
-	end
-end)
-
-Farm:AddToggle({
-	Name = "Auto Farm All Melee Mastery",
-	Default = false,
-	Callback = function(Value)
-		_G.FarmAllMelee = Value
-		StopTween(_G.FarmAllMelee)
-	end
-})
-
-Farm:AddToggle({
-	Name = "Auto Farm All Sword Mastery",
-	Default = false,
-	Callback = function(Value)
-		_G.FarmAllSword = Value
-		StopTween(_G.FarmAllSword)
-	end
-})
-
-spawn(function()
-    while wait() do
-        pcall(function()
-            if _G.FarmAllMelee or _G.FarmAllSword then
-                local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
-                if not string.find(QuestTitle, NameMon) then
-                    StartMagnet = false
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
-                end
-                if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
-                    StartMagnet = false
-                    CheckQuest()
-	    			topos(CFrameQuest)
-		    		if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQuest.Position).Magnitude <= 5 then
-	    				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest",NameQuest,LevelQuest)
-                    end
-                elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
-                    CheckQuest()
-                    if game:GetService("Workspace").Enemies:FindFirstChild(Mon) then
-                        for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                            if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
-                                if v.Name == Mon then
-                                    if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
-                                        repeat wait()
-                                            if _G.FarmAllMelee then
-                                                EquipWeapon(SelectAllMelee)
-                                            elseif _G.FarmAllSword then
-                                                EquipWeapon(SelectAllSword)
-                                            end
-                                            topos(v.HumanoidRootPart.CFrame * Pos)
-                                            PosFarm = v.HumanoidRootPart.CFrame
-                                            StartMagnet = true
-                                        until not _G.FarmAllMelee or not _G.FarmAllSword or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
-                                    else
-                                        StartMagnet = false
-                                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
-                                    end
-                                end
-                            end
-                        end
-                    else
-                        topos(CFrameMon)
-                        if _G.FarmAllMelee then
-                            UnEquipWeapon(SelectAllMelee)
-                        elseif _G.FarmAllSword then
-                            UnEquipWeapon(SelectAllSword)
-                        end
-                        StartMagnet = false
                     end
                 end
             end
