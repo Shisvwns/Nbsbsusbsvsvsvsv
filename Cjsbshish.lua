@@ -1970,7 +1970,6 @@ RL.wrapAttackAnimationAsync = function(a,b,c,d,func)
 	if not NoAttackAnimation then
 		return oldRL(a,b,c,60,func)
 	end
-
 	local Hits = {}
 	local Client = game.Players.LocalPlayer
 	local Characters = game:GetService("Workspace").Characters:GetChildren()
@@ -1991,7 +1990,7 @@ RL.wrapAttackAnimationAsync = function(a,b,c,d,func)
 	pcall(func,Hits)
 end
 
-getAllBladeHits = function(Sizes)
+getAllBladeHits = spawn(function(Sizes)
 	local Hits = {}
 	local Client = game.Players.LocalPlayer
 	local Enemies = game:GetService("Workspace").Enemies:GetChildren()
@@ -2002,9 +2001,9 @@ getAllBladeHits = function(Sizes)
 		end
 	end
 	return Hits
-end
+end)
 
-getAllBladeHitsPlayers = function(Sizes)
+getAllBladeHitsPlayers = spawn(function(Sizes)
 	local Hits = {}
 	local Client = game.Players.LocalPlayer
 	local Characters = game:GetService("Workspace").Characters:GetChildren()
@@ -2015,7 +2014,7 @@ getAllBladeHitsPlayers = function(Sizes)
 		end
 	end
 	return Hits
-end
+end)
 
 local CombatFramework = require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework"))
 local CombatFrameworkR = getupvalues(CombatFramework)[2]
@@ -2028,7 +2027,7 @@ local FastAttackDelay = 0.01
 local FireL = 0
 local bladehit = {}
 
-CancelCoolDown = function()
+CancelCoolDown = spawn(function()
 	local ac = CombatFrameworkR.activeController
 	if ac and ac.equipped then
 		AttackCoolDown = tick() + (FastAttackDelay or 0.01) + ((FireL/MaxFire)*0.3)
@@ -2038,9 +2037,9 @@ CancelCoolDown = function()
 			FireL = FireL - 1
 		end)
 	end
-end
+end)
 
-AttackFunction = function(typef)
+AttackFunction = spawn(function(typef)
 	local ac = CombatFrameworkR.activeController
 	if ac and ac.equipped then
 		local bladehit = {}
@@ -2079,7 +2078,7 @@ AttackFunction = function(typef)
 			end)
 		end
 	end
-end
+end)
 
 function CheckStun()
 	if game:GetService('Players').LocalPlayer.Character:FindFirstChild("Stun") then
@@ -2114,7 +2113,7 @@ spawn(function()
 	end
 end)
     
-inmyselfss = function(name)
+inmyselfss = spawn(function(name)
 	if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(name) then
 		return game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(name)
 	end
@@ -2133,7 +2132,7 @@ end)
 task.spawn(function() 
     if hookfunction and not islclosure(hookfunction) then 
         workspace._WorldOrigin.ChildAdded:Connect(function(v)
-            if v.Name == 'DamageCounter' then 
+            if v.Name =='DamageCounter' then 
                 v.Enabled  = false 
             end
         end)
@@ -2182,7 +2181,7 @@ task.spawn(function()
             end
         end)
     end
-end
+end)
 
 local Mouse = game:GetService("Players").LocalPlayer:GetMouse()
 Mouse.Button1Down:Connect(function()
@@ -2285,6 +2284,7 @@ Setting:AddToggle({
 		DamageAura =Value
 		ClickNoCooldown = Value
 		NeedAttacking = Value
+		UsefastattackPlayers = Value
 		DmgAttack.Enabled = not Value
 	end
 })
@@ -2335,7 +2335,7 @@ Setting:AddToggle({
 })
 
 spawn(function()
-	while wait() do
+	while true do wait()
 		if setscriptable then
 			setscriptable(game.Players.LocalPlayer, "SimulationRadius", true)
 		end
