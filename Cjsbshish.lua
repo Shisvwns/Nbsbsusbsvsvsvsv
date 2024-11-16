@@ -1953,12 +1953,6 @@ spawn(function()
                 if game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit') then
                     game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit'):Destroy()
                 end
-                if game:GetService("ReplicatedStorage").Effect.Container:FindFirstChild("Death") then
-	                game:GetService("ReplicatedStorage").Effect.Container.Death:Destroy()
-                end
-                if game:GetService("ReplicatedStorage").Effect.Container:FindFirstChild("Respawn") then
-                	game:GetService("ReplicatedStorage").Effect.Container.Respawn:Destroy()
-                end
                 game:GetService("ReplicatedStorage").Util.Sound.Storage.Swing:Destroy()
             end
         end
@@ -3447,6 +3441,7 @@ function CheckMasSelect(Weapon)
     end
 end
 
+local AllSwordInInventroy = {}
 spawn(function()
     while wait() do
         pcall(function()
@@ -3465,7 +3460,7 @@ spawn(function()
                     for i,v in pairs(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventory")) do
                         if type(v) == "table" then
                             if v.Type == "Sword" and v.Mastery >= _G.SelectMastery then
-                                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LoadItem",v.Name)
+                                table.insert(AllSwordInInventroy, v.Name)
                             end
                         end
                     end
