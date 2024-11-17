@@ -445,7 +445,7 @@ function CheckQuest()
             CFrameQuest = CFrame.new(5832.83594, 51.6806107, -1101.51563, 0.898790359, -0, -0.438378751, 0, 1, -0, 0.438378751, 0, 0.898790359)
             CFrameMon = CFrame.new(6141.140625, 51.35136413574219, -1340.738525390625)
         elseif MyLevel == 1600 or MyLevel <= 1624 then 
-            Mon = "Dragon Crew Archer [Lv. 1600]"
+            Mon = "Dragon Crew Archer"
             NameQuest = "AmazonQuest"
             LevelQuest = 2
             NameMon = "Dragon Crew Archer"
@@ -459,7 +459,7 @@ function CheckQuest()
             CFrameQuest = CFrame.new(5446.8793945313, 601.62945556641, 749.45672607422)
             CFrameMon = CFrame.new(4685.25830078125, 735.8078002929688, 815.3425903320312)
         elseif MyLevel == 1650 or MyLevel <= 1699 then 
-            Mon = "Giant Islander [Lv. 1650]"
+            Mon = "Giant Islander"
             NameQuest = "AmazonQuest2"
             LevelQuest = 2
             NameMon = "Giant Islander"
@@ -473,7 +473,7 @@ function CheckQuest()
             CFrameQuest = CFrame.new(2180.54126, 27.8156815, -6741.5498, -0.965929747, 0, 0.258804798, 0, 1, 0, -0.258804798, 0, -0.965929747)
             CFrameMon = CFrame.new(2286.0078125, 73.13391876220703, -7159.80908203125)
         elseif MyLevel == 1725 or MyLevel <= 1774 then
-            Mon = "Marine Rear Admiral [Lv. 1725]"
+            Mon = "Marine Rear Admiral"
             NameMon = "Marine Rear Admiral"
             NameQuest = "MarineTreeIsland"
             LevelQuest = 2
@@ -2721,9 +2721,9 @@ spawn(function()
                         end
                     end
                 else
+                    StartMagnet = false
                     topos(CFrameMon)
                     UnEquipWeapon(_G.SelectWeapon)
-                    StartMagnet = false
                 end
             end
             if _G.LevelMode == "Get Quest" and _G.FarmLevel == true then
@@ -2760,9 +2760,9 @@ spawn(function()
                             end
                         end
                     else
+                        StartMagnet = false
                         topos(CFrameMon)
                         UnEquipWeapon(_G.SelectWeapon)
-                        StartMagnet = false
                     end
                 end
             end
@@ -2928,29 +2928,14 @@ Farm:AddToggle({
 	end
 })
 
-_F = function(a,b,c,d,e)
-	local args = {a,b,c,d,e}
-	if tostring(args[1]):find("Buy") then
-		if not Root then
-			return
-		else
-			wait()
-		end
-	end
-	local Remote = game:GetService('ReplicatedStorage').Remotes:FindFirstChild("CommF_")
-	if Remote:IsA("RemoteEvent") then
-		return Remote:FireServer(unpack(args))
-	elseif Remote:IsA("RemoteFunction") then
-		return Remote:InvokeServer(unpack(args))
-	end
-end
-
 spawn(function()
 	while wait() do
 	    pcall(function()
 	    	if _G.FarmKatakuri then
-				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")
-				if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, "Cookie Crafter") and _G.KatakuriMode == "Get Quest" then _F("AbandonQuest"); end
+	            if _G.SpawnKatakuri then
+				    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")
+				end
+				if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, "Cookie Crafter") and _G.KatakuriMode == "Get Quest" then game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest") end
 				if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false and _G.KatakuriMode == "Get Quest" then
 					MagnetNear = false
 					Questtween = topos(CFrame.new(-2020, 38, -12025))
@@ -2960,7 +2945,7 @@ spawn(function()
 						end
 						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-2020, 38, -12025)
 						wait(0.3)
-						_F("StartQuest", "CakeQuest1", 1)
+						game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", "CakeQuest1", 1)
 					end
 				elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true or _G.KatakuriMode == "No Quest" then
 					if game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince") or game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince") then
@@ -2995,15 +2980,9 @@ spawn(function()
 								end
 							end
 						else
-						    UnEquipWeapon(_G.SelectWeapon)
 							MagnetNear = false
-							Questtween = topos(CFrame.new(-2077, 252, -12373))
-							if (CFrame.new(-2077, 252, -12373).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 300 then
-								if Questtween then
-									Questtween:Stop()
-								end
-								game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-2077, 252, -12373)
-							end
+							topos(CFrame.new(-2077, 252, -12373))
+							UnEquipWeapon(_G.SelectWeapon)
 						end
 					end
 				end
@@ -3016,7 +2995,7 @@ Farm:AddToggle({
 	Name = "Auto Spawn Katakuri",
 	Default = true,
 	Callback = function(Value)
-		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner",Value)
+		_G.SpawnKatakuri = Value
 	end
 })
 
@@ -3044,71 +3023,45 @@ local CayBone = Farm:AddToggle({
 	end
 })
 
-local BonePos = CFrame.new(-9506.234375, 172.130615234375, 6117.0771484375)
-local BoneQuestPos = CFrame.new(-9516.99316, 172.017181, 6078.46533, 0, 0, -1, 0, 1, 0, 1, 0, 0)
 spawn(function()
-    while wait() do 
-        pcall(function()
-            if _G.BoneMode == "No Quest" and _G.FarmBone and World3 then
-                if game:GetService("Workspace").Enemies:FindFirstChild("Reborn Skeleton") or game:GetService("Workspace").Enemies:FindFirstChild("Living Zombie") or game:GetService("Workspace").Enemies:FindFirstChild("Demonic Soul") or game:GetService("Workspace").Enemies:FindFirstChild("Posessed Mummy") then
-                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                        if v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy" then
-                           if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                               repeat wait()
-                                    EquipWeapon(_G.SelectWeapon)
-                                    topos(v.HumanoidRootPart.CFrame * Pos)
-                                    PosNear = v.HumanoidRootPart.CFrame
-                                    MagnetNear = true
-                                until not _G.FarmBone or not v.Parent or v.Humanoid.Health <= 0
-                            end
-                        end
-                    end
-                else
-                    topos(BonePos)
-                    UnEquipWeapon(_G.SelectWeapon)
-                    MagnetNear = false
-                end
-            end
-            if _G.BoneMode == "Get Quest" and _G.FarmBone and World3 then
-                local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
-                if not string.find(QuestTitle, "Demonic Soul") then
-                    MagnetNear = false
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
-                end
-                if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
-                    MagnetNear = false
-                    topos(BoneQuestPos)
-                    if (BoneQuestPos.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3 then    
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest","HauntedQuest2",1)
-                    end
-                elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
-                    if game:GetService("Workspace").Enemies:FindFirstChild("Reborn Skeleton") or game:GetService("Workspace").Enemies:FindFirstChild("Living Zombie") or game:GetService("Workspace").Enemies:FindFirstChild("Demonic Soul") or game:GetService("Workspace").Enemies:FindFirstChild("Posessed Mummy") then
-                        for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                            if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
-                                if v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy" then
-                                    if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, "Demonic Soul") then
-                                        repeat wait()
-                                            EquipWeapon(_G.SelectWeapon)
-                                            topos(v.HumanoidRootPart.CFrame * Pos)
-                                            PosNear = v.HumanoidRootPart.CFrame
-                                            MagnetNear = true
-                                        until not _G.FarmBone or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
-                                    else
-                                        MagnetNear = false
-                                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
-                                    end
-                                end
-                            end
-                        end
-                    else
-                        topos(BonePos)
-                        UnEquipWeapon(_G.SelectWeapon)
-                        MagnetNear = false
-                    end
-                end
-            end
-        end)
-    end
+	while wait() do
+		pcall(function()
+			if _G.FarmBone then
+				if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, "Living Zombie") and _G.BoneMode == "Get Quest" then game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest") end
+				if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false and _G.BoneMode == "Get Quest" then
+					MagnetNear = false
+					Questtween = topos(CFrame.new(-9482, 142, 5567))
+					if (CFrame.new(-9482, 142, 5567).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 150 then
+						if Questtween then
+							Questtween:Stop()
+						end
+						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-9482, 142, 5567)
+						wait(0.1)
+						game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", "HauntedQuest1", 2)
+					end
+				elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true or _G.BoneMode == "No Quest" then
+					if game:GetService("Workspace").Enemies:FindFirstChild("Reborn Skeleton") or game:GetService("Workspace").Enemies:FindFirstChild("Living Zombie") or game:GetService("Workspace").Enemies:FindFirstChild("Demonic Soul") or game:GetService("Workspace").Enemies:FindFirstChild("Posessed Mummy") then
+						for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+							if v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy" then
+								if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+									repeat wait()
+										EquipWeapon(_G.SelectWeapon)
+										topos(v.HumanoidRootPart.CFrame * Pos)
+										PosNear = v.HumanoidRootPart.CFrame
+										MagnetNear = true
+									until not _G.FarmBone or v.Humanoid.Health <= 0 or not v.Parent or v.Humanoid.Health <= 0
+								end
+							end
+						end
+					end
+				else
+				    MagnetNear = false
+					topos(CFrame.new(-9504.8564453125, 172.14292907714844, 6057.259765625))
+					UnEquipWeapon(_G.SelectWeapon)
+				end
+			end
+		end)
+	end
 end)
 
 Farm:AddToggle({
@@ -3227,7 +3180,6 @@ spawn(function()
                                             PosFarm = v.HumanoidRootPart.CFrame
                                             StartMagnet = true
                                         until not _G.FruitsMastery or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
-                                        StartMagnet = false
                                         UseSkill = false
                                         Skillaimbot = false
                                     end
@@ -3235,6 +3187,7 @@ spawn(function()
                             end
                         end
                     else
+                        StartMagnet = false
                         topos(CFrameMon)
                         UnEquipWeapon(_G.SelectWeapon)
                         UnEquipWeapon(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value)
@@ -3297,12 +3250,12 @@ spawn(function()
                                         until v.Humanoid.Health <= 0 or _G.GunMastery == false or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
                                         UseGunSkill = false
                                         Skillaimbot = false
-                                        StartMagnet = false
                                     end
                                 end
                             end
                         end)
                     else
+                       StartMagnet = false
                        topos(CFrameMon)
                        UnEquipWeapon(_G.SelectWeapon)
                        UnEquipWeapon(EquipWeaponGun())
@@ -3468,9 +3421,9 @@ spawn(function()
 	    pcall(function()
             if _G.BossMode == "No Quest" and _G.FarmBoss then
                 CheckBossQuest()
-                if game:GetService("Workspace").Enemies:FindFirstChild(_G.SelectBoss) then
+                if game:GetService("Workspace").Enemies:FindFirstChild(MsBoss) then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                        if v.Name == _G.SelectBoss then
+                        if v.Name == MsBoss then
                             if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                                 repeat wait()
                                     EquipWeapon(_G.SelectWeapon)
@@ -3580,20 +3533,19 @@ local Section = Farm:AddSection({
     Name = "~ Mob ~"
 })
 
-if World1 then
-	MobList = {"Bandit","Monkey","Gorilla","Pirate","Brute","Desert Bandit","Desert Officer","Snow Bandit","Snowman","Chief Petty Officer","Sky Bandit","Dark Master","Toga Warrior","Gladiator","Military Soldier","Military Spy","Fishman Warrior","Fishman Commando","God's Guard","Shanda","Royal Squad","Royal Soldier","Galley Pirate","Galley Captain"}
-elseif World2 then
-	MobList = {"Raider","Mercenary","Swan Pirate","Factory Staff","Marine Lieutenant","Marine Captain","Zombie","Vampire","Snow Trooper","Winter Warrior","Lab Subordinate","Horned Warrior","Magma Ninja","Lava Pirate","Ship Deckhand","Ship Engineer","Ship Steward","Ship Officer","Arctic Warrior","Snow Lurker","Sea Soldier","Water Fighter"}
-elseif World3 then
-	MobList = {"Pirate Millionaire","Dragon Crew Warrior","Dragon Crew Archer","Female Islander","Giant Islander","Marine Commodore","Marine Rear Admiral","Fishman Raider","Fishman Captain","Forest Pirate","Mythological Pirate","Jungle Pirate","Musketeer Pirate","Reborn Skeleton","Living Zombie","Demonic Soul","Posessed Mummy","Peanut Scout","Peanut President","Ice Cream Chef","Ice Cream Commander","Cookie Crafter","Cake Guard","Baking Staff","Head Baker","Cocoa Warrior","Chocolate Bar Battler","Sweet Thief","Candy Rebel","Candy Pirate","Snow Demon","Isle Outlaw","Island Boy","Sun-kissed Warrior","Isle Champion"}
-end
-
 Farm:AddDropdown({
 	Name = "Select Mob",
 	Default = "",
 	Options = MobList,
 	Callback = function(Value)
 		_G.SelectMob = Value
+		if World1 then
+			MobList = {"Bandit","Monkey","Gorilla","Pirate","Brute","Desert Bandit","Desert Officer","Snow Bandit","Snowman","Chief Petty Officer","Sky Bandit","Dark Master","Toga Warrior","Gladiator","Military Soldier","Military Spy","Fishman Warrior","Fishman Commando","God's Guard","Shanda","Royal Squad","Royal Soldier","Galley Pirate","Galley Captain"}
+		elseif World2 then
+			MobList = {"Raider","Mercenary","Swan Pirate","Factory Staff","Marine Lieutenant","Marine Captain","Zombie","Vampire","Snow Trooper","Winter Warrior","Lab Subordinate","Horned Warrior","Magma Ninja","Lava Pirate","Ship Deckhand","Ship Engineer","Ship Steward","Ship Officer","Arctic Warrior","Snow Lurker","Sea Soldier","Water Fighter"}
+		elseif World3 then
+			MobList = {"Pirate Millionaire","Dragon Crew Warrior","Dragon Crew Archer","Female Islander","Giant Islander","Marine Commodore","Marine Rear Admiral","Fishman Raider","Fishman Captain","Forest Pirate","Mythological Pirate","Jungle Pirate","Musketeer Pirate","Reborn Skeleton","Living Zombie","Demonic Soul","Posessed Mummy","Peanut Scout","Peanut President","Ice Cream Chef","Ice Cream Commander","Cookie Crafter","Cake Guard","Baking Staff","Head Baker","Cocoa Warrior","Chocolate Bar Battler","Sweet Thief","Candy Rebel","Candy Pirate","Snow Demon","Isle Outlaw","Island Boy","Sun-kissed Warrior","Isle Champion"}
+		end
 	end
 })
 
@@ -3638,20 +3590,19 @@ local Section = Farm:AddSection({
     Name = "~ Material ~"
 })
 
-if World1 then
-    MaterialList = {"Scrap Metal","Leather","Angel Wings","Magma Ore","Fish Tail"}
-elseif World2 then
-    MaterialList = {"Scrap Metal","Leather","Radioactive Material","Ectoplasm","Mystic Droplet","Magma Ore","Vampire Fang"}
-elseif World3 then
-    MaterialList = {"Scrap Metal","Leather","Demonic Wisp","Conjured Cocoa","Dragon Scale","Gunpowder","Fish Tail","Mini Tusk"}
-end
-
 Farm:AddDropdown({
 	Name = "Select Material",
 	Default = "",
 	Options = MaterialList,
 	Callback = function(Value)
 		_G.SelectMaterial = Value
+		if World1 then
+ 		   MaterialList = {"Scrap Metal","Leather","Angel Wings","Magma Ore","Fish Tail"}
+		elseif World2 then
+		    MaterialList = {"Scrap Metal","Leather","Radioactive Material","Ectoplasm","Mystic Droplet","Magma Ore","Vampire Fang"}
+		elseif World3 then
+ 		   MaterialList = {"Scrap Metal","Leather","Demonic Wisp","Conjured Cocoa","Dragon Scale","Gunpowder","Fish Tail","Mini Tusk"}
+		end
 	end
 })
 
@@ -3702,8 +3653,8 @@ spawn(function()
                         end
                     end
                 else
-                    UnEquipWeapon(_G.SelectWeapon)
                     topos(MPos)
+                    UnEquipWeapon(_G.SelectWeapon)
                     wait(3)
                     topos(MPos1)
                     wait(3)
