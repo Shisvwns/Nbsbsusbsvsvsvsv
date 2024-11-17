@@ -2967,20 +2967,15 @@ spawn(function()
 							for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
 								if _G.FarmKatakuri and v.Name == "Cake Prince" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
 									repeat wait()
-										if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude > 300 then
-											MagnetNear = true
-											if not game.Players.LocalPlayer.Character:FindFirstChild(_G.SelectWeapon) then
-												EquipWeapon(_G.SelectWeapon)
-											end
-											PosNear = v.HumanoidRootPart.CFrame
-											v.HumanoidRootPart.Size = Vector3.new(60,60,60)
-											v.HumanoidRootPart.Transparency = 1
-											v.Humanoid.JumpPower = 0
-											v.Humanoid.WalkSpeed = 0
-											v.HumanoidRootPart.CanCollide = false
-											v.Humanoid:ChangeState(11)
-											topos(v.HumanoidRootPart.CFrame * Pos)
-										end
+										MagnetNear = true
+										PosNear = v.HumanoidRootPart.CFrame
+										v.HumanoidRootPart.Size = Vector3.new(60,60,60)
+										v.HumanoidRootPart.Transparency = 1
+										v.Humanoid.JumpPower = 0
+										v.Humanoid.WalkSpeed = 0
+										v.HumanoidRootPart.CanCollide = false
+										v.Humanoid:ChangeState(11)
+										topos(v.HumanoidRootPart.CFrame * Pos)
 									until not _G.FarmKatakuri or not v.Parent or v.Humanoid.Health <= 0 or game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince")
 								end
 							end
@@ -2996,37 +2991,32 @@ spawn(function()
 							for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
 								if 0 and (v.Name == "Cookie Crafter" or v.Name == "Cake Guard" or v.Name == "Baking Staff" or v.Name == "Head Baker") and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
 									repeat wait()
-										if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude > 300 then
-											MagnetNear = true
-											if not game.Players.LocalPlayer.Character:FindFirstChild(_G.SelectWeapon) then
-												EquipWeapon(_G.SelectWeapon)
-											end
-											PosNear = v.HumanoidRootPart.CFrame
-											v.HumanoidRootPart.Size = Vector3.new(60,60,60)
-											v.HumanoidRootPart.Transparency = 1
-											v.Humanoid.JumpPower = 0
-											v.Humanoid.WalkSpeed = 0
-											v.HumanoidRootPart.CanCollide = false
-											v.Humanoid:ChangeState(11)
-											topos(v.HumanoidRootPart.CFrame * Pos)
-										end
+										MagnetNear = true
+										PosNear = v.HumanoidRootPart.CFrame
+										v.HumanoidRootPart.Size = Vector3.new(60,60,60)
+										v.HumanoidRootPart.Transparency = 1
+										v.Humanoid.JumpPower = 0
+										v.Humanoid.WalkSpeed = 0
+										v.HumanoidRootPart.CanCollide = false
+										v.Humanoid:ChangeState(11)
+										topos(v.HumanoidRootPart.CFrame * Pos)
 									until not _G.FarmKatakuri or not v.Parent or v.Humanoid.Health <= 0
 									MagnetNear = false
 								end
 							end
 						else
 							MagnetNear = false
-							Questtween = topos(CFrame.new(-2077, 252, -12373).Position,CFrame.new(-2077, 252, -12373))
+							Questtween = topos(CFrame.new(-2077, 252, -12373))
 							if (CFrame.new(-2077, 252, -12373).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 300 then
-								if Questtween then Questtween:Stop() end
+								if Questtween then
+									Questtween:Stop()
+								end
 								game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-2077, 252, -12373)
 							end
 						end
 					end
 				end
-			--end
-		else
-			--break
+			end
 		end
 	end
 end)
