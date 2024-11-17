@@ -3014,7 +3014,7 @@ Farm:AddDropdown({
 	end
 })
 
-local CayBone = Farm:AddToggle({
+Farm:AddToggle({
 	Name = "Auto Farm Bone",
 	Default = false,
 	Callback = function(Value)
@@ -3030,14 +3030,14 @@ spawn(function()
 				if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, "Living Zombie") and _G.BoneMode == "Get Quest" then game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest") end
 				if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false and _G.BoneMode == "Get Quest" then
 					MagnetNear = false
-					Questtween = topos(CFrame.new(-9482, 142, 5567))
-					if (CFrame.new(-9482, 142, 5567).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 150 then
+					Questtween = topos(CFrame.new(-9516.99316, 172.017181, 6078.46533, 0, 0, -1, 0, 1, 0, 1, 0, 0))
+					if (CFrame.new(-9516.99316, 172.017181, 6078.46533, 0, 0, -1, 0, 1, 0, 1, 0, 0).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 150 then
 						if Questtween then
 							Questtween:Stop()
 						end
-						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-9482, 142, 5567)
+						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-9516.99316, 172.017181, 6078.46533, 0, 0, -1, 0, 1, 0, 1, 0, 0)
 						wait(0.2)
-						game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", "HauntedQuest1", 2)
+						game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest","HauntedQuest2",1)
 					end
 				elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true or _G.BoneMode == "No Quest" then
 					if game:GetService("Workspace").Enemies:FindFirstChild("Reborn Skeleton") or game:GetService("Workspace").Enemies:FindFirstChild("Living Zombie") or game:GetService("Workspace").Enemies:FindFirstChild("Demonic Soul") or game:GetService("Workspace").Enemies:FindFirstChild("Posessed Mummy") then
@@ -3112,7 +3112,6 @@ spawn(function()
                         end
                     end
                 else
-                    CayBone:Set(true)
                     local args = {
                         [1] = "Bones",
                         [2] = "Buy",
