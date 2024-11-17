@@ -2949,43 +2949,29 @@ spawn(function()
 	while wait() do
 	    pcall(function()
 	    	if _G.FarmKatakuri then
-				local GetQuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title
-				local GetQuest = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
-				local MyLevel = game.Players.LocalPlayer.Data.Level.Value
-				local LevelFarm = 1
-				local Monster = "Cookie Crafter [Lv. 2200]"
-				local NameQuest = "CakeQuest1"
-				local LevelQuest = 1
-				local NameCheckQuest = "Cookie Crafter"
-				local CFrameMyMon = CFrame.new(-2365, 38, -12099)
-				local CFrameQuest = CFrame.new(-2020, 38, -12025)
 				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")
-				if not string.find(GetQuestTitle.Text, NameCheckQuest) and _G.KatakuriMode == "Get Quest" == true then _F("AbandonQuest"); end
-				if GetQuest.Visible == false and _G.KatakuriMode == "Get Quest" == true then
+				if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, "Cookie Crafter") and _G.KatakuriMode == "Get Quest" then
+                    _F("AbandonQuest")
+                end
+				if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false and _G.KatakuriMode == "Get Quest" then
 					MagnetNear = false
-					Questtween = topos(CFrameQuest)
-					if (CFrameQuest.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 150 then
-						if Questtween then Questtween:Stop() end
-						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameQuest
+					Questtween = topos(CFrame.new(-2020, 38, -12025))
+					if (CFrame.new(-2020, 38, -12025).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 150 then
+						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-2020, 38, -12025)
 						wait(0.95)
-						_F("StartQuest", NameQuest, LevelQuest)
+						_F("StartQuest", "CakeQuest1", 1)
 					end
-				elseif GetQuest.Visible == true or _G.KatakuriMode == "No Quest" then
+				elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true or _G.KatakuriMode == "No Quest" then
 					if game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince [Lv. 2300] [Raid Boss]") or game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince [Lv. 2300] [Raid Boss]") then
 						if game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince [Lv. 2300] [Raid Boss]") then
 							for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
 								if _G.FarmKatakuri and v.Name == "Cake Prince [Lv. 2300] [Raid Boss]" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
 									repeat wait()
-										if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude > 300 then
+										if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 300 then
 											Farmtween = topos(v.HumanoidRootPart.Position,v.HumanoidRootPart.CFrame)
-										elseif (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 300 then
-											if Farmtween then
-												Farmtween:Stop()
-											end
+										elseif (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 300 then
 											MagnetNear = true
-											if not game.Players.LocalPlayer.Character:FindFirstChild(_G.SelectWeapon) then
-												EquipWeapon(_G.SelectWeapon)
-											end
+											EquipWeapon(_G.SelectWeapon)
 											PosNear = v.HumanoidRootPart.CFrame
 											v.HumanoidRootPart.Size = Vector3.new(60,60,60)
 											v.HumanoidRootPart.Transparency = 1
@@ -3010,14 +2996,11 @@ spawn(function()
 							for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
 								if 0 and (v.Name == "Cookie Crafter [Lv. 2200]" or v.Name == "Cake Guard [Lv. 2225]" or v.Name == "Baking Staff [Lv. 2250]" or v.Name == "Head Baker [Lv. 2275]") and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
 									repeat wait()
-										if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude > 300 then
+										if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 300 then
 											Farmtween = topos(v.HumanoidRootPart.Position,v.HumanoidRootPart.CFrame)
-										elseif (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 300 then
-											if Farmtween then Farmtween:Stop() end
+										elseif (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 300 then
 											MagnetNear = true
-											if not game.Players.LocalPlayer.Character:FindFirstChild(_G.SelectWeapon) then
-												EquipWeapon(_G.SelectWeapon)
-											end
+											EquipWeapon(_G.SelectWeapon)
 											PosNear = v.HumanoidRootPart.CFrame
 											v.HumanoidRootPart.Size = Vector3.new(60,60,60)
 											v.HumanoidRootPart.Transparency = 1
@@ -3034,8 +3017,7 @@ spawn(function()
 						else
 							MagnetNear = false
 							Questtween = topos(CFrame.new(-2077, 252, -12373).Position,CFrame.new(-2077, 252, -12373))
-							if (CFrame.new(-2077, 252, -12373).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 300 then
-								if Questtween then Questtween:Stop() end
+							if (CFrame.new(-2077, 252, -12373).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 300 then
 								game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-2077, 252, -12373)
 							end
 						end
