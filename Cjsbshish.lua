@@ -2944,7 +2944,7 @@ spawn(function()
 							Questtween:Stop()
 						end
 						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-2020, 38, -12025)
-						wait(0.3)
+						wait(0.2)
 						game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", "CakeQuest1", 1)
 					end
 				elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true or _G.KatakuriMode == "No Quest" then
@@ -3036,7 +3036,7 @@ spawn(function()
 							Questtween:Stop()
 						end
 						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-9482, 142, 5567)
-						wait(0.1)
+						wait(0.2)
 						game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", "HauntedQuest1", 2)
 					end
 				elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true or _G.BoneMode == "No Quest" then
@@ -3417,8 +3417,8 @@ Farm:AddToggle({
 })
 
 spawn(function()
-	while wait() do
-	    pcall(function()
+    while wait() do
+        pcall(function()
             if _G.BossMode == "No Quest" and _G.FarmBoss then
                 CheckBossQuest()
                 if game:GetService("Workspace").Enemies:FindFirstChild(MsBoss) then
@@ -3437,57 +3437,41 @@ spawn(function()
                     UnEquipWeapon(_G.SelectWeapon)
                 end
             end
-	    	if _G.BossMode == "Get Quest" and _G.FarmBoss then
-				CheckBossQuest()
-				if MsBoss == "Soul Reaper" or MsBoss == "Longma" or MsBoss == "Don Swan" or MsBoss == "Cursed Captain" or MsBoss == "Order" or MsBoss == "rip_indra True Form" then
-					if game:GetService("Workspace").Enemies:FindFirstChild(MsBoss) then
-						for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-							if v.Name == MsBoss then
-								repeat wait()
-									EquipWeapon(_G.SelectWeapon)
-									topos(v.HumanoidRootPart.CFrame * Pos)
+        	if _G.BossMode == "Get Quest" and _G.FarmBoss then
+	    		CheckBossQuest()
+				if game:GetService("Workspace").Enemies:FindFirstChild(MsBoss) then
+					for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+						if v.Name == MsBoss then
+							repeat wait()
+								EquipWeapon(_G.SelectWeapon)
+								topos(v.HumanoidRootPart.CFrame * Pos)
                                 until not _G.FarmBoss or not v.Parent or v.Humanoid.Health <= 0
-							end
 						end
-					else
-						topos(CFrameBoss)
-						UnEquipWeapon(_G.SelectWeapon)
 					end
 				else
-					if _G.BossMode == "Get Quest" and _G.FarmBoss then
-						CheckBossQuest()
-						if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameBoss) then
-							game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+					topos(CFrameBoss)
+					UnEquipWeapon(_G.SelectWeapon)
+				end
+			else
+				if _G.BossMode == "Get Quest" and _G.FarmBoss then
+					CheckBossQuest()
+					if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameBoss) then
+						game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+					end
+					if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
+						repeat wait() topos(CFrameQuestBoss) until (CFrameQuestBoss.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3 or not _G.FarmBoss
+						if (CFrameQuestBoss.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 4 then
+							wait(0.2)
+							game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NameQuestBoss, LevelQuestBoss)
 						end
-						if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
-							repeat wait() topos(CFrameQuestBoss) until (CFrameQuestBoss.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3 or not _G.FarmBoss
-							if (CFrameQuestBoss.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 4 then
-								wait(0.5)
-								game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NameQuestBoss, LevelQuestBoss)
-							end
-						elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
-							if game:GetService("Workspace").Enemies:FindFirstChild(MsBoss) then
-								for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-									if v.Name == MsBoss then
-										repeat wait()
-											EquipWeapon(_G.SelectWeapon)
-											topos(v.HumanoidRootPart.CFrame * Pos)
-                                        until not _G.FarmBoss or not v.Parent or v.Humanoid.Health <= 0
-									end
-								end
-							else
-								topos(CFrameBoss)
-								UnEquipWeapon(_G.SelectWeapon)
-							end
-						end
-					else
+					elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
 						if game:GetService("Workspace").Enemies:FindFirstChild(MsBoss) then
 							for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
 								if v.Name == MsBoss then
 									repeat wait()
 										EquipWeapon(_G.SelectWeapon)
-										topos(v.HumanoidRootPart.CFrame * Pos)										
-                                    until not _G.FarmBoss or not v.Parent or v.Humanoid.Health <= 0
+										topos(v.HumanoidRootPart.CFrame * Pos)
+                                        until not _G.FarmBoss or not v.Parent or v.Humanoid.Health <= 0
 								end
 							end
 						else
@@ -3495,10 +3479,24 @@ spawn(function()
 							UnEquipWeapon(_G.SelectWeapon)
 						end
 					end
+				else
+					if game:GetService("Workspace").Enemies:FindFirstChild(MsBoss) then
+						for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+							if v.Name == MsBoss then
+								repeat wait()
+									EquipWeapon(_G.SelectWeapon)
+									topos(v.HumanoidRootPart.CFrame * Pos)										
+                                    until not _G.FarmBoss or not v.Parent or v.Humanoid.Health <= 0
+							end
+						end
+					else
+						topos(CFrameBoss)
+						UnEquipWeapon(_G.SelectWeapon)
+					end
 				end
-			end
-		end)
-	end
+    		end
+    	end)
+    end
 end)
 
 Farm:AddToggle({
