@@ -2948,7 +2948,7 @@ end
 spawn(function()
 	while wait() do
 	    pcall(function()
-	    	if Auto_Cake_Prince then
+	    	if _G.FarmKatakuri then
 				local GetQuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title
 				local GetQuest = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
 				local MyLevel = game.Players.LocalPlayer.Data.Level.Value
@@ -2974,7 +2974,7 @@ spawn(function()
 					if game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince [Lv. 2300] [Raid Boss]") or game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince [Lv. 2300] [Raid Boss]") then
 						if game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince [Lv. 2300] [Raid Boss]") then
 							for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
-								if Auto_Cake_Prince and v.Name == "Cake Prince [Lv. 2300] [Raid Boss]" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+								if _G.FarmKatakuri and v.Name == "Cake Prince [Lv. 2300] [Raid Boss]" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
 									repeat wait()
 										if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude > 300 then
 											Farmtween = topos(v.HumanoidRootPart.Position,v.HumanoidRootPart.CFrame)
@@ -2995,7 +2995,7 @@ spawn(function()
 											v.Humanoid:ChangeState(11)
 											topos(v.HumanoidRootPart.CFrame * Pos)
 										end
-									until not Auto_Cake_Prince or not v.Parent or v.Humanoid.Health <= 0 or game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince [Lv. 2300] [Raid Boss]")
+									until not _G.FarmKatakuri or not v.Parent or v.Humanoid.Health <= 0 or game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince [Lv. 2300] [Raid Boss]")
 								end
 							end
 						else
@@ -3027,7 +3027,7 @@ spawn(function()
 											v.Humanoid:ChangeState(11)
 											topos(v.HumanoidRootPart.CFrame * Pos)
 										end
-									until not Auto_Cake_Prince or not v.Parent or v.Humanoid.Health <= 0
+									until not _G.FarmKatakuri or not v.Parent or v.Humanoid.Health <= 0
 									MagnetNear = false
 								end
 							end
