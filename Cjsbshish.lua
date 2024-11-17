@@ -2928,111 +2928,122 @@ Farm:AddToggle({
 	end
 })
 
-local CakeQuestPos = CFrame.new(-2021.32007, 37.7982254, -12028.7295, 0.957576931, -8.80302053e-08, 0.288177818, 6.9301187e-08, 1, 7.51931211e-08, -0.288177818, -5.2032135e-08, 0.957576931)
-local CakePos = CFrame.new(-2091.911865234375, 70.00884246826172, -12142.8359375)
+_F = function(a,b,c,d,e)
+	local args = {a,b,c,d,e}
+	if tostring(args[1]):find("Buy") then
+		if not Root then
+			return
+		else
+			wait()
+		end
+	end
+	local Remote = game:GetService('ReplicatedStorage').Remotes:FindFirstChild("CommF_")
+	if Remote:IsA("RemoteEvent") then
+		return Remote:FireServer(unpack(args))
+	elseif Remote:IsA("RemoteFunction") then
+		return Remote:InvokeServer(unpack(args))
+	end
+end
+
 spawn(function()
-    while wait() do
-        pcall(function()
-            if _G.KatakuriMode == "No Quest" and _G.FarmKatakuri and World3 then
-                if game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince") or game:GetService("Workspace").Enemies:FindFirstChild("Dough King") then
-                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                        if v.Name == "Cake Prince" or v.Name == "Dough King" then
-                            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                repeat wait()
-                                    EquipWeapon(_G.SelectWeapon)
-                                    topos(CFrame.new(-2120, 70.00884246826172, -12405))
-                                    wait(2)
-                                    if game:GetService("Workspace")["_WorldOrigin"]:FindFirstChild("Ring") or game:GetService("Workspace")["_WorldOrigin"]:FindFirstChild("Fist") then
-                                        topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 100, 0))
-                                    else
-                                        topos(v.HumanoidRootPart.CFrame * Pos)
-                                    end
-                                until not _G.FarmKatakuri or not v.Parent or v.Humanoid.Health <= 0
-                            end
-                        end
-                    end
-                elseif not game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince") or not game:GetService("Workspace").Enemies:FindFirstChild("Dough King")then
-                    if game:GetService("Workspace").Map.CakeLoaf.BigMirror.Other.Transparency == 1 then
-                        if game:GetService("Workspace").Enemies:FindFirstChild("Cookie Crafter") or game:GetService("Workspace").Enemies:FindFirstChild("Cake Guard") or game:GetService("Workspace").Enemies:FindFirstChild("Baking Staff") or game:GetService("Workspace").Enemies:FindFirstChild("Head Baker") then
-                            for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                                if v.Name == "Cookie Crafter" or v.Name == "Cake Guard" or v.Name == "Baking Staff" or v.Name == "Head Baker" then
-                                    if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                        repeat wait()
-                                            EquipWeapon(_G.SelectWeapon)
-                                            topos(v.HumanoidRootPart.CFrame * Pos)
-                                            PosNear = v.HumanoidRootPart.CFrame
-                                            MagnetNear = true
-                                        until not _G.FarmKatakuri or not v.Parent or v.Humanoid.Health <= 0 or game:GetService("Workspace").Map.CakeLoaf.BigMirror.Other.Transparency == 0 or game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince") or game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince")
-                                    end
-                                end
-                            end
-                        else
-                            topos(CakePos)
-                            MagnetNear = false
-                            UnEquipWeapon(_G.SelectWeapon)
-                        end
-                    end
-                end
-            end
-            if _G.KatakuriMode == "Get Quest" and _G.FarmKatakuri and World3 then
-                if game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince") or game:GetService("Workspace").Enemies:FindFirstChild("Dough King")then
-                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                        if v.Name == "Cake Prince" or v.Name == "Dough King" then
-                            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                repeat wait()
-                                    EquipWeapon(_G.SelectWeapon)
-                                    topos(CFrame.new(-2120, 70.00884246826172, -12405))
-                                    wait(2)
-                                    if game:GetService("Workspace")["_WorldOrigin"]:FindFirstChild("Ring") or game:GetService("Workspace")["_WorldOrigin"]:FindFirstChild("Fist") then
-                                        topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 100, 0))
-                                    else
-                                        topos(v.HumanoidRootPart.CFrame * Pos)
-                                    end
-                                until not _G.FarmKatakuri or not v.Parent or v.Humanoid.Health <= 0
-                            end
-                        end
-                    end
-                elseif not game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince") or not game:GetService("Workspace").Enemies:FindFirstChild("Dough King")then
-                    local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
-                    if not string.find(QuestTitle, "Cookie Crafter") then
-                        MagnetNear = false
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
-                    end
-                    if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
-                        MagnetNear = false
-                        topos(CakeQuestPos)
-                        if (CakeQuestPos.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3 then                            
-                            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest","CakeQuest1",1)
-                        end
-                    elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
-                        if game:GetService("Workspace").Enemies:FindFirstChild("Cookie Crafter") or game:GetService("Workspace").Enemies:FindFirstChild("Cake Guard") or game:GetService("Workspace").Enemies:FindFirstChild("Baking Staff") or game:GetService("Workspace").Enemies:FindFirstChild("Head Baker") then
-                            for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                                if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
-                                    if v.Name == "Cookie Crafter" or v.Name == "Cake Guard" or v.Name == "Baking Staff" or v.Name == "Head Baker" then
-                                        if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, "Cookie Crafter") then
-                                            repeat wait()
-                                                EquipWeapon(_G.SelectWeapon)
-                                                topos(v.HumanoidRootPart.CFrame * Pos)
-                                                PosNear = v.HumanoidRootPart.CFrame
-                                                MagnetNear = true
-                                            until not _G.FarmKatakuri or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false or v.Humanoid.Health <= 0 or game:GetService("Workspace").Map.CakeLoaf.BigMirror.Other.Transparency == 0 or game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince") or game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince")
-                                        else
-                                            MagnetNear = false
-                                            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
-                                        end
-                                    end
-                                end
-                            end
-                        else
-                            topos(CakePos)
-                            MagnetNear = false
-                            UnEquipWeapon(_G.SelectWeapon)
-                        end
-                    end
-                end
-            end
-        end)
-    end
+	while wait() do
+	    pcall(function()
+	    	if Auto_Cake_Prince then
+				local GetQuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title
+				local GetQuest = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
+				local MyLevel = game.Players.LocalPlayer.Data.Level.Value
+				local LevelFarm = 1
+				local Monster = "Cookie Crafter [Lv. 2200]"
+				local NameQuest = "CakeQuest1"
+				local LevelQuest = 1
+				local NameCheckQuest = "Cookie Crafter"
+				local CFrameMyMon = CFrame.new(-2365, 38, -12099)
+				local CFrameQuest = CFrame.new(-2020, 38, -12025)
+				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")
+				if not string.find(GetQuestTitle.Text, NameCheckQuest) and _G.KatakuriMode == "Get Quest" == true then _F("AbandonQuest"); end
+				if GetQuest.Visible == false and _G.KatakuriMode == "Get Quest" == true then
+					MagnetNear = false
+					Questtween = topos(CFrameQuest)
+					if (CFrameQuest.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 150 then
+						if Questtween then Questtween:Stop() end
+						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameQuest
+						wait(0.95)
+						_F("StartQuest", NameQuest, LevelQuest)
+					end
+				elseif GetQuest.Visible == true or _G.KatakuriMode == "No Quest" then
+					if game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince [Lv. 2300] [Raid Boss]") or game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince [Lv. 2300] [Raid Boss]") then
+						if game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince [Lv. 2300] [Raid Boss]") then
+							for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
+								if Auto_Cake_Prince and v.Name == "Cake Prince [Lv. 2300] [Raid Boss]" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+									repeat wait()
+										if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude > 300 then
+											Farmtween = topos(v.HumanoidRootPart.Position,v.HumanoidRootPart.CFrame)
+										elseif (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 300 then
+											if Farmtween then
+												Farmtween:Stop()
+											end
+											MagnetNear = true
+											if not game.Players.LocalPlayer.Character:FindFirstChild(_G.SelectWeapon) then
+												EquipWeapon(_G.SelectWeapon)
+											end
+											PosNear = v.HumanoidRootPart.CFrame
+											v.HumanoidRootPart.Size = Vector3.new(60,60,60)
+											v.HumanoidRootPart.Transparency = 1
+											v.Humanoid.JumpPower = 0
+											v.Humanoid.WalkSpeed = 0
+											v.HumanoidRootPart.CanCollide = false
+											v.Humanoid:ChangeState(11)
+											topos(v.HumanoidRootPart.CFrame * Pos)
+										end
+									until not Auto_Cake_Prince or not v.Parent or v.Humanoid.Health <= 0 or game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince [Lv. 2300] [Raid Boss]")
+								end
+							end
+						else
+							if game:GetService("Workspace").Map.CakeLoaf.BigMirror.Other.Transparency == 0 then
+								if tween then tween:Cancel() end
+								game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-2151.82153, 149.315704, -12404.9053) * CFrame.new(math.random(-5,5),math.random(-5,5),math.random(-5,5))
+								wait(.1)
+							end
+						end
+					else
+						if game:GetService("Workspace").Enemies:FindFirstChild("Cookie Crafter [Lv. 2200]") or game:GetService("Workspace").Enemies:FindFirstChild("Cake Guard [Lv. 2225]") or game:GetService("Workspace").Enemies:FindFirstChild("Baking Staff [Lv. 2250]") or game:GetService("Workspace").Enemies:FindFirstChild("Head Baker [Lv. 2275]") then
+							for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
+								if 0 and (v.Name == "Cookie Crafter [Lv. 2200]" or v.Name == "Cake Guard [Lv. 2225]" or v.Name == "Baking Staff [Lv. 2250]" or v.Name == "Head Baker [Lv. 2275]") and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+									repeat wait()
+										if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude > 300 then
+											Farmtween = topos(v.HumanoidRootPart.Position,v.HumanoidRootPart.CFrame)
+										elseif (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 300 then
+											if Farmtween then Farmtween:Stop() end
+											MagnetNear = true
+											if not game.Players.LocalPlayer.Character:FindFirstChild(_G.SelectWeapon) then
+												EquipWeapon(_G.SelectWeapon)
+											end
+											PosNear = v.HumanoidRootPart.CFrame
+											v.HumanoidRootPart.Size = Vector3.new(60,60,60)
+											v.HumanoidRootPart.Transparency = 1
+											v.Humanoid.JumpPower = 0
+											v.Humanoid.WalkSpeed = 0
+											v.HumanoidRootPart.CanCollide = false
+											v.Humanoid:ChangeState(11)
+											topos(v.HumanoidRootPart.CFrame * Pos)
+										end
+									until not Auto_Cake_Prince or not v.Parent or v.Humanoid.Health <= 0
+									MagnetNear = false
+								end
+							end
+						else
+							MagnetNear = false
+							Questtween = topos(CFrame.new(-2077, 252, -12373).Position,CFrame.new(-2077, 252, -12373))
+							if (CFrame.new(-2077, 252, -12373).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 300 then
+								if Questtween then Questtween:Stop() end
+								game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-2077, 252, -12373)
+							end
+						end
+					end
+				end
+			end
+		end)
+	end
 end)
 
 Farm:AddToggle({
