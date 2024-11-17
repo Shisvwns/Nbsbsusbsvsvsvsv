@@ -2968,11 +2968,6 @@ spawn(function()
 								if _G.FarmKatakuri and v.Name == "Cake Prince" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
 									repeat wait()
 										if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude > 300 then
-											Farmtween = topos(v.HumanoidRootPart.Position,v.HumanoidRootPart.CFrame)
-										elseif (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 300 then
-											if Farmtween then
-												Farmtween:Stop()
-											end
 											MagnetNear = true
 											if not game.Players.LocalPlayer.Character:FindFirstChild(_G.SelectWeapon) then
 												EquipWeapon(_G.SelectWeapon)
@@ -3002,9 +2997,6 @@ spawn(function()
 								if 0 and (v.Name == "Cookie Crafter" or v.Name == "Cake Guard" or v.Name == "Baking Staff" or v.Name == "Head Baker") and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
 									repeat wait()
 										if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude > 300 then
-											Farmtween = topos(v.HumanoidRootPart.Position,v.HumanoidRootPart.CFrame)
-										elseif (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 300 then
-											if Farmtween then Farmtween:Stop() end
 											MagnetNear = true
 											if not game.Players.LocalPlayer.Character:FindFirstChild(_G.SelectWeapon) then
 												EquipWeapon(_G.SelectWeapon)
