@@ -2949,7 +2949,7 @@ AutoQuest = true
 spawn(function()
 	while wait() do
 		if _G.FarmKatakuri then
-			xpcall(function()
+			--pcall(function()
 				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")
 				if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, "Cookie Crafter") and AutoQuest == true then _F("AbandonQuest"); end
 				if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false and AutoQuest == true then
@@ -3032,7 +3032,7 @@ spawn(function()
 						end
 					end
 				end
-			end)
+			--end
 		else
 			--break
 		end
