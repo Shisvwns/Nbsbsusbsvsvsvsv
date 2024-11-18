@@ -1165,6 +1165,14 @@ function CheckBossQuest()
 		MsBoss = "Soul Reaper"
 		NameBoss = "Soul Reaper"
 		CFrameBoss = CFrame.new(-9515.62109, 315.925537, 6691.12012)
+	elseif _G.SelectBoss == "Dough King" then
+		MsBoss = "Dough King"
+		NameBoss = "Dough King"
+		CFrameBoss = CFrame.new(-2077, 252, -12373)
+	elseif _G.SelectBoss == "Cake Prince" then
+		MsBoss = "Cake Prince"
+		NameBoss = "Cake Prince"
+		CFrameBoss = CFrame.new(-2077, 252, -12373)
 	end
 end
 
@@ -2935,7 +2943,9 @@ spawn(function()
 	            if _G.SpawnKatakuri then
 				    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")
 				end
-				if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, "Cookie Crafter") and _G.KatakuriMode == "Get Quest" then game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest") end
+				if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, "Cookie Crafter") and _G.KatakuriMode == "Get Quest" then
+					game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+				end
 				if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false and _G.KatakuriMode == "Get Quest" then
 					MagnetNear = false
 					Questtween = topos(CFrame.new(-2020, 38, -12025))
@@ -3027,7 +3037,9 @@ spawn(function()
 	while wait() do
 		pcall(function()
 			if _G.FarmBone then
-				if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, "Living Zombie") and _G.BoneMode == "Get Quest" then game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest") end
+				if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, "Living Zombie") and _G.BoneMode == "Get Quest" then
+					game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+				end
 				if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false and _G.BoneMode == "Get Quest" then
 					MagnetNear = false
 					Questtween = topos(CFrame.new(-9516.99316, 172.017181, 6078.46533, 0, 0, -1, 0, 1, 0, 1, 0, 0))
@@ -3418,84 +3430,55 @@ Farm:AddToggle({
 spawn(function()
     while wait() do
         pcall(function()
-            if _G.BossMode == "No Quest" and _G.FarmBoss then
+            if _G.FarmBoss then
                 CheckBossQuest()
-                if game:GetService("Workspace").Enemies:FindFirstChild(MsBoss) then
-                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                        if v.Name == MsBoss then
-                            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                repeat wait()
-                                    EquipWeapon(_G.SelectWeapon)
-                                    topos(v.HumanoidRootPart.CFrame * Pos)
-                                until not _G.FarmBoss or not v.Parent or v.Humanoid.Health <= 0
-                            end
-                        end
-                    end
-                else
-                    topos(CFrameBoss)
-                    UnEquipWeapon(_G.SelectWeapon)
-                end
-            end
-        	if _G.BossMode == "Get Quest" and _G.FarmBoss then
-	    		CheckBossQuest()
-				if game:GetService("Workspace").Enemies:FindFirstChild(MsBoss) then
-					for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-						if v.Name == MsBoss then
-							repeat wait()
-								EquipWeapon(_G.SelectWeapon)
-								topos(v.HumanoidRootPart.CFrame * Pos)
-                                until not _G.FarmBoss or not v.Parent or v.Humanoid.Health <= 0
-						end
-					end
-				else
-					topos(CFrameBoss)
-					UnEquipWeapon(_G.SelectWeapon)
+                if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, MsBoss) and _G.BossMode == "Get Quest" then
+					game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
 				end
-			else
-				if _G.BossMode == "Get Quest" and _G.FarmBoss then
-					CheckBossQuest()
-					if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameBoss) then
-						game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
-					end
-					if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
-						repeat wait() topos(CFrameQuestBoss) until (CFrameQuestBoss.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3 or not _G.FarmBoss
-						if (CFrameQuestBoss.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 4 then
-							wait(0.2)
-							game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NameQuestBoss, LevelQuestBoss)
-						end
-					elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
-						if game:GetService("Workspace").Enemies:FindFirstChild(MsBoss) then
-							for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-								if v.Name == MsBoss then
-									repeat wait()
-										EquipWeapon(_G.SelectWeapon)
-										topos(v.HumanoidRootPart.CFrame * Pos)
-                                        until not _G.FarmBoss or not v.Parent or v.Humanoid.Health <= 0
-								end
-							end
-						else
-							topos(CFrameBoss)
-							UnEquipWeapon(_G.SelectWeapon)
-						end
-					end
-				else
+				if MsBoss == "Saber Expert" or MsBoss == "The Saw" or MsBoss == "Greybeard" or MsBoss == "Mob Leader" or MsBoss == "Don Swan" or MsBoss == "Cursed Captain" or MsBoss == "Darkbeard" or MsBoss == "Order" or MsBoss == "rip_indra True Form" or MsBoss == "Longma" or MsBoss == "Soul Reaper" or MsBoss == "Dough King" or MsBoss == "Cake Prince" then
 					if game:GetService("Workspace").Enemies:FindFirstChild(MsBoss) then
 						for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
 							if v.Name == MsBoss then
 								repeat wait()
 									EquipWeapon(_G.SelectWeapon)
-									topos(v.HumanoidRootPart.CFrame * Pos)										
-                                    until not _G.FarmBoss or not v.Parent or v.Humanoid.Health <= 0
+									topos(v.HumanoidRootPart.CFrame * Pos)
+								until not _G.FarmBoss or not v.Parent or v.Humanoid.Health <= 0
 							end
 						end
 					else
 						topos(CFrameBoss)
 						UnEquipWeapon(_G.SelectWeapon)
 					end
+				elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false and _G.BossMode == "Get Quest" then
+					Questtween = topos(CFrameQuestBoss)
+					if (CFrameQuestBoss.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 150 then
+						if Questtween then
+							Questtween:Stop()
+						end
+						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameQuestBoss
+						wait(0.2)
+						game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NameQuestBoss, LevelQuestBoss)
+					end
+				elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true or _G.BossMode == "No Quest" then
+					if game:GetService("Workspace").Enemies:FindFirstChild(MsBoss) then
+						for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+							if v.Name == MsBoss then
+								if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+									repeat wait()
+										EquipWeapon(_G.SelectWeapon)
+										topos(v.HumanoidRootPart.CFrame * Pos)
+									until not _G.FarmBoss or v.Humanoid.Health <= 0 or not v.Parent or v.Humanoid.Health <= 0
+								end
+							end
+						end
+					end
+				else
+					topos(CFrameBoss)
+					UnEquipWeapon(_G.SelectWeapon)
 				end
-    		end
-    	end)
-    end
+			end
+		end)
+	end
 end)
 
 Farm:AddToggle({
@@ -3516,7 +3499,7 @@ spawn(function()
                         if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 17000 then
                             repeat wait()
                                 EquipWeapon(_G.SelectWeapon)
-                                topos(v.HumanoidRootPart.CFrame*Pos)
+                                topos(v.HumanoidRootPart.CFrame * Pos)
                             until not _G.FarmAllBoss or not v.Parent or v.Humanoid.Health <= 0
                         end
                     end
@@ -3530,19 +3513,20 @@ local Section = Farm:AddSection({
     Name = "~ Mob ~"
 })
 
+if World1 then
+	MobList = {"Bandit","Monkey","Gorilla","Pirate","Brute","Desert Bandit","Desert Officer","Snow Bandit","Snowman","Chief Petty Officer","Sky Bandit","Dark Master","Toga Warrior","Gladiator","Military Soldier","Military Spy","Fishman Warrior","Fishman Commando","God's Guard","Shanda","Royal Squad","Royal Soldier","Galley Pirate","Galley Captain"}
+elseif World2 then
+	MobList = {"Raider","Mercenary","Swan Pirate","Factory Staff","Marine Lieutenant","Marine Captain","Zombie","Vampire","Snow Trooper","Winter Warrior","Lab Subordinate","Horned Warrior","Magma Ninja","Lava Pirate","Ship Deckhand","Ship Engineer","Ship Steward","Ship Officer","Arctic Warrior","Snow Lurker","Sea Soldier","Water Fighter"}
+elseif World3 then
+	MobList = {"Pirate Millionaire","Dragon Crew Warrior","Dragon Crew Archer","Female Islander","Giant Islander","Marine Commodore","Marine Rear Admiral","Fishman Raider","Fishman Captain","Forest Pirate","Mythological Pirate","Jungle Pirate","Musketeer Pirate","Reborn Skeleton","Living Zombie","Demonic Soul","Posessed Mummy","Peanut Scout","Peanut President","Ice Cream Chef","Ice Cream Commander","Cookie Crafter","Cake Guard","Baking Staff","Head Baker","Cocoa Warrior","Chocolate Bar Battler","Sweet Thief","Candy Rebel","Candy Pirate","Snow Demon","Isle Outlaw","Island Boy","Sun-kissed Warrior","Isle Champion"}
+end
+
 Farm:AddDropdown({
 	Name = "Select Mob",
 	Default = "",
 	Options = MobList,
 	Callback = function(Value)
 		_G.SelectMob = Value
-		if World1 then
-			MobList = {"Bandit","Monkey","Gorilla","Pirate","Brute","Desert Bandit","Desert Officer","Snow Bandit","Snowman","Chief Petty Officer","Sky Bandit","Dark Master","Toga Warrior","Gladiator","Military Soldier","Military Spy","Fishman Warrior","Fishman Commando","God's Guard","Shanda","Royal Squad","Royal Soldier","Galley Pirate","Galley Captain"}
-		elseif World2 then
-			MobList = {"Raider","Mercenary","Swan Pirate","Factory Staff","Marine Lieutenant","Marine Captain","Zombie","Vampire","Snow Trooper","Winter Warrior","Lab Subordinate","Horned Warrior","Magma Ninja","Lava Pirate","Ship Deckhand","Ship Engineer","Ship Steward","Ship Officer","Arctic Warrior","Snow Lurker","Sea Soldier","Water Fighter"}
-		elseif World3 then
-			MobList = {"Pirate Millionaire","Dragon Crew Warrior","Dragon Crew Archer","Female Islander","Giant Islander","Marine Commodore","Marine Rear Admiral","Fishman Raider","Fishman Captain","Forest Pirate","Mythological Pirate","Jungle Pirate","Musketeer Pirate","Reborn Skeleton","Living Zombie","Demonic Soul","Posessed Mummy","Peanut Scout","Peanut President","Ice Cream Chef","Ice Cream Commander","Cookie Crafter","Cake Guard","Baking Staff","Head Baker","Cocoa Warrior","Chocolate Bar Battler","Sweet Thief","Candy Rebel","Candy Pirate","Snow Demon","Isle Outlaw","Island Boy","Sun-kissed Warrior","Isle Champion"}
-		end
 	end
 })
 
@@ -3559,7 +3543,7 @@ spawn(function()
     while wait() do
         if _G.FarmMob then
             pcall(function()
-                CheckMonFarm(_G.SelectMob)
+                CheckMonFarm()
                 if game:GetService("Workspace").Enemies:FindFirstChild(_G.SelectMob) then
                     for i,v in pairs (game.Workspace.Enemies:GetChildren()) do
                         if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
@@ -3587,19 +3571,20 @@ local Section = Farm:AddSection({
     Name = "~ Material ~"
 })
 
+if World1 then
+	MaterialList = {"Scrap Metal","Leather","Angel Wings","Magma Ore","Fish Tail"}
+elseif World2 then
+	MaterialList = {"Scrap Metal","Leather","Radioactive Material","Ectoplasm","Mystic Droplet","Magma Ore","Vampire Fang"}
+elseif World3 then
+	MaterialList = {"Scrap Metal","Leather","Demonic Wisp","Conjured Cocoa","Dragon Scale","Gunpowder","Fish Tail","Mini Tusk"}
+end
+
 Farm:AddDropdown({
 	Name = "Select Material",
 	Default = "",
 	Options = MaterialList,
 	Callback = function(Value)
 		_G.SelectMaterial = Value
-		if World1 then
- 		   MaterialList = {"Scrap Metal","Leather","Angel Wings","Magma Ore","Fish Tail"}
-		elseif World2 then
-		    MaterialList = {"Scrap Metal","Leather","Radioactive Material","Ectoplasm","Mystic Droplet","Magma Ore","Vampire Fang"}
-		elseif World3 then
- 		   MaterialList = {"Scrap Metal","Leather","Demonic Wisp","Conjured Cocoa","Dragon Scale","Gunpowder","Fish Tail","Mini Tusk"}
-		end
 	end
 })
 
@@ -3634,7 +3619,7 @@ spawn(function()
                 end
             end
             if _G.FarmMaterial then
-                MaterialMon(_G.SelectMaterial)
+                MaterialMon()
                 if game:GetService("Workspace").Enemies:FindFirstChild(MMon) or game:GetService("Workspace").Enemies:FindFirstChild(MMon1) then
                     for i,v in pairs (game:GetService("Workspace").Enemies:GetChildren()) do
                         if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
@@ -3652,9 +3637,9 @@ spawn(function()
                 else
                     topos(MPos)
                     UnEquipWeapon(_G.SelectWeapon)
-                    wait(3)
+                    wait(2)
                     topos(MPos1)
-                    wait(3)
+                    wait(2)
                 end
             end
         end)
