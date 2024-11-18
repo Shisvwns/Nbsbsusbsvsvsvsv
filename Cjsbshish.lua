@@ -3427,21 +3427,7 @@ spawn(function()
                 if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameBoss) and _G.BossMode == "Get Quest" then
 					game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
 				end
-				if MsBoss == "Saber Expert" or MsBoss == "The Saw" or MsBoss == "Greybeard" or MsBoss == "Mob Leader" or MsBoss == "Don Swan" or MsBoss == "Cursed Captain" or MsBoss == "Darkbeard" or MsBoss == "Order" or MsBoss == "rip_indra True Form" or MsBoss == "Longma" or MsBoss == "Soul Reaper" or MsBoss == "Dough King" or MsBoss == "Cake Prince" then
-					if game:GetService("Workspace").Enemies:FindFirstChild(MsBoss) then
-						for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-							if v.Name == MsBoss then
-								repeat wait()
-									EquipWeapon(_G.SelectWeapon)
-									topos(v.HumanoidRootPart.CFrame * Pos)
-								until not _G.FarmBoss or not v.Parent or v.Humanoid.Health <= 0
-							end
-						end
-					else
-						topos(CFrameBoss)
-						UnEquipWeapon(_G.SelectWeapon)
-					end
-				elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false and _G.BossMode == "Get Quest" then
+				if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false and _G.BossMode == "Get Quest" then
 					Questtween = topos(CFrameQuestBoss)
 					if (CFrameQuestBoss.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 150 then
 						if Questtween then
