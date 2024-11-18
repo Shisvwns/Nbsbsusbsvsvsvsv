@@ -2600,7 +2600,8 @@ spawn(function()
                         topos(CFrameMon)
                         UnEquipWeapon(_G.SelectWeapon)
                     end
-                elseif _G.LevelMode == "No Quest" then
+                end
+                if _G.LevelMode == "No Quest" then
                     CheckQuest()
                     if game:GetService("Workspace").Enemies:FindFirstChild(Mon) then
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
