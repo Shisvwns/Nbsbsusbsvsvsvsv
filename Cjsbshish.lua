@@ -3037,7 +3037,7 @@ spawn(function()
 	while wait() do
 		pcall(function()
 			if _G.FarmBone then
-				if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, "Living Zombie") and _G.BoneMode == "Get Quest" then
+				if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, "Demonic Soul") and _G.BoneMode == "Get Quest" then
 					game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
 				end
 				if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false and _G.BoneMode == "Get Quest" then
@@ -3432,7 +3432,7 @@ spawn(function()
         pcall(function()
             if _G.FarmBoss then
                 CheckBossQuest()
-                if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, MsBoss) and _G.BossMode == "Get Quest" then
+                if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameBoss) and _G.BossMode == "Get Quest" then
 					game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
 				end
 				if MsBoss == "Saber Expert" or MsBoss == "The Saw" or MsBoss == "Greybeard" or MsBoss == "Mob Leader" or MsBoss == "Don Swan" or MsBoss == "Cursed Captain" or MsBoss == "Darkbeard" or MsBoss == "Order" or MsBoss == "rip_indra True Form" or MsBoss == "Longma" or MsBoss == "Soul Reaper" or MsBoss == "Dough King" or MsBoss == "Cake Prince" then
