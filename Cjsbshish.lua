@@ -702,8 +702,7 @@ function CheckMaterialMob()
             MMon1 = "Fishman Commando"
             MPos1 = CFrame.new(61922.6328125, 18.482830047607422, 1493.934326171875)
         end
-    end
-    if World2 then
+    elseif World2 then
         if _G.SelectMaterial == "Magma Ore" then
             MMon = "Magma Ninja"
             MPos = CFrame.new(-5428, 78, -5959)
@@ -730,8 +729,7 @@ function CheckMaterialMob()
             MMon1 = "Sea Soldier"
             MPos1 = CFrame.new(-3028.2236328125, 64.67451477050781, -9775.4267578125)
         end
-    end
-    if World3 then
+    elseif World3 then
         if _G.SelectMaterial == "Mini Tusk" then
             MMon = "Mythological Pirate"
             MPos = CFrame.new(-13545, 470, -6917)
@@ -2578,7 +2576,7 @@ spawn(function()
                     StartMagnet = false
 	    			topos(CFrameQuest)
 		    		if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQuest.Position).Magnitude <= 10 then
-	    				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest",NameQuest,LevelQuest)
+	    				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NameQuest, LevelQuest)
                     end
                 elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true or _G.LevelMode == "No Quest" then
                     CheckQuest()
@@ -2869,7 +2867,7 @@ spawn(function()
 					MagnetNear = false
 					topos(CFrame.new(-9516.99316, 172.017181, 6078.46533, 0, 0, -1, 0, 1, 0, 1, 0, 0))
 					if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrame.new(-9516.99316, 172.017181, 6078.46533, 0, 0, -1, 0, 1, 0, 1, 0, 0).Position).Magnitude <= 10 then
-						game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest","HauntedQuest2",1)
+						game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", "HauntedQuest2", 1)
 					end
 				elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true or _G.BoneMode == "No Quest" then
 					if game:GetService("Workspace").Enemies:FindFirstChild("Reborn Skeleton") or game:GetService("Workspace").Enemies:FindFirstChild("Living Zombie") or game:GetService("Workspace").Enemies:FindFirstChild("Demonic Soul") or game:GetService("Workspace").Enemies:FindFirstChild("Posessed Mummy") then
@@ -3277,9 +3275,6 @@ spawn(function()
                             until not _G.FarmAllBoss or not v.Parent or v.Humanoid.Health <= 0
                         end
                     end
-                else
-                    topos(CFrame.new(-12471.169921875, 374.94024658203, -7551.677734375))
-                    UnEquipWeapon(_G.SelectWeapon)
                 end
             end
         end)
@@ -3394,8 +3389,7 @@ spawn(function()
                     topos(CFrame.new(916.928589, 181.092773, 33422))
                     UnEquipWeapon(_G.SelectWeapon)
                 end
-            end
-            if _G.FarmMaterial then
+            elseif _G.FarmMaterial then
                 CheckMaterialMob()
                 if game:GetService("Workspace").Enemies:FindFirstChild(MMon) or game:GetService("Workspace").Enemies:FindFirstChild(MMon1) then
                     for i,v in pairs (game:GetService("Workspace").Enemies:GetChildren()) do
