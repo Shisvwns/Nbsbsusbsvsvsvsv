@@ -3370,15 +3370,16 @@ local Section = Farm:AddSection({
 })
 
 function CheckBoss()
-    local Check = {"No Boss"}
-    for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
-        if string.find(v.Name, ' %pBoss%p') or string.find(v.Name, ' %pRaid Boss%p') then
+    local Check = {"Not Found Boss"}
+    for i, v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
+        if (v.Name == "rip_indra" or v.Name == "Ice Admiral")
+                or (v.Name == "Saber Expert" or v.Name == "The Saw" or v.Name == "Greybeard" or v.Name == "Mob Leader" or v.Name == "The Gorilla King" or v.Name == "Bobby" or v.Name == "Yeti" or v.Name == "Vice Admiral" or v.Name == "Warden" or v.Name == "Chief Warden" or v.Name == "Swan" or v.Name == "Magma Admiral" or v.Name == "Fishman Lord" or v.Name == "Wysper" or v.Name == "Thunder God" or v.Name == "Cyborg")
+                or (v.Name == "Don Swan" or v.Name == "Diamond" or v.Name == "Jeremy" or v.Name == "Fajita" or v.Name == "Smoke Admiral" or v.Name == "Awakened Ice Admiral" or v.Name == "Tide Keeper" or v.Name == "Order" or v.Name == "Darkbeard" or v.Name == "Cursed Captain")
+                or (v.Name == "Stone" or v.Name == "Island Empress" or v.Name == "Kilo Admiral" or v.Name == "Captain Elephant" or v.Name == "Beautiful Pirate" or v.Name == "Cake Queen" or v.Name == "rip_indra True Form" or v.Name == "Longma" or v.Name == "Soul Reaper" or v.Name == "Cake Prince" or v.Name == "Dough King") then
             table.insert(Check, v.Name)
-        end
-    end
-    for i, v in pairs(game.ReplicatedStorage:GetChildren()) do
-        if string.find(v.Name, ' %pBoss%p') or string.find(v.Name, ' %pRaid Boss%p') then
-            table.insert(Check, v.Name)
+            if table.find(Check, "Not Found Boss") then
+                table.remove(Check, 1)
+            end
         end
     end
     return Check
@@ -3406,7 +3407,6 @@ Farm:AddButton({
     Name = "Refresh Boss List",
     Callback = function()
         BossName:Refresh(CheckBoss(), true)
-        BossName:Refresh(CheckBoss())
     end
 })
 
@@ -3452,7 +3452,7 @@ spawn(function()
 						game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NameQuestBoss, LevelQuestBoss)
 					end
 				elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true or _G.BossMode == "No Quest" then
-					if game:GetService("Workspace").Enemies:FindFirstChild(MsBoss) then
+					if game:GetService("Workspace").Enemies:FindFirstChild(_G.SelectBoss) then
 						for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
 							if v.Name == MsBoss then
 								if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
