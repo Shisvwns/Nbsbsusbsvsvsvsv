@@ -3370,20 +3370,20 @@ local Section = Farm:AddSection({
 })
 
 function CheckBoss()
-    local a = {"No Boss"}
+    local Check = {"No Boss"}
     for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
         if string.find(v.Name, ' %pBoss%p') or string.find(v.Name, ' %pRaid Boss%p') then
-            table.insert(a, v.Name)
-            if table.find(a,"No Boss") then
-                table.remove(a,1)
+            table.insert(Check, v.Name)
+            if table.find(Check, "No Boss") then
+                table.remove(Check, 1)
             end
         end
     end
     for i, v in pairs(game.ReplicatedStorage:GetChildren()) do
         if string.find(v.Name, ' %pBoss%p') or string.find(v.Name, ' %pRaid Boss%p') then
-            table.insert(a, v.Name)
-            if table.find(a,"No Boss") then
-                table.remove(a,1)
+            table.insert(Check, v.Name)
+            if table.find(Check, "No Boss") then
+                table.remove(Check, 1)
             end
         end
     end
@@ -3412,6 +3412,7 @@ Farm:AddButton({
     Name = "Refresh Boss List",
     Callback = function()
         BossName:Refresh(CheckBoss(), true)
+        BossName:Refresh(CheckBoss())
     end
 })
 
