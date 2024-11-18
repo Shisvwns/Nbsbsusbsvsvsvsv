@@ -3374,20 +3374,14 @@ function CheckBoss()
     for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
         if string.find(v.Name, ' %pBoss%p') or string.find(v.Name, ' %pRaid Boss%p') then
             table.insert(Check, v.Name)
-            if table.find(Check, "No Boss") then
-                table.remove(Check, 1)
-            end
         end
     end
     for i, v in pairs(game.ReplicatedStorage:GetChildren()) do
         if string.find(v.Name, ' %pBoss%p') or string.find(v.Name, ' %pRaid Boss%p') then
             table.insert(Check, v.Name)
-            if table.find(Check, "No Boss") then
-                table.remove(Check, 1)
-            end
         end
     end
-    return a
+    return Check
 end
 
 Farm:AddDropdown({
