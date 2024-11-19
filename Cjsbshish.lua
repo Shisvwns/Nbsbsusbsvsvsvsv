@@ -1400,8 +1400,6 @@ function topos(Pos)
     Tween:Play()
     Tween.Completed:Wait()
 end
-    end
-end
 
 spawn(function()
     while task.wait() do
