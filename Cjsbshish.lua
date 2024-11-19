@@ -2582,13 +2582,13 @@ spawn(function()
                     CheckQuest()
                     if game:GetService("Workspace").Enemies:FindFirstChild(Mon) then
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                            if v.Name == Mon and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                            if (v.Name == Mon) and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                                 repeat wait()
                                     EquipWeapon(_G.SelectWeapon)
                                     topos(v.HumanoidRootPart.CFrame * Pos)
                                     PosFarm = v.HumanoidRootPart.CFrame
                                     StartMagnet = true
-                                until not _G.FarmLevel or v.Humanoid.Health <= 0 or not v.Parent or v.Humanoid.Health <= 0
+                                until not _G.FarmLevel or not v.Parent or v.Humanoid.Health <= 0
                             end
                         end
                     else
@@ -2780,7 +2780,7 @@ spawn(function()
 					if game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince") or game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince") then
 						if game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince") then
 							for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
-								if v.Name == "Cake Prince" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+								if (v.Name == "Cake Prince") and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
 									repeat wait()
 									    EquipWeapon(_G.SelectWeapon)
 							    		topos(v.HumanoidRootPart.CFrame * Pos)
@@ -2871,7 +2871,7 @@ spawn(function()
 									topos(v.HumanoidRootPart.CFrame * Pos)
 									PosNear = v.HumanoidRootPart.CFrame
 									MagnetNear = true
-								until not _G.FarmBone or v.Humanoid.Health <= 0 or not v.Parent or v.Humanoid.Health <= 0
+								until not _G.FarmBone or not v.Parent or v.Humanoid.Health <= 0
 							end
 						end
 					else
@@ -3226,13 +3226,11 @@ spawn(function()
                 CheckBossPos()
 				if game:GetService("Workspace").Enemies:FindFirstChild(_G.SelectBoss) then
 					for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-						if v.Name == _G.SelectBoss then
-							if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-								repeat wait()
-									EquipWeapon(_G.SelectWeapon)
-									topos(v.HumanoidRootPart.CFrame * Pos)
-								until not _G.FarmBoss or v.Humanoid.Health <= 0 or not v.Parent or v.Humanoid.Health <= 0
-							end
+						if (v.Name == _G.SelectBoss) and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+							repeat wait()
+								EquipWeapon(_G.SelectWeapon)
+								topos(v.HumanoidRootPart.CFrame * Pos)
+							until not _G.FarmBoss or not v.Parent or v.Humanoid.Health <= 0
 						end
 					end
 				else
@@ -3309,15 +3307,13 @@ spawn(function()
                 CheckMobPos()
                 if game:GetService("Workspace").Enemies:FindFirstChild(_G.SelectMob) then
                     for i,v in pairs (game.Workspace.Enemies:GetChildren()) do
-                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                            if v.Name == _G.SelectMob then
-                                repeat wait()
-                                    EquipWeapon(_G.SelectWeapon)
-                                    topos(v.HumanoidRootPart.CFrame * Pos)
-                                    PosMonFarm = v.HumanoidRootPart.CFrame
-                                    SelectMag = true
-                                until not _G.FarmMob or not v.Parent or v.Humanoid.Health <= 0
-                            end
+                        if (v.Name == _G.SelectMob) and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                            repeat wait()
+                                EquipWeapon(_G.SelectWeapon)
+                                topos(v.HumanoidRootPart.CFrame * Pos)
+                                PosMonFarm = v.HumanoidRootPart.CFrame
+                                SelectMag = true
+                            until not _G.FarmMob or not v.Parent or v.Humanoid.Health <= 0
                         end
                     end
                 else
@@ -3366,7 +3362,7 @@ spawn(function()
             if _G.SelectMaterial == "Ectoplasm" and _G.FarmMaterial then
                 if game:GetService("Workspace").Enemies:FindFirstChild("Ship Deckhand") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Engineer") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Steward") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Officer") or game:GetService("Workspace").Enemies:FindFirstChild("Cursed Captain") then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                        if v.Name == "Ship Deckhand" or v.Name == "Ship Engineer" or v.Name == "Ship Steward" or v.Name == "Ship Officer" or v.Name == "Cursed Captain" then
+                        if (v.Name == "Ship Deckhand" or v.Name == "Ship Engineer" or v.Name == "Ship Steward" or v.Name == "Ship Officer" or v.Name == "Cursed Captain") and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                             repeat wait()
                                 EquipWeapon(_G.SelectWeapon)
                                 topos(v.HumanoidRootPart.CFrame * Pos)
@@ -3384,15 +3380,13 @@ spawn(function()
                 CheckMaterialMob()
                 if game:GetService("Workspace").Enemies:FindFirstChild(MMon) or game:GetService("Workspace").Enemies:FindFirstChild(MMon1) then
                     for i,v in pairs (game:GetService("Workspace").Enemies:GetChildren()) do
-                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                            if v.Name == MMon or v.Name == MMon1 then
-                                repeat wait()
-                                    EquipWeapon(_G.SelectWeapon)
-                                    topos(v.HumanoidRootPart.CFrame * Pos)
-                                    MaterialPos = v.HumanoidRootPart.CFrame
-                                    BringMonMaterial = true
-                                until not _G.FarmMaterial or not v.Parent or v.Humanoid.Health <= 0
-                            end
+                        if (v.Name == MMon or v.Name == MMon1) and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                            repeat wait()
+                                EquipWeapon(_G.SelectWeapon)
+                                topos(v.HumanoidRootPart.CFrame * Pos)
+                                MaterialPos = v.HumanoidRootPart.CFrame
+                                BringMonMaterial = true
+                            until not _G.FarmMaterial or not v.Parent or v.Humanoid.Health <= 0
                         end
                     end
                 else
