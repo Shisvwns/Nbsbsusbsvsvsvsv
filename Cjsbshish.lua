@@ -2983,20 +2983,19 @@ Farm:AddToggle({
 	end
 })
 
-function Click()
-	game:GetService("VirtualUser"):CaptureController()
-	game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
-end
-
 function Mastery()
     HealthMin = v.Humanoid.MaxHealth * _G.MobHealth/100
     if v.Humanoid.Health <= HealthMs then
-        EquipWeapon(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value)
         if _G.FruitMastery then
+            EquipWeapon(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value)
             UseFruitSkill = true
         elseif _G.GunMastery then
+            EquipWeapon(EquipWeaponGun())
+            ShootPosition = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, -15, 0)
+            game:GetService("Players").LocalPlayer.Character.Humanoid:FindFirstChild(""):InvokeServer("TAP", Vector3.new(ShootPosition.Position))
             UseGunSkill = true
-            Click()
+            game:GetService("VirtualUser"):CaptureController()
+            game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
         end
         SkillAimbot = true
         topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 20, 0))
@@ -3032,12 +3031,12 @@ spawn(function()
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                             if (v.Name == Mon) and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                                 repeat wait()
-                                    AimBotSkillPosition = v.HumanoidRootPart.CFrame.Position
                                     Mastery()
+                                    AimBotSkillPosition = v.HumanoidRootPart.CFrame.Position
                                     MonFarm = v.Name
                                     PosFarm = v.HumanoidRootPart.CFrame
                                     StartMagnet = true
-                                until not _G.FarmLevel or not v.Parent or v.Humanoid.Health <= 0
+                                until not _G.FruitMastery or not _G.GunMastery or not v.Parent or v.Humanoid.Health <= 0
                                 UseFruitSkill = false
 								UseGunSkill = false
 								SkillAimbot = false
@@ -3056,12 +3055,12 @@ spawn(function()
 						for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
 							if 0 and (v.Name == "Cookie Crafter" or v.Name == "Cake Guard" or v.Name == "Baking Staff" or v.Name == "Head Baker") and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
 								repeat wait()
-                                    AimBotSkillPosition = v.HumanoidRootPart.CFrame.Position
                                     Mastery()
+                                    AimBotSkillPosition = v.HumanoidRootPart.CFrame.Position
                                     MonFarm = v.Name
 									PosNear = v.HumanoidRootPart.CFrame
 									MagnetNear = true
-								until not _G.FarmKatakuri or not v.Parent or v.Humanoid.Health <= 0
+								until not _G.FruitMastery or not _G.GunMastery or not v.Parent or v.Humanoid.Health <= 0
 								UseFruitSkill = false
 								UseGunSkill = false
 								SkillAimbot = false
@@ -3080,12 +3079,12 @@ spawn(function()
 						for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
 							if (v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy") and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
 								repeat wait()
-                                    AimBotSkillPosition = v.HumanoidRootPart.CFrame.Position
                                     Mastery()
+                                    AimBotSkillPosition = v.HumanoidRootPart.CFrame.Position
                                     MonFarm = v.Name
 									PosNear = v.HumanoidRootPart.CFrame
 									MagnetNear = true
-								until not _G.FarmBone or not v.Parent or v.Humanoid.Health <= 0
+								until not _G.FruitMastery or not _G.GunMastery or not v.Parent or v.Humanoid.Health <= 0
 								UseFruitSkill = false
 								UseGunSkill = false
 								SkillAimbot = false
