@@ -1,7 +1,8 @@
 -- Anti Ban & Afk & Auto Team --
 
-if getconnections or get_signal_cons then
-    for i,v in pairs(getconnections or get_signal_cons(game.Players.LocalPlayer.Idled)) do
+local GC = getconnections or get_signal_cons
+if GC then
+    for i,v in pairs(GC(game.Players.LocalPlayer.Idled)) do
         if v["Disable"] then
             v["Disable"](v)
         elseif v["Disconnect"] then
@@ -3002,8 +3003,7 @@ spawn(function()
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                             if (v.Name == Mon) and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                                 repeat wait()
-                                    HealthMin = v.Humanoid.MaxHealth * _G.MobHealth/100
-                                    if v.Humanoid.Health <= HealthMin then
+                                    if v.Humanoid.Health <= v.Humanoid.MaxHealth * _G.MobHealth/100 then
                                         if _G.FruitMastery then
                                             EquipWeapon(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value)
                                             UseFruitSkill = true
@@ -3047,8 +3047,7 @@ spawn(function()
 						for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
 							if 0 and (v.Name == "Cookie Crafter" or v.Name == "Cake Guard" or v.Name == "Baking Staff" or v.Name == "Head Baker") and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
 								repeat wait()
-                                    HealthMin = v.Humanoid.MaxHealth * _G.MobHealth/100
-                                    if v.Humanoid.Health <= HealthMin then
+                                    if v.Humanoid.Health <= v.Humanoid.MaxHealth * _G.MobHealth/100 then
                                         if _G.FruitMastery then
                                             EquipWeapon(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value)
                                             UseFruitSkill = true
@@ -3092,8 +3091,7 @@ spawn(function()
 						for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
 							if (v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy") and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
 								repeat wait()
-                                    HealthMin = v.Humanoid.MaxHealth * _G.MobHealth/100
-                                    if v.Humanoid.Health <= HealthMin then
+                                    if v.Humanoid.Health <= v.Humanoid.MaxHealth * _G.MobHealth/100 then
                                         if _G.FruitMastery then
                                             EquipWeapon(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value)
                                             UseFruitSkill = true
