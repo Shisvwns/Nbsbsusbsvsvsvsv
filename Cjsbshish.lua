@@ -2985,7 +2985,7 @@ Farm:AddToggle({
 
 function Mastery()
     HealthMin = v.Humanoid.MaxHealth * _G.MobHealth/100
-    if v.Humanoid.Health <= HealthMs then
+    if v.Humanoid.Health <= HealthMin then
         if _G.FruitMastery then
             EquipWeapon(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value)
             UseFruitSkill = true
