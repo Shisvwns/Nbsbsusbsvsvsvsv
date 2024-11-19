@@ -1369,7 +1369,7 @@ function topos(Pos)
     if not Pos then return end
     if not lp.Character:FindFirstChild("PartTele") then
         local PartTele = Instance.new("Part", lp.Character)
-        PartTele.Size = Vector3.new(0, 0, 0)
+        PartTele.Size = Vector3.new(0,0,0)
         PartTele.Name = "PartTele"
         PartTele.Anchored = true
         PartTele.Transparency = 1
@@ -1396,14 +1396,11 @@ function topos(Pos)
         lp.Character.Humanoid.Sit = false
     end
     _G.NoClip = true
-    local TweenService = game:GetService("TweenService")
-    local Tween = TweenService:Create(
-        lp.Character.PartTele, 
-        TweenInfo.new(Distance / _G.FlySpeed, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), -- Tạo tween với thời gian mượt
-        { CFrame = Pos }
-    )
+    Tween = game:GetService("TweenService"):Create(lp.Character.PartTele, TweenInfo.new(Distance / _G.FlySpeed, Enum.EasingStyle.Linear),{CFrame = Pos})
     Tween:Play()
     Tween.Completed:Wait()
+end
+    end
 end
 
 spawn(function()
