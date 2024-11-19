@@ -2979,15 +2979,6 @@ Farm:AddToggle({
 	end
 })
 
-Farm:AddToggle({
-	Name = "Auto Farm Gun Mastery",
-	Default = false,
-	Callback = function(Value)
-		_G.GunMastery = Value
-		StopTween(_G.GunMastery)
-	end
-})
-
 spawn(function()
     while wait() do
         pcall(function()
@@ -3013,7 +3004,7 @@ spawn(function()
                                         AimBotSkillPosition = v.HumanoidRootPart.CFrame.Position
                                         SkillAimbot = true
                                         UseFruitSkill = true
-                                        topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 20, 0))
+                                        topos(v.HumanoidRootPart.CFrame * Pos)
                                     else
                                         EquipWeapon(_G.SelectWeapon)
                                         UseFruitSkill = false
@@ -3045,7 +3036,7 @@ spawn(function()
                                         AimBotSkillPosition = v.HumanoidRootPart.CFrame.Position
                                         SkillAimbot = true
                                         UseFruitSkill = true
-                                        topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 20, 0))
+                                        topos(v.HumanoidRootPart.CFrame * Pos)
                                     else
                                         EquipWeapon(_G.SelectWeapon)
                                         UseFruitSkill = false
@@ -3077,7 +3068,7 @@ spawn(function()
                                         AimBotSkillPosition = v.HumanoidRootPart.CFrame.Position
                                         SkillAimbot = true
                                         UseFruitSkill = true
-                                        topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 20, 0))
+                                        topos(v.HumanoidRootPart.CFrame * Pos)
                                     else
                                         EquipWeapon(_G.SelectWeapon)
                                         UseFruitSkill = false
@@ -3104,6 +3095,15 @@ spawn(function()
     end
 end)
 
+Farm:AddToggle({
+	Name = "Auto Farm Gun Mastery",
+	Default = false,
+	Callback = function(Value)
+		_G.GunMastery = Value
+		StopTween(_G.GunMastery)
+	end
+})
+
 spawn(function()
     while wait() do
         pcall(function()
@@ -3126,12 +3126,10 @@ spawn(function()
                                 repeat wait()
                                     if v.Humanoid.Health <= v.Humanoid.MaxHealth * _G.MobHealth/100 then
                                         EquipWeapon(EquipWeaponGun())
-                                        ShootPosition = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, -15, 0)
-                                        game:GetService("Players").LocalPlayer.Character.Humanoid:FindFirstChild(""):InvokeServer("TAP", Vector3.new(ShootPosition.Position))
                                         AimBotSkillPosition = v.HumanoidRootPart.CFrame.Position
                                         SkillAimbot = true
                                         UseGunSkill = true
-                                        topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 20, 0))
+                                        topos(v.HumanoidRootPart.CFrame * Pos)
                                     else
                                         EquipWeapon(_G.SelectWeapon)
                                         UseGunSkill = false
@@ -3160,12 +3158,10 @@ spawn(function()
 								repeat wait()
                                     if v.Humanoid.Health <= v.Humanoid.MaxHealth * _G.MobHealth/100 then
                                         EquipWeapon(EquipWeaponGun())
-                                        ShootPosition = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, -15, 0)
-                                        game:GetService("Players").LocalPlayer.Character.Humanoid:FindFirstChild(""):InvokeServer("TAP", Vector3.new(ShootPosition.Position))
                                         AimBotSkillPosition = v.HumanoidRootPart.CFrame.Position
                                         SkillAimbot = true
                                         UseGunSkill = true
-                                        topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 20, 0))
+                                        topos(v.HumanoidRootPart.CFrame * Pos)
                                     else
                                         EquipWeapon(_G.SelectWeapon)
                                         UseGunSkill = false
@@ -3194,12 +3190,10 @@ spawn(function()
 								repeat wait()
                                     if v.Humanoid.Health <= v.Humanoid.MaxHealth * _G.MobHealth/100 then
                                         EquipWeapon(EquipWeaponGun())
-                                        ShootPosition = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, -15, 0)
-                                        game:GetService("Players").LocalPlayer.Character.Humanoid:FindFirstChild(""):InvokeServer("TAP", Vector3.new(ShootPosition.Position))
                                         AimBotSkillPosition = v.HumanoidRootPart.CFrame.Position
                                         SkillAimbot = true
                                         UseGunSkill = true
-                                        topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 20, 0))
+                                        topos(v.HumanoidRootPart.CFrame * Pos)
                                     else
                                         EquipWeapon(_G.SelectWeapon)
                                         UseGunSkill = false
