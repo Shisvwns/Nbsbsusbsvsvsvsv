@@ -1,8 +1,7 @@
 -- Anti Ban & Afk & Auto Team --
 
-local GC = getconnections or get_signal_cons
-if GC then
-    for i,v in pairs(GC(game.Players.LocalPlayer.Idled)) do
+if getconnections or get_signal_cons then
+    for i,v in pairs(getconnections or get_signal_cons(game.Players.LocalPlayer.Idled)) do
         if v["Disable"] then
             v["Disable"](v)
         elseif v["Disconnect"] then
@@ -2983,34 +2982,6 @@ Farm:AddToggle({
 	end
 })
 
-function Mastery()
-    HealthMin = v.Humanoid.MaxHealth * _G.MobHealth/100
-    if v.Humanoid.Health <= HealthMin then
-        if _G.FruitMastery then
-            EquipWeapon(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value)
-            UseFruitSkill = true
-        elseif _G.GunMastery then
-            EquipWeapon(EquipWeaponGun())
-            ShootPosition = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, -15, 0)
-            game:GetService("Players").LocalPlayer.Character.Humanoid:FindFirstChild(""):InvokeServer("TAP", Vector3.new(ShootPosition.Position))
-            UseGunSkill = true
-            game:GetService("VirtualUser"):CaptureController()
-            game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
-        end
-        SkillAimbot = true
-        topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 20, 0))
-    else
-        EquipWeapon(_G.SelectWeapon)
-        if _G.FruitMastery then
-            UseFruitSkill = false
-        elseif _G.GunMastery then
-            UseGunSkill = false
-        end
-        SkillAimbot = false
-        topos(v.HumanoidRootPart.CFrame * Pos)
-    end
-end
-
 spawn(function()
     while wait() do
         pcall(function()
@@ -3031,7 +3002,28 @@ spawn(function()
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                             if (v.Name == Mon) and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                                 repeat wait()
-                                    Mastery()
+                                    HealthMin = v.Humanoid.MaxHealth * _G.MobHealth/100
+                                    if v.Humanoid.Health <= HealthMin then
+                                        if _G.FruitMastery then
+                                            EquipWeapon(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value)
+                                            UseFruitSkill = true
+                                        elseif _G.GunMastery then
+                                            EquipWeapon(EquipWeaponGun())
+                                            ShootPosition = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, -15, 0)
+                                            game:GetService("Players").LocalPlayer.Character.Humanoid:FindFirstChild(""):InvokeServer("TAP", Vector3.new(ShootPosition.Position))
+                                            UseGunSkill = true
+                                            game:GetService("VirtualUser"):CaptureController()
+                                            game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
+                                        end
+                                        SkillAimbot = true
+                                        topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 20, 0))
+                                    else
+                                        EquipWeapon(_G.SelectWeapon)
+                                        UseFruitSkill = false
+                                        UseGunSkill = false
+                                        SkillAimbot = false
+                                        topos(v.HumanoidRootPart.CFrame * Pos)
+                                    end
                                     AimBotSkillPosition = v.HumanoidRootPart.CFrame.Position
                                     MonFarm = v.Name
                                     PosFarm = v.HumanoidRootPart.CFrame
@@ -3055,7 +3047,28 @@ spawn(function()
 						for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
 							if 0 and (v.Name == "Cookie Crafter" or v.Name == "Cake Guard" or v.Name == "Baking Staff" or v.Name == "Head Baker") and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
 								repeat wait()
-                                    Mastery()
+                                    HealthMin = v.Humanoid.MaxHealth * _G.MobHealth/100
+                                    if v.Humanoid.Health <= HealthMin then
+                                        if _G.FruitMastery then
+                                            EquipWeapon(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value)
+                                            UseFruitSkill = true
+                                        elseif _G.GunMastery then
+                                            EquipWeapon(EquipWeaponGun())
+                                            ShootPosition = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, -15, 0)
+                                            game:GetService("Players").LocalPlayer.Character.Humanoid:FindFirstChild(""):InvokeServer("TAP", Vector3.new(ShootPosition.Position))
+                                            UseGunSkill = true
+                                            game:GetService("VirtualUser"):CaptureController()
+                                            game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
+                                        end
+                                        SkillAimbot = true
+                                        topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 20, 0))
+                                    else
+                                        EquipWeapon(_G.SelectWeapon)
+                                        UseFruitSkill = false
+                                        UseGunSkill = false
+                                        SkillAimbot = false
+                                        topos(v.HumanoidRootPart.CFrame * Pos)
+                                    end
                                     AimBotSkillPosition = v.HumanoidRootPart.CFrame.Position
                                     MonFarm = v.Name
 									PosNear = v.HumanoidRootPart.CFrame
@@ -3079,7 +3092,28 @@ spawn(function()
 						for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
 							if (v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy") and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
 								repeat wait()
-                                    Mastery()
+                                    HealthMin = v.Humanoid.MaxHealth * _G.MobHealth/100
+                                    if v.Humanoid.Health <= HealthMin then
+                                        if _G.FruitMastery then
+                                            EquipWeapon(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value)
+                                            UseFruitSkill = true
+                                        elseif _G.GunMastery then
+                                            EquipWeapon(EquipWeaponGun())
+                                            ShootPosition = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, -15, 0)
+                                            game:GetService("Players").LocalPlayer.Character.Humanoid:FindFirstChild(""):InvokeServer("TAP", Vector3.new(ShootPosition.Position))
+                                            UseGunSkill = true
+                                            game:GetService("VirtualUser"):CaptureController()
+                                            game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
+                                        end
+                                        SkillAimbot = true
+                                        topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 20, 0))
+                                    else
+                                        EquipWeapon(_G.SelectWeapon)
+                                        UseFruitSkill = false
+                                        UseGunSkill = false
+                                        SkillAimbot = false
+                                        topos(v.HumanoidRootPart.CFrame * Pos)
+                                    end
                                     AimBotSkillPosition = v.HumanoidRootPart.CFrame.Position
                                     MonFarm = v.Name
 									PosNear = v.HumanoidRootPart.CFrame
