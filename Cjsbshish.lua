@@ -2578,21 +2578,17 @@ spawn(function()
 		    		if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQuest.Position).Magnitude <= 10 then
 	    				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NameQuest, LevelQuest)
                     end
-                else
+                elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true or _G.LevelMode == "No Quest" then
                     CheckQuest()
                     if game:GetService("Workspace").Enemies:FindFirstChild(Mon) then
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                            if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
-                                if v.Name == Mon then
-                                    if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
-                                        repeat wait()
-                                            EquipWeapon(_G.SelectWeapon)
-                                            topos(v.HumanoidRootPart.CFrame * Pos)
-                                            PosFarm = v.HumanoidRootPart.CFrame
-                                            StartMagnet = true
-                                        until not _G.FarmLevel or v.Humanoid.Health <= 0 or not v.Parent or v.Humanoid.Health <= 0
-                                    end
-                                end
+                            if v.Name == Mon and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                                repeat wait()
+                                    EquipWeapon(_G.SelectWeapon)
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
+                                    PosFarm = v.HumanoidRootPart.CFrame
+                                    StartMagnet = true
+                                until not _G.FarmLevel or v.Humanoid.Health <= 0 or not v.Parent or v.Humanoid.Health <= 0
                             end
                         end
                     else
@@ -2784,12 +2780,10 @@ spawn(function()
 					if game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince") or game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince") then
 						if game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince") then
 							for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
-								if _G.FarmKatakuri and v.Name == "Cake Prince" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+								if v.Name == "Cake Prince" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
 									repeat wait()
 									    EquipWeapon(_G.SelectWeapon)
 							    		topos(v.HumanoidRootPart.CFrame * Pos)
-										PosNear = v.HumanoidRootPart.CFrame
-										MagnetNear = true
 									until not _G.FarmKatakuri or not v.Parent or v.Humanoid.Health <= 0 or game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince")
 								end
 							end
@@ -2809,7 +2803,6 @@ spawn(function()
 										PosNear = v.HumanoidRootPart.CFrame
 										MagnetNear = true
 									until not _G.FarmKatakuri or not v.Parent or v.Humanoid.Health <= 0
-									MagnetNear = false
 								end
 							end
 						else
@@ -2872,22 +2865,20 @@ spawn(function()
 				elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true or _G.BoneMode == "No Quest" then
 					if game:GetService("Workspace").Enemies:FindFirstChild("Reborn Skeleton") or game:GetService("Workspace").Enemies:FindFirstChild("Living Zombie") or game:GetService("Workspace").Enemies:FindFirstChild("Demonic Soul") or game:GetService("Workspace").Enemies:FindFirstChild("Posessed Mummy") then
 						for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-							if v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy" then
-								if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-									repeat wait()
-										EquipWeapon(_G.SelectWeapon)
-										topos(v.HumanoidRootPart.CFrame * Pos)
-										PosNear = v.HumanoidRootPart.CFrame
-										MagnetNear = true
-									until not _G.FarmBone or v.Humanoid.Health <= 0 or not v.Parent or v.Humanoid.Health <= 0
-								end
+							if (v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy") and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+								repeat wait()
+									EquipWeapon(_G.SelectWeapon)
+									topos(v.HumanoidRootPart.CFrame * Pos)
+									PosNear = v.HumanoidRootPart.CFrame
+									MagnetNear = true
+								until not _G.FarmBone or v.Humanoid.Health <= 0 or not v.Parent or v.Humanoid.Health <= 0
 							end
 						end
+					else
+					    MagnetNear = false
+						topos(CFrame.new(-9504.8564453125, 172.14292907714844, 6057.259765625))
+						UnEquipWeapon(_G.SelectWeapon)
 					end
-				else
-				    MagnetNear = false
-					topos(CFrame.new(-9504.8564453125, 172.14292907714844, 6057.259765625))
-					UnEquipWeapon(_G.SelectWeapon)
 				end
 			end
 		end)
