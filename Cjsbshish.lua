@@ -3104,7 +3104,7 @@ Farm:AddToggle({
 	end
 })
 
-task.spawn(function()
+spawn(function()
 	while wait() do
 		for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do  
 			if v:IsA("Tool") then
@@ -3142,16 +3142,12 @@ spawn(function()
                                         SkillAimbot = true
                                         UseGunSkill = true
                                         if game:GetService("Players").LocalPlayer.Character:FindFirstChild(SelectWeaponGun) and game:GetService("Players").LocalPlayer.Character:FindFirstChild(SelectWeaponGun):FindFirstChild("RemoteFunctionShoot") then
-							            	game:GetService("VirtualUser"):CaptureController()
-							            	game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
 							            	local args = {
 					    		            	[1] = v.HumanoidRootPart.Position,
 					    		            	[2] = v.HumanoidRootPart
 							            	}
 							            	game:GetService("Players").LocalPlayer.Character[SelectWeaponGun].RemoteFunctionShoot:InvokeServer(unpack(args))
-							            end 
-                                        game:GetService "VirtualUser":CaptureController()
-                                        game:GetService "VirtualUser":Button1Down(Vector2.new(50, 50))
+							            end
                                         topos(v.HumanoidRootPart.CFrame * Pos)
                                     else
                                         EquipWeapon(_G.SelectWeapon)
@@ -3171,7 +3167,7 @@ spawn(function()
                         StartMagnet = false
                         topos(CFrameMon)
                         UnEquipWeapon(_G.SelectWeapon)
-                        UnEquipWeapon(EquipWeaponGun())
+                        UnEquipWeapon(SelectWeaponGun)
                     end
                 end
                 if _G.MasteryMode == "Farm Katakuri" then
@@ -3195,7 +3191,7 @@ spawn(function()
                                     end
                                     MonFarm = v.Name
                                     PosNear = v.HumanoidRootPart.CFrame
-                                    StartMagnet = true
+                                    MagnetNear = true
                                 until not _G.GunMastery or not v.Parent or v.Humanoid.Health <= 0
 								UseGunSkill = false
 								SkillAimbot = false
