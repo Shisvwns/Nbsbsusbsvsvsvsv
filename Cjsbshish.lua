@@ -2981,7 +2981,7 @@ Farm:AddToggle({
 
 spawn(function()
     while wait() do
-        pcall(function()
+        --pcall(function()
             if _G.FruitMastery then
                 CheckQuest()
                 if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) and _G.MasteryMode == "Farm Level" then
@@ -3091,7 +3091,7 @@ spawn(function()
 					end
 				end
             end
-        end)
+        --end)
     end
 end)
 
