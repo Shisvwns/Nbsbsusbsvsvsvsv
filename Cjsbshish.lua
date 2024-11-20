@@ -3129,6 +3129,8 @@ spawn(function()
                                         AimBotSkillPosition = v.HumanoidRootPart.CFrame.Position
                                         SkillAimbot = true
                                         UseGunSkill = true
+                                        game:GetService "VirtualUser":CaptureController()
+                                        game:GetService "VirtualUser":Button1Down(Vector2.new(50, 50))
                                         topos(v.HumanoidRootPart.CFrame * Pos)
                                     else
                                         EquipWeapon(_G.SelectWeapon)
@@ -3161,6 +3163,8 @@ spawn(function()
                                         AimBotSkillPosition = v.HumanoidRootPart.CFrame.Position
                                         SkillAimbot = true
                                         UseGunSkill = true
+                                        game:GetService "VirtualUser":CaptureController()
+                                        game:GetService "VirtualUser":Button1Down(Vector2.new(50, 50))
                                         topos(v.HumanoidRootPart.CFrame * Pos)
                                     else
                                         EquipWeapon(_G.SelectWeapon)
@@ -3193,6 +3197,8 @@ spawn(function()
                                         AimBotSkillPosition = v.HumanoidRootPart.CFrame.Position
                                         SkillAimbot = true
                                         UseGunSkill = true
+                                        game:GetService "VirtualUser":CaptureController()
+                                        game:GetService "VirtualUser":Button1Down(Vector2.new(50, 50))
                                         topos(v.HumanoidRootPart.CFrame * Pos)
                                     else
                                         EquipWeapon(_G.SelectWeapon)
@@ -3224,7 +3230,7 @@ Farm:AddSlider({
 	Name = "Kill Mobs At % Health",
 	Min = 1,
 	Max = 100,
-	Default = 20,
+	Default = 30,
 	Color = Color3.fromRGB(255,255,255),
 	Increment = 1,
 	ValueName = "%",
