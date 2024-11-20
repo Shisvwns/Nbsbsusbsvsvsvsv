@@ -2961,15 +2961,6 @@ local Section = Farm:AddSection({
     Name = "~ Devil Fruit & Gun Mastery ~"
 })
 
-Farm:AddDropdown({
-	Name = "Select Mode Farm Mastery",
-	Default = "Farm Level",
-	Options = {"Farm Level","Farm Katakuri","Farm Bone"},
-	Callback = function(Value)
-		_G.MasteryMode = Value
-	end
-})
-
 Farm:AddToggle({
 	Name = "Auto Farm Devil Fruit Mastery",
 	Default = false,
@@ -2984,16 +2975,16 @@ spawn(function()
         pcall(function()
             if _G.FruitMastery then
                 CheckQuest()
-                if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) and _G.MasteryMode == "Farm Level" then
+                if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
                 end
-                if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false and _G.MasteryMode == "Farm Level" then
+                if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
                     StartMagnet = false
 	    			topos(CFrameQuest)
 		    		if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQuest.Position).Magnitude <= 10 then
 	    				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NameQuest, LevelQuest)
                     end
-                elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true or _G.MasteryMode == "Farm Level" then
+                elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
                     CheckQuest()
                     if game:GetService("Workspace").Enemies:FindFirstChild(Mon) then
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
@@ -3004,7 +2995,7 @@ spawn(function()
                                         AimBotSkillPosition = v.HumanoidRootPart.CFrame.Position
                                         SkillAimbot = true
                                         UseFruitSkill = true
-                                        topos(v.HumanoidRootPart.CFrame * Pos)
+                                        topos(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
                                     else
                                         EquipWeapon(_G.SelectWeapon)
                                         UseFruitSkill = false
@@ -3026,70 +3017,6 @@ spawn(function()
                         UnEquipWeapon(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value)
                     end
                 end
-                if _G.MasteryMode == "Farm Katakuri" then
-					if game:GetService("Workspace").Enemies:FindFirstChild("Cookie Crafter") or game:GetService("Workspace").Enemies:FindFirstChild("Cake Guard") or game:GetService("Workspace").Enemies:FindFirstChild("Baking Staff") or game:GetService("Workspace").Enemies:FindFirstChild("Head Baker") then
-						for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
-							if 0 and (v.Name == "Cookie Crafter" or v.Name == "Cake Guard" or v.Name == "Baking Staff" or v.Name == "Head Baker") and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
-								repeat wait()
-                                    if v.Humanoid.Health <= v.Humanoid.MaxHealth * _G.MobHealth/100 then
-                                        EquipWeapon(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value)
-                                        AimBotSkillPosition = v.HumanoidRootPart.CFrame.Position
-                                        SkillAimbot = true
-                                        UseFruitSkill = true
-                                        topos(v.HumanoidRootPart.CFrame * Pos)
-                                    else
-                                        EquipWeapon(_G.SelectWeapon)
-                                        UseFruitSkill = false
-                                        SkillAimbot = false
-                                        topos(v.HumanoidRootPart.CFrame * Pos)
-                                    end
-                                    MonFarm = v.Name
-									PosNear = v.HumanoidRootPart.CFrame
-									MagnetNear = true
-								until not _G.FruitMastery or not v.Parent or v.Humanoid.Health <= 0
-								UseFruitSkill = false
-								SkillAimbot = false
-							end
-						end
-					else
-						MagnetNear = false
-						topos(CFrame.new(-2077, 252, -12373))
-						UnEquipWeapon(_G.SelectWeapon)
-						UnEquipWeapon(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value)
-					end
-				end
-				if _G.MasteryMode == "Farm Bone" then
-					if game:GetService("Workspace").Enemies:FindFirstChild("Reborn Skeleton") or game:GetService("Workspace").Enemies:FindFirstChild("Living Zombie") or game:GetService("Workspace").Enemies:FindFirstChild("Demonic Soul") or game:GetService("Workspace").Enemies:FindFirstChild("Posessed Mummy") then
-						for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-							if (v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy") and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-								repeat wait()
-                                    if v.Humanoid.Health <= v.Humanoid.MaxHealth * _G.MobHealth/100 then
-                                        EquipWeapon(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value)
-                                        AimBotSkillPosition = v.HumanoidRootPart.CFrame.Position
-                                        SkillAimbot = true
-                                        UseFruitSkill = true
-                                        topos(v.HumanoidRootPart.CFrame * Pos)
-                                    else
-                                        EquipWeapon(_G.SelectWeapon)
-                                        UseFruitSkill = false
-                                        SkillAimbot = false
-                                        topos(v.HumanoidRootPart.CFrame * Pos)
-                                    end
-                                    MonFarm = v.Name
-									PosNear = v.HumanoidRootPart.CFrame
-									MagnetNear = true
-								until not _G.FruitMastery or not v.Parent or v.Humanoid.Health <= 0
-								UseFruitSkill = false
-								SkillAimbot = false
-							end
-						end
-					else
-					    MagnetNear = false
-						topos(CFrame.new(-9504.8564453125, 172.14292907714844, 6057.259765625))
-						UnEquipWeapon(_G.SelectWeapon)
-						UnEquipWeapon(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value)
-					end
-				end
             end
         end)
     end
@@ -3118,19 +3045,19 @@ end)
 
 spawn(function()
     while wait() do
-        --pcall(function()
+        pcall(function()
             if _G.GunMastery then
                 CheckQuest()
-                if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) and _G.MasteryMode == "Farm Level" then
+                if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
                 end
-                if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false and _G.MasteryMode == "Farm Level" then
+                if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
                     StartMagnet = false
 	    			topos(CFrameQuest)
 		    		if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQuest.Position).Magnitude <= 10 then
 	    				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NameQuest, LevelQuest)
                     end
-                elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true or _G.MasteryMode == "Farm Level" then
+                elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
                     CheckQuest()
                     if game:GetService("Workspace").Enemies:FindFirstChild(Mon) then
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
@@ -3148,7 +3075,7 @@ spawn(function()
 							            	}
 							            	game:GetService("Players").LocalPlayer.Character[SelectWeaponGun].RemoteFunctionShoot:InvokeServer(unpack(args))
 							            end
-                                        topos(v.HumanoidRootPart.CFrame * Pos)
+                                        topos(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
                                     else
                                         EquipWeapon(_G.SelectWeapon)
                                         UseGunSkill = false
@@ -3171,7 +3098,7 @@ spawn(function()
                     end
                 end
             end
-        --end)
+        end)
     end
 end)
 
