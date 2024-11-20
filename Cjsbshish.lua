@@ -3104,6 +3104,18 @@ Farm:AddToggle({
 	end
 })
 
+task.spawn(function()
+	while wait() do
+		for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do  
+			if v:IsA("Tool") then
+				if v:FindFirstChild("RemoteFunctionShoot") then 
+					SelectWeaponGun = v.Name
+				end
+			end
+		end
+	end
+end)
+
 spawn(function()
     while wait() do
         pcall(function()
@@ -3125,10 +3137,19 @@ spawn(function()
                             if (v.Name == Mon) and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                                 repeat wait()
                                     if v.Humanoid.Health <= v.Humanoid.MaxHealth * _G.MobHealth/100 then
-                                        EquipWeapon(EquipWeaponGun())
+                                        EquipWeapon(SelectWeaponGun)
                                         AimBotSkillPosition = v.HumanoidRootPart.CFrame.Position
                                         SkillAimbot = true
                                         UseGunSkill = true
+                                        if game:GetService("Players").LocalPlayer.Character:FindFirstChild(SelectWeaponGun) and game:GetService("Players").LocalPlayer.Character:FindFirstChild(SelectWeaponGun):FindFirstChild("RemoteFunctionShoot") then
+							            	game:GetService("VirtualUser"):CaptureController()
+							            	game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
+							            	local args = {
+					    		            	[1] = v.HumanoidRootPart.Position,
+					    		            	[2] = v.HumanoidRootPart
+							            	}
+							            	game:GetService("Players").LocalPlayer.Character[SelectWeaponGun].RemoteFunctionShoot:InvokeServer(unpack(args))
+							            end 
                                         game:GetService "VirtualUser":CaptureController()
                                         game:GetService "VirtualUser":Button1Down(Vector2.new(50, 50))
                                         topos(v.HumanoidRootPart.CFrame * Pos)
