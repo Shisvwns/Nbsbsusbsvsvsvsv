@@ -3118,7 +3118,7 @@ end)
 
 spawn(function()
     while wait() do
-        pcall(function()
+        --pcall(function()
             if _G.GunMastery then
                 CheckQuest()
                 if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) and _G.MasteryMode == "Farm Level" then
@@ -3239,7 +3239,7 @@ spawn(function()
 					end
 				end
             end
-        end)
+        --end)
     end
 end)
 
