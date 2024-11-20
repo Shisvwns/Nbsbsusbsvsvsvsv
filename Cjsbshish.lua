@@ -2981,7 +2981,7 @@ Farm:AddToggle({
 
 spawn(function()
     while wait() do
-        --pcall(function()
+        pcall(function()
             if _G.FruitMastery then
                 CheckQuest()
                 if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) and _G.MasteryMode == "Farm Level" then
@@ -3091,7 +3091,7 @@ spawn(function()
 					end
 				end
             end
-        --end)
+        end)
     end
 end)
 
@@ -3170,74 +3170,6 @@ spawn(function()
                         UnEquipWeapon(SelectWeaponGun)
                     end
                 end
-                if _G.MasteryMode == "Farm Katakuri" then
-					if game:GetService("Workspace").Enemies:FindFirstChild("Cookie Crafter") or game:GetService("Workspace").Enemies:FindFirstChild("Cake Guard") or game:GetService("Workspace").Enemies:FindFirstChild("Baking Staff") or game:GetService("Workspace").Enemies:FindFirstChild("Head Baker") then
-						for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
-							if 0 and (v.Name == "Cookie Crafter" or v.Name == "Cake Guard" or v.Name == "Baking Staff" or v.Name == "Head Baker") and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
-								repeat wait()
-                                    if v.Humanoid.Health <= v.Humanoid.MaxHealth * _G.MobHealth/100 then
-                                        EquipWeapon(EquipWeaponGun())
-                                        AimBotSkillPosition = v.HumanoidRootPart.CFrame.Position
-                                        SkillAimbot = true
-                                        UseGunSkill = true
-                                        game:GetService "VirtualUser":CaptureController()
-                                        game:GetService "VirtualUser":Button1Down(Vector2.new(50, 50))
-                                        topos(v.HumanoidRootPart.CFrame * Pos)
-                                    else
-                                        EquipWeapon(_G.SelectWeapon)
-                                        UseGunSkill = false
-                                        SkillAimbot = false
-                                        topos(v.HumanoidRootPart.CFrame * Pos)
-                                    end
-                                    MonFarm = v.Name
-                                    PosNear = v.HumanoidRootPart.CFrame
-                                    MagnetNear = true
-                                until not _G.GunMastery or not v.Parent or v.Humanoid.Health <= 0
-								UseGunSkill = false
-								SkillAimbot = false
-                            end
-                        end
-                    else
-                        MagnetNear = false
-						topos(CFrame.new(-2077, 252, -12373))
-						UnEquipWeapon(_G.SelectWeapon)
-						UnEquipWeapon(EquipWeaponGun())
-					end
-				end
-				if _G.MasteryMode == "Farm Bone" then
-					if game:GetService("Workspace").Enemies:FindFirstChild("Reborn Skeleton") or game:GetService("Workspace").Enemies:FindFirstChild("Living Zombie") or game:GetService("Workspace").Enemies:FindFirstChild("Demonic Soul") or game:GetService("Workspace").Enemies:FindFirstChild("Posessed Mummy") then
-						for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-							if (v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy") and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-								repeat wait()
-                                    if v.Humanoid.Health <= v.Humanoid.MaxHealth * _G.MobHealth/100 then
-                                        EquipWeapon(EquipWeaponGun())
-                                        AimBotSkillPosition = v.HumanoidRootPart.CFrame.Position
-                                        SkillAimbot = true
-                                        UseGunSkill = true
-                                        game:GetService "VirtualUser":CaptureController()
-                                        game:GetService "VirtualUser":Button1Down(Vector2.new(50, 50))
-                                        topos(v.HumanoidRootPart.CFrame * Pos)
-                                    else
-                                        EquipWeapon(_G.SelectWeapon)
-                                        UseGunSkill = false
-                                        SkillAimbot = false
-                                        topos(v.HumanoidRootPart.CFrame * Pos)
-                                    end
-                                    MonFarm = v.Name
-                                    PosNear = v.HumanoidRootPart.CFrame
-                                    MagnetNear = true
-                                until not _G.GunMastery or not v.Parent or v.Humanoid.Health <= 0
-								UseGunSkill = false
-								SkillAimbot = false
-                            end
-                        end
-                    else
-                        MagnetNear = false
-						topos(CFrame.new(-9504.8564453125, 172.14292907714844, 6057.259765625))
-						UnEquipWeapon(_G.SelectWeapon)
-						UnEquipWeapon(EquipWeaponGun())
-					end
-				end
             end
         --end)
     end
