@@ -3595,46 +3595,25 @@ FruitRaid:AddToggle({
 	end
 })
 
+function StoreFruit(path)
+    for i,v in pairs(path:GetChildren()) do
+        if string.find(v.Name,"Fruit") and not v:FindFirstChild("Ignored")  then
+            local test  = string.gsub(v.Name, " Fruit","")
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StoreFruit",string.gsub(v.Name, " Fruit","-"..test),path:FindFirstChild(v.Name))
+            local Ignored = Instance.new("IntValue", v)
+            Ignored.Name = "Ignored"
+        end
+    end
+end
+
 spawn(function()
-    while wait() do
-        pcall(function()
-            if _G.StoreFruit then
-                for i, v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
-                    if string.find(v.Name, "Fruit") and not v:FindFirstChild("Ignored") then
-                        ResultStoreFruits = {}
-                        CheckFruits()
-                        for z, Res in pairs(ResultStoreFruits) do
-                            if v.Name == Res then
-                                local NameFruit = v.Name
-                                local FirstNameFruit = string.gsub(v.Name, " Fruit", "")
-                                if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(NameFruit) then
-                                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StoreFruit",FirstNameFruit.."-"..FirstNameFruit,game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(NameFruit))
-                                end
-                            end
-                        end
-                        local Ignored = Instance.new("IntValue", Res)
-                        Ignored.Name = "Ignored"
-                    end
-                end
-                for i, v in pairs(game:GetService("Players").LocalPlayer.Character:GetChildren()) do
-                    if string.find(v.Name, "Fruit") and not v:FindFirstChild("Ignored") then
-                        ResultStoreFruits = {}
-                        CheckFruits()
-                        for z, Res in pairs(ResultStoreFruits) do
-                            if v.Name == Res then
-                                local NameFruit = v.Name
-                                local FirstNameFruit = string.gsub(v.Name, " Fruit", "")
-                                if game:GetService("Players").LocalPlayer.Character:FindFirstChild(NameFruit) then
-                                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StoreFruit",FirstNameFruit.."-"..FirstNameFruit,game:GetService("Players").LocalPlayer.Character:FindFirstChild(NameFruit))
-                                end
-                            end
-                        end
-                        local Ignored = Instance.new("IntValue", Res)
-                        Ignored.Name = "Ignored"
-                    end
-                end
-            end
-        end)
+    while task.wait() do
+        if _G.AutoStoreFruit then
+            pcall(function()
+                StoreFruit(plr.Backpack)
+                StoreFruit(plr.Character)
+            end)
+        end
     end
 end)
 
