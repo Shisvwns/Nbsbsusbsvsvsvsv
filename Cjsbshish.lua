@@ -3610,10 +3610,10 @@ spawn(function()
                                 if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(NameFruit) then
                                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StoreFruit",FirstNameFruit.."-"..FirstNameFruit,game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(NameFruit))
                                 end
+                                local Ignored = Instance.new("IntValue", Res)
+                                Ignored.Name = "Ignored"
                             end
                         end
-                        local Ignored = Instance.new("IntValue", v)
-                        Ignored.Name = "Ignored"
                     end
                 end
                 for i, v in pairs(game:GetService("Players").LocalPlayer.Character:GetChildren()) do
@@ -3627,10 +3627,10 @@ spawn(function()
                                 if game:GetService("Players").LocalPlayer.Character:FindFirstChild(NameFruit) then
                                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StoreFruit",FirstNameFruit.."-"..FirstNameFruit,game:GetService("Players").LocalPlayer.Character:FindFirstChild(NameFruit))
                                 end
+                                local Ignored = Instance.new("IntValue", Res)
+                                Ignored.Name = "Ignored"
                             end
                         end
-                        local Ignored = Instance.new("IntValue", v)
-                        Ignored.Name = "Ignored"
                     end
                 end
             end
