@@ -3600,7 +3600,7 @@ spawn(function()
         pcall(function()
             if _G.StoreFruit then
                 for i, v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
-                    if string.find(v.Name, "Fruit") then
+                    if string.find(v.Name, "Fruit") and not v:FindFirstChild("Ignored") then
                         ResultStoreFruits = {}
                         CheckFruits()
                         for z, Res in pairs(ResultStoreFruits) do
@@ -3610,14 +3610,14 @@ spawn(function()
                                 if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(NameFruit) then
                                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StoreFruit",FirstNameFruit.."-"..FirstNameFruit,game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(NameFruit))
                                 end
-                                local Ignored = Instance.new("IntValue", Res)
-                                Ignored.Name = "Ignored"
                             end
                         end
+                        local Ignored = Instance.new("IntValue", Res)
+                        Ignored.Name = "Ignored"
                     end
                 end
                 for i, v in pairs(game:GetService("Players").LocalPlayer.Character:GetChildren()) do
-                    if string.find(v.Name, "Fruit") then
+                    if string.find(v.Name, "Fruit") and not v:FindFirstChild("Ignored") then
                         ResultStoreFruits = {}
                         CheckFruits()
                         for z, Res in pairs(ResultStoreFruits) do
@@ -3627,10 +3627,10 @@ spawn(function()
                                 if game:GetService("Players").LocalPlayer.Character:FindFirstChild(NameFruit) then
                                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StoreFruit",FirstNameFruit.."-"..FirstNameFruit,game:GetService("Players").LocalPlayer.Character:FindFirstChild(NameFruit))
                                 end
-                                local Ignored = Instance.new("IntValue", Res)
-                                Ignored.Name = "Ignored"
                             end
                         end
+                        local Ignored = Instance.new("IntValue", Res)
+                        Ignored.Name = "Ignored"
                     end
                 end
             end
